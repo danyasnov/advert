@@ -17,8 +17,30 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['react', '@typescript-eslint'],
+    settings: {
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            },
+        },
+    },
     rules: {
         'react/jsx-filename-extension': 'off',
         'react/react-in-jsx-scope': 'off',
+        'no-use-before-define': 'off',
+        'react/prop-types': 'off',
+        'import/extensions': [
+            'error',
+            'ignorePackages',
+            {
+                js: 'never',
+                jsx: 'never',
+                ts: 'never',
+                tsx: 'never',
+            },
+        ],
+    },
+    globals: {
+        JSX: true,
     },
 }
