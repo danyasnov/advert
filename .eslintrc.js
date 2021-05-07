@@ -1,46 +1,54 @@
 module.exports = {
-    env: {
-        browser: true,
-        es2021: true,
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'plugin:prettier/recommended',
+    'plugin:react-hooks/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    extends: [
-        'plugin:react/recommended',
-        'airbnb',
-        'plugin:prettier/recommended',
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint', 'import'],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+  rules: {
+    'react/jsx-filename-extension': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'no-use-before-define': 'off',
+    'react/prop-types': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
     ],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-        ecmaFeatures: {
-            jsx: true,
-        },
-        ecmaVersion: 12,
-        sourceType: 'module',
-    },
-    plugins: ['react', '@typescript-eslint'],
-    settings: {
-        'import/resolver': {
-            node: {
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
-            },
-        },
-    },
-    rules: {
-        'react/jsx-filename-extension': 'off',
-        'react/react-in-jsx-scope': 'off',
-        'no-use-before-define': 'off',
-        'react/prop-types': 'off',
-        'import/extensions': [
-            'error',
-            'ignorePackages',
-            {
-                js: 'never',
-                jsx: 'never',
-                ts: 'never',
-                tsx: 'never',
-            },
-        ],
-    },
-    globals: {
-        JSX: true,
-    },
+    'react/jsx-max-props-per-line': [
+      1,
+      {
+        maximum: 1,
+        when: 'multiline',
+      },
+    ],
+  },
+  globals: {
+    JSX: true,
+  },
 }

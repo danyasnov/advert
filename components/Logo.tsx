@@ -1,17 +1,17 @@
-import { SvgIcon } from '@material-ui/core'
-import { FC } from 'react'
-import AdvertoLogoInverseSquare from '../assets/icons/AdvertoLogoInverseSquare.svg'
+import {FC} from 'react'
+import Icon from './Icon'
 
 const Logo: FC = () => {
-    return (
-        <>
-            <SvgIcon
-                component={AdvertoLogoInverseSquare}
-                viewBox="0 0 136 136"
-                style={{ fontSize: 40 }}
-            />
-        </>
-    )
+  return (
+    <div className='flex flex-col justify-center '>
+      <div className='l:hidden'>
+        <Icon type='icAdvertoLogoInverseSquare' width={40} height={40} />
+      </div>
+      <div className='hidden l:block'>
+        <Icon type='icAdvertoLogoInverseLandscape' width={146} height={32} />
+      </div>
+    </div>
+  )
 }
 
 export default Logo
