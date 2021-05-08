@@ -39,18 +39,16 @@ module.exports = {
       l: '1360px',
     },
     extend: {
-      gridTemplateRows: {
-        'footer-3': 'repeat(3, minmax(auto, 1fr))',
-      },
+      gridTemplateRows: {},
       borderRadius: {
         8: '8px',
       },
       spacing: {
         9.5: '2.375rem',
         '33px': '33px',
-        192: '48rem',
-        256: '64rem',
-        340: '85rem',
+        '768px': '768px',
+        '1024px': '1024px',
+        '1360px': '1360px',
       },
     },
   },
