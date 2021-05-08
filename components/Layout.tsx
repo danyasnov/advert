@@ -8,7 +8,7 @@ interface Props {
 
 const Layout: FC = ({children}: Props) => {
   return (
-    <div className='mx-auto s:w-192 m:w-256 l:w-340'>
+    <div className='mx-auto s:w-768px m:w-1024px l:w-1360px'>
       <Header />
       {children}
       <Footer />

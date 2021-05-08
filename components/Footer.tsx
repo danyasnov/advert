@@ -61,10 +61,10 @@ const Footer: FC = () => {
         </div>
       </div>
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
-        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6'>
+        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12'>
           <Section
             title={t('MOBILE_APP')}
-            className='s:col-span-2'
+            className='s:col-span-2 m:col-span-3'
             body={
               <>
                 <div className='text-body-3 text-black-b capitalize-first mb-2'>
@@ -76,6 +76,7 @@ const Footer: FC = () => {
           />
           <Section
             title={t('SOCIAL_NETWORK')}
+            className='m:col-span-2 m:col-span-3'
             body={
               <div className='flex space-x-2'>
                 {social.map((id) => (
@@ -86,7 +87,7 @@ const Footer: FC = () => {
           />
           <Section
             title={t('CATEGORIES')}
-            className='s:col-span-2'
+            className='s:col-span-2 m:col-span-4'
             headerLink={
               <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
             }
@@ -98,7 +99,7 @@ const Footer: FC = () => {
               </div>
             }
           />
-          <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end'>
+          <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2'>
             <LinkButton
               onClick={notImplementedAlert}
               label={t('PLACE_AN_AD_FOR_FREE')}
@@ -110,7 +111,7 @@ const Footer: FC = () => {
             <LinkButton onClick={notImplementedAlert} label={t('CAREER')} />
           </div>
         </div>
-        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between'>
+        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10'>
           <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
             <LinkButton
               onClick={notImplementedAlert}
