@@ -38,8 +38,8 @@ const Footer: FC = () => {
 
   return (
     <>
-      <div className='hidden s:flex s:flex-col items-center'>
-        <div className='flex justify-center space-x-4 mb-2'>
+      <div className='hidden pb-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-24'>
+        <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (
             <LinkButton key={i} onClick={notImplementedAlert} label={i} />
           ))}
@@ -49,7 +49,7 @@ const Footer: FC = () => {
             className='font-bold'
           />
         </div>
-        <div className='flex justify-center space-x-4 border-shadow-b border-t py-2 w-min'>
+        <div className='flex justify-center space-x-4 border-shadow-b border-t pt-2 w-min l:border-t-0 l:border-l l:pt-0 l:pl-6'>
           {mainCities.map((i) => (
             <LinkButton key={i} onClick={notImplementedAlert} label={i} />
           ))}
@@ -61,22 +61,41 @@ const Footer: FC = () => {
         </div>
       </div>
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
-        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12'>
+        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-24'>
           <Section
             title={t('MOBILE_APP')}
-            className='s:col-span-2 m:col-span-3'
+            className='s:col-span-2 m:col-span-3 l:col-span-4'
             body={
               <>
-                <div className='text-body-3 text-black-b capitalize-first mb-2'>
+                <div className='text-body-3 text-black-b capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
-                <Icon type='icGooglePlay' width={135} height={40} />
+                <div className='flex flex-wrap'>
+                  <Icon
+                    type='icGooglePlay'
+                    width={135}
+                    height={40}
+                    className='l:mr-2 l:mb-2'
+                  />
+                  <Icon
+                    type='icAppStore'
+                    width={120}
+                    height={40}
+                    className='hidden l:block'
+                  />
+                  <Icon
+                    type='icAppGallery'
+                    width={133}
+                    height={40}
+                    className='hidden l:block'
+                  />
+                </div>
               </>
             }
           />
           <Section
             title={t('SOCIAL_NETWORK')}
-            className='m:col-span-2 m:col-span-3'
+            className='m:col-span-3 l:col-span-2'
             body={
               <div className='flex space-x-2'>
                 {social.map((id) => (
@@ -87,7 +106,7 @@ const Footer: FC = () => {
           />
           <Section
             title={t('CATEGORIES')}
-            className='s:col-span-2 m:col-span-4'
+            className='s:col-span-2 m:col-span-4 l:col-span-4'
             headerLink={
               <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
             }
@@ -99,7 +118,7 @@ const Footer: FC = () => {
               </div>
             }
           />
-          <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2'>
+          <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2 l:col-span-2'>
             <LinkButton
               onClick={notImplementedAlert}
               label={t('PLACE_AN_AD_FOR_FREE')}
@@ -111,7 +130,7 @@ const Footer: FC = () => {
             <LinkButton onClick={notImplementedAlert} label={t('CAREER')} />
           </div>
         </div>
-        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10'>
+        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10 l:px-24'>
           <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
             <LinkButton
               onClick={notImplementedAlert}
@@ -127,7 +146,7 @@ const Footer: FC = () => {
               label={t('APPLICATION_HELP')}
             />
           </div>
-          <div className='text-body-3 mt-2 s:mt-4 m:mt-0'>
+          <div className='text-body-3 mt-2 s:mt-4 m:mt-0 text-black-b'>
             © 2017—{new Date().getFullYear()} A&D Adverto Services LTD
           </div>
         </div>

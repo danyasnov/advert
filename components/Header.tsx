@@ -12,7 +12,7 @@ const Header: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='s:px-0 s:mx-8 m:mx-12 l:mx-24'>
+    <div className='s:px-0 s:mx-8 m:mx-10 l:mx-24'>
       <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
         <div className='hidden s:flex space-x-4'>
           <LinkButton onClick={notImplementedAlert} label={t('FOR_BUSINESS')} />
