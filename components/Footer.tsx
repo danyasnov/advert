@@ -1,8 +1,11 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import Icon from './Icon'
 import LinkButton from './LinkButton'
 import {notImplementedAlert} from '../helpers/alert'
+import {useCategoriesStore} from '../providers/RootStoreProvider'
 
 const social: Array<string> = ['FB', 'Instagram', 'VK', 'YouTube', 'Twitter']
 const mainCountries: Array<string> = [
@@ -22,19 +25,11 @@ const mainCities: Array<string> = [
   'пафос',
   'афины',
 ]
-const categories = [
-  'транспортные средства',
-  'недвижимость',
-  'личные вещи',
-  'для дома и сада',
-  'электроника',
-  'красота и здоровье',
-  'услуги',
-  'хобби и отдых',
-  'животные',
-]
-const Footer: FC = () => {
+
+const Footer: FC = observer(() => {
+  const store = useCategoriesStore()
   const {t} = useTranslation()
+  const categories = toJS(store.categories)
 
   return (
     <>
@@ -112,8 +107,12 @@ const Footer: FC = () => {
             }
             body={
               <div className='grid grid-cols-2 grid-rows-5 grid-flow-col place-items-start gap-y-2'>
-                {categories.map((i) => (
-                  <LinkButton key={i} onClick={notImplementedAlert} label={i} />
+                {categories.map((c) => (
+                  <LinkButton
+                    key={c.id}
+                    onClick={notImplementedAlert}
+                    label={c.name}
+                  />
                 ))}
               </div>
             }
@@ -153,7 +152,7 @@ const Footer: FC = () => {
       </div>
     </>
   )
-}
+})
 
 interface Props {
   title?: string

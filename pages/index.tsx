@@ -2,20 +2,31 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import RestApi from 'front-api'
 import Layout from '../components/Layout'
 import {storage} from '../stores/Storage'
+import CategoriesSlider from '../components/CategoriesSlider'
 
-export default function Home({res}) {
-  console.log(res)
-  return <Layout>Home</Layout>
+export default function Home() {
+  return (
+    <Layout>
+      <CategoriesSlider />
+    </Layout>
+  )
 }
 
 export const getServerSideProps = async ({locale}) => {
-  const res = await rest.fetchCategoriesTree()
+  const data = await globalRestApi.categories.fetchTree()
   return {
     props: {
-      res,
+      hydrationData: {
+        categoriesStore: {
+          categories: data.result,
+        },
+      },
       ...(await serverSideTranslations(locale)),
     },
   }
 }
 
-const rest = new RestApi({storage, isDev: true})
+export const globalRestApi = new RestApi({
+  isDev: false,
+  storage,
+})

@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import Button from './Button'
 import Logo from './Logo'
 import Search from './Search'
-import Categories from './Categories'
+import CategoriesSelector from './CategoriesSelector'
 import LinkButton from './LinkButton'
 import {notImplementedAlert} from '../helpers/alert'
 
@@ -43,7 +43,7 @@ const Header: FC = () => {
       <div className='flex my-2 mx-4 space-x-4 s:my-4 s:mx-0 s:space-x-6 m:space-x-2'>
         <Logo />
         <div className='flex space-x-4 w-full'>
-          <Categories />
+          <CategoriesSelector />
           <Search />
         </div>
         <Button

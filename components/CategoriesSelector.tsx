@@ -1,11 +1,11 @@
 import {FC} from 'react'
 import CategoriesButton from './CategoriesButton'
 
-const Categories: FC = () => {
+const CategoriesSelector: FC = () => {
   return (
     <>
       <CategoriesButton />
     </>
   )
 }
-export default Categories
+export default CategoriesSelector

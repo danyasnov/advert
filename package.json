@@ -6,22 +6,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "fetch-translations": "node fetchTranslations.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
+    "front-api": "git+ssh://git@github.com:danyasnov/front-api.git#034ef1e",
     "mobx": "^6.3.0",
-    "mobx-react": "^7.1.0",
+    "mobx-logger": "^0.7.1",
+    "mobx-react-lite": "^3.2.0",
     "next": "^10.2.0",
     "next-i18next": "^8.2.0",
+    "next-transpile-modules": "^7.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "front-api": "git+ssh://git@github.com:danyasnov/front-api.git",
+    "swiper": "^6.6.1",
     "tailwindcss": "^2.1.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
     "@svgr/webpack": "^5.5.0",
     "@types/node": "^15.0.1",
     "@types/react": "^17.0.4",

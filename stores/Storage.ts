@@ -1,3 +1,5 @@
+import {AppStorage, LocationModel} from 'front-api'
+
 export type StorageKey =
   | 'authType'
   | 'email'
@@ -20,7 +22,32 @@ export type StorageKey =
   | 'categoryVersion'
   | 'isOnboardShown'
   | 'degradationType'
-class Storage {
+
+class Storage implements AppStorage {
+  saveAppVersion = (version: any) => {
+    throw new Error('Method not implemented.')
+  }
+
+  setUserLocation = (location: LocationModel) => {
+    throw new Error('Method not implemented.')
+  }
+
+  setLocation = (location: LocationModel) => {
+    throw new Error('Method not implemented.')
+  }
+
+  saveAddressText = (address: string) => {
+    throw new Error('Method not implemented.')
+  }
+
+  platform: 'web'
+
+  language: 'en'
+
+  location: LocationModel
+
+  userLocation: LocationModel
+
   store = {}
 
   value = <T>(key: StorageKey): T | null => {

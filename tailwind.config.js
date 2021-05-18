@@ -21,6 +21,7 @@ module.exports = {
       'body-2': ['14px', '16px'],
       'body-3': ['12px', '16px'],
       'body-4': ['10px', '12px'],
+      'h-2': ['20px', '24px'],
     },
     colors: {
       'brand-a1': '#FF9514',
@@ -39,12 +40,12 @@ module.exports = {
       l: '1360px',
     },
     extend: {
-      gridTemplateRows: {},
       borderRadius: {
         8: '8px',
       },
       spacing: {
         9.5: '2.375rem',
+        34: '8.5rem',
         '33px': '33px',
         '768px': '768px',
         '1024px': '1024px',

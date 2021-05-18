@@ -565,7 +565,7 @@
   "SHOW_PHONE_NUMBER": "Show phone number",
   "SHOW_PHONE_NUMBER_DESCRIPTION": "You can set up the time frames when to show your phone number in your ads. Users will see your number only at this time, the rest of the time they can write you via chat",
   "SHOW_PHONE_NUMBER_IN_ADVERTS": "Show phone number in adverts",
-  "SIMILAR_ADS": null,
+  "SIMILAR_ADS": "Similar Ads",
   "SINCE": "On Adverto since {{date}}",
   "SMS_NUM_CONFIRM": "Adverto: {{code}} - Your code",
   "SOCIAL_NETWORK": "Social networks",
