@@ -5,18 +5,30 @@ interface Props {
   type: string
   alt: string
   className?: string
-  width: number
-  height: number
+  objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+  layout?: 'fixed' | 'intrinsic' | 'responsive' | 'fill'
+  width?: number
+  height?: number
 }
 
-const ImageWrapper: FC<Props> = ({type, width, height, className, alt}) => {
+const ImageWrapper: FC<Props> = ({
+  type,
+  width,
+  height,
+  className,
+  layout,
+  alt,
+  objectFit,
+}) => {
   return (
     <Image
-      src={`/img/${type}.jpg`}
+      src={type}
       width={width}
       height={height}
       alt={alt}
       className={className}
+      layout={layout}
+      objectFit={objectFit}
     />
   )
 }

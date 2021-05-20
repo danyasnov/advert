@@ -3,6 +3,7 @@ import {enableLogging} from 'mobx-logger'
 import {enableStaticRendering} from 'mobx-react-lite'
 import {RootStore, IRootStoreHydration, IRootStore} from '../stores/RootStore'
 import {ICategoriesStore} from '../stores/CategoriesStore'
+import {IProductsStore} from '../stores/ProductsStore'
 
 enableStaticRendering(typeof window === 'undefined')
 
@@ -24,6 +25,11 @@ export const useRootStore = (): IRootStore => {
 export const useCategoriesStore = (): ICategoriesStore => {
   const {categoriesStore} = useRootStore()
   return categoriesStore
+}
+
+export const useProductsStore = (): IProductsStore => {
+  const {productsStore} = useRootStore()
+  return productsStore
 }
 
 export const RootStoreProvider: FC = ({

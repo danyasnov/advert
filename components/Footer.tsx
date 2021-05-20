@@ -2,12 +2,18 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
-import Icon from './Icon'
 import LinkButton from './LinkButton'
 import {notImplementedAlert} from '../helpers/alert'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
+import IcGooglePlay from '../assets/icons/stores/GooglePlay.svg'
+import IcAppStore from '../assets/icons/stores/AppStore.svg'
+import IcAppGallery from '../assets/icons/stores/AppGallery.svg'
+import IcFB from '../assets/icons/social/FB.svg'
+import IcInstagram from '../assets/icons/social/Instagram.svg'
+import IcVK from '../assets/icons/social/VK.svg'
+import IcYouTube from '../assets/icons/social/YouTube.svg'
+import IcTwitter from '../assets/icons/social/Twitter.svg'
 
-const social: Array<string> = ['FB', 'Instagram', 'VK', 'YouTube', 'Twitter']
 const mainCountries: Array<string> = [
   'россия',
   'украина',
@@ -25,15 +31,14 @@ const mainCities: Array<string> = [
   'пафос',
   'афины',
 ]
-
 const Footer: FC = observer(() => {
   const store = useCategoriesStore()
   const {t} = useTranslation()
   const categories = toJS(store.categories)
 
   return (
-    <>
-      <div className='hidden pb-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-24'>
+    <footer>
+      <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (
             <LinkButton key={i} onClick={notImplementedAlert} label={i} />
@@ -56,7 +61,7 @@ const Footer: FC = observer(() => {
         </div>
       </div>
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
-        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-24'>
+        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20'>
           <Section
             title={t('MOBILE_APP')}
             className='s:col-span-2 m:col-span-3 l:col-span-4'
@@ -66,20 +71,17 @@ const Footer: FC = observer(() => {
                   {t('INSTALL_MOBILE_APP')}
                 </div>
                 <div className='flex flex-wrap'>
-                  <Icon
-                    type='icGooglePlay'
+                  <IcGooglePlay
                     width={135}
                     height={40}
                     className='l:mr-2 l:mb-2'
                   />
-                  <Icon
-                    type='icAppStore'
+                  <IcAppStore
                     width={120}
                     height={40}
                     className='hidden l:block'
                   />
-                  <Icon
-                    type='icAppGallery'
+                  <IcAppGallery
                     width={133}
                     height={40}
                     className='hidden l:block'
@@ -93,9 +95,11 @@ const Footer: FC = observer(() => {
             className='m:col-span-3 l:col-span-2'
             body={
               <div className='flex space-x-2'>
-                {social.map((id) => (
-                  <Icon type={`ic${id}`} key={id} width={24} height={24} />
-                ))}
+                <IcFB width={24} height={24} />
+                <IcInstagram width={24} height={24} />
+                <IcVK width={24} height={24} />
+                <IcYouTube width={24} height={24} />
+                <IcTwitter width={24} height={24} />
               </div>
             }
           />
@@ -129,7 +133,7 @@ const Footer: FC = observer(() => {
             <LinkButton onClick={notImplementedAlert} label={t('CAREER')} />
           </div>
         </div>
-        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10 l:px-24'>
+        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10 l:px-20'>
           <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
             <LinkButton
               onClick={notImplementedAlert}
@@ -150,7 +154,7 @@ const Footer: FC = observer(() => {
           </div>
         </div>
       </div>
-    </>
+    </footer>
   )
 })
 

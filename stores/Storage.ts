@@ -40,11 +40,14 @@ class Storage implements AppStorage {
     throw new Error('Method not implemented.')
   }
 
-  platform: 'web'
+  platform: 'ios' | 'android' | 'web' = 'web'
 
-  language: 'en'
+  language = 'en'
 
-  location: LocationModel
+  location: LocationModel = {
+    latitude: 37.785834,
+    longitude: -122.406417,
+  }
 
   userLocation: LocationModel
 

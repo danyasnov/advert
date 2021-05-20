@@ -1,21 +1,23 @@
 import {FC, useCallback, useEffect, useState} from 'react'
+import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
-import {useTranslation} from 'next-i18next'
 import {useEmblaCarousel} from 'embla-carousel/react'
-import ImageWrapper from './ImageWrapper'
-import {useCategoriesStore} from '../providers/RootStoreProvider'
+import {useProductsStore} from '../providers/RootStoreProvider'
+import Card from './Card'
 import TitleWithSeparator from './TitleWithSeparator'
+import useNestedEmblaCarousel from '../hooks/useNestedEmblaCarousel'
 import SliderButton from './SliderButton'
 
-const CategoriesSlider: FC = observer(() => {
-  const store = useCategoriesStore()
+const ProductsSlider: FC = observer(() => {
   const {t} = useTranslation()
+  const store = useProductsStore()
+  const products = toJS(store.products)
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
   })
-  const categories = toJS(store.categoriesWithoutAll)
+  const setLockParentScroll = useNestedEmblaCarousel(embla)
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
 
@@ -34,20 +36,13 @@ const CategoriesSlider: FC = observer(() => {
   }, [embla, onSelect])
   return (
     <div>
-      <TitleWithSeparator title={t('CATEGORIES')} />
+      <TitleWithSeparator title={t('FREE')} />
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
-          <div className='flex space-x-4 mx-4 s:mx-8  m:mx-0'>
-            {categories.map((c) => (
-              <div key={c.id} className='relative'>
-                <ImageWrapper
-                  type={`/img/categories/${c.slug}.jpg`}
-                  width={136}
-                  height={136}
-                  alt={c.name}
-                  className='rounded-xl'
-                  layout='fixed'
-                />
+          <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
+            {products.map((p) => (
+              <div key={p.hash} className='relative'>
+                <Card product={p} setLockParentScroll={setLockParentScroll} />
               </div>
             ))}
           </div>
@@ -56,17 +51,17 @@ const CategoriesSlider: FC = observer(() => {
           onClick={scrollPrev}
           enabled={prevBtnEnabled}
           direction='left'
-          className='slider-button left-1 s:left-5 m:left-0'
+          className='slider-button left-1 s:left-5 m:left-1 m:-left-4'
         />
         <SliderButton
           onClick={scrollNext}
           enabled={nextBtnEnabled}
           direction='right'
-          className='slider-button right-1 s:right-5 m:right-0'
+          className='slider-button right-1 s:right-5 m:-right-4'
         />
       </div>
     </div>
   )
 })
 
-export default CategoriesSlider
+export default ProductsSlider
