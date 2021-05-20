@@ -35,6 +35,7 @@ const ProductsSlider: FC = observer(() => {
     onSelect()
   }, [embla, onSelect])
   return (
+    // здесь div нужен для корректных отступов между секциями
     <div>
       <TitleWithSeparator title={t('FREE')} />
       <div className='relative'>

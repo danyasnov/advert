@@ -5,6 +5,7 @@ import {toJS} from 'mobx'
 import LinkButton from './LinkButton'
 import {notImplementedAlert} from '../helpers/alert'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
+// todo настроить babel-module-resolver для иконок
 import IcGooglePlay from '../assets/icons/stores/GooglePlay.svg'
 import IcAppStore from '../assets/icons/stores/AppStore.svg'
 import IcAppGallery from '../assets/icons/stores/AppGallery.svg'

@@ -16,6 +16,7 @@ const CategoriesSlider: FC = observer(() => {
     containScroll: 'trimSnaps',
   })
   const categories = toJS(store.categoriesWithoutAll)
+  // todo вынести управление слайдером в отдельный хук
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
 
@@ -33,6 +34,7 @@ const CategoriesSlider: FC = observer(() => {
     onSelect()
   }, [embla, onSelect])
   return (
+    // здесь div нужен для корректных отступов между секциями
     <div>
       <TitleWithSeparator title={t('CATEGORIES')} />
       <div className='relative'>
