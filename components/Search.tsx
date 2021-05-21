@@ -2,7 +2,7 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcMyLocation from 'icons/material/MyLocation.svg'
 import Button from './Button'
-import {notImplementedAlert} from '../helpers/alert'
+import {notImplementedAlert} from '../helpers'
 
 const Search: FC = () => {
   const {t} = useTranslation()

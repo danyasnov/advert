@@ -4,6 +4,7 @@ import {enableStaticRendering} from 'mobx-react-lite'
 import {RootStore, IRootStoreHydration, IRootStore} from '../stores/RootStore'
 import {ICategoriesStore} from '../stores/CategoriesStore'
 import {IProductsStore} from '../stores/ProductsStore'
+import {ICountriesStore} from '../stores/CountriesStore'
 
 enableStaticRendering(typeof window === 'undefined')
 
@@ -30,6 +31,11 @@ export const useCategoriesStore = (): ICategoriesStore => {
 export const useProductsStore = (): IProductsStore => {
   const {productsStore} = useRootStore()
   return productsStore
+}
+
+export const useCountriesStore = (): ICountriesStore => {
+  const {countriesStore} = useRootStore()
+  return countriesStore
 }
 
 export const RootStoreProvider: FC = ({

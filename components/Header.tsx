@@ -8,13 +8,13 @@ import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector'
 import LinkButton from './LinkButton'
-import {notImplementedAlert} from '../helpers/alert'
+import {notImplementedAlert} from '../helpers'
 
 const Header: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <header className='s:px-0 s:mx-8 m:mx-10 l:mx-20'>
+    <header className='s:px-8 m:px-10 l:px-20 mx-auto fixed-breakpoints-width relative'>
       <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
         <div className='hidden s:flex space-x-4'>
           <LinkButton onClick={notImplementedAlert} label={t('FOR_BUSINESS')} />
@@ -42,7 +42,7 @@ const Header: FC = () => {
           </LinkButton>
         </div>
       </div>
-      <div className='flex my-2 mx-4 space-x-4 s:my-4 s:mx-0 s:space-x-6 m:space-x-2'>
+      <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-2'>
         <Logo />
         <div className='flex space-x-4 w-full'>
           <CategoriesSelector />

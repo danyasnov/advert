@@ -9,7 +9,7 @@ const nextConfig = {
     webpack5: true,
   },
   images: {
-    domains: ['cache.adverto.sale'],
+    domains: ['cache.adverto.sale', 'adverto.sale'],
   },
   i18n,
   webpack(config) {

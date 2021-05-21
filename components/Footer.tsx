@@ -10,8 +10,11 @@ import IcInstagram from 'icons/social/Instagram.svg'
 import IcVK from 'icons/social/VK.svg'
 import IcYouTube from 'icons/social/YouTube.svg'
 import IcTwitter from 'icons/social/Twitter.svg'
-import {useCategoriesStore} from '../providers/RootStoreProvider'
-import {notImplementedAlert} from '../helpers/alert'
+import {
+  useCategoriesStore,
+  useCountriesStore,
+} from '../providers/RootStoreProvider'
+import {notImplementedAlert} from '../helpers'
 import LinkButton from './LinkButton'
 
 const mainCountries: Array<string> = [
@@ -32,12 +35,13 @@ const mainCities: Array<string> = [
   'афины',
 ]
 const Footer: FC = observer(() => {
-  const store = useCategoriesStore()
+  const categoriesStore = useCategoriesStore()
+  const countriesStore = useCountriesStore()
   const {t} = useTranslation()
-  const categories = toJS(store.categories)
-
+  const categories = toJS(categoriesStore.categories)
+  const countries = toJS(countriesStore.countries)
   return (
-    <footer>
+    <footer className='mx-auto fixed-breakpoints-width'>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (

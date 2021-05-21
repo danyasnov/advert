@@ -27,6 +27,7 @@ export const getServerSideProps = async ({locale}) => {
       priceMax: '0',
     },
   })
+  const countriesData = await globalRestApi.oldRest.restFetchCountries()
 
   return {
     props: {
@@ -36,6 +37,9 @@ export const getServerSideProps = async ({locale}) => {
         },
         productsStore: {
           products: productsData.result,
+        },
+        countriesStore: {
+          countries: countriesData,
         },
       },
       ...(await serverSideTranslations(locale)),

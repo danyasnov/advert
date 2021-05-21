@@ -35,6 +35,7 @@ module.exports = {
       },
       spacing: {
         9.5: '2.375rem',
+        26: '6.5rem',
         31: '7.75rem',
         34: '8.5rem',
         35: '8.75rem',
@@ -63,6 +64,9 @@ module.exports = {
         'black-e': '#F8F8F8',
         'white-a': '#FFFFFF',
         'white-d': 'rgba(12, 13, 13, 0.2)',
+      },
+      inset: {
+        '89px': '89px',
       },
     },
   },
