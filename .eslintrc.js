@@ -8,6 +8,8 @@ module.exports = {
     'airbnb',
     'plugin:prettier/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -30,6 +32,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-use-before-define': 'off',
     'react/prop-types': 'off',
+    'no-underscore-dangle': ['error', {allow: ['_store']}],
+    '@typescript-eslint/no-var-requires': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
