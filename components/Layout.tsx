@@ -8,11 +8,23 @@ interface Props {
 
 const Layout: FC = ({children}: Props) => {
   return (
-    <div className='mx-auto s:w-192 m:w-256 l:w-340'>
-      <Header />
-      {children}
-      <Footer />
-    </div>
+    <>
+      <div className='mx-auto fixed-breakpoints-width'>
+        <Header />
+      </div>
+      <div className='bg-black-e py-8 m:flex'>
+        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
+          <main className='m:w-608px l:w-896px space-y-12'>{children}</main>
+          <aside
+            className='hidden m:block bg-white'
+            style={{width: '288px', height: '700px'}}
+          />
+        </div>
+      </div>
+      <div className='mx-auto fixed-breakpoints-width'>
+        <Footer />
+      </div>
+    </>
   )
 }
 

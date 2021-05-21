@@ -1,8 +1,8 @@
 import {FC} from 'react'
-import {NearMe} from '@material-ui/icons'
 import {useTranslation} from 'next-i18next'
 import Button from './Button'
 import {notImplementedAlert} from '../helpers/alert'
+import IcMyLocation from '../assets/icons/material/MyLocation.svg'
 
 const Search: FC = () => {
   const {t} = useTranslation()
@@ -17,7 +17,11 @@ const Search: FC = () => {
       <Button
         onClick={notImplementedAlert}
         className='hidden s:flex text-black-c w-9.5 h-9.5 flex-shrink-0 m:hidden'>
-        <NearMe style={{fontSize: 23}} />
+        <IcMyLocation
+          width={24}
+          height={23}
+          className='fill-current text-black-c'
+        />
       </Button>
       <Button
         onClick={notImplementedAlert}

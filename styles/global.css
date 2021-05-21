@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fixed-breakpoints-width {
+    @apply s:w-768px m:w-1024px l:w-1360px;
+}
+
+.slider-button {
+    @apply absolute top-1/3
+}
