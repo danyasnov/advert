@@ -1,6 +1,6 @@
 import {FC} from 'react'
-import IcAdvertoLogoInverseSquare from '../assets/icons/logo/AdvertoLogoInverseSquare.svg'
-import IcAdvertoLogoInverseLandscape from '../assets/icons/logo/AdvertoLogoInverseLandscape.svg'
+import IcAdvertoLogoInverseSquare from 'icons/logo/AdvertoLogoInverseSquare.svg'
+import IcAdvertoLogoInverseLandscape from 'icons/logo/AdvertoLogoInverseLandscape.svg'
 
 const Logo: FC = () => {
   return (

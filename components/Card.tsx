@@ -1,10 +1,10 @@
 import {Dispatch, FC, SetStateAction, useEffect} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
+import IcMoreVert from 'icons/material/MoreVert.svg'
+import IcVisibility from 'icons/material/Visibility.svg'
 import ImageWrapper from './ImageWrapper'
 import unixToString from '../utils/unixToString'
-import IcMoreVert from '../assets/icons/material/MoreVert.svg'
-import IcVisibility from '../assets/icons/material/Visibility.svg'
 
 interface Props {
   product: AdvertiseListItemModel

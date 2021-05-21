@@ -10,6 +10,8 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +24,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'import'],
   settings: {
     'import/resolver': {
+      'babel-module': {},
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },

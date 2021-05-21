@@ -1,14 +1,14 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import IcWallet from 'icons/material/Wallet.svg'
+import IcLanguage from 'icons/material/Language.svg'
+import IcLogin from 'icons/material/Login.svg'
 import Button from './Button'
 import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector'
 import LinkButton from './LinkButton'
 import {notImplementedAlert} from '../helpers/alert'
-import IcWallet from '../assets/icons/material/Wallet.svg'
-import IcLanguage from '../assets/icons/material/Language.svg'
-import IcLogin from '../assets/icons/material/Login.svg'
 
 const Header: FC = () => {
   const {t} = useTranslation()

@@ -1,8 +1,8 @@
 import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
+import IcCategoriesClosed from 'icons/CategoriesClosed.svg'
+import IcCategoriesOpen from 'icons/CategoriesOpen.svg'
 import Button from './Button'
-import IcCategoriesClosed from '../assets/icons/CategoriesClosed.svg'
-import IcCategoriesOpen from '../assets/icons/CategoriesOpen.svg'
 
 const CategoriesButton: FC = () => {
   const [show, setShow] = useState(false)

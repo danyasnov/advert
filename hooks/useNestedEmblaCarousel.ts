@@ -1,8 +1,9 @@
 import {useState, useEffect, useCallback, useRef} from 'react'
+import {EmblaCarouselType} from 'embla-carousel'
 
 const noop = () => undefined
 
-const useNestedEmblaCarousel = (embla) => {
+const useNestedEmblaCarousel = (embla: EmblaCarouselType) => {
   const [parentIsLocked, setParentIsLocked] = useState(false)
   const onPointerUp = useRef(noop)
   const lastLocation = useRef(0)

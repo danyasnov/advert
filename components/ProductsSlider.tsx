@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
@@ -8,6 +8,7 @@ import Card from './Card'
 import TitleWithSeparator from './TitleWithSeparator'
 import useNestedEmblaCarousel from '../hooks/useNestedEmblaCarousel'
 import SliderButton from './SliderButton'
+import useSliderButtons from '../hooks/useSliderButtons'
 
 const ProductsSlider: FC = observer(() => {
   const {t} = useTranslation()
@@ -18,22 +19,13 @@ const ProductsSlider: FC = observer(() => {
     containScroll: 'trimSnaps',
   })
   const setLockParentScroll = useNestedEmblaCarousel(embla)
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+  const {
+    scrollNext,
+    scrollPrev,
+    prevBtnEnabled,
+    nextBtnEnabled,
+  } = useSliderButtons(embla)
 
-  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
-  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
-  const onSelect = useCallback(() => {
-    if (!embla) return
-    setPrevBtnEnabled(embla.canScrollPrev())
-    setNextBtnEnabled(embla.canScrollNext())
-  }, [embla])
-
-  useEffect(() => {
-    if (!embla) return
-    embla.on('select', onSelect)
-    onSelect()
-  }, [embla, onSelect])
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>

@@ -1,7 +1,7 @@
 import {FC, ReactNode} from 'react'
+import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
+import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import Button from './Button'
-import IcKeyboardArrowRight from '../assets/icons/material/KeyboardArrowRight.svg'
-import IcKeyboardArrowLeft from '../assets/icons/material/KeyboardArrowLeft.svg'
 
 interface Props {
   children?: ReactNode
