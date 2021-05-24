@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import {storage} from '../stores/Storage'
 import CategoriesSlider from '../components/CategoriesSlider'
 import ProductsSlider from '../components/ProductsSlider'
+import {DummyAnalytics} from '../helpers'
 
 export default function Home() {
   return (
@@ -27,7 +28,7 @@ export const getServerSideProps = async ({locale}) => {
       priceMax: '0',
     },
   })
-  const countriesData = await globalRestApi.oldRest.restFetchCountries()
+  const countriesData = await globalRestApi.oldRest.fetchCountries()
 
   return {
     props: {
@@ -50,4 +51,6 @@ export const getServerSideProps = async ({locale}) => {
 export const globalRestApi = new RestApi({
   isDev: false,
   storage,
+  isLogEnabled: false,
+  analyticsService: new DummyAnalytics(),
 })

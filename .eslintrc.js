@@ -37,6 +37,9 @@ module.exports = {
     'react/prop-types': 'off',
     'no-underscore-dangle': ['error', {allow: ['_store']}],
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',

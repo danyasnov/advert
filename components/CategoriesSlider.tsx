@@ -40,6 +40,7 @@ const CategoriesSlider: FC = observer(() => {
                   className='rounded-xl'
                   layout='fixed'
                 />
+                <p className='text-body-2 text-black-b text-center'>{c.name}</p>
               </div>
             ))}
           </div>

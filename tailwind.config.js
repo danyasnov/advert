@@ -54,6 +54,7 @@ module.exports = {
       },
       colors: {
         'brand-a1': '#FF9514',
+        'brand-a2': '#FFEEDD',
         'brand-b1': '#1E4592',
         'shadow-a': 'rgba(12, 13, 13, 0.2)',
         'shadow-b': 'rgba(12, 13, 13, 0.1)',

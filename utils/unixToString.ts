@@ -1,9 +1,7 @@
+import {DateTime} from 'luxon'
+
 const unixToString = (unix: number): string => {
-  const date = new Date(unix * 1e3)
-  return Intl.DateTimeFormat(undefined, {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
+  const date = DateTime.fromSeconds(unix)
+  return date.toLocaleString(DateTime.DATE_FULL)
 }
 export default unixToString

@@ -58,7 +58,7 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
           </span>
         </div>
         <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-          <span>{unixToString(dateUpdated)}</span>
+          <span suppressHydrationWarning>{unixToString(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>
               <IcVisibility className='fill-current text-black-d h-4 w-4' />
