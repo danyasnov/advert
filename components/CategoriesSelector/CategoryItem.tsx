@@ -14,6 +14,7 @@ import Button from '../Button'
 interface Props {
   category: CACategoryModel
   onClick: () => void
+  isActive?: boolean
 }
 
 const iconsMap = {
@@ -27,11 +28,14 @@ const iconsMap = {
   services: IcServices,
   vehicles: IcVehicles,
 }
-const CategoryItem: FC<Props> = ({category, onClick}) => {
+const CategoryItem: FC<Props> = ({category, onClick, isActive}) => {
   const {slug, id, name} = category
   const IconComponent = iconsMap[slug]
   return (
-    <Button className='categories-selector-item' key={id} onClick={onClick}>
+    <Button
+      className={`${isActive ? 'bg-brand-a2' : ''} categories-selector-item`}
+      key={id}
+      onClick={onClick}>
       {IconComponent && <IconComponent className='w-6 h-6 mr-2' />}
       {name}
     </Button>

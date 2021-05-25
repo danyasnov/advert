@@ -1,47 +1,81 @@
-// @ts-nocheck
-// in progress
 // eslint-disable-next-line max-classes-per-file
 import {source, target} from 'react-aim'
-import {Component} from 'react'
+import {PureComponent, ReactNode} from 'react'
+import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
 import {notImplementedAlert} from '../../helpers'
 import Button from '../Button'
 
+interface ColItemProps {
+  category: CACategoryModel
+  isActive: boolean
+  onMouseEnter?: (c: CACategoryModel) => void
+  onClick?: () => void
+}
+
+interface ColProps {
+  items: Array<CACategoryModel>
+  onMouseEnter?: (c: CACategoryModel) => void
+  activeId?: number | undefined
+}
+
+// @ts-ignore
 @source({
   mouseEnter: (props) => props.onMouseEnter(props.category),
 })
-class FirstColItem extends Component {
-  render() {
-    const {category} = this.props
+class FirstColItem extends PureComponent<ColItemProps> {
+  render(): ReactNode {
+    const {category, isActive} = this.props
     const {name} = category
 
     return (
-      <CategoryItem category={category} onClick={notImplementedAlert}>
+      <CategoryItem
+        category={category}
+        onClick={notImplementedAlert}
+        isActive={isActive}>
         {name}
       </CategoryItem>
     )
   }
 }
 
+// @ts-ignore
 @target()
-class SecondColItemWrapper extends Component {
-  render() {
-    const {category, onMouseEnter} = this.props
-    const {name, items} = category
-    return <SecondColItem category={category} onMouseEnter={onMouseEnter} />
+class SecondCol extends PureComponent<ColProps> {
+  render(): ReactNode {
+    const {items, onMouseEnter, activeId} = this.props
+    return (
+      <div className='h-full'>
+        {items.map((c) => {
+          return (
+            <SecondColItem
+              key={c.id}
+              isActive={c.id === activeId}
+              category={c}
+              onMouseEnter={onMouseEnter}
+            />
+          )
+        })}
+      </div>
+    )
   }
 }
 
+// @ts-ignore
 @source({
-  mouseEnter: (props) => props.onMouseEnter(props.category),
+  mouseEnter: (props) => {
+    props.onMouseEnter(props.category)
+  },
 })
-class SecondColItem extends Component {
-  render() {
-    const {category} = this.props
-    const {name, items} = category
+class SecondColItem extends PureComponent<ColItemProps> {
+  render(): ReactNode {
+    const {category, isActive} = this.props
+    const {name} = category
     return (
       <Button
-        className='categories-selector-item'
+        className={`${
+          isActive ? 'bg-brand-a2' : ''
+        } categories-selector-item first:font-bold`}
         onClick={notImplementedAlert}>
         {name}
       </Button>
@@ -49,19 +83,24 @@ class SecondColItem extends Component {
   }
 }
 
+// @ts-ignore
 @target()
-class ThirdColItem extends Component {
-  render() {
-    const {category} = this.props
-    const {name, items} = category
+class ThirdCol extends PureComponent<ColProps> {
+  render(): ReactNode {
+    const {items} = this.props
     return (
-      <Button
-        className='categories-selector-item'
-        onClick={notImplementedAlert}>
-        {name}
-      </Button>
+      <div className='h-full'>
+        {items.map((c) => (
+          <Button
+            className='categories-selector-item first:font-bold'
+            key={c.id}
+            onClick={notImplementedAlert}>
+            {c.name}
+          </Button>
+        ))}
+      </div>
     )
   }
 }
 
-export {FirstColItem, SecondColItemWrapper, ThirdColItem}
+export {FirstColItem, SecondCol, ThirdCol}

@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.fixed-breakpoints-width {
-    @apply s:w-768px m:w-1024px l:w-1360px;
+.header-width {
+    @apply s:w-704px m:w-944px l:w-1208px
+}
+
+.category-selector-width {
+    @apply s:w-768px m:w-1024px l:w-1360px
 }
 
 .slider-button {
@@ -11,5 +15,5 @@
 }
 
 .categories-selector-item {
-    @apply flex w-full px-4 py-2 items-center justify-start text-black-b text-body-2 h-10 hover:bg-brand-a2
+    @apply flex w-full px-4 py-2 items-center justify-start text-black-b text-body-2 h-10 hover:bg-brand-a2 text-left
 }

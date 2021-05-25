@@ -31,16 +31,19 @@ module.exports = {
     },
     extend: {
       borderRadius: {
-        8: '8px',
+        2: '8px',
+        12: '48px',
       },
       spacing: {
         9.5: '2.375rem',
+        18: '4.5rem',
         26: '6.5rem',
         29: '7.25rem',
         31: '7.75rem',
         34: '8.5rem',
         35: '8.75rem',
         38: '9.5rem',
+        50: '12.5rem',
         53: '13.25rem',
         74: '18.5rem',
         '33px': '33px',
@@ -55,7 +58,8 @@ module.exports = {
         '1360px': '1360px',
       },
       gridTemplateColumns: {
-        main: '608px 288px',
+        'category-selector-m': '202px 202px 202px 336px',
+        'category-selector-l': '298px 299px 299px 312px',
       },
       colors: {
         'brand-a1': '#FF9514',
@@ -79,9 +83,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      margin: ['first'],
-      width: ['first'],
-      minWidth: ['first'],
+      fontWeight: ['first'],
     },
   },
   plugins: [capitalizeFirst, lineClamp],

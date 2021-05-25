@@ -15,7 +15,7 @@ const Header: FC = () => {
 
   return (
     <header className='flex s:justify-center relative'>
-      <div className='w-full s:w-704px m:w-944px l:w-1208px'>
+      <div className='w-full header-width'>
         <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
           <div className='hidden s:flex space-x-4'>
             <LinkButton
@@ -53,7 +53,7 @@ const Header: FC = () => {
             <Search />
           </div>
           <Button
-            className='hidden s:flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-8 whitespace-nowrap'
+            className='hidden s:flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
             onClick={notImplementedAlert}>
             <span className='capitalize-first'>{t('NEW_AD')}</span>
           </Button>

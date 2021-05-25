@@ -8,7 +8,7 @@ const Search: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex h-10 w-full border rounded-8 border-shadow-b divide-x divide-shadow-b'>
+    <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
       <input
         className='w-full py-2.5 px-3.5 text-body-2 text-black-c rounded-l-8'
         type='text'
