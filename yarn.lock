@@ -2908,9 +2908,9 @@ fraction.js@^4.0.13:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.13.tgz#3c1c315fa16b35c85fffa95725a36fa729c69dfe"
   integrity sha512-E1fz2Xs9ltlUp+qbiyx9wmt2n9dRzPsS11Jtdb8D2o+cC7wr9xkkKsVKJuBX0ST+LVS+LhLO+SbLJNtfWcJvXA==
 
-"front-api@git+ssh://git@github.com:danyasnov/front-api.git#3f8690d":
+"front-api@git+ssh://git@gitlab.com:adverto/front-api.git#3f8690d":
   version "1.0.2"
-  resolved "git+ssh://git@github.com:danyasnov/front-api.git#3f8690dd43e9b05454840d0ae79ee5db546a8980"
+  resolved "git+ssh://git@gitlab.com:adverto/front-api.git#3f8690dd43e9b05454840d0ae79ee5db546a8980"
   dependencies:
     axios "^0.21.1"
     fetch-to-curl "^0.5.2"
@@ -4634,6 +4634,11 @@ raw-body@2.4.1:
     http-errors "1.7.3"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-aim@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/react-aim/-/react-aim-0.2.3.tgz#4783f27460214c1c10562492a08e2480ad09bc5e"
+  integrity sha512-llc6sDCRrCIj7XMU18c1+J/3/csmbRb3AywThephS4mk0Y/Uxbl25o4yw/HtYElTogZ9imoNwm3tQEkY802c3A==
 
 react-dom@^17.0.2:
   version "17.0.2"

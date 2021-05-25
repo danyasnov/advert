@@ -8,7 +8,7 @@ function MyApp({Component, pageProps}: AppProps) {
     // @ts-ignore
     <RootStoreProvider hydrationData={pageProps.hydrationData}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </RootStoreProvider>
   )
 }

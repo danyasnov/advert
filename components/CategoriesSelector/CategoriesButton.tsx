@@ -2,7 +2,7 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcCategoriesClosed from 'icons/CategoriesClosed.svg'
 import IcCategoriesOpen from 'icons/CategoriesOpen.svg'
-import Button from './Button'
+import Button from '../Button'
 
 interface Props {
   show: boolean

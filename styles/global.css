@@ -9,3 +9,7 @@
 .slider-button {
     @apply absolute top-1/3
 }
+
+.categories-selector-item {
+    @apply flex w-full px-4 py-2 items-center justify-start text-black-b text-body-2 h-10 hover:bg-brand-a2
+}
