@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {FC, useState} from 'react'
 import {toJS} from 'mobx'
 import {observer} from 'mobx-react-lite'
