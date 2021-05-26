@@ -27,6 +27,7 @@ const ImageWrapper: FC<Props> = ({
       height={height}
       alt={alt}
       className={className}
+      // @ts-ignore
       layout={layout}
       objectFit={objectFit}
     />

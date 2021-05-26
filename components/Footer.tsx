@@ -2,18 +2,20 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
+import IcGooglePlay from 'icons/stores/GooglePlay.svg'
+import IcAppStore from 'icons/stores/AppStore.svg'
+import IcAppGallery from 'icons/stores/AppGallery.svg'
+import IcFB from 'icons/social/FB.svg'
+import IcInstagram from 'icons/social/Instagram.svg'
+import IcVK from 'icons/social/VK.svg'
+import IcYouTube from 'icons/social/YouTube.svg'
+import IcTwitter from 'icons/social/Twitter.svg'
+import {
+  useCategoriesStore,
+  useCountriesStore,
+} from '../providers/RootStoreProvider'
+import {notImplementedAlert} from '../helpers'
 import LinkButton from './LinkButton'
-import {notImplementedAlert} from '../helpers/alert'
-import {useCategoriesStore} from '../providers/RootStoreProvider'
-// todo настроить babel-module-resolver для иконок
-import IcGooglePlay from '../assets/icons/stores/GooglePlay.svg'
-import IcAppStore from '../assets/icons/stores/AppStore.svg'
-import IcAppGallery from '../assets/icons/stores/AppGallery.svg'
-import IcFB from '../assets/icons/social/FB.svg'
-import IcInstagram from '../assets/icons/social/Instagram.svg'
-import IcVK from '../assets/icons/social/VK.svg'
-import IcYouTube from '../assets/icons/social/YouTube.svg'
-import IcTwitter from '../assets/icons/social/Twitter.svg'
 
 const mainCountries: Array<string> = [
   'россия',
@@ -33,12 +35,13 @@ const mainCities: Array<string> = [
   'афины',
 ]
 const Footer: FC = observer(() => {
-  const store = useCategoriesStore()
+  const categoriesStore = useCategoriesStore()
+  const countriesStore = useCountriesStore()
   const {t} = useTranslation()
-  const categories = toJS(store.categories)
-
+  const categories = toJS(categoriesStore.categories)
+  const countries = toJS(countriesStore.countries)
   return (
-    <footer>
+    <footer className='mx-auto fixed-breakpoints-width'>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (

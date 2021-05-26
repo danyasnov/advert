@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
 import {useTranslation} from 'next-i18next'
@@ -7,6 +7,7 @@ import ImageWrapper from './ImageWrapper'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
 import TitleWithSeparator from './TitleWithSeparator'
 import SliderButton from './SliderButton'
+import useSliderButtons from '../hooks/useSliderButtons'
 
 const CategoriesSlider: FC = observer(() => {
   const store = useCategoriesStore()
@@ -16,23 +17,12 @@ const CategoriesSlider: FC = observer(() => {
     containScroll: 'trimSnaps',
   })
   const categories = toJS(store.categoriesWithoutAll)
-  // todo вынести управление слайдером в отдельный хук
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
-
-  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla])
-  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla])
-  const onSelect = useCallback(() => {
-    if (!embla) return
-    setPrevBtnEnabled(embla.canScrollPrev())
-    setNextBtnEnabled(embla.canScrollNext())
-  }, [embla])
-
-  useEffect(() => {
-    if (!embla) return
-    embla.on('select', onSelect)
-    onSelect()
-  }, [embla, onSelect])
+  const {
+    scrollNext,
+    scrollPrev,
+    prevBtnEnabled,
+    nextBtnEnabled,
+  } = useSliderButtons(embla)
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>
@@ -50,6 +40,7 @@ const CategoriesSlider: FC = observer(() => {
                   className='rounded-xl'
                   layout='fixed'
                 />
+                <p className='text-body-2 text-black-b text-center'>{c.name}</p>
               </div>
             ))}
           </div>

@@ -45,8 +45,8 @@ class Storage implements AppStorage {
   language = 'en'
 
   location: LocationModel = {
-    latitude: 37.785834,
-    longitude: -122.406417,
+    longitude: 30.314974,
+    latitude: 59.982716,
   }
 
   userLocation: LocationModel
@@ -64,6 +64,14 @@ class Storage implements AppStorage {
     const value = this.store[key]
     if (!value) throw new Error(`value for key: ${key} is not set`)
     return value as T
+  }
+
+  get searchAddress(): string | null {
+    return this.value<string>('addressText')
+  }
+
+  get userHash(): string | null {
+    return this.value<string>('hash')
   }
 }
 

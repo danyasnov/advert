@@ -2,6 +2,10 @@ const withPlugins = require('next-compose-plugins')
 const withTM = require('next-transpile-modules')(['front-api'], {
   resolveSymlinks: false,
 })
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+const {withSentryConfig} = require('@sentry/nextjs')
 const {i18n} = require('./next-i18next.config')
 
 const nextConfig = {
@@ -9,7 +13,7 @@ const nextConfig = {
     webpack5: true,
   },
   images: {
-    domains: ['cache.adverto.sale'],
+    domains: ['cache.adverto.sale', 'adverto.sale'],
   },
   i18n,
   webpack(config) {
@@ -32,4 +36,7 @@ const nextConfig = {
   },
 }
 
-module.exports = withPlugins([withTM], nextConfig)
+module.exports = withPlugins(
+  [withTM, withBundleAnalyzer, withSentryConfig],
+  nextConfig,
+)

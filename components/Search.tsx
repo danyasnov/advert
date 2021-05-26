@@ -1,14 +1,14 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import IcMyLocation from 'icons/material/MyLocation.svg'
 import Button from './Button'
-import {notImplementedAlert} from '../helpers/alert'
-import IcMyLocation from '../assets/icons/material/MyLocation.svg'
+import {notImplementedAlert} from '../helpers'
 
 const Search: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex h-10 w-full border rounded-8 border-shadow-b divide-x divide-shadow-b'>
+    <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
       <input
         className='w-full py-2.5 px-3.5 text-body-2 text-black-c rounded-l-8'
         type='text'
