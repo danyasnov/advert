@@ -10,6 +10,7 @@
     "fetch-translations": "node fetchTranslations.js"
   },
   "dependencies": {
+    "@sentry/nextjs": "^6.4.1",
     "@tailwindcss/line-clamp": "^0.2.0",
     "axios": "^0.21.1",
     "embla-carousel": "^4.5.1",

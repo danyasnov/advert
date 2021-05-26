@@ -5,6 +5,7 @@ const withTM = require('next-transpile-modules')(['front-api'], {
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const {withSentryConfig} = require('@sentry/nextjs')
 const {i18n} = require('./next-i18next.config')
 
 const nextConfig = {
@@ -35,4 +36,7 @@ const nextConfig = {
   },
 }
 
-module.exports = withPlugins([withTM, withBundleAnalyzer], nextConfig)
+module.exports = withPlugins(
+  [withTM, withBundleAnalyzer, withSentryConfig],
+  nextConfig,
+)
