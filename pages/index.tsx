@@ -34,13 +34,13 @@ export const getServerSideProps = async ({locale}) => {
     props: {
       hydrationData: {
         categoriesStore: {
-          categories: categoriesData.result,
+          categories: categoriesData.result ?? [],
         },
         productsStore: {
-          products: productsData.result,
+          products: productsData.result ?? [],
         },
         countriesStore: {
-          countries: countriesData,
+          countries: countriesData ?? [],
         },
       },
       ...(await serverSideTranslations(locale)),

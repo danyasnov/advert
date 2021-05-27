@@ -3,11 +3,11 @@ import {useTranslation} from 'next-i18next'
 import IcWallet from 'icons/material/Wallet.svg'
 import IcLanguage from 'icons/material/Language.svg'
 import IcLogin from 'icons/material/Login.svg'
-import Button from './Button'
+import Button from './Buttons/Button'
 import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector/index'
-import LinkButton from './LinkButton'
+import LinkButton from './Buttons/LinkButton'
 import {notImplementedAlert} from '../helpers'
 
 const Header: FC = () => {

@@ -15,7 +15,7 @@ import {
   useCountriesStore,
 } from '../providers/RootStoreProvider'
 import {notImplementedAlert} from '../helpers'
-import LinkButton from './LinkButton'
+import LinkButton from './Buttons/LinkButton'
 
 const mainCountries: Array<string> = [
   'россия',
@@ -40,8 +40,9 @@ const Footer: FC = observer(() => {
   const {t} = useTranslation()
   const categories = toJS(categoriesStore.categories)
   const countries = toJS(countriesStore.countries)
+  // #todo fix footer width
   return (
-    <footer className='mx-auto fixed-breakpoints-width'>
+    <footer className='mx-auto'>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (
@@ -65,7 +66,7 @@ const Footer: FC = observer(() => {
         </div>
       </div>
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
-        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20'>
+        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
           <Section
             title={t('MOBILE_APP')}
             className='s:col-span-2 m:col-span-3 l:col-span-4'

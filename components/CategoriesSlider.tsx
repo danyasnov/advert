@@ -6,7 +6,7 @@ import {useEmblaCarousel} from 'embla-carousel/react'
 import ImageWrapper from './ImageWrapper'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
 import TitleWithSeparator from './TitleWithSeparator'
-import SliderButton from './SliderButton'
+import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 
 const CategoriesSlider: FC = observer(() => {

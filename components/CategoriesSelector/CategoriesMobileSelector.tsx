@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import CategoryItem from './CategoryItem'
 import {notImplementedAlert} from '../../helpers'
-import Button from '../Button'
+import Button from '../Buttons/Button'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 
 const CategoriesMobileSelector: FC = observer(() => {

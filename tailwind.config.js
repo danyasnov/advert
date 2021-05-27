@@ -31,8 +31,9 @@ module.exports = {
     },
     extend: {
       borderRadius: {
-        2: '8px',
-        12: '48px',
+        2: '0.5rem',
+        6: '1.5rem',
+        12: '3rem',
       },
       spacing: {
         9.5: '2.375rem',
@@ -45,10 +46,14 @@ module.exports = {
         38: '9.5rem',
         50: '12.5rem',
         53: '13.25rem',
+        54: '13.5rem',
         74: '18.5rem',
+        '7px': '7px',
         '33px': '33px',
         '288px': '288px',
+        '480px': '480px',
         '608px': '608px',
+        '680px': '680px',
         '704px': '704px',
         '768px': '768px',
         '896px': '896px',
@@ -65,6 +70,7 @@ module.exports = {
         'brand-a1': '#FF9514',
         'brand-a2': '#FFEEDD',
         'brand-b1': '#1E4592',
+        'shadow-overlay': 'rgba(12, 13, 13, 0.4)',
         'shadow-a': 'rgba(12, 13, 13, 0.2)',
         'shadow-b': 'rgba(12, 13, 13, 0.1)',
         'black-a': '#0C0D0D',
@@ -78,6 +84,9 @@ module.exports = {
       inset: {
         '89px': '89px',
         '105px': '105px',
+      },
+      maxHeight: {
+        '216px': '216px',
       },
     },
   },

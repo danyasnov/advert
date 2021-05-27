@@ -1,4 +1,5 @@
 import '../styles/global.css'
+import 'rc-slider/assets/index.css'
 import {AppProps} from 'next/app'
 import {appWithTranslation} from 'next-i18next'
 import {RootStoreProvider} from '../providers/RootStoreProvider'

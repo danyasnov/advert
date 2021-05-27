@@ -9,7 +9,7 @@ import IcPersonalGoods from 'icons/categories/PersonalGoods.svg'
 import IcProperty from 'icons/categories/Property.svg'
 import IcServices from 'icons/categories/Services.svg'
 import IcVehicles from 'icons/categories/Vehicles.svg'
-import Button from '../Button'
+import Button from '../Buttons/Button'
 
 interface Props {
   category: CACategoryModel

@@ -4,7 +4,7 @@ import {PureComponent, ReactNode} from 'react'
 import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
 import {notImplementedAlert} from '../../helpers'
-import Button from '../Button'
+import Button from '../Buttons/Button'
 
 interface ColItemProps {
   category: CACategoryModel

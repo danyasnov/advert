@@ -7,7 +7,7 @@ import {useProductsStore} from '../providers/RootStoreProvider'
 import Card from './Card'
 import TitleWithSeparator from './TitleWithSeparator'
 import useNestedEmblaCarousel from '../hooks/useNestedEmblaCarousel'
-import SliderButton from './SliderButton'
+import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 
 const ProductsSlider: FC = observer(() => {
