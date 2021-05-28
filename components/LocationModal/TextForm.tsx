@@ -6,7 +6,9 @@ import {GeoPositionItemModel} from 'front-api/src/models/index'
 import axios, {AxiosResponse} from 'axios'
 import {RestResponse} from 'front-api/src/api/request'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
-import Select from '../Select'
+import Select from '../Selects/Select'
+import Button from '../Buttons/Button'
+import {notImplementedAlert} from '../../helpers'
 
 const TextForm: FC = observer(() => {
   const {countries} = useCountriesStore()
@@ -18,6 +20,7 @@ const TextForm: FC = observer(() => {
   const [country, setCountry] = useState(null)
   const [region, setRegion] = useState(null)
   const [city, setCity] = useState(null)
+  const [popularCities, setPopularCities] = useState([])
   const [regionOptions, setRegionOptions] = useState([])
   const [cityOptions, setCityOptions] = useState([])
   const onChangeCountry = (item) => {
@@ -30,6 +33,8 @@ const TextForm: FC = observer(() => {
       .then((res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>) => {
         const {data} = res
         setRegion(null)
+        setCity(null)
+        setPopularCities([])
         setRegionOptions(
           (data.result || []).map((r) => ({value: r.id, label: r.value})),
         )
@@ -44,10 +49,10 @@ const TextForm: FC = observer(() => {
       })
       .then((res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>) => {
         const {data} = res
+        const items = data.result || []
         setCity(null)
-        setCityOptions(
-          (data.result || []).map((r) => ({value: r.id, label: r.value})),
-        )
+        setPopularCities(items.filter((c) => c.has_adverts).slice(0, 9))
+        setCityOptions(items.map((r) => ({value: r.id, label: r.value})))
       })
   }
 
@@ -76,9 +81,19 @@ const TextForm: FC = observer(() => {
           isDisabled={!cityOptions.length}
         />
       </div>
-      <p className='text-body-2 text-black-b pt-6'>
+      <p className='text-body-2 text-black-b pt-6 pb-4'>
         {t('ENTER_CITY_OR_SELECT_POPULAR')}
       </p>
+      <div className='grid grid-cols-2'>
+        {popularCities.map((c) => (
+          <Button
+            key={c.value}
+            onClick={notImplementedAlert}
+            className='text-body-2 text-black-b px-4 py-3 hover:bg-brand-a2 rounded-lg justify-start'>
+            {c.value}
+          </Button>
+        ))}
+      </div>
     </>
   )
 })

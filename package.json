@@ -14,7 +14,7 @@
     "@tailwindcss/line-clamp": "^0.2.0",
     "axios": "^0.21.1",
     "embla-carousel": "^4.5.1",
-    "front-api": "git+ssh://git@gitlab.com:adverto/front-api.git#3f8690d",
+    "front-api": "git+ssh://git@gitlab.com:adverto/front-api.git#300958a",
     "google-map-react": "^2.1.9",
     "luxon": "^1.27.0",
     "mobx": "^6.3.0",

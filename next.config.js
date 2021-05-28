@@ -37,6 +37,6 @@ const nextConfig = {
 }
 
 module.exports = withPlugins(
-  [withTM, withBundleAnalyzer, withSentryConfig],
+  [withTM, withBundleAnalyzer, [withSentryConfig, {silent: true}]],
   nextConfig,
 )

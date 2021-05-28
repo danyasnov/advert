@@ -3195,9 +3195,9 @@ fraction.js@^4.0.13:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.13.tgz#3c1c315fa16b35c85fffa95725a36fa729c69dfe"
   integrity sha512-E1fz2Xs9ltlUp+qbiyx9wmt2n9dRzPsS11Jtdb8D2o+cC7wr9xkkKsVKJuBX0ST+LVS+LhLO+SbLJNtfWcJvXA==
 
-"front-api@git+ssh://git@gitlab.com:adverto/front-api.git#3f8690d":
+"front-api@git+ssh://git@gitlab.com:adverto/front-api.git#300958a":
   version "1.0.2"
-  resolved "git+ssh://git@gitlab.com:adverto/front-api.git#3f8690dd43e9b05454840d0ae79ee5db546a8980"
+  resolved "git+ssh://git@gitlab.com:adverto/front-api.git#300958abc50d3b35adacee40c370716aaa3b11d1"
   dependencies:
     axios "^0.21.1"
     fetch-to-curl "^0.5.2"

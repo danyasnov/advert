@@ -88,6 +88,9 @@ module.exports = {
       maxHeight: {
         '216px': '216px',
       },
+      outline: {
+        'brand-a1': ['2px solid #FF9514', '1px'],
+      },
     },
   },
   variants: {

@@ -2,9 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    button {
+        @apply focus:outline-brand-a1
+    }
+
+    input {
+        @apply focus:outline-brand-a1
+    }
+}
+
 .fixed-breakpoints-width {
     @apply s:w-768px m:w-1024px l:w-1360px
 }
+
 .header-width {
     @apply s:w-704px m:w-944px l:w-1208px
 }
