@@ -36,14 +36,11 @@ const mainCities: Array<string> = [
 ]
 const Footer: FC = observer(() => {
   const categoriesStore = useCategoriesStore()
-  const countriesStore = useCountriesStore()
   const {t} = useTranslation()
   const categories = toJS(categoriesStore.categories)
-  const countries = toJS(countriesStore.countries)
-  // #todo fix footer width
   return (
     <footer className='mx-auto'>
-      <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20'>
+      <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountries.map((i) => (
             <LinkButton key={i} onClick={notImplementedAlert} label={i} />
@@ -138,24 +135,26 @@ const Footer: FC = observer(() => {
             <LinkButton onClick={notImplementedAlert} label={t('CAREER')} />
           </div>
         </div>
-        <div className='flex flex-col items-center border-t border-shadow-b pt-2 m:flex-row m:justify-between m:px-10 l:px-20'>
-          <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
-            <LinkButton
-              onClick={notImplementedAlert}
-              label={t('LICENSE_AGREEMENT')}
-            />
-            <LinkButton onClick={notImplementedAlert} label={t('PHOTOS')} />
-            <LinkButton
-              onClick={notImplementedAlert}
-              label={t('ADVERTISING_ADVERTO')}
-            />
-            <LinkButton
-              onClick={notImplementedAlert}
-              label={t('APPLICATION_HELP')}
-            />
-          </div>
-          <div className='text-body-3 mt-2 s:mt-4 m:mt-0 text-black-b'>
-            © 2017—{new Date().getFullYear()} A&D Adverto Services LTD
+        <div className='border-t border-shadow-b pt-2'>
+          <div className='flex flex-col m:flex-row m:justify-between items-center  m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
+            <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
+              <LinkButton
+                onClick={notImplementedAlert}
+                label={t('LICENSE_AGREEMENT')}
+              />
+              <LinkButton onClick={notImplementedAlert} label={t('PHOTOS')} />
+              <LinkButton
+                onClick={notImplementedAlert}
+                label={t('ADVERTISING_ADVERTO')}
+              />
+              <LinkButton
+                onClick={notImplementedAlert}
+                label={t('APPLICATION_HELP')}
+              />
+            </div>
+            <div className='text-body-3 mt-2 s:mt-4 m:mt-0 text-black-b'>
+              © 2017—{new Date().getFullYear()} A&D Adverto Services LTD
+            </div>
           </div>
         </div>
       </div>
