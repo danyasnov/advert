@@ -44,17 +44,21 @@ const MapForm: FC = () => {
   const marker = useRef(null)
   const loadOptions = useCallback(
     debounce((inputValue, callback) => {
-      axios
-        .get('/api/location-text-search', {params: {query: inputValue}})
-        .then((res) => {
-          callback(
-            res.data.results.map((l) => ({
-              label: l.formatted_address,
-              value: l.place_id,
-              geometry: l.geometry,
-            })),
-          )
-        })
+      if (!inputValue) {
+        callback([])
+      } else {
+        axios
+          .get('/api/location-text-search', {params: {query: inputValue}})
+          .then((res) => {
+            callback(
+              res.data.results.map((l) => ({
+                label: l.formatted_address,
+                value: l.place_id,
+                geometry: l.geometry,
+              })),
+            )
+          })
+      }
     }, 500),
     [],
   )
