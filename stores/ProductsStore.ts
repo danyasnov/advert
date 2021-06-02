@@ -23,8 +23,6 @@ export class ProductsStore implements IProductsStore {
   }
 
   hydrate(data?: IProductsHydration): void {
-    if (data) {
-      this.products = data.products
-    }
+    this.products = data?.products ?? []
   }
 }

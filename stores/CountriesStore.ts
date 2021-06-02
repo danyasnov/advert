@@ -23,8 +23,6 @@ export class CountriesStore implements ICountriesStore {
   }
 
   hydrate(data?: ICountriesHydration): void {
-    if (data) {
-      this.countries = data.countries
-    }
+    this.countries = data?.countries ?? []
   }
 }

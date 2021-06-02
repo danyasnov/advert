@@ -9,7 +9,7 @@ const Button: FC<Props> = ({children, className, onClick}) => {
   return (
     <button
       type='button'
-      className={`flex items-center justify-center ${className}`}
+      className={`flex items-center justify-center ${className || ''}`}
       onClick={onClick}>
       {children}
     </button>

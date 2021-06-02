@@ -11,7 +11,7 @@ interface Props {
 const Tabs: FC<Props> = ({items, value, onChange}) => {
   const {t} = useTranslation()
   return (
-    <div className='flex'>
+    <div className='flex h-12'>
       {items.map((i) => {
         return (
           <Button

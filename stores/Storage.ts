@@ -23,7 +23,22 @@ export type StorageKey =
   | 'isOnboardShown'
   | 'degradationType'
 
-class Storage implements AppStorage {
+interface StorageOptions {
+  language: string
+}
+
+export class Storage implements AppStorage {
+  constructor(data: StorageOptions) {
+    const {language} = data
+    this.store = {
+      language,
+    }
+  }
+
+  get language(): string {
+    return this.value<string>('language') ?? 'en'
+  }
+
   saveAppVersion = (version: any) => {
     throw new Error('Method not implemented.')
   }
@@ -41,8 +56,6 @@ class Storage implements AppStorage {
   }
 
   platform: 'ios' | 'android' | 'web' = 'web'
-
-  language = 'en'
 
   location: LocationModel = {
     longitude: 30.314974,
@@ -74,5 +87,3 @@ class Storage implements AppStorage {
     return this.value<string>('hash')
   }
 }
-
-export const storage = new Storage()

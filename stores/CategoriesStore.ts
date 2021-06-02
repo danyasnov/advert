@@ -28,8 +28,6 @@ export class CategoriesStore implements ICategoriesStore {
   }
 
   hydrate(data?: ICategoriesHydration): void {
-    if (data) {
-      this.categories = data.categories
-    }
+    this.categories = data?.categories ?? []
   }
 }

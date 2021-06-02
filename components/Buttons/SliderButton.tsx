@@ -15,7 +15,7 @@ const SliderButton: FC<Props> = ({direction, enabled, onClick, className}) => {
   return (
     <Button
       onClick={onClick}
-      className={`w-8 h-8 bg-white rounded-full shadow-2xl ${className}`}>
+      className={`w-8 h-8 bg-white rounded-full shadow-2xl ${className || ''}`}>
       {direction === 'left' ? (
         <IcKeyboardArrowLeft className='fill-current text-black-c w-4 h-4' />
       ) : (

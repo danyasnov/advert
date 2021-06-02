@@ -4,11 +4,12 @@ import IcMyLocation from 'icons/material/MyLocation.svg'
 import Button from './Buttons/Button'
 import {notImplementedAlert} from '../helpers'
 import LocationModal from './LocationModal'
+import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const Search: FC = () => {
   const {t} = useTranslation()
   const [locationModalShow, setLocationModalShow] = useState(false)
-
+  useDisableBodyScroll(locationModalShow)
   return (
     <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
       <input

@@ -1,10 +1,10 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import RestApi, {defaultFilter} from 'front-api'
+import {defaultFilter} from 'front-api'
 import Layout from '../components/Layout'
-import {storage} from '../stores/Storage'
 import CategoriesSlider from '../components/CategoriesSlider'
 import ProductsSlider from '../components/ProductsSlider'
-import {DummyAnalytics} from '../helpers'
+import {getRest} from '../api'
+import {Storage} from '../stores/Storage'
 
 export default function Home() {
   return (
@@ -19,8 +19,10 @@ export const getServerSideProps = async ({locale}) => {
   let categoriesData
   let productsData
   let countriesData
+  const storage = new Storage({language: locale})
+  const rest = getRest(storage)
   try {
-    productsData = await globalRestApi.advertises.fetchList({
+    productsData = await rest.advertises.fetchList({
       page: 1,
       limit: 40,
       searchId: '',
@@ -31,8 +33,8 @@ export const getServerSideProps = async ({locale}) => {
         priceMax: '0',
       },
     })
-    countriesData = await globalRestApi.oldRest.fetchCountries()
-    categoriesData = await globalRestApi.categories.fetchTree()
+    countriesData = await rest.oldRest.fetchCountries()
+    categoriesData = await rest.categories.fetchTree()
   } catch (e) {
     console.error(e)
   }
@@ -41,25 +43,16 @@ export const getServerSideProps = async ({locale}) => {
     props: {
       hydrationData: {
         categoriesStore: {
-          categories: categoriesData?.result ?? [],
+          categories: categoriesData?.result,
         },
         productsStore: {
-          products: productsData?.result ?? [],
+          products: productsData?.result,
         },
         countriesStore: {
-          countries: countriesData ?? [],
+          countries: countriesData,
         },
       },
       ...(await serverSideTranslations(locale)),
     },
   }
 }
-
-export const globalRestApi = new RestApi({
-  isDev: false,
-  storage,
-  isLogEnabled: false,
-  isLogRequest: true,
-  isLogResponse: false,
-  analyticsService: new DummyAnalytics(),
-})

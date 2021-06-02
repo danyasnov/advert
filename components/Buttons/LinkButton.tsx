@@ -12,7 +12,7 @@ const LinkButton: FC<Props> = ({onClick, label, children, className}) => {
   return (
     <Button
       onClick={onClick}
-      className={`text-body-3 text-brand-b1 ${className}`}>
+      className={`text-body-3 text-brand-b1 ${className || ''}`}>
       {children}
       <span className='capitalize-first whitespace-nowrap'>{label}</span>
     </Button>

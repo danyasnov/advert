@@ -17,7 +17,9 @@ const TextInput: FC<Props> = ({value, onChange, placeholder, className}) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`h-10 w-full border border-shadow-b rounded-lg pl-3.5 pr-8 py-3 text-body-2 text-black-b ${className}`}
+        className={`h-10 w-full border border-shadow-b rounded-lg pl-3.5 pr-8 py-3 text-body-2 text-black-b ${
+          className || ''
+        }`}
       />
       <Button onClick={() => onChange('')} className='absolute top-2 right-2'>
         <IcClear className='max-h-6 h-6 w-6 fill-current text-black-c' />

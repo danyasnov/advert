@@ -1,4 +1,5 @@
 import {AnalyticsService} from 'front-api/src'
+import cookie from 'cookie'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -27,4 +28,8 @@ export class DummyAnalytics implements AnalyticsService {
   trackingSessionEvents = (isTrack: boolean): Promise<boolean> => {
     return Promise.resolve(false)
   }
+}
+
+export const parseCookies = (req) => {
+  return cookie.parse(req ? req.headers.cookie || '' : document.cookie)
 }

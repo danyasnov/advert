@@ -171,7 +171,7 @@ interface Props {
 
 const Section: FC<Props> = ({title, body, headerLink, className}) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col ${className || ''}`}>
       <div className='flex justify-between pb-2 border-b mb-2 border-shadow-b'>
         {title && (
           <div className='text-body-2 text-black-b font-bold capitalize-first '>
