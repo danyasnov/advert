@@ -26,6 +26,8 @@ const ProductsSlider: FC = observer(() => {
     nextBtnEnabled,
   } = useSliderButtons(embla)
 
+  if (!products.length) return null
+
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>

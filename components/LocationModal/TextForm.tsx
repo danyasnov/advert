@@ -1,21 +1,61 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
 import {useTranslation} from 'next-i18next'
 import {GeoPositionItemModel} from 'front-api/src/models/index'
 import {AxiosResponse} from 'axios'
 import {RestResponse} from 'front-api/src/api/request'
-import {useCookies} from 'react-cookie'
+import {parseCookies, setCookie} from 'nookies'
+import Router from 'next/router'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
 import Select, {SelectItem} from '../Selects/Select'
 import Button from '../Buttons/Button'
-import {notImplementedAlert} from '../../helpers'
 import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 
+const fetchRegions = (countryId) => {
+  return makeRequest({
+    method: 'post',
+    url: '/api/regions',
+    data: {
+      country: countryId,
+    },
+  }).then(
+    (
+      res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>,
+    ): SelectItem[] => {
+      const {data} = res
+      const items = data.result || []
+      return items.map((r) => ({value: r.id, label: r.value}))
+    },
+  )
+}
+
+const fetchCities = (regionId) => {
+  return makeRequest({
+    method: 'post',
+    url: '/api/cities',
+    data: {
+      region: regionId,
+    },
+  }).then(
+    (
+      res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>,
+    ): (SelectItem & {hasAdverts: string})[] => {
+      const {data} = res
+      const items = data.result || []
+      return items.map((r) => ({
+        value: r.id,
+        label: r.value,
+        hasAdverts: r.has_adverts,
+      }))
+    },
+  )
+}
+
 const TextForm: FC = observer(() => {
-  const [, setCookie] = useCookies(['country', 'region', 'city'])
+  const cookies = parseCookies()
   const {countries} = useCountriesStore()
   const countryOptions: SelectItem[] = toJS(countries).map((c) => ({
     value: c.id,
@@ -35,19 +75,11 @@ const TextForm: FC = observer(() => {
       setCity(null)
       setPopularCities([])
     } else {
-      makeRequest({
-        method: 'post',
-        url: '/api/regions',
-        data: {
-          country: item.value,
-        },
-      }).then((res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>) => {
-        const {data} = res
-        const items = data.result || []
+      fetchRegions(item.value).then((items) => {
         setRegion(null)
         setCity(null)
         setPopularCities([])
-        setRegionOptions(items.map((r) => ({value: r.id, label: r.value})))
+        setRegionOptions(items)
       })
     }
   }
@@ -57,31 +89,54 @@ const TextForm: FC = observer(() => {
       setCity(null)
       setPopularCities([])
     } else {
-      makeRequest({
-        method: 'post',
-        url: '/api/cities',
-        data: {
-          region: item.value,
-        },
-      }).then((res: AxiosResponse<RestResponse<GeoPositionItemModel[]>>) => {
-        const {data} = res
-        const items = data.result || []
+      fetchCities(item.value).then((items) => {
         setCity(null)
-        setPopularCities(
-          items
-            .filter((c) => c.has_adverts)
-            .slice(0, 9)
-            .map((c) => ({value: c.id, label: c.value})),
-        )
-        setCityOptions(items.map((r) => ({value: r.id, label: r.value})))
+        setPopularCities(items.filter((c) => c.hasAdverts).slice(0, 9))
+        setCityOptions(items)
       })
     }
   }
 
+  useEffect(() => {
+    // eslint-disable-next-line consistent-return
+    const init = async () => {
+      const {countryId, regionId, cityId} = cookies
+      if (countryId) {
+        const currentCountry = countryOptions.find((c) => c.value === countryId)
+        setCountry(currentCountry)
+        let regions
+        try {
+          regions = await fetchRegions(countryId)
+        } catch (e) {
+          return console.error(e)
+        }
+        setRegionOptions(regions)
+        if (regionId) {
+          const currentRegion = regions.find((c) => c.value === regionId)
+          setRegion(currentRegion)
+          let cities
+          try {
+            cities = await fetchCities(regionId)
+          } catch (e) {
+            return console.error(e)
+          }
+          setCityOptions(cities)
+          setPopularCities(cities.filter((c) => c.hasAdverts).slice(0, 9))
+          if (cityId) {
+            const currentCity = cities.find((c) => c.value === cityId)
+            setCity(currentCity)
+          }
+        }
+      }
+    }
+    init()
+  }, [])
+
   const onSubmit = () => {
-    if (country?.value) setCookie('country', country.value)
-    if (region?.value) setCookie('region', region.value)
-    if (city?.value) setCookie('city', city.value)
+    if (country?.value) setCookie(null, 'countryId', country.value.toString())
+    if (region?.value) setCookie(null, 'regionId', region.value.toString())
+    if (city?.value) setCookie(null, 'cityId', city.value.toString())
+    Router.reload()
   }
 
   return (

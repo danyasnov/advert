@@ -1,13 +1,13 @@
 import {FC, useEffect, useRef, useState, useCallback} from 'react'
 import GoogleMapReact from 'google-map-react'
-import axios from 'axios'
 import Slider from 'rc-slider'
 import {useTranslation} from 'next-i18next'
 import debounce from 'lodash.debounce'
-import {useCookies} from 'react-cookie'
+import {setCookie} from 'nookies'
 import Autocomplete from '../Selects/Autocomplete'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {makeRequest} from '../../api'
 
 const getMark = (label) => ({
   style: {
@@ -42,7 +42,6 @@ const marksMap = {
 
 const MapForm: FC = () => {
   const {t} = useTranslation()
-  const [, setCookie] = useCookies(['location', 'distance'])
   const [location, setLocation] = useState(null)
   const [radius, setRadius] = useState(42)
   const circle = useRef(null)
@@ -55,27 +54,31 @@ const MapForm: FC = () => {
       if (!inputValue) {
         callback([])
       } else {
-        axios
-          .get('/api/location-text-search', {params: {query: inputValue}})
-          .then((res) => {
-            callback(
-              res.data.results.map((l) => ({
-                label: l.formatted_address,
-                value: l.place_id,
-                geometry: l.geometry,
-              })),
-            )
-          })
+        makeRequest({
+          method: 'get',
+          url: '/api/location-text-search',
+          params: {query: inputValue},
+        }).then((res) => {
+          callback(
+            res.data.results.map((l) => ({
+              label: l.formatted_address,
+              value: l.place_id,
+              geometry: l.geometry,
+            })),
+          )
+        })
       }
     }, 500),
     [],
   )
   useEffect(() => {
-    axios.get('/api/mylocation').then(({data: {data}}) => {
-      const center = {lat: data.latitude, lng: data.longitude}
-      setLocation(center)
-      initialLocation.current = center
-    })
+    makeRequest({method: 'get', url: '/api/mylocation'}).then(
+      ({data: {data}}) => {
+        const center = {lat: data.latitude, lng: data.longitude}
+        setLocation(center)
+        initialLocation.current = center
+      },
+    )
   }, [])
 
   const onChangeMap = ({center}) => {
@@ -99,8 +102,8 @@ const MapForm: FC = () => {
   }
 
   const onSubmit = () => {
-    setCookie('location', JSON.stringify(location))
-    setCookie('radius', marksMap[radius])
+    setCookie(null, 'searchLocation', JSON.stringify(location))
+    setCookie(null, 'searchRadius', marksMap[radius])
   }
 
   return (

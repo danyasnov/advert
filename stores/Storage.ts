@@ -1,4 +1,4 @@
-import {AppStorage, LocationModel} from 'front-api'
+import {AppStorage, emptyLocation, LocationModel} from 'front-api'
 
 export type StorageKey =
   | 'authType'
@@ -15,6 +15,7 @@ export type StorageKey =
   | 'defaultAddressText'
   | 'location'
   | 'defaultLocation'
+  | 'userLocation'
   | 'searchRadius'
   | 'appVersion'
   | 'firstStartApp'
@@ -22,18 +23,43 @@ export type StorageKey =
   | 'categoryVersion'
   | 'isOnboardShown'
   | 'degradationType'
+  | 'countryId'
+  | 'regionId'
+  | 'cityId'
 
 interface StorageOptions {
   language: string
+  location?: LocationModel
+  userLocation?: LocationModel
+  searchRadius?: number
+  countryId?: number
+  regionId?: number
+  cityId?: number
 }
 
 export class Storage implements AppStorage {
   constructor(data: StorageOptions) {
-    const {language} = data
+    const {
+      language,
+      location,
+      userLocation,
+      searchRadius,
+      countryId,
+      cityId,
+      regionId,
+    } = data
     this.store = {
       language,
+      location,
+      userLocation,
+      searchRadius,
+      countryId,
+      cityId,
+      regionId,
     }
   }
+
+  fcmToken: string
 
   get language(): string {
     return this.value<string>('language') ?? 'en'
@@ -57,12 +83,13 @@ export class Storage implements AppStorage {
 
   platform: 'ios' | 'android' | 'web' = 'web'
 
-  location: LocationModel = {
-    longitude: 30.314974,
-    latitude: 59.982716,
+  get location(): LocationModel {
+    return this.value<LocationModel>('location')
   }
 
-  userLocation: LocationModel
+  get userLocation(): LocationModel | null {
+    return this.value<LocationModel>('userLocation')
+  }
 
   store = {}
 
