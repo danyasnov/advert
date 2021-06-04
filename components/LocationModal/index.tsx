@@ -2,6 +2,7 @@ import {FC, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
+import {parseCookies} from 'nookies'
 import Button from '../Buttons/Button'
 import TextForm from './TextForm'
 import Tabs from './Tabs'
@@ -18,8 +19,11 @@ const tabs = [
 ]
 
 const LocationModal: FC<Props> = ({isOpen, onClose}) => {
+  const cookies = parseCookies()
   const {t} = useTranslation()
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(() => {
+    return cookies.searchBy === 'id' ? 1 : 0
+  })
 
   return (
     <ReactModal

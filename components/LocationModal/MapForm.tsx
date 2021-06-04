@@ -1,13 +1,20 @@
-import {FC, useEffect, useRef, useState, useCallback} from 'react'
+import {FC, useRef, useState, useCallback} from 'react'
 import GoogleMapReact from 'google-map-react'
 import Slider from 'rc-slider'
 import {useTranslation} from 'next-i18next'
 import debounce from 'lodash.debounce'
-import {setCookie} from 'nookies'
+import {parseCookies} from 'nookies'
+import {useRouter} from 'next/router'
 import Autocomplete from '../Selects/Autocomplete'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
+import {
+  getShortAddress,
+  objectFlip,
+  SerializedCookiesState,
+  setCookiesObject,
+} from '../../helpers'
 
 const getMark = (label) => ({
   style: {
@@ -40,15 +47,32 @@ const marksMap = {
   100: 300,
 }
 
+const invertedMarksMap = objectFlip(marksMap)
+
 const MapForm: FC = () => {
+  const router = useRouter()
+  const cookies: SerializedCookiesState = parseCookies()
+  const {searchLocation, userLocation, searchRadius} = cookies
   const {t} = useTranslation()
-  const [location, setLocation] = useState(null)
-  const [radius, setRadius] = useState(42)
+  const initialLocation = useRef(null)
+
+  const [location, setLocation] = useState(() => {
+    let loc
+    if (searchLocation) {
+      loc = JSON.parse(searchLocation)
+    } else {
+      loc = JSON.parse(userLocation)
+    }
+    const value = {lat: loc.latitude, lng: loc.longitude}
+    initialLocation.current = value
+    return value
+  })
+  const [radius, setRadius] = useState(invertedMarksMap[searchRadius])
   const circle = useRef(null)
   const marker = useRef(null)
   const mapRef = useRef(null)
   const mapsRef = useRef(null)
-  const initialLocation = useRef(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadOptions = useCallback(
     debounce((inputValue, callback) => {
       if (!inputValue) {
@@ -68,18 +92,9 @@ const MapForm: FC = () => {
           )
         })
       }
-    }, 500),
+    }, 1000),
     [],
   )
-  useEffect(() => {
-    makeRequest({method: 'get', url: '/api/mylocation'}).then(
-      ({data: {data}}) => {
-        const center = {lat: data.latitude, lng: data.longitude}
-        setLocation(center)
-        initialLocation.current = center
-      },
-    )
-  }, [])
 
   const onChangeMap = ({center}) => {
     if (!circle?.current) return
@@ -102,8 +117,24 @@ const MapForm: FC = () => {
   }
 
   const onSubmit = () => {
-    setCookie(null, 'searchLocation', JSON.stringify(location))
-    setCookie(null, 'searchRadius', marksMap[radius])
+    const resultLocation = {latitude: location.lat, longitude: location.lng}
+    setCookiesObject({
+      searchLocation: resultLocation,
+      searchRadius: marksMap[radius],
+      searchBy: 'coords',
+    })
+    makeRequest({
+      url: '/api/address-by-location',
+      method: 'post',
+      data: {
+        location: resultLocation,
+      },
+    }).then((res) => {
+      setCookiesObject({
+        address: getShortAddress(res.data.result),
+      })
+      router.reload()
+    })
   }
 
   return (
@@ -134,7 +165,7 @@ const MapForm: FC = () => {
                   fillOpacity: 0.2,
                   map,
                   center: location,
-                  radius: 25000,
+                  radius: marksMap[radius] * 1000,
                 })
                 const svgMarker = {
                   path:
@@ -159,7 +190,7 @@ const MapForm: FC = () => {
           railStyle={{backgroundColor: 'rgba(12, 13, 13, 0.1)', height: 4}}
           marks={marks}
           value={radius}
-          defaultValue={42}
+          defaultValue={radius}
           onChange={onChangeRadius}
           dotStyle={{border: 'none', backgroundColor: 'transparent'}}
           activeDotStyle={{border: 'none', backgroundColor: 'transparent'}}

@@ -17,14 +17,7 @@ import {
 import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
 
-const mainCountries: Array<string> = [
-  'россия',
-  'украина',
-  'белоруссия',
-  'греция',
-  'турция',
-  'кипр',
-]
+const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
   'санкт-Петербург',
   'екатеринбург',
@@ -36,14 +29,20 @@ const mainCities: Array<string> = [
 ]
 const Footer: FC = observer(() => {
   const categoriesStore = useCategoriesStore()
+  const countriesStore = useCountriesStore()
+  const countriesById = toJS(countriesStore.countriesById)
   const {t} = useTranslation()
   const categories = toJS(categoriesStore.categories)
   return (
     <footer className='mx-auto'>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
-          {mainCountries.map((i) => (
-            <LinkButton key={i} onClick={notImplementedAlert} label={i} />
+          {mainCountriesIds.map((id) => (
+            <LinkButton
+              key={id}
+              onClick={notImplementedAlert}
+              label={countriesById[id].title}
+            />
           ))}
           <LinkButton
             onClick={notImplementedAlert}

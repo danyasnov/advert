@@ -22,7 +22,15 @@ locales.forEach((localeData) => {
     })
 
     res.on('end', () => {
-      fs.writeFileSync(`locales/${localeData.locale}/common.json`, body)
+      const formatted = Object.fromEntries(
+        Object.entries(JSON.parse(body)).map(([key, val]) =>
+          val === null ? [key, key] : [key, val],
+        ),
+      )
+      fs.writeFileSync(
+        `locales/${localeData.locale}/common.json`,
+        JSON.stringify(formatted, null, 2),
+      )
     })
   })
 })

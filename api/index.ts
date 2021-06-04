@@ -1,8 +1,12 @@
-import RestApi, {AppStorage, defaultFilter} from 'front-api/src/index'
+import RestApi, {AppStorage, LocationModel} from 'front-api/src/index'
 import axios, {AxiosPromise, AxiosRequestConfig} from 'axios'
 import {NextApiRequest} from 'next'
 import {RestResponse} from 'front-api/src/api/request'
-import {AdvertiseListItemModel} from 'front-api/src/models/index'
+import {
+  AdvertiseListItemModel,
+  BASIC_RADIUS,
+  sortTypes,
+} from 'front-api/src/models/index'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import {DummyAnalytics} from '../helpers'
@@ -40,18 +44,33 @@ export const getFreeProducts = (
   storage: AppStorage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
   const rest = getRest(storage)
-  const location = {
-    cityId: storage.value<number>('cityId'),
-    regionId: storage.value<number>('regionId'),
-    countryId: storage.value<number>('countryId'),
+  const locationFilter: {
+    cityId?: number
+    regionId?: number
+    countryId?: number
+    location?: LocationModel
+  } = {}
+  if (storage.value<string>('searchBy') === 'id') {
+    locationFilter.cityId = storage.value<number>('cityId')
+    locationFilter.regionId = storage.value<number>('regionId')
+    locationFilter.countryId = storage.value<number>('countryId')
+  } else {
+    locationFilter.location = storage.location
   }
   const filter = {
-    ...defaultFilter(storage),
-    withPhoto: true,
+    onlyFavorite: false,
+    search: '',
+    fieldValues: new Map(),
+    sort: sortTypes[0],
+    distanceMax: storage.value<number>('searchRadius') ?? BASIC_RADIUS,
+    locationAddress: storage.searchAddress ?? undefined,
+    secureDeal: false,
+    withDiscount: false,
+    withPhoto: false,
     priceMin: '0',
     priceMax: '0',
     // @ts-ignore
-    ...location,
+    ...locationFilter,
   }
 
   return rest.advertises.fetchList({

@@ -8,7 +8,7 @@ export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const cookies = parseCookies({req})
   const storage = new Storage({language: cookies.language})
   const rest = getRest(storage)
-  return rest.geo.fetchCityByRegion(body.region).then((response) => {
+  return rest.geo.fetchPositionByGPS(body.location).then((response) => {
     res.json(response)
   })
 }

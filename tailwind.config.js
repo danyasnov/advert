@@ -85,8 +85,15 @@ module.exports = {
         '89px': '89px',
         '105px': '105px',
       },
-      maxHeight: {
-        '216px': '216px',
+      maxHeight: {},
+      maxWidth: {
+        44: '11rem',
+      },
+      minHeight: {
+        10: '2.5rem',
+      },
+      minWidth: {
+        10: '2.5rem',
       },
       outline: {
         'brand-a1': ['2px solid #FF9514', '1px'],

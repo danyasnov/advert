@@ -1,12 +1,14 @@
 import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcMyLocation from 'icons/material/MyLocation.svg'
+import {parseCookies} from 'nookies'
 import Button from './Buttons/Button'
 import {notImplementedAlert} from '../helpers'
 import LocationModal from './LocationModal'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const Search: FC = () => {
+  const cookies = parseCookies()
   const {t} = useTranslation()
   const [locationModalShow, setLocationModalShow] = useState(false)
   useDisableBodyScroll(locationModalShow)
@@ -19,12 +21,19 @@ const Search: FC = () => {
       />
       <Button
         onClick={() => setLocationModalShow(true)}
-        className='hidden s:flex text-black-c w-9.5 h-9.5 flex-shrink-0 m:hidden'>
-        <IcMyLocation
-          width={24}
-          height={23}
-          className='fill-current text-black-c'
-        />
+        className='hidden s:flex min-w-10 min-h-10 flex-shrink-0'>
+        <div className='flex flex-row items-center px-3.5'>
+          <IcMyLocation
+            width={24}
+            height={23}
+            className='fill-current text-black-c'
+          />
+          {!!cookies.address && (
+            <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'>
+              {cookies.address}
+            </span>
+          )}
+        </div>
       </Button>
       <Button
         onClick={notImplementedAlert}

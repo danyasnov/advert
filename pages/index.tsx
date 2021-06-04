@@ -1,11 +1,17 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import nookies from 'nookies'
+import {parseCookies} from 'nookies'
 import {GetServerSideProps} from 'next'
 import Layout from '../components/Layout'
 import CategoriesSlider from '../components/CategoriesSlider'
 import ProductsSlider from '../components/ProductsSlider'
 import {getFreeProducts, getLocationByIp, getRest, parseIp} from '../api'
 import {Storage} from '../stores/Storage'
+import {
+  CookiesState,
+  getShortAddress,
+  SerializedCookiesState,
+  setCookiesObject,
+} from '../helpers'
 
 export default function Home() {
   return (
@@ -18,66 +24,53 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {locale, req} = ctx
-  const cookies = nookies.get(ctx)
+  const cookies: SerializedCookiesState = parseCookies(ctx)
+  const state: CookiesState = {}
 
   let categoriesData = null
   let productsData = null
   let countriesData = null
   let locationByIp = null
-  let userLocation
-  let searchLocation
-  let searchRadius
-  let countryId
-  let regionId
-  let cityId
 
-  if (!cookies.language) {
-    nookies.set(ctx, 'language', locale)
-  }
+  state.language = locale
   if (!cookies.userLocation) {
     try {
       const ip = parseIp(req)
       locationByIp = await getLocationByIp(ip)
       if (locationByIp.data?.data) {
         const {latitude, longitude} = locationByIp.data.data
-        userLocation = {
+        state.userLocation = {
           latitude,
           longitude,
         }
-        nookies.set(ctx, 'userLocation', JSON.stringify(userLocation))
       }
     } catch (e) {
       console.error(e)
     }
   } else {
-    userLocation = JSON.parse(cookies.userLocation)
+    state.userLocation = JSON.parse(cookies.userLocation)
   }
-  if (!cookies.searchLocation && userLocation) {
-    searchLocation = userLocation
-    nookies.set(ctx, 'searchLocation', JSON.stringify(searchLocation))
-  } else {
-    searchLocation = JSON.parse(cookies.searchLocation)
-  }
+  state.searchLocation =
+    !cookies.searchLocation && state.userLocation
+      ? state.userLocation
+      : JSON.parse(cookies.searchLocation)
 
-  if (!cookies.searchRadius) {
-    searchRadius = 25
-    nookies.set(ctx, 'searchRadius', searchRadius)
-  } else {
-    searchRadius = Number(cookies.searchRadius)
-  }
+  state.searchRadius = cookies.searchRadius ? Number(cookies.searchRadius) : 25
+  state.searchBy = cookies.searchBy ?? 'coords'
 
-  if (cookies.countryId) countryId = Number(cookies.countryId)
-  if (cookies.regionId) regionId = Number(cookies.regionId)
-  if (cookies.cityId) cityId = Number(cookies.cityId)
+  if (cookies.countryId) state.countryId = Number(cookies.countryId)
+  if (cookies.regionId) state.regionId = Number(cookies.regionId)
+  if (cookies.cityId) state.cityId = Number(cookies.cityId)
 
   const storage = new Storage({
     language: locale,
-    location: searchLocation,
-    userLocation,
-    searchRadius,
-    countryId,
-    regionId,
-    cityId,
+    location: state.searchLocation,
+    userLocation: state.userLocation,
+    searchRadius: state.searchRadius,
+    countryId: state.countryId,
+    regionId: state.regionId,
+    cityId: state.cityId,
+    searchBy: state.searchBy,
   })
   const rest = getRest(storage)
   try {
@@ -87,6 +80,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } catch (e) {
     console.error(e)
   }
+
+  if (!cookies.address) {
+    const position = await rest.geo.fetchPositionByGPS(state.userLocation)
+    state.address = getShortAddress(position.result)
+  }
+
+  setCookiesObject(state, ctx)
 
   return {
     props: {

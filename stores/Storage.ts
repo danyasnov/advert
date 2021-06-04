@@ -26,15 +26,17 @@ export type StorageKey =
   | 'countryId'
   | 'regionId'
   | 'cityId'
+  | 'searchBy'
 
 interface StorageOptions {
   language: string
   location?: LocationModel
   userLocation?: LocationModel
   searchRadius?: number
-  countryId?: number
-  regionId?: number
-  cityId?: number
+  countryId?: number | string
+  regionId?: number | string
+  cityId?: number | string
+  searchBy?: 'coords' | 'id'
 }
 
 export class Storage implements AppStorage {
@@ -47,6 +49,7 @@ export class Storage implements AppStorage {
       countryId,
       cityId,
       regionId,
+      searchBy,
     } = data
     this.store = {
       language,
@@ -56,6 +59,7 @@ export class Storage implements AppStorage {
       countryId,
       cityId,
       regionId,
+      searchBy,
     }
   }
 
