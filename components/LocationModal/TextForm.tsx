@@ -72,7 +72,7 @@ const popularCountriesIds = [
 const TextForm: FC = observer(() => {
   const router = useRouter()
   const cookies = parseCookies()
-  const {countries, countriesById: byId} = useCountriesStore()
+  const {countries, byId} = useCountriesStore()
   const countryOptions: SelectItem[] = toJS(countries).map((c) => ({
     value: c.id,
     label: c.title,

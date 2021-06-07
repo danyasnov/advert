@@ -17,6 +17,7 @@ const ProductsSlider: FC = observer(() => {
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
+    slidesToScroll: 2,
   })
   const setLockParentScroll = useNestedEmblaCarousel(embla)
   const {

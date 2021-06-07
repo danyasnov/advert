@@ -1,17 +1,15 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import Layout from '../components/Layout'
-import CategoriesSlider from '../components/CategoriesSlider'
-import ProductsSlider from '../components/ProductsSlider'
-import {getFreeProducts, getRest} from '../api'
-import {Storage} from '../stores/Storage'
-import {processCookies} from '../helpers'
+import Layout from '../../../components/Layout'
+import {processCookies} from '../../../helpers'
+import {Storage} from '../../../stores/Storage'
+import {getFreeProducts, getRest} from '../../../api'
+import Breadcrumbs from '../../../components/Breadcrumbs'
 
 export default function Home() {
   return (
     <Layout>
-      <CategoriesSlider />
-      <ProductsSlider />
+      <Breadcrumbs />
     </Layout>
   )
 }

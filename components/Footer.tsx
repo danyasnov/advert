@@ -30,7 +30,7 @@ const mainCities: Array<string> = [
 const Footer: FC = observer(() => {
   const categoriesStore = useCategoriesStore()
   const countriesStore = useCountriesStore()
-  const countriesById = toJS(countriesStore.countriesById)
+  const countriesById = toJS(countriesStore.byId)
   const {t} = useTranslation()
   const categories = toJS(categoriesStore.categories)
   return (
@@ -41,7 +41,7 @@ const Footer: FC = observer(() => {
             <LinkButton
               key={id}
               onClick={notImplementedAlert}
-              label={countriesById[id].title}
+              label={countriesById[id]?.title}
             />
           ))}
           <LinkButton

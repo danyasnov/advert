@@ -25,14 +25,11 @@ interface ColProps {
 })
 class FirstColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
-    const {category, isActive} = this.props
+    const {category, isActive, onClick} = this.props
     const {name} = category
 
     return (
-      <CategoryItem
-        category={category}
-        onClick={notImplementedAlert}
-        isActive={isActive}>
+      <CategoryItem category={category} onClick={onClick} isActive={isActive}>
         {name}
       </CategoryItem>
     )

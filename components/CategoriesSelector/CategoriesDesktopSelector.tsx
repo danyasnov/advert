@@ -3,13 +3,17 @@ import {toJS} from 'mobx'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
-import {notImplementedAlert} from '../../helpers'
+import {useRouter} from 'next/router'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
-import {FirstColItem, ThirdCol, SecondCol} from './utils'
+import {FirstColItem, ThirdCol, SecondCol} from './columns'
 import ImageWrapper from '../ImageWrapper'
 
-const CategoriesMobileSelector: FC = observer(() => {
+interface Props {
+  onHide: () => void
+}
+const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
   const {t} = useTranslation()
+  const router = useRouter()
   const allProductsButton = {
     id: 0,
     name: t('ALL_ADVERTS'),
@@ -29,7 +33,7 @@ const CategoriesMobileSelector: FC = observer(() => {
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [secondColumnActiveId, setSecondColumnActiveId] = useState(0)
   const [secondLevelItems, setSecondLevelItems] = useState(
-    withAllProductsButton(categories[0].items),
+    withAllProductsButton(categories[0]?.items ?? []),
   )
   const [thirdLevelItems, setThirdLevelItems] = useState([])
 
@@ -43,8 +47,11 @@ const CategoriesMobileSelector: FC = observer(() => {
           <FirstColItem
             category={c}
             key={c.id}
-            onClick={notImplementedAlert}
-            isActive={activeCategory.id === c.id}
+            onClick={() => {
+              onHide()
+              router.push(`/all/all/${c.slug}`)
+            }}
+            isActive={activeCategory?.id === c.id}
             onMouseEnter={(cat) => {
               const secondItems = withAllProductsButton(cat.items)
               const thirdItems = withAllProductsButton(secondItems[0].items)
@@ -72,8 +79,8 @@ const CategoriesMobileSelector: FC = observer(() => {
       <div className='hidden m:block'>
         <div className='pl-12 pt-6 l:pl-6'>
           <ImageWrapper
-            type={`/img/categories/${activeCategory.slug}.jpg`}
-            alt={activeCategory.slug}
+            type={`/img/categories/${activeCategory?.slug}.jpg`}
+            alt={activeCategory?.slug}
             width={288}
             height={288}
             className='rounded-12'
@@ -84,4 +91,4 @@ const CategoriesMobileSelector: FC = observer(() => {
   )
 })
 
-export default CategoriesMobileSelector
+export default CategoriesDesktopSelector

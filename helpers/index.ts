@@ -1,6 +1,9 @@
 import {AnalyticsService, LocationModel} from 'front-api/src'
 import {GeoPositionModel} from 'front-api/src/models/index'
-import {setCookie} from 'nookies'
+import {parseCookies, setCookie} from 'nookies'
+import {GetServerSideProps, GetServerSidePropsContext} from 'next'
+import {ParsedUrlQuery} from 'querystring'
+import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -39,7 +42,7 @@ export const objectFlip = (obj: any): any => {
   }, {})
 }
 
-export const getShortAddress = (addressObj: GeoPositionModel): string => {
+export const getShortAddress = (addressObj: GeoPositionModel = {}): string => {
   const {city, region, country} = addressObj
   const addressArray = []
   if (city) addressArray.push(city.word)
@@ -56,6 +59,50 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
         : data[key]
     setCookie(ctx, key, value)
   })
+}
+
+export const processCookies = async (
+  ctx: GetServerSidePropsContext,
+): Promise<CookiesState> => {
+  const {locale, req} = ctx
+  const cookies: SerializedCookiesState = parseCookies(ctx)
+  const state: CookiesState = {}
+  let locationByIp = null
+  state.language = locale
+  if (!cookies.userLocation) {
+    try {
+      const ip = parseIp(req)
+      locationByIp = await getLocationByIp(ip)
+      if (locationByIp.data?.data) {
+        const {latitude, longitude} = locationByIp.data.data
+        state.userLocation = {
+          latitude,
+          longitude,
+        }
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  } else {
+    state.userLocation = JSON.parse(cookies.userLocation)
+  }
+  state.searchLocation =
+    !cookies.searchLocation && state.userLocation
+      ? state.userLocation
+      : JSON.parse(cookies.searchLocation)
+
+  state.searchRadius = cookies.searchRadius ? Number(cookies.searchRadius) : 25
+  state.searchBy = cookies.searchBy ?? 'coords'
+
+  if (cookies.countryId) state.countryId = Number(cookies.countryId)
+  if (cookies.regionId) state.regionId = Number(cookies.regionId)
+  if (cookies.cityId) state.cityId = Number(cookies.cityId)
+  if (!cookies.address) {
+    const position = await getAddressByGPS(state.userLocation, state.language)
+    state.address = getShortAddress(position.data?.result)
+  }
+  setCookiesObject(state, ctx)
+  return state
 }
 
 export interface CookiesState {

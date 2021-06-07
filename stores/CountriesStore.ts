@@ -9,7 +9,7 @@ export interface ICountriesHydration {
 export interface ICountriesStore {
   root: RootStore
   countries: Array<CountryModel>
-  countriesById: Record<string, CountryModel>
+  byId: Record<string, CountryModel>
   hydrate(data: ICountriesHydration): void
 }
 
@@ -18,7 +18,7 @@ export class CountriesStore implements ICountriesStore {
 
   countries = []
 
-  get countriesById(): Record<string, CountryModel> {
+  get byId(): Record<string, CountryModel> {
     return this.countries.reduce(
       (acc, val) => ({
         ...acc,

@@ -80,6 +80,7 @@ module.exports = {
         'black-e': '#F8F8F8',
         'white-a': '#FFFFFF',
         'white-d': 'rgba(12, 13, 13, 0.2)',
+        'image-placeholder': 'rgb(234,233,233)',
       },
       inset: {
         '89px': '89px',

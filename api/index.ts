@@ -1,15 +1,19 @@
 import RestApi, {AppStorage, LocationModel} from 'front-api/src/index'
-import axios, {AxiosPromise, AxiosRequestConfig} from 'axios'
+import axios, {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios'
 import {NextApiRequest} from 'next'
-import {RestResponse} from 'front-api/src/api/request'
+import {Endpoint, RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListItemModel,
   BASIC_RADIUS,
+  GeoPositionModel,
   sortTypes,
 } from 'front-api/src/models/index'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
+import curlirize from 'axios-curlirize'
 import {DummyAnalytics} from '../helpers'
+
+curlirize(axios)
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
@@ -37,6 +41,17 @@ export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
     method: 'get',
     url: `${process.env.API_URL}/v2/geo/mylocation`,
     headers,
+  })
+}
+
+export const getAddressByGPS = (
+  location: LocationModel,
+  lang: string,
+): Promise<AxiosResponse<RestResponse<GeoPositionModel>>> => {
+  return makeRequest({
+    url: `${process.env.API_URL}/${Endpoint.locationByIp}`,
+    method: 'post',
+    data: {lat: location.latitude, lng: location.longitude, lang},
   })
 }
 

@@ -28,11 +28,9 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
   return (
     <div className='w-40 s:w-56 m:w-48 l:w-53 border border-shadow-b rounded-lg overflow-hidden'>
       <div className='overflow-hidden' ref={viewportRef}>
-        <div className='flex'>
+        <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {images.map((i) => (
-            <div
-              key={i}
-              className='relative min-w-full h-40 s:h-56 m:h-48 l:h-53'>
+            <div key={i} className='relative min-w-full'>
               <ImageWrapper
                 type={i}
                 key={i}

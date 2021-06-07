@@ -25,7 +25,7 @@ const CategoriesSelector: FC = () => {
             <CategoriesMobileSelector />
           </div>
           <div className='hidden s:block'>
-            <CategoriesDesktopSelector />
+            <CategoriesDesktopSelector onHide={() => setShow(false)} />
           </div>
         </>
       )}
