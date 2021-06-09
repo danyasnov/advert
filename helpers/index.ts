@@ -99,7 +99,7 @@ export const processCookies = async (
   if (cookies.cityId) state.cityId = Number(cookies.cityId)
   if (!cookies.address) {
     const position = await getAddressByGPS(state.userLocation, state.language)
-    state.address = getShortAddress(position.data?.result)
+    state.address = getShortAddress(position.result)
   }
   setCookiesObject(state, ctx)
   return state

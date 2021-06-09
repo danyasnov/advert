@@ -12,6 +12,7 @@ import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import curlirize from 'axios-curlirize'
 import {DummyAnalytics} from '../helpers'
+import {Storage} from '../stores/Storage'
 
 curlirize(axios)
 
@@ -46,13 +47,11 @@ export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
 
 export const getAddressByGPS = (
   location: LocationModel,
-  lang: string,
-): Promise<AxiosResponse<RestResponse<GeoPositionModel>>> => {
-  return makeRequest({
-    url: `${process.env.API_URL}/${Endpoint.locationByIp}`,
-    method: 'post',
-    data: {lat: location.latitude, lng: location.longitude, lang},
-  })
+  language: string,
+): Promise<RestResponse<GeoPositionModel>> => {
+  const storage = new Storage({language})
+  const rest = getRest(storage)
+  return rest.geo.fetchPositionByGPS(location)
 }
 
 export const getFreeProducts = (
