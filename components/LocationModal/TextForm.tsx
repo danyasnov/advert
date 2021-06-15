@@ -89,6 +89,7 @@ const TextForm: FC = observer(() => {
     if (!item?.value) {
       setRegion(null)
       setCity(null)
+      setCityOptions([])
     } else {
       fetchRegions(item.value).then((items) => {
         setRegion(null)
@@ -101,6 +102,7 @@ const TextForm: FC = observer(() => {
     setRegion(item)
     if (!item?.value) {
       setCity(null)
+      setCityOptions([])
     } else {
       fetchCities(item.value).then((items) => {
         setCity(null)
@@ -150,19 +152,19 @@ const TextForm: FC = observer(() => {
     const state: CookiesState = {}
     if (city?.value) {
       addressArray.push(city.label)
-      state.cityId = city.value
+      state.cityId = city.value.toString()
     } else {
       destroyCookie(null, 'cityId')
     }
     if (region?.value) {
       addressArray.push(region.label)
-      state.regionId = region.value
+      state.regionId = region.value.toString()
     } else {
       destroyCookie(null, 'regionId')
     }
     if (country?.value) {
       addressArray.push(country.label)
-      state.countryId = country.value
+      state.countryId = country.value.toString()
     } else {
       destroyCookie(null, 'countryId')
     }

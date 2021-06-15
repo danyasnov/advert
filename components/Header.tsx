@@ -14,7 +14,7 @@ const Header: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <header className='flex s:justify-center relative'>
+    <header className='flex s:justify-center relative shadow-lg'>
       <div className='w-full header-width'>
         <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
           <div className='hidden s:flex space-x-4'>

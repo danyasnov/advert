@@ -15,7 +15,7 @@ const CategoriesSlider: FC = observer(() => {
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
-    slidesToScroll: 2,
+    slidesToScroll: 1,
   })
   const categories = toJS(store.categoriesWithoutAll)
   const {

@@ -1,21 +1,23 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import Layout from '../../../components/Layout'
-import {processCookies} from '../../../helpers'
-import {Storage} from '../../../stores/Storage'
-import {getFreeProducts, getRest} from '../../../api'
+import CategoryLayout from '../../../components/CategoryLayout'
+import {findCategoryByQuery, processCookies} from '../../../helpers'
+import Storage from '../../../stores/Storage'
+import {getProducts, getRest} from '../../../api'
 import Breadcrumbs from '../../../components/Breadcrumbs'
+import CategoryBody from '../../../components/CategoryBody'
 
 export default function Home() {
   return (
-    <Layout>
+    <CategoryLayout>
       <Breadcrumbs />
-    </Layout>
+      <CategoryBody />
+    </CategoryLayout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {locale} = ctx
+  const {locale, query} = ctx
   const state = await processCookies(ctx)
 
   const storage = new Storage({
@@ -29,24 +31,29 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     searchBy: state.searchBy,
   })
   const rest = getRest(storage)
+
+  let categories
+  try {
+    const response = await rest.categories.fetchTree()
+    categories = response?.result
+  } catch (e) {
+    console.error(e)
+  }
+
+  const currentCategory = findCategoryByQuery(query.categories, categories)
+
   const promises = [
-    getFreeProducts(storage),
+    getProducts(rest, storage, currentCategory),
     rest.oldRest.fetchCountries(),
-    rest.categories.fetchTree(),
+    rest.categories.fetchCategoryData(23),
   ]
 
-  const [
-    productsData,
-    countriesData,
-    categoriesData,
-  ] = await Promise.allSettled(promises).then((res) =>
-    res.map((p) => (p.status === 'fulfilled' ? p.value : null)),
-  )
+  const [productsData, countriesData, filters] = await Promise.allSettled(
+    promises,
+  ).then((res) => res.map((p) => (p.status === 'fulfilled' ? p.value : null)))
   // @ts-ignore
-  const categories = categoriesData?.result
-  // @ts-ignore
-  const products = productsData?.result
-  const countries = countriesData
+  const products = productsData?.result ?? null
+  const countries = countriesData ?? null
   return {
     props: {
       hydrationData: {

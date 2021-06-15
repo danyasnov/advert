@@ -36,6 +36,7 @@ module.exports = {
         12: '3rem',
       },
       spacing: {
+        4.5: '1.125rem',
         9.5: '2.375rem',
         18: '4.5rem',
         26: '6.5rem',
@@ -44,10 +45,16 @@ module.exports = {
         34: '8.5rem',
         35: '8.75rem',
         38: '9.5rem',
+        49: '12.25rem',
         50: '12.5rem',
         53: '13.25rem',
         54: '13.5rem',
+        58: '14.5rem',
+        73: '18.25rem',
         74: '18.5rem',
+        82: '20.5rem',
+        86: '21.5rem',
+        110: '27.5rem',
         '7px': '7px',
         '33px': '33px',
         '288px': '288px',
@@ -81,6 +88,7 @@ module.exports = {
         'white-a': '#FFFFFF',
         'white-d': 'rgba(12, 13, 13, 0.2)',
         'image-placeholder': 'rgb(234,233,233)',
+        error: '#CC3237',
       },
       inset: {
         '89px': '89px',
@@ -104,6 +112,8 @@ module.exports = {
   variants: {
     extend: {
       fontWeight: ['first'],
+      borderRadius: ['first', 'last'],
+      borderWidth: ['first', 'last'],
     },
   },
   plugins: [capitalizeFirst, lineClamp],

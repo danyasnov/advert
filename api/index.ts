@@ -1,18 +1,23 @@
-import RestApi, {AppStorage, LocationModel} from 'front-api/src/index'
-import axios, {AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios'
+import RestApi, {
+  AppStorage,
+  LocationModel,
+  CACategoryModel,
+  defaultFilter,
+} from 'front-api'
+import axios, {AxiosPromise, AxiosRequestConfig} from 'axios'
 import {NextApiRequest} from 'next'
-import {Endpoint, RestResponse} from 'front-api/src/api/request'
+import {RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListItemModel,
-  BASIC_RADIUS,
+  CountryModel,
+  GeoPositionItemModel,
   GeoPositionModel,
-  sortTypes,
 } from 'front-api/src/models/index'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import curlirize from 'axios-curlirize'
-import {DummyAnalytics} from '../helpers'
-import {Storage} from '../stores/Storage'
+import {DummyAnalytics, getSearchByFilter} from '../helpers'
+import Storage from '../stores/Storage'
 
 curlirize(axios)
 
@@ -53,34 +58,36 @@ export const getAddressByGPS = (
   const rest = getRest(storage)
   return rest.geo.fetchPositionByGPS(location)
 }
+export const getProducts = (
+  rest: RestApi,
+  storage: AppStorage,
+  category: CACategoryModel,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const locationFilter = getSearchByFilter(storage)
 
+  const filter = {
+    ...defaultFilter(storage),
+    location: null,
+    categoryId: category.id,
+    ...locationFilter,
+  }
+
+  return rest.advertises.fetchList({
+    page: 1,
+    limit: 40,
+    searchId: '',
+    filter,
+  })
+}
 export const getFreeProducts = (
+  rest: RestApi,
   storage: AppStorage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const rest = getRest(storage)
-  const locationFilter: {
-    cityId?: number
-    regionId?: number
-    countryId?: number
-    location?: LocationModel
-  } = {}
-  if (storage.value<string>('searchBy') === 'id') {
-    locationFilter.cityId = storage.value<number>('cityId')
-    locationFilter.regionId = storage.value<number>('regionId')
-    locationFilter.countryId = storage.value<number>('countryId')
-  } else {
-    locationFilter.location = storage.location
-  }
+  const locationFilter = getSearchByFilter(storage)
+
   const filter = {
-    onlyFavorite: false,
-    search: '',
-    fieldValues: new Map(),
-    sort: sortTypes[0],
-    distanceMax: storage.value<number>('searchRadius') ?? BASIC_RADIUS,
-    locationAddress: storage.searchAddress ?? undefined,
-    secureDeal: false,
-    withDiscount: false,
-    withPhoto: false,
+    ...defaultFilter(storage),
+    location: null,
     priceMin: '0',
     priceMax: '0',
     // @ts-ignore
@@ -93,4 +100,36 @@ export const getFreeProducts = (
     searchId: '',
     filter,
   })
+}
+
+export const getCountries = (
+  language: string,
+): Promise<Array<CountryModel>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.oldRest.fetchCountries()
+}
+
+export const getRegions = (
+  country: string,
+  language: string,
+): Promise<RestResponse<Array<GeoPositionItemModel>>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.geo.fetchRegionByCountry(country)
+}
+
+export const getCities = (
+  region: string,
+  language: string,
+): Promise<RestResponse<Array<GeoPositionItemModel>>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.geo.fetchCityByRegion(region)
 }

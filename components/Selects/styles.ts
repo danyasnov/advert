@@ -14,12 +14,12 @@ export default {
         }
       : {}),
   }),
-  option: (provided) => ({
+  option: (provided, state) => ({
     ...provided,
     fontSize: '14px',
     lineHeight: '16px',
     color: '#3D3F43',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: state.isFocused ? '#FFEEDD' : '#FFFFFF',
     '&:hover': {
       backgroundColor: '#FFEEDD',
     },

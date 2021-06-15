@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx'
-import {CACategoryModel, CountryModel} from 'front-api'
+import {CACategoryModel} from 'front-api'
 import {RootStore} from './RootStore'
 
 export interface ICategoriesHydration {
@@ -10,8 +10,8 @@ export interface ICategoriesStore {
   root: RootStore
   categories: Array<CACategoryModel>
   hydrate(data: ICategoriesHydration): void
-  byId: Record<string, CountryModel>
-  bySlug: Record<string, CountryModel>
+  byId: Record<string, CACategoryModel>
+  bySlug: Record<string, CACategoryModel>
   readonly categoriesWithoutAll: Array<CACategoryModel>
 }
 
@@ -20,7 +20,7 @@ export class CategoriesStore implements ICategoriesStore {
 
   categories = []
 
-  get byId(): Record<string, CountryModel> {
+  get byId(): Record<string, CACategoryModel> {
     return this.categories.reduce(
       (acc, val) => ({
         ...acc,
@@ -30,7 +30,7 @@ export class CategoriesStore implements ICategoriesStore {
     )
   }
 
-  get bySlug(): Record<string, CountryModel> {
+  get bySlug(): Record<string, CACategoryModel> {
     return this.categories.reduce(
       (acc, val) => ({
         ...acc,

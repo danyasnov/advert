@@ -6,7 +6,7 @@ interface Props {
   options: Array<SelectItem>
   placeholder: string
   onChange: (value: SelectItem) => void
-  value: SelectItem
+  value?: SelectItem
   isSearchable?: boolean
   isDisabled?: boolean
   isClearable?: boolean

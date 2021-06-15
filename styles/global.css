@@ -31,3 +31,14 @@
 .categories-selector-item {
     @apply flex w-full px-4 py-2 items-center justify-start text-black-b text-body-2 h-10 hover:bg-brand-a2 text-left
 }
+
+.segmented-option-border-fix:last-child {
+    border-right-width: 1px !important
+}
+
+input:checked + div {
+    @apply border-brand-a1 bg-brand-a1;
+}
+input:checked + div svg {
+    @apply block text-white;
+}

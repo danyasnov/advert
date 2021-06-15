@@ -1,33 +1,19 @@
-import {Dispatch, FC, SetStateAction, useEffect} from 'react'
+import {FC} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
-import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
-import ImageWrapper from './ImageWrapper'
-import unixToString from '../utils/unixToString'
+import ImageWrapper from '../ImageWrapper'
+import unixToString from '../../utils/unixToString'
 
 interface Props {
   product: AdvertiseListItemModel
-  setLockParentScroll: Dispatch<SetStateAction<boolean>>
 }
-const Card: FC<Props> = ({product, setLockParentScroll}) => {
+const Card: FC<Props> = ({product}) => {
   const {title, images, price, oldPrice, dateUpdated, views} = product
-
-  const [viewportRef, embla] = useEmblaCarousel({
-    align: 'start',
-    containScroll: 'trimSnaps',
-    draggable: images.length > 1,
-  })
-
-  useEffect(() => {
-    if (!embla) return
-    embla.on('pointerDown', () => setLockParentScroll(true))
-    embla.on('pointerUp', () => setLockParentScroll(false))
-  }, [embla, setLockParentScroll])
 
   return (
     <div className='w-40 s:w-56 m:w-48 l:w-53 border border-shadow-b rounded-lg overflow-hidden'>
-      <div className='overflow-hidden' ref={viewportRef}>
+      <div className='overflow-hidden'>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {images.map((i) => (
             <div key={i} className='relative min-w-full'>

@@ -1,9 +1,21 @@
-import {AnalyticsService, LocationModel} from 'front-api/src'
+import {
+  AnalyticsService,
+  LocationModel,
+  CACategoryModel,
+  AppStorage,
+} from 'front-api/src'
 import {GeoPositionModel} from 'front-api/src/models/index'
 import {parseCookies, setCookie} from 'nookies'
 import {GetServerSideProps, GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
-import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
+import {
+  getAddressByGPS,
+  getCities,
+  getCountries,
+  getLocationByIp,
+  getRegions,
+  parseIp,
+} from '../api'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -57,7 +69,10 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
       typeof data[key] === 'object' && data[key] !== null
         ? JSON.stringify(data[key])
         : data[key]
-    setCookie(ctx, key, value)
+    setCookie(ctx, key, value, {
+      path: '/',
+      maxAge: 30 * 24 * 60 * 60,
+    })
   })
 }
 
@@ -94,24 +109,97 @@ export const processCookies = async (
   state.searchRadius = cookies.searchRadius ? Number(cookies.searchRadius) : 25
   state.searchBy = cookies.searchBy ?? 'coords'
 
-  if (cookies.countryId) state.countryId = Number(cookies.countryId)
-  if (cookies.regionId) state.regionId = Number(cookies.regionId)
-  if (cookies.cityId) state.cityId = Number(cookies.cityId)
-  if (!cookies.address) {
-    const position = await getAddressByGPS(state.userLocation, state.language)
-    state.address = getShortAddress(position.result)
+  if (cookies.countryId) state.countryId = cookies.countryId
+  if (cookies.regionId) state.regionId = cookies.regionId
+  if (cookies.cityId) state.cityId = cookies.cityId
+  if (!cookies.address || cookies.language !== locale) {
+    if (state.searchBy === 'coords') {
+      const position = await getAddressByGPS(state.userLocation, state.language)
+      state.address = getShortAddress(position.result)
+    } else {
+      const address = []
+      if (state.countryId) {
+        const countries = await getCountries(state.language)
+        const countryTitle = (countries ?? []).find(
+          (c) => c.id === state.countryId,
+        )?.title
+        if (countryTitle) address.push(countryTitle)
+        if (state.regionId) {
+          const regions = await getRegions(state.countryId, state.language)
+          const regionTitle = (regions.result ?? []).find(
+            (c) => c.id === state.countryId,
+          )?.word
+          if (regionTitle) address.push(regionTitle)
+          if (state.cityId) {
+            const cities = await getCities(state.regionId, state.language)
+            const cityTitle = (cities.result ?? []).find(
+              (c) => c.id === state.cityId,
+            )?.word
+            if (cityTitle) address.push(cityTitle)
+          }
+        }
+      }
+      if (address.length) {
+        state.address = address[address.length - 1]
+      }
+    }
   }
   setCookiesObject(state, ctx)
   return state
+}
+
+export const findCategoryByQuery = (
+  categoriesQuery: string | string[],
+  categories: CACategoryModel[],
+): CACategoryModel | null => {
+  if (!Array.isArray(categoriesQuery)) return null
+  let category
+  // eslint-disable-next-line no-restricted-syntax
+  for (const slug of categoriesQuery) {
+    const source = (category?.items || categories) ?? []
+    category = source.find((c) => c.slug === slug)
+    if (!category) {
+      break
+    }
+  }
+  return category
+}
+
+export const getQueryValue = (query: ParsedUrlQuery, path: string): string => {
+  const value = query[path]
+  return Array.isArray(value) ? value[0] : value
+}
+
+export const getSearchByFilter = (
+  storage: AppStorage,
+): LocationIdFilter | LocationFilter => {
+  if (storage.searchBy === 'id') {
+    return {
+      cityId: storage.cityId,
+      regionId: storage.regionId,
+      countryId: storage.countryId,
+    }
+  }
+  return {location: storage.location}
+}
+
+interface LocationIdFilter {
+  cityId?: number
+  regionId?: number
+  countryId: number
+}
+
+interface LocationFilter {
+  location: LocationModel
 }
 
 export interface CookiesState {
   userLocation?: LocationModel
   searchLocation?: LocationModel
   searchRadius?: number
-  countryId?: string | number
-  regionId?: string | number
-  cityId?: string | number
+  countryId?: string
+  regionId?: string
+  cityId?: string
   searchBy?: 'coords' | 'id'
   address?: string
   language?: string

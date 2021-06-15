@@ -3,12 +3,12 @@ import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
 import {useEmblaCarousel} from 'embla-carousel/react'
-import {useProductsStore} from '../providers/RootStoreProvider'
+import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
-import TitleWithSeparator from './TitleWithSeparator'
-import useNestedEmblaCarousel from '../hooks/useNestedEmblaCarousel'
-import SliderButton from './Buttons/SliderButton'
-import useSliderButtons from '../hooks/useSliderButtons'
+import TitleWithSeparator from '../TitleWithSeparator'
+import useNestedEmblaCarousel from '../../hooks/useNestedEmblaCarousel'
+import SliderButton from '../Buttons/SliderButton'
+import useSliderButtons from '../../hooks/useSliderButtons'
 
 const ProductsSlider: FC = observer(() => {
   const {t} = useTranslation()
@@ -17,7 +17,7 @@ const ProductsSlider: FC = observer(() => {
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
-    slidesToScroll: 2,
+    slidesToScroll: 1,
   })
   const setLockParentScroll = useNestedEmblaCarousel(embla)
   const {

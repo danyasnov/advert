@@ -1,6 +1,6 @@
 import {parseCookies} from 'nookies'
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {Storage} from '../../stores/Storage'
+import Storage from '../../stores/Storage'
 import {getRest} from '../../api'
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
