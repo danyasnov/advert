@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {useTranslation} from 'next-i18next'
 import {GeoPositionItemModel} from 'front-api/src/models/index'
 import {AxiosResponse} from 'axios'
@@ -72,12 +71,11 @@ const popularCountriesIds = [
 const TextForm: FC = observer(() => {
   const router = useRouter()
   const cookies = parseCookies()
-  const {countries, byId} = useCountriesStore()
-  const countryOptions: SelectItem[] = toJS(countries).map((c) => ({
+  const {countries, byId: countriesById} = useCountriesStore()
+  const countryOptions: SelectItem[] = countries.map((c) => ({
     value: c.id,
     label: c.title,
   }))
-  const countriesById = toJS(byId)
   const {t} = useTranslation()
   const [country, setCountry] = useState<SelectItem | null>(null)
   const [region, setRegion] = useState<SelectItem | null>(null)

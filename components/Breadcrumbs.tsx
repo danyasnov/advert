@@ -3,16 +3,14 @@ import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import Link from 'next/link'
-import {toJS} from 'mobx'
 import {CACategoryModel} from 'front-api'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
 
 const Breadcrumbs: FC = observer(() => {
   const {query} = useRouter()
-  const categoriesStore = useCategoriesStore()
+  const {categories} = useCategoriesStore()
   const {t} = useTranslation()
   let categoriesBreadcrumbs = []
-  const categories = toJS(categoriesStore.categories)
   if (Array.isArray(query.categories)) {
     let currentCategory: CACategoryModel
     let currentHref = `/${query.country}/${query.city}/`

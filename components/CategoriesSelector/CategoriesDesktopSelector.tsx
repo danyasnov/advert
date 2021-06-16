@@ -1,5 +1,4 @@
 import {FC, useState} from 'react'
-import {toJS} from 'mobx'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
@@ -28,12 +27,11 @@ const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
     return []
   }
 
-  const categoriesStore = useCategoriesStore()
-  const categories = toJS(categoriesStore.categoriesWithoutAll)
-  const [activeCategory, setActiveCategory] = useState(categories[0])
+  const {categoriesWithoutAll} = useCategoriesStore()
+  const [activeCategory, setActiveCategory] = useState(categoriesWithoutAll[0])
   const [secondColumnActiveId, setSecondColumnActiveId] = useState(0)
   const [secondLevelItems, setSecondLevelItems] = useState(
-    withAllProductsButton(categories[0]?.items ?? []),
+    withAllProductsButton(categoriesWithoutAll[0]?.items ?? []),
   )
   const [thirdLevelItems, setThirdLevelItems] = useState([])
 
@@ -43,7 +41,7 @@ const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
        border-t s:px-8 m:px-10 l:px-18 shadow-2xl category-selector-width m-auto
        grid grid-cols-3 m:grid-cols-category-selector-m l:grid-cols-category-selector-l'>
       <div className='pb-4'>
-        {categories.map((c) => (
+        {categoriesWithoutAll.map((c) => (
           <FirstColItem
             category={c}
             key={c.id}

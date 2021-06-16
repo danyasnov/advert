@@ -2,7 +2,6 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
-import {toJS} from 'mobx'
 import Select, {SelectItem} from '../Selects/Select'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {findCategoryByQuery, getQueryValue} from '../../helpers'
@@ -12,8 +11,7 @@ const CategoryFilter: FC = observer(() => {
   const router = useRouter()
   const slug = getQueryValue(router.query, 'category')
   const {t} = useTranslation()
-  const categoriesStore = useCategoriesStore()
-  const categories = toJS(categoriesStore.categories)
+  const {categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,

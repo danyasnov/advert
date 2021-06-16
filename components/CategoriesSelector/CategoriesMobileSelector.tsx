@@ -1,6 +1,5 @@
 import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {FC, useState} from 'react'
-import {toJS} from 'mobx'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import CategoryItem from './CategoryItem'
@@ -9,15 +8,14 @@ import Button from '../Buttons/Button'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 
 const CategoriesMobileSelector: FC = observer(() => {
-  const categoriesStore = useCategoriesStore()
-  const categories = toJS(categoriesStore.categoriesWithoutAll)
+  const {categoriesWithoutAll} = useCategoriesStore()
   const {t} = useTranslation()
   const [subCategories, setSubCategories] = useState(null)
 
   return (
     <div className='absolute top-89px inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start'>
       {!subCategories &&
-        categories.map((c) => (
+        categoriesWithoutAll.map((c) => (
           <CategoryItem
             category={c}
             key={c.id}

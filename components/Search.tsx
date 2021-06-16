@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcMyLocation from 'icons/material/MyLocation.svg'
 import {parseCookies} from 'nookies'
@@ -12,6 +12,10 @@ const Search: FC = () => {
   const {t} = useTranslation()
   const [locationModalShow, setLocationModalShow] = useState(false)
   useDisableBodyScroll(locationModalShow)
+  const [address, setAddress] = useState(null)
+  useEffect(() => {
+    setAddress(cookies.address ? cookies.address : null)
+  }, [cookies])
   return (
     <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
       <input
@@ -28,9 +32,9 @@ const Search: FC = () => {
             height={23}
             className='fill-current text-black-c'
           />
-          {!!cookies.address && (
+          {!!address && (
             <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'>
-              {cookies.address}
+              {address}
             </span>
           )}
         </div>

@@ -1,7 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
@@ -12,8 +11,7 @@ import useSliderButtons from '../../hooks/useSliderButtons'
 
 const ProductsSlider: FC = observer(() => {
   const {t} = useTranslation()
-  const store = useProductsStore()
-  const products = toJS(store.products)
+  const {products} = useProductsStore()
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',

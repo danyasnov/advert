@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {useTranslation} from 'next-i18next'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import ImageWrapper from './ImageWrapper'
@@ -10,14 +9,13 @@ import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 
 const CategoriesSlider: FC = observer(() => {
-  const store = useCategoriesStore()
+  const {categoriesWithoutAll} = useCategoriesStore()
   const {t} = useTranslation()
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
     slidesToScroll: 1,
   })
-  const categories = toJS(store.categoriesWithoutAll)
   const {
     scrollNext,
     scrollPrev,
@@ -31,7 +29,7 @@ const CategoriesSlider: FC = observer(() => {
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-4 mx-4 s:mx-8  m:mx-0'>
-            {categories.map((c) => (
+            {categoriesWithoutAll.map((c) => (
               <div key={c.id} className='relative'>
                 <ImageWrapper
                   type={`/img/categories/${c.slug}.jpg`}

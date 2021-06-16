@@ -1,13 +1,11 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import BigCard from './VipCard'
 import Card from './Card'
 
 const ScrollableCardGroup: FC = observer(() => {
-  const productsStore = useProductsStore()
-  const products = toJS(productsStore.products)
+  const {products} = useProductsStore()
   const vipProducts = products.slice(0, 2)
   const topProducts = products.slice(2, 6)
   const restProducts = products.slice(6, 10)

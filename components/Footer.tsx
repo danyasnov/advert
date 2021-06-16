@@ -1,7 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import IcGooglePlay from 'icons/stores/GooglePlay.svg'
 import IcAppStore from 'icons/stores/AppStore.svg'
 import IcAppGallery from 'icons/stores/AppGallery.svg'
@@ -28,11 +27,9 @@ const mainCities: Array<string> = [
   'афины',
 ]
 const Footer: FC = observer(() => {
-  const categoriesStore = useCategoriesStore()
-  const countriesStore = useCountriesStore()
-  const countriesById = toJS(countriesStore.byId)
+  const {ids, byId: categoriesById} = useCategoriesStore()
+  const {byId: countriesById} = useCountriesStore()
   const {t} = useTranslation()
-  const categories = toJS(categoriesStore.categories)
   return (
     <footer className='mx-auto'>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
@@ -112,11 +109,11 @@ const Footer: FC = observer(() => {
             }
             body={
               <div className='grid grid-cols-2 grid-rows-5 grid-flow-col place-items-start gap-y-2'>
-                {categories.map((c) => (
+                {ids.map((id) => (
                   <LinkButton
-                    key={c.id}
+                    key={id}
                     onClick={notImplementedAlert}
-                    label={c.name}
+                    label={categoriesById[id]?.name}
                   />
                 ))}
               </div>
