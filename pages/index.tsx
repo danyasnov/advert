@@ -1,19 +1,14 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import Layout from '../components/Layout'
-import CategoriesSlider from '../components/CategoriesSlider'
-import ProductsSlider from '../components/Cards/ProductsSlider'
-import {getCountries, getFreeProducts, getRest} from '../api'
+import {getRest} from '../api'
 import Storage from '../stores/Storage'
 import {processCookies} from '../helpers'
+import {getCountries} from '../api/v1'
+import {fetchProducts} from '../api/v2'
+import MainLayout from '../components/Layouts/MainLayout'
 
 export default function Home() {
-  return (
-    <Layout>
-      <CategoriesSlider />
-      <ProductsSlider />
-    </Layout>
-  )
+  return <MainLayout />
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -32,22 +27,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   })
   const rest = getRest(storage)
   const promises = [
-    getFreeProducts(rest, storage),
+    // @ts-ignore
+    fetchProducts(state, {priceMax: 0}),
     getCountries(locale),
     rest.categories.fetchTree(),
   ]
 
   const [
-    productsData,
+    productsResponse,
     countriesData,
     categoriesData,
   ] = await Promise.allSettled(promises).then((res) =>
-    res.map((p) => (p.status === 'fulfilled' ? p.value : null)),
+    res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
   // @ts-ignore
   const categories = categoriesData?.result ?? null
   // @ts-ignore
-  const products = productsData?.result ?? null
+  const products = productsResponse?.data?.data ?? null
   const countries = countriesData ?? null
   return {
     props: {

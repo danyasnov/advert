@@ -1,10 +1,19 @@
-import {FC} from 'react'
-import {Formik, Field, Form, FormikHelpers} from 'formik'
+import {FC, useEffect, useRef, useState} from 'react'
+import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
+import {useRouter} from 'next/router'
+import axios, {CancelTokenSource} from 'axios'
 import {FormikCheckbox, FormikRange, FormikSegmented} from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import {SelectItem} from '../Selects/Select'
+import {
+  useCategoriesStore,
+  useProductsStore,
+} from '../../providers/RootStoreProvider'
+import {findCategoryByQuery} from '../../helpers'
+
+const cancelToken = axios.CancelToken
 
 interface Values {
   condition: SelectItem
@@ -12,12 +21,29 @@ interface Values {
     priceMin: string
     priceMax: string
   }
-  secureDeal: boolean
-  withDiscount: boolean
-  onlyFavorite: boolean
+  onlyWithPhoto: boolean
+  onlyDiscounted: boolean
+  onlyFromSubscribed: boolean
 }
+
+const getInitialValues = (conditionOptions) => {
+  return {
+    condition: conditionOptions[0],
+    priceRange: {
+      priceMin: '',
+      priceMax: '',
+    },
+    onlyWithPhoto: false,
+    onlyDiscounted: false,
+    onlyFromSubscribed: false,
+  }
+}
+
 const DefaultForm: FC = () => {
   const {t} = useTranslation()
+  const router = useRouter()
+  const cancelTokenSourceRef = useRef<CancelTokenSource>()
+  const formikRef = useRef<FormikProps<Values>>()
   const conditionOptions = [
     {
       value: 0,
@@ -32,22 +58,57 @@ const DefaultForm: FC = () => {
       label: t('USED'),
     },
   ]
+
+  useEffect(() => {
+    if (formikRef.current) {
+      formikRef.current.resetForm({values: getInitialValues(conditionOptions)})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath])
+
+  const [initialValue, setInitialValue] = useState<Values>(
+    getInitialValues(conditionOptions),
+  )
+  const {fetchProducts} = useProductsStore()
+  const {categories} = useCategoriesStore()
+
   return (
     <Formik
       validateOnChange
-      initialValues={{
-        condition: conditionOptions[0],
-        priceRange: {
-          priceMin: '',
-          priceMax: '',
-        },
-        secureDeal: false,
-        withDiscount: false,
-        onlyFavorite: false,
-      }}
+      innerRef={formikRef}
+      enableReinitialize
+      initialValues={initialValue}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
-        console.log(values)
-        setSubmitting(false)
+        const {
+          priceRange,
+          onlyWithPhoto,
+          onlyDiscounted,
+          onlyFromSubscribed,
+        } = values
+
+        setInitialValue(values)
+        let condition = ''
+        if (values.condition.value === 1) condition = '1'
+        if (values.condition.value === 2) condition = '2'
+        const currentCategory = findCategoryByQuery(
+          router.query.categories,
+          categories,
+        )
+
+        const options = {
+          condition,
+          priceMin: parseInt(priceRange.priceMin, 10) || undefined,
+          priceMax: parseInt(priceRange.priceMax, 10) || undefined,
+          onlyWithPhoto,
+          onlyDiscounted,
+          onlyFromSubscribed,
+          categoryId: currentCategory.id,
+        }
+        if (cancelTokenSourceRef.current) cancelTokenSourceRef.current.cancel()
+        cancelTokenSourceRef.current = cancelToken.source()
+        fetchProducts({
+          cancelTokenSource: cancelTokenSourceRef.current,
+        }).then(() => setSubmitting(false))
       }}>
       {({handleReset}) => (
         <Form className='pt-8 space-y-6 divide-y'>
@@ -77,17 +138,17 @@ const DefaultForm: FC = () => {
 
           <div className='space-y-6 pt-6'>
             <Field
-              name='secureDeal'
+              name='onlyWithPhoto'
               component={FormikCheckbox}
               label={t('WITH_PHOTO')}
             />
             <Field
-              name='withDiscount'
+              name='onlyDiscounted'
               component={FormikCheckbox}
               label={t('ONLY_WITH_DISCOUNT')}
             />
             <Field
-              name='onlyFavorite'
+              name='onlyFromSubscribed'
               component={FormikCheckbox}
               label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
             />

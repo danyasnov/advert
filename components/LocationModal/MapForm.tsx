@@ -9,12 +9,8 @@ import Autocomplete from '../Selects/Autocomplete'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
-import {
-  getShortAddress,
-  objectFlip,
-  SerializedCookiesState,
-  setCookiesObject,
-} from '../../helpers'
+import {getShortAddress, objectFlip, setCookiesObject} from '../../helpers'
+import {SerializedCookiesState} from '../../types'
 
 const getMark = (label) => ({
   style: {

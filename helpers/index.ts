@@ -1,21 +1,11 @@
-import {
-  AnalyticsService,
-  LocationModel,
-  CACategoryModel,
-  AppStorage,
-} from 'front-api/src'
+import {AnalyticsService, LocationModel, CACategoryModel} from 'front-api/src'
 import {GeoPositionModel} from 'front-api/src/models/index'
 import {parseCookies, setCookie} from 'nookies'
-import {GetServerSideProps, GetServerSidePropsContext} from 'next'
+import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
-import {
-  getAddressByGPS,
-  getCities,
-  getCountries,
-  getLocationByIp,
-  getRegions,
-  parseIp,
-} from '../api'
+import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
+import {CookiesState, LocationIdFilter, SerializedCookiesState} from '../types'
+import {getCities, getCountries, getRegions} from '../api/v1'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -77,13 +67,13 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
 }
 
 export const processCookies = async (
-  ctx: GetServerSidePropsContext,
+  ctx: Partial<GetServerSidePropsContext>,
 ): Promise<CookiesState> => {
   const {locale, req} = ctx
   const cookies: SerializedCookiesState = parseCookies(ctx)
   const state: CookiesState = {}
   let locationByIp = null
-  state.language = locale
+  state.language = locale || cookies.language || 'en'
   if (!cookies.userLocation) {
     try {
       const ip = parseIp(req)
@@ -164,6 +154,24 @@ export const findCategoryByQuery = (
   }
   return category
 }
+export const findCurrentCategoriesOptionsyByQuery = (
+  categoriesQuery: string | string[],
+  categories: CACategoryModel[],
+): CACategoryModel[] | null => {
+  if (!Array.isArray(categoriesQuery)) return null
+  let category
+  // eslint-disable-next-line no-restricted-syntax
+  for (const slug of categoriesQuery) {
+    const source = (category?.items || categories) ?? []
+    const temp = source.find((c) => c.slug === slug)
+    if (!temp?.items.length) {
+      break
+    } else {
+      category = temp
+    }
+  }
+  return category?.items
+}
 
 export const getQueryValue = (query: ParsedUrlQuery, path: string): string => {
   const value = query[path]
@@ -171,48 +179,18 @@ export const getQueryValue = (query: ParsedUrlQuery, path: string): string => {
 }
 
 export const getSearchByFilter = (
-  storage: AppStorage,
-): LocationIdFilter | LocationFilter => {
-  if (storage.searchBy === 'id') {
-    return {
-      cityId: storage.cityId,
-      regionId: storage.regionId,
-      countryId: storage.countryId,
+  state: CookiesState,
+): LocationIdFilter | (LocationModel & {distanceMax: number}) => {
+  if (state.searchBy === 'id') {
+    const data: LocationIdFilter = {
+      countryISO: parseInt(state.countryId, 10),
     }
+    if (state.cityId) data.cityId = parseInt(state.cityId, 10)
+    if (state.regionId) data.regionId = parseInt(state.regionId, 10)
+    return data
   }
-  return {location: storage.location}
-}
-
-interface LocationIdFilter {
-  cityId?: number
-  regionId?: number
-  countryId: number
-}
-
-interface LocationFilter {
-  location: LocationModel
-}
-
-export interface CookiesState {
-  userLocation?: LocationModel
-  searchLocation?: LocationModel
-  searchRadius?: number
-  countryId?: string
-  regionId?: string
-  cityId?: string
-  searchBy?: 'coords' | 'id'
-  address?: string
-  language?: string
-}
-
-export interface SerializedCookiesState {
-  userLocation?: string
-  searchLocation?: string
-  searchRadius?: string
-  countryId?: string
-  regionId?: string
-  cityId?: string
-  searchBy?: 'coords' | 'id'
-  address?: string
-  language?: string
+  return {
+    ...state.searchLocation,
+    distanceMax: state.searchRadius,
+  }
 }

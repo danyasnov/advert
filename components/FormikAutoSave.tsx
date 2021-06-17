@@ -9,11 +9,11 @@ const FormikAutoSave: FC = () => {
   const debouncedSubmitCaller = useCallback(
     debounce((ctx: typeof formik) => {
       ctx.submitForm()
-    }, 1000),
+    }, 500),
     [],
   )
   useEffect(() => {
-    if (formik.dirty && !formik.isSubmitting) {
+    if (formik.dirty) {
       formik.validateForm(formik.values).then((err) => {
         if (Object.keys(err).length === 0) debouncedSubmitCaller(formik)
       })

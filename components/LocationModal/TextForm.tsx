@@ -13,7 +13,8 @@ import Button from '../Buttons/Button'
 import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {CookiesState, setCookiesObject} from '../../helpers'
+import {setCookiesObject} from '../../helpers'
+import {CookiesState} from '../../types'
 
 const fetchRegions = (countryId) => {
   return makeRequest({

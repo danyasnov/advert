@@ -1,19 +1,14 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import CategoryLayout from '../../../components/CategoryLayout'
+import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {findCategoryByQuery, processCookies} from '../../../helpers'
 import Storage from '../../../stores/Storage'
-import {getProducts, getRest} from '../../../api'
-import Breadcrumbs from '../../../components/Breadcrumbs'
-import CategoryBody from '../../../components/CategoryBody'
+import {getRest} from '../../../api'
+import {fetchProducts} from '../../../api/v2'
+import {getCountries} from '../../../api/v1'
 
 export default function Home() {
-  return (
-    <CategoryLayout>
-      <Breadcrumbs />
-      <CategoryBody />
-    </CategoryLayout>
-  )
+  return <CategoriesLayout />
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -43,16 +38,25 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const currentCategory = findCategoryByQuery(query.categories, categories)
 
   const promises = [
-    getProducts(rest, storage, currentCategory),
-    rest.oldRest.fetchCountries(),
+    // @ts-ignore
+    fetchProducts(state, {categoryId: currentCategory.id}),
+    getCountries(locale),
     rest.categories.fetchCategoryData(23),
   ]
 
-  const [productsData, countriesData, filters] = await Promise.allSettled(
+  const [productsResponse, countriesData, filters] = await Promise.allSettled(
     promises,
   ).then((res) => res.map((p) => (p.status === 'fulfilled' ? p.value : null)))
-  // @ts-ignore
-  const products = productsData?.result ?? null
+  const productsStore = {
+    // @ts-ignore
+    products: productsResponse?.data?.data ?? null,
+    // @ts-ignore
+    count: productsResponse?.data?.headers.pagination.count,
+    // @ts-ignore
+    page: productsResponse?.data?.headers.pagination.page,
+    // @ts-ignore
+    cacheId: productsResponse?.data?.headers.cacheId,
+  }
   const countries = countriesData ?? null
   return {
     props: {
@@ -60,9 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         categoriesStore: {
           categories,
         },
-        productsStore: {
-          products,
-        },
+        productsStore,
         countriesStore: {
           countries,
         },

@@ -3,7 +3,7 @@ import {FieldProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
-import {SelectItem} from '../Selects/Select'
+import Select, {SelectItem} from '../Selects/Select'
 import Button from '../Buttons/Button'
 
 interface IFormikSegmented {
@@ -12,6 +12,7 @@ interface IFormikSegmented {
 interface IFormikCheckbox {
   label: string
 }
+
 export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
   field,
   form,

@@ -8,7 +8,7 @@ module.exports = {
     domains: [
       {
         domain: 'localhost',
-        defaultLocale: 'en',
+        defaultLocale: 'ru',
       },
       {
         domain: 'adverto.sale',

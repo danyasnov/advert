@@ -32,7 +32,7 @@ const Card: FC<Props> = ({
 
   return (
     <div
-      className={`w-40 s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
+      className={`w-40 s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden shadow-md ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}>
       <div className='overflow-hidden' ref={viewportRef}>
