@@ -1,27 +1,30 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import {toJS} from 'mobx'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
+import Loader from '../Loader'
 
 const ScrollableCardGroup: FC = observer(() => {
-  const {products, state, count, page, fetchProducts} = useProductsStore()
-  // const ids = useSelector(getAllNewsExceptFirstTwo())
-  // const totalLength = useSelector(getTotalNewsLength())
-  // const currentPage = useSelector(getCurrentPage())
+  const {products, state, count, page, fetchProducts, filter} =
+    useProductsStore()
   const hasMore = count > page * 10
-  // console.log(count, page)
 
   return (
     <div className='flex flex-col items-center relative'>
       <InfiniteScroll
         dataLength={products.length}
         next={() => {
-          fetchProducts({page: page + 1})
+          fetchProducts({page: page + 1, isScroll: true})
         }}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={
+          <div className='flex justify-center'>
+            <Loader />
+          </div>
+        }
         endMessage={<h4>Yay! You have seen it all</h4>}>
         <div
           className={`flex flex-col space-y-4 s:flex-row s:space-y-0  mb-4 flex-wrap

@@ -9,7 +9,7 @@ export default async (
   const {body} = req
   const state = await processCookies({req})
 
-  return fetchProducts(state, body.data, body.pagination)
+  return fetchProducts(state, body.filter, body.pagination)
     .then((response) => {
       res.json(response.data)
     })

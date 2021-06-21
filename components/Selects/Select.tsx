@@ -10,6 +10,7 @@ interface Props {
   isSearchable?: boolean
   isDisabled?: boolean
   isClearable?: boolean
+  isMulti?: boolean
 }
 
 export interface SelectItem {
@@ -25,6 +26,7 @@ const Select: FC<Props> = ({
   isSearchable,
   isDisabled,
   isClearable,
+  isMulti,
 }) => {
   return (
     <RS
@@ -35,6 +37,7 @@ const Select: FC<Props> = ({
       isDisabled={isDisabled}
       onChange={onChange}
       isClearable={isClearable}
+      isMulti={isMulti}
       styles={styles}
     />
   )

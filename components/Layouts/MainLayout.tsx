@@ -1,13 +1,11 @@
 import {FC} from 'react'
-import Header from '../Header'
-import Footer from '../Footer'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
+import HeaderFooterWrapper from './HeaderFooterWrapper'
 
 const MainLayout: FC = () => {
   return (
-    <>
-      <Header />
+    <HeaderFooterWrapper>
       <div className='bg-black-e py-8 m:flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-608px l:w-896px space-y-12'>
@@ -20,8 +18,7 @@ const MainLayout: FC = () => {
           />
         </div>
       </div>
-      <Footer />
-    </>
+    </HeaderFooterWrapper>
   )
 }
 

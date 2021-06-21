@@ -4,7 +4,7 @@ export default {
     ...provided,
     borderRadius: 8,
     boxShadow: 'none',
-    height: '40px',
+    borderColor: 'rgba(12, 13, 13, 0,1)',
     ...(state.isFocused
       ? {
           borderColor: '#1E4592',

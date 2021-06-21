@@ -1,8 +1,9 @@
 import {FC} from 'react'
-import {FieldProps} from 'formik'
+import {Field, FieldProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
+import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import Select, {SelectItem} from '../Selects/Select'
 import Button from '../Buttons/Button'
 
@@ -11,6 +12,77 @@ interface IFormikSegmented {
 }
 interface IFormikCheckbox {
   label: string
+}
+interface IFormikSelect {
+  label: string
+  options: SelectItem[]
+  placeholder: string
+  isFilterable: boolean
+  isMulti: boolean
+}
+interface IFormikNumber {
+  placeholder: string
+}
+interface IFormikField {
+  field: CACategoryDataFieldModel
+}
+
+interface FieldOptions {
+  options?: SelectItem[]
+  placeholder?: string
+  label?: string
+  isFilterable?: boolean
+  isMulti?: boolean
+}
+
+export const FormikField: FC<IFormikField> = ({field}) => {
+  const {fieldType, allMultiselects, slug, name, isFilterable} = field
+  let component
+  const props: FieldOptions = {}
+  switch (fieldType) {
+    case 'select': {
+      component = FormikSelect
+      props.options = allMultiselects.map((o) => ({
+        value: o.id,
+        label: o.value,
+      }))
+      props.placeholder = name
+      props.isFilterable = isFilterable
+      break
+    }
+    case 'multiselect': {
+      component = FormikSelect
+      props.options = allMultiselects.map((o) => ({
+        value: o.id,
+        label: o.value,
+      }))
+      props.placeholder = name
+      props.isFilterable = isFilterable
+      props.isMulti = true
+      break
+    }
+    case 'int': {
+      component = FormikNumber
+      props.placeholder = name
+      break
+    }
+    case 'string': {
+      component = FormikText
+      props.placeholder = name
+      break
+    }
+    case 'checkbox': {
+      component = FormikCheckbox
+      props.label = name
+      break
+    }
+    default: {
+      component = null
+    }
+  }
+  if (!component) return null
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <Field name={slug} component={component} {...props} />
 }
 
 export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
@@ -38,12 +110,58 @@ export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
   )
 }
 
+export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
+  field,
+  form,
+  placeholder,
+}) => {
+  const {name, value} = field
+  const {setFieldValue, errors} = form
+  const isValid = !errors[name]
+  return (
+    <NumberFormat
+      value={value}
+      onValueChange={({floatValue}) => {
+        setFieldValue(name, floatValue)
+      }}
+      thousandSeparator={' '}
+      placeholder={placeholder}
+      className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+        isValid ? '' : 'border-error'
+      }`}
+    />
+  )
+}
+export const FormikText: FC<IFormikNumber & FieldProps> = ({
+  field,
+  form,
+  placeholder,
+}) => {
+  const {name, value} = field
+  const {setFieldValue, errors} = form
+  const isValid = !errors[name]
+  return (
+    <input
+      value={value}
+      onChange={(e) => {
+        setFieldValue(name, e.target.value)
+      }}
+      placeholder={placeholder}
+      className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+        isValid ? '' : 'border-error'
+      }`}
+    />
+  )
+}
+
 export const FormikRange: FC<FieldProps> = ({field, form}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const {t} = useTranslation()
   const isValid = !errors[name]
-  const commonClass = `w-1/2 py-3 px-3.5 ${isValid ? '' : 'border-error'}`
+  const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-2 ${
+    isValid ? '' : 'border-error'
+  }`
   return (
     <div className='flex text-black-b text-body-2'>
       <NumberFormat
@@ -94,5 +212,28 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
         {label}
       </label>
     </div>
+  )
+}
+
+export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
+  field,
+  form,
+  options,
+  placeholder,
+  isFilterable,
+  isMulti,
+}) => {
+  const {name, value} = field
+  const {setFieldValue} = form
+  return (
+    <Select
+      value={value}
+      options={options}
+      isClearable
+      placeholder={placeholder}
+      isSearchable={isFilterable}
+      isMulti={isMulti}
+      onChange={(item) => setFieldValue(name, item)}
+    />
   )
 }

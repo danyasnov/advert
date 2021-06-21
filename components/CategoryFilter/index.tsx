@@ -12,13 +12,13 @@ import {
   findCurrentCategoriesOptionsyByQuery,
 } from '../../helpers'
 import DefaultForm from './DefaultForm'
+import CustomForm from './CustomForm'
 
 const CategoryFilter: FC = observer(() => {
   const router = useRouter()
-  // const slug = getQueryValue(router.query, 'category')
   const {t} = useTranslation()
   const {setFilter} = useProductsStore()
-  const {categories} = useCategoriesStore()
+  const {categories, categoryData} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
@@ -26,21 +26,21 @@ const CategoryFilter: FC = observer(() => {
   useEffect(() => {
     if (currentCategory) {
       setFilter({categoryId: currentCategory.id})
-      console.log('useEffect', currentCategory.id)
     }
   }, [currentCategory, setFilter])
   const currentCategoriesOptions = findCurrentCategoriesOptionsyByQuery(
     router.query.categories,
     categories,
   )
-  // console.log(toJS(currentCategoriesOptions))
 
   const options = currentCategoriesOptions.map((i) => ({
     value: i.id,
     label: i.name,
     slug: i.slug,
   }))
-  const currentOption = options.find((o) => o.value === currentCategory.id)
+  const currentOption =
+    options.find((o) => o.value === currentCategory.id) ?? null
+
   return (
     <div className='hidden m:block w-72 bg-white border border-shadow-b rounded-lg px-4 py-4 divide-y shadow-md'>
       <div className='pb-8'>
@@ -60,7 +60,7 @@ const CategoryFilter: FC = observer(() => {
           }}
         />
       </div>
-      <DefaultForm />
+      {categoryData ? <CustomForm /> : <DefaultForm />}
     </div>
   )
 })

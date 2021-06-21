@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from 'mobx'
+import {action, makeAutoObservable, toJS} from 'mobx'
 import {AdvertiseListItemModel} from 'front-api'
 import {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {RootStore} from './RootStore'
@@ -24,14 +24,16 @@ export interface IProductsStore {
   cacheId: string
   filter: Partial<Filter>
   setFilter: (filter: Partial<Filter>) => void
+  resetFilter: () => void
   fetchProducts: (opts: FetchOptions) => Promise<void>
 }
 
 interface FetchOptions {
   cancelTokenSource?: CancelTokenSource
   page?: number
+  isScroll?: boolean
 }
-type State = 'done' | 'pending' | 'error'
+type State = 'done' | 'pending' | 'error' | 'pending-scroll'
 
 export class ProductsStore implements IProductsStore {
   root
@@ -42,11 +44,11 @@ export class ProductsStore implements IProductsStore {
 
   page = 1
 
-  limit = null
+  limit = 40
 
   count = null
 
-  cacheId = null
+  cacheId
 
   filter: Partial<Filter> = {}
 
@@ -59,14 +61,25 @@ export class ProductsStore implements IProductsStore {
     this.filter = {...this.filter, ...data}
   }
 
+  resetFilter = (): void => {
+    this.filter = {
+      condition: '',
+      categoryId: this.filter.categoryId,
+      onlyWithPhoto: false,
+      onlyDiscounted: false,
+      onlyFromSubscribed: false,
+    }
+  }
+
+  // todo move cancel token here
   fetchProducts = (opts: FetchOptions): Promise<void> => {
-    this.state = 'pending'
+    this.state = opts.isScroll ? 'pending-scroll' : 'pending'
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',
       data: {
-        data: this.filter,
-        pagination: {page: 1, limit: 10},
+        filter: {...this.filter},
+        pagination: {page: 1, limit: this.limit},
       },
     }
 
@@ -75,7 +88,7 @@ export class ProductsStore implements IProductsStore {
     }
     if (opts.page) {
       config.data.pagination.page = opts.page
-      config.data.data.cacheId = this.cacheId
+      config.data.filter.cacheId = this.cacheId
     }
 
     return makeRequest(config).then(
@@ -87,7 +100,6 @@ export class ProductsStore implements IProductsStore {
             cacheId,
           },
         } = response.data
-        console.log(data, count, page)
         if (page === 1) {
           this.products = data
           this.cacheId = cacheId
@@ -112,6 +124,6 @@ export class ProductsStore implements IProductsStore {
     this.page = data?.page ?? 1
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0
-    this.cacheId = data?.cacheId ?? ''
+    this.cacheId = data?.cacheId ?? undefined
   }
 }

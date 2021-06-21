@@ -9,8 +9,8 @@ const {withSentryConfig} = require('@sentry/nextjs')
 const {i18n} = require('./next-i18next.config')
 
 const nextConfig = {
-  future: {
-    webpack5: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
     domains: ['cache.adverto.sale', 'adverto.sale'],

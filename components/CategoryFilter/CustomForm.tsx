@@ -3,7 +3,9 @@ import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import axios, {CancelTokenSource} from 'axios'
-import {FormikCheckbox, FormikRange, FormikSegmented} from './FormikComponents'
+import {toJS} from 'mobx'
+import {observer} from 'mobx-react-lite'
+import {FormikField} from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import {SelectItem} from '../Selects/Select'
@@ -39,11 +41,13 @@ const getInitialValues = (conditionOptions): Values => {
   }
 }
 
-const DefaultForm: FC = () => {
+const CustomForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
   const cancelTokenSourceRef = useRef<CancelTokenSource>()
   const {setFilter, resetFilter} = useProductsStore()
+  const {categoryData} = useCategoriesStore()
+  // console.log(toJS(categoryData).fields)
   const formikRef = useRef<FormikProps<Values>>()
   const conditionOptions = [
     {
@@ -81,6 +85,7 @@ const DefaultForm: FC = () => {
       enableReinitialize
       initialValues={initialValue}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
+        return
         const {priceRange, onlyWithPhoto, onlyDiscounted, onlyFromSubscribed} =
           values
 
@@ -110,48 +115,10 @@ const DefaultForm: FC = () => {
         }).then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
-        <Form className='pt-8 space-y-6 divide-y'>
-          <div className='space-y-6'>
-            <Field
-              name='condition'
-              options={conditionOptions}
-              component={FormikSegmented}
-            />
-            <Field
-              name='priceRange'
-              component={FormikRange}
-              validate={(value) => {
-                const {priceMin, priceMax} = value
-                let error
-                if (priceMin && priceMax) {
-                  const parsedMin = parseFloat(priceMin)
-                  const parsedMax = parseFloat(priceMax)
-                  if (parsedMin > parsedMax) {
-                    error = 'priceMin should be lesser than priceMax'
-                  }
-                }
-                return error
-              }}
-            />
-          </div>
-
-          <div className='space-y-6 pt-6'>
-            <Field
-              name='onlyWithPhoto'
-              component={FormikCheckbox}
-              label={t('WITH_PHOTO')}
-            />
-            <Field
-              name='onlyDiscounted'
-              component={FormikCheckbox}
-              label={t('ONLY_WITH_DISCOUNT')}
-            />
-            <Field
-              name='onlyFromSubscribed'
-              component={FormikCheckbox}
-              label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
-            />
-          </div>
+        <Form className='pt-8 space-y-6'>
+          {categoryData.fields.map((field) => (
+            <FormikField field={field} key={field.id} />
+          ))}
           <div className='pt-6'>
             <SecondaryButton
               onClick={() => {
@@ -173,6 +140,6 @@ const DefaultForm: FC = () => {
       )}
     </Formik>
   )
-}
+})
 
-export default DefaultForm
+export default CustomForm

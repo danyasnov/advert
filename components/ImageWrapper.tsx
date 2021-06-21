@@ -21,6 +21,7 @@ const ImageWrapper: FC<Props> = ({
   objectFit,
 }) => {
   return (
+    // @ts-ignore
     <Image
       src={type}
       width={width}

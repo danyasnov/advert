@@ -12,7 +12,7 @@ interface Pagination {
 // eslint-disable-next-line import/prefer-default-export
 export const fetchProducts = (
   state: CookiesState,
-  opts: Partial<Filter>,
+  filter: Partial<Filter>,
   pagination: Partial<Pagination>,
 ): AxiosPromise => {
   const headers = {
@@ -30,7 +30,7 @@ export const fetchProducts = (
     },
   }
   const data = {
-    ...opts,
+    ...filter,
     ...getSearchByFilter(state),
     searchId: '',
     appId: 'web',

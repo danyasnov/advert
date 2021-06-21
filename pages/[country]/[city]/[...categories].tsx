@@ -38,15 +38,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const currentCategory = findCategoryByQuery(query.categories, categories)
 
   const promises = [
-    // @ts-ignore
-    fetchProducts(state, {categoryId: currentCategory.id}),
+    fetchProducts(state, {categoryId: currentCategory.id}, {limit: 40}),
     getCountries(locale),
-    rest.categories.fetchCategoryData(23),
   ]
 
-  const [productsResponse, countriesData, filters] = await Promise.allSettled(
-    promises,
-  ).then((res) => res.map((p) => (p.status === 'fulfilled' ? p.value : null)))
+  if (!currentCategory.items.length) {
+    // @ts-ignore
+    promises.push(rest.categories.fetchCategoryData(currentCategory.id))
+  }
+
+  const [productsResponse, countriesData, categoryData] =
+    await Promise.allSettled(promises).then((res) =>
+      res.map((p) => (p.status === 'fulfilled' ? p.value : null)),
+    )
   const productsStore = {
     // @ts-ignore
     products: productsResponse?.data?.data ?? null,
@@ -54,6 +58,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     count: productsResponse?.data?.headers.pagination.count,
     // @ts-ignore
     page: productsResponse?.data?.headers.pagination.page,
+    // @ts-ignore
+    limit: productsResponse?.data?.headers.pagination.limit,
     // @ts-ignore
     cacheId: productsResponse?.data?.headers.cacheId,
   }
@@ -63,6 +69,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       hydrationData: {
         categoriesStore: {
           categories,
+          // @ts-ignore
+          categoryData: categoryData?.result ?? null,
         },
         productsStore,
         countriesStore: {
