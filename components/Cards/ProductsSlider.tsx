@@ -18,12 +18,9 @@ const ProductsSlider: FC = observer(() => {
     slidesToScroll: 1,
   })
   const setLockParentScroll = useNestedEmblaCarousel(embla)
-  const {
-    scrollNext,
-    scrollPrev,
-    prevBtnEnabled,
-    nextBtnEnabled,
-  } = useSliderButtons(embla)
+
+  const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
+    useSliderButtons(embla)
 
   if (!products.length) return null
 

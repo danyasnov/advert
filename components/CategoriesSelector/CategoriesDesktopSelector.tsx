@@ -2,17 +2,12 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
-import {useRouter} from 'next/router'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {FirstColItem, ThirdCol, SecondCol} from './columns'
 import ImageWrapper from '../ImageWrapper'
 
-interface Props {
-  onHide: () => void
-}
-const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
+const CategoriesDesktopSelector: FC = observer(() => {
   const {t} = useTranslation()
-  const router = useRouter()
   const allProductsButton = {
     id: 0,
     name: t('ALL_ADVERTS'),
@@ -28,8 +23,12 @@ const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
   }
 
   const {categoriesWithoutAll} = useCategoriesStore()
-  const [activeCategory, setActiveCategory] = useState(categoriesWithoutAll[0])
-  const [secondColumnActiveId, setSecondColumnActiveId] = useState(0)
+  const [activeCategory, setActiveCategory] = useState<CACategoryModel>(
+    categoriesWithoutAll[0],
+  )
+  const [secondColumnActiveCategory, setSecondColumnActiveCategory] = useState<
+    CACategoryModel | undefined
+  >()
   const [secondLevelItems, setSecondLevelItems] = useState(
     withAllProductsButton(categoriesWithoutAll[0]?.items ?? []),
   )
@@ -45,16 +44,13 @@ const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
           <FirstColItem
             category={c}
             key={c.id}
-            onClick={() => {
-              onHide()
-              router.push(`/all/all/${c.slug}`)
-            }}
+            href={`/all/all/${c.slug}`}
             isActive={activeCategory?.id === c.id}
             onMouseEnter={(cat) => {
               const secondItems = withAllProductsButton(cat.items)
               const thirdItems = withAllProductsButton(secondItems[0].items)
               setSecondLevelItems(secondItems)
-              setSecondColumnActiveId(secondItems[0].id)
+              setSecondColumnActiveCategory(secondItems[0])
               setThirdLevelItems(thirdItems)
               setActiveCategory(cat)
             }}
@@ -63,16 +59,21 @@ const CategoriesDesktopSelector: FC<Props> = observer(({onHide}) => {
       </div>
       <div className='pb-4'>
         <SecondCol
-          activeId={secondColumnActiveId}
+          activeCategory={activeCategory}
+          activeId={secondColumnActiveCategory?.id}
           items={secondLevelItems}
           onMouseEnter={(cat) => {
             setThirdLevelItems(withAllProductsButton(cat.items))
-            setSecondColumnActiveId(cat.id)
+            setSecondColumnActiveCategory(cat)
           }}
         />
       </div>
       <div className='pb-4'>
-        <ThirdCol items={thirdLevelItems} />
+        <ThirdCol
+          items={thirdLevelItems}
+          activeCategory={activeCategory}
+          secondActiveCategory={secondColumnActiveCategory}
+        />
       </div>
       <div className='hidden m:block'>
         <div className='pl-12 pt-6 l:pl-6'>

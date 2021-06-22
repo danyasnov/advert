@@ -15,6 +15,7 @@ import {
 } from '../providers/RootStoreProvider'
 import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
@@ -110,11 +111,11 @@ const Footer: FC = observer(() => {
             body={
               <div className='grid grid-cols-2 grid-rows-5 grid-flow-col place-items-start gap-y-2'>
                 {ids.map((id) => (
-                  <LinkButton
-                    key={id}
-                    onClick={notImplementedAlert}
-                    label={categoriesById[id]?.name}
-                  />
+                  <LinkWrapper
+                    href={`/all/all/${categoriesById[id]?.slug}`}
+                    key={id}>
+                    {categoriesById[id]?.name}
+                  </LinkWrapper>
                 ))}
               </div>
             }

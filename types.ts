@@ -44,3 +44,8 @@ export interface Filter {
   onlyDiscounted: boolean
   onlyFromSubscribed: boolean
 }
+
+export interface Size {
+  width: number | undefined
+  height: number | undefined
+}

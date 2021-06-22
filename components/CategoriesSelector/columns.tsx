@@ -3,20 +3,22 @@ import {source, target} from 'react-aim'
 import {PureComponent, ReactNode} from 'react'
 import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
-import {notImplementedAlert} from '../../helpers'
-import Button from '../Buttons/Button'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 interface ColItemProps {
   category: CACategoryModel
   isActive: boolean
   onMouseEnter?: (c: CACategoryModel) => void
-  onClick?: () => void
+  href: string
+  activeCategory?: CACategoryModel
 }
 
 interface ColProps {
   items: Array<CACategoryModel>
   onMouseEnter?: (c: CACategoryModel) => void
   activeId?: number | undefined
+  activeCategory: CACategoryModel
+  secondActiveCategory?: CACategoryModel
 }
 
 // @ts-ignore
@@ -25,11 +27,11 @@ interface ColProps {
 })
 class FirstColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
-    const {category, isActive, onClick} = this.props
+    const {category, isActive, href} = this.props
     const {name} = category
 
     return (
-      <CategoryItem category={category} onClick={onClick} isActive={isActive}>
+      <CategoryItem category={category} href={href} isActive={isActive}>
         {name}
       </CategoryItem>
     )
@@ -40,13 +42,15 @@ class FirstColItem extends PureComponent<ColItemProps> {
 @target()
 class SecondCol extends PureComponent<ColProps> {
   render(): ReactNode {
-    const {items, onMouseEnter, activeId} = this.props
+    const {items, onMouseEnter, activeId, activeCategory} = this.props
     return (
       <div className='h-full'>
         {items.map((c) => {
           return (
             <SecondColItem
               key={c.id}
+              href={`/all/all/${activeCategory.slug}/${c.slug || ''}`}
+              activeCategory={activeCategory}
               isActive={c.id === activeId}
               category={c}
               onMouseEnter={onMouseEnter}
@@ -66,16 +70,16 @@ class SecondCol extends PureComponent<ColProps> {
 })
 class SecondColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
-    const {category, isActive} = this.props
+    const {category, isActive, href} = this.props
     const {name} = category
     return (
-      <Button
+      <LinkWrapper
         className={`${
           isActive ? 'bg-brand-a2' : ''
         } categories-selector-item first:font-bold`}
-        onClick={notImplementedAlert}>
+        href={href}>
         {name}
-      </Button>
+      </LinkWrapper>
     )
   }
 }
@@ -84,16 +88,18 @@ class SecondColItem extends PureComponent<ColItemProps> {
 @target()
 class ThirdCol extends PureComponent<ColProps> {
   render(): ReactNode {
-    const {items} = this.props
+    const {items, activeCategory, secondActiveCategory} = this.props
     return (
       <div className='h-full'>
         {items.map((c) => (
-          <Button
+          <LinkWrapper
             className='categories-selector-item first:font-bold'
             key={c.id}
-            onClick={notImplementedAlert}>
+            href={`/all/all/${activeCategory.slug}/${
+              secondActiveCategory.slug
+            }/${c.slug || ''}`}>
             {c.name}
-          </Button>
+          </LinkWrapper>
         ))}
       </div>
     )

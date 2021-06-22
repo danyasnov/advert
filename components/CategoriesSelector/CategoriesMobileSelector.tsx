@@ -2,49 +2,52 @@ import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
 import {notImplementedAlert} from '../../helpers'
 import Button from '../Buttons/Button'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 const CategoriesMobileSelector: FC = observer(() => {
   const {categoriesWithoutAll} = useCategoriesStore()
   const {t} = useTranslation()
-  const [subCategories, setSubCategories] = useState(null)
+  const [activeCategory, setActiveCategory] = useState<CACategoryModel | null>(
+    null,
+  )
 
   return (
     <div className='absolute top-89px inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start'>
-      {!subCategories &&
+      {!activeCategory?.items &&
         categoriesWithoutAll.map((c) => (
           <CategoryItem
             category={c}
             key={c.id}
-            onClick={() => setSubCategories(c.items)}
+            onClick={() => setActiveCategory(c)}
+            href=''
           />
         ))}
-      {!!subCategories && (
+      {!!activeCategory?.items && (
         <>
           <Button
-            onClick={() => setSubCategories(null)}
+            onClick={() => setActiveCategory(null)}
             className='categories-selector-item'>
             <IcArrowBack className='w-6 h-6 fill-current text-black-c mr-2' />
             {t('BACK')}
           </Button>
-          <Button
-            onClick={notImplementedAlert}
+          <LinkWrapper
+            href={`/all/all/${activeCategory.slug}`}
             className='categories-selector-item font-bold'>
             {t('ALL_ADVERTS')}
-          </Button>
-          {subCategories.reduce((acc, value) => {
-            acc.push(
-              <Button
-                className='categories-selector-item'
-                onClick={notImplementedAlert}>
-                {value.name}
-              </Button>,
-            )
-            return acc
-          }, [])}
+          </LinkWrapper>
+          {activeCategory.items.map((value) => (
+            <CategoryItem
+              key={value.id}
+              category={value}
+              href={`/all/all/${activeCategory.slug}/${value.slug}`}>
+              {value.name}
+            </CategoryItem>
+          ))}
         </>
       )}
     </div>

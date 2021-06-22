@@ -3,8 +3,8 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
-import ImageWrapper from '../ImageWrapper'
 import unixToString from '../../utils/unixToString'
+import CardImage from '../CardImage'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -39,13 +39,7 @@ const Card: FC<Props> = ({
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {images.map((i) => (
             <div key={i} className='relative min-w-full'>
-              <ImageWrapper
-                type={i}
-                key={i}
-                alt={title}
-                layout='fill'
-                objectFit='cover'
-              />
+              <CardImage key={i} url={i} alt={title} />
             </div>
           ))}
         </div>

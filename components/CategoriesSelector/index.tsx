@@ -1,4 +1,5 @@
-import {FC, useRef, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
+import {useRouter} from 'next/router'
 import CategoriesButton from './CategoriesButton'
 import useOnClickOutside from '../../hooks/useOnClickOutside'
 import CategoriesMobileSelector from './CategoriesMobileSelector'
@@ -10,6 +11,11 @@ const CategoriesSelector: FC = () => {
   useOnClickOutside(ref, () => {
     setShow(false)
   })
+  const router = useRouter()
+
+  useEffect(() => {
+    setShow(false)
+  }, [router.asPath])
 
   return (
     <div ref={ref}>
@@ -25,7 +31,7 @@ const CategoriesSelector: FC = () => {
             <CategoriesMobileSelector />
           </div>
           <div className='hidden s:block'>
-            <CategoriesDesktopSelector onHide={() => setShow(false)} />
+            <CategoriesDesktopSelector />
           </div>
         </>
       )}
