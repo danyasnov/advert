@@ -28,6 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const rest = getRest(storage)
   const promises = [
     // @ts-ignore
+    fetchProducts(state),
     fetchProducts(state, {priceMax: 0}),
     getCountries(locale),
     rest.categories.fetchTree(),
@@ -35,6 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const [
     productsResponse,
+    freeProductsResponse,
     countriesData,
     categoriesData,
   ] = await Promise.allSettled(promises).then((res) =>
@@ -44,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const categories = categoriesData?.result ?? null
   // @ts-ignore
   const products = productsResponse?.data?.data ?? null
+  const freeProducts = freeProductsResponse?.data?.data ?? null
   const countries = countriesData ?? null
   return {
     props: {
@@ -53,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         productsStore: {
           products,
+          freeProducts,
         },
         countriesStore: {
           countries,

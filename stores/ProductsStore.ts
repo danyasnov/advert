@@ -7,6 +7,7 @@ import {Filter} from '../types'
 
 export interface IProductsHydration {
   products: Array<AdvertiseListItemModel>
+  freeProducts: Array<AdvertiseListItemModel>
   page: number
   limit: number
   count: number
@@ -16,6 +17,7 @@ export interface IProductsHydration {
 export interface IProductsStore {
   root: RootStore
   products: Array<AdvertiseListItemModel>
+  freeProducts: Array<AdvertiseListItemModel>
   hydrate(data: IProductsHydration): void
   state: State
   page: number
@@ -41,6 +43,8 @@ export class ProductsStore implements IProductsStore {
   state: State = 'done'
 
   products = []
+
+  freeProducts = []
 
   page = 1
 
@@ -121,6 +125,7 @@ export class ProductsStore implements IProductsStore {
 
   hydrate(data?: IProductsHydration): void {
     this.products = data?.products ?? []
+    this.freeProducts = data?.freeProducts ?? []
     this.page = data?.page ?? 1
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0

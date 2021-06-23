@@ -2,6 +2,7 @@ import {FC} from 'react'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
+import RecommendedProducts from '../Cards/RecommendedProducts'
 
 const MainLayout: FC = () => {
   return (
@@ -11,6 +12,7 @@ const MainLayout: FC = () => {
           <main className='m:w-608px l:w-896px space-y-12'>
             <CategoriesSlider />
             <ProductsSlider />
+            <RecommendedProducts />
           </main>
           <aside
             className='hidden m:block bg-white'

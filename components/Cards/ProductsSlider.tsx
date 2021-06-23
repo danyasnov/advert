@@ -11,7 +11,7 @@ import useSliderButtons from '../../hooks/useSliderButtons'
 
 const ProductsSlider: FC = observer(() => {
   const {t} = useTranslation()
-  const {products} = useProductsStore()
+  const {freeProducts: products} = useProductsStore()
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',

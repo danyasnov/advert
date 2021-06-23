@@ -13,17 +13,13 @@ interface Pagination {
 export const fetchProducts = (
   state: CookiesState,
   filter: Partial<Filter>,
-  pagination: Partial<Pagination>,
+  pagination?: Partial<Pagination>,
 ): AxiosPromise => {
   const headers = {
     lang: {
       code: state.language,
     },
     location: state.userLocation,
-    user: null,
-    security: {
-      token: '74323bdc165babb451258da4a7dd046e:1',
-    },
     pagination: {
       limit: pagination?.limit ?? 10,
       page: pagination?.page ?? 1,
