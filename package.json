@@ -33,6 +33,7 @@
     "react-modal": "^3.14.3",
     "react-number-format": "^4.6.3",
     "react-select": "^4.3.1",
+    "react-window": "^1.8.6",
     "swr": "^0.5.6",
     "tailwindcss": "^2.2.0"
   },

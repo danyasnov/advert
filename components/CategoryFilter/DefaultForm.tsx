@@ -2,18 +2,11 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import axios, {CancelTokenSource} from 'axios'
 import {FormikCheckbox, FormikRange, FormikSegmented} from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import {SelectItem} from '../Selects/Select'
-import {
-  useCategoriesStore,
-  useProductsStore,
-} from '../../providers/RootStoreProvider'
-import {findCategoryByQuery} from '../../helpers'
-
-const cancelToken = axios.CancelToken
+import {useProductsStore} from '../../providers/RootStoreProvider'
 
 interface Values {
   condition: SelectItem
@@ -42,7 +35,6 @@ const getInitialValues = (conditionOptions): Values => {
 const DefaultForm: FC = () => {
   const {t} = useTranslation()
   const router = useRouter()
-  const cancelTokenSourceRef = useRef<CancelTokenSource>()
   const {setFilter, resetFilter} = useProductsStore()
   const formikRef = useRef<FormikProps<Values>>()
   const conditionOptions = [
@@ -72,7 +64,6 @@ const DefaultForm: FC = () => {
     getInitialValues(conditionOptions),
   )
   const {fetchProducts} = useProductsStore()
-  const {categories} = useCategoriesStore()
 
   return (
     <Formik
@@ -88,10 +79,6 @@ const DefaultForm: FC = () => {
         let condition = ''
         if (values.condition.value === 1) condition = '1'
         if (values.condition.value === 2) condition = '2'
-        const currentCategory = findCategoryByQuery(
-          router.query.categories,
-          categories,
-        )
 
         const filter = {
           condition,
@@ -100,14 +87,9 @@ const DefaultForm: FC = () => {
           onlyWithPhoto,
           onlyDiscounted,
           onlyFromSubscribed,
-          // categoryId: currentCategory.id,
         }
         setFilter(filter)
-        if (cancelTokenSourceRef.current) cancelTokenSourceRef.current.cancel()
-        cancelTokenSourceRef.current = cancelToken.source()
-        fetchProducts({
-          cancelTokenSource: cancelTokenSourceRef.current,
-        }).then(() => setSubmitting(false))
+        fetchProducts().then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
         <Form className='pt-8 space-y-6 divide-y'>
@@ -157,12 +139,7 @@ const DefaultForm: FC = () => {
               onClick={() => {
                 resetForm({values: getInitialValues(conditionOptions)})
                 resetFilter()
-                if (cancelTokenSourceRef.current)
-                  cancelTokenSourceRef.current.cancel()
-                cancelTokenSourceRef.current = cancelToken.source()
-                fetchProducts({
-                  cancelTokenSource: cancelTokenSourceRef.current,
-                })
+                fetchProducts()
               }}
               className='w-full'>
               {t('RESET_FILTER')}

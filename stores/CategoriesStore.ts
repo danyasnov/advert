@@ -1,5 +1,6 @@
 import {makeAutoObservable} from 'mobx'
 import {CACategoryDataModel, CACategoryModel} from 'front-api'
+import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {RootStore} from './RootStore'
 
 export interface ICategoriesHydration {
@@ -14,7 +15,7 @@ export interface ICategoriesStore {
   hydrate(data: ICategoriesHydration): void
   byId: Record<string, CACategoryModel>
   ids: number[]
-  bySlug: Record<string, CACategoryModel>
+  categoryDataFieldsBySlug: Record<string, CACategoryDataFieldModel>
   readonly categoriesWithoutAll: Array<CACategoryModel>
 }
 
@@ -39,8 +40,8 @@ export class CategoriesStore implements ICategoriesStore {
     return this.categories.map((c) => c.id)
   }
 
-  get bySlug(): Record<string, CACategoryModel> {
-    return this.categories.reduce(
+  get categoryDataFieldsBySlug(): Record<string, CACategoryDataFieldModel> {
+    return this.categoryData.fields.reduce(
       (acc, val) => ({
         ...acc,
         [val.slug]: val,

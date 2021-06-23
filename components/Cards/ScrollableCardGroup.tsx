@@ -1,15 +1,13 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import {toJS} from 'mobx'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
 
 const ScrollableCardGroup: FC = observer(() => {
-  const {products, state, count, page, fetchProducts, filter} =
-    useProductsStore()
+  const {products, state, count, page, fetchProducts} = useProductsStore()
   const hasMore = count > page * 10
 
   return (
@@ -27,22 +25,16 @@ const ScrollableCardGroup: FC = observer(() => {
         }
         endMessage={<h4>Yay! You have seen it all</h4>}>
         <div
-          className={`flex flex-col space-y-4 s:flex-row s:space-y-0  mb-4 flex-wrap
+          className={`flex flex-col space-y-4 s:flex-row s:space-y-0 -mx-1 s:-mx-2 flex-wrap
       ${state === 'pending' ? 'opacity-40' : ''}`}>
           {products.map((p) => (
-            <div className='px-1 py-2' key={p.hash}>
+            <div className='px-1 pb-2 s:px-2 s:pb-4' key={p.hash}>
               <Card product={p} />
             </div>
           ))}
         </div>
       </InfiniteScroll>
-
       <LoaderWrapper show={state === 'pending'} />
-      {/* <div className='grid grid-cols-2 gap-2'> */}
-      {/*  {topProducts.map((p) => ( */}
-      {/*    <Card product={p} variant='top' key={p.hash} /> */}
-      {/*  ))} */}
-      {/* </div> */}
     </div>
   )
 })

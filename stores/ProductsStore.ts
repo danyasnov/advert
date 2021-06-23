@@ -1,9 +1,11 @@
-import {action, makeAutoObservable, toJS} from 'mobx'
+import {action, makeAutoObservable} from 'mobx'
 import {AdvertiseListItemModel} from 'front-api'
-import {AxiosRequestConfig, CancelTokenSource} from 'axios'
+import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
+
+const cancelToken = axios.CancelToken
 
 export interface IProductsHydration {
   products: Array<AdvertiseListItemModel>
@@ -27,11 +29,10 @@ export interface IProductsStore {
   filter: Partial<Filter>
   setFilter: (filter: Partial<Filter>) => void
   resetFilter: () => void
-  fetchProducts: (opts: FetchOptions) => Promise<void>
+  fetchProducts: (opts?: FetchOptions) => Promise<void>
 }
 
 interface FetchOptions {
-  cancelTokenSource?: CancelTokenSource
   page?: number
   isScroll?: boolean
 }
@@ -56,6 +57,8 @@ export class ProductsStore implements IProductsStore {
 
   filter: Partial<Filter> = {}
 
+  private cancelTokenSource: CancelTokenSource
+
   constructor(root: RootStore) {
     makeAutoObservable(this, {}, {autoBind: true})
     this.root = root
@@ -76,8 +79,11 @@ export class ProductsStore implements IProductsStore {
   }
 
   // todo move cancel token here
-  fetchProducts = (opts: FetchOptions): Promise<void> => {
-    this.state = opts.isScroll ? 'pending-scroll' : 'pending'
+  fetchProducts = (opts?: FetchOptions): Promise<void> => {
+    if (this.cancelTokenSource) this.cancelTokenSource.cancel('got_new_request')
+    this.cancelTokenSource = cancelToken.source()
+
+    this.state = opts?.isScroll ? 'pending-scroll' : 'pending'
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',
@@ -86,11 +92,8 @@ export class ProductsStore implements IProductsStore {
         pagination: {page: 1, limit: this.limit},
       },
     }
-
-    if (opts.cancelTokenSource) {
-      config.cancelToken = opts.cancelTokenSource.token
-    }
-    if (opts.page) {
+    config.cancelToken = this.cancelTokenSource.token
+    if (opts?.page) {
       config.data.pagination.page = opts.page
       config.data.filter.cacheId = this.cacheId
     }
@@ -117,8 +120,8 @@ export class ProductsStore implements IProductsStore {
         return Promise.resolve()
       }),
       action('fetchError', (error) => {
-        this.state = 'error'
-        return Promise.reject()
+        if (error?.message !== 'got_new_request') this.state = 'error'
+        return Promise.reject(error)
       }),
     )
   }

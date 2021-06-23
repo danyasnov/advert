@@ -1,10 +1,9 @@
 import {FC, useEffect, useRef, useState} from 'react'
-import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
+import {Formik, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import axios, {CancelTokenSource} from 'axios'
-import {toJS} from 'mobx'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import {FormikField} from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -13,9 +12,6 @@ import {
   useCategoriesStore,
   useProductsStore,
 } from '../../providers/RootStoreProvider'
-import {findCategoryByQuery} from '../../helpers'
-
-const cancelToken = axios.CancelToken
 
 interface Values {
   condition: SelectItem
@@ -29,6 +25,7 @@ interface Values {
 }
 
 const getInitialValues = (conditionOptions): Values => {
+  return {}
   return {
     condition: conditionOptions[0],
     priceRange: {
@@ -44,10 +41,9 @@ const getInitialValues = (conditionOptions): Values => {
 const CustomForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
-  const cancelTokenSourceRef = useRef<CancelTokenSource>()
   const {setFilter, resetFilter} = useProductsStore()
-  const {categoryData} = useCategoriesStore()
-  // console.log(toJS(categoryData).fields)
+  const {categoryData, categoryDataFieldsBySlug} = useCategoriesStore()
+  console.log(toJS(categoryData.fields), toJS(categoryDataFieldsBySlug))
   const formikRef = useRef<FormikProps<Values>>()
   const conditionOptions = [
     {
@@ -85,34 +81,52 @@ const CustomForm: FC = observer(() => {
       enableReinitialize
       initialValues={initialValue}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
-        return
-        const {priceRange, onlyWithPhoto, onlyDiscounted, onlyFromSubscribed} =
-          values
-
-        setInitialValue(values)
-        let condition = ''
-        if (values.condition.value === 1) condition = '1'
-        if (values.condition.value === 2) condition = '2'
-        const currentCategory = findCategoryByQuery(
-          router.query.categories,
-          categories,
+        const fields = Object.fromEntries(
+          Object.entries(values).map(([key, value]) => {
+            const field = categoryDataFieldsBySlug[key]
+            let mappedValue
+            switch (field.fieldType) {
+              case 'select': {
+                if (value?.value) mappedValue = [value.value]
+                break
+              }
+              case 'multiselect': {
+                if (Array.isArray(value) && value.length)
+                  mappedValue = value.map((v) => v.value)
+                break
+              }
+              default: {
+                if (value) mappedValue = [value]
+              }
+            }
+            return [key, mappedValue]
+          }),
         )
+        // return console.log(fields)
+        // const {priceRange, onlyWithPhoto, onlyDiscounted, onlyFromSubscribed} =
+        //   values
+        //
+        // setInitialValue(values)
+        // let condition = ''
+        // if (values.condition.value === 1) condition = '1'
+        // if (values.condition.value === 2) condition = '2'
+        // const currentCategory = findCategoryByQuery(
+        //   router.query.categories,
+        //   categories,
+        // )
 
         const filter = {
-          condition,
-          priceMin: parseInt(priceRange.priceMin, 10) || undefined,
-          priceMax: parseInt(priceRange.priceMax, 10) || undefined,
-          onlyWithPhoto,
-          onlyDiscounted,
-          onlyFromSubscribed,
+          // condition,
+          // priceMin: parseInt(priceRange.priceMin, 10) || undefined,
+          // priceMax: parseInt(priceRange.priceMax, 10) || undefined,
+          // onlyWithPhoto,
+          // onlyDiscounted,
+          // onlyFromSubscribed,
+          fields,
           // categoryId: currentCategory.id,
         }
         setFilter(filter)
-        if (cancelTokenSourceRef.current) cancelTokenSourceRef.current.cancel()
-        cancelTokenSourceRef.current = cancelToken.source()
-        fetchProducts({
-          cancelTokenSource: cancelTokenSourceRef.current,
-        }).then(() => setSubmitting(false))
+        fetchProducts().then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
         <Form className='pt-8 space-y-6'>
@@ -124,12 +138,7 @@ const CustomForm: FC = observer(() => {
               onClick={() => {
                 resetForm({values: getInitialValues(conditionOptions)})
                 resetFilter()
-                if (cancelTokenSourceRef.current)
-                  cancelTokenSourceRef.current.cancel()
-                cancelTokenSourceRef.current = cancelToken.source()
-                fetchProducts({
-                  cancelTokenSource: cancelTokenSourceRef.current,
-                })
+                fetchProducts()
               }}
               className='w-full'>
               {t('RESET_FILTER')}
