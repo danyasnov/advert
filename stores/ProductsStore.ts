@@ -75,6 +75,7 @@ export class ProductsStore implements IProductsStore {
       onlyWithPhoto: false,
       onlyDiscounted: false,
       onlyFromSubscribed: false,
+      fields: {},
     }
   }
 

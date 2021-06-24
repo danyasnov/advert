@@ -82,7 +82,7 @@ export const FormikField: FC<IFormikField> = ({field}) => {
   }
   if (!component) return null
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Field name={slug} component={component} {...props} />
+  return <Field name={`fields.${slug}`} component={component} {...props} />
 }
 
 export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({

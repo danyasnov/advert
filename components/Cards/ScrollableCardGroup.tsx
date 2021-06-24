@@ -22,8 +22,7 @@ const ScrollableCardGroup: FC = observer(() => {
           <div className='flex justify-center'>
             <Loader />
           </div>
-        }
-        endMessage={<h4>Yay! You have seen it all</h4>}>
+        }>
         <div
           className={`flex flex-col space-y-4 s:flex-row s:space-y-0 -mx-1 s:-mx-2 flex-wrap
       ${state === 'pending' ? 'opacity-40' : ''}`}>

@@ -43,6 +43,7 @@ export interface Filter {
   onlyWithPhoto: boolean
   onlyDiscounted: boolean
   onlyFromSubscribed: boolean
+  fields: Record<string, unknown>
 }
 
 export interface Size {

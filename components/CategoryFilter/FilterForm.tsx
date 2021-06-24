@@ -1,12 +1,21 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {FormikCheckbox, FormikRange, FormikSegmented} from './FormikComponents'
+import {toJS} from 'mobx'
+import {
+  FormikCheckbox,
+  FormikField,
+  FormikRange,
+  FormikSegmented,
+} from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import {SelectItem} from '../Selects/Select'
-import {useProductsStore} from '../../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useProductsStore,
+} from '../../providers/RootStoreProvider'
 
 interface Values {
   condition: SelectItem
@@ -17,6 +26,7 @@ interface Values {
   onlyWithPhoto: boolean
   onlyDiscounted: boolean
   onlyFromSubscribed: boolean
+  fields?: Record<string, unknown>
 }
 
 const getInitialValues = (conditionOptions): Values => {
@@ -29,41 +39,46 @@ const getInitialValues = (conditionOptions): Values => {
     onlyWithPhoto: false,
     onlyDiscounted: false,
     onlyFromSubscribed: false,
+    fields: {},
   }
 }
 
-const DefaultForm: FC = () => {
+const FilterForm: FC = () => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter} = useProductsStore()
+  const {setFilter, resetFilter, fetchProducts} = useProductsStore()
+  const {categoryData, categoryDataFieldsBySlug} = useCategoriesStore()
+
   const formikRef = useRef<FormikProps<Values>>()
-  const conditionOptions = [
-    {
-      value: 0,
-      label: t('ALL'),
-    },
-    {
-      value: 1,
-      label: t('NEW'),
-    },
-    {
-      value: 2,
-      label: t('USED'),
-    },
-  ]
+
+  const conditionOptions = useMemo(
+    () => [
+      {
+        value: 0,
+        label: t('ALL'),
+      },
+      {
+        value: 1,
+        label: t('NEW'),
+      },
+      {
+        value: 2,
+        label: t('USED'),
+      },
+    ],
+    [t],
+  )
 
   useEffect(() => {
     if (formikRef.current) {
       formikRef.current.resetForm({values: getInitialValues(conditionOptions)})
       resetFilter()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath])
+  }, [conditionOptions, resetFilter, router.asPath])
 
   const [initialValue, setInitialValue] = useState<Values>(
     getInitialValues(conditionOptions),
   )
-  const {fetchProducts} = useProductsStore()
 
   return (
     <Formik
@@ -72,8 +87,35 @@ const DefaultForm: FC = () => {
       enableReinitialize
       initialValues={initialValue}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
-        const {priceRange, onlyWithPhoto, onlyDiscounted, onlyFromSubscribed} =
-          values
+        const {
+          priceRange,
+          onlyWithPhoto,
+          onlyDiscounted,
+          onlyFromSubscribed,
+          fields,
+        } = values
+        const mappedFields = Object.fromEntries(
+          Object.entries(fields).map(([key, value]) => {
+            const field = categoryDataFieldsBySlug[key]
+            let mappedValue
+            switch (field.fieldType) {
+              case 'select': {
+                const fieldValue = value as SelectItem
+                if (fieldValue?.value) mappedValue = [fieldValue.value]
+                break
+              }
+              case 'multiselect': {
+                if (Array.isArray(value) && value.length)
+                  mappedValue = value.map((v) => v.value)
+                break
+              }
+              default: {
+                if (value) mappedValue = [value]
+              }
+            }
+            return [key, mappedValue]
+          }),
+        )
 
         setInitialValue(values)
         let condition = ''
@@ -87,12 +129,13 @@ const DefaultForm: FC = () => {
           onlyWithPhoto,
           onlyDiscounted,
           onlyFromSubscribed,
+          fields: mappedFields,
         }
         setFilter(filter)
         fetchProducts().then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
-        <Form className='pt-8 space-y-6 divide-y'>
+        <Form className='pt-8 space-y-8 divide-y'>
           <div className='space-y-6'>
             <Field
               name='condition'
@@ -117,7 +160,15 @@ const DefaultForm: FC = () => {
             />
           </div>
 
-          <div className='space-y-6 pt-6'>
+          {Array.isArray(categoryData?.fields) && (
+            <div className='space-y-6 pt-8'>
+              {categoryData.fields.map((field) => (
+                <FormikField field={field} key={field.id} />
+              ))}
+            </div>
+          )}
+
+          <div className='space-y-6 pt-8'>
             <Field
               name='onlyWithPhoto'
               component={FormikCheckbox}
@@ -134,7 +185,7 @@ const DefaultForm: FC = () => {
               label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
             />
           </div>
-          <div className='pt-6'>
+          <div className='pt-8'>
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues(conditionOptions)})
@@ -152,4 +203,4 @@ const DefaultForm: FC = () => {
   )
 }
 
-export default DefaultForm
+export default FilterForm

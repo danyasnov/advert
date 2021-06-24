@@ -11,14 +11,13 @@ import {
   findCategoryByQuery,
   findCurrentCategoriesOptionsyByQuery,
 } from '../../helpers'
-import DefaultForm from './DefaultForm'
-import CustomForm from './CustomForm'
+import FilterForm from './FilterForm'
 
 const CategoryFilter: FC = observer(() => {
   const router = useRouter()
   const {t} = useTranslation()
   const {setFilter} = useProductsStore()
-  const {categories, categoryData} = useCategoriesStore()
+  const {categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
@@ -60,7 +59,7 @@ const CategoryFilter: FC = observer(() => {
           }}
         />
       </div>
-      {categoryData ? <CustomForm /> : <DefaultForm />}
+      <FilterForm />
     </div>
   )
 })

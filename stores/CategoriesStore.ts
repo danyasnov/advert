@@ -41,13 +41,15 @@ export class CategoriesStore implements ICategoriesStore {
   }
 
   get categoryDataFieldsBySlug(): Record<string, CACategoryDataFieldModel> {
-    return this.categoryData.fields.reduce(
-      (acc, val) => ({
-        ...acc,
-        [val.slug]: val,
-      }),
-      {},
-    )
+    return Array.isArray(this.categoryData?.fields)
+      ? this.categoryData.fields.reduce(
+          (acc, val) => ({
+            ...acc,
+            [val.slug]: val,
+          }),
+          {},
+        )
+      : null
   }
 
   get categoriesWithoutAll(): Array<CACategoryModel> {

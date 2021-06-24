@@ -9,9 +9,11 @@ import IcInstagram from 'icons/social/Instagram.svg'
 import IcVK from 'icons/social/VK.svg'
 import IcYouTube from 'icons/social/YouTube.svg'
 import IcTwitter from 'icons/social/Twitter.svg'
+import {toJS} from 'mobx'
 import {
   useCategoriesStore,
   useCountriesStore,
+  useProductsStore,
 } from '../providers/RootStoreProvider'
 import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
@@ -28,6 +30,8 @@ const mainCities: Array<string> = [
   'афины',
 ]
 const Footer: FC = observer(() => {
+  const {filter} = useProductsStore()
+  console.log(JSON.stringify(toJS(filter), null, 2))
   const {ids, byId: categoriesById} = useCategoriesStore()
   const {byId: countriesById} = useCountriesStore()
   const {t} = useTranslation()
