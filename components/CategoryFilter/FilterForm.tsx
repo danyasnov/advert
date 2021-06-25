@@ -2,7 +2,6 @@ import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {toJS} from 'mobx'
 import {
   FormikCheckbox,
   FormikField,
@@ -46,8 +45,9 @@ const getInitialValues = (conditionOptions): Values => {
 const FilterForm: FC = () => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter, fetchProducts} = useProductsStore()
-  const {categoryData, categoryDataFieldsBySlug} = useCategoriesStore()
+  const {setFilter, resetFilter, fetchProducts, aggregatedFields, timestamp} =
+    useProductsStore()
+  const {categoryDataFieldsBySlug} = useCategoriesStore()
 
   const formikRef = useRef<FormikProps<Values>>()
 
@@ -95,26 +95,28 @@ const FilterForm: FC = () => {
           fields,
         } = values
         const mappedFields = Object.fromEntries(
-          Object.entries(fields).map(([key, value]) => {
-            const field = categoryDataFieldsBySlug[key]
-            let mappedValue
-            switch (field.fieldType) {
-              case 'select': {
-                const fieldValue = value as SelectItem
-                if (fieldValue?.value) mappedValue = [fieldValue.value]
-                break
+          Object.entries(fields)
+            .map(([key, value]) => {
+              const field = categoryDataFieldsBySlug[key]
+              let mappedValue
+              switch (field.fieldType) {
+                case 'select': {
+                  const fieldValue = value as SelectItem
+                  if (fieldValue?.value) mappedValue = [fieldValue.value]
+                  break
+                }
+                case 'multiselect': {
+                  if (Array.isArray(value) && value.length)
+                    mappedValue = value.map((v) => v.value)
+                  break
+                }
+                default: {
+                  if (value) mappedValue = [value]
+                }
               }
-              case 'multiselect': {
-                if (Array.isArray(value) && value.length)
-                  mappedValue = value.map((v) => v.value)
-                break
-              }
-              default: {
-                if (value) mappedValue = [value]
-              }
-            }
-            return [key, mappedValue]
-          }),
+              return [key, mappedValue]
+            })
+            .filter(([, value]) => !!value),
         )
 
         setInitialValue(values)
@@ -160,11 +162,13 @@ const FilterForm: FC = () => {
             />
           </div>
 
-          {Array.isArray(categoryData?.fields) && (
+          {Array.isArray(aggregatedFields) && !!aggregatedFields.length && (
             <div className='space-y-6 pt-8'>
-              {categoryData.fields.map((field) => (
-                <FormikField field={field} key={field.id} />
-              ))}
+              {aggregatedFields.map((field) => {
+                return (
+                  <FormikField field={field} key={`${field.id}-${timestamp}`} />
+                )
+              })}
             </div>
           )}
 

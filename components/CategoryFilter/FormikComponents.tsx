@@ -227,6 +227,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   const {setFieldValue} = form
   return (
     <Select
+      id={name}
       value={value}
       options={options}
       isClearable

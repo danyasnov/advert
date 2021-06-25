@@ -3,7 +3,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
-import unixToString from '../../utils/unixToString'
+import {unixToString} from '../../utils'
 import CardImage from '../CardImage'
 
 interface Props {

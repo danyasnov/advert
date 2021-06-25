@@ -3,7 +3,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
 import ImageWrapper from '../ImageWrapper'
-import unixToString from '../../utils/unixToString'
+import {unixToString} from '../../utils'
 
 interface Props {
   product: AdvertiseListItemModel

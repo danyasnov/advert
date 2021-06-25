@@ -1,6 +1,7 @@
 import {action, makeAutoObservable} from 'mobx'
 import {AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
+import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
@@ -13,7 +14,9 @@ export interface IProductsHydration {
   page: number
   limit: number
   count: number
+  timestamp: number
   cacheId: string
+  aggregatedFields: CACategoryDataFieldModel[]
 }
 
 export interface IProductsStore {
@@ -26,10 +29,12 @@ export interface IProductsStore {
   limit: number
   count: number
   cacheId: string
+  aggregatedFields: CACategoryDataFieldModel[]
   filter: Partial<Filter>
   setFilter: (filter: Partial<Filter>) => void
   resetFilter: () => void
   fetchProducts: (opts?: FetchOptions) => Promise<void>
+  timestamp: number
 }
 
 interface FetchOptions {
@@ -55,6 +60,10 @@ export class ProductsStore implements IProductsStore {
 
   cacheId
 
+  aggregatedFields = []
+
+  timestamp = Date.now()
+
   filter: Partial<Filter> = {}
 
   private cancelTokenSource: CancelTokenSource
@@ -79,7 +88,6 @@ export class ProductsStore implements IProductsStore {
     }
   }
 
-  // todo move cancel token here
   fetchProducts = (opts?: FetchOptions): Promise<void> => {
     if (this.cancelTokenSource) this.cancelTokenSource.cancel('got_new_request')
     this.cancelTokenSource = cancelToken.source()
@@ -107,6 +115,7 @@ export class ProductsStore implements IProductsStore {
             pagination: {count, page, limit},
             cacheId,
           },
+          aggregatedFields,
         } = response.data
         if (page === 1) {
           this.products = data
@@ -114,6 +123,8 @@ export class ProductsStore implements IProductsStore {
         } else {
           this.products = [...this.products, ...data]
         }
+        this.aggregatedFields = aggregatedFields
+        this.timestamp = Date.now()
         this.page = page
         this.limit = limit
         this.count = count
@@ -134,5 +145,7 @@ export class ProductsStore implements IProductsStore {
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0
     this.cacheId = data?.cacheId ?? undefined
+    this.aggregatedFields = data?.aggregatedFields ?? []
+    this.timestamp = data?.timestamp ?? Date.now()
   }
 }

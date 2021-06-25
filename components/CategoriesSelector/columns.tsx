@@ -93,7 +93,7 @@ class ThirdCol extends PureComponent<ColProps> {
       <div className='h-full'>
         {items.map((c) => (
           <LinkWrapper
-            className='categories-selector-item first:font-bold'
+            className='categories-selector-item first:font-bold '
             key={c.id}
             href={`/all/all/${activeCategory.slug}/${
               secondActiveCategory.slug

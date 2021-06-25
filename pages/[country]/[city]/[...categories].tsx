@@ -62,6 +62,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     limit: productsResponse?.data?.headers.pagination.limit,
     // @ts-ignore
     cacheId: productsResponse?.data?.headers.cacheId,
+    // @ts-ignore
+    aggregatedFields: productsResponse?.data?.aggregatedFields,
+    timestamp: Date.now(),
   }
   const countries = countriesData ?? null
   return {

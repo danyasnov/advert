@@ -44,6 +44,7 @@ const CategoryFilter: FC = observer(() => {
     <div className='hidden m:block w-72 bg-white border border-shadow-b rounded-lg px-4 py-4 divide-y shadow-md'>
       <div className='pb-8'>
         <Select
+          id='SUBCATEGORY'
           placeholder={t('SUBCATEGORY')}
           value={currentOption}
           options={options}

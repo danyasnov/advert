@@ -12,6 +12,7 @@ interface Props {
   isDisabled?: boolean
   isClearable?: boolean
   isMulti?: boolean
+  id?: string
 }
 
 export interface SelectItem {
@@ -64,9 +65,11 @@ const Select: FC<Props> = ({
   isDisabled,
   isClearable,
   isMulti,
+  id,
 }) => {
   return (
     <RS
+      inputId={id}
       value={value}
       options={options}
       placeholder={placeholder}

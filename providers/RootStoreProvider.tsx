@@ -1,5 +1,4 @@
 import React, {createContext, FC, ReactNode, useContext} from 'react'
-import {enableLogging} from 'mobx-logger'
 import {enableStaticRendering} from 'mobx-react-lite'
 import {RootStore, IRootStoreHydration, IRootStore} from '../stores/RootStore'
 import {ICategoriesStore} from '../stores/CategoriesStore'
@@ -7,8 +6,6 @@ import {IProductsStore} from '../stores/ProductsStore'
 import {ICountriesStore} from '../stores/CountriesStore'
 
 enableStaticRendering(typeof window === 'undefined')
-
-enableLogging()
 
 let store: IRootStore
 const StoreContext = createContext<RootStore | undefined>(undefined)

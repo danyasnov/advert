@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useEmblaCarousel} from 'embla-carousel/react'
+import Link from 'next/link'
 import ImageWrapper from './ImageWrapper'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
 import TitleWithSeparator from './TitleWithSeparator'
@@ -16,12 +17,8 @@ const CategoriesSlider: FC = observer(() => {
     containScroll: 'trimSnaps',
     slidesToScroll: 1,
   })
-  const {
-    scrollNext,
-    scrollPrev,
-    prevBtnEnabled,
-    nextBtnEnabled,
-  } = useSliderButtons(embla)
+  const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
+    useSliderButtons(embla)
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>
@@ -30,17 +27,22 @@ const CategoriesSlider: FC = observer(() => {
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-4 mx-4 s:mx-8  m:mx-0'>
             {categoriesWithoutAll.map((c) => (
-              <div key={c.id} className='relative'>
-                <ImageWrapper
-                  type={`/img/categories/${c.slug}.jpg`}
-                  width={136}
-                  height={136}
-                  alt={c.name}
-                  className='rounded-xl'
-                  layout='fixed'
-                />
-                <p className='text-body-2 text-black-b text-center'>{c.name}</p>
-              </div>
+              <Link key={c.id} href={`/all/all/${c.slug}`}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className='relative cursor-pointer'>
+                  <ImageWrapper
+                    type={`/img/categories/${c.slug}.jpg`}
+                    width={136}
+                    height={136}
+                    alt={c.name}
+                    className='rounded-xl'
+                    layout='fixed'
+                  />
+                  <p className='text-body-2 text-black-b text-center'>
+                    {c.name}
+                  </p>
+                </a>
+              </Link>
             ))}
           </div>
         </div>

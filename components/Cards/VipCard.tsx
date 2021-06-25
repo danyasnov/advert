@@ -6,7 +6,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import {useTranslation} from 'next-i18next'
 import IcPhone from 'icons/material/Phone.svg'
 import ImageWrapper from '../ImageWrapper'
-import unixToString from '../../utils/unixToString'
+import {unixToString} from '../../utils'
 import Button from '../Buttons/Button'
 import {notImplementedAlert} from '../../helpers'
 
