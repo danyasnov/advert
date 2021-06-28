@@ -22,6 +22,7 @@ module.exports = {
       'body-2': ['14px', '16px'],
       'body-3': ['12px', '16px'],
       'body-4': ['10px', '12px'],
+      'h-1': ['36px', '40px'],
       'h-2': ['20px', '24px'],
     },
     screens: {

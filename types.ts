@@ -41,6 +41,8 @@ export interface SerializedCookiesState {
 
 export interface Filter {
   condition: string
+  sortField: string
+  sortDirection: string
   priceMin: number
   priceMax: number
   categoryId: number

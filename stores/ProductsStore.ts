@@ -35,6 +35,8 @@ export interface IProductsStore {
   resetFilter: () => void
   fetchProducts: (opts?: FetchOptions) => Promise<void>
   timestamp: number
+  sortBy: string
+  setSortBy: (value: string) => void
 }
 
 interface FetchOptions {
@@ -66,6 +68,8 @@ export class ProductsStore implements IProductsStore {
 
   filter: Partial<Filter> = {}
 
+  sortBy = 'date_published-asc'
+
   private cancelTokenSource: CancelTokenSource
 
   constructor(root: RootStore) {
@@ -86,6 +90,7 @@ export class ProductsStore implements IProductsStore {
       onlyFromSubscribed: false,
       fields: {},
     }
+    this.sortBy = 'date_published-asc'
   }
 
   fetchProducts = (opts?: FetchOptions): Promise<void> => {
@@ -93,11 +98,12 @@ export class ProductsStore implements IProductsStore {
     this.cancelTokenSource = cancelToken.source()
 
     this.state = opts?.isScroll ? 'pending-scroll' : 'pending'
+    const [sortField, sortDirection] = this.sortBy.split('-')
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',
       data: {
-        filter: {...this.filter},
+        filter: {...this.filter, sortField, sortDirection},
         pagination: {page: 1, limit: this.limit},
       },
     }
@@ -136,6 +142,10 @@ export class ProductsStore implements IProductsStore {
         return Promise.reject(error)
       }),
     )
+  }
+
+  setSortBy = (value: string): void => {
+    this.sortBy = value
   }
 
   hydrate(data?: IProductsHydration): void {

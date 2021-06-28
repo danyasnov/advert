@@ -25,10 +25,14 @@ export const fetchProducts = (
       page: pagination?.page ?? 1,
     },
   }
+  const sort: Partial<Filter> = {}
+  if (!filter.sortField) sort.sortField = 'date_published'
+  if (!filter.sortDirection) sort.sortDirection = 'asc'
   const data = {
     ...filter,
+    ...sort,
     ...getSearchByFilter(state),
-    searchId: '',
+    cacheId: '',
     appId: 'web',
   }
   return makeRequest({

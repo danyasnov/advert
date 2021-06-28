@@ -40,12 +40,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const promises = [
     fetchProducts(state, {categoryId: currentCategory.id}, {limit: 40}),
     getCountries(locale),
+    rest.categories.fetchCategoryData(currentCategory.id),
   ]
-
-  if (!currentCategory.items.length) {
-    // @ts-ignore
-    promises.push(rest.categories.fetchCategoryData(currentCategory.id))
-  }
 
   const [productsResponse, countriesData, categoryData] =
     await Promise.allSettled(promises).then((res) =>
