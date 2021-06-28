@@ -4,6 +4,7 @@ import {PureComponent, ReactNode} from 'react'
 import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
 import LinkWrapper from '../Buttons/LinkWrapper'
+import {getLocationCodes} from '../../helpers'
 
 interface ColItemProps {
   category: CACategoryModel
@@ -49,7 +50,9 @@ class SecondCol extends PureComponent<ColProps> {
           return (
             <SecondColItem
               key={c.id}
-              href={`/all/all/${activeCategory.slug}/${c.slug || ''}`}
+              href={`/${getLocationCodes()}/${activeCategory.slug}/${
+                c.slug || ''
+              }`}
               activeCategory={activeCategory}
               isActive={c.id === activeId}
               category={c}
@@ -95,7 +98,7 @@ class ThirdCol extends PureComponent<ColProps> {
           <LinkWrapper
             className='categories-selector-item first:font-bold '
             key={c.id}
-            href={`/all/all/${activeCategory.slug}/${
+            href={`/${getLocationCodes()}/${activeCategory.slug}/${
               secondActiveCategory.slug
             }/${c.slug || ''}`}>
             {c.name}

@@ -21,6 +21,8 @@ export interface CookiesState {
   searchBy?: 'coords' | 'id'
   address?: string
   language?: string
+  countryCode?: string
+  regionOrCityCode?: string
 }
 
 export interface SerializedCookiesState {
@@ -33,6 +35,8 @@ export interface SerializedCookiesState {
   searchBy?: 'coords' | 'id'
   address?: string
   language?: string
+  countryCode?: string
+  regionOrCityCode?: string
 }
 
 export interface Filter {

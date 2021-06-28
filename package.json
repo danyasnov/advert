@@ -16,7 +16,7 @@
     "axios-curlirize": "^1.3.7",
     "embla-carousel": "^4.5.3",
     "formik": "^2.2.9",
-    "front-api": "git+ssh://git@gitlab.com:adverto/front-api.git#30491c27a35aed9ce3d248ae595d811bc5f27796",
+    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#8d216f343db4dbad9f38c696884a19497b492787",
     "google-map-react": "^2.1.9",
     "luxon": "^1.27.0",
     "mobx": "^6.3.2",

@@ -46,7 +46,7 @@ const Header: FC = () => {
             </LinkButton>
           </div>
         </div>
-        <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-2'>
+        <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-8'>
           <Logo />
           <div className='flex space-x-4 w-full'>
             <CategoriesSelector />

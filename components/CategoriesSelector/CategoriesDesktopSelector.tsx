@@ -5,6 +5,7 @@ import {CACategoryModel} from 'front-api'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {FirstColItem, ThirdCol, SecondCol} from './columns'
 import ImageWrapper from '../ImageWrapper'
+import {getLocationCodes} from '../../helpers'
 
 const CategoriesDesktopSelector: FC = observer(() => {
   const {t} = useTranslation()
@@ -44,7 +45,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           <FirstColItem
             category={c}
             key={c.id}
-            href={`/all/all/${c.slug}`}
+            href={`/${getLocationCodes()}/${c.slug}`}
             isActive={activeCategory?.id === c.id}
             onMouseEnter={(cat) => {
               const secondItems = withAllProductsButton(cat.items)

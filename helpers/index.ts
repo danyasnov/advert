@@ -73,6 +73,7 @@ export const processCookies = async (
   const cookies: SerializedCookiesState = parseCookies(ctx)
   const state: CookiesState = {}
   let locationByIp = null
+  let addressByGps = null
   state.language = locale || cookies.language || 'en'
   if (!cookies.userLocation) {
     try {
@@ -102,9 +103,52 @@ export const processCookies = async (
   if (cookies.countryId) state.countryId = cookies.countryId
   if (cookies.regionId) state.regionId = cookies.regionId
   if (cookies.cityId) state.cityId = cookies.cityId
+
+  // URL search params eg RU/moscow
+  if (state.searchBy === 'coords') {
+    addressByGps = await getAddressByGPS(state.searchLocation, state.language)
+    if (addressByGps.result) {
+      state.countryCode = addressByGps.result.country.code
+      if (addressByGps.result.region?.slug) {
+        state.regionOrCityCode = addressByGps.result.region.slug
+        if (addressByGps.result.city?.slug) {
+          state.regionOrCityCode = addressByGps.result.city.slug
+        }
+      } else {
+        state.regionOrCityCode = ''
+      }
+    } else {
+      state.countryCode = ''
+      state.regionOrCityCode = ''
+    }
+  } else {
+    const countries = await getCountries(state.language)
+    const country = (countries ?? []).find((c) => c.id === state.countryId)
+    state.countryCode = country?.isoCode || ''
+    if (state.regionId) {
+      const regions = await getRegions(state.countryId, 'en')
+      const region = (regions.result ?? []).find((c) => c.id === state.regionId)
+      if (region?.word) {
+        state.regionOrCityCode = region?.word
+        if (state.cityId) {
+          const cities = await getCities(state.regionId, 'en')
+          const city = (cities.result ?? []).find((c) => c.id === state.cityId)
+          if (city?.word) {
+            state.regionOrCityCode = city?.word
+          }
+        }
+      }
+    } else {
+      state.regionOrCityCode = ''
+    }
+  }
+
+  // address string in search
   if (!cookies.address || cookies.language !== locale) {
     if (state.searchBy === 'coords') {
-      const position = await getAddressByGPS(state.userLocation, state.language)
+      const position =
+        addressByGps ||
+        (await getAddressByGPS(state.userLocation, state.language))
       state.address = getShortAddress(position.result)
     } else {
       const address = []
@@ -193,4 +237,12 @@ export const getSearchByFilter = (
     ...state.searchLocation,
     distanceMax: state.searchRadius,
   }
+}
+
+export const getLocationCodes = (): string => {
+  const cookies: SerializedCookiesState = parseCookies()
+  const result = []
+  result.push(cookies.countryCode || 'all')
+  result.push(cookies.regionOrCityCode || 'all')
+  return result.join('/')
 }

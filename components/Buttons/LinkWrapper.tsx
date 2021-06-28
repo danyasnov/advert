@@ -12,7 +12,7 @@ const LinkWrapper: FC<Props> = ({href, children, className}) => {
     <Link href={href}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
-        className={`capitalize-first whitespace-nowrap text-body-3 text-brand-b1
+        className={`capitalize-first text-body-3 text-brand-b1
       ${className || ''}`}>
         {children}
       </a>

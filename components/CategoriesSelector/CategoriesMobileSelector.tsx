@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
-import {notImplementedAlert} from '../../helpers'
+import {getLocationCodes} from '../../helpers'
 import Button from '../Buttons/Button'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import LinkWrapper from '../Buttons/LinkWrapper'
@@ -16,6 +16,8 @@ const CategoriesMobileSelector: FC = observer(() => {
     null,
   )
 
+  const locationCodes = getLocationCodes()
+
   return (
     <div className='absolute top-89px inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start'>
       {!activeCategory?.items &&
@@ -24,7 +26,6 @@ const CategoriesMobileSelector: FC = observer(() => {
             category={c}
             key={c.id}
             onClick={() => setActiveCategory(c)}
-            href=''
           />
         ))}
       {!!activeCategory?.items && (
@@ -36,7 +37,7 @@ const CategoriesMobileSelector: FC = observer(() => {
             {t('BACK')}
           </Button>
           <LinkWrapper
-            href={`/all/all/${activeCategory.slug}`}
+            href={`/${locationCodes}/${activeCategory.slug}`}
             className='categories-selector-item font-bold'>
             {t('ALL_ADVERTS')}
           </LinkWrapper>
@@ -44,7 +45,7 @@ const CategoriesMobileSelector: FC = observer(() => {
             <CategoryItem
               key={value.id}
               category={value}
-              href={`/all/all/${activeCategory.slug}/${value.slug}`}>
+              href={`/${locationCodes}/${activeCategory.slug}/${value.slug}`}>
               {value.name}
             </CategoryItem>
           ))}

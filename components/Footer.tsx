@@ -109,7 +109,7 @@ const Footer: FC = observer(() => {
               <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
             }
             body={
-              <div className='grid grid-cols-2 grid-rows-5 grid-flow-col place-items-start gap-y-2'>
+              <div className='grid grid-cols-2 grid-rows-6 grid-flow-col place-items-start gap-y-2'>
                 {ids.map((id) => (
                   <LinkWrapper
                     href={`/all/all/${categoriesById[id]?.slug}`}

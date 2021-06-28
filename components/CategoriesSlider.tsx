@@ -8,6 +8,7 @@ import {useCategoriesStore} from '../providers/RootStoreProvider'
 import TitleWithSeparator from './TitleWithSeparator'
 import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
+import {getLocationCodes} from '../helpers'
 
 const CategoriesSlider: FC = observer(() => {
   const {categoriesWithoutAll} = useCategoriesStore()
@@ -27,7 +28,7 @@ const CategoriesSlider: FC = observer(() => {
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-4 mx-4 s:mx-8  m:mx-0'>
             {categoriesWithoutAll.map((c) => (
-              <Link key={c.id} href={`/all/all/${c.slug}`}>
+              <Link key={c.id} href={`${getLocationCodes()}/${c.slug}`}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className='relative cursor-pointer'>
                   <ImageWrapper

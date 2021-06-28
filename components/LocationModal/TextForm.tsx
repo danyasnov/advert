@@ -89,10 +89,12 @@ const TextForm: FC = observer(() => {
       setRegion(null)
       setCity(null)
       setCityOptions([])
+      setRegionOptions([])
     } else {
       fetchRegions(item.value).then((items) => {
         setRegion(null)
         setCity(null)
+        setCityOptions([])
         setRegionOptions(items)
       })
     }
