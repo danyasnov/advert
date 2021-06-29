@@ -5,10 +5,11 @@ import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
+import {PAGE_LIMIT} from '../../stores/ProductsStore'
 
 const ScrollableCardGroup: FC = observer(() => {
   const {products, state, count, page, fetchProducts} = useProductsStore()
-  const hasMore = count > page * 10
+  const hasMore = count > page * PAGE_LIMIT
 
   return (
     <div className='flex flex-col items-center relative'>

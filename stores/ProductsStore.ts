@@ -44,7 +44,7 @@ interface FetchOptions {
   isScroll?: boolean
 }
 type State = 'done' | 'pending' | 'error' | 'pending-scroll'
-
+export const PAGE_LIMIT = 40
 export class ProductsStore implements IProductsStore {
   root
 
@@ -56,7 +56,7 @@ export class ProductsStore implements IProductsStore {
 
   page = 1
 
-  limit = 40
+  limit = PAGE_LIMIT
 
   count = null
 

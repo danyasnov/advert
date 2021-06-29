@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import RS from 'react-select'
 import {FixedSizeList as List} from 'react-window'
-import styles from './styles'
+import {defaultStyles} from './styles'
 
 interface Props {
   options: Array<SelectItem>
@@ -13,6 +13,8 @@ interface Props {
   isClearable?: boolean
   isMulti?: boolean
   id?: string
+  styles?
+  components?
 }
 
 export interface SelectItem {
@@ -66,6 +68,8 @@ const Select: FC<Props> = ({
   isClearable,
   isMulti,
   id,
+  styles: propsStyles,
+  components,
 }) => {
   return (
     <RS
@@ -78,9 +82,10 @@ const Select: FC<Props> = ({
       onChange={onChange}
       isClearable={isClearable}
       isMulti={isMulti}
-      styles={styles}
+      styles={{...defaultStyles, ...propsStyles}}
       components={{
         MenuList,
+        ...(components || {}),
       }}
     />
   )

@@ -6,6 +6,7 @@ import Storage from '../../../stores/Storage'
 import {getRest} from '../../../api'
 import {fetchProducts} from '../../../api/v2'
 import {getCountries} from '../../../api/v1'
+import {PAGE_LIMIT} from '../../../stores/ProductsStore'
 
 export default function Home() {
   return <CategoriesLayout />
@@ -38,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const currentCategory = findCategoryByQuery(query.categories, categories)
 
   const promises = [
-    fetchProducts(state, {categoryId: currentCategory.id}, {limit: 40}),
+    fetchProducts(state, {categoryId: currentCategory.id}),
     getCountries(locale),
     rest.categories.fetchCategoryData(currentCategory.id),
   ]

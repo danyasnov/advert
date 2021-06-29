@@ -2,6 +2,7 @@ import {AxiosPromise} from 'axios'
 import {getSearchByFilter} from '../../helpers'
 import {API_URL, makeRequest} from '../index'
 import {CookiesState, Filter} from '../../types'
+import {PAGE_LIMIT} from '../../stores/ProductsStore'
 
 interface Pagination {
   page: number
@@ -21,18 +22,19 @@ export const fetchProducts = (
     },
     location: state.userLocation,
     pagination: {
-      limit: pagination?.limit ?? 10,
+      limit: pagination?.limit ?? PAGE_LIMIT,
       page: pagination?.page ?? 1,
     },
   }
   const sort: Partial<Filter> = {}
-  if (!filter.sortField) sort.sortField = 'date_published'
-  if (!filter.sortDirection) sort.sortDirection = 'asc'
+  if (!filter?.sortField) sort.sortField = 'date_published'
+  if (!filter?.sortDirection) sort.sortDirection = 'asc'
   const data = {
     ...filter,
     ...sort,
+    // location
     ...getSearchByFilter(state),
-    cacheId: '',
+    search: '',
     appId: 'web',
   }
   return makeRequest({

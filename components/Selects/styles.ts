@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-export default {
+export const defaultStyles = {
   control: (provided, state) => ({
     ...provided,
     borderRadius: 8,
@@ -23,6 +23,7 @@ export default {
     '&:hover': {
       backgroundColor: '#FFEEDD',
     },
+    display: 'flex',
   }),
   singleValue: (provided) => ({
     ...provided,
@@ -39,5 +40,21 @@ export default {
   valueContainer: (provided) => ({
     ...provided,
     paddingLeft: '12px',
+  }),
+}
+
+export const LinkStyles = {
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
+  }),
+  indicatorsContainer: () => ({
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    display: 'flex',
   }),
 }

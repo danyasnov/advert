@@ -1,7 +1,7 @@
 import {FC, useRef, useState} from 'react'
 import AsyncSelect from 'react-select/async'
 import {components} from 'react-select'
-import styles from './styles'
+import {defaultStyles} from './styles'
 
 interface Props {
   placeholder: string
@@ -58,7 +58,7 @@ const Autocomplete: FC<Props> = ({
       onInputChange={onInputChange}
       cacheOptions
       allowCreateWhileLoading={false}
-      styles={styles}
+      styles={defaultStyles}
       defaultOptions
       isClearable={isClearable}
       isDisabled={isDisabled}
