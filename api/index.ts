@@ -14,11 +14,11 @@ export const {API_URL} = process.env
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
-    isDev: false,
+    isDev: true,
     storage,
-    isLogEnabled: false,
+    isLogEnabled: true,
     isLogRequest: true,
-    isLogResponse: false,
+    isLogResponse: true,
     analyticsService: new DummyAnalytics(),
   })
 

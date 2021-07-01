@@ -1,5 +1,6 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
+import {FilterPublication} from 'front-api/src/models/index'
 import {getRest} from '../api'
 import Storage from '../stores/Storage'
 import {processCookies} from '../helpers'
@@ -33,6 +34,26 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getCountries(locale),
     rest.categories.fetchTree(),
   ]
+
+  // const details = await rest.advertises.fetchDetail('e7MKFg')
+
+  // const searchResults = await rest.advertises.fetchList({
+  //   filter: {
+  //     onlyFromSubscribed: false,
+  //     published: FilterPublication.ALL_TIME,
+  //     priceMax: undefined,
+  //     priceMin: undefined,
+  //     fieldValues: new Map(),
+  //     search: '',
+  //     onlyDiscounted: false,
+  //     secureDeal: false,
+  //     sort: {
+  //       type: 'date_published',
+  //       direction: 'asc',
+  //       key: '',
+  //     },
+  //   },
+  // })
 
   const [
     productsResponse,

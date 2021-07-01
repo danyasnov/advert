@@ -6,10 +6,10 @@ import Storage from '../../../stores/Storage'
 import {getRest} from '../../../api'
 import {fetchProducts} from '../../../api/v2'
 import {getCountries} from '../../../api/v1'
-import {PAGE_LIMIT} from '../../../stores/ProductsStore'
+import ProductLayout from '../../../components/Layouts/ProductLayout'
 
-export default function Home() {
-  return <CategoriesLayout />
+export default function Home({isProduct}) {
+  return isProduct ? <ProductLayout /> : <CategoriesLayout />
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -38,40 +38,66 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const currentCategory = findCategoryByQuery(query.categories, categories)
 
-  const promises = [
-    fetchProducts(state, {categoryId: currentCategory.id}),
-    getCountries(locale),
-    rest.categories.fetchCategoryData(currentCategory.id),
-  ]
+  let productPromise
+  if (!currentCategory) {
+    const productSlug = query.categories[query.categories.length - 1]
+    if (typeof productSlug === 'string') {
+      const chunks = productSlug.split('-')
+      const hash = chunks[chunks.length - 1]
+      productPromise = rest.advertises.fetchDetail(hash)
+    }
+  }
 
-  const [productsResponse, countriesData, categoryData] =
+  const promises = [getCountries(locale)]
+  if (currentCategory) {
+    promises.push(
+      // @ts-ignore
+      fetchProducts(state, {categoryId: currentCategory.id}),
+      rest.categories.fetchCategoryData(currentCategory.id),
+    )
+  } else if (productPromise) {
+    promises.push(productPromise)
+  }
+
+  const [countriesData, productsResponse, categoryData] =
     await Promise.allSettled(promises).then((res) =>
       res.map((p) => (p.status === 'fulfilled' ? p.value : null)),
     )
-  const productsStore = {
+
+  let productsStore
+  const categoriesStore = {categories}
+  if (currentCategory) {
+    productsStore = {
+      // @ts-ignore
+      products: productsResponse?.data?.data ?? null,
+      // @ts-ignore
+      count: productsResponse?.data?.headers.pagination.count,
+      // @ts-ignore
+      page: productsResponse?.data?.headers.pagination.page,
+      // @ts-ignore
+      limit: productsResponse?.data?.headers.pagination.limit,
+      // @ts-ignore
+      cacheId: productsResponse?.data?.headers.cacheId,
+      // @ts-ignore
+      aggregatedFields: productsResponse?.data?.aggregatedFields,
+      timestamp: Date.now(),
+    }
     // @ts-ignore
-    products: productsResponse?.data?.data ?? null,
-    // @ts-ignore
-    count: productsResponse?.data?.headers.pagination.count,
-    // @ts-ignore
-    page: productsResponse?.data?.headers.pagination.page,
-    // @ts-ignore
-    limit: productsResponse?.data?.headers.pagination.limit,
-    // @ts-ignore
-    cacheId: productsResponse?.data?.headers.cacheId,
-    // @ts-ignore
-    aggregatedFields: productsResponse?.data?.aggregatedFields,
-    timestamp: Date.now(),
+    categoriesStore.categoryData = categoryData?.result ?? null
+  } else if (productPromise) {
+    productsStore = {
+      // @ts-ignore
+      product: productsResponse?.result ?? null,
+      timestamp: Date.now(),
+    }
   }
+
   const countries = countriesData ?? null
   return {
     props: {
+      isProduct: !!productPromise,
       hydrationData: {
-        categoriesStore: {
-          categories,
-          // @ts-ignore
-          categoryData: categoryData?.result ?? null,
-        },
+        categoriesStore,
         productsStore,
         countriesStore: {
           countries,

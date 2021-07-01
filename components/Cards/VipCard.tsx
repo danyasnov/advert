@@ -6,7 +6,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import {useTranslation} from 'next-i18next'
 import IcPhone from 'icons/material/Phone.svg'
 import ImageWrapper from '../ImageWrapper'
-import {unixToString} from '../../utils'
+import {unixToDate} from '../../utils'
 import Button from '../Buttons/Button'
 import {notImplementedAlert} from '../../helpers'
 
@@ -58,7 +58,7 @@ const Card: FC<Props> = ({product}) => {
           </Button>
         </div>
         <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-          <span suppressHydrationWarning>{unixToString(dateUpdated)}</span>
+          <span suppressHydrationWarning>{unixToDate(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>
               <IcVisibility className='fill-current text-black-d h-4 w-4' />

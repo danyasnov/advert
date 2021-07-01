@@ -1,5 +1,5 @@
 import {action, makeAutoObservable} from 'mobx'
-import {AdvertiseListItemModel} from 'front-api'
+import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {RootStore} from './RootStore'
@@ -10,6 +10,7 @@ const cancelToken = axios.CancelToken
 
 export interface IProductsHydration {
   products: Array<AdvertiseListItemModel>
+  product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
   page: number
   limit: number
@@ -22,6 +23,7 @@ export interface IProductsHydration {
 export interface IProductsStore {
   root: RootStore
   products: Array<AdvertiseListItemModel>
+  product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
   hydrate(data: IProductsHydration): void
   state: State
@@ -51,6 +53,8 @@ export class ProductsStore implements IProductsStore {
   state: State = 'done'
 
   products = []
+
+  product
 
   freeProducts = []
 
@@ -150,6 +154,7 @@ export class ProductsStore implements IProductsStore {
 
   hydrate(data?: IProductsHydration): void {
     this.products = data?.products ?? []
+    this.product = data?.product ?? []
     this.freeProducts = data?.freeProducts ?? []
     this.page = data?.page ?? 1
     this.limit = data?.limit ?? 10

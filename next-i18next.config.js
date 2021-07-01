@@ -7,7 +7,7 @@ const getDomains = (domain) => {
     if (l === 'en') {
       result.push({domain, defaultLocale: l})
     } else {
-      result.push({domain: `${l}.${domain}`, defaultLocale: l})
+      result.push({domain: `${l}.${domain}`, defaultLocale: l, http: true})
     }
   })
   return result
@@ -18,7 +18,8 @@ module.exports = {
     defaultLocale: 'en',
     locales,
     fallbackLng: 'en',
-    domains: [...getDomains('fpreprod.adverto.sale')],
+    domains: [...getDomains('localhost:3000')],
+    // domains: [...getDomains('fpreprod.adverto.sale')],
   },
   localePath: path.resolve('./locales'),
 }

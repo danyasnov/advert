@@ -3,7 +3,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
-import {unixToString} from '../../utils'
+import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
 interface Props {
@@ -32,7 +32,7 @@ const Card: FC<Props> = ({
 
   return (
     <div
-      className={`w-40 s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
+      className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}>
       <div className='overflow-hidden' ref={viewportRef}>
@@ -61,7 +61,7 @@ const Card: FC<Props> = ({
           </span>
         </div>
         <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-          <span suppressHydrationWarning>{unixToString(dateUpdated)}</span>
+          <span suppressHydrationWarning>{unixToDate(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>
               <IcVisibility className='fill-current text-black-d h-4 w-4' />

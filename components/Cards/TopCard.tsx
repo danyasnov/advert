@@ -3,7 +3,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
 import ImageWrapper from '../ImageWrapper'
-import {unixToString} from '../../utils'
+import {unixToDate} from '../../utils'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -42,7 +42,7 @@ const Card: FC<Props> = ({product}) => {
           </span>
         </div>
         <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-          <span suppressHydrationWarning>{unixToString(dateUpdated)}</span>
+          <span suppressHydrationWarning>{unixToDate(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>
               <IcVisibility className='fill-current text-black-d h-4 w-4' />
