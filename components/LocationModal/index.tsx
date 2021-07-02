@@ -5,7 +5,7 @@ import IcClear from 'icons/material/Clear.svg'
 import {parseCookies} from 'nookies'
 import Button from '../Buttons/Button'
 import TextForm from './TextForm'
-import Tabs from './Tabs'
+import Tabs from '../Tabs'
 import MapForm from './MapForm'
 
 interface Props {

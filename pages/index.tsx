@@ -36,8 +36,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ]
 
   // const details = await rest.advertises.fetchDetail('e7MKFg')
-
+  //
   // const searchResults = await rest.advertises.fetchList({
+  //   limit: 40,
   //   filter: {
   //     onlyFromSubscribed: false,
   //     published: FilterPublication.ALL_TIME,
@@ -47,6 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   //     search: '',
   //     onlyDiscounted: false,
   //     secureDeal: false,
+  //     countryId: 840,
   //     sort: {
   //       type: 'date_published',
   //       direction: 'asc',

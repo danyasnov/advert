@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import Button from '../Buttons/Button'
+import Button from './Buttons/Button'
 
 interface Props {
   items: {title: string; id: number}[]
