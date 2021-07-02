@@ -7,7 +7,7 @@ const getDomains = (domain) => {
     if (l === 'en') {
       result.push({domain, defaultLocale: l})
     } else {
-      result.push({domain: `${l}.${domain}`, defaultLocale: l, http: true})
+      result.push({domain: `${l}.${domain}`, defaultLocale: l})
     }
   })
   return result
