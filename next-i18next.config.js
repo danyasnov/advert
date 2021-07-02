@@ -18,8 +18,8 @@ module.exports = {
     defaultLocale: 'en',
     locales,
     fallbackLng: 'en',
-    domains: [...getDomains('localhost:3000')],
-    // domains: [...getDomains('fpreprod.adverto.sale')],
+    // domains: [...getDomains('localhost:3000')],
+    domains: [...getDomains('fpreprod.adverto.sale')],
   },
   localePath: path.resolve('./locales'),
 }
