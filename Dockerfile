@@ -38,6 +38,7 @@ COPY --from=builder /app/next-i18next.config.js ./next-i18next.config.js
 COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/.env.production ./.env.production
 COPY --from=builder /app/locales ./locales
+COPY --from=builder /app/server.js ./server.js
 
 USER nextjs
 
