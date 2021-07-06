@@ -1,5 +1,5 @@
 // server.js
-const {parseCookies, setCookie} = require('nookies')
+const {parseCookies} = require('nookies')
 const parser = require('accept-language-parser')
 const express = require('express')
 const {parse} = require('url')
@@ -33,8 +33,7 @@ app.prepare().then(() => {
     const cookies = parseCookies({req})
     const languages = parser.parse(req.headers['accept-language'])
     const parsedUrl = parse(req.url, true)
-    const {pathname, query} = parsedUrl
-    req.originalUrl = pathname
+    const {pathname} = parsedUrl
 
     // first visit
     if (!cookies.language) {
@@ -48,7 +47,6 @@ app.prepare().then(() => {
         }
       }
       if (language && language !== 'en') {
-        setCookie({res}, 'language', language)
         req.locale = language
 
         if (!host.startsWith(language)) {
@@ -57,7 +55,6 @@ app.prepare().then(() => {
         }
       } else {
         language = 'en'
-        setCookie({res}, 'language', language)
         req.locale = language
         if (!host.startsWith(getDomain(host))) {
           res.redirect(`http://${getDomain(host)}${pathname}`)
