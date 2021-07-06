@@ -50,7 +50,7 @@ const Card: FC<Props> = ({
   }, [elW, elX, embla, images])
   if (embla)
     embla.on('select', () => {
-      setCurrentIndex(embla.selectedScrollSnap())
+      setCurrentIndex(embla.selectedScrollSnap() || 0)
     })
   return (
     <div
