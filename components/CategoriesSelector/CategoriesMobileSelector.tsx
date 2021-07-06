@@ -38,8 +38,8 @@ const CategoriesMobileSelector: FC = observer(() => {
           </Button>
           <LinkWrapper
             href={`/${locationCodes}/${activeCategory.slug}`}
-            className='categories-selector-item font-bold'>
-            {t('ALL_ADVERTS')}
+            className='text-brand-b1 categories-selector-item'>
+            {t('SHOW_ALL_ADVERTS')}
           </LinkWrapper>
           {activeCategory.items.map((value) => (
             <CategoryItem

@@ -20,6 +20,7 @@ const ImageWrapper: FC<Props> = ({
   alt,
   objectFit,
 }) => {
+  if (!type) return null
   return (
     // @ts-ignore
     <Image

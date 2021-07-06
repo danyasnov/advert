@@ -79,7 +79,7 @@ class SecondColItem extends PureComponent<ColItemProps> {
       <LinkWrapper
         className={`${
           isActive ? 'bg-brand-a2' : ''
-        } categories-selector-item first:font-bold`}
+        } categories-selector-item text-black-b first:text-brand-b1 first:border-b`}
         href={href}>
         {name}
       </LinkWrapper>
@@ -96,7 +96,7 @@ class ThirdCol extends PureComponent<ColProps> {
       <div className='h-full'>
         {items.map((c) => (
           <LinkWrapper
-            className='categories-selector-item first:font-bold '
+            className='categories-selector-item text-black-b first:text-brand-b1 first:border-b'
             key={c.id}
             href={`/${getLocationCodes()}/${activeCategory.slug}/${
               secondActiveCategory.slug
