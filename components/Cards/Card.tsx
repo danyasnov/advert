@@ -24,6 +24,7 @@ const Card: FC<Props> = ({
     align: 'start',
     containScroll: 'trimSnaps',
     draggable: images.length > 1,
+    speed: 30,
   })
 
   useEffect(() => {
@@ -31,11 +32,13 @@ const Card: FC<Props> = ({
     embla.on('pointerDown', () => setLockParentScroll(true))
     embla.on('pointerUp', () => setLockParentScroll(false))
   }, [embla, setLockParentScroll])
+
   const ref = useRef(null)
   const {elX, elW} = useMouseHovered(ref, {
     bound: true,
     whenHovered: true,
   })
+
   useEffect(() => {
     if (!embla) return
     const {length} = images
@@ -44,9 +47,11 @@ const Card: FC<Props> = ({
     const position = elX / elW
     const index = Math.floor(position / step)
     embla.scrollTo(index)
-    if (length > index) setCurrentIndex(index)
   }, [elW, elX, embla, images])
-
+  if (embla)
+    embla.on('select', () => {
+      setCurrentIndex(embla.selectedScrollSnap())
+    })
   return (
     <div
       className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
