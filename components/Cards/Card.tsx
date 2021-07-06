@@ -1,8 +1,9 @@
-import {Dispatch, FC, SetStateAction, useEffect} from 'react'
+import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
+import {useMouseHovered} from 'react-use'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -17,6 +18,7 @@ const Card: FC<Props> = ({
   variant = 'default',
 }) => {
   const {title, images, price, oldPrice, dateUpdated, views} = product
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
@@ -29,13 +31,29 @@ const Card: FC<Props> = ({
     embla.on('pointerDown', () => setLockParentScroll(true))
     embla.on('pointerUp', () => setLockParentScroll(false))
   }, [embla, setLockParentScroll])
+  const ref = useRef(null)
+  const {elX, elW} = useMouseHovered(ref, {
+    bound: true,
+    whenHovered: true,
+  })
+  useEffect(() => {
+    if (!embla) return
+    const {length} = images
+    if (length < 2) return
+    const step = 1 / length
+    const position = elX / elW
+    const index = Math.floor(position / step)
+    embla.scrollTo(index)
+    if (length > index) setCurrentIndex(index)
+  }, [elW, elX, embla, images])
 
   return (
     <div
       className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
-      }`}>
-      <div className='overflow-hidden' ref={viewportRef}>
+      }`}
+      ref={ref}>
+      <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {images.map((i) => (
             <div key={i} className='relative min-w-full'>
@@ -43,6 +61,17 @@ const Card: FC<Props> = ({
             </div>
           ))}
         </div>
+        {images.length > 1 && (
+          <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
+            {images.map((i, index) => (
+              <div
+                className={`w-full h-1 ${
+                  currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div
         className={`p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 ${
