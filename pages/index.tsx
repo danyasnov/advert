@@ -13,11 +13,10 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {locale} = ctx
   const state = await processCookies(ctx)
 
   const storage = new Storage({
-    language: locale,
+    language: state.language,
     location: state.searchLocation,
     userLocation: state.userLocation,
     searchRadius: state.searchRadius,
@@ -31,7 +30,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // @ts-ignore
     fetchProducts(state),
     fetchProducts(state, {priceMax: 0}),
-    getCountries(locale),
+    fetchProducts(state, {onlyDiscounted: true}),
+    getCountries(state.language),
     rest.categories.fetchTree(),
   ]
 
@@ -60,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const [
     productsResponse,
     freeProductsResponse,
+    discountedProductsResponse,
     countriesData,
     categoriesData,
   ] = await Promise.allSettled(promises).then((res) =>
@@ -70,6 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // @ts-ignore
   const products = productsResponse?.data?.data ?? null
   const freeProducts = freeProductsResponse?.data?.data ?? null
+  const discountedProducts = discountedProductsResponse?.data?.data ?? null
   const countries = countriesData ?? null
   return {
     props: {
@@ -80,12 +82,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         productsStore: {
           products,
           freeProducts,
+          discountedProducts,
         },
         countriesStore: {
           countries,
         },
       },
-      ...(await serverSideTranslations(locale)),
+      ...(await serverSideTranslations(state.language)),
     },
   }
 }

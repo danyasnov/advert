@@ -4,6 +4,7 @@ import 'rc-slider/assets/index.css'
 import {AppProps} from 'next/app'
 import {appWithTranslation} from 'next-i18next'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
+import i18n from '../next-i18next.config'
 
 function MyApp({Component, pageProps}: AppProps) {
   return (
@@ -15,4 +16,4 @@ function MyApp({Component, pageProps}: AppProps) {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(MyApp, i18n)

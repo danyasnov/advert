@@ -16,12 +16,14 @@ const UserCard: FC = observer(() => {
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
           <div className='w-16 h-16 rounded-full overflow-hidden mb-1'>
-            <ImageWrapper
-              width={64}
-              height={64}
-              type={product.owner.image}
-              alt='avatar'
-            />
+            {!!product.owner.image && (
+              <ImageWrapper
+                width={64}
+                height={64}
+                type={product.owner.image}
+                alt='avatar'
+              />
+            )}
           </div>
           <IcPersonAdd className='fill-current h-6 w-6 ' />
         </div>
@@ -47,7 +49,7 @@ const UserCard: FC = observer(() => {
         <span className='mr-2'>{t('I_SPEAK')}</span>
         <div className='flex'>
           {product.owner.languages.map((l) => (
-            <div className='mr-2 w-3 h-3'>
+            <div className='mr-2 w-3 h-3' key={l}>
               <ImageWrapper
                 key={l}
                 type={`https://adverto.sale/img/flags/${l}.png`}

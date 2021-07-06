@@ -1,19 +1,20 @@
 import {FC} from 'react'
-import {useTranslation} from 'next-i18next'
-import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {useRouter} from 'next/router'
-import {useProductsStore} from '../../providers/RootStoreProvider'
+import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
 import TitleWithSeparator from '../TitleWithSeparator'
 import useNestedEmblaCarousel from '../../hooks/useNestedEmblaCarousel'
 import SliderButton from '../Buttons/SliderButton'
 import useSliderButtons from '../../hooks/useSliderButtons'
 
-const ProductsSlider: FC = observer(() => {
-  const {t} = useTranslation()
+interface Props {
+  products: AdvertiseListItemModel[]
+  title: string
+}
+
+const ProductsSlider: FC<Props> = ({products, title}) => {
   const router = useRouter()
-  const {freeProducts: products} = useProductsStore()
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -29,7 +30,7 @@ const ProductsSlider: FC = observer(() => {
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>
-      <TitleWithSeparator title={t('FREE')} />
+      <TitleWithSeparator title={title} />
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
@@ -59,6 +60,6 @@ const ProductsSlider: FC = observer(() => {
       </div>
     </div>
   )
-})
+}
 
 export default ProductsSlider

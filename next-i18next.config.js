@@ -17,6 +17,7 @@ module.exports = {
   i18n: {
     defaultLocale: 'en',
     locales,
+    serializeConfig: false,
     fallbackLng: 'en',
     // domains: [...getDomains('localhost:3000')],
     domains: [...getDomains('fpreprod.adverto.sale')],

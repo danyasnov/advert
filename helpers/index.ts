@@ -3,6 +3,8 @@ import {GeoPositionModel} from 'front-api/src/models/index'
 import {parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
+import {IncomingMessage} from 'http'
+import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {CookiesState, LocationIdFilter, SerializedCookiesState} from '../types'
 import {getCities, getCountries, getRegions} from '../api/v1'
@@ -67,14 +69,16 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
 }
 
 export const processCookies = async (
-  ctx: Partial<GetServerSidePropsContext>,
+  ctx: Partial<GetServerSidePropsContext> & {
+    req: IncomingMessage & {cookies: NextApiRequestCookies; locale?: string}
+  },
 ): Promise<CookiesState> => {
-  const {locale, req} = ctx
+  const {req} = ctx
   const cookies: SerializedCookiesState = parseCookies(ctx)
   const state: CookiesState = {}
   let locationByIp = null
   let addressByGps = null
-  state.language = locale || cookies.language || 'en'
+  state.language = cookies.language || req.locale || 'en'
   if (!cookies.userLocation) {
     try {
       const ip = parseIp(req)
@@ -144,7 +148,7 @@ export const processCookies = async (
   }
 
   // address string in search
-  if (!cookies.address || cookies.language !== locale) {
+  if (!cookies.address) {
     if (state.searchBy === 'coords') {
       const position =
         addressByGps ||

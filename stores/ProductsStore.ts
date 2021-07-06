@@ -12,6 +12,7 @@ export interface IProductsHydration {
   products: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
+  discountedProducts: Array<AdvertiseListItemModel>
   page: number
   limit: number
   count: number
@@ -25,6 +26,7 @@ export interface IProductsStore {
   products: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
+  discountedProducts: Array<AdvertiseListItemModel>
   hydrate(data: IProductsHydration): void
   state: State
   page: number
@@ -57,6 +59,8 @@ export class ProductsStore implements IProductsStore {
   product
 
   freeProducts = []
+
+  discountedProducts = []
 
   page = 1
 
@@ -156,6 +160,7 @@ export class ProductsStore implements IProductsStore {
     this.products = data?.products ?? []
     this.product = data?.product ?? []
     this.freeProducts = data?.freeProducts ?? []
+    this.discountedProducts = data?.discountedProducts ?? []
     this.page = data?.page ?? 1
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0

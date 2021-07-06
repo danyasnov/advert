@@ -13,11 +13,11 @@ export default function Home({isProduct}) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {locale, query} = ctx
+  const {query} = ctx
   const state = await processCookies(ctx)
 
   const storage = new Storage({
-    language: locale,
+    language: state.language,
     location: state.searchLocation,
     userLocation: state.userLocation,
     searchRadius: state.searchRadius,
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-  const promises = [getCountries(locale)]
+  const promises = [getCountries(state.language)]
   if (currentCategory) {
     promises.push(
       // @ts-ignore
@@ -103,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           countries,
         },
       },
-      ...(await serverSideTranslations(locale)),
+      ...(await serverSideTranslations(state.language)),
     },
   }
 }

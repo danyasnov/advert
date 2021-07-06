@@ -15,7 +15,6 @@ const nextConfig = {
   images: {
     domains: ['cache.adverto.sale', 'adverto.sale'],
   },
-  i18n,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
