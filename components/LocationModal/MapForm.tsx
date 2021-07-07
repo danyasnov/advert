@@ -1,16 +1,15 @@
-import {FC, useRef, useState, useCallback} from 'react'
+import {FC, useRef, useState} from 'react'
 import GoogleMapReact from 'google-map-react'
 import Slider from 'rc-slider'
 import {useTranslation} from 'next-i18next'
-import debounce from 'lodash.debounce'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
-import Autocomplete from '../Selects/Autocomplete'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
 import {getShortAddress, objectFlip, setCookiesObject} from '../../helpers'
 import {SerializedCookiesState} from '../../types'
+// import Autocomplete from '../Selects/Autocomplete'
 
 const getMark = (label) => ({
   style: {
@@ -68,29 +67,28 @@ const MapForm: FC = () => {
   const marker = useRef(null)
   const mapRef = useRef(null)
   const mapsRef = useRef(null)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const loadOptions = useCallback(
-    debounce((inputValue, callback) => {
-      if (!inputValue) {
-        callback([])
-      } else {
-        makeRequest({
-          method: 'get',
-          url: '/api/location-text-search',
-          params: {query: inputValue},
-        }).then((res) => {
-          callback(
-            res.data.results.map((l) => ({
-              label: l.formatted_address,
-              value: l.place_id,
-              geometry: l.geometry,
-            })),
-          )
-        })
-      }
-    }, 1000),
-    [],
-  )
+  // const loadOptions = useCallback(
+  //   debounce((inputValue, callback) => {
+  //     if (!inputValue) {
+  //       callback([])
+  //     } else {
+  //       makeRequest({
+  //         method: 'get',
+  //         url: '/api/location-text-search',
+  //         params: {query: inputValue},
+  //       }).then((res) => {
+  //         callback(
+  //           res.data.results.map((l) => ({
+  //             label: l.formatted_address,
+  //             value: l.place_id,
+  //             geometry: l.geometry,
+  //           })),
+  //         )
+  //       })
+  //     }
+  //   }, 1000),
+  //   [],
+  // )
 
   const onChangeMap = ({center}) => {
     if (!circle?.current) return
@@ -105,12 +103,12 @@ const MapForm: FC = () => {
     // @ts-ignore
     circle.current.setRadius(marksMap[data] * 1000)
   }
-  const onChangeSearch = (item) => {
-    if (!item) return
-    setLocation(item.geometry.location)
-    circle.current.setCenter(item.geometry.location)
-    marker.current.setPosition(item.geometry.location)
-  }
+  // const onChangeSearch = (item) => {
+  //   if (!item) return
+  //   setLocation(item.geometry.location)
+  //   circle.current.setCenter(item.geometry.location)
+  //   marker.current.setPosition(item.geometry.location)
+  // }
 
   const onSubmit = () => {
     const resultLocation = {latitude: location.lat, longitude: location.lng}

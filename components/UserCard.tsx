@@ -20,6 +20,7 @@ const UserCard: FC = observer(() => {
               <ImageWrapper
                 width={64}
                 height={64}
+                objectFit='cover'
                 type={product.owner.image}
                 alt='avatar'
               />

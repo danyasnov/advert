@@ -48,10 +48,12 @@ const Card: FC<Props> = ({
     const index = Math.floor(position / step)
     embla.scrollTo(index)
   }, [elW, elX, embla, images])
-  if (embla)
-    embla.on('select', () => {
-      setCurrentIndex(embla.selectedScrollSnap() || 0)
-    })
+  useEffect(() => {
+    if (embla)
+      embla.on('select', () => {
+        setCurrentIndex(embla.selectedScrollSnap() || 0)
+      })
+  }, [embla])
   return (
     <div
       className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
@@ -70,6 +72,7 @@ const Card: FC<Props> = ({
           <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
             {images.map((i, index) => (
               <div
+                key={i}
                 className={`w-full h-1 ${
                   currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
                 }`}

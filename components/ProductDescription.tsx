@@ -11,6 +11,7 @@ import {notImplementedAlert} from '../helpers'
 import OutlineButton from './Buttons/OutlineButton'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
+import ProductMap from './ProductMap'
 
 const tabs = [
   {id: 0, title: 'DESCRIPTION'},
@@ -22,8 +23,8 @@ const ProductDescription: FC = observer(() => {
   const {t} = useTranslation()
 
   return (
-    <div>
-      <div className='flex justify-between'>
+    <div className='mt-4'>
+      <div className='flex justify-between mb-6'>
         <OutlineButton
           onClick={notImplementedAlert}
           className='text-black-b text-body-2'>
@@ -47,6 +48,8 @@ const ProductDescription: FC = observer(() => {
           </span>
         </div>
       </div>
+      <ProductMap />
+
       <div className='h-full flex flex-col'>
         <Tabs
           items={tabs}
