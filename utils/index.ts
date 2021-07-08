@@ -1,4 +1,5 @@
 import {DateTime} from 'luxon'
+import {FilterPublication} from 'front-api/src/models/index'
 
 export const unixToDate = (unix: number): string => {
   const date = DateTime.fromSeconds(unix)
@@ -17,4 +18,20 @@ export const getFirstNonEmptyArray = <T extends unknown>(
     if (Array.isArray(item) && item.length) return item
   }
   return null
+}
+
+export const defaultFilter = {
+  onlyFromSubscribed: false,
+  published: FilterPublication.ALL_TIME,
+  priceMax: undefined,
+  priceMin: undefined,
+  fieldValues: new Map(),
+  search: '',
+  onlyDiscounted: false,
+  secureDeal: false,
+  sort: {
+    type: 'date_published',
+    direction: 'asc',
+    key: '',
+  },
 }

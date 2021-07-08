@@ -2,6 +2,7 @@ import {action, makeAutoObservable} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
+import {isEmpty} from 'lodash'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
@@ -12,11 +13,11 @@ export interface IProductsHydration {
   products: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
+  similarProducts: Array<AdvertiseListItemModel>
   discountedProducts: Array<AdvertiseListItemModel>
   page: number
   limit: number
   count: number
-  timestamp: number
   cacheId: string
   aggregatedFields: CACategoryDataFieldModel[]
 }
@@ -26,6 +27,7 @@ export interface IProductsStore {
   products: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
+  similarProducts: Array<AdvertiseListItemModel>
   discountedProducts: Array<AdvertiseListItemModel>
   hydrate(data: IProductsHydration): void
   state: State
@@ -38,7 +40,6 @@ export interface IProductsStore {
   setFilter: (filter: Partial<Filter>) => void
   resetFilter: () => void
   fetchProducts: (opts?: FetchOptions) => Promise<void>
-  timestamp: number
   sortBy: string
   setSortBy: (value: string) => void
 }
@@ -60,6 +61,8 @@ export class ProductsStore implements IProductsStore {
 
   freeProducts = []
 
+  similarProducts = []
+
   discountedProducts = []
 
   page = 1
@@ -71,8 +74,6 @@ export class ProductsStore implements IProductsStore {
   cacheId
 
   aggregatedFields = []
-
-  timestamp = Date.now()
 
   filter: Partial<Filter> = {}
 
@@ -106,30 +107,38 @@ export class ProductsStore implements IProductsStore {
     this.cancelTokenSource = cancelToken.source()
 
     this.state = opts?.isScroll ? 'pending-scroll' : 'pending'
-    const [sortField, sortDirection] = this.sortBy.split('-')
+    const [key, direction] = this.sortBy.split('-')
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',
       data: {
-        filter: {...this.filter, sortField, sortDirection},
-        pagination: {page: 1, limit: this.limit},
+        filter: {
+          ...this.filter,
+          sort: {key, direction},
+          fieldValues: this.filter.fields,
+        },
+        limit: this.limit,
+        page: 1,
       },
     }
     config.cancelToken = this.cancelTokenSource.token
     if (opts?.page) {
-      config.data.pagination.page = opts.page
-      config.data.filter.cacheId = this.cacheId
+      config.data.page = opts.page
+      config.data.cacheId = this.cacheId
     }
 
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {
+        if (!response.data || isEmpty(response.data)) {
+          this.state = 'done'
+          return Promise.resolve()
+        }
         const {
-          data,
+          result: {aggregatedFields, data},
           headers: {
             pagination: {count, page, limit},
             cacheId,
           },
-          aggregatedFields,
         } = response.data
         if (page === 1) {
           this.products = data
@@ -138,7 +147,6 @@ export class ProductsStore implements IProductsStore {
           this.products = [...this.products, ...data]
         }
         this.aggregatedFields = aggregatedFields
-        this.timestamp = Date.now()
         this.page = page
         this.limit = limit
         this.count = count
@@ -160,12 +168,12 @@ export class ProductsStore implements IProductsStore {
     this.products = data?.products ?? []
     this.product = data?.product ?? []
     this.freeProducts = data?.freeProducts ?? []
+    this.similarProducts = data?.similarProducts ?? []
     this.discountedProducts = data?.discountedProducts ?? []
     this.page = data?.page ?? 1
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0
     this.cacheId = data?.cacheId ?? undefined
     this.aggregatedFields = data?.aggregatedFields ?? []
-    this.timestamp = data?.timestamp ?? Date.now()
   }
 }

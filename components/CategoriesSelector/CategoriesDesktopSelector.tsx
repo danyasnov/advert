@@ -2,7 +2,6 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
-import {toJS} from 'mobx'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {FirstColItem, ThirdCol, SecondCol} from './columns'
 import ImageWrapper from '../ImageWrapper'
@@ -25,7 +24,6 @@ const CategoriesDesktopSelector: FC = observer(() => {
   }
 
   const {categoriesWithoutAll} = useCategoriesStore()
-  console.log(toJS(categoriesWithoutAll))
   const [activeCategory, setActiveCategory] = useState<CACategoryModel>(
     categoriesWithoutAll[0],
   )

@@ -1,11 +1,8 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {FilterPublication} from 'front-api/src/models/index'
-import {getRest} from '../api'
-import Storage from '../stores/Storage'
 import {processCookies} from '../helpers'
-import {getCountries} from '../api/v1'
-import {fetchProducts} from '../api/v2'
+import {fetchCountries} from '../api/v1'
+import {fetchCategories, fetchProducts} from '../api/v2'
 import MainLayout from '../components/Layouts/MainLayout'
 
 export default function Home() {
@@ -15,47 +12,13 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
 
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-  })
-  const rest = getRest(storage)
   const promises = [
-    // @ts-ignore
     fetchProducts(state),
-    fetchProducts(state, {priceMax: 0}),
-    fetchProducts(state, {onlyDiscounted: true}),
-    getCountries(state.language),
-    rest.categories.fetchTree(),
+    fetchProducts(state, {filter: {priceMax: 0}}),
+    fetchProducts(state, {filter: {onlyDiscounted: true}}),
+    fetchCountries(state.language),
+    fetchCategories(state.language),
   ]
-
-  // const details = await rest.advertises.fetchDetail('e7MKFg')
-  //
-  // const searchResults = await rest.advertises.fetchList({
-  //   limit: 40,
-  //   filter: {
-  //     onlyFromSubscribed: false,
-  //     published: FilterPublication.ALL_TIME,
-  //     priceMax: undefined,
-  //     priceMin: undefined,
-  //     fieldValues: new Map(),
-  //     search: '',
-  //     onlyDiscounted: false,
-  //     secureDeal: false,
-  //     countryId: 840,
-  //     sort: {
-  //       type: 'date_published',
-  //       direction: 'asc',
-  //       key: '',
-  //     },
-  //   },
-  // })
 
   const [
     productsResponse,
@@ -66,12 +29,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ] = await Promise.allSettled(promises).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  // @ts-ignore
   const categories = categoriesData?.result ?? null
-  // @ts-ignore
-  const products = productsResponse?.data?.data ?? null
-  const freeProducts = freeProductsResponse?.data?.data ?? null
-  const discountedProducts = discountedProductsResponse?.data?.data ?? null
+  const products = productsResponse?.result?.data ?? null
+  const freeProducts = freeProductsResponse?.result?.data ?? null
+  const discountedProducts = discountedProductsResponse?.result?.data ?? null
   const countries = countriesData ?? null
   return {
     props: {

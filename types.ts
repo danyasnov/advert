@@ -1,10 +1,9 @@
 import {LocationModel} from 'front-api/src/index'
-import {SelectItem} from './components/Selects/Select'
 
 export interface LocationIdFilter {
   cityId?: number
   regionId?: number
-  countryISO: number
+  countryId: number
 }
 
 export interface LocationFilter {
@@ -55,4 +54,11 @@ export interface Filter {
 export interface Size {
   width: number | undefined
   height: number | undefined
+}
+export interface FetchAdvertisesPayload {
+  limit?: number
+  page?: number
+  filter?: Partial<Filter>
+  advHash?: string
+  cacheId?: string
 }

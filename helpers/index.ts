@@ -7,7 +7,7 @@ import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {CookiesState, LocationIdFilter, SerializedCookiesState} from '../types'
-import {getCities, getCountries, getRegions} from '../api/v1'
+import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -126,16 +126,16 @@ export const processCookies = async (
       state.regionOrCityCode = ''
     }
   } else {
-    const countries = await getCountries(state.language)
+    const countries = await fetchCountries(state.language)
     const country = (countries ?? []).find((c) => c.id === state.countryId)
     state.countryCode = country?.isoCode || ''
     if (state.regionId) {
-      const regions = await getRegions(state.countryId, 'en')
+      const regions = await fetchRegions(state.countryId, 'en')
       const region = (regions.result ?? []).find((c) => c.id === state.regionId)
       if (region?.word) {
         state.regionOrCityCode = region?.word
         if (state.cityId) {
-          const cities = await getCities(state.regionId, 'en')
+          const cities = await fetchCities(state.regionId, 'en')
           const city = (cities.result ?? []).find((c) => c.id === state.cityId)
           if (city?.word) {
             state.regionOrCityCode = city?.word
@@ -157,19 +157,19 @@ export const processCookies = async (
     } else {
       const address = []
       if (state.countryId) {
-        const countries = await getCountries(state.language)
+        const countries = await fetchCountries(state.language)
         const countryTitle = (countries ?? []).find(
           (c) => c.id === state.countryId,
         )?.title
         if (countryTitle) address.push(countryTitle)
         if (state.regionId) {
-          const regions = await getRegions(state.countryId, state.language)
+          const regions = await fetchRegions(state.countryId, state.language)
           const regionTitle = (regions.result ?? []).find(
             (c) => c.id === state.countryId,
           )?.word
           if (regionTitle) address.push(regionTitle)
           if (state.cityId) {
-            const cities = await getCities(state.regionId, state.language)
+            const cities = await fetchCities(state.regionId, state.language)
             const cityTitle = (cities.result ?? []).find(
               (c) => c.id === state.cityId,
             )?.word
@@ -231,7 +231,7 @@ export const getSearchByFilter = (
 ): LocationIdFilter | (LocationModel & {distanceMax: number}) => {
   if (state.searchBy === 'id') {
     const data: LocationIdFilter = {
-      countryISO: parseInt(state.countryId, 10),
+      countryId: parseInt(state.countryId, 10),
     }
     if (state.cityId) data.cityId = parseInt(state.cityId, 10)
     if (state.regionId) data.regionId = parseInt(state.regionId, 10)

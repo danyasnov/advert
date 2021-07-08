@@ -18,8 +18,10 @@ const tabs = [
   {id: 1, title: 'CHARACTERISTICS_TAB'},
 ]
 const ProductDescription: FC = observer(() => {
-  const [activeTab, setActiveTab] = useState(0)
   const {product} = useProductsStore()
+  if (!product) return null
+  const [activeTab, setActiveTab] = useState(0)
+
   const {t} = useTranslation()
 
   return (

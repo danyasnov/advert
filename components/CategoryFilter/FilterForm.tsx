@@ -2,6 +2,8 @@ import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {Formik, Field, Form, FormikHelpers, FormikProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
+import {isEmpty} from 'lodash'
+import {observer} from 'mobx-react-lite'
 import {
   FormikCheckbox,
   FormikField,
@@ -42,10 +44,10 @@ const getInitialValues = (conditionOptions): Values => {
   }
 }
 
-const FilterForm: FC = () => {
+const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter, fetchProducts, aggregatedFields, timestamp} =
+  const {setFilter, resetFilter, fetchProducts, aggregatedFields} =
     useProductsStore()
   const {categoryDataFieldsBySlug} = useCategoriesStore()
 
@@ -162,12 +164,10 @@ const FilterForm: FC = () => {
             />
           </div>
 
-          {Array.isArray(aggregatedFields) && !!aggregatedFields.length && (
+          {!isEmpty(aggregatedFields) && (
             <div className='space-y-6 pt-8'>
               {aggregatedFields.map((field) => {
-                return (
-                  <FormikField field={field} key={`${field.id}-${timestamp}`} />
-                )
+                return <FormikField field={field} key={field.id} />
               })}
             </div>
           )}
@@ -205,6 +205,6 @@ const FilterForm: FC = () => {
       )}
     </Formik>
   )
-}
+})
 
 export default FilterForm

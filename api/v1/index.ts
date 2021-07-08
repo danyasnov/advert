@@ -3,7 +3,7 @@ import {CountryModel, GeoPositionItemModel} from 'front-api/src/models/index'
 import {getRest} from '../index'
 import Storage from '../../stores/Storage'
 
-export const getCountries = (
+export const fetchCountries = (
   language: string,
 ): Promise<Array<CountryModel>> => {
   const storage = new Storage({
@@ -13,7 +13,7 @@ export const getCountries = (
   return rest.oldRest.fetchCountries()
 }
 
-export const getRegions = (
+export const fetchRegions = (
   country: string,
   language: string,
 ): Promise<RestResponse<Array<GeoPositionItemModel>>> => {
@@ -24,7 +24,7 @@ export const getRegions = (
   return rest.geo.fetchRegionByCountry(country)
 }
 
-export const getCities = (
+export const fetchCities = (
   region: string,
   language: string,
 ): Promise<RestResponse<Array<GeoPositionItemModel>>> => {

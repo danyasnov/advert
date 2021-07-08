@@ -1,11 +1,16 @@
 import {FC} from 'react'
+import {useTranslation} from 'next-i18next'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import ProductHeader from '../ProductHeader'
 import ProductDescription from '../ProductDescription'
 import ProductSidebar from '../ProductSidebar'
 import ProductPhotos from '../ProductPhotos'
+import ProductsSlider from '../Cards/ProductsSlider'
+import {useProductsStore} from '../../providers/RootStoreProvider'
 
 const ProductLayout: FC = () => {
+  const {t} = useTranslation()
+  const {similarProducts} = useProductsStore()
   return (
     <HeaderFooterWrapper>
       <div className='bg-black-e py-8 m:flex'>
@@ -14,6 +19,10 @@ const ProductLayout: FC = () => {
             <ProductHeader />
             <ProductPhotos />
             <ProductDescription />
+            <ProductsSlider
+              products={similarProducts}
+              title={t('SIMILAR_ADS_TAB')}
+            />
           </main>
           <aside className='hidden m:block w-288px'>
             <ProductSidebar />

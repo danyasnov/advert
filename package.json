@@ -20,6 +20,7 @@
     "formik": "^2.2.9",
     "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#29249fa97c222362a5176007dde246b0ef260551",
     "google-map-react": "^2.1.9",
+    "lodash": "^4.17.21",
     "luxon": "^1.27.0",
     "mobx": "^6.3.2",
     "mobx-logger": "^0.7.1",

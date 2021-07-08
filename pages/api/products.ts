@@ -7,11 +7,12 @@ export default async (
   res: NextApiResponse,
 ): Promise<void> => {
   const {body} = req
+  const {filter, page, advHash, limit, cacheId} = body
   const state = await processCookies({req})
 
-  return fetchProducts(state, body.filter, body.pagination)
+  return fetchProducts(state, {filter, page, advHash, limit, cacheId})
     .then((response) => {
-      res.json(response.data)
+      res.json(response)
     })
     .catch((e) => {
       res.json(e)
