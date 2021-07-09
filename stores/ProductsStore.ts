@@ -77,7 +77,7 @@ export class ProductsStore implements IProductsStore {
 
   filter: Partial<Filter> = {}
 
-  sortBy = 'date_published-asc'
+  sortBy = 'date_updated-asc'
 
   private cancelTokenSource: CancelTokenSource
 
@@ -99,7 +99,7 @@ export class ProductsStore implements IProductsStore {
       onlyFromSubscribed: false,
       fields: {},
     }
-    this.sortBy = 'date_published-asc'
+    this.sortBy = 'date_updated-asc'
   }
 
   fetchProducts = (opts?: FetchOptions): Promise<void> => {

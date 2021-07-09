@@ -29,7 +29,11 @@ const ScrollableCardGroup: FC = observer(() => {
           className={`flex flex-col space-y-4 s:flex-row s:space-y-0 -mx-1 s:-mx-2 flex-wrap
       ${state === 'pending' ? 'opacity-40' : ''}`}>
           {products.map((p) => (
-            <LinkWrapper href={p.url} key={p.hash} target='_blank'>
+            <LinkWrapper
+              href={p.url}
+              key={p.hash}
+              target='_blank'
+              className='px-1 pb-2 s:px-2 s:pb-4'>
               <Card product={p} />
             </LinkWrapper>
           ))}

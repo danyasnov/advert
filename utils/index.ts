@@ -30,7 +30,7 @@ export const defaultFilter = {
   onlyDiscounted: false,
   secureDeal: false,
   sort: {
-    type: 'date_published',
+    type: 'date_updated',
     direction: 'asc',
     key: '',
   },

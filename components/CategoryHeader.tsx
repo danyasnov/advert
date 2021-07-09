@@ -29,11 +29,11 @@ const CategoryHeader: FC = observer(() => {
   const [options, setOptions] = useState(
     withIcons([
       {
-        value: 'date_published-asc',
+        value: 'date_updated-asc',
         label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
       },
       {
-        value: 'date_published-desc',
+        value: 'date_updated-desc',
         label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
       },
       {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
