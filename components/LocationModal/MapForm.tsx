@@ -42,6 +42,17 @@ const marksMap = {
   100: 300,
 }
 
+const zoomMarksMap = {
+  0: 13,
+  14: 11,
+  28: 10,
+  42: 9,
+  56: 8,
+  70: 7,
+  84: 6,
+  100: 5,
+}
+
 const invertedMarksMap = objectFlip(marksMap)
 
 const MapForm: FC = () => {
@@ -101,6 +112,7 @@ const MapForm: FC = () => {
     if (!circle?.current) return
     setRadius(data)
     // @ts-ignore
+    mapRef.current.setZoom(zoomMarksMap[data])
     circle.current.setRadius(marksMap[data] * 1000)
   }
   // const onChangeSearch = (item) => {
