@@ -1,4 +1,4 @@
-import {AnalyticsService, LocationModel, CACategoryModel} from 'front-api/src'
+import {AnalyticsService, CACategoryModel, LocationModel} from 'front-api/src'
 import {GeoPositionModel} from 'front-api/src/models/index'
 import {parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
@@ -53,6 +53,16 @@ export const getShortAddress = (addressObj: GeoPositionModel = {}): string => {
   if (region) addressArray.push(region.word)
   if (country) addressArray.push(country.word)
   return addressArray[0]
+}
+
+export const getLocationQuery = (
+  addressObj: GeoPositionModel = {},
+): {city: string; country: string} => {
+  const {city, region, country} = addressObj
+  return {
+    city: city?.word || region?.word || 'all',
+    country: country?.code || 'all',
+  }
 }
 
 export const setCookiesObject = (data: CookiesState, ctx = null): void => {

@@ -22,18 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query} = ctx
   const state = await processCookies(ctx)
 
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-  })
-  const rest = getRest(storage)
-
   let categories
   try {
     const response = await fetchCategories(state.language)

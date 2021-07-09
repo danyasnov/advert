@@ -29,7 +29,7 @@ const fetchRegions = (countryId) => {
     ): SelectItem[] => {
       const {data} = res
       const items = data.result || []
-      return items.map((r) => ({value: r.id, label: r.value}))
+      return items.map((r) => ({value: r.id, label: r.value, word: r.word}))
     },
   )
 }
@@ -51,6 +51,7 @@ const fetchCities = (regionId) => {
         value: r.id,
         label: r.value,
         hasAdverts: r.has_adverts,
+        word: r.word,
       }))
     },
   )
@@ -68,19 +69,26 @@ const popularCountriesIds = [
   '804',
   '642',
 ]
-
-const TextForm: FC = observer(() => {
+interface Props {
+  onClose: () => void
+}
+const TextForm: FC<Props> = observer(({onClose}) => {
   const router = useRouter()
   const cookies = parseCookies()
   const {countries, byId: countriesById} = useCountriesStore()
   const countryOptions: SelectItem[] = countries.map((c) => ({
     value: c.id,
     label: c.title,
+    isoCode: c.isoCode,
   }))
   const {t} = useTranslation()
-  const [country, setCountry] = useState<SelectItem | null>(null)
-  const [region, setRegion] = useState<SelectItem | null>(null)
-  const [city, setCity] = useState<SelectItem | null>(null)
+  const [country, setCountry] = useState<
+    (SelectItem & {isoCode?: string}) | null
+  >(null)
+  const [region, setRegion] = useState<(SelectItem & {word: string}) | null>(
+    null,
+  )
+  const [city, setCity] = useState<(SelectItem & {word?: string}) | null>(null)
   const [regionOptions, setRegionOptions] = useState<SelectItem[]>([])
   const [cityOptions, setCityOptions] = useState<SelectItem[]>([])
   const onChangeCountry = (item) => {
@@ -151,21 +159,26 @@ const TextForm: FC = observer(() => {
   const onSubmit = () => {
     const addressArray = []
     const state: CookiesState = {}
-    if (city?.value) {
-      addressArray.push(city.label)
-      state.cityId = city.value.toString()
-    } else {
-      destroyCookie(null, 'cityId')
-    }
+    const query: {city: string; country: string} = {city: 'all', country: 'all'}
     if (region?.value) {
       addressArray.push(region.label)
       state.regionId = region.value.toString()
+      query.city = region.word
     } else {
       destroyCookie(null, 'regionId')
     }
+    if (city?.value) {
+      addressArray.push(city.label)
+      state.cityId = city.value.toString()
+      query.city = city.word
+    } else {
+      destroyCookie(null, 'cityId')
+    }
+
     if (country?.value) {
       addressArray.push(country.label)
       state.countryId = country.value.toString()
+      query.country = country.isoCode
     } else {
       destroyCookie(null, 'countryId')
     }
@@ -173,7 +186,14 @@ const TextForm: FC = observer(() => {
     // eslint-disable-next-line prefer-destructuring
     state.address = addressArray[0]
     setCookiesObject(state)
-    router.reload()
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        ...query,
+      },
+    })
+    onClose()
   }
 
   return (
@@ -220,7 +240,13 @@ const TextForm: FC = observer(() => {
             return (
               <Button
                 key={id}
-                onClick={() => onChangeCountry({label: value.title, value: id})}
+                onClick={() =>
+                  onChangeCountry({
+                    label: value.title,
+                    value: id,
+                    isoCode: value.isoCode,
+                  })
+                }
                 className={`px-4 py-3 hover:bg-brand-a2 rounded-lg justify-start
               ${id === country?.value ? 'bg-brand-a2' : ''}`}>
                 <span className='text-body-2 text-black-b truncate max-w-44 whitespace-nowrap'>

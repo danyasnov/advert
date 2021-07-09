@@ -7,7 +7,12 @@ import {useRouter} from 'next/router'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
-import {getShortAddress, objectFlip, setCookiesObject} from '../../helpers'
+import {
+  getLocationQuery,
+  getShortAddress,
+  objectFlip,
+  setCookiesObject,
+} from '../../helpers'
 import {SerializedCookiesState} from '../../types'
 // import Autocomplete from '../Selects/Autocomplete'
 
@@ -54,8 +59,10 @@ const zoomMarksMap = {
 }
 
 const invertedMarksMap = objectFlip(marksMap)
-
-const MapForm: FC = () => {
+interface Props {
+  onClose: () => void
+}
+const MapForm: FC<Props> = ({onClose}) => {
   const router = useRouter()
   const cookies: SerializedCookiesState = parseCookies()
   const {searchLocation, userLocation, searchRadius} = cookies
@@ -78,28 +85,6 @@ const MapForm: FC = () => {
   const marker = useRef(null)
   const mapRef = useRef(null)
   const mapsRef = useRef(null)
-  // const loadOptions = useCallback(
-  //   debounce((inputValue, callback) => {
-  //     if (!inputValue) {
-  //       callback([])
-  //     } else {
-  //       makeRequest({
-  //         method: 'get',
-  //         url: '/api/location-text-search',
-  //         params: {query: inputValue},
-  //       }).then((res) => {
-  //         callback(
-  //           res.data.results.map((l) => ({
-  //             label: l.formatted_address,
-  //             value: l.place_id,
-  //             geometry: l.geometry,
-  //           })),
-  //         )
-  //       })
-  //     }
-  //   }, 1000),
-  //   [],
-  // )
 
   const onChangeMap = ({center}) => {
     if (!circle?.current) return
@@ -115,12 +100,6 @@ const MapForm: FC = () => {
     mapRef.current.setZoom(zoomMarksMap[data])
     circle.current.setRadius(marksMap[data] * 1000)
   }
-  // const onChangeSearch = (item) => {
-  //   if (!item) return
-  //   setLocation(item.geometry.location)
-  //   circle.current.setCenter(item.geometry.location)
-  //   marker.current.setPosition(item.geometry.location)
-  // }
 
   const onSubmit = () => {
     const resultLocation = {latitude: location.lat, longitude: location.lng}
@@ -139,19 +118,20 @@ const MapForm: FC = () => {
       setCookiesObject({
         address: getShortAddress(res.data.result),
       })
-      router.reload()
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          ...getLocationQuery(res.data.result),
+        },
+      })
+      onClose()
     })
   }
 
   return (
     <div className='flex flex-col justify-between h-full'>
       <div className='pt-4 px-6'>
-        {/* <Autocomplete */}
-        {/*  placeholder={t('ENTER_ADDRESS')} */}
-        {/*  isClearable */}
-        {/*  loadOptions={loadOptions} */}
-        {/*  onChange={onChangeSearch} */}
-        {/* /> */}
         <div style={{height: '288px', width: '432px'}} className='my-4'>
           {location && (
             <GoogleMapReact

@@ -49,8 +49,8 @@ const LocationModal: FC<Props> = ({isOpen, onClose}) => {
             value={activeTab}
             onChange={(id) => setActiveTab(id)}
           />
-          {activeTab === 0 && <MapForm />}
-          {activeTab === 1 && <TextForm />}
+          {activeTab === 0 && <MapForm onClose={onClose} />}
+          {activeTab === 1 && <TextForm onClose={onClose} />}
         </div>
       </div>
     </ReactModal>
