@@ -237,6 +237,8 @@ const TextForm: FC = observer(() => {
             setCountry(null)
             setRegion(null)
             setCity(null)
+            setRegionOptions([])
+            setCityOptions([])
           }}>
           {t('CLEAN')}
         </SecondaryButton>
