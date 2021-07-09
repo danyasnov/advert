@@ -1,12 +1,12 @@
 import {FC} from 'react'
 import {useEmblaCarousel} from 'embla-carousel/react'
-import {useRouter} from 'next/router'
 import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
 import TitleWithSeparator from '../TitleWithSeparator'
 import useNestedEmblaCarousel from '../../hooks/useNestedEmblaCarousel'
 import SliderButton from '../Buttons/SliderButton'
 import useSliderButtons from '../../hooks/useSliderButtons'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 interface Props {
   products: AdvertiseListItemModel[]
@@ -14,7 +14,6 @@ interface Props {
 }
 
 const ProductsSlider: FC<Props> = ({products, title}) => {
-  const router = useRouter()
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -35,13 +34,9 @@ const ProductsSlider: FC<Props> = ({products, title}) => {
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
             {products.map((p) => (
-              <button
-                type='button'
-                key={p.hash}
-                className='relative'
-                onClick={() => router.push(p.url)}>
+              <LinkWrapper href={p.url} key={p.hash} target='_blank'>
                 <Card product={p} setLockParentScroll={setLockParentScroll} />
-              </button>
+              </LinkWrapper>
             ))}
           </div>
         </div>

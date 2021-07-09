@@ -228,7 +228,7 @@ export const getQueryValue = (query: ParsedUrlQuery, path: string): string => {
 
 export const getSearchByFilter = (
   state: CookiesState,
-): LocationIdFilter | (LocationModel & {distanceMax: number}) => {
+): LocationIdFilter | {location: LocationModel & {distanceMax: number}} => {
   if (state.searchBy === 'id') {
     const data: LocationIdFilter = {
       countryId: parseInt(state.countryId, 10),
@@ -238,8 +238,10 @@ export const getSearchByFilter = (
     return data
   }
   return {
-    ...state.searchLocation,
-    distanceMax: state.searchRadius,
+    location: {
+      ...state.searchLocation,
+      distanceMax: state.searchRadius,
+    },
   }
 }
 
