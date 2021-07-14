@@ -1,78 +1,43 @@
-import {FC, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {useTranslation} from 'next-i18next'
-import IcSort from 'icons/material/Sort.svg'
-import {parseCookies} from 'nookies'
-import {
-  useCategoriesStore,
-  useProductsStore,
-} from '../providers/RootStoreProvider'
-import LinkSelect from './Selects/LinkSelect'
-import {SerializedCookiesState} from '../types'
+import IcFilter from 'icons/material/Filter.svg'
+import IcClear from 'icons/material/Clear.svg'
+import {useCategoriesStore} from '../providers/RootStoreProvider'
+import SortSelect from './SortSelect'
+import Breadcrumbs from './Breadcrumbs'
+import Button from './Buttons/Button'
 
-const withIcons = (options) => {
-  return options.map((o) => ({
-    ...o,
-    icon: o.value.includes('desc') ? (
-      <IcSort className='fill-current text-black-c' />
-    ) : (
-      <IcSort className='fill-current text-black-c rotate-180	' />
-    ),
-  }))
+interface Props {
+  setShowFilter: (show: boolean) => void
+  showFilter: boolean
 }
-
-const CategoryHeader: FC = observer(() => {
+const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const {categoryData} = useCategoriesStore()
-  const {sortBy, setSortBy, fetchProducts} = useProductsStore()
-  const {t} = useTranslation()
-  const state: SerializedCookiesState = parseCookies()
-  const [options, setOptions] = useState(
-    withIcons([
-      {
-        value: 'date_updated-asc',
-        label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
-      },
-      {
-        value: 'date_updated-desc',
-        label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
-      },
-      {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
-      {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
-      {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
-      {
-        value: 'distance-desc',
-        label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
-      },
-    ]),
-  )
-  useEffect(() => {
-    if (state.searchBy !== 'coords') {
-      setOptions(
-        options.filter(
-          (o) => !['distance-asc', 'distance-desc'].includes(o.value),
-        ),
-      )
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   if (!categoryData) return null
   return (
-    <div className='flex justify-between border-b border-shadow-b pb-4 mb-6 mt-4'>
-      <h1 className='text-h-1 text-black-b '>{categoryData.name}</h1>
-      <div className='w-60'>
-        <LinkSelect
-          id='sort'
-          onChange={({value}) => {
-            setSortBy(value as string)
-            fetchProducts()
-          }}
-          value={options.find(({value}) => value === sortBy)}
-          options={options}
-          isSearchable={false}
-          placeholder={t('SORTING_ORDER')}
-        />
+    <div className='flex justify-between pb-4 mt-4 items-center'>
+      <div>
+        <Breadcrumbs />
+        <h1 className='text-h-2 font-bold text-black-b pt-2'>
+          {categoryData.name}
+        </h1>
       </div>
+
+      {!showFilter && (
+        <div className='hidden s:block min-w-52'>
+          <SortSelect id='desktop-sort' />
+        </div>
+      )}
+      <Button
+        className='m:hidden shadow-xl rounded-full min-w-10 w-10 h-10 bg-white flex justify-center items-center '
+        onClick={() => setShowFilter(!showFilter)}>
+        {showFilter ? (
+          <IcClear className='fill-current text-black-c h-6 w-6' />
+        ) : (
+          <IcFilter className='fill-current text-black-c w-6 h-6' />
+        )}
+      </Button>
     </div>
   )
 })

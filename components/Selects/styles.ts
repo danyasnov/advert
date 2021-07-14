@@ -49,6 +49,7 @@ export const LinkStyles = {
     backgroundColor: 'transparent',
     border: 'none',
     boxShadow: 'none',
+    minHeight: '0px',
   }),
   indicatorsContainer: () => ({
     display: 'none',
@@ -56,5 +57,10 @@ export const LinkStyles = {
   singleValue: (provided) => ({
     ...provided,
     display: 'flex',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    padding: '0 8px',
+    height: '16px',
   }),
 }

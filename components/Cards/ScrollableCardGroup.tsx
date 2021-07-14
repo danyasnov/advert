@@ -7,13 +7,17 @@ import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
+import SortSelect from '../SortSelect'
 
 const ScrollableCardGroup: FC = observer(() => {
   const {products, state, count, page, fetchProducts} = useProductsStore()
   const hasMore = count > page * PAGE_LIMIT
 
   return (
-    <div className='flex flex-col items-center relative'>
+    <div className='flex flex-col m:items-center relative border-t border-shadow-b'>
+      <div className='s:hidden -ml-3 my-6'>
+        <SortSelect id='mobile-sort' />
+      </div>
       <InfiniteScroll
         dataLength={products.length}
         next={() => {
@@ -26,7 +30,7 @@ const ScrollableCardGroup: FC = observer(() => {
           </div>
         }>
         <div
-          className={`flex flex-col space-y-4 s:flex-row s:space-y-0 -mx-1 s:-mx-2 flex-wrap
+          className={`flex -mx-1 s:-mx-2 s:mt-4 flex-wrap
       ${state === 'pending' ? 'opacity-40' : ''}`}>
           {products.map((p) => (
             <LinkWrapper

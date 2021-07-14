@@ -12,11 +12,15 @@ import {
 } from './FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
-import {SelectItem} from '../Selects/Select'
+import Select, {SelectItem} from '../Selects/Select'
 import {
   useCategoriesStore,
   useProductsStore,
 } from '../../providers/RootStoreProvider'
+import {
+  findCategoryByQuery,
+  findCurrentCategoriesOptionsyByQuery,
+} from '../../helpers'
 
 interface Values {
   condition: SelectItem
@@ -30,27 +34,16 @@ interface Values {
   fields?: Record<string, unknown>
 }
 
-const getInitialValues = (conditionOptions): Values => {
-  return {
-    condition: conditionOptions[0],
-    priceRange: {
-      priceMin: '',
-      priceMax: '',
-    },
-    onlyWithPhoto: false,
-    onlyDiscounted: false,
-    onlyFromSubscribed: false,
-    fields: {},
-  }
-}
-
 const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
   const {setFilter, resetFilter, fetchProducts, aggregatedFields} =
     useProductsStore()
-  const {categoryDataFieldsBySlug} = useCategoriesStore()
-
+  const {categoryDataFieldsBySlug, categories} = useCategoriesStore()
+  const currentCategory = findCategoryByQuery(
+    router.query.categories,
+    categories,
+  )
   const formikRef = useRef<FormikProps<Values>>()
 
   const conditionOptions = useMemo(
@@ -71,16 +64,42 @@ const FilterForm: FC = observer(() => {
     [t],
   )
 
+  const getInitialValues = (): Values => {
+    return {
+      condition: conditionOptions[0],
+      priceRange: {
+        priceMin: '',
+        priceMax: '',
+      },
+      onlyWithPhoto: false,
+      onlyDiscounted: false,
+      onlyFromSubscribed: false,
+      fields: {},
+    }
+  }
+
   useEffect(() => {
     if (formikRef.current) {
-      formikRef.current.resetForm({values: getInitialValues(conditionOptions)})
+      formikRef.current.resetForm({values: getInitialValues()})
       resetFilter()
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [conditionOptions, resetFilter, router.asPath])
 
-  const [initialValue, setInitialValue] = useState<Values>(
-    getInitialValues(conditionOptions),
+  const [initialValue, setInitialValue] = useState<Values>(getInitialValues())
+
+  const currentCategoriesOptions = findCurrentCategoriesOptionsyByQuery(
+    router.query.categories,
+    categories,
   )
+
+  const options = currentCategoriesOptions.map((i) => ({
+    value: i.id,
+    label: i.name,
+    slug: i.slug,
+  }))
+  const currentOption =
+    options.find((o) => o.value === currentCategory.id) ?? null
 
   return (
     <Formik
@@ -139,8 +158,24 @@ const FilterForm: FC = observer(() => {
         fetchProducts().then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
-        <Form className='pt-8 space-y-8 divide-y'>
+        <Form className='space-y-8 divide-y'>
           <div className='space-y-6'>
+            <Select
+              id='SUBCATEGORY'
+              placeholder={t('SUBCATEGORY')}
+              value={currentOption}
+              options={options}
+              onChange={(opt: SelectItem & {slug: string}) => {
+                if (opt?.value) setFilter({categoryId: opt.value as number})
+                if (currentCategory.items.length) {
+                  router.push(`${router.asPath}/${opt.slug}`)
+                } else {
+                  const pathArray = router.asPath.split('/')
+                  pathArray[pathArray.length - 1] = opt.slug
+                  router.push(pathArray.join('/'))
+                }
+              }}
+            />
             <Field
               name='condition'
               options={conditionOptions}
@@ -189,14 +224,14 @@ const FilterForm: FC = observer(() => {
               label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
             />
           </div>
-          <div className='pt-8'>
+          <div className='pt-8 flex justify-center'>
             <SecondaryButton
               onClick={() => {
-                resetForm({values: getInitialValues(conditionOptions)})
+                resetForm({values: getInitialValues()})
                 resetFilter()
                 fetchProducts()
               }}
-              className='w-full'>
+              className='w-full max-w-64'>
               {t('RESET_FILTER')}
             </SecondaryButton>
           </div>

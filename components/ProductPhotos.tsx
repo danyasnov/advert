@@ -109,6 +109,7 @@ const Thumb: FC<ThumbProps> = ({url, onHover, index, activePhotoIndex}) => {
         height={90}
         key={url}
         objectFit='cover'
+        priority
       />
     </div>
   )

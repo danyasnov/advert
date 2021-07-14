@@ -1,6 +1,7 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {CountryModel, GeoPositionItemModel} from 'front-api/src/models/index'
-import {getRest} from '../index'
+import axios from 'axios'
+import {API_URL, getRest} from '../index'
 import Storage from '../../stores/Storage'
 
 export const fetchCountries = (
@@ -33,4 +34,15 @@ export const fetchCities = (
   })
   const rest = getRest(storage)
   return rest.geo.fetchCityByRegion(region)
+}
+
+export const fetchSearchSuggestion = () => {
+  return axios({
+    method: 'post',
+    url: `${API_URL}/v1/search_suggestions.php`,
+    data: {
+      lang: 'ru',
+      phrase: 'iphone',
+    },
+  })
 }

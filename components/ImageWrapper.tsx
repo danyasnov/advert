@@ -9,6 +9,7 @@ interface Props {
   layout?: 'fixed' | 'intrinsic' | 'responsive' | 'fill'
   width?: number
   height?: number
+  priority?: boolean
 }
 
 const ImageWrapper: FC<Props> = ({
@@ -19,6 +20,7 @@ const ImageWrapper: FC<Props> = ({
   layout,
   alt,
   objectFit,
+  priority,
 }) => {
   if (!type) return null
   return (
@@ -32,6 +34,7 @@ const ImageWrapper: FC<Props> = ({
       // @ts-ignore
       layout={layout}
       objectFit={objectFit}
+      priority={priority}
     />
   )
 }

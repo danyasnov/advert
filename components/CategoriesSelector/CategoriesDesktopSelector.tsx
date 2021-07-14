@@ -38,7 +38,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
   return (
     <div
       className='absolute top-105px inset-x-0 z-10 bg-white divide-x divide-shadow-b
-       border-t s:px-8 m:px-10 l:px-18 shadow-2xl category-selector-width m-auto
+       border-t s:px-8 m:px-10 l:px-18 shadow-xl category-selector-width m-auto
        grid grid-cols-3 m:grid-cols-category-selector-m l:grid-cols-category-selector-l'>
       <div className='pb-4'>
         {categoriesWithoutAll.map((c) => (
