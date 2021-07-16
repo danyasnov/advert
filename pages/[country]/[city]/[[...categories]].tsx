@@ -1,25 +1,28 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
-import {findCategoryByQuery, processCookies} from '../../../helpers'
-import Storage from '../../../stores/Storage'
-import {getRest} from '../../../api'
+import {
+  findCategoryByQuery,
+  getQueryValue,
+  processCookies,
+} from '../../../helpers'
 import {
   fetchCategories,
   fetchCategoryData,
-  fetchProductDetails,
+  fetchProductByUrl,
   fetchProducts,
 } from '../../../api/v2'
 import {fetchCountries} from '../../../api/v1'
 import ProductLayout from '../../../components/Layouts/ProductLayout'
 import {defaultFilter} from '../../../utils'
+import {Filter} from '../../../types'
 
 export default function Home({isProduct}) {
   return isProduct ? <ProductLayout /> : <CategoriesLayout />
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {query} = ctx
+  const {query, resolvedUrl} = ctx
   const state = await processCookies(ctx)
 
   let categories
@@ -30,37 +33,43 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     console.error(e)
   }
 
-  const currentCategory = findCategoryByQuery(query.categories, categories)
+  let product
 
-  let productPromise
+  try {
+    const productRes = await fetchProductByUrl(state.language, resolvedUrl)
+    product = productRes.data?.data
+  } catch (e) {
+    console.log(e)
+  }
+
   let similarProductsPromise
-  if (!currentCategory) {
-    const productSlug = query.categories[query.categories.length - 1]
-    if (typeof productSlug === 'string') {
-      const chunks = productSlug.split('-')
-      const hash = chunks[chunks.length - 1]
-      productPromise = fetchProductDetails(state, hash)
-      similarProductsPromise = fetchProducts(state, {
-        limit: 4,
-        advHash: hash,
-        filter: defaultFilter,
-      })
-    }
+  let currentCategory
+  if (product) {
+    similarProductsPromise = fetchProducts(state, {
+      limit: 4,
+      advHash: product.advert.hash,
+      filter: defaultFilter,
+    })
+  } else {
+    currentCategory = findCategoryByQuery(query.categories, categories)
   }
 
   let promises: Promise<any>[] = []
-  if (currentCategory) {
-    promises = [
-      fetchCountries(state.language),
-      fetchProducts(state, {filter: {categoryId: currentCategory.id}}),
-      fetchCategoryData(state, currentCategory.id),
-    ]
-  } else if (productPromise) {
-    promises = [
-      fetchCountries(state.language),
-      productPromise,
-      similarProductsPromise,
-    ]
+  if (currentCategory || query.q) {
+    promises = [fetchCountries(state.language)]
+    const filter: Partial<Filter> = {}
+    if (currentCategory?.id) {
+      filter.categoryId = currentCategory.id
+    }
+    if (query.q) {
+      filter.search = getQueryValue(query, 'q')
+    }
+    promises.push(fetchProducts(state, {filter}))
+    if (currentCategory?.id) {
+      promises.push(fetchCategoryData(state, currentCategory.id))
+    }
+  } else if (similarProductsPromise) {
+    promises = [fetchCountries(state.language), similarProductsPromise]
   }
 
   const response = await Promise.allSettled(promises).then((res) =>
@@ -68,9 +77,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   )
   const [countriesData] = response
 
-  let productsStore
-  const categoriesStore = {categories}
-  if (currentCategory) {
+  let productsStore = {}
+  const categoriesStore = {categories: categories ?? null}
+  if (currentCategory || query.q) {
     const [, productsResponse, categoryData] = response
     productsStore = {
       // @ts-ignore
@@ -88,12 +97,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
     // @ts-ignore
     categoriesStore.categoryData = categoryData?.result ?? null
-  } else if (productPromise) {
-    const [, productsResponse, similarProductsResponse] = response
+  } else if (product && similarProductsPromise) {
+    const [, similarProductsResponse] = response
 
     productsStore = {
       // @ts-ignore
-      product: productsResponse?.result ?? null,
+      product: product ?? null,
       similarProducts: similarProductsResponse?.result?.data ?? null,
     }
   }
@@ -101,7 +110,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const countries = countriesData ?? null
   return {
     props: {
-      isProduct: !!productPromise,
+      isProduct: !!product,
       hydrationData: {
         categoriesStore,
         productsStore,

@@ -1,7 +1,7 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import {processCookies} from '../helpers'
-import {fetchCountries, fetchSearchSuggestion} from '../api/v1'
+import {fetchCountries} from '../api/v1'
 import {fetchCategories, fetchProducts} from '../api/v2'
 import MainLayout from '../components/Layouts/MainLayout'
 
@@ -19,13 +19,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     fetchCountries(state.language),
     fetchCategories(state.language),
   ]
-  //
-  // let res
-  // try {
-  //   res = await fetchSearchSuggestion()
-  // } catch (e) {
-  //   res = e
-  // }
 
   const [
     productsResponse,

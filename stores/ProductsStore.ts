@@ -129,8 +129,8 @@ export class ProductsStore implements IProductsStore {
 
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {
-        if (!response.data || isEmpty(response.data)) {
-          this.state = 'done'
+        if (!response.data || isEmpty(response.data) || response?.data?.error) {
+          this.state = 'error'
           return Promise.resolve()
         }
         const {

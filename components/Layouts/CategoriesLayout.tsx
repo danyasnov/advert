@@ -25,7 +25,7 @@ const CategoriesLayout: FC = () => {
               <FilterForm />
             </div>
           </main>
-          <aside className='hidden m:block w-72'>
+          <aside className='hidden m:block w-72 mt-4'>
             <CategoryFilter />
           </aside>
         </div>

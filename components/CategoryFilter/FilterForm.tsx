@@ -88,10 +88,9 @@ const FilterForm: FC = observer(() => {
 
   const [initialValue, setInitialValue] = useState<Values>(getInitialValues())
 
-  const currentCategoriesOptions = findCurrentCategoriesOptionsyByQuery(
-    router.query.categories,
-    categories,
-  )
+  const currentCategoriesOptions =
+    findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
+    []
 
   const options = currentCategoriesOptions.map((i) => ({
     value: i.id,
@@ -158,24 +157,26 @@ const FilterForm: FC = observer(() => {
         fetchProducts().then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
-        <Form className='space-y-8 divide-y'>
+        <Form className='space-y-8 divide-y w-full'>
           <div className='space-y-6'>
-            <Select
-              id='SUBCATEGORY'
-              placeholder={t('SUBCATEGORY')}
-              value={currentOption}
-              options={options}
-              onChange={(opt: SelectItem & {slug: string}) => {
-                if (opt?.value) setFilter({categoryId: opt.value as number})
-                if (currentCategory.items.length) {
-                  router.push(`${router.asPath}/${opt.slug}`)
-                } else {
-                  const pathArray = router.asPath.split('/')
-                  pathArray[pathArray.length - 1] = opt.slug
-                  router.push(pathArray.join('/'))
-                }
-              }}
-            />
+            {!isEmpty(options) && (
+              <Select
+                id='SUBCATEGORY'
+                placeholder={t('SUBCATEGORY')}
+                value={currentOption}
+                options={options}
+                onChange={(opt: SelectItem & {slug: string}) => {
+                  if (opt?.value) setFilter({categoryId: opt.value as number})
+                  if (currentCategory.items.length) {
+                    router.push(`${router.asPath}/${opt.slug}`)
+                  } else {
+                    const pathArray = router.asPath.split('/')
+                    pathArray[pathArray.length - 1] = opt.slug
+                    router.push(pathArray.join('/'))
+                  }
+                }}
+              />
+            )}
             <Field
               name='condition'
               options={conditionOptions}

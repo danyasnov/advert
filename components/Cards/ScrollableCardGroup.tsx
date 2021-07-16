@@ -1,6 +1,8 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import {isEmpty} from 'lodash'
+import {useTranslation} from 'next-i18next'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
@@ -12,7 +14,7 @@ import SortSelect from '../SortSelect'
 const ScrollableCardGroup: FC = observer(() => {
   const {products, state, count, page, fetchProducts} = useProductsStore()
   const hasMore = count > page * PAGE_LIMIT
-
+  const {t} = useTranslation()
   return (
     <div className='flex flex-col m:items-center relative border-t border-shadow-b'>
       <div className='s:hidden -ml-3 my-6'>
@@ -32,15 +34,21 @@ const ScrollableCardGroup: FC = observer(() => {
         <div
           className={`flex -mx-1 s:-mx-2 s:mt-4 flex-wrap
       ${state === 'pending' ? 'opacity-40' : ''}`}>
-          {products.map((p) => (
-            <LinkWrapper
-              href={p.url}
-              key={p.hash}
-              target='_blank'
-              className='px-1 pb-2 s:px-2 s:pb-4'>
-              <Card product={p} />
-            </LinkWrapper>
-          ))}
+          {isEmpty(products) ? (
+            <span className='text-black-b text-body-2 mx-2'>
+              {t('ADVERT_NOT_FOUND')}
+            </span>
+          ) : (
+            products.map((p) => (
+              <LinkWrapper
+                href={p.url}
+                key={p.hash}
+                target='_blank'
+                className='px-1 pb-2 s:px-2 s:pb-4'>
+                <Card product={p} />
+              </LinkWrapper>
+            ))
+          )}
         </div>
       </InfiniteScroll>
       <LoaderWrapper show={state === 'pending'} />

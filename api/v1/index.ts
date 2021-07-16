@@ -1,6 +1,6 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {CountryModel, GeoPositionItemModel} from 'front-api/src/models/index'
-import axios from 'axios'
+import axios, {AxiosPromise} from 'axios'
 import {API_URL, getRest} from '../index'
 import Storage from '../../stores/Storage'
 
@@ -36,13 +36,32 @@ export const fetchCities = (
   return rest.geo.fetchCityByRegion(region)
 }
 
-export const fetchSearchSuggestion = () => {
+export const fetchSearchSuggestion = (
+  phrase: string,
+  lang: string,
+): AxiosPromise => {
+  const payload = {
+    phrase,
+    lang,
+  }
   return axios({
     method: 'post',
     url: `${API_URL}/v1/search_suggestions.php`,
-    data: {
-      lang: 'ru',
-      phrase: 'iphone',
-    },
+    data: `query=${JSON.stringify(payload)}`,
+  })
+}
+
+export const fetchCategorySuggestion = (
+  phrase: string,
+  lang: string,
+): AxiosPromise => {
+  const payload = {
+    phrase,
+    lang,
+  }
+  return axios({
+    method: 'post',
+    url: `${API_URL}/v1/search_suggestions_category.php`,
+    data: `query=${JSON.stringify(payload)}`,
   })
 }

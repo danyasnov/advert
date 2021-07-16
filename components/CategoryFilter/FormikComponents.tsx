@@ -36,13 +36,14 @@ interface FieldOptions {
 }
 
 export const FormikField: FC<IFormikField> = ({field}) => {
-  const {fieldType, allMultiselects, slug, name, isFilterable} = field
+  // @ts-ignore
+  const {fieldType, multiselects, slug, name, isFilterable} = field
   let component
   const props: FieldOptions = {}
   switch (fieldType) {
     case 'select': {
       component = FormikSelect
-      props.options = allMultiselects.map((o) => ({
+      props.options = [...multiselects.top, ...multiselects.other].map((o) => ({
         value: o.id,
         label: o.value,
       }))
@@ -52,7 +53,7 @@ export const FormikField: FC<IFormikField> = ({field}) => {
     }
     case 'multiselect': {
       component = FormikSelect
-      props.options = allMultiselects.map((o) => ({
+      props.options = [...multiselects.top, ...multiselects.other].map((o) => ({
         value: o.id,
         label: o.value,
       }))

@@ -96,6 +96,7 @@ module.exports = {
       inset: {
         '89px': '89px',
         '105px': '105px',
+        '81px': '81px',
       },
       maxHeight: {},
       maxWidth: {

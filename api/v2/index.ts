@@ -2,8 +2,9 @@ import {RestResponse} from 'front-api/src/api/request'
 import {AdvertiseListResponse} from 'front-api/src/models/index'
 import {AdvertiseDetail, CACategoryDataModel, CACategoryModel} from 'front-api'
 import {isObject, isNil} from 'lodash'
+import axios, {AxiosPromise} from 'axios'
 import {getSearchByFilter} from '../../helpers'
-import {getRest} from '../index'
+import {API_URL, getRest} from '../index'
 import {CookiesState, FetchAdvertisesPayload} from '../../types'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
@@ -98,4 +99,18 @@ export const fetchProductDetails = (
   })
   const rest = getRest(storage)
   return rest.advertises.fetchDetail(hash)
+}
+
+export const fetchProductByUrl = (
+  lang: string,
+  url: string,
+): AxiosPromise<{data: AdvertiseDetail}> => {
+  return axios({
+    method: 'post',
+    url: `${API_URL}/v2/advert/by-url`,
+    data: {
+      data: {url},
+      headers: {lang: {code: lang}},
+    },
+  })
 }
