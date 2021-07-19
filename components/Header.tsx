@@ -45,7 +45,6 @@ const Header: FC = () => {
   const {t} = useTranslation()
   const [lang, setLang] = useState<string>()
   const languages = useRef(withIcons(options))
-  console.log(languages, lang)
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
     setLang(state.language)
