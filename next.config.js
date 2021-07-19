@@ -15,6 +15,9 @@ const nextConfig = {
   images: {
     domains: ['cache.adverto.sale', 'adverto.sale'],
   },
+  publicRuntimeConfig: {
+    domain: process.env.DOMAIN,
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

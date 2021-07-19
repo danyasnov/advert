@@ -20,7 +20,9 @@ import {
 import {
   findCategoryByQuery,
   findCurrentCategoriesOptionsyByQuery,
+  notImplementedAlert,
 } from '../../helpers'
+import PrimaryButton from '../Buttons/PrimaryButton'
 
 interface Values {
   condition: SelectItem
@@ -225,16 +227,19 @@ const FilterForm: FC = observer(() => {
               label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
             />
           </div>
-          <div className='pt-8 flex justify-center'>
+          <div className='pt-8 flex justify-center '>
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues()})
                 resetFilter()
                 fetchProducts()
               }}
-              className='w-full max-w-64'>
+              className='w-full  hidden s:block'>
               {t('RESET_FILTER')}
             </SecondaryButton>
+            <PrimaryButton onClick={notImplementedAlert} className='w-full'>
+              {t('SHOW_ADVERTS')}
+            </PrimaryButton>
           </div>
           <FormikAutoSave />
         </Form>

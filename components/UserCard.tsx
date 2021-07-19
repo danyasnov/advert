@@ -52,7 +52,6 @@ const UserCard: FC = observer(() => {
           {product.owner.languages.map((l) => (
             <div className='mr-2 w-3 h-3' key={l}>
               <ImageWrapper
-                key={l}
                 type={`https://adverto.sale/img/flags/${l}.png`}
                 alt='lang'
                 width={12}

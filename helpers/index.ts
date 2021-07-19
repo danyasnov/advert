@@ -71,10 +71,13 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
       typeof data[key] === 'object' && data[key] !== null
         ? JSON.stringify(data[key])
         : data[key]
-    setCookie(ctx, key, value, {
+    const options: Partial<{path: string; maxAge: number; domain: string}> = {
       path: '/',
       maxAge: 30 * 24 * 60 * 60,
-    })
+    }
+    const domain = process.env.DOMAIN
+    if (domain) options.domain = domain
+    setCookie(ctx, key, value, options)
   })
 }
 

@@ -1,6 +1,7 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {CountryModel, GeoPositionItemModel} from 'front-api/src/models/index'
 import axios, {AxiosPromise} from 'axios'
+import {SettingsLanguageModel} from 'front-api'
 import {API_URL, getRest} from '../index'
 import Storage from '../../stores/Storage'
 
@@ -64,4 +65,14 @@ export const fetchCategorySuggestion = (
     url: `${API_URL}/v1/search_suggestions_category.php`,
     data: `query=${JSON.stringify(payload)}`,
   })
+}
+
+export const fetchLanguages = (
+  language: string,
+): Promise<RestResponse<Array<SettingsLanguageModel>>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.oldRest.fetchLanguages(language)
 }

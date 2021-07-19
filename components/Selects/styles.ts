@@ -62,5 +62,7 @@ export const LinkStyles = {
     ...provided,
     padding: '0 8px',
     height: '16px',
+    display: 'flex',
+    justifyContent: 'flex-end',
   }),
 }

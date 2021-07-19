@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "cross-env DOMAIN=.adverto.sale NODE_ENV=production node server.js",
     "prepare": "husky install",
     "fetch-translations": "node fetchTranslations.js"
   },
@@ -19,7 +19,7 @@
     "embla-carousel": "^4.5.3",
     "express": "^4.17.1",
     "formik": "^2.2.9",
-    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#29249fa97c222362a5176007dde246b0ef260551",
+    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#47f5830b35d6301686404154ee130a135e8ab4d7",
     "google-map-react": "^2.1.9",
     "lodash": "^4.17.21",
     "luxon": "^1.27.0",
@@ -55,6 +55,7 @@
     "autoprefixer": "^10.2.6",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",

@@ -13,17 +13,24 @@ import {
   ICountriesHydration,
   ICountriesStore,
 } from './CountriesStore'
+import {
+  ILanguagesHydration,
+  ILanguagesStore,
+  LanguagesStore,
+} from './LanguagesStore'
 
 export interface IRootStoreHydration {
   categoriesStore: ICategoriesHydration
   productsStore: IProductsHydration
   countriesStore: ICountriesHydration
+  languagesStore: ILanguagesHydration
 }
 
 export interface IRootStore {
   categoriesStore: ICategoriesStore
   productsStore: IProductsStore
   countriesStore: ICountriesStore
+  languagesStore: ILanguagesStore
   hydrate(data: IRootStoreHydration): void
 }
 
@@ -34,10 +41,13 @@ export class RootStore implements IRootStore {
 
   countriesStore
 
+  languagesStore
+
   constructor() {
     this.categoriesStore = new CategoriesStore(this)
     this.productsStore = new ProductsStore(this)
     this.countriesStore = new CountriesStore(this)
+    this.languagesStore = new LanguagesStore(this)
   }
 
   hydrate(data: IRootStoreHydration): void {
@@ -49,6 +59,9 @@ export class RootStore implements IRootStore {
     }
     if (data.countriesStore) {
       this.countriesStore.hydrate(data.countriesStore)
+    }
+    if (data.languagesStore) {
+      this.languagesStore.hydrate(data.languagesStore)
     }
   }
 }

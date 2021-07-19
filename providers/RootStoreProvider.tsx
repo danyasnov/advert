@@ -4,6 +4,7 @@ import {RootStore, IRootStoreHydration, IRootStore} from '../stores/RootStore'
 import {ICategoriesStore} from '../stores/CategoriesStore'
 import {IProductsStore} from '../stores/ProductsStore'
 import {ICountriesStore} from '../stores/CountriesStore'
+import {ILanguagesStore} from '../stores/LanguagesStore'
 
 enableStaticRendering(typeof window === 'undefined')
 
@@ -33,6 +34,11 @@ export const useProductsStore = (): IProductsStore => {
 export const useCountriesStore = (): ICountriesStore => {
   const {countriesStore} = useRootStore()
   return countriesStore
+}
+
+export const useLanguagesStore = (): ILanguagesStore => {
+  const {languagesStore} = useRootStore()
+  return languagesStore
 }
 
 export const RootStoreProvider: FC = ({

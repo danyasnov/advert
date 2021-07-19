@@ -12,7 +12,7 @@ import {
   fetchProductByUrl,
   fetchProducts,
 } from '../../../api/v2'
-import {fetchCountries} from '../../../api/v1'
+import {fetchCountries, fetchLanguages} from '../../../api/v1'
 import ProductLayout from '../../../components/Layouts/ProductLayout'
 import {defaultFilter} from '../../../utils'
 import {Filter} from '../../../types'
@@ -54,9 +54,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     currentCategory = findCategoryByQuery(query.categories, categories)
   }
 
-  let promises: Promise<any>[] = []
+  let promises: Promise<any>[] = [fetchCountries(state.language)]
   if (currentCategory || query.q) {
-    promises = [fetchCountries(state.language)]
     const filter: Partial<Filter> = {}
     if (currentCategory?.id) {
       filter.categoryId = currentCategory.id
@@ -69,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       promises.push(fetchCategoryData(state, currentCategory.id))
     }
   } else if (similarProductsPromise) {
-    promises = [fetchCountries(state.language), similarProductsPromise]
+    promises = [similarProductsPromise]
   }
 
   const response = await Promise.allSettled(promises).then((res) =>
