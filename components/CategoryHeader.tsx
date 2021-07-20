@@ -3,7 +3,10 @@ import {observer} from 'mobx-react-lite'
 import IcFilter from 'icons/material/Filter.svg'
 import IcClear from 'icons/material/Clear.svg'
 import {useRouter} from 'next/router'
-import {useCategoriesStore} from '../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useGeneralStore,
+} from '../providers/RootStoreProvider'
 import SortSelect from './SortSelect'
 import Breadcrumbs from './Breadcrumbs'
 import Button from './Buttons/Button'
@@ -19,7 +22,7 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const search = getQueryValue(query, 'q')
   const header =
     categoryData?.name || `!!результаты поиска по запросу ${search}`
-
+  const {setFooterVisibility} = useGeneralStore()
   if (!header) return null
   return (
     <div className='flex justify-between pb-4 mt-4 items-center'>
@@ -35,7 +38,10 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
       )}
       <Button
         className='m:hidden shadow-xl rounded-full min-w-10 w-10 h-10 bg-white flex justify-center items-center '
-        onClick={() => setShowFilter(!showFilter)}>
+        onClick={() => {
+          setShowFilter(!showFilter)
+          setFooterVisibility(!!showFilter)
+        }}>
         {showFilter ? (
           <IcClear className='fill-current text-black-c h-6 w-6' />
         ) : (

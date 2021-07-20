@@ -21,11 +21,11 @@ const CategoriesLayout: FC = () => {
             <div
               className={`${
                 showFilter ? 'flex' : 'hidden'
-              } px-4  s:px-0 s:-mx-0 border-t border-b pb-8 mb-6 border-shadow-b pt-6 w-full`}>
-              <FilterForm />
+              } px-4  s:px-0 s:-mx-0 border-t pb-4 border-shadow-b pt-6 w-full`}>
+              <FilterForm setShowFilter={setShowFilter} />
             </div>
           </main>
-          <aside className='hidden m:block w-72 mt-4'>
+          <aside className='hidden m:block w-72 mt-8'>
             <CategoryFilter />
           </aside>
         </div>

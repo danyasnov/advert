@@ -798,6 +798,7 @@
   "DESCRIPTION_TAB": "Description",
   "DISCOUNT": "Discount {{percent}} {{oldPrice}} {{currency}}",
   "DISPUTED": "DISPUTED",
+  "DO NOT CALL MESSAGE": "This user accepts calls {{weekday}} from {{timeFrom}} to {{timeTo}} ",
   "DRAFT_DELETE_MESSAGE": "Draft was delete",
   "DRAFTS": "Drafts",
   "DUPLICATE_AD": "Duplicate ad",

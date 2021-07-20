@@ -17,7 +17,7 @@ const SecondaryButton: FC<Props> = ({
 }) => {
   return (
     <Button
-      className={`rounded-2xl py-3 px-3.5 border border-shadow-b text-body-2 text-black-b ${
+      className={`rounded-lg py-3 px-3.5 border border-shadow-b text-body-2 text-black-b ${
         disabled ? disabledClass : ''
       } ${className || ''}`}
       onClick={onClick}>

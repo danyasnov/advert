@@ -5,6 +5,7 @@ import {ICategoriesStore} from '../stores/CategoriesStore'
 import {IProductsStore} from '../stores/ProductsStore'
 import {ICountriesStore} from '../stores/CountriesStore'
 import {ILanguagesStore} from '../stores/LanguagesStore'
+import {IGeneralStore} from '../stores/GeneralStore'
 
 enableStaticRendering(typeof window === 'undefined')
 
@@ -39,6 +40,11 @@ export const useCountriesStore = (): ICountriesStore => {
 export const useLanguagesStore = (): ILanguagesStore => {
   const {languagesStore} = useRootStore()
   return languagesStore
+}
+
+export const useGeneralStore = (): IGeneralStore => {
+  const {generalStore} = useRootStore()
+  return generalStore
 }
 
 export const RootStoreProvider: FC = ({

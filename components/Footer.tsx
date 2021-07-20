@@ -12,6 +12,7 @@ import IcTwitter from 'icons/social/Twitter.svg'
 import {
   useCategoriesStore,
   useCountriesStore,
+  useGeneralStore,
 } from '../providers/RootStoreProvider'
 import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
@@ -31,8 +32,10 @@ const Footer: FC = observer(() => {
   const {ids, byId: categoriesById} = useCategoriesStore()
   const {byId: countriesById} = useCountriesStore()
   const {t} = useTranslation()
+  const {showFooter} = useGeneralStore()
+
   return (
-    <footer className='mx-auto'>
+    <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountriesIds.map((id) => (
