@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     currentCategory = findCategoryByQuery(query.categories, categories)
   }
 
-  let promises: Promise<any>[] = [fetchCountries(state.language)]
+  const promises: Promise<any>[] = [fetchCountries(state.language)]
   if (currentCategory || query.q) {
     const filter: Partial<Filter> = {}
     if (currentCategory?.id) {
@@ -68,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       promises.push(fetchCategoryData(state, currentCategory.id))
     }
   } else if (similarProductsPromise) {
-    promises = [similarProductsPromise]
+    promises.push(similarProductsPromise)
   }
 
   const response = await Promise.allSettled(promises).then((res) =>

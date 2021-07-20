@@ -82,7 +82,7 @@ const Header: FC = () => {
                 value={languages.current.find(({value}) => value === lang)}
                 options={languages.current as SelectItem[]}
                 isSearchable={false}
-                placeholder='test'
+                placeholder={t('LANGUAGES')}
               />
             </div>
             <LinkButton onClick={notImplementedAlert} label={t('LOGIN')}>
