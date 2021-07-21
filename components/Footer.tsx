@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import IcGooglePlay from 'icons/stores/GooglePlay.svg'
@@ -17,6 +17,7 @@ import {
 import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
 import LinkWrapper from './Buttons/LinkWrapper'
+import CountriesSelector from './CountriesSelector'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
@@ -31,6 +32,7 @@ const mainCities: Array<string> = [
 const Footer: FC = observer(() => {
   const {ids, byId: categoriesById} = useCategoriesStore()
   const {byId: countriesById} = useCountriesStore()
+  const [showCountries, setShowCountries] = useState(false)
   const {t} = useTranslation()
   const {showFooter} = useGeneralStore()
 
@@ -46,7 +48,7 @@ const Footer: FC = observer(() => {
             />
           ))}
           <LinkButton
-            onClick={notImplementedAlert}
+            onClick={() => setShowCountries(!showCountries)}
             label={t('ALL_COUNTRIES')}
             className='font-bold'
           />
@@ -62,6 +64,13 @@ const Footer: FC = observer(() => {
           />
         </div>
       </div>
+      <div
+        className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${
+          showCountries ? 'flex' : 'hidden'
+        }`}>
+        <CountriesSelector />
+      </div>
+
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
         <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
           <Section
