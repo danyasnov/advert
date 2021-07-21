@@ -35,13 +35,12 @@ const ProductPhotos: FC = observer(() => {
   return (
     <div>
       <div className='overflow-hidden relative' ref={viewportRef}>
-        <div className='flex w-896px h-596px bg-image-placeholder'>
+        <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
           {product.advert.images.map((i) => (
             <div key={i} className='relative min-w-full'>
               <ImageWrapper
                 type={i}
-                width={896}
-                height={596}
+                layout='fill'
                 alt={i}
                 objectFit='contain'
               />
@@ -61,7 +60,7 @@ const ProductPhotos: FC = observer(() => {
           className='absolute inset-y-0 right-0'
         />
       </div>
-      <div className='flex mt-4 flex-row  -mx-1 flex-wrap'>
+      <div className='flex mt-4 flex-row -mx-1 flex-wrap'>
         {product.advert.images.length > 1 &&
           product.advert.images.map((i, index) => (
             <Thumb
@@ -95,18 +94,16 @@ const Thumb: FC<ThumbProps> = ({url, onHover, index, activePhotoIndex}) => {
   }, [index, isHovering, onHover])
   return (
     <div
-      style={{width: '105px', height: '90px'}}
-      className={`mx-1 mb-2 ${
+      className={`mx-1 mb-2 w-12 h-12 s:w-26 relative ${
         isHovering || activePhotoIndex === index
-          ? 'border-4 border-brand-a1'
-          : 'border-4 border-transparent'
+          ? 'border border-brand-a1'
+          : 'border border-transparent'
       }`}
       ref={ref}>
       <ImageWrapper
         type={url}
         alt={url}
-        width={105}
-        height={90}
+        layout='fill'
         key={url}
         objectFit='cover'
         priority

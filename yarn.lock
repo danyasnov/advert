@@ -3615,9 +3615,9 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#47f5830b35d6301686404154ee130a135e8ab4d7":
+"front-api@git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#1be3b3804e6f8befda65cb97d59ec983021e3d90":
   version "1.0.4"
-  resolved "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#47f5830b35d6301686404154ee130a135e8ab4d7"
+  resolved "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#1be3b3804e6f8befda65cb97d59ec983021e3d90"
   dependencies:
     axios "^0.21.1"
     fetch-to-curl "^0.5.2"

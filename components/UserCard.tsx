@@ -3,6 +3,8 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcPersonAdd from 'icons/material/PersonAdd.svg'
 import IcStar from 'icons/material/Star.svg'
+import IcAdvert from 'icons/material/Advert.svg'
+import {toJS} from 'mobx'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
@@ -15,7 +17,7 @@ const UserCard: FC = observer(() => {
     <div className='flex flex-col bg-white px-2 py-6'>
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
-          <div className='w-16 h-16 rounded-full overflow-hidden mb-1'>
+          <div className='w-16 h-16 rounded-full overflow-hidden mb-2'>
             {!!product.owner.image && (
               <ImageWrapper
                 width={64}
@@ -28,19 +30,21 @@ const UserCard: FC = observer(() => {
           </div>
           <IcPersonAdd className='fill-current h-6 w-6 ' />
         </div>
-
         <div>
           <span className='text-brand-b1 text-h-3 font-bold'>
             {product.owner.name}
           </span>
-          <div className='text-brand-a1 text-body-2 flex items-center'>
+          <div className='text-brand-a1 text-body-2 flex items-center mb-2'>
             <IcStar className='fill-current h-6 w-6 mr-2' />
             <span className='mr-1'>{product.owner.ratingMark}</span>
             <span>({product.owner.ratingMarkCnt})</span>
           </div>
-          {/* <div> */}
-          {/*  <IcAdvert className='fill-current text-black-c h-6 w-6 mr-2' /> */}
-          {/* </div> */}
+          <div className='flex items-center mb-2'>
+            <IcAdvert className='fill-current text-black-c h-6 w-6 mr-2' />
+            <span className='text-black-c text-body-2'>
+              {t('N_ADVERTS', {count: product.owner.advertsActiveCount})}
+            </span>
+          </div>
           <span className='text-black-c text-body-2'>
             {t('SINCE', {date: unixToDate(product.owner.dateRegistered)})}
           </span>

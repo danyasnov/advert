@@ -25,6 +25,7 @@ module.exports = {
       'h-1': ['36px', '40px'],
       'h-2': ['20px', '24px'],
       'h-3': ['18px', '20px'],
+      'h-4': ['16px', '20px'],
     },
     screens: {
       s: '768px',
@@ -40,6 +41,7 @@ module.exports = {
       spacing: {
         4.5: '1.125rem',
         9.5: '2.375rem',
+        15: '3.75rem',
         18: '4.5rem',
         26: '6.5rem',
         29: '7.25rem',
@@ -56,10 +58,14 @@ module.exports = {
         74: '18.5rem',
         82: '20.5rem',
         86: '21.5rem',
+        100: '25rem',
         110: '27.5rem',
         '7px': '7px',
+        '3.5px': '3.5px',
         '33px': '33px',
+        '250px': '250px',
         '288px': '288px',
+        '328px': '328px',
         '480px': '480px',
         '596px': '596px',
         '608px': '608px',
@@ -91,6 +97,7 @@ module.exports = {
         'white-a': '#FFFFFF',
         'white-d': 'rgba(12, 13, 13, 0.2)',
         'image-placeholder': 'rgb(234,233,233)',
+        'notification-success': 'rgba(0, 163, 0, 1)',
         error: '#CC3237',
       },
       inset: {

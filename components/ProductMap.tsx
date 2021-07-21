@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcPinDrop from 'icons/material/PinDrop.svg'
@@ -15,7 +15,7 @@ const ProductMap: FC = observer(() => {
   if (!product) return null
 
   return (
-    <div className='bg-white rounded-lg text-body-2 text-black-b'>
+    <div className='bg-white s:rounded-lg text-body-2 text-black-b'>
       <div className='flex justify-between px-6 py-5'>
         <div className='flex items-center'>
           <IcPinDrop className='w-6 h-6 fill-current text-black-c mr-2' />
@@ -27,7 +27,7 @@ const ProductMap: FC = observer(() => {
         </Button>
       </div>
       {mapVisible && (
-        <div style={{height: '506px', width: '896px'}} className=''>
+        <div className='w-full h-96'>
           <GoogleMapReact
             bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
             center={{

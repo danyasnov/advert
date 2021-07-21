@@ -13,16 +13,18 @@ const ProductLayout: FC = () => {
   const {similarProducts} = useProductsStore()
   return (
     <HeaderFooterWrapper>
-      <div className='bg-black-e py-8 m:flex'>
+      <div className='bg-black-e py-4 m:flex px-4 s:px-8'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-608px l:w-896px'>
             <ProductHeader />
             <ProductPhotos />
             <ProductDescription />
-            <ProductsSlider
-              products={similarProducts}
-              title={t('SIMILAR_ADS_TAB')}
-            />
+            <div className='-mx-4'>
+              <ProductsSlider
+                products={similarProducts}
+                title={t('SIMILAR_ADS_TAB')}
+              />
+            </div>
           </main>
           <aside className='hidden m:block w-288px'>
             <ProductSidebar />
