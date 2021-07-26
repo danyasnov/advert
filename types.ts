@@ -63,3 +63,11 @@ export interface FetchAdvertisesPayload {
   advHash?: string
   cacheId?: string
 }
+
+export interface City {
+  id: number
+  word: string
+  // eslint-disable-next-line camelcase
+  has_adverts: '0' | '1'
+  slug: string
+}

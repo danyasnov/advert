@@ -9,15 +9,18 @@ import IcInstagram from 'icons/social/Instagram.svg'
 import IcVK from 'icons/social/VK.svg'
 import IcYouTube from 'icons/social/YouTube.svg'
 import IcTwitter from 'icons/social/Twitter.svg'
+import {head} from 'lodash'
+import {useRouter} from 'next/router'
+import {CountryModel} from 'front-api'
 import {
   useCategoriesStore,
   useCountriesStore,
   useGeneralStore,
 } from '../providers/RootStoreProvider'
-import {notImplementedAlert} from '../helpers'
+import {notImplementedAlert, setCookiesObject} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
 import LinkWrapper from './Buttons/LinkWrapper'
-import CountriesSelector from './CountriesSelector'
+import LocationSelector from './LocationSelector'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
@@ -34,8 +37,23 @@ const Footer: FC = observer(() => {
   const {byId: countriesById} = useCountriesStore()
   const [showCountries, setShowCountries] = useState(false)
   const {t} = useTranslation()
+  const {push} = useRouter()
   const {showFooter} = useGeneralStore()
+  const {countries} = useCountriesStore()
+  const countriesByAlphabet = countries.reduce((acc, value) => {
+    if (value.has_adverts === '0') return acc
+    const result: CountryModel & {href: string} = {
+      ...value,
+      href: `/cities/${value.isoCode}`,
+    }
+    if (acc[head(result.title)]) {
+      acc[head(result.title)].push(result)
+    } else {
+      acc[head(result.title)] = [result]
+    }
 
+    return acc
+  }, {})
   return (
     <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
@@ -68,7 +86,14 @@ const Footer: FC = observer(() => {
         className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${
           showCountries ? 'flex' : 'hidden'
         }`}>
-        <CountriesSelector />
+        <LocationSelector
+          items={countriesByAlphabet}
+          title={t('COUNTRY_SELECTION')}
+          showAllLink='/all/all'
+          onSelect={(item) => {
+            push(`/cities/${item.isoCode}`)
+          }}
+        />
       </div>
 
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>

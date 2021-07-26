@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from 'mobx'
+import {action, makeAutoObservable, toJS} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
@@ -37,7 +37,7 @@ export interface IProductsStore {
   cacheId: string
   aggregatedFields: CACategoryDataFieldModel[]
   filter: Partial<Filter>
-  setFilter: (filter: Partial<Filter>) => void
+  setFilter: (filter: Partial<Filter>) => Partial<Filter>
   resetFilter: () => void
   fetchProducts: (opts?: FetchOptions) => Promise<void>
   sortBy: string
@@ -86,8 +86,9 @@ export class ProductsStore implements IProductsStore {
     this.root = root
   }
 
-  setFilter = (data: Partial<Filter>): void => {
+  setFilter = (data: Partial<Filter>): Partial<Filter> => {
     this.filter = {...this.filter, ...data}
+    return this.filter
   }
 
   resetFilter = (): void => {

@@ -207,8 +207,9 @@ export const findCategoryByQuery = (
   let category
   // eslint-disable-next-line no-restricted-syntax
   for (const slug of categoriesQuery) {
+    const splitted = slug.split('?')[0]
     const source = (category?.items || categories) ?? []
-    category = source.find((c) => c.slug === slug)
+    category = source.find((c) => c.slug === splitted)
     if (!category) {
       break
     }
@@ -241,7 +242,10 @@ export const getQueryValue = (query: ParsedUrlQuery, path: string): string => {
 
 export const getSearchByFilter = (
   state: CookiesState,
-): LocationIdFilter | {location: LocationModel & {distanceMax: number}} => {
+):
+  | LocationIdFilter
+  | {location: LocationModel & {distanceMax: number}}
+  | Record<string, never> => {
   if (state.searchBy === 'id') {
     const data: LocationIdFilter = {
       countryId: parseInt(state.countryId, 10),
@@ -250,12 +254,26 @@ export const getSearchByFilter = (
     if (state.regionId) data.regionId = parseInt(state.regionId, 10)
     return data
   }
-  return {
-    location: {
-      ...state.searchLocation,
-      distanceMax: state.searchRadius,
-    },
+  if (state.searchBy === 'coords') {
+    return {
+      location: {
+        ...state.searchLocation,
+        distanceMax: state.searchRadius,
+      },
+    }
   }
+  if (state.searchBy === 'onlyCountry') {
+    return {
+      countryId: parseInt(state.countryId, 10),
+    }
+  }
+  if (state.searchBy === 'countryAndCity') {
+    return {
+      countryId: parseInt(state.countryId, 10),
+      cityId: parseInt(state.cityId, 10),
+    }
+  }
+  return {}
 }
 
 export const getLocationCodes = (): string => {

@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import IcFilter from 'icons/material/Filter.svg'
 import IcClear from 'icons/material/Clear.svg'
 import {useRouter} from 'next/router'
+import {useTranslation} from 'next-i18next'
 import {
   useCategoriesStore,
   useGeneralStore,
@@ -20,8 +21,9 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const {categoryData} = useCategoriesStore()
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
+  const {t} = useTranslation()
   const header =
-    categoryData?.name || `!!результаты поиска по запросу ${search}`
+    categoryData?.name || t('SEARCH_RESULTS_BY_QUERY', {query: search})
   const {setFooterVisibility} = useGeneralStore()
   if (!header) return null
   return (

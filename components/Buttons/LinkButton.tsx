@@ -6,15 +6,27 @@ interface Props {
   label: string
   children?: ReactNode
   className?: string
+  nowrap?: boolean
 }
 
-const LinkButton: FC<Props> = ({onClick, label, children, className}) => {
+const LinkButton: FC<Props> = ({
+  onClick,
+  label,
+  children,
+  className,
+  nowrap = true,
+}) => {
   return (
     <Button
       onClick={onClick}
       className={`text-body-3 text-brand-b1 ${className || ''}`}>
       {children}
-      <span className='capitalize-first whitespace-nowrap'>{label}</span>
+      <span
+        className={`capitalize-first ${
+          nowrap ? 'whitespace-nowrap' : 'whitespace-normal'
+        }`}>
+        {label}
+      </span>
     </Button>
   )
 }
