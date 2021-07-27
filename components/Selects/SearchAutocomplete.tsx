@@ -57,6 +57,7 @@ const SearchAutocomplete: FC<Props> = ({
     highlightedIndex,
     getItemProps,
   } = useCombobox({
+    id: 'search-autocomplete',
     items: inputItems,
     selectedItem,
     // @ts-ignore

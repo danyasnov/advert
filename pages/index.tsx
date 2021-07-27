@@ -1,6 +1,6 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {processCookies} from '../helpers'
+import {getLocationCodes, processCookies} from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories, fetchProducts} from '../api/v2'
 import MainLayout from '../components/Layouts/MainLayout'
@@ -47,6 +47,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         countriesStore: {
           countries,
+        },
+        generalStore: {
+          locationCodes: getLocationCodes(ctx),
         },
       },
       ...(await serverSideTranslations(state.language)),

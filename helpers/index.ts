@@ -276,8 +276,8 @@ export const getSearchByFilter = (
   return {}
 }
 
-export const getLocationCodes = (): string => {
-  const cookies: SerializedCookiesState = parseCookies()
+export const getLocationCodes = (ctx?): string => {
+  const cookies: SerializedCookiesState = parseCookies(ctx)
   const result = []
   result.push(cookies.countryCode || 'all')
   result.push(cookies.regionOrCityCode || 'all')

@@ -18,13 +18,14 @@ import {
   ILanguagesStore,
   LanguagesStore,
 } from './LanguagesStore'
-import {GeneralStore, IGeneralStore} from './GeneralStore'
+import {GeneralStore, IGeneralsHydration, IGeneralStore} from './GeneralStore'
 
 export interface IRootStoreHydration {
   categoriesStore: ICategoriesHydration
   productsStore: IProductsHydration
   countriesStore: ICountriesHydration
   languagesStore: ILanguagesHydration
+  generalStore: IGeneralsHydration
 }
 
 export interface IRootStore {
@@ -67,6 +68,9 @@ export class RootStore implements IRootStore {
     }
     if (data.languagesStore) {
       this.languagesStore.hydrate(data.languagesStore)
+    }
+    if (data.generalStore) {
+      this.generalStore.hydrate(data.generalStore)
     }
   }
 }
