@@ -15,6 +15,7 @@ export interface ICategoriesStore {
   hydrate(data: ICategoriesHydration): void
   byId: Record<string, CACategoryModel>
   ids: number[]
+  categoryDataFieldsById: Record<string, CACategoryDataFieldModel> | null
   categoryDataFieldsBySlug: Record<string, CACategoryDataFieldModel> | null
   categoryDataFields: CACategoryDataFieldModel[]
   readonly categoriesWithoutAll: Array<CACategoryModel>
@@ -50,6 +51,21 @@ export class CategoriesStore implements ICategoriesStore {
           (acc, val) => ({
             ...acc,
             [val.slug]: val,
+          }),
+          {},
+        )
+      : null
+  }
+
+  get categoryDataFieldsById(): Record<
+    string,
+    CACategoryDataFieldModel
+  > | null {
+    return Array.isArray(this.categoryData?.fields)
+      ? this.categoryData.fields.reduce(
+          (acc, val) => ({
+            ...acc,
+            [val.id]: val,
           }),
           {},
         )

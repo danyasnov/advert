@@ -82,7 +82,9 @@ const Select: FC<Props> = ({
       onChange={onChange}
       isClearable={isClearable}
       isMulti={isMulti}
+      closeMenuOnSelect={false}
       styles={{...defaultStyles, ...propsStyles}}
+      isOptionDisabled={(option) => option.disabled}
       components={{
         MenuList,
         ...(components || {}),

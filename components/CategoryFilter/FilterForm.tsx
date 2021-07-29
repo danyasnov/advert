@@ -20,18 +20,20 @@ import {
 import {
   findCategoryByQuery,
   findCurrentCategoriesOptionsyByQuery,
+  getUrlQueryFromFilter,
+  getFormikInitialFromQuery,
 } from '../../helpers'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {clearQueryFromUrl} from '../../utils'
 
 interface Values {
   condition: SelectItem
   priceRange: {
-    priceMin: string
-    priceMax: string
+    priceMin?: string
+    priceMax?: string
   }
   onlyWithPhoto: boolean
   onlyDiscounted: boolean
-  onlyFromSubscribed: boolean
   fields?: Record<string, unknown>
 }
 
@@ -44,7 +46,9 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const router = useRouter()
   const {setFilter, resetFilter, fetchProducts, aggregatedFields, count} =
     useProductsStore()
-  const {categoryDataFieldsBySlug, categories} = useCategoriesStore()
+
+  const {categoryDataFieldsById, categories, categoryDataFieldsBySlug} =
+    useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
@@ -68,8 +72,8 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     [t],
   )
 
-  const getInitialValues = (): Values => {
-    return {
+  const getInitialValues = (reset?: boolean): Values => {
+    const defaultValues = {
       condition: conditionOptions[0],
       priceRange: {
         priceMin: '',
@@ -77,9 +81,29 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       },
       onlyWithPhoto: false,
       onlyDiscounted: false,
-      onlyFromSubscribed: false,
       fields: {},
     }
+    if (reset) return defaultValues
+    const filter = getFormikInitialFromQuery(
+      router.query,
+      categoryDataFieldsBySlug,
+    )
+
+    if (filter) {
+      let condition = conditionOptions[0]
+      // eslint-disable-next-line prefer-destructuring
+      if (filter.condition === '1') condition = conditionOptions[1]
+      // eslint-disable-next-line prefer-destructuring
+      if (filter.condition === '2') condition = conditionOptions[2]
+      const values: Partial<Values> = {
+        ...filter,
+        condition,
+      }
+
+      return {...defaultValues, ...values}
+    }
+
+    return defaultValues
   }
 
   useEffect(() => {
@@ -89,9 +113,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [JSON.stringify(router.query.categories)])
-
-  const [initialValue, setInitialValue] = useState<Values>(getInitialValues())
-
+  const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
   const currentCategoriesOptions =
     findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
     []
@@ -108,26 +130,17 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       validateOnChange
       innerRef={formikRef}
       enableReinitialize
-      initialValues={initialValue}
+      initialValues={initialValues}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
-        const {
-          priceRange,
-          onlyWithPhoto,
-          onlyDiscounted,
-          onlyFromSubscribed,
-          fields,
-        } = values
+        const {priceRange, onlyWithPhoto, onlyDiscounted, fields} = values
+
         const mappedFields = Object.fromEntries(
           Object.entries(fields)
             .map(([key, value]) => {
-              const field = categoryDataFieldsBySlug[key]
+              const field = categoryDataFieldsById[key]
               let mappedValue
               switch (field.fieldType) {
-                case 'select': {
-                  const fieldValue = value as SelectItem
-                  if (fieldValue?.value) mappedValue = [fieldValue.value]
-                  break
-                }
+                case 'select':
                 case 'multiselect': {
                   if (Array.isArray(value) && value.length)
                     mappedValue = value.map((v) => v.value)
@@ -153,13 +166,15 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
           priceMax: parseInt(priceRange.priceMax, 10) || undefined,
           onlyWithPhoto,
           onlyDiscounted,
-          onlyFromSubscribed,
           fields: mappedFields,
         }
+
         const updatedFilter = setFilter(filter)
-        router.replace(
-          `${router.asPath.split('?')[0]}?filter=${JSON.stringify(
+
+        router.push(
+          `${clearQueryFromUrl(router.asPath)}?${getUrlQueryFromFilter(
             updatedFilter,
+            categoryDataFieldsById,
           )}`,
           null,
           {
@@ -181,9 +196,13 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                 onChange={(opt: SelectItem & {slug: string}) => {
                   if (opt?.value) setFilter({categoryId: opt.value as number})
                   if (currentCategory.items.length) {
-                    router.push(`${router.asPath}/${opt.slug}`)
+                    router.push(
+                      `${clearQueryFromUrl(router.asPath)}/${opt.slug}`,
+                    )
                   } else {
-                    const pathArray = router.asPath.split('/')
+                    const pathArray = clearQueryFromUrl(router.asPath).split(
+                      '/',
+                    )
                     pathArray[pathArray.length - 1] = opt.slug
                     router.push(pathArray.join('/'))
                   }
@@ -232,16 +251,19 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               component={FormikCheckbox}
               label={t('ONLY_WITH_DISCOUNT')}
             />
-            <Field
-              name='onlyFromSubscribed'
-              component={FormikCheckbox}
-              label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')}
-            />
+            {/* <Field */}
+            {/*  name='onlyFromSubscribed' */}
+            {/*  component={FormikCheckbox} */}
+            {/*  label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')} */}
+            {/* /> */}
           </div>
           <div className='pt-4 flex justify-center s:justify-between'>
             <SecondaryButton
               onClick={() => {
-                resetForm({values: getInitialValues()})
+                resetForm({values: getInitialValues(true)})
+                router.push(`${clearQueryFromUrl(router.asPath)}`, null, {
+                  shallow: true,
+                })
                 resetFilter()
                 fetchProducts()
               }}

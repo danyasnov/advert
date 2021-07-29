@@ -14,17 +14,23 @@ export const defaultStyles = {
         }
       : {}),
   }),
-  option: (provided, state) => ({
-    ...provided,
-    fontSize: '14px',
-    lineHeight: '16px',
-    color: '#3D3F43',
-    backgroundColor: state.isFocused ? '#FFEEDD' : '#FFFFFF',
-    '&:hover': {
-      backgroundColor: '#FFEEDD',
-    },
-    display: 'flex',
-  }),
+  option: (provided, state) => {
+    const isDisabled = !!state.data.disabled
+    return {
+      ...provided,
+      fontSize: '14px',
+      lineHeight: '16px',
+      color: '#3D3F43',
+      backgroundColor: state.isFocused ? '#FFEEDD' : '#FFFFFF',
+      '&:hover': {
+        backgroundColor: '#FFEEDD',
+      },
+      display: 'flex',
+      ...(isDisabled
+        ? {'&:hover': {}, color: 'hsl(0, 0%, 80%)', backgroundColor: '#FFFFFF'}
+        : {}),
+    }
+  },
   singleValue: (provided) => ({
     ...provided,
     fontSize: '14px',

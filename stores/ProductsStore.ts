@@ -2,7 +2,7 @@ import {action, makeAutoObservable, toJS} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
-import {isEmpty} from 'lodash'
+import {isEmpty, omit} from 'lodash'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
@@ -114,7 +114,7 @@ export class ProductsStore implements IProductsStore {
       method: 'POST',
       data: {
         filter: {
-          ...this.filter,
+          ...omit(this.filter, ['fields']),
           sort: {key, direction},
           fieldValues: this.filter.fields,
         },
@@ -131,7 +131,7 @@ export class ProductsStore implements IProductsStore {
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {
         if (!response.data || isEmpty(response.data) || response?.data?.error) {
-          this.state = 'error'
+          this.state = 'pending'
           return Promise.resolve()
         }
         const {

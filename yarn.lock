@@ -2412,6 +2412,11 @@ cli-truncate@^2.1.0:
     slice-ansi "^3.0.0"
     string-width "^4.2.0"
 
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 coa@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/coa/-/coa-2.0.2.tgz#43f6c21151b4ef2bf57187db0d73de229e3e7ec3"
@@ -3630,9 +3635,9 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#a9d118bc0239b2b21202c6644ef96f4e29c11705":
-  version "1.0.4"
-  resolved "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#a9d118bc0239b2b21202c6644ef96f4e29c11705"
+"front-api@git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#e911368d76915884c4be3ad89769199a452e5a37":
+  version "1.0.7"
+  resolved "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#e911368d76915884c4be3ad89769199a452e5a37"
   dependencies:
     axios "^0.21.1"
     fetch-to-curl "^0.5.2"
@@ -5851,6 +5856,13 @@ react-select@^4.3.1:
     prop-types "^15.6.0"
     react-input-autosize "^3.0.0"
     react-transition-group "^4.3.0"
+
+react-toastify@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-7.0.4.tgz#7d0b743f2b96f65754264ca6eae31911a82378db"
+  integrity sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==
+  dependencies:
+    clsx "^1.1.1"
 
 react-transition-group@^4.3.0:
   version "4.4.1"

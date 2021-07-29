@@ -11,12 +11,17 @@ const sequelize = new Sequelize(
   },
 )
 
+const cache = new Map()
+
 // eslint-disable-next-line import/prefer-default-export
-export const fetchCitiesByCountryCode = (
+export const fetchCitiesByCountryCode = async (
   code: string,
   lang: string,
 ): Promise<City[]> => {
-  return sequelize.query(
+  const key = `${code}-${lang}`
+  const cached: City[] = cache.get(key)
+  if (cached) return cached
+  const result: City[] = await sequelize.query(
     `SELECT
     l.id,
     IFNULL(lt.content, l.word) as word,
@@ -30,4 +35,6 @@ WHERE l.type = 'city' AND ac.alpha2 = '${code}'
 ORDER BY word`,
     {type: QueryTypes.SELECT},
   )
+  cache.set(key, result)
+  return result
 }

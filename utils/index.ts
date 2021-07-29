@@ -20,6 +20,15 @@ export const getFirstNonEmptyArray = <T extends unknown>(
   return null
 }
 
+export const clearQueryFromUrl = (value: string): string => {
+  return value.split('?')[0]
+}
+
+export const clearFalsyValues = (
+  obj: Record<string, unknown>,
+): Record<string, unknown> => {
+  return Object.fromEntries(Object.entries(obj).filter(([, value]) => !!value))
+}
 export const defaultFilter = {
   onlyFromSubscribed: false,
   published: FilterPublication.ALL_TIME,

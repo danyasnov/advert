@@ -35,28 +35,25 @@ interface FieldOptions {
   isMulti?: boolean
 }
 
+const getSelectOptions = (o) => ({
+  value: o.id,
+  label: o.value,
+  disabled: o.count === 0,
+})
+
 export const FormikField: FC<IFormikField> = ({field}) => {
   // @ts-ignore
-  const {fieldType, multiselects, slug, name, isFilterable} = field
+  const {fieldType, multiselects, id, name, isFilterable} = field
   let component
   const props: FieldOptions = {}
   switch (fieldType) {
-    case 'select': {
-      component = FormikSelect
-      props.options = [...multiselects.top, ...multiselects.other].map((o) => ({
-        value: o.id,
-        label: o.value,
-      }))
-      props.placeholder = name
-      props.isFilterable = isFilterable
-      break
-    }
+    case 'select':
     case 'multiselect': {
       component = FormikSelect
-      props.options = [...multiselects.top, ...multiselects.other].map((o) => ({
-        value: o.id,
-        label: o.value,
-      }))
+      props.options = [
+        ...multiselects.top.map(getSelectOptions),
+        ...multiselects.other.map(getSelectOptions),
+      ]
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = true
@@ -83,7 +80,7 @@ export const FormikField: FC<IFormikField> = ({field}) => {
   }
   if (!component) return null
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Field name={`fields.${slug}`} component={component} {...props} />
+  return <Field name={`fields.${id}`} component={component} {...props} />
 }
 
 export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
@@ -195,21 +192,22 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   const {name, value} = field
   const {setFieldValue} = form
   return (
-    <div className='flex items-center'>
-      <input
-        type='checkbox'
-        name={name}
-        checked={value}
-        id={name}
-        onChange={() => setFieldValue(name, !value)}
-        className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-      />
-      <div
-        className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
+    <div className=''>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label className='select-none text-black-b cursor-pointer flex items-center'>
+        <input
+          type='checkbox'
+          name={name}
+          checked={value}
+          id={name}
+          onChange={() => setFieldValue(name, !value)}
+          className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
+        />
+        <div
+          className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
        flex-shrink-0 justify-center items-center mr-2'>
-        <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
-      </div>
-      <label className='select-none text-black-b cursor-pointer' htmlFor={name}>
+          <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+        </div>
         {label}
       </label>
     </div>

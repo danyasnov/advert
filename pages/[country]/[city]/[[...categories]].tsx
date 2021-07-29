@@ -4,6 +4,7 @@ import {toString} from 'lodash'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
   findCategoryByQuery,
+  getFilterFromQuery,
   getQueryValue,
   processCookies,
 } from '../../../helpers'
@@ -75,6 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let similarProductsPromise
   let currentCategory
+  let categoryData
   if (product) {
     similarProductsPromise = fetchProducts(state, {
       limit: 4,
@@ -83,13 +85,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   } else {
     currentCategory = findCategoryByQuery(query.categories, categories)
+    categoryData =
+      (await fetchCategoryData(state, currentCategory.id))?.result ?? null
   }
 
   const promises: Promise<any>[] = []
   if (product) {
     promises.push(similarProductsPromise)
   } else {
-    const filter: Partial<Filter> = {}
+    const filterQueryData = getFilterFromQuery(query, categoryData)
+
+    const filter: Partial<Filter> = filterQueryData || {}
     if (currentCategory?.id) {
       filter.categoryId = currentCategory.id
     }
@@ -97,9 +103,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       filter.search = getQueryValue(query, 'q')
     }
     promises.push(fetchProducts(state, {filter}))
-    if (currentCategory?.id) {
-      promises.push(fetchCategoryData(state, currentCategory.id))
-    }
   }
 
   const response = await Promise.allSettled(promises).then((res) =>
@@ -117,7 +120,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       similarProducts: similarProductsResponse?.result?.data ?? null,
     }
   } else {
-    const [productsResponse, categoryData] = response
+    const [productsResponse] = response
     productsStore = {
       // @ts-ignore
       products: productsResponse?.result?.data ?? null,
@@ -133,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       aggregatedFields: productsResponse?.result?.aggregatedFields,
     }
     // @ts-ignore
-    categoriesStore.categoryData = categoryData?.result ?? null
+    categoriesStore.categoryData = categoryData
   }
 
   const countries = countriesData ?? null

@@ -1,13 +1,28 @@
-import {AnalyticsService, CACategoryModel, LocationModel} from 'front-api/src'
-import {GeoPositionModel} from 'front-api/src/models/index'
+import {
+  AnalyticsService,
+  CACategoryModel,
+  LocationModel,
+  CACategoryDataModel,
+} from 'front-api/src'
+import {
+  CACategoryDataFieldModel,
+  GeoPositionModel,
+} from 'front-api/src/models/index'
 import {parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
+import {pick, omit, toNumber, isEmpty} from 'lodash'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
-import {CookiesState, LocationIdFilter, SerializedCookiesState} from '../types'
+import {
+  CookiesState,
+  Filter,
+  LocationIdFilter,
+  SerializedCookiesState,
+} from '../types'
 import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
+import {clearFalsyValues} from '../utils'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -274,6 +289,181 @@ export const getSearchByFilter = (
     }
   }
   return {}
+}
+
+export const getUrlQueryFromFilter = (
+  filter: Partial<Filter>,
+  fieldById: Record<string, CACategoryDataFieldModel>,
+): string => {
+  const baseFields = [
+    'condition',
+    'onlyDiscounted',
+    'onlyWithPhoto',
+    'priceMax',
+    'priceMin',
+  ]
+  const baseData = clearFalsyValues(pick(filter, baseFields))
+  const fieldValues = clearFalsyValues(filter.fields)
+  const fieldValuesWithSlug = Object.fromEntries(
+    Object.entries(fieldValues).map(([key, value]) => {
+      let stringValue = ''
+      const currentField = fieldById[key]
+      switch (currentField.fieldType) {
+        case 'select':
+        case 'multiselect': {
+          // @ts-ignore
+          stringValue = value.map(
+            (valueId) =>
+              // @ts-ignore
+              currentField.multiselects.find(({id}) => id === valueId)?.value,
+          )
+          break
+        }
+        default: {
+          // eslint-disable-next-line prefer-destructuring
+          stringValue = value[0]
+        }
+      }
+      return [
+        encodeURIComponent(currentField.slug),
+        encodeURIComponent(stringValue),
+      ]
+    }),
+  )
+
+  return new URLSearchParams({...baseData, ...fieldValuesWithSlug} as Record<
+    string,
+    string
+  >).toString()
+}
+
+export const getFilterFromQuery = (
+  query: ParsedUrlQuery,
+  category: CACategoryDataModel,
+): Partial<Filter> => {
+  const excludedFields = ['country', 'city', 'categories']
+  const baseFields = [
+    'condition',
+    'onlyDiscounted',
+    'onlyWithPhoto',
+    'priceMax',
+    'priceMin',
+  ]
+
+  const baseFilter = pick(query, baseFields)
+  baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
+  baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
+  if (baseFilter.priceMax) baseFilter.priceMax = toNumber(baseFilter.priceMax)
+  if (baseFilter.priceMin) baseFilter.priceMin = toNumber(baseFilter.priceMin)
+  const fieldsFilter = omit(query, [...baseFields, ...excludedFields])
+  const result = {...baseFilter}
+
+  if (!isEmpty(fieldsFilter)) {
+    result.fieldValues = Object.fromEntries(
+      Object.entries(fieldsFilter).map(([key, value]) => {
+        // if (key === 'vin-number0') debugger
+        const parsedKey = key
+        const currentField = category.fields.find((f) => f.slug === parsedKey)
+
+        let parsedValue = decodeURIComponent(value as string).split(',')
+        // eslint-disable-next-line default-case
+        switch (currentField.fieldType) {
+          case 'select':
+          case 'multiselect': {
+            parsedValue = parsedValue.map(
+              (valueId) =>
+                // @ts-ignore
+                currentField.multiselects.find((m) => m.value === valueId)?.id,
+            )
+            break
+          }
+          case 'checkbox': {
+            // @ts-ignore
+            parsedValue = [parsedValue[0] === 'true']
+            break
+          }
+          case 'int': {
+            parsedValue = [toNumber(parsedValue[0])]
+            break
+          }
+        }
+
+        return [currentField.id, parsedValue]
+      }),
+    )
+  }
+
+  return result
+}
+
+export const getFormikInitialFromQuery = (
+  query: ParsedUrlQuery,
+  categoryDataFieldsBySlug: Record<string, CACategoryDataFieldModel>,
+) => {
+  const excludedFields = ['country', 'city', 'categories']
+  const baseFields = [
+    'condition',
+    'onlyDiscounted',
+    'onlyWithPhoto',
+    'priceMax',
+    'priceMin',
+  ]
+
+  const baseFilter = pick(query, baseFields)
+  baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
+  baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
+  const priceRange: {
+    priceMin?: string
+    priceMax?: string
+  } = {
+    ...(baseFilter.priceMax ? {priceMax: toNumber(baseFilter.priceMax)} : {}),
+    ...(baseFilter.priceMin ? {priceMin: toNumber(baseFilter.priceMin)} : {}),
+  }
+  const fieldsFilter = omit(query, [...baseFields, ...excludedFields])
+  const result = {...baseFilter, priceRange}
+  delete result.priceMin
+  delete result.priceMax
+
+  if (!isEmpty(fieldsFilter)) {
+    result.fields = Object.fromEntries(
+      Object.entries(fieldsFilter).map(([key, value]) => {
+        const currentField = categoryDataFieldsBySlug[key]
+
+        let parsedValue = decodeURIComponent(value as string).split(',')
+        // eslint-disable-next-line default-case
+        switch (currentField.fieldType) {
+          case 'select':
+          case 'multiselect': {
+            // @ts-ignore
+            parsedValue = parsedValue.map((valueId) => {
+              // @ts-ignore
+              const option = currentField.multiselects.find(
+                (m) => m.value === valueId,
+              )
+              return {
+                value: option.id,
+                label: option.value,
+              }
+            })
+            break
+          }
+          case 'checkbox': {
+            // @ts-ignore
+            parsedValue = parsedValue[0] === 'true'
+            break
+          }
+          case 'int': {
+            parsedValue = toNumber(parsedValue[0])
+            break
+          }
+        }
+
+        return [currentField.id, parsedValue]
+      }),
+    )
+  }
+
+  return result
 }
 
 export const getLocationCodes = (ctx?): string => {
