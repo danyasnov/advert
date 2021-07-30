@@ -17,7 +17,7 @@ const ScrollableCardGroup: FC = observer(() => {
   const {t} = useTranslation()
   return (
     <div className='flex flex-col m:items-center relative border-t border-shadow-b'>
-      <div className='s:hidden -ml-3 my-6'>
+      <div className='s:hidden w-48 my-6'>
         <SortSelect id='mobile-sort' />
       </div>
       <InfiniteScroll
