@@ -181,8 +181,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
             shallow: true,
           },
         )
-
-        fetchProducts().then(() => setSubmitting(false))
+        fetchProducts({query: router.query}).then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
         <Form className='space-y-8 divide-y w-full'>
@@ -265,7 +264,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                   shallow: true,
                 })
                 resetFilter()
-                fetchProducts()
+                fetchProducts({query: router.query})
               }}
               className='w-full hidden s:block s:w-min py-3 px-3.5 s:w-full'>
               {t('RESET_FILTER')}

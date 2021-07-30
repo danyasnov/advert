@@ -1,8 +1,9 @@
-import {action, makeAutoObservable, toJS} from 'mobx'
+import {action, makeAutoObservable} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {isEmpty, omit} from 'lodash'
+import {ParsedUrlQuery} from 'querystring'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
@@ -39,7 +40,7 @@ export interface IProductsStore {
   filter: Partial<Filter>
   setFilter: (filter: Partial<Filter>) => Partial<Filter>
   resetFilter: () => void
-  fetchProducts: (opts?: FetchOptions) => Promise<void>
+  fetchProducts: (opts?: Partial<FetchOptions>) => Promise<void>
   sortBy: string
   setSortBy: (value: string) => void
 }
@@ -47,6 +48,7 @@ export interface IProductsStore {
 interface FetchOptions {
   page?: number
   isScroll?: boolean
+  query?: ParsedUrlQuery
 }
 type State = 'done' | 'pending' | 'error' | 'pending-scroll'
 export const PAGE_LIMIT = 40
@@ -103,7 +105,7 @@ export class ProductsStore implements IProductsStore {
     this.sortBy = 'date_updated-asc'
   }
 
-  fetchProducts = (opts?: FetchOptions): Promise<void> => {
+  fetchProducts = (opts?: Partial<FetchOptions>): Promise<void> => {
     if (this.cancelTokenSource) this.cancelTokenSource.cancel('got_new_request')
     this.cancelTokenSource = cancelToken.source()
 
@@ -120,6 +122,7 @@ export class ProductsStore implements IProductsStore {
         },
         limit: this.limit,
         page: 1,
+        query: opts?.query,
       },
     }
     config.cancelToken = this.cancelTokenSource.token

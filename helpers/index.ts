@@ -3,6 +3,7 @@ import {
   CACategoryModel,
   LocationModel,
   CACategoryDataModel,
+  CountryModel,
 } from 'front-api/src'
 import {
   CACategoryDataFieldModel,
@@ -13,9 +14,10 @@ import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
-import {pick, omit, toNumber, isEmpty} from 'lodash'
+import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
+  City,
   CookiesState,
   Filter,
   LocationIdFilter,
@@ -288,6 +290,12 @@ export const getSearchByFilter = (
       cityId: parseInt(state.cityId, 10),
     }
   }
+  if (state.searchBy === 'countryAndRegion') {
+    return {
+      countryId: parseInt(state.countryId, 10),
+      regionId: parseInt(state.regionId, 10),
+    }
+  }
   return {}
 }
 
@@ -472,4 +480,49 @@ export const getLocationCodes = (ctx?): string => {
   result.push(cookies.countryCode || 'all')
   result.push(cookies.regionOrCityCode || 'all')
   return result.join('/')
+}
+
+export const withLocationQuery = async (
+  state: CookiesState,
+  query: ParsedUrlQuery,
+  {
+    countries,
+    cities,
+    regions,
+  }: {countries: CountryModel[]; cities: City[]; regions: City[]},
+): Promise<CookiesState> => {
+  const updatedState = state
+  const countryCode = getQueryValue(query, 'country')
+  const cityCode = getQueryValue(query, 'city')
+  if (countryCode) {
+    if (countryCode === 'all') {
+      delete updatedState.searchBy
+    } else {
+      const country = countries.find((c) => c.isoCode === countryCode)
+      if (country) {
+        if (cityCode === 'all') {
+          // @ts-ignore
+          updatedState.searchBy = 'onlyCountry'
+          updatedState.countryId = country.id
+        } else {
+          const city = cities.find((c) => c.slug === cityCode)
+          const region = regions.find((c) => c.slug === cityCode)
+          updatedState.countryId = country.id
+          if (city) {
+            // @ts-ignore
+            updatedState.searchBy = 'countryAndCity'
+            updatedState.cityId = toString(city.id)
+          }
+          if (region) {
+            // @ts-ignore
+            updatedState.searchBy = 'countryAndRegion'
+            updatedState.regionId = toString(region.id)
+          }
+        }
+      } else {
+        delete updatedState.searchBy
+      }
+    }
+  }
+  return updatedState
 }

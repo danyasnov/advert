@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
+import {useRouter} from 'next/router'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
@@ -14,6 +15,7 @@ import SortSelect from '../SortSelect'
 const ScrollableCardGroup: FC = observer(() => {
   const {products, state, count, page, fetchProducts} = useProductsStore()
   const hasMore = count > page * PAGE_LIMIT
+  const {query} = useRouter()
   const {t} = useTranslation()
   return (
     <div className='flex flex-col m:items-center relative border-t border-shadow-b'>
@@ -23,7 +25,7 @@ const ScrollableCardGroup: FC = observer(() => {
       <InfiniteScroll
         dataLength={products.length}
         next={() => {
-          fetchProducts({page: page + 1, isScroll: true})
+          fetchProducts({page: page + 1, isScroll: true, query})
         }}
         hasMore={hasMore}
         loader={

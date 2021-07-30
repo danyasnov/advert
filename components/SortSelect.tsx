@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import IcSort from 'icons/material/Sort.svg'
+import {useRouter} from 'next/router'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
@@ -21,7 +22,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts} = useProductsStore()
-
+  const {query} = useRouter()
   const [options, setOptions] = useState(
     withIcons([
       {
@@ -56,7 +57,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
       id={id}
       onChange={({value}) => {
         setSortBy(value as string)
-        fetchProducts()
+        fetchProducts({query})
       }}
       value={options.find(({value}) => value === sortBy)}
       options={options}

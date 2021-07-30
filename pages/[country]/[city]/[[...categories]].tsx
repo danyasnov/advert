@@ -1,12 +1,12 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {toString} from 'lodash'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
   findCategoryByQuery,
   getFilterFromQuery,
   getQueryValue,
   processCookies,
+  withLocationQuery,
 } from '../../../helpers'
 import {
   fetchCategories,
@@ -18,7 +18,10 @@ import {fetchCountries} from '../../../api/v1'
 import ProductLayout from '../../../components/Layouts/ProductLayout'
 import {defaultFilter} from '../../../utils'
 import {Filter} from '../../../types'
-import {fetchCitiesByCountryCode} from '../../../api/db'
+import {
+  fetchCitiesByCountryCode,
+  fetchRegionsByCountryCode,
+} from '../../../api/db'
 
 export default function Home({isProduct}) {
   return isProduct ? <ProductLayout /> : <CategoriesLayout />
@@ -26,37 +29,13 @@ export default function Home({isProduct}) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query, resolvedUrl} = ctx
-  const state = await processCookies(ctx)
+  let state = await processCookies(ctx)
   const countryCode = getQueryValue(query, 'country')
-  const cityCode = getQueryValue(query, 'city')
-  const countriesData = await fetchCountries(state.language)
+  const countries = (await fetchCountries(state.language)) ?? null
+  const cities = await fetchCitiesByCountryCode(countryCode, state.language)
+  const regions = await fetchRegionsByCountryCode(countryCode, state.language)
+  state = await withLocationQuery(state, query, {countries, cities, regions})
 
-  if (countryCode) {
-    if (countryCode === 'all') {
-      delete state.searchBy
-    } else {
-      const country = countriesData.find((c) => c.isoCode === countryCode)
-      if (country) {
-        if (cityCode === 'all') {
-          // @ts-ignore
-          state.searchBy = 'onlyCountry'
-          state.countryId = country.id
-        } else {
-          const cities = await fetchCitiesByCountryCode(
-            countryCode,
-            state.language,
-          )
-          const city = cities.find((c) => c.slug === cityCode)
-          // @ts-ignore
-          state.searchBy = 'countryAndCity'
-          state.countryId = country.id
-          state.cityId = toString(city.id)
-        }
-      } else {
-        delete state.searchBy
-      }
-    }
-  }
   let categories
   try {
     const response = await fetchCategories(state.language)
@@ -86,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } else {
     currentCategory = findCategoryByQuery(query.categories, categories)
     categoryData =
-      (await fetchCategoryData(state, currentCategory.id))?.result ?? null
+      (await fetchCategoryData(state, currentCategory?.id))?.result ?? null
   }
 
   const promises: Promise<any>[] = []
@@ -139,7 +118,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     categoriesStore.categoryData = categoryData
   }
 
-  const countries = countriesData ?? null
   return {
     props: {
       isProduct: !!product,
