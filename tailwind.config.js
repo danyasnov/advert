@@ -127,6 +127,8 @@ module.exports = {
       fontWeight: ['first'],
       borderRadius: ['first', 'last'],
       borderWidth: ['first', 'last'],
+      ringWidth: ['focus-visible'],
+      ringColor: ['focus-visible'],
     },
   },
   plugins: [capitalizeFirst, lineClamp],

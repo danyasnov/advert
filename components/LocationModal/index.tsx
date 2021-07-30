@@ -32,7 +32,7 @@ const LocationModal: FC<Props> = ({isOpen, onClose}) => {
       shouldCloseOnOverlayClick
       ariaHideApp={false}
       contentLabel='Location Modal'
-      className='absolute rounded-6 w-480px h-680px bg-white-a inset-x-0 mx-auto top-24 flex'
+      className='absolute rounded-6 w-480px h-680px bg-white-a inset-x-0 mx-auto top-24 flex outline-none'
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto'>
       <div className='flex flex-col w-full'>
         <div className='px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>

@@ -4,11 +4,11 @@
 
 @layer base {
     button {
-        @apply focus:outline-brand-a1
+        @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
     }
 
     input {
-        @apply focus:outline-brand-a1
+        @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
     }
 }
 
