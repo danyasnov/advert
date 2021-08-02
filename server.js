@@ -25,6 +25,13 @@ const getDomain = (host) => {
   return host
 }
 
+const getProtocol = (host) => {
+  if (host.includes('localhost')) {
+    return 'http'
+  }
+  return 'https'
+}
+
 app.prepare().then(() => {
   const server = express()
 
@@ -50,14 +57,16 @@ app.prepare().then(() => {
         req.locale = language
 
         if (!host.startsWith(language)) {
-          res.redirect(`http://${language}.${getDomain(host)}${pathname}`)
+          res.redirect(
+            `${getProtocol(host)}://${language}.${getDomain(host)}${pathname}`,
+          )
           return res.end()
         }
       } else {
         language = 'en'
         req.locale = language
         if (!host.startsWith(getDomain(host))) {
-          res.redirect(`http://${getDomain(host)}${pathname}`)
+          res.redirect(`${getProtocol(host)}://${getDomain(host)}${pathname}`)
           return res.end()
         }
       }
@@ -65,14 +74,18 @@ app.prepare().then(() => {
       cookies.language !== 'en' &&
       !host.startsWith(cookies.language)
     ) {
-      res.redirect(`http://${cookies.language}.${getDomain(host)}${pathname}`)
+      res.redirect(
+        `${getProtocol(host)}://${cookies.language}.${getDomain(
+          host,
+        )}${pathname}`,
+      )
       return res.end()
     } else if (
       cookies.language === 'en' &&
       !host.startsWith('localhost') &&
       !host.startsWith('fpreprod')
     ) {
-      res.redirect(`http://${getDomain(host)}${pathname}`)
+      res.redirect(`${getProtocol(host)}://${getDomain(host)}${pathname}`)
       return res.end()
     }
     return handle(req, res)
