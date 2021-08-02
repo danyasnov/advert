@@ -85,6 +85,7 @@ const Select: FC<Props> = ({
       closeMenuOnSelect={false}
       styles={{...defaultStyles, ...propsStyles}}
       isOptionDisabled={(option) => option.disabled}
+      className='react-select'
       components={{
         MenuList,
         ...(components || {}),

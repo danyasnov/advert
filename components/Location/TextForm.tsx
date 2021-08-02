@@ -198,7 +198,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
 
   return (
     <div className='flex flex-col justify-between h-full'>
-      <div className='pt-3 px-6'>
+      <div className='pt-3 px-4 s:px-6'>
         <div className='space-y-3'>
           <Select
             value={country}
@@ -257,7 +257,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           })}
         </div>
       </div>
-      <div className='flex w-full border-t border-shadow-b mb-6 pt-4 justify-end'>
+      <div className='flex w-full border-t border-shadow-b mb-6 pt-4 justify-between s:justify-end px-4 s:px-6'>
         <SecondaryButton
           onClick={() => {
             setCountry(null)
@@ -268,10 +268,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           }}>
           {t('CLEAN')}
         </SecondaryButton>
-        <PrimaryButton
-          onClick={onSubmit}
-          className='ml-4 mr-6'
-          disabled={!country}>
+        <PrimaryButton onClick={onSubmit} className='ml-4' disabled={!country}>
           {t('APPLY')}
         </PrimaryButton>
       </div>

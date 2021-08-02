@@ -131,8 +131,8 @@ const MapForm: FC<Props> = ({onClose}) => {
 
   return (
     <div className='flex flex-col justify-between h-full'>
-      <div className='pt-4 px-6'>
-        <div style={{height: '288px', width: '432px'}} className='my-4'>
+      <div className='pt-4 px-4 s:px-6'>
+        <div style={{height: '288px'}} className='my-4 -mx-4 s:-mx-0'>
           {location && (
             <GoogleMapReact
               bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
@@ -193,7 +193,7 @@ const MapForm: FC<Props> = ({onClose}) => {
           {t('LOCATION_BY_MAP_TIP')}
         </p>
       </div>
-      <div className='flex w-full border-t border-shadow-b mb-6 pt-4 justify-end'>
+      <div className='flex justify-between px-4 s:px-6 w-full border-t border-shadow-b mt-6 s:mt-0 mb-6 pt-4 s:justify-end'>
         <SecondaryButton
           onClick={() => {
             setLocation(initialLocation.current)
@@ -204,7 +204,7 @@ const MapForm: FC<Props> = ({onClose}) => {
           }}>
           {t('CLEAN')}
         </SecondaryButton>
-        <PrimaryButton onClick={onSubmit} className='ml-4 mr-6'>
+        <PrimaryButton onClick={onSubmit} className='ml-4'>
           {t('APPLY')}
         </PrimaryButton>
       </div>
