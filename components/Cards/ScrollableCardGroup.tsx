@@ -10,7 +10,6 @@ import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
-import SortSelect from '../SortSelect'
 
 const ScrollableCardGroup: FC = observer(() => {
   const {products, state, count, page, fetchProducts} = useProductsStore()
@@ -18,10 +17,7 @@ const ScrollableCardGroup: FC = observer(() => {
   const {query} = useRouter()
   const {t} = useTranslation()
   return (
-    <div className='flex flex-col m:items-center relative border-t border-shadow-b'>
-      <div className='s:hidden w-48 my-6'>
-        <SortSelect id='mobile-sort' />
-      </div>
+    <div className='flex flex-col m:items-center relative'>
       <InfiniteScroll
         dataLength={products.length}
         next={() => {

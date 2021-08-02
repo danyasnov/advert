@@ -4,10 +4,16 @@ import {useTranslation} from 'next-i18next'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
-import RecommendedProducts from '../Cards/RecommendedProducts'
-import {useProductsStore} from '../../providers/RootStoreProvider'
+import {
+  useGeneralStore,
+  useProductsStore,
+} from '../../providers/RootStoreProvider'
+import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
+import LinkWrapper from '../Buttons/LinkWrapper'
+import TitleWithSeparator from '../TitleWithSeparator'
 
 const MainLayout: FC = observer(() => {
+  const {locationCodes} = useGeneralStore()
   const {freeProducts, discountedProducts} = useProductsStore()
   const {t} = useTranslation()
 
@@ -22,7 +28,15 @@ const MainLayout: FC = observer(() => {
               title={t('DISCOUNTED_GOODS')}
             />
             <ProductsSlider products={freeProducts} title={t('FREE')} />
-            <RecommendedProducts />
+            <div>
+              <TitleWithSeparator
+                title={t('RECOMMENDATIONS_FOR_YOU')}
+                rightContent={
+                  <LinkWrapper href={locationCodes}>{t('SEE_ALL')}</LinkWrapper>
+                }
+              />
+              <ScrollableCardGroup />
+            </div>
           </main>
           <aside
             className='hidden m:block bg-white'

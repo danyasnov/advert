@@ -22,10 +22,13 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
-  const header =
-    categoryData?.name || t('SEARCH_RESULTS_BY_QUERY', {query: search})
+  let header = ''
+  if (categoryData?.name) {
+    header = categoryData?.name
+  } else if (search) {
+    header = t('SEARCH_RESULTS_BY_QUERY', {query: search})
+  }
   const {setFooterVisibility} = useGeneralStore()
-  if (!header) return null
   return (
     <div className='flex justify-between pb-4 mt-4 items-center'>
       <div>

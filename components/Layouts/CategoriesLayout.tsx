@@ -4,6 +4,7 @@ import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import CategoryHeader from '../CategoryHeader'
 import FilterForm from '../CategoryFilter/FilterForm'
+import SortSelect from '../SortSelect'
 
 const CategoriesLayout: FC = () => {
   const [showFilter, setShowFilter] = useState(false)
@@ -17,7 +18,14 @@ const CategoriesLayout: FC = () => {
               setShowFilter={setShowFilter}
               showFilter={showFilter}
             />
-            {!showFilter && <ScrollableCardGroup />}
+            {!showFilter && (
+              <div className='border-t border-shadow-b'>
+                <div className='s:hidden w-48 my-6'>
+                  <SortSelect id='mobile-sort' />
+                </div>
+                <ScrollableCardGroup />
+              </div>
+            )}
             <div
               className={`${
                 showFilter ? 'flex' : 'hidden'

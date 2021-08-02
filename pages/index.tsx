@@ -30,9 +30,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
   const categories = categoriesData?.result ?? null
-  const products = productsResponse?.result?.data ?? null
-  const freeProducts = freeProductsResponse?.result?.data ?? null
-  const discountedProducts = discountedProductsResponse?.result?.data ?? null
+  const productsStore = {
+    freeProducts: freeProductsResponse?.result?.data ?? null,
+    discountedProducts: discountedProductsResponse?.result?.data ?? null,
+
+    products: productsResponse?.result?.data ?? null,
+    count: productsResponse?.headers?.pagination.count,
+    page: productsResponse?.headers?.pagination.page,
+    limit: productsResponse?.headers?.pagination.limit,
+    cacheId: productsResponse?.headers?.cacheId,
+  }
   const countries = countriesData ?? null
   return {
     props: {
@@ -40,11 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         categoriesStore: {
           categories,
         },
-        productsStore: {
-          products,
-          freeProducts,
-          discountedProducts,
-        },
+        productsStore,
         countriesStore: {
           countries,
         },

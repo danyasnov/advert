@@ -81,9 +81,11 @@ const Card: FC<Props> = ({
           </div>
         )}
         <div className='absolute inset-x-0 bottom-0 pb-2 px-2'>
-          <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
-            {location.distance}
-          </span>
+          {location.distance && (
+            <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
+              {location.distance}
+            </span>
+          )}
         </div>
       </div>
       <div

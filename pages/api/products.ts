@@ -11,11 +11,13 @@ export default async (
   const {body} = req
   const {filter, page, advHash, limit, cacheId, query} = body
   let state = await processCookies({req})
-  const countryCode = getQueryValue(query, 'country')
-  const countries = (await fetchCountries(state.language)) ?? null
-  const cities = await fetchCitiesByCountryCode(countryCode, state.language)
-  const regions = await fetchRegionsByCountryCode(countryCode, state.language)
-  state = await withLocationQuery(state, query, {countries, cities, regions})
+  if (query) {
+    const countryCode = getQueryValue(query, 'country')
+    const countries = (await fetchCountries(state.language)) ?? null
+    const cities = await fetchCitiesByCountryCode(countryCode, state.language)
+    const regions = await fetchRegionsByCountryCode(countryCode, state.language)
+    state = await withLocationQuery(state, query, {countries, cities, regions})
+  }
 
   return fetchProducts(state, {filter, page, advHash, limit, cacheId})
     .then((response) => {
