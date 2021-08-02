@@ -17,7 +17,7 @@ const Card: FC<Props> = ({
   setLockParentScroll,
   variant = 'default',
 }) => {
-  const {title, images, price, oldPrice, dateUpdated, views} = product
+  const {title, images, price, oldPrice, dateUpdated, views, location} = product
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const [viewportRef, embla] = useEmblaCarousel({
@@ -73,13 +73,18 @@ const Card: FC<Props> = ({
             {images.map((i, index) => (
               <div
                 key={i}
-                className={`w-full h-1 ${
+                className={`w-4 h-0.5 ${
                   currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
                 }`}
               />
             ))}
           </div>
         )}
+        <div className='absolute inset-x-0 bottom-0 pb-2 px-2'>
+          <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
+            {location.distance}
+          </span>
+        </div>
       </div>
       <div
         className={`p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 ${
