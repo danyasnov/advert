@@ -20,8 +20,14 @@ export const getFirstNonEmptyArray = <T extends unknown>(
   return null
 }
 
-export const clearQueryFromUrl = (value: string): string => {
+export const clearUrlFromQuery = (value: string): string => {
   return value.split('?')[0]
+}
+
+export const setSortToUrl = (value: string, sortBy: string): string => {
+  const params = new URLSearchParams(value.split('?')[1])
+  params.set('sortBy', sortBy)
+  return `${value.split('?')[0]}?${params}`
 }
 
 export const clearFalsyValues = (

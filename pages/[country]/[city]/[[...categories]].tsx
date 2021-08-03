@@ -31,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query, resolvedUrl} = ctx
   let state = await processCookies(ctx)
   const countryCode = getQueryValue(query, 'country')
+  const sortBy = getQueryValue(query, 'sortBy')
   const countries = (await fetchCountries(state.language)) ?? null
   const cities = await fetchCitiesByCountryCode(countryCode, state.language)
   const regions = await fetchRegionsByCountryCode(countryCode, state.language)
@@ -113,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       cacheId: productsResponse?.headers?.cacheId,
       // @ts-ignore
       aggregatedFields: productsResponse?.result?.aggregatedFields,
+      ...(sortBy ? {sortBy} : {}),
     }
     // @ts-ignore
     categoriesStore.categoryData = categoryData

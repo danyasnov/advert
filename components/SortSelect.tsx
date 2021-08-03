@@ -7,6 +7,7 @@ import {useRouter} from 'next/router'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
+import {setSortToUrl} from '../utils'
 
 const withIcons = (options) => {
   return options.map((o) => ({
@@ -20,9 +21,9 @@ const withIcons = (options) => {
 }
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
+  const {query, push, asPath} = useRouter()
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts} = useProductsStore()
-  const {query} = useRouter()
   const [options, setOptions] = useState(
     withIcons([
       {
@@ -43,7 +44,14 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     ]),
   )
   useEffect(() => {
-    if (state.searchBy !== 'coords') {
+    const countryCode = state.countryCode || 'all'
+    const regionOrCityCode = state.regionOrCityCode || 'all'
+    if (
+      state.searchBy !== 'coords'
+      // &&
+      // countryCode !== getQueryValue(query, 'countryCode') &&
+      // regionOrCityCode !== getQueryValue(query, 'city')
+    ) {
       setOptions(
         options.filter(
           (o) => !['distance-asc', 'distance-desc'].includes(o.value),
@@ -57,6 +65,9 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
       id={id}
       onChange={({value}) => {
         setSortBy(value as string)
+        push(setSortToUrl(asPath, value as string), null, {
+          shallow: true,
+        })
         fetchProducts({query})
       }}
       value={options.find(({value}) => value === sortBy)}

@@ -77,7 +77,7 @@ export const getLocationQuery = (
 ): {city: string; country: string} => {
   const {city, region, country} = addressObj
   return {
-    city: city?.word || region?.word || 'all',
+    city: city?.slug || region?.slug || 'all',
     country: country?.code || 'all',
   }
 }
@@ -356,6 +356,7 @@ export const getFilterFromQuery = (
     'onlyWithPhoto',
     'priceMax',
     'priceMin',
+    'sortBy',
   ]
 
   const baseFilter = pick(query, baseFields)
@@ -415,6 +416,7 @@ export const getFormikInitialFromQuery = (
     'onlyWithPhoto',
     'priceMax',
     'priceMin',
+    'sortBy',
   ]
 
   const baseFilter = pick(query, baseFields)
@@ -427,7 +429,7 @@ export const getFormikInitialFromQuery = (
     ...(baseFilter.priceMax ? {priceMax: toNumber(baseFilter.priceMax)} : {}),
     ...(baseFilter.priceMin ? {priceMin: toNumber(baseFilter.priceMin)} : {}),
   }
-  const fieldsFilter = omit(query, [...baseFields, ...excludedFields])
+  const fieldsFilter = omit(query, [...baseFields, ...excludedFields, 'sortBy'])
   const result = {...baseFilter, priceRange}
   delete result.priceMin
   delete result.priceMax
@@ -494,35 +496,48 @@ export const withLocationQuery = async (
   const updatedState = state
   const countryCode = getQueryValue(query, 'country')
   const cityCode = getQueryValue(query, 'city')
-  if (countryCode) {
-    if (countryCode === 'all') {
-      delete updatedState.searchBy
-    } else {
-      const country = countries.find((c) => c.isoCode === countryCode)
-      if (country) {
-        if (cityCode === 'all') {
-          // @ts-ignore
-          updatedState.searchBy = 'onlyCountry'
-          updatedState.countryId = country.id
-        } else {
-          const city = cities.find((c) => c.slug === cityCode)
-          const region = regions.find((c) => c.slug === cityCode)
-          updatedState.countryId = country.id
-          if (city) {
-            // @ts-ignore
-            updatedState.searchBy = 'countryAndCity'
-            updatedState.cityId = toString(city.id)
-          }
-          if (region) {
-            // @ts-ignore
-            updatedState.searchBy = 'countryAndRegion'
-            updatedState.regionId = toString(region.id)
-          }
-        }
-      } else {
-        delete updatedState.searchBy
-      }
+  const country =
+    countryCode && countryCode !== 'all'
+      ? countries.find((c) => c.isoCode === countryCode)
+      : null
+  let region = null
+  let city = null
+  if (country && cityCode !== 'all') {
+    region = regions.find((c) => c.slug === cityCode)
+    if (!region) {
+      city = cities.find((c) => c.slug === cityCode)
     }
+  }
+
+  if (country?.isoCode === state.countryCode && state.searchBy === 'coords') {
+    if (state.regionOrCityCode && cityCode !== 'all') {
+      if (
+        state.regionOrCityCode === region?.slug ||
+        state.regionOrCityCode === city?.slug
+      ) {
+        return updatedState
+      }
+    } else if (!state.regionOrCityCode && cityCode === 'all') {
+      return updatedState
+    }
+  }
+
+  if (country) {
+    if (city) {
+      // @ts-ignore
+      updatedState.searchBy = 'countryAndCity'
+      updatedState.cityId = toString(city.id)
+    } else if (region) {
+      // @ts-ignore
+      updatedState.searchBy = 'countryAndRegion'
+      updatedState.regionId = toString(region.id)
+    } else {
+      // @ts-ignore
+      updatedState.searchBy = 'onlyCountry'
+      updatedState.countryId = country.id
+    }
+  } else {
+    delete updatedState.searchBy
   }
   return updatedState
 }

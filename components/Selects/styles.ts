@@ -26,6 +26,7 @@ export const defaultStyles = {
         backgroundColor: '#FFEEDD',
       },
       display: 'flex',
+      alignItems: 'center',
       ...(isDisabled
         ? {'&:hover': {}, color: 'hsl(0, 0%, 80%)', backgroundColor: '#FFFFFF'}
         : {}),

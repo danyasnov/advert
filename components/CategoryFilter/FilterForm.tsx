@@ -24,7 +24,7 @@ import {
   getFormikInitialFromQuery,
 } from '../../helpers'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {clearQueryFromUrl} from '../../utils'
+import {clearUrlFromQuery} from '../../utils'
 
 interface Values {
   condition: SelectItem
@@ -172,7 +172,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         const updatedFilter = setFilter(filter)
 
         router.push(
-          `${clearQueryFromUrl(router.asPath)}?${getUrlQueryFromFilter(
+          `${clearUrlFromQuery(router.asPath)}?${getUrlQueryFromFilter(
             updatedFilter,
             categoryDataFieldsById,
           )}`,
@@ -196,10 +196,10 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                   if (opt?.value) setFilter({categoryId: opt.value as number})
                   if (currentCategory.items.length) {
                     router.push(
-                      `${clearQueryFromUrl(router.asPath)}/${opt.slug}`,
+                      `${clearUrlFromQuery(router.asPath)}/${opt.slug}`,
                     )
                   } else {
-                    const pathArray = clearQueryFromUrl(router.asPath).split(
+                    const pathArray = clearUrlFromQuery(router.asPath).split(
                       '/',
                     )
                     pathArray[pathArray.length - 1] = opt.slug
@@ -260,7 +260,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues(true)})
-                router.push(`${clearQueryFromUrl(router.asPath)}`, null, {
+                router.push(clearUrlFromQuery(router.asPath), null, {
                   shallow: true,
                 })
                 resetFilter()

@@ -20,6 +20,7 @@ export interface IProductsHydration {
   limit: number
   count: number
   cacheId: string
+  sortBy: string
   aggregatedFields: CACategoryDataFieldModel[]
 }
 
@@ -179,5 +180,6 @@ export class ProductsStore implements IProductsStore {
     this.count = data?.count ?? 0
     this.cacheId = data?.cacheId ?? undefined
     this.aggregatedFields = data?.aggregatedFields ?? []
+    this.sortBy = data?.sortBy ?? 'date_updated-asc'
   }
 }
