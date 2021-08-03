@@ -115,6 +115,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       // @ts-ignore
       aggregatedFields: productsResponse?.result?.aggregatedFields,
       ...(sortBy ? {sortBy} : {}),
+      // @ts-ignore
+      hideDistanceSort: state.modified || false,
     }
     // @ts-ignore
     categoriesStore.categoryData = categoryData

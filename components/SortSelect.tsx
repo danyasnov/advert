@@ -23,7 +23,8 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query, push, asPath} = useRouter()
   const state: SerializedCookiesState = parseCookies()
-  const {sortBy, setSortBy, fetchProducts} = useProductsStore()
+  const {sortBy, setSortBy, fetchProducts, hideDistanceSort} =
+    useProductsStore()
   const [options, setOptions] = useState(
     withIcons([
       {
@@ -44,14 +45,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     ]),
   )
   useEffect(() => {
-    const countryCode = state.countryCode || 'all'
-    const regionOrCityCode = state.regionOrCityCode || 'all'
-    if (
-      state.searchBy !== 'coords'
-      // &&
-      // countryCode !== getQueryValue(query, 'countryCode') &&
-      // regionOrCityCode !== getQueryValue(query, 'city')
-    ) {
+    if (state.searchBy !== 'coords' || hideDistanceSort) {
       setOptions(
         options.filter(
           (o) => !['distance-asc', 'distance-desc'].includes(o.value),

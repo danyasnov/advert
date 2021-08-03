@@ -539,5 +539,7 @@ export const withLocationQuery = async (
   } else {
     delete updatedState.searchBy
   }
+  // @ts-ignore
+  updatedState.modified = true
   return updatedState
 }
