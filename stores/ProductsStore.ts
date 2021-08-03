@@ -20,7 +20,6 @@ export interface IProductsHydration {
   limit: number
   count: number
   cacheId: string
-  sortBy: string
   aggregatedFields: CACategoryDataFieldModel[]
   hideDistanceSort: boolean
 }
@@ -82,7 +81,7 @@ export class ProductsStore implements IProductsStore {
 
   filter: Partial<Filter> = {}
 
-  sortBy = 'date_updated-asc'
+  sortBy
 
   hideDistanceSort = false
 
@@ -107,7 +106,6 @@ export class ProductsStore implements IProductsStore {
       onlyFromSubscribed: false,
       fields: {},
     }
-    this.sortBy = 'date_updated-asc'
   }
 
   fetchProducts = (opts?: Partial<FetchOptions>): Promise<void> => {
@@ -185,6 +183,5 @@ export class ProductsStore implements IProductsStore {
     this.cacheId = data?.cacheId ?? undefined
     this.hideDistanceSort = data?.hideDistanceSort ?? false
     this.aggregatedFields = data?.aggregatedFields ?? []
-    this.sortBy = data?.sortBy ?? 'date_updated-asc'
   }
 }

@@ -82,6 +82,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (query.q) {
       filter.search = getQueryValue(query, 'q')
     }
+    if (sortBy) {
+      const [key, direction] = sortBy.split('-')
+      filter.sort = {key, direction}
+    }
     promises.push(fetchProducts(state, {filter}))
   }
 
@@ -114,7 +118,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       cacheId: productsResponse?.headers?.cacheId,
       // @ts-ignore
       aggregatedFields: productsResponse?.result?.aggregatedFields,
-      ...(sortBy ? {sortBy} : {}),
       // @ts-ignore
       hideDistanceSort: state.modified || false,
     }

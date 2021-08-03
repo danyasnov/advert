@@ -8,6 +8,7 @@ import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {setSortToUrl} from '../utils'
+import {getQueryValue} from '../helpers'
 
 const withIcons = (options) => {
   return options.map((o) => ({
@@ -25,6 +26,8 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts, hideDistanceSort} =
     useProductsStore()
+  const sortByQuery = getQueryValue(query, 'sortBy')
+
   const [options, setOptions] = useState(
     withIcons([
       {
@@ -54,6 +57,13 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    if (!sortBy) {
+      setSortBy(sortByQuery || 'date_updated-asc')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortByQuery])
+
   return (
     <LinkSelect
       id={id}

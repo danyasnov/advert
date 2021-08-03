@@ -49,6 +49,7 @@ export interface Filter {
   onlyDiscounted: boolean
   onlyFromSubscribed: boolean
   search: string
+  sort: {key: string; direction: string}
   fields: Record<string, unknown>
 }
 
