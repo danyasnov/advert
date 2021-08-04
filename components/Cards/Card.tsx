@@ -21,6 +21,7 @@ const Card: FC<Props> = ({
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const [viewportRef, embla] = useEmblaCarousel({
+    loop: true,
     align: 'start',
     containScroll: 'trimSnaps',
     draggable: images.length > 1,

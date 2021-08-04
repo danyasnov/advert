@@ -14,6 +14,7 @@ const ProductPhotos: FC = observer(() => {
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
   const [viewportRef, embla] = useEmblaCarousel({
+    loop: true,
     align: 'start',
     containScroll: 'trimSnaps',
     draggable: product.advert.images.length > 1,
