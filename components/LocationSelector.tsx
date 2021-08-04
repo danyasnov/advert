@@ -35,7 +35,12 @@ const LocationSelector: FC<Props> = ({
           )}
         </div>
         <div className='flex'>
-          <LinkWrapper href={showAllLink}>{t('SHOW_ALL_ADVERTS')}</LinkWrapper>
+          <LinkWrapper
+            title={t('SHOW_ALL_ADVERTS')}
+            className='text-body-2'
+            href={showAllLink}>
+            {t('SHOW_ALL_ADVERTS')}
+          </LinkWrapper>
         </div>
       </div>
       <div className='flex flex-wrap'>
@@ -46,7 +51,11 @@ const LocationSelector: FC<Props> = ({
             </div>
             <div className='pl-4'>
               {values.map((c) => (
-                <LinkWrapper href={c.href} key={c.id}>
+                <LinkWrapper
+                  title={c.title || c.value || c.word}
+                  className='text-body-2'
+                  href={c.href}
+                  key={c.id}>
                   <Button onClick={() => onSelect(c)} className='text-left'>
                     {c.title || c.value || c.word}
                   </Button>

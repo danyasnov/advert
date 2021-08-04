@@ -2,9 +2,9 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
-import Link from 'next/link'
 import {CACategoryModel} from 'front-api'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const Breadcrumbs: FC = observer(() => {
   const {query} = useRouter()
@@ -52,10 +52,13 @@ const Breadcrumbs: FC = observer(() => {
             {b.title}
           </span>
         ) : (
-          <Link href={b.href} passHref key={b.title}>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a className='text-brand-b1'>{b.title}</a>
-          </Link>
+          <LinkWrapper
+            title={b.title}
+            href={b.href}
+            key={b.title}
+            className='text-body-2'>
+            {b.title}
+          </LinkWrapper>
         )
         return index === 0
           ? [link]

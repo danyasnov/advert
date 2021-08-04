@@ -49,6 +49,7 @@ class ColItem extends PureComponent<ColItemProps> {
     const {name} = category
     return (
       <LinkWrapper
+        title={name}
         className={`${
           isActive ? 'bg-brand-a2' : ''
         } categories-selector-item text-black-b first:text-brand-b1 first:border-b`}

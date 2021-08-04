@@ -32,7 +32,12 @@ const MainLayout: FC = observer(() => {
               <TitleWithSeparator
                 title={t('RECOMMENDATIONS_FOR_YOU')}
                 rightContent={
-                  <LinkWrapper href={locationCodes}>{t('SEE_ALL')}</LinkWrapper>
+                  <LinkWrapper
+                    title={t('SEE_ALL')}
+                    className='text-body-3'
+                    href={locationCodes}>
+                    {t('SEE_ALL')}
+                  </LinkWrapper>
                 }
               />
               <ScrollableCardGroup />

@@ -39,6 +39,7 @@ const CategoriesMobileSelector: FC = observer(() => {
             {t('BACK')}
           </Button>
           <LinkWrapper
+            title={t('SHOW_ALL_ADVERTS')}
             href={`/${locationCodes}/${getSlugs(history)}`}
             className='text-brand-b1 categories-selector-item'>
             {t('SHOW_ALL_ADVERTS')}

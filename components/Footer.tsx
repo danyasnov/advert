@@ -17,7 +17,7 @@ import {
   useCountriesStore,
   useGeneralStore,
 } from '../providers/RootStoreProvider'
-import {notImplementedAlert, setCookiesObject} from '../helpers'
+import {notImplementedAlert} from '../helpers'
 import LinkButton from './Buttons/LinkButton'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LocationSelector from './LocationSelector'
@@ -149,6 +149,8 @@ const Footer: FC = observer(() => {
               <div className='grid grid-cols-2 grid-rows-6 grid-flow-col place-items-start gap-y-2'>
                 {ids.map((id) => (
                   <LinkWrapper
+                    title={categoriesById[id]?.name}
+                    className='text-body-3'
                     href={`/all/all/${categoriesById[id]?.slug}`}
                     key={id}>
                     {categoriesById[id]?.name}

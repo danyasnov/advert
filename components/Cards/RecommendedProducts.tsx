@@ -13,7 +13,11 @@ const RecommendedProducts: FC = observer(() => {
     <div>
       <TitleWithSeparator
         title={t('RECOMMENDATIONS_FOR_YOU')}
-        rightContent={<LinkWrapper href='/all/all'>{t('SEE_ALL')}</LinkWrapper>}
+        rightContent={
+          <LinkWrapper title={t('SEE_ALL')} href='/all/all'>
+            {t('SEE_ALL')}
+          </LinkWrapper>
+        }
       />
       <div className='flex mx-4 s:mx-8 m:mx-0'>
         <div className='flex flex-wrap -mx-1 s:-mx-2'>

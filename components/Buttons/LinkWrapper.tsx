@@ -5,6 +5,7 @@ interface Props {
   href: string
   children: ReactNode
   className?: string
+  title: string
   target?: '_self' | '_blank'
 }
 
@@ -12,6 +13,7 @@ const LinkWrapper: FC<Props> = ({
   href,
   children,
   className,
+  title,
   target = '_self',
 }) => {
   return (
@@ -19,7 +21,8 @@ const LinkWrapper: FC<Props> = ({
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         target={target}
-        className={`capitalize-first text-body-3 text-brand-b1
+        title={title}
+        className={`capitalize-first text-brand-b1
       ${className || ''}`}>
         {children}
       </a>

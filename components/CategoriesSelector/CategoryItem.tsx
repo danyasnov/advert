@@ -33,7 +33,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       {elBody}
     </Button>
   ) : (
-    <LinkWrapper className={className} key={id} href={href}>
+    <LinkWrapper title={name} className={className} key={id} href={href}>
       {elBody}
     </LinkWrapper>
   )

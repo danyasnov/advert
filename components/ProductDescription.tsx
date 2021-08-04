@@ -87,30 +87,35 @@ const ProductDescription: FC = observer(() => {
         <div className='flex space-x-2 mt-4 mb-2'>
           <LinkWrapper
             target='_blank'
+            title='Telegram'
             href={`https://telegram.me/share/url?url=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcTelegram className='fill-current text-black-c h-6 w-6 ' />
           </LinkWrapper>
           <LinkWrapper
             target='_blank'
+            title='Facebook'
             href={`https://www.facebook.com/sharer.php?u=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcFacebook className='fill-current text-black-c h-6 w-6 ' />
           </LinkWrapper>
           <LinkWrapper
             target='_blank'
+            title='Viber'
             href={`viber://forward?text=250+Benz+CLA+${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcViber className='fill-current text-black-c h-6 w-6 ' />
           </LinkWrapper>
           <LinkWrapper
             target='_blank'
+            title='Whatsapp'
             href={`whatsapp://send?text=250+Benz+CLA ${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcWhatsapp className='fill-current text-black-c h-6 w-6 ' />
           </LinkWrapper>
           <LinkWrapper
             target='_blank'
+            title='VK'
             href={`https://vk.com/share.php?url=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcVk className='fill-current text-black-c h-6 w-6 ' />

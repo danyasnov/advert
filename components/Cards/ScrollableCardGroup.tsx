@@ -39,6 +39,7 @@ const ScrollableCardGroup: FC = observer(() => {
           ) : (
             products.map((p) => (
               <LinkWrapper
+                title={p.title}
                 href={p.url}
                 key={p.hash}
                 target='_blank'
