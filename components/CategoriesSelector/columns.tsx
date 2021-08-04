@@ -11,15 +11,13 @@ interface ColItemProps {
   isActive: boolean
   onMouseEnter?: (c: CACategoryModel) => void
   href: string
-  activeCategory?: CACategoryModel
 }
 
 interface ColProps {
   items: Array<CACategoryModel>
   onMouseEnter?: (c: CACategoryModel) => void
   activeId?: number | undefined
-  activeCategory: CACategoryModel
-  secondActiveCategory?: CACategoryModel
+  urlPath: string
 }
 
 // @ts-ignore
@@ -40,38 +38,12 @@ class FirstColItem extends PureComponent<ColItemProps> {
 }
 
 // @ts-ignore
-@target()
-class SecondCol extends PureComponent<ColProps> {
-  render(): ReactNode {
-    const {items, onMouseEnter, activeId, activeCategory} = this.props
-    return (
-      <div className='h-full'>
-        {items.map((c) => {
-          return (
-            <SecondColItem
-              key={c.id}
-              href={`/${getLocationCodes()}/${activeCategory.slug}/${
-                c.slug || ''
-              }`}
-              activeCategory={activeCategory}
-              isActive={c.id === activeId}
-              category={c}
-              onMouseEnter={onMouseEnter}
-            />
-          )
-        })}
-      </div>
-    )
-  }
-}
-
-// @ts-ignore
 @source({
   mouseEnter: (props) => {
     props.onMouseEnter(props.category)
   },
 })
-class SecondColItem extends PureComponent<ColItemProps> {
+class ColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
     const {category, isActive, href} = this.props
     const {name} = category
@@ -89,24 +61,25 @@ class SecondColItem extends PureComponent<ColItemProps> {
 
 // @ts-ignore
 @target()
-class ThirdCol extends PureComponent<ColProps> {
+class Col extends PureComponent<ColProps> {
   render(): ReactNode {
-    const {items, activeCategory, secondActiveCategory} = this.props
+    const {items, onMouseEnter, activeId, urlPath} = this.props
     return (
       <div className='h-full'>
-        {items.map((c) => (
-          <LinkWrapper
-            className='categories-selector-item text-black-b first:text-brand-b1 first:border-b'
-            key={c.id}
-            href={`/${getLocationCodes()}/${activeCategory.slug}/${
-              secondActiveCategory.slug
-            }/${c.slug || ''}`}>
-            {c.name}
-          </LinkWrapper>
-        ))}
+        {items.map((c) => {
+          return (
+            <ColItem
+              key={c.id}
+              href={`/${getLocationCodes()}/${urlPath}/${c.slug || ''}`}
+              isActive={c.id === activeId}
+              category={c}
+              onMouseEnter={onMouseEnter}
+            />
+          )
+        })}
       </div>
     )
   }
 }
 
-export {FirstColItem, SecondCol, ThirdCol}
+export {FirstColItem, Col}

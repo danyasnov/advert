@@ -2,10 +2,11 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
+import {isEmpty} from 'lodash'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
-import {FirstColItem, ThirdCol, SecondCol} from './columns'
-import ImageWrapper from '../ImageWrapper'
+import {FirstColItem, Col} from './columns'
 import {getLocationCodes} from '../../helpers'
+import ImageWrapper from '../ImageWrapper'
 
 const CategoriesDesktopSelector: FC = observer(() => {
   const {t} = useTranslation()
@@ -30,10 +31,17 @@ const CategoriesDesktopSelector: FC = observer(() => {
   const [secondColumnActiveCategory, setSecondColumnActiveCategory] = useState<
     CACategoryModel | undefined
   >()
+  const [thirdColumnActiveCategory, setThirdColumnActiveCategory] = useState<
+    CACategoryModel | undefined
+  >()
+  const [fourthColumnActiveCategory, setFourthColumnActiveCategory] = useState<
+    CACategoryModel | undefined
+  >()
   const [secondLevelItems, setSecondLevelItems] = useState(
     withAllProductsButton(categoriesWithoutAll[0]?.items ?? []),
   )
   const [thirdLevelItems, setThirdLevelItems] = useState([])
+  const [fourthLevelItems, setFourthLevelItems] = useState([])
 
   return (
     <div
@@ -49,44 +57,69 @@ const CategoriesDesktopSelector: FC = observer(() => {
             isActive={activeCategory?.id === c.id}
             onMouseEnter={(cat) => {
               const secondItems = withAllProductsButton(cat.items)
-              const thirdItems = withAllProductsButton(secondItems[0].items)
-              setSecondLevelItems(secondItems)
-              setSecondColumnActiveCategory(secondItems[0])
-              setThirdLevelItems(thirdItems)
               setActiveCategory(cat)
+              setSecondLevelItems(secondItems)
+              setSecondColumnActiveCategory(undefined)
+              setThirdColumnActiveCategory(undefined)
+              setFourthColumnActiveCategory(undefined)
+              setThirdLevelItems([])
+              setFourthLevelItems([])
             }}
           />
         ))}
       </div>
       <div className='pb-4'>
-        <SecondCol
-          activeCategory={activeCategory}
+        <Col
+          urlPath={activeCategory?.slug}
           activeId={secondColumnActiveCategory?.id}
           items={secondLevelItems}
           onMouseEnter={(cat) => {
             setThirdLevelItems(withAllProductsButton(cat.items))
             setSecondColumnActiveCategory(cat)
+            setThirdColumnActiveCategory(undefined)
+            setFourthColumnActiveCategory(undefined)
+            setFourthLevelItems([])
           }}
         />
       </div>
       <div className='pb-4'>
-        <ThirdCol
+        <Col
           items={thirdLevelItems}
-          activeCategory={activeCategory}
-          secondActiveCategory={secondColumnActiveCategory}
+          urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}`}
+          activeId={thirdColumnActiveCategory?.id}
+          onMouseEnter={(cat) => {
+            setFourthLevelItems(withAllProductsButton(cat.items))
+            setThirdColumnActiveCategory(cat)
+            setFourthColumnActiveCategory(undefined)
+          }}
         />
       </div>
-      <div className='hidden m:block'>
-        <div className='pl-12 pt-6 l:pl-6'>
-          <ImageWrapper
-            type={`/img/categories/${activeCategory?.slug}.jpg`}
-            alt={activeCategory?.slug}
-            width={288}
-            height={288}
-            className='rounded-12'
+      {!isEmpty(fourthLevelItems) && (
+        <div className='pb-4'>
+          <Col
+            items={fourthLevelItems}
+            urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}`}
+            activeId={fourthColumnActiveCategory?.id}
+            onMouseEnter={(cat) => {
+              setFourthColumnActiveCategory(cat)
+            }}
           />
         </div>
-      </div>
+      )}
+
+      {isEmpty(fourthLevelItems) && (
+        <div className='hidden m:block'>
+          <div className='pl-12 pt-6 l:pl-6'>
+            <ImageWrapper
+              type={`/img/categories/${activeCategory?.slug}.jpg`}
+              alt={activeCategory?.slug}
+              width={288}
+              height={288}
+              className='rounded-12'
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 })
