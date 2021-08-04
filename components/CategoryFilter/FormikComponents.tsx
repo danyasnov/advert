@@ -51,7 +51,9 @@ export const FormikField: FC<IFormikField> = ({field}) => {
     case 'multiselect': {
       component = FormikSelect
       props.options = [
+        // @ts-ignore
         ...multiselects.top.map(getSelectOptions),
+        // @ts-ignore
         ...multiselects.other.map(getSelectOptions),
       ]
       props.placeholder = name

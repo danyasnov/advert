@@ -379,9 +379,9 @@ export const getFilterFromQuery = (
         switch (currentField.fieldType) {
           case 'select':
           case 'multiselect': {
+            // @ts-ignore
             parsedValue = parsedValue.map(
               (valueId) =>
-                // @ts-ignore
                 currentField.multiselects.find((m) => m.value === valueId)?.id,
             )
             break
