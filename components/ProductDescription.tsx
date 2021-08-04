@@ -19,8 +19,8 @@ import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-import PrimaryButton from './Buttons/PrimaryButton'
 import SecondaryButton from './Buttons/SecondaryButton'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const tabs = [
   {id: 0, title: 'DESCRIPTION'},
@@ -32,7 +32,8 @@ const ProductDescription: FC = observer(() => {
   const [activeTab, setActiveTab] = useState(0)
 
   const {t} = useTranslation()
-
+  const {advert} = product
+  const {shortUrl, favoriteCounter, views, dateUpdated} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
@@ -46,16 +47,16 @@ const ProductDescription: FC = observer(() => {
             onClick={notImplementedAlert}
             className='text-black-b text-body-3'>
             <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
-            {product.advert.favoriteCounter}
+            {favoriteCounter}
           </Button>
           <Button
             onClick={notImplementedAlert}
             className='text-black-b text-body-3'>
             <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
-            {product.advert.views}
+            {views}
           </Button>
           <span suppressHydrationWarning className='text-black-b text-body-3'>
-            {unixToDateTime(product.advert.dateUpdated)}
+            {unixToDateTime(dateUpdated)}
           </span>
         </div>
       </div>
@@ -84,31 +85,36 @@ const ProductDescription: FC = observer(() => {
       </div>
       <div className='flex justify-between flex-col s:flex-row'>
         <div className='flex space-x-2 mt-4 mb-2'>
-          <Button
-            onClick={notImplementedAlert}
+          <LinkWrapper
+            target='_blank'
+            href={`https://telegram.me/share/url?url=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcTelegram className='fill-current text-black-c h-6 w-6 ' />
-          </Button>
-          <Button
-            onClick={notImplementedAlert}
+          </LinkWrapper>
+          <LinkWrapper
+            target='_blank'
+            href={`https://www.facebook.com/sharer.php?u=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcFacebook className='fill-current text-black-c h-6 w-6 ' />
-          </Button>
-          <Button
-            onClick={notImplementedAlert}
+          </LinkWrapper>
+          <LinkWrapper
+            target='_blank'
+            href={`viber://forward?text=250+Benz+CLA+${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcViber className='fill-current text-black-c h-6 w-6 ' />
-          </Button>
-          <Button
-            onClick={notImplementedAlert}
+          </LinkWrapper>
+          <LinkWrapper
+            target='_blank'
+            href={`whatsapp://send?text=250+Benz+CLA ${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcWhatsapp className='fill-current text-black-c h-6 w-6 ' />
-          </Button>
-          <Button
-            onClick={notImplementedAlert}
+          </LinkWrapper>
+          <LinkWrapper
+            target='_blank'
+            href={`https://vk.com/share.php?url=${shortUrl}`}
             className='p-2 border border-shadow-b rounded-lg'>
             <IcVk className='fill-current text-black-c h-6 w-6 ' />
-          </Button>
+          </LinkWrapper>
         </div>
         <div className='flex justify-end mt-4 text-body-2 flex-col s:flex-row s:space-x-4'>
           <SecondaryButton
