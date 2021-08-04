@@ -7,11 +7,13 @@ import {useTranslation} from 'next-i18next'
 import {
   useCategoriesStore,
   useGeneralStore,
+  useProductsStore,
 } from '../providers/RootStoreProvider'
 import SortSelect from './SortSelect'
 import Breadcrumbs from './Breadcrumbs'
 import Button from './Buttons/Button'
 import {getQueryValue} from '../helpers'
+import {clearUrlFromQuery} from '../utils'
 
 interface Props {
   setShowFilter: (show: boolean) => void
@@ -19,7 +21,8 @@ interface Props {
 }
 const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const {categoryData} = useCategoriesStore()
-  const {query} = useRouter()
+  const {resetFilter, fetchProducts} = useProductsStore()
+  const {query, push, asPath} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
   let header = ''
@@ -46,6 +49,13 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
         onClick={() => {
           setShowFilter(!showFilter)
           setFooterVisibility(!!showFilter)
+          if (showFilter) {
+            push(clearUrlFromQuery(asPath), null, {
+              shallow: true,
+            })
+            resetFilter()
+            fetchProducts({query})
+          }
         }}>
         {showFilter ? (
           <IcClear className='fill-current text-black-c h-6 w-6' />

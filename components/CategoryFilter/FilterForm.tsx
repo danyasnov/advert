@@ -250,11 +250,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               component={FormikCheckbox}
               label={t('ONLY_WITH_DISCOUNT')}
             />
-            {/* <Field */}
-            {/*  name='onlyFromSubscribed' */}
-            {/*  component={FormikCheckbox} */}
-            {/*  label={t('SHOW_ADVERTS_FROM_FAVORITE_SELLERS')} */}
-            {/* /> */}
           </div>
           <div className='pt-4 flex justify-center s:justify-between'>
             <SecondaryButton
@@ -266,12 +261,12 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                 resetFilter()
                 fetchProducts({query: router.query})
               }}
-              className='w-full hidden s:block s:w-min py-3 px-3.5 s:w-full'>
+              className='w-full hidden s:block s:w-min py-3 px-3.5 m:w-full'>
               {t('RESET_FILTER')}
             </SecondaryButton>
             <PrimaryButton
               onClick={() => setShowFilter(false)}
-              className='w-full s:w-min py-3 px-3.5 whitespace-nowrap s:hidden'>
+              className='w-full s:w-min py-3 px-3.5 whitespace-nowrap m:hidden'>
               {t('SHOW_ADVERTS', {quantity: count})}
             </PrimaryButton>
           </div>
