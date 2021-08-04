@@ -82,7 +82,7 @@ const Select: FC<Props> = ({
       onChange={onChange}
       isClearable={isClearable}
       isMulti={isMulti}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={!isMulti}
       styles={{...defaultStyles, ...propsStyles}}
       isOptionDisabled={(option) => option.disabled}
       className='react-select'
