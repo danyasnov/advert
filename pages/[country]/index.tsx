@@ -6,7 +6,6 @@ export default function Home() {
   return null
 }
 
-// @ts-ignore
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query, res} = ctx
   const state = await processCookies(ctx)
@@ -19,7 +18,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     res.setHeader('location', url)
     res.statusCode = 302
     res.end()
-    return
+  } else {
+    throw new Error("can't find advert")
   }
-  throw new Error("can't find advert")
+  return {
+    props: {},
+  }
 }
