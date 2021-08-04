@@ -33,19 +33,19 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   }
   const {setFooterVisibility} = useGeneralStore()
   return (
-    <div className='flex justify-between pb-4 mt-4 items-center'>
-      <div>
+    <div className='flex pb-4 mt-4 items-center'>
+      <div className='flex-1'>
         <Breadcrumbs />
         <h1 className='text-h-2 font-bold text-black-b pt-2'>{header}</h1>
       </div>
 
       {!showFilter && (
-        <div className='hidden s:block min-w-52 self-end mb-1'>
+        <div className='hidden s:block min-w-52 self-end mb-1 '>
           <SortSelect id='desktop-sort' />
         </div>
       )}
       <Button
-        className='m:hidden shadow-xl rounded-full min-w-10 w-10 h-10 bg-white flex justify-center items-center '
+        className='m:hidden shadow-xl rounded-full min-w-10 w-10 h-10 bg-white flex justify-center items-center'
         onClick={() => {
           setShowFilter(!showFilter)
           setFooterVisibility(!!showFilter)
