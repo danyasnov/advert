@@ -23,6 +23,7 @@ const RecommendedProducts: FC = observer(() => {
         <div className='flex flex-wrap -mx-1 s:-mx-2'>
           {products.map((p) => (
             <LinkWrapper
+              title={p.title}
               href={p.url}
               key={p.hash}
               target='_blank'
