@@ -14,9 +14,9 @@ const withIcons = (options) => {
   return options.map((o) => ({
     ...o,
     icon: o.value.includes('desc') ? (
-      <IcSort className='fill-current text-black-c' />
+      <IcSort className='fill-current text-black-c w-4 h-4' />
     ) : (
-      <IcSort className='fill-current text-black-c rotate-180	' />
+      <IcSort className='fill-current text-black-c w-4 h-4 rotate-180	' />
     ),
   }))
 }
