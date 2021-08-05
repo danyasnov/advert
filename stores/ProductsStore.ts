@@ -4,6 +4,7 @@ import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {isEmpty, omit} from 'lodash'
 import {ParsedUrlQuery} from 'querystring'
+import {toast} from 'react-toastify'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
 import {Filter} from '../types'
@@ -138,7 +139,12 @@ export class ProductsStore implements IProductsStore {
       action('fetchSuccess', (response) => {
         if (!response.data || isEmpty(response.data) || response?.data?.error) {
           this.state = 'pending'
-          return Promise.resolve()
+          if (response?.data?.error) {
+            toast.error(response.data.error)
+          }
+          return Promise.reject(
+            !response.data || isEmpty(response.data) || response?.data?.error,
+          )
         }
         const {
           result: {aggregatedFields, data},
@@ -162,6 +168,7 @@ export class ProductsStore implements IProductsStore {
       }),
       action('fetchError', (error) => {
         if (error?.message !== 'got_new_request') this.state = 'error'
+        if (error?.message) toast.error(error.message)
         return Promise.reject(error)
       }),
     )
