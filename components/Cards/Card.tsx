@@ -60,6 +60,8 @@ const Card: FC<Props> = ({
       className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}
+      // @ts-ignore safari fix border radius
+      style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={ref}>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
