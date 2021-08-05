@@ -5,6 +5,7 @@ import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import IcAim from 'icons/material/Aim.svg'
+import ReactDOM from 'react-dom'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
@@ -145,6 +146,26 @@ const MapForm: FC<Props> = ({onClose}) => {
     })
   }
 
+  const handleOnLoad = (map, maps) => {
+    const controlButtonDiv = document.createElement('div')
+    ReactDOM.render(
+      <Button
+        className='bg-white w-10 h-10 absolute right-2.5 top-20 rounded'
+        onClick={async () => {
+          try {
+            const center = await getPosition()
+            onChangeMap({center})
+          } catch (e) {
+            console.error(e)
+          }
+        }}>
+        <IcAim className='fill-current text-black-c w-6 h-6' />
+      </Button>,
+      controlButtonDiv,
+    )
+    map.controls[maps.ControlPosition.TOP_RIGHT].push(controlButtonDiv)
+  }
+
   return (
     <div className='flex flex-col justify-between h-full'>
       <div className='pt-4 px-4 s:px-6'>
@@ -183,20 +204,9 @@ const MapForm: FC<Props> = ({onClose}) => {
                     icon: svgMarker,
                     map,
                   })
+                  handleOnLoad(map, maps)
                 }}
               />
-              <Button
-                className='bg-white w-10 h-10 absolute right-2.5 top-20 rounded'
-                onClick={async () => {
-                  try {
-                    const center = await getPosition()
-                    onChangeMap({center})
-                  } catch (e) {
-                    console.error(e)
-                  }
-                }}>
-                <IcAim className='fill-current text-black-c w-6 h-6' />
-              </Button>
             </>
           )}
         </div>
