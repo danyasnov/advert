@@ -125,6 +125,7 @@ module.exports = {
   variants: {
     extend: {
       fontWeight: ['first'],
+      margin: ['first'],
       borderRadius: ['first', 'last'],
       borderWidth: ['first', 'last'],
       ringWidth: ['focus-visible'],

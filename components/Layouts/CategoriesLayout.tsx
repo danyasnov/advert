@@ -5,6 +5,7 @@ import HeaderFooterWrapper from './HeaderFooterWrapper'
 import CategoryHeader from '../CategoryHeader'
 import FilterForm from '../CategoryFilter/FilterForm'
 import SortSelect from '../SortSelect'
+import QuickCategories from '../QuickCategories'
 
 const CategoriesLayout: FC = () => {
   const [showFilter, setShowFilter] = useState(false)
@@ -14,6 +15,9 @@ const CategoriesLayout: FC = () => {
       <div className='bg-white px-4 s:px-8 flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
           <main className='m:w-608px l:w-896px relative'>
+            <div className='flex s:hidden'>
+              <QuickCategories />
+            </div>
             <CategoryHeader
               setShowFilter={setShowFilter}
               showFilter={showFilter}

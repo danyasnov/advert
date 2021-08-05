@@ -34,7 +34,7 @@ const MainLayout: FC = observer(() => {
                 rightContent={
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-3'
+                    className='text-body-3 text-brand-b1'
                     href={locationCodes}>
                     {t('SEE_ALL')}
                   </LinkWrapper>

@@ -150,7 +150,7 @@ const Footer: FC = observer(() => {
                 {ids.map((id) => (
                   <LinkWrapper
                     title={categoriesById[id]?.name}
-                    className='text-body-3'
+                    className='text-body-3 text-brand-b1'
                     href={`/all/all/${categoriesById[id]?.slug}`}
                     key={id}>
                     {categoriesById[id]?.name}

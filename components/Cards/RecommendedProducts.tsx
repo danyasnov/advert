@@ -14,7 +14,10 @@ const RecommendedProducts: FC = observer(() => {
       <TitleWithSeparator
         title={t('RECOMMENDATIONS_FOR_YOU')}
         rightContent={
-          <LinkWrapper title={t('SEE_ALL')} href='/all/all'>
+          <LinkWrapper
+            className='text-brand-b1'
+            title={t('SEE_ALL')}
+            href='/all/all'>
             {t('SEE_ALL')}
           </LinkWrapper>
         }
@@ -27,7 +30,7 @@ const RecommendedProducts: FC = observer(() => {
               href={p.url}
               key={p.hash}
               target='_blank'
-              className='px-1 pb-2 s:px-2 s:pb-4'>
+              className='px-1 pb-2 s:px-2 s:pb-4 text-brand-b1'>
               <Card product={p} />
             </LinkWrapper>
           ))}

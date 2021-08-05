@@ -37,7 +37,7 @@ const LocationSelector: FC<Props> = ({
         <div className='flex'>
           <LinkWrapper
             title={t('SHOW_ALL_ADVERTS')}
-            className='text-body-2'
+            className='text-body-2 text-brand-b1'
             href={showAllLink}>
             {t('SHOW_ALL_ADVERTS')}
           </LinkWrapper>
@@ -53,7 +53,7 @@ const LocationSelector: FC<Props> = ({
               {values.map((c) => (
                 <LinkWrapper
                   title={c.title || c.value || c.word}
-                  className='text-body-2'
+                  className='text-body-2 text-brand-b1'
                   href={c.href}
                   key={c.id}>
                   <Button onClick={() => onSelect(c)} className='text-left'>

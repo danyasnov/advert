@@ -22,7 +22,7 @@ const LinkWrapper: FC<Props> = ({
       <a
         target={target}
         title={title}
-        className={`capitalize-first text-brand-b1
+        className={`capitalize-first
       ${className || ''}`}>
         {children}
       </a>

@@ -56,7 +56,7 @@ const Breadcrumbs: FC = observer(() => {
             title={b.title}
             href={b.href}
             key={b.title}
-            className='text-body-2'>
+            className='text-body-2 text-brand-b1'>
             {b.title}
           </LinkWrapper>
         )
