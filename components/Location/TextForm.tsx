@@ -160,13 +160,6 @@ const TextForm: FC<Props> = observer(({onClose}) => {
     const addressArray = []
     const state: CookiesState = {}
     const query: {city: string; country: string} = {city: 'all', country: 'all'}
-    if (region?.value) {
-      addressArray.push(region.label)
-      state.regionId = region.value.toString()
-      query.city = region.word
-    } else {
-      destroyCookie(null, 'regionId')
-    }
     if (city?.value) {
       addressArray.push(city.label)
       state.cityId = city.value.toString()
@@ -174,7 +167,13 @@ const TextForm: FC<Props> = observer(({onClose}) => {
     } else {
       destroyCookie(null, 'cityId')
     }
-
+    if (region?.value) {
+      addressArray.push(region.label)
+      state.regionId = region.value.toString()
+      query.city = region.word
+    } else {
+      destroyCookie(null, 'regionId')
+    }
     if (country?.value) {
       addressArray.push(country.label)
       state.countryId = country.value.toString()
