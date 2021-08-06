@@ -98,7 +98,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
         <div className='pb-4'>
           <Col
             items={fourthLevelItems}
-            urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}`}
+            urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
             activeId={fourthColumnActiveCategory?.id}
             onMouseEnter={(cat) => {
               setFourthColumnActiveCategory(cat)
