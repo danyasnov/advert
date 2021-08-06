@@ -21,7 +21,7 @@ class MyDocument extends Document {
             href='https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap'
             rel='stylesheet'
           />
-          <meta name='apple-itunes-app' content='app-id=id1287862488' />
+          <meta name='apple-itunes-app' content='app-id=1287862488' />
         </Head>
         <body>
           <Main />
