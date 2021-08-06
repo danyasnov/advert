@@ -4,6 +4,7 @@ import {useEmblaCarousel} from 'embla-carousel/react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
+import {isEmpty} from 'lodash'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -65,11 +66,20 @@ const Card: FC<Props> = ({
       ref={ref}>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
-          {images.map((i) => (
-            <div key={i} className='relative min-w-full'>
-              <CardImage key={i} url={i} alt={title} />
+          {isEmpty(images) ? (
+            <div className='relative min-w-full'>
+              <CardImage
+                url={`/img/subcategories/${product.categoryId}.jpg`}
+                alt={title}
+              />
             </div>
-          ))}
+          ) : (
+            images.map((i) => (
+              <div key={i} className='relative min-w-full'>
+                <CardImage url={i} alt={title} />
+              </div>
+            ))
+          )}
         </div>
         {images.length > 1 && (
           <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>

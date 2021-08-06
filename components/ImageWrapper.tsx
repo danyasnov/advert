@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import Image from 'next/image'
 
 interface Props {
@@ -22,7 +22,8 @@ const ImageWrapper: FC<Props> = ({
   objectFit,
   priority,
 }) => {
-  if (!type) return null
+  const [hide, setHide] = useState(false)
+  if (!type || hide) return null
   return (
     // @ts-ignore
     <Image
@@ -35,6 +36,9 @@ const ImageWrapper: FC<Props> = ({
       layout={layout}
       objectFit={objectFit}
       priority={priority}
+      onError={() => {
+        setHide(true)
+      }}
     />
   )
 }

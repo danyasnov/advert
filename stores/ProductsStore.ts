@@ -114,7 +114,7 @@ export class ProductsStore implements IProductsStore {
     this.cancelTokenSource = cancelToken.source()
 
     this.state = opts?.isScroll ? 'pending-scroll' : 'pending'
-    const [key, direction] = this.sortBy.split('-')
+    const [key, direction] = (this.sortBy || 'date_updated-asc').split('-')
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',
