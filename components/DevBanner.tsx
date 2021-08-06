@@ -1,6 +1,7 @@
 import {FC, useState} from 'react'
 import {parseCookies} from 'nookies'
 import IcClear from 'icons/material/Clear.svg'
+import {useTranslation} from 'next-i18next'
 import {SerializedCookiesState} from '../types'
 import Button from './Buttons/Button'
 import {setCookiesObject} from '../helpers'
@@ -8,22 +9,22 @@ import LinkWrapper from './Buttons/LinkWrapper'
 
 const DevBanner: FC = () => {
   const state: SerializedCookiesState = parseCookies()
+  const {t} = useTranslation()
   const [hide, setHide] = useState(false)
   if (state.hideDevBanner || hide) return null
   return (
     <div className='flex flex-col flex justify-center items-center relative bg-black-e'>
       <h4 className='text-h-4 text-black-b font-bold m-auto pt-2'>
-        We have updated our site
+        {t('BANNER_HEADER_OLD_SITE')}
       </h4>
       <span className='text-body-2 text-black-c text-center my-2'>
-        This version of the site is under development and some functions may be
-        disabled or not work correctly.
+        {t('BANNER_TEXT_OLD_SITE')}
       </span>
       <LinkWrapper
-        href='oldsite.com'
+        href='old.adverto.sale'
         title='old site'
         className='text-body-2 text-brand-b1 pb-2'>
-        Continue with old site
+        {t('BANNER_LINK_OLD_SITE')}
       </LinkWrapper>
       <Button
         className='absolute top-0 right-0 pt-2 pr-2'
