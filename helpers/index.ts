@@ -99,9 +99,12 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
 }
 
 export const destroyCookiesWrapper = (ctx = null, name: string): void => {
-  destroyCookie(ctx, name, {
+  const options: Partial<{path: string; maxAge: number; domain: string}> = {
     path: '/',
-  })
+  }
+  const domain = process.env.DOMAIN || process.env.NEXT_PUBLIC_DOMAIN
+  if (domain) options.domain = domain
+  destroyCookie(ctx, name, options)
 }
 
 export const processCookies = async (
