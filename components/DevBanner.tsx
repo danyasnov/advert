@@ -21,7 +21,7 @@ const DevBanner: FC = () => {
         {t('BANNER_TEXT_OLD_SITE')}
       </span>
       <LinkWrapper
-        href='old.adverto.sale'
+        href='https://old.adverto.com'
         title='old site'
         className='text-body-2 text-brand-b1 pb-2'>
         {t('BANNER_LINK_OLD_SITE')}

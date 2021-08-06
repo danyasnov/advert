@@ -187,6 +187,13 @@ const Footer: FC = observer(() => {
                 onClick={notImplementedAlert}
                 label={t('APPLICATION_HELP')}
               />
+
+              <LinkWrapper
+                href='https://old.adverto.com'
+                title='old.adverto.com'
+                className='text-brand-b1 text-body-3'>
+                old.adverto.com
+              </LinkWrapper>
             </div>
             <div className='text-body-3 mt-2 s:mt-4 m:mt-0 text-black-b'>
               © 2017—{new Date().getFullYear()} A&D Adverto Services LTD

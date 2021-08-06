@@ -19,11 +19,7 @@ const LinkWrapper: FC<Props> = ({
   return (
     <Link href={href}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a
-        target={target}
-        title={title}
-        className={`capitalize-first
-      ${className || ''}`}>
+      <a target={target} title={title} className={className || ''}>
         {children}
       </a>
     </Link>
