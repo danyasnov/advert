@@ -9,7 +9,7 @@ import {
   CACategoryDataFieldModel,
   GeoPositionModel,
 } from 'front-api/src/models/index'
-import {parseCookies, setCookie} from 'nookies'
+import {destroyCookie, parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
 import {IncomingMessage} from 'http'
@@ -95,6 +95,12 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
     const domain = process.env.DOMAIN || process.env.NEXT_PUBLIC_DOMAIN
     if (domain) options.domain = domain
     setCookie(ctx, key, value, options)
+  })
+}
+
+export const destroyCookiesWrapper = (ctx = null, name: string): void => {
+  destroyCookie(ctx, name, {
+    path: '/',
   })
 }
 

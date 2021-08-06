@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {GeoPositionItemModel} from 'front-api/src/models/index'
 import {AxiosResponse} from 'axios'
 import {RestResponse} from 'front-api/src/api/request'
-import {destroyCookie, parseCookies} from 'nookies'
+import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
 import Select, {SelectItem} from '../Selects/Select'
@@ -12,7 +12,7 @@ import Button from '../Buttons/Button'
 import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {setCookiesObject} from '../../helpers'
+import {destroyCookiesWrapper, setCookiesObject} from '../../helpers'
 import {CookiesState} from '../../types'
 
 const fetchRegions = (countryId) => {
@@ -165,21 +165,21 @@ const TextForm: FC<Props> = observer(({onClose}) => {
       state.cityId = city.value.toString()
       query.city = city.word
     } else {
-      destroyCookie(null, 'cityId')
+      destroyCookiesWrapper(null, 'cityId')
     }
     if (region?.value) {
       addressArray.push(region.label)
       state.regionId = region.value.toString()
       query.city = region.word
     } else {
-      destroyCookie(null, 'regionId')
+      destroyCookiesWrapper(null, 'regionId')
     }
     if (country?.value) {
       addressArray.push(country.label)
       state.countryId = country.value.toString()
       query.country = country.isoCode
     } else {
-      destroyCookie(null, 'countryId')
+      destroyCookiesWrapper(null, 'countryId')
     }
     state.searchBy = 'id'
     // eslint-disable-next-line prefer-destructuring
