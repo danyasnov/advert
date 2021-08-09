@@ -1,5 +1,6 @@
 const plugin = require('tailwindcss/plugin')
 const lineClamp = require('@tailwindcss/line-clamp')
+const typography = require('@tailwindcss/typography')
 
 const capitalizeFirst = plugin(({addUtilities}) => {
   const newUtilities = {
@@ -26,6 +27,7 @@ module.exports = {
       'h-2': ['20px', '24px'],
       'h-3': ['18px', '20px'],
       'h-4': ['16px', '20px'],
+      'h-5': ['14px', '16px'],
     },
     screens: {
       s: '768px',
@@ -132,5 +134,5 @@ module.exports = {
       ringColor: ['focus-visible'],
     },
   },
-  plugins: [capitalizeFirst, lineClamp],
+  plugins: [capitalizeFirst, lineClamp, typography],
 }

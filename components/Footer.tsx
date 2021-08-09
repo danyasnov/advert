@@ -150,7 +150,7 @@ const Footer: FC = observer(() => {
                 {ids.map((id) => (
                   <LinkWrapper
                     title={categoriesById[id]?.name}
-                    className='text-body-3 text-brand-b1'
+                    className='text-body-3 text-brand-b1 whitespace-nowrap'
                     href={`/all/all/${categoriesById[id]?.slug}`}
                     key={id}>
                     {categoriesById[id]?.name}
@@ -159,35 +159,39 @@ const Footer: FC = observer(() => {
               </div>
             }
           />
-          <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2 l:col-span-2'>
-            <LinkButton
-              onClick={notImplementedAlert}
-              label={t('PLACE_AN_AD_FOR_FREE')}
-            />
-            <LinkButton onClick={notImplementedAlert} label={t('ADS')} />
-            <LinkButton onClick={notImplementedAlert} label={t('SAFETY')} />
-            <LinkButton onClick={notImplementedAlert} label={t('SHOPS')} />
-            <LinkButton onClick={notImplementedAlert} label={t('ABOUT_US')} />
-            <LinkButton onClick={notImplementedAlert} label={t('CAREER')} />
-          </div>
+          {/* <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2 l:col-span-2'> */}
+          {/*  <LinkButton */}
+          {/*    onClick={notImplementedAlert} */}
+          {/*    label={t('PLACE_AN_AD_FOR_FREE')} */}
+          {/*  /> */}
+          {/*  <LinkButton onClick={notImplementedAlert} label={t('ADS')} /> */}
+          {/*  <LinkButton onClick={notImplementedAlert} label={t('SAFETY')} /> */}
+          {/*  <LinkButton onClick={notImplementedAlert} label={t('SHOPS')} /> */}
+          {/*  <LinkButton onClick={notImplementedAlert} label={t('ABOUT_US')} /> */}
+          {/*  <LinkButton onClick={notImplementedAlert} label={t('CAREER')} /> */}
+          {/* </div> */}
         </div>
         <div className='border-t border-shadow-b pt-2'>
           <div className='flex flex-col m:flex-row m:justify-between items-center  m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
             <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
-              <LinkButton
-                onClick={notImplementedAlert}
-                label={t('LICENSE_AGREEMENT')}
-              />
-              <LinkButton onClick={notImplementedAlert} label={t('PHOTOS')} />
-              <LinkButton
-                onClick={notImplementedAlert}
-                label={t('ADVERTISING_ADVERTO')}
-              />
-              <LinkButton
-                onClick={notImplementedAlert}
-                label={t('APPLICATION_HELP')}
-              />
-
+              <LinkWrapper
+                title={t('TERMS_AND_CONDITIONS')}
+                className='text-brand-b1 text-body-3'
+                href='/terms-and-conditions'>
+                {t('TERMS_AND_CONDITIONS')}
+              </LinkWrapper>
+              <LinkWrapper
+                title={t('PRIVACY_POLICY')}
+                className='text-brand-b1 text-body-3'
+                href='/privacy-policy'>
+                {t('PRIVACY_POLICY')}
+              </LinkWrapper>
+              <LinkWrapper
+                title={t('RULES')}
+                className='text-brand-b1 text-body-3'
+                href='/general-requirements-for-adverts'>
+                {t('RULES')}
+              </LinkWrapper>
               <LinkWrapper
                 href='https://old.adverto.com'
                 title='old.adverto.com'
@@ -195,7 +199,7 @@ const Footer: FC = observer(() => {
                 old.adverto.com
               </LinkWrapper>
             </div>
-            <div className='text-body-3 mt-2 s:mt-4 m:mt-0 text-black-b'>
+            <div className='text-body-3 my-2 s:my-4 text-black-b'>
               © 2017—{new Date().getFullYear()} A&D Adverto Services LTD
             </div>
           </div>

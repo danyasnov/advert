@@ -11,10 +11,10 @@ import {useRouter} from 'next/router'
 import {useEffect} from 'react'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
+import CookiesWarning from '../components/CookiesWarning'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
-
   useEffect(() => {
     const handleStart = (url) => {
       console.log(`Loading: ${url}`)
@@ -40,6 +40,7 @@ function MyApp({Component, pageProps}: AppProps) {
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Component {...pageProps} />
       <ToastContainer />
+      <CookiesWarning />
     </RootStoreProvider>
   )
 }

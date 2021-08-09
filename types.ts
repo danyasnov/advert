@@ -23,6 +23,7 @@ export interface CookiesState {
   countryCode?: string
   regionOrCityCode?: string
   hideDevBanner?: boolean
+  cookieAccepted?: boolean
 }
 
 export interface SerializedCookiesState {
@@ -38,6 +39,7 @@ export interface SerializedCookiesState {
   countryCode?: string
   regionOrCityCode?: string
   hideDevBanner?: boolean
+  cookieAccepted?: boolean
 }
 
 export interface Filter {
