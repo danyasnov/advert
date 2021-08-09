@@ -1,4 +1,5 @@
 import {GetServerSideProps} from 'next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {getLocationCodes, getQueryValue, processCookies} from '../../helpers'
 import {fetchCategories, fetchProductDetails} from '../../api/v2'
 import {fetchDocuments} from '../../api/db'
@@ -51,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
             document,
           },
         },
+        ...(await serverSideTranslations(state.language)),
       },
     }
   }
