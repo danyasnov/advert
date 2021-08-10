@@ -262,7 +262,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                   if (setShowFilter) setShowFilter(false)
                   applyFilter()
                 }}
-                className='w-full s:w-min py-3 px-3.5 m:w-full m:mt-2 whitespace-nowrap'>
+                className='w-full s:w-min py-3 px-3.5 m:w-full m:mb-2 whitespace-nowrap'>
                 {t('SHOW_ADVERTS', {count: newCount})}
               </PrimaryButton>
             )}

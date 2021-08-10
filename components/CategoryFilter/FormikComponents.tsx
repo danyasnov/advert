@@ -120,7 +120,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   const isValid = !errors[name]
   return (
     <NumberFormat
-      value={value}
+      value={value || ''}
       onValueChange={({floatValue}) => {
         setFieldValue(name, floatValue)
       }}
@@ -142,7 +142,7 @@ export const FormikText: FC<IFormikNumber & FieldProps> = ({
   const isValid = !errors[name]
   return (
     <input
-      value={value}
+      value={value || ''}
       onChange={(e) => {
         setFieldValue(name, e.target.value)
       }}
@@ -229,7 +229,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   return (
     <Select
       id={name}
-      value={value}
+      value={value || []}
       options={options}
       isClearable
       placeholder={placeholder}
