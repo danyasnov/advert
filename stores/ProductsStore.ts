@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from 'mobx'
+import {action, makeAutoObservable, toJS} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
@@ -21,6 +21,7 @@ export interface IProductsHydration {
   limit: number
   count: number
   cacheId: string
+  sortBy: string
   aggregatedFields: CACategoryDataFieldModel[]
   hideDistanceSort: boolean
 }
@@ -28,6 +29,7 @@ export interface IProductsHydration {
 export interface IProductsStore {
   root: RootStore
   products: Array<AdvertiseListItemModel>
+  newProducts: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
   similarProducts: Array<AdvertiseListItemModel>
@@ -35,10 +37,15 @@ export interface IProductsStore {
   hydrate(data: IProductsHydration): void
   state: State
   page: number
+  newPage: number
   limit: number
+  newLimit: number
   count: number
+  newCount: number
   cacheId: string
+  newCacheId: string
   aggregatedFields: CACategoryDataFieldModel[]
+  newAggregatedFields: CACategoryDataFieldModel[]
   filter: Partial<Filter>
   setFilter: (filter: Partial<Filter>) => Partial<Filter>
   resetFilter: () => void
@@ -46,6 +53,8 @@ export interface IProductsStore {
   sortBy: string
   hideDistanceSort: boolean
   setSortBy: (value: string) => void
+  applyFilter: () => void
+  isFilterApplied: boolean
 }
 
 interface FetchOptions {
@@ -62,6 +71,8 @@ export class ProductsStore implements IProductsStore {
 
   products = []
 
+  newProducts = []
+
   product
 
   freeProducts = []
@@ -72,13 +83,25 @@ export class ProductsStore implements IProductsStore {
 
   page = 1
 
+  newPage = 1
+
   limit = PAGE_LIMIT
+
+  newLimit = PAGE_LIMIT
 
   count = null
 
+  newCount = null
+
   cacheId
 
+  newCacheId
+
   aggregatedFields = []
+
+  newAggregatedFields = []
+
+  isFilterApplied
 
   filter: Partial<Filter> = {}
 
@@ -154,24 +177,38 @@ export class ProductsStore implements IProductsStore {
           },
         } = response.data
         if (page === 1) {
-          this.products = data
-          this.cacheId = cacheId
+          this.newProducts = data
+          this.newCacheId = cacheId
         } else {
-          this.products = [...this.products, ...data]
+          this.newProducts = [...this.products, ...data]
         }
-        this.aggregatedFields = aggregatedFields
-        this.page = page
-        this.limit = limit
-        this.count = count
+        this.newAggregatedFields = aggregatedFields
+        this.newPage = page
+        this.newLimit = limit
+        this.newCount = count
+        this.isFilterApplied = false
+
         this.state = 'done'
         return Promise.resolve()
       }),
       action('fetchError', (error) => {
-        if (error?.message !== 'got_new_request') this.state = 'error'
-        if (error?.message) toast.error(error.message)
+        if (error?.message !== 'got_new_request') {
+          toast.error(error.message)
+          this.state = 'error'
+        }
         return Promise.reject(error)
       }),
     )
+  }
+
+  applyFilter = (): void => {
+    this.products = this.newProducts
+    this.cacheId = this.newCacheId
+    this.aggregatedFields = this.newAggregatedFields
+    this.page = this.newPage
+    this.limit = this.newLimit
+    this.count = this.newCount
+    this.isFilterApplied = true
   }
 
   setSortBy = (value: string): void => {
@@ -179,6 +216,7 @@ export class ProductsStore implements IProductsStore {
   }
 
   hydrate(data?: IProductsHydration): void {
+    console.log('hydrate(data?: IProductsHydration', data?.products)
     this.products = data?.products ?? []
     this.product = data?.product ?? []
     this.freeProducts = data?.freeProducts ?? []
@@ -188,7 +226,11 @@ export class ProductsStore implements IProductsStore {
     this.limit = data?.limit ?? 10
     this.count = data?.count ?? 0
     this.cacheId = data?.cacheId ?? undefined
+    this.sortBy = data?.sortBy ?? 'date_updated-asc'
     this.hideDistanceSort = data?.hideDistanceSort ?? false
     this.aggregatedFields = data?.aggregatedFields ?? []
+
+    this.newCount = null
+    this.isFilterApplied = true
   }
 }

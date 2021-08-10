@@ -22,6 +22,7 @@ import {
   findCurrentCategoriesOptionsyByQuery,
   getUrlQueryFromFilter,
   getFormikInitialFromQuery,
+  shallowUpdateQuery,
 } from '../../helpers'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {clearUrlFromQuery} from '../../utils'
@@ -44,8 +45,15 @@ interface Props {
 const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter, fetchProducts, aggregatedFields, count} =
-    useProductsStore()
+  const {
+    setFilter,
+    resetFilter,
+    fetchProducts,
+    aggregatedFields,
+    newCount,
+    applyFilter,
+    isFilterApplied,
+  } = useProductsStore()
 
   const {categoryDataFieldsById, categories, categoryDataFieldsBySlug} =
     useCategoriesStore()
@@ -170,17 +178,13 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         }
 
         const updatedFilter = setFilter(filter)
-
-        router.push(
-          `${clearUrlFromQuery(router.asPath)}?${getUrlQueryFromFilter(
-            updatedFilter,
-            categoryDataFieldsById,
-          )}`,
-          null,
-          {
-            shallow: true,
-          },
+        const params = new URLSearchParams(window.location.search)
+        const sortBy = params.get('sortBy')
+        const newParams = new URLSearchParams(
+          getUrlQueryFromFilter(updatedFilter, categoryDataFieldsById),
         )
+        newParams.set('sortBy', sortBy)
+        shallowUpdateQuery(newParams.toString())
         fetchProducts({query: router.query}).then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
@@ -251,24 +255,27 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               label={t('ONLY_WITH_DISCOUNT')}
             />
           </div>
-          <div className='pt-4 flex justify-center s:justify-between'>
+          <div className='pt-4 flex justify-center s:justify-between m:flex-col'>
+            {!isFilterApplied && (
+              <PrimaryButton
+                onClick={() => {
+                  if (setShowFilter) setShowFilter(false)
+                  applyFilter()
+                }}
+                className='w-full s:w-min py-3 px-3.5 m:w-full m:mt-2 whitespace-nowrap'>
+                {t('SHOW_ADVERTS', {count: newCount})}
+              </PrimaryButton>
+            )}
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues(true)})
-                router.push(clearUrlFromQuery(router.asPath), null, {
-                  shallow: true,
-                })
+                shallowUpdateQuery()
                 resetFilter()
-                fetchProducts({query: router.query})
+                fetchProducts({query: router.query}).then(() => applyFilter())
               }}
               className='w-full hidden s:block s:w-min py-3 px-3.5 m:w-full'>
               {t('RESET_FILTER')}
             </SecondaryButton>
-            <PrimaryButton
-              onClick={() => setShowFilter(false)}
-              className='w-full s:w-min py-3 px-3.5 whitespace-nowrap m:hidden'>
-              {t('SHOW_ADVERTS', {quantity: count})}
-            </PrimaryButton>
           </div>
           <FormikAutoSave />
         </Form>

@@ -12,8 +12,7 @@ import {
 import SortSelect from './SortSelect'
 import Breadcrumbs from './Breadcrumbs'
 import Button from './Buttons/Button'
-import {getQueryValue} from '../helpers'
-import {clearUrlFromQuery} from '../utils'
+import {getQueryValue, shallowUpdateQuery} from '../helpers'
 
 interface Props {
   setShowFilter: (show: boolean) => void
@@ -21,8 +20,8 @@ interface Props {
 }
 const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   const {categoryData} = useCategoriesStore()
-  const {resetFilter, fetchProducts} = useProductsStore()
-  const {query, push, asPath} = useRouter()
+  const {resetFilter, fetchProducts, applyFilter} = useProductsStore()
+  const {query} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
   let header = ''
@@ -50,11 +49,9 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
           setShowFilter(!showFilter)
           setFooterVisibility(!!showFilter)
           if (showFilter) {
-            push(clearUrlFromQuery(asPath), null, {
-              shallow: true,
-            })
+            shallowUpdateQuery()
             resetFilter()
-            fetchProducts({query})
+            fetchProducts({query}).then(() => applyFilter())
           }
         }}>
         {showFilter ? (

@@ -418,6 +418,10 @@ export const getFormikInitialFromQuery = (
   query: ParsedUrlQuery,
   categoryDataFieldsBySlug: Record<string, CACategoryDataFieldModel>,
 ) => {
+  const queryData =
+    typeof window === 'undefined'
+      ? query
+      : Object.fromEntries(new URLSearchParams(window.location.search))
   const excludedFields = ['country', 'city', 'categories']
   const baseFields = [
     'condition',
@@ -428,7 +432,7 @@ export const getFormikInitialFromQuery = (
     'sortBy',
   ]
 
-  const baseFilter = pick(query, baseFields)
+  const baseFilter = pick(queryData, baseFields)
   baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
   baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
   const priceRange: {
@@ -438,7 +442,11 @@ export const getFormikInitialFromQuery = (
     ...(baseFilter.priceMax ? {priceMax: toNumber(baseFilter.priceMax)} : {}),
     ...(baseFilter.priceMin ? {priceMin: toNumber(baseFilter.priceMin)} : {}),
   }
-  const fieldsFilter = omit(query, [...baseFields, ...excludedFields, 'sortBy'])
+  const fieldsFilter = omit(queryData, [
+    ...baseFields,
+    ...excludedFields,
+    'sortBy',
+  ])
   const result = {...baseFilter, priceRange}
   delete result.priceMin
   delete result.priceMax
@@ -551,4 +559,11 @@ export const withLocationQuery = async (
   // @ts-ignore
   updatedState.modified = true
   return updatedState
+}
+
+export const shallowUpdateQuery = (queryString?: string): void => {
+  const newurl = `${window.location.protocol}//${window.location.host}${
+    window.location.pathname
+  }${queryString ? `?${queryString}` : ''}`
+  window.history.pushState({path: newurl}, '', newurl)
 }

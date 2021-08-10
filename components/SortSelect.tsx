@@ -7,8 +7,7 @@ import {useRouter} from 'next/router'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
-import {setSortToUrl} from '../utils'
-import {getQueryValue} from '../helpers'
+import {shallowUpdateQuery} from '../helpers'
 
 const withIcons = (options) => {
   return options.map((o) => ({
@@ -22,11 +21,10 @@ const withIcons = (options) => {
 }
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
-  const {query, push, asPath} = useRouter()
+  const {query} = useRouter()
   const state: SerializedCookiesState = parseCookies()
-  const {sortBy, setSortBy, fetchProducts, hideDistanceSort} =
+  const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
     useProductsStore()
-  const sortByQuery = getQueryValue(query, 'sortBy')
 
   const [options, setOptions] = useState(
     withIcons([
@@ -57,22 +55,17 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  useEffect(() => {
-    if (!sortBy) {
-      setSortBy(sortByQuery || 'date_updated-asc')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortByQuery])
 
   return (
     <LinkSelect
       id={id}
       onChange={({value}) => {
+        const params = new URLSearchParams(window.location.search)
+        params.set('sortBy', value as string)
         setSortBy(value as string)
-        push(setSortToUrl(asPath, value as string), null, {
-          shallow: true,
-        })
-        fetchProducts({query})
+
+        shallowUpdateQuery(params.toString())
+        fetchProducts({query}).then(() => applyFilter())
       }}
       value={options.find(({value}) => value === sortBy)}
       options={options}
