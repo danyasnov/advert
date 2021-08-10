@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import {
   FormikCheckbox,
   FormikField,
@@ -133,6 +134,8 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   }))
   const currentOption =
     options.find((o) => o.value === currentCategory.id) ?? null
+
+  console.log(toJS(aggregatedFields))
   return (
     <Formik
       validateOnChange
@@ -183,7 +186,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         const newParams = new URLSearchParams(
           getUrlQueryFromFilter(updatedFilter, categoryDataFieldsById),
         )
-        newParams.set('sortBy', sortBy)
+        if (sortBy) newParams.set('sortBy', sortBy)
         shallowUpdateQuery(newParams.toString())
         fetchProducts({query: router.query}).then(() => setSubmitting(false))
       }}>
