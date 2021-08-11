@@ -30,10 +30,7 @@ import {clearUrlFromQuery} from '../../utils'
 
 interface Values {
   condition: SelectItem
-  priceRange: {
-    priceMin?: string
-    priceMax?: string
-  }
+  priceRange: string[]
   onlyWithPhoto: boolean
   onlyDiscounted: boolean
   fields?: Record<string, unknown>
@@ -84,10 +81,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const getInitialValues = (reset?: boolean): Values => {
     const defaultValues = {
       condition: conditionOptions[0],
-      priceRange: {
-        priceMin: '',
-        priceMax: '',
-      },
+      priceRange: ['', ''],
       onlyWithPhoto: false,
       onlyDiscounted: false,
       fields: {},
@@ -97,6 +91,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       router.query,
       categoryDataFieldsBySlug,
     )
+    console.log('filter', filter)
 
     if (filter) {
       let condition = conditionOptions[0]
@@ -135,7 +130,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const currentOption =
     options.find((o) => o.value === currentCategory.id) ?? null
 
-  console.log(toJS(aggregatedFields))
   return (
     <Formik
       validateOnChange
@@ -152,9 +146,20 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               let mappedValue
               switch (field.fieldType) {
                 case 'select':
+                case 'iconselect':
                 case 'multiselect': {
                   if (Array.isArray(value) && value.length)
                     mappedValue = value.map((v) => v.value)
+                  break
+                }
+                case 'int': {
+                  mappedValue = []
+                  if (Array.isArray(value)) {
+                    if (value[0] || value[0] === 0)
+                      mappedValue[0] = parseInt(value[0], 10)
+                    if (value[1] || value[1] === 0)
+                      mappedValue[1] = parseInt(value[1], 10)
+                  }
                   break
                 }
                 default: {
@@ -173,8 +178,8 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
 
         const filter = {
           condition,
-          priceMin: parseInt(priceRange.priceMin, 10) || undefined,
-          priceMax: parseInt(priceRange.priceMax, 10) || undefined,
+          priceMin: parseInt(priceRange[0], 10) || undefined,
+          priceMax: parseInt(priceRange[1], 10) || undefined,
           onlyWithPhoto,
           onlyDiscounted,
           fields: mappedFields,
@@ -223,8 +228,9 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
             <Field
               name='priceRange'
               component={FormikRange}
+              placeholder={t('PRICE')}
               validate={(value) => {
-                const {priceMin, priceMax} = value
+                const [priceMin, priceMax] = value
                 let error
                 if (priceMin && priceMax) {
                   const parsedMin = parseFloat(priceMin)

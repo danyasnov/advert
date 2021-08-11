@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import NumberFormat from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
+import {get} from 'lodash'
 import Select, {SelectItem} from '../Selects/Select'
 import Button from '../Buttons/Button'
 
@@ -22,6 +23,8 @@ interface IFormikSelect {
 }
 interface IFormikNumber {
   placeholder: string
+  minValue?: number
+  maxValue?: number
 }
 interface IFormikField {
   field: CACategoryDataFieldModel
@@ -33,21 +36,34 @@ interface FieldOptions {
   label?: string
   isFilterable?: boolean
   isMulti?: boolean
+  maxValue?: number
+  minValue?: number
+  validate?: (value: any) => string
 }
 
 const getSelectOptions = (o) => ({
   value: o.id,
   label: o.value,
-  disabled: o.count === 0,
+  // disabled: o.count === 0,
 })
 
 export const FormikField: FC<IFormikField> = ({field}) => {
   // @ts-ignore
-  const {fieldType, multiselects, id, name, isFilterable} = field
+  const {
+    fieldType,
+    multiselects,
+    id,
+    name,
+    isFilterable,
+    maxValue,
+    minValue,
+    slug,
+  } = field
   let component
   const props: FieldOptions = {}
   switch (fieldType) {
     case 'select':
+    case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
       props.options = [
@@ -62,8 +78,25 @@ export const FormikField: FC<IFormikField> = ({field}) => {
       break
     }
     case 'int': {
-      component = FormikNumber
+      component = FormikRange
       props.placeholder = name
+      props.maxValue = maxValue
+      props.minValue = minValue
+      props.validate = (value = []) => {
+        const [min, max] = value
+        let parsedMin
+        let parsedMax
+        if (min) parsedMin = parseFloat(min)
+        if (max) parsedMax = parseFloat(max)
+        let error
+        if ((parsedMin || parsedMin === 0) && (parsedMax || parsedMax === 0)) {
+          if (parsedMin > parsedMax) {
+            error = 'parsedMin should be lesser than parsedMax'
+          }
+        }
+
+        return error
+      }
       break
     }
     case 'string': {
@@ -154,29 +187,34 @@ export const FormikText: FC<IFormikNumber & FieldProps> = ({
   )
 }
 
-export const FormikRange: FC<FieldProps> = ({field, form}) => {
+export const FormikRange: FC<FieldProps & IFormikNumber> = ({
+  field,
+  form,
+  placeholder,
+}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const {t} = useTranslation()
-  const isValid = !errors[name]
+  const isValid = !get(errors, name)
   const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-2 ${
     isValid ? '' : 'border-error'
   }`
+  const mappedValue = Array.isArray(value) ? value : ['', '']
   return (
     <div className='flex text-black-b text-body-2'>
       <NumberFormat
-        value={value?.priceMin}
-        onValueChange={({value: priceMin}) => {
-          setFieldValue(name, {priceMin, priceMax: value?.priceMax})
+        value={mappedValue[0]}
+        onValueChange={({value: min}) => {
+          setFieldValue(name, [min, mappedValue[1]])
         }}
         thousandSeparator={' '}
-        placeholder={t('PRICE_FROM')}
+        placeholder={t('TITLE_FROM', {title: placeholder})}
         className={`border rounded-l-2xl ${commonClass}`}
       />
       <NumberFormat
-        value={value?.priceMax}
-        onValueChange={({value: priceMax}) => {
-          setFieldValue(name, {priceMin: value?.priceMin, priceMax})
+        value={mappedValue[1]}
+        onValueChange={({value: max}) => {
+          setFieldValue(name, [mappedValue[0], max])
         }}
         thousandSeparator={' '}
         placeholder={t('UP_TO')}

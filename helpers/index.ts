@@ -327,6 +327,7 @@ export const getUrlQueryFromFilter = (
       const currentField = fieldById[key]
       switch (currentField.fieldType) {
         case 'select':
+        case 'iconselect':
         case 'multiselect': {
           // @ts-ignore
           stringValue = value.map(
@@ -334,6 +335,19 @@ export const getUrlQueryFromFilter = (
               // @ts-ignore
               currentField.multiselects.find(({id}) => id === valueId)?.value,
           )
+          break
+        }
+        case 'int': {
+          if (Array.isArray(value)) {
+            const arr = []
+            if (value[0] || value[0] === 0) {
+              arr.push(value[0])
+            }
+            if (value[1] || value[1] === 0) {
+              arr.push(value[1])
+            }
+            if (arr.length) stringValue = arr.join('-')
+          }
           break
         }
         default: {
@@ -387,6 +401,7 @@ export const getFilterFromQuery = (
         // eslint-disable-next-line default-case
         switch (currentField.fieldType) {
           case 'select':
+          case 'iconselect':
           case 'multiselect': {
             // @ts-ignore
             parsedValue = parsedValue.map(
@@ -401,7 +416,15 @@ export const getFilterFromQuery = (
             break
           }
           case 'int': {
-            parsedValue = [toNumber(parsedValue[0])]
+            const range = parsedValue[0].split('-')
+            const parsed = []
+            if (range[0]) {
+              parsed.push(toNumber(range[0]))
+            }
+            if (range[1]) {
+              parsed.push(toNumber(range[1]))
+            }
+            parsedValue = parsed
             break
           }
         }
@@ -435,13 +458,10 @@ export const getFormikInitialFromQuery = (
   const baseFilter = pick(queryData, baseFields)
   baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
   baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
-  const priceRange: {
-    priceMin?: string
-    priceMax?: string
-  } = {
-    ...(baseFilter.priceMax ? {priceMax: toNumber(baseFilter.priceMax)} : {}),
-    ...(baseFilter.priceMin ? {priceMin: toNumber(baseFilter.priceMin)} : {}),
-  }
+  const priceRange: string[] = [
+    baseFilter.priceMax ? toNumber(baseFilter.priceMax) : undefined,
+    baseFilter.priceMin ? toNumber(baseFilter.priceMin) : undefined,
+  ]
   const fieldsFilter = omit(queryData, [
     ...baseFields,
     ...excludedFields,
@@ -460,6 +480,7 @@ export const getFormikInitialFromQuery = (
         // eslint-disable-next-line default-case
         switch (currentField.fieldType) {
           case 'select':
+          case 'iconselect':
           case 'multiselect': {
             // @ts-ignore
             parsedValue = parsedValue.map((valueId) => {
@@ -480,7 +501,15 @@ export const getFormikInitialFromQuery = (
             break
           }
           case 'int': {
-            parsedValue = toNumber(parsedValue[0])
+            const range = parsedValue[0].split('-')
+            const parsed = []
+            if (range[0]) {
+              parsed.push(toNumber(range[0]))
+            }
+            if (range[1]) {
+              parsed.push(toNumber(range[1]))
+            }
+            parsedValue = parsed
             break
           }
         }

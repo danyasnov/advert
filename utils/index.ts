@@ -33,7 +33,14 @@ export const setSortToUrl = (value: string, sortBy: string): string => {
 export const clearFalsyValues = (
   obj: Record<string, unknown>,
 ): Record<string, unknown> => {
-  return Object.fromEntries(Object.entries(obj).filter(([, value]) => !!value))
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => {
+      if (Array.isArray(value) && !value.length) {
+        return false
+      }
+      return !!value
+    }),
+  )
 }
 export const defaultFilter = {
   onlyFromSubscribed: false,
