@@ -332,8 +332,12 @@ export const getUrlQueryFromFilter = (
           // @ts-ignore
           stringValue = value.map(
             (valueId) =>
-              // @ts-ignore
-              currentField.multiselects.find(({id}) => id === valueId)?.value,
+              [
+                // @ts-ignore
+                ...currentField.multiselects.top,
+                // @ts-ignore
+                ...currentField.multiselects.other,
+              ].find(({id}) => id === valueId)?.value,
           )
           break
         }

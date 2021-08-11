@@ -91,7 +91,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       router.query,
       categoryDataFieldsBySlug,
     )
-    console.log('filter', filter)
 
     if (filter) {
       let condition = conditionOptions[0]
@@ -189,7 +188,13 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         const params = new URLSearchParams(window.location.search)
         const sortBy = params.get('sortBy')
         const newParams = new URLSearchParams(
-          getUrlQueryFromFilter(updatedFilter, categoryDataFieldsById),
+          getUrlQueryFromFilter(
+            updatedFilter,
+            aggregatedFields.reduce(
+              (acc, val) => ({...acc, [val.id]: val}),
+              {},
+            ),
+          ),
         )
         if (sortBy) newParams.set('sortBy', sortBy)
         shallowUpdateQuery(newParams.toString())

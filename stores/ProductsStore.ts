@@ -216,7 +216,6 @@ export class ProductsStore implements IProductsStore {
   }
 
   hydrate(data?: IProductsHydration): void {
-    console.log('hydrate(data?: IProductsHydration', data?.products)
     this.products = data?.products ?? []
     this.product = data?.product ?? []
     this.freeProducts = data?.freeProducts ?? []
