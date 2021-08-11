@@ -6,6 +6,7 @@ import {GeoPositionModel} from 'front-api/src/models/index'
 import {IncomingMessage} from 'http'
 import {NextApiRequestCookies} from 'next/dist/next-server/server/api-utils'
 import curlirize from 'axios-curlirize'
+import isIp from 'is-ip'
 import {DummyAnalytics} from '../helpers'
 import Storage from '../stores/Storage'
 
@@ -33,11 +34,13 @@ export const parseIp = (
   req.socket?.remoteAddress
 
 export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
-  const headers = {}
+  let url = `${process.env.API_URL}/v2/geo/mylocation`
+  if (isIp(ip as string) && ip !== '::1') {
+    url += `?ip=${ip}`
+  }
   return makeRequest({
     method: 'get',
-    url: `${process.env.API_URL}/v2/geo/mylocation?ip=${ip}`,
-    headers,
+    url,
   })
 }
 
