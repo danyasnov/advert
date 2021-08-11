@@ -488,10 +488,12 @@ export const getFormikInitialFromQuery = (
           case 'multiselect': {
             // @ts-ignore
             parsedValue = parsedValue.map((valueId) => {
-              // @ts-ignore
-              const option = currentField.multiselects.find(
-                (m) => m.value === valueId,
-              )
+              const option = [
+                // @ts-ignore
+                ...currentField.multiselects.top,
+                // @ts-ignore
+                ...currentField.multiselects.other,
+              ].find((m) => m.value === valueId)
               return {
                 value: option.id,
                 label: option.value,
