@@ -34,10 +34,9 @@ export const parseIp = (
 
 export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
   const headers = {}
-  if (ip) headers['X-Real-IP'] = ip
   return makeRequest({
     method: 'get',
-    url: `${process.env.API_URL}/v2/geo/mylocation`,
+    url: `${process.env.API_URL}/v2/geo/mylocation/${ip}`,
     headers,
   })
 }
