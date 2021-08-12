@@ -107,11 +107,6 @@ const Footer: FC = observer(() => {
                   {t('INSTALL_MOBILE_APP')}
                 </div>
                 <div className='flex flex-wrap items-center'>
-                  {/* <IcGooglePlay */}
-                  {/*  width={135} */}
-                  {/*  height={40} */}
-                  {/*  className='l:mr-2 l:mb-2' */}
-                  {/* /> */}
                   <a
                     href='https://play.google.com/store/apps/details?id=adverto.sale&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
                     className='l:mr-2 l:mb-2 '
@@ -125,7 +120,6 @@ const Footer: FC = observer(() => {
                     className='hidden l:block p-2'
                     href='https://apps.apple.com/ru/app/adverto/id1287862488?itsct=apps_box_badge&amp;itscg=30200'
                     style={{
-                      // overflow: 'hidden',
                       borderRadius: '13px',
                       width: '130px',
                       height: '52px',
@@ -140,16 +134,6 @@ const Footer: FC = observer(() => {
                       }}
                     />
                   </a>
-                  {/* <IcAppStore */}
-                  {/*  width={120} */}
-                  {/*  height={40} */}
-                  {/*  className='hidden l:block' */}
-                  {/* /> */}
-                  {/* <IcAppGallery */}
-                  {/*  width={133} */}
-                  {/*  height={40} */}
-                  {/*  className='hidden l:block' */}
-                  {/* /> */}
                 </div>
               </>
             }

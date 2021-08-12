@@ -122,6 +122,9 @@ module.exports = {
       outline: {
         'brand-a1': ['2px solid #FF9514', '1px'],
       },
+      backgroundImage: () => ({
+        'adverto-background': "url('/img/adverto-background.png')",
+      }),
     },
   },
   variants: {

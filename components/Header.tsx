@@ -101,11 +101,11 @@ const Header: FC = () => {
             <CategoriesSelector />
             <Search />
           </div>
-          {/* <Button */}
-          {/*  className='hidden s:flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap' */}
-          {/*  onClick={notImplementedAlert}> */}
-          {/*  <span className='capitalize-first'>{t('NEW_AD')}</span> */}
-          {/* </Button> */}
+          <Button className='hidden s:flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
+            <LinkWrapper href='/new-ad' title={t('NEW_AD')}>
+              <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
+            </LinkWrapper>
+          </Button>
         </div>
       </div>
     </header>
