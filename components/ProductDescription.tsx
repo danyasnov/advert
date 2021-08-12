@@ -3,8 +3,6 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
-import IcNoEntry from 'icons/material/NoEntry.svg'
-import IcService from 'icons/material/Service.svg'
 import IcPhone from 'icons/material/Phone.svg'
 import IcViber from 'icons/material/Viber.svg'
 import IcWhatsapp from 'icons/material/Whatsapp.svg'
@@ -12,9 +10,6 @@ import IcTelegram from 'icons/material/Telegram.svg'
 import IcFacebook from 'icons/material/Facebook.svg'
 import IcVk from 'icons/material/Vk.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
-import Button from './Buttons/Button'
-import {notImplementedAlert} from '../helpers'
-import OutlineButton from './Buttons/OutlineButton'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
 import ProductMap from './ProductMap'
@@ -30,43 +25,42 @@ const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
   const [activeTab, setActiveTab] = useState(0)
-
+  const [showPhone, setShowPhone] = useState(false)
   const {t} = useTranslation()
-  const {advert} = product
+  const {advert, owner} = product
+  const {phoneNum} = owner
   const {shortUrl, favoriteCounter, views, dateUpdated} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
-        <OutlineButton
-          onClick={notImplementedAlert}
-          className='text-black-b text-body-2 mb-4 s:mb-0'>
-          {t('ADD_NOTE')}
-        </OutlineButton>
+        <div>
+          {/* <OutlineButton */}
+          {/*  onClick={notImplementedAlert} */}
+          {/*  className='text-black-b text-body-2 mb-4 s:mb-0'> */}
+          {/*  {t('ADD_NOTE')} */}
+          {/* </OutlineButton> */}
+        </div>
         <div className='flex items-center space-x-6 justify-between'>
-          <Button
-            onClick={notImplementedAlert}
-            className='text-black-b text-body-3'>
+          <div className='text-black-b text-body-3 flex items-center'>
             <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
             {favoriteCounter}
-          </Button>
-          <Button
-            onClick={notImplementedAlert}
-            className='text-black-b text-body-3'>
+          </div>
+          <div className='text-black-b text-body-3 flex items-center'>
             <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
             {views}
-          </Button>
+          </div>
           <span suppressHydrationWarning className='text-black-b text-body-3'>
             {unixToDateTime(dateUpdated)}
           </span>
         </div>
       </div>
       <SecondaryButton
-        onClick={notImplementedAlert}
+        onClick={() => setShowPhone(true)}
         className='text-body-2 text-black-b order-0 mb-4'>
         <IcPhone className='fill-current h-4 w-4 mr-2' />
-        {t('MAKE_A_CALL')}
+        {showPhone ? phoneNum : t('MAKE_A_CALL')}
       </SecondaryButton>
-      <div className='mb-2 s:mb-4'>
+      <div className='mb-2 s:mb-4 m:hidden'>
         <UserCard />
       </div>
 
@@ -122,16 +116,16 @@ const ProductDescription: FC = observer(() => {
           </LinkWrapper>
         </div>
         <div className='flex justify-end mt-4 text-body-2 flex-col s:flex-row s:space-x-4'>
-          <SecondaryButton
-            onClick={notImplementedAlert}
-            className='mb-2 s:mb-0'>
-            <IcNoEntry className='fill-current text-black-c h-4 w-4 mr-2' />
-            {t('BLOCK_MESSAGE')}
-          </SecondaryButton>
-          <SecondaryButton onClick={notImplementedAlert}>
-            <IcService className='fill-current text-black-c h-4 w-4 mr-2' />
-            {t('SUPPORT')}
-          </SecondaryButton>
+          {/* <SecondaryButton */}
+          {/*  onClick={notImplementedAlert} */}
+          {/*  className='mb-2 s:mb-0'> */}
+          {/*  <IcNoEntry className='fill-current text-black-c h-4 w-4 mr-2' /> */}
+          {/*  {t('BLOCK_MESSAGE')} */}
+          {/* </SecondaryButton> */}
+          {/* <SecondaryButton onClick={notImplementedAlert}> */}
+          {/*  <IcService className='fill-current text-black-c h-4 w-4 mr-2' /> */}
+          {/*  {t('SUPPORT')} */}
+          {/* </SecondaryButton> */}
         </div>
       </div>
     </div>

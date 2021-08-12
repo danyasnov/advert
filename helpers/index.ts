@@ -463,8 +463,8 @@ export const getFormikInitialFromQuery = (
   baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
   baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
   const priceRange: string[] = [
-    baseFilter.priceMax ? toNumber(baseFilter.priceMax) : undefined,
     baseFilter.priceMin ? toNumber(baseFilter.priceMin) : undefined,
+    baseFilter.priceMax ? toNumber(baseFilter.priceMax) : undefined,
   ]
   const fieldsFilter = omit(queryData, [
     ...baseFields,

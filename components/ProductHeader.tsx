@@ -1,10 +1,6 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import IcLikeEmpty from 'icons/material/LikeEmpty.svg'
-import IcMoreHoriz from 'icons/material/MoreHoriz.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
-import Button from './Buttons/Button'
-import {notImplementedAlert} from '../helpers'
 import ProductInfoIcons from './ProductInfoIcons'
 
 const ProductHeader: FC = observer(() => {
@@ -18,20 +14,20 @@ const ProductHeader: FC = observer(() => {
           {product.advert.title}
         </h1>
         <div className='flex ml-4 self-start'>
-          <Button onClick={notImplementedAlert} className='mr-2'>
-            <IcLikeEmpty
-              className='fill-current text-black-c'
-              width={24}
-              height={24}
-            />
-          </Button>
-          <Button onClick={notImplementedAlert}>
-            <IcMoreHoriz
-              className='fill-current text-black-c'
-              width={24}
-              height={24}
-            />
-          </Button>
+          {/* <Button onClick={notImplementedAlert} className='mr-2'> */}
+          {/*  <IcLikeEmpty */}
+          {/*    className='fill-current text-black-c' */}
+          {/*    width={24} */}
+          {/*    height={24} */}
+          {/*  /> */}
+          {/* </Button> */}
+          {/* <Button onClick={notImplementedAlert}> */}
+          {/*  <IcMoreHoriz */}
+          {/*    className='fill-current text-black-c' */}
+          {/*    width={24} */}
+          {/*    height={24} */}
+          {/*  /> */}
+          {/* </Button> */}
         </div>
       </div>
       <div className='flex flex-col m:hidden'>

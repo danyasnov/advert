@@ -2,14 +2,11 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useProductsStore} from '../providers/RootStoreProvider'
-import {notImplementedAlert} from '../helpers'
-import PrimaryButton from './Buttons/PrimaryButton'
 import UserCard from './UserCard'
 import ProductInfoIcons from './ProductInfoIcons'
 
 const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
-  const {t} = useTranslation()
 
   return (
     <div className='flex flex-col'>
@@ -21,9 +18,9 @@ const ProductSidebar: FC = observer(() => {
       </span>
 
       <ProductInfoIcons />
-      <PrimaryButton onClick={notImplementedAlert} className='my-4'>
-        {t('SEND_A_MESSAGE')}
-      </PrimaryButton>
+      {/* <PrimaryButton onClick={notImplementedAlert} className='my-4'> */}
+      {/*  {t('SEND_A_MESSAGE')} */}
+      {/* </PrimaryButton> */}
       <UserCard />
     </div>
   )

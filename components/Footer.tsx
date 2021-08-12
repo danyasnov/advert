@@ -72,14 +72,14 @@ const Footer: FC = observer(() => {
           />
         </div>
         <div className='flex justify-center space-x-4 border-shadow-b border-t pt-2 w-min l:border-t-0 l:border-l l:pt-0 l:pl-6'>
-          {mainCities.map((i) => (
-            <LinkButton key={i} onClick={notImplementedAlert} label={i} />
-          ))}
-          <LinkButton
-            onClick={notImplementedAlert}
-            label={t('ALL_CITIES')}
-            className='font-bold'
-          />
+          {/* {mainCities.map((i) => ( */}
+          {/*  <LinkButton key={i} onClick={notImplementedAlert} label={i} /> */}
+          {/* ))} */}
+          {/* <LinkButton */}
+          {/*  onClick={notImplementedAlert} */}
+          {/*  label={t('ALL_CITIES')} */}
+          {/*  className='font-bold' */}
+          {/* /> */}
         </div>
       </div>
       <div
@@ -106,22 +106,50 @@ const Footer: FC = observer(() => {
                 <div className='text-body-3 text-black-b capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
-                <div className='flex flex-wrap'>
-                  <IcGooglePlay
-                    width={135}
-                    height={40}
-                    className='l:mr-2 l:mb-2'
-                  />
-                  <IcAppStore
-                    width={120}
-                    height={40}
-                    className='hidden l:block'
-                  />
-                  <IcAppGallery
-                    width={133}
-                    height={40}
-                    className='hidden l:block'
-                  />
+                <div className='flex flex-wrap items-center'>
+                  {/* <IcGooglePlay */}
+                  {/*  width={135} */}
+                  {/*  height={40} */}
+                  {/*  className='l:mr-2 l:mb-2' */}
+                  {/* /> */}
+                  <a
+                    href='https://play.google.com/store/apps/details?id=adverto.sale&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
+                    className='l:mr-2 l:mb-2 '
+                    style={{width: '135px', height: '40px'}}>
+                    <img
+                      alt='Get it on Google Play'
+                      src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'
+                    />
+                  </a>
+                  <a
+                    className='hidden l:block p-2'
+                    href='https://apps.apple.com/ru/app/adverto/id1287862488?itsct=apps_box_badge&amp;itscg=30200'
+                    style={{
+                      // overflow: 'hidden',
+                      borderRadius: '13px',
+                      width: '130px',
+                      height: '52px',
+                    }}>
+                    <img
+                      src='https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1513555200&h=328ae9fa89f9b000ff0df1a0bd814025'
+                      alt='Download on the App Store'
+                      style={{
+                        borderRadius: '13px',
+                        width: '120px',
+                        height: '40px',
+                      }}
+                    />
+                  </a>
+                  {/* <IcAppStore */}
+                  {/*  width={120} */}
+                  {/*  height={40} */}
+                  {/*  className='hidden l:block' */}
+                  {/* /> */}
+                  {/* <IcAppGallery */}
+                  {/*  width={133} */}
+                  {/*  height={40} */}
+                  {/*  className='hidden l:block' */}
+                  {/* /> */}
                 </div>
               </>
             }
@@ -131,20 +159,25 @@ const Footer: FC = observer(() => {
             className='m:col-span-3 l:col-span-2'
             body={
               <div className='flex space-x-2'>
-                <IcFB width={24} height={24} />
-                <IcInstagram width={24} height={24} />
-                <IcVK width={24} height={24} />
-                <IcYouTube width={24} height={24} />
-                <IcTwitter width={24} height={24} />
+                <LinkWrapper
+                  href='https://www.facebook.com/advertoapp/'
+                  title='Facebook'
+                  target='_blank'>
+                  <IcFB width={24} height={24} />
+                </LinkWrapper>
+                {/* <IcInstagram width={24} height={24} /> */}
+                {/* <IcVK width={24} height={24} /> */}
+                {/* <IcYouTube width={24} height={24} /> */}
+                {/* <IcTwitter width={24} height={24} /> */}
               </div>
             }
           />
           <Section
             title={t('CATEGORIES')}
             className='s:col-span-2 m:col-span-4 l:col-span-4'
-            headerLink={
-              <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
-            }
+            // headerLink={
+            //   <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
+            // }
             body={
               <div className='grid grid-cols-2 grid-rows-6 grid-flow-col place-items-start gap-y-2'>
                 {ids.map((id) => (

@@ -1,10 +1,8 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import IcPersonAdd from 'icons/material/PersonAdd.svg'
 import IcStar from 'icons/material/Star.svg'
 import IcAdvert from 'icons/material/Advert.svg'
-import {toJS} from 'mobx'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
@@ -17,7 +15,7 @@ const UserCard: FC = observer(() => {
     <div className='flex flex-col bg-white px-2 py-6'>
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
-          <div className='w-16 h-16 rounded-full overflow-hidden mb-2'>
+          <div className='w-16 h-16 rounded-full overflow-hidden mb-2 bg-black-c'>
             {!!product.owner.image && (
               <ImageWrapper
                 width={64}
@@ -28,7 +26,7 @@ const UserCard: FC = observer(() => {
               />
             )}
           </div>
-          <IcPersonAdd className='fill-current h-6 w-6 ' />
+          {/* <IcPersonAdd className='fill-current h-6 w-6 ' /> */}
         </div>
         <div>
           <span className='text-brand-b1 text-h-3 font-bold'>
