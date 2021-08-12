@@ -177,20 +177,26 @@ const Footer: FC = observer(() => {
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
                 className='text-brand-b1 text-body-3'
-                href='/terms-and-conditions'>
+                href='/p/terms-and-conditions'>
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
                 className='text-brand-b1 text-body-3'
-                href='/privacy-policy'>
+                href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('RULES')}
                 className='text-brand-b1 text-body-3'
-                href='/general-requirements-for-adverts'>
+                href='/p/rooles/general-requirements-for-adverts'>
                 {t('RULES')}
+              </LinkWrapper>
+              <LinkWrapper
+                title={t('COOKIES_POLICY')}
+                className='text-brand-b1 text-body-3'
+                href='/p/cookies-policy'>
+                {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 href='https://old.adverto.com'

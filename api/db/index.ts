@@ -64,14 +64,12 @@ ORDER BY word`,
 }
 //
 // 1-ru 2-en
-export const fetchDocuments = async (path: string, lang: string) => {
-  const tempLang = lang === 'ru' ? 1 : 2
-
-  const key = `docs-${path}-${tempLang}`
+export const fetchDocuments = async (path: string) => {
+  const key = `docs-${path}`
   const cached = cache.get(key)
   if (cached) return cached
   const result = await sequelize.query(
-    `SELECT * FROM adv_site_content WHERE id_lang=${tempLang} AND url='/${path}/'`,
+    `SELECT * FROM adv_site_content WHERE id_lang=2 AND url='/${path}/'`,
     {type: QueryTypes.SELECT},
   )
   cache.set(key, result)
