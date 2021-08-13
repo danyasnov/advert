@@ -59,11 +59,13 @@ const Footer: FC = observer(() => {
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
         <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
           {mainCountriesIds.map((id) => (
-            <LinkButton
+            <LinkWrapper
               key={id}
-              onClick={notImplementedAlert}
-              label={countriesById[id]?.title}
-            />
+              className='text-brand-b1 text-body-3'
+              href={`/${countriesById[id]?.isoCode}/all`}
+              title={countriesById[id]?.title}>
+              {countriesById[id]?.title}
+            </LinkWrapper>
           ))}
           <LinkButton
             onClick={() => setShowCountries(!showCountries)}
