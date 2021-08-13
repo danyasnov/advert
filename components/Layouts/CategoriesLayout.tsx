@@ -1,6 +1,7 @@
 import {FC, useState} from 'react'
 import Head from 'next/head'
 import {observer} from 'mobx-react-lite'
+import {useTranslation} from 'next-i18next'
 import CategoryFilter from '../CategoryFilter'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -13,11 +14,14 @@ import {useCategoriesStore} from '../../providers/RootStoreProvider'
 const CategoriesLayout: FC = observer(() => {
   const [showFilter, setShowFilter] = useState(false)
   const {categoryData} = useCategoriesStore()
-
+  const {t} = useTranslation()
+  const title = categoryData ? '' : t('MAIN_PAGE_TITLE')
+  const description = categoryData ? '' : t('MAIN_PAGE_DESCRIPTION')
   return (
     <HeaderFooterWrapper>
       <Head>
-        <title>{categoryData.name}</title>
+        <title>{title}</title>
+        <meta name='description' content={description} />
       </Head>
       <div className='bg-white px-4 s:px-8 flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>

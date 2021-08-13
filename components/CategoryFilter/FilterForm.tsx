@@ -86,7 +86,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       onlyDiscounted: false,
       fields: {},
     }
-    if (reset) return defaultValues
+    if (reset || isEmpty(aggregatedFields)) return defaultValues
     const filter = getFormikInitialFromQuery(
       router.query,
       aggregatedFields.reduce((acc, val) => ({...acc, [val.slug]: val}), {}),
