@@ -6,6 +6,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 import Button from './Buttons/Button'
 
 interface Props {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   items: Record<string, any>
   title?: string
   subTitle?: string
@@ -29,7 +30,7 @@ const LocationSelector: FC<Props> = ({
     <div className='flex flex-col'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col mt-2 pt-4'>
-          {title && <span className='text-h-2 text-black-a mb-2'>{title}</span>}
+          {title && <h1 className='text-h-2 text-black-a mb-2'>{title}</h1>}
           {subTitle && (
             <span className='text-h-4 text-black-b mb-4'>{subTitle}</span>
           )}

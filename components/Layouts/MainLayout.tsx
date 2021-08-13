@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import Head from 'next/head'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -19,6 +20,9 @@ const MainLayout: FC = observer(() => {
 
   return (
     <HeaderFooterWrapper>
+      <Head>
+        <title>{t('MAIN_PAGE_TITLE')}</title>
+      </Head>
       <div className='bg-black-e py-8 m:flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-608px l:w-896px space-y-12'>
