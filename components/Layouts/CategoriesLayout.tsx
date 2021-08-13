@@ -2,6 +2,7 @@ import {FC, useState} from 'react'
 import Head from 'next/head'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {useRouter} from 'next/router'
 import CategoryFilter from '../CategoryFilter'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -9,14 +10,28 @@ import CategoryHeader from '../CategoryHeader'
 import FilterForm from '../CategoryFilter/FilterForm'
 import SortSelect from '../SortSelect'
 import QuickCategories from '../QuickCategories'
-import {useCategoriesStore} from '../../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useCountriesStore,
+} from '../../providers/RootStoreProvider'
+import {getQueryValue} from '../../helpers'
 
 const CategoriesLayout: FC = observer(() => {
   const [showFilter, setShowFilter] = useState(false)
+  const {query} = useRouter()
+  const citySlug: string = getQueryValue(query, 'city')
   const {categoryData} = useCategoriesStore()
+  const {citiesBySlug} = useCountriesStore()
+  const cityTitle: string = citiesBySlug[citySlug]?.word
   const {t} = useTranslation()
-  const title = categoryData ? '' : t('MAIN_PAGE_TITLE')
-  const description = categoryData ? '' : t('MAIN_PAGE_DESCRIPTION')
+  const title = categoryData
+    ? // @ts-ignore
+      categoryData.metaTitle.replace('#LOCATION#', cityTitle || '')
+    : t('MAIN_PAGE_TITLE')
+  const description = categoryData
+    ? // @ts-ignore
+      categoryData.metaDescription.replace('#LOCATION#', cityTitle || '')
+    : t('MAIN_PAGE_DESCRIPTION')
   return (
     <HeaderFooterWrapper>
       <Head>

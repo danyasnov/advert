@@ -137,6 +137,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         productsStore,
         countriesStore: {
           countries,
+          cities,
         },
       },
       ...(await serverSideTranslations(state.language)),
