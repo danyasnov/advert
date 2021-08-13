@@ -22,6 +22,7 @@ const MainLayout: FC = observer(() => {
     <HeaderFooterWrapper>
       <Head>
         <title>{t('MAIN_PAGE_TITLE')}</title>
+        <meta name='description' content={t('MAIN_PAGE_DESCRIPTION')} />
       </Head>
       <div className='bg-black-e py-8 m:flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>

@@ -1,4 +1,6 @@
 import {FC, useState} from 'react'
+import Head from 'next/head'
+import {observer} from 'mobx-react-lite'
 import CategoryFilter from '../CategoryFilter'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -6,12 +8,17 @@ import CategoryHeader from '../CategoryHeader'
 import FilterForm from '../CategoryFilter/FilterForm'
 import SortSelect from '../SortSelect'
 import QuickCategories from '../QuickCategories'
+import {useCategoriesStore} from '../../providers/RootStoreProvider'
 
-const CategoriesLayout: FC = () => {
+const CategoriesLayout: FC = observer(() => {
   const [showFilter, setShowFilter] = useState(false)
+  const {categoryData} = useCategoriesStore()
 
   return (
     <HeaderFooterWrapper>
+      <Head>
+        <title>{categoryData.name}</title>
+      </Head>
       <div className='bg-white px-4 s:px-8 flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
           <main className='m:w-608px l:w-896px relative'>
@@ -43,6 +50,6 @@ const CategoriesLayout: FC = () => {
       </div>
     </HeaderFooterWrapper>
   )
-}
+})
 
 export default CategoriesLayout

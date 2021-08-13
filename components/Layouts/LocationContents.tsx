@@ -24,6 +24,10 @@ const LocationContents: FC<Props> = observer(({subtitle}) => {
     <>
       <Head>
         <title>{t('LOCATION_PAGE_TITLE', {location: title})}</title>
+        <meta
+          name='description'
+          content={t('LOCATION_PAGE_TITLE', {location: title})}
+        />
       </Head>
       <HeaderFooterWrapper>
         <div className='bg-white px-4 s:px-8 flex'>
