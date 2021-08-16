@@ -10,7 +10,7 @@ import isIp from 'is-ip'
 import {DummyAnalytics} from '../helpers'
 import Storage from '../stores/Storage'
 
-curlirize(axios)
+if (!process.env.PRODUCTION) curlirize(axios)
 export const {API_URL} = process.env
 
 export const getRest = (storage: AppStorage): RestApi =>

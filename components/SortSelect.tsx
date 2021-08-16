@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {useTranslation} from 'next-i18next'
+import {TFunction, useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import IcSort from 'icons/material/Sort.svg'
 import {useRouter} from 'next/router'
@@ -19,6 +19,24 @@ const withIcons = (options) => {
     ),
   }))
 }
+
+const getSortOptions = (t: TFunction) => [
+  {
+    value: 'date_updated-asc',
+    label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
+  },
+  {
+    value: 'date_updated-desc',
+    label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
+  },
+  {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
+  {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
+  {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
+  {
+    value: 'distance-desc',
+    label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
+  },
+]
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
@@ -26,35 +44,17 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
     useProductsStore()
 
-  const [options, setOptions] = useState(
-    withIcons([
-      {
-        value: 'date_updated-asc',
-        label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
-      },
-      {
-        value: 'date_updated-desc',
-        label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
-      },
-      {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
-      {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
-      {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
-      {
-        value: 'distance-desc',
-        label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
-      },
-    ]),
-  )
+  const [options, setOptions] = useState(withIcons(getSortOptions(t)))
   useEffect(() => {
-    if (state.searchBy !== 'coords' || hideDistanceSort) {
-      setOptions(
-        options.filter(
-          (o) => !['distance-asc', 'distance-desc'].includes(o.value),
-        ),
-      )
-    }
+    setOptions(
+      state.searchBy !== 'coords' || hideDistanceSort
+        ? getSortOptions(t).filter(
+            (o) => !['distance-asc', 'distance-desc'].includes(o.value),
+          )
+        : getSortOptions(t),
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [state.searchBy])
 
   return (
     <LinkSelect
