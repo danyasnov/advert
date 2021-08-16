@@ -12,6 +12,7 @@ const handle = app.getRequestHandler()
 const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
 const domains = {
   dev: 'localhost:3000',
+  prod: 'adverto.sale',
   stage: 'fpreprod.adverto.sale',
 }
 
@@ -21,6 +22,9 @@ const getDomain = (host) => {
   }
   if (host.includes('fpreprod')) {
     return domains.stage
+  }
+  if (host.includes('adverto')) {
+    return domains.prod
   }
   return host
 }

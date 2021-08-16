@@ -1,15 +1,18 @@
 const path = require('path')
 
 const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
-const getDomains = (domain) => {
+const getDomains = (domains = []) => {
   const result = []
-  locales.forEach((l) => {
-    if (l === 'en') {
-      result.push({domain, defaultLocale: l})
-    } else {
-      result.push({domain: `${l}.${domain}`, defaultLocale: l})
-    }
+  domains.forEach((domain) => {
+    locales.forEach((l) => {
+      if (l === 'en') {
+        result.push({domain, defaultLocale: l})
+      } else {
+        result.push({domain: `${l}.${domain}`, defaultLocale: l})
+      }
+    })
   })
+
   return result
 }
 
@@ -19,8 +22,7 @@ module.exports = {
     locales,
     serializeConfig: false,
     fallbackLng: 'en',
-    // domains: [...getDomains('localhost:3000')],
-    domains: [...getDomains('fpreprod.adverto.sale')],
+    domains: [...getDomains(['adverto.sale', 'fpreprod.adverto.sale'])],
   },
   localePath: path.resolve('./locales'),
 }
