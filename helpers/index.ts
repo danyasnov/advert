@@ -449,7 +449,7 @@ export const getFormikInitialFromQuery = (
     typeof window === 'undefined'
       ? query
       : Object.fromEntries(new URLSearchParams(window.location.search))
-  const excludedFields = ['country', 'city', 'categories']
+  const excludedFields = ['country', 'city', 'categories', 'q']
   const baseFields = [
     'condition',
     'onlyDiscounted',
