@@ -48,10 +48,10 @@ const MainLayout: FC = observer(() => {
               <ScrollableCardGroup />
             </div>
           </main>
-          <aside
-            className='hidden m:block bg-white'
-            style={{width: '288px', height: '700px'}}
-          />
+          {/* <aside */}
+          {/*  className='hidden m:block bg-white' */}
+          {/*  style={{width: '288px', height: '700px'}} */}
+          {/* /> */}
         </div>
       </div>
     </HeaderFooterWrapper>
