@@ -218,10 +218,10 @@ const Footer: FC = observer(() => {
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper
-                href='https://old.adverto.com'
-                title='old.adverto.com'
+                href='https://old.adverto.sale'
+                title='old.adverto.sale'
                 className='text-brand-b1 text-body-3'>
-                old.adverto.com
+                old.adverto.sale
               </LinkWrapper>
             </div>
             <div className='text-body-3 my-2 s:my-4 text-black-b'>

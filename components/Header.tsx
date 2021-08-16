@@ -86,7 +86,7 @@ const Header: FC = () => {
               />
             </div>
             <LinkWrapper
-              href='https://old.adverto.com'
+              href='https://old.adverto.sale'
               title={t('LOGIN')}
               target='_blank'
               className='flex'>

@@ -26,12 +26,3 @@ module.exports = {
   },
   localePath: path.resolve('./locales'),
 }
-
-// [
-// ({domain: 'sample.com', defaultLocale: 'en'},
-//   {domain: 'el.sample.com', defaultLocale: 'el'},
-//   {domain: 'ro.sample.com', defaultLocale: 'ro'},
-//   {domain: 'ru.sample.com', defaultLocale: 'ru'},
-//   {domain: 'tr.sample.com', defaultLocale: 'tr'},
-//   {domain: 'uk.sample.com', defaultLocale: 'uk'})
-// ]
