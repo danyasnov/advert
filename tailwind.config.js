@@ -30,6 +30,7 @@ module.exports = {
       'h-5': ['14px', '16px'],
     },
     screens: {
+      xs: '576px',
       s: '768px',
       m: '1024px',
       l: '1360px',
@@ -117,6 +118,7 @@ module.exports = {
       },
       minWidth: {
         10: '2.5rem',
+        40: '10rem',
         52: '13rem',
       },
       outline: {
