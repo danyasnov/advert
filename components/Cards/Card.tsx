@@ -48,8 +48,9 @@ const Card: FC<Props> = ({
     const step = 1 / length
     const position = elX / elW
     const index = Math.floor(position / step)
-    embla.scrollTo(index)
-  }, [elW, elX, embla, images])
+    if (index) embla.scrollTo(index)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elW, elX, embla, images?.length])
   useEffect(() => {
     if (embla)
       embla.on('select', () => {
