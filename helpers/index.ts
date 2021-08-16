@@ -125,8 +125,8 @@ export const processCookies = async (
       if (locationByIp.data?.data) {
         const {latitude, longitude} = locationByIp.data.data
         state.userLocation = {
-          latitude,
-          longitude,
+          latitude: latitude || 34.6841,
+          longitude: longitude || 33.0379,
         }
       }
     } catch (e) {
@@ -376,7 +376,7 @@ export const getFilterFromQuery = (
   query: ParsedUrlQuery,
   category: CACategoryDataModel,
 ): Partial<Filter> => {
-  const excludedFields = ['country', 'city', 'categories']
+  const excludedFields = ['country', 'city', 'categories', 'q']
   const baseFields = [
     'condition',
     'onlyDiscounted',
