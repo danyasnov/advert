@@ -26,7 +26,7 @@ const MainLayout: FC = observer(() => {
       </Head>
       <div className='bg-black-e py-8 m:flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='m:w-608px l:w-896px space-y-12'>
+          <main className='m:w-944px l:w-896px space-y-12'>
             <CategoriesSlider />
             <ProductsSlider
               products={discountedProducts}

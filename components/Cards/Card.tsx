@@ -59,7 +59,7 @@ const Card: FC<Props> = ({
   }, [embla])
   return (
     <div
-      className={`w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
+      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}
       // @ts-ignore safari fix border radius

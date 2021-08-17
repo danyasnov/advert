@@ -100,11 +100,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const categoriesStore = {categories: categories ?? null}
   if (product && similarProductsPromise) {
     const [similarProductsResponse] = response
-
-    productsStore = {
-      // @ts-ignore
-      product: product ?? null,
-      similarProducts: similarProductsResponse?.result?.data ?? null,
+    if (product?.advert?.block) {
+      productsStore = undefined
+    } else {
+      productsStore = {
+        // @ts-ignore
+        product: product ?? null,
+        similarProducts: similarProductsResponse?.result?.data ?? null,
+      }
     }
   } else {
     const [productsResponse] = response

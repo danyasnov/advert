@@ -33,7 +33,7 @@ const ScrollableCardGroup: FC = observer(() => {
           </div>
         }>
         <div
-          className={`flex -mx-1 s:-mx-2 s:mt-4 flex-wrap justify-around
+          className={`grid grid-cols-2 xs:grid-cols-3 mx-3 s:mt-4 s:flex s:mx-6 m:-mx-8 s:flex-wrap s:justify-around
       ${state === 'pending' ? 'opacity-40' : ''}`}>
           {isEmpty(products) ? (
             <span className='text-black-b text-body-2 mx-2'>

@@ -178,10 +178,11 @@ export class ProductsStore implements IProductsStore {
         } = response.data
         if (page === 1) {
           this.newProducts = data
-          this.newCacheId = cacheId
         } else {
           this.newProducts = [...this.products, ...data]
         }
+        this.newCacheId = cacheId
+
         this.newAggregatedFields = aggregatedFields
         this.newPage = page
         this.newLimit = limit
