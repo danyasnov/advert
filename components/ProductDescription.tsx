@@ -29,7 +29,7 @@ const ProductDescription: FC = observer(() => {
   const {t} = useTranslation()
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {shortUrl, favoriteCounter, views, dateUpdated} = advert
+  const {shortUrl, favoriteCounter, views, dateUpdated, fields} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
@@ -72,7 +72,7 @@ const ProductDescription: FC = observer(() => {
 
       <div className='h-full flex flex-col'>
         <Tabs
-          items={tabs}
+          items={fields.length ? tabs : [tabs[0]]}
           value={activeTab}
           onChange={(id) => setActiveTab(id)}
         />
