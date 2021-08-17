@@ -12,6 +12,7 @@ import {
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import TitleWithSeparator from '../TitleWithSeparator'
+import Button from '../Buttons/Button'
 
 const MainLayout: FC = observer(() => {
   const {locationCodes} = useGeneralStore()
@@ -24,6 +25,11 @@ const MainLayout: FC = observer(() => {
         <title>{t('MAIN_PAGE_TITLE')}</title>
         <meta name='description' content={t('MAIN_PAGE_DESCRIPTION')} />
       </Head>
+      <Button className='s:hidden flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap fixed left-1/2 -translate-x-1/2	w-40 z-10 bottom-20'>
+        <LinkWrapper href='/new-ad' title={t('NEW_AD')}>
+          <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
+        </LinkWrapper>
+      </Button>
       <div className='bg-black-e py-8 m:flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-944px l:w-896px space-y-12'>

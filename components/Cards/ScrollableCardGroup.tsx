@@ -18,7 +18,7 @@ const ScrollableCardGroup: FC = observer(() => {
   const {query} = useRouter()
   const {t} = useTranslation()
   return (
-    <div className='flex flex-col m:items-center relative'>
+    <div className='flex flex-col m:items-start relative'>
       <InfiniteScroll
         dataLength={products.length}
         next={() => {
@@ -33,7 +33,7 @@ const ScrollableCardGroup: FC = observer(() => {
           </div>
         }>
         <div
-          className={`grid grid-cols-2 xs:grid-cols-3 mx-3 s:mt-4 s:flex s:mx-6 m:-mx-8 s:flex-wrap s:justify-around
+          className={`grid grid-cols-2 xs:grid-cols-3 -mx-1 s:mt-4 s:flex s:-mx-2 m:-mx-2 s:flex-wrap s:justify-start
       ${state === 'pending' ? 'opacity-40' : ''}`}>
           {isEmpty(products) ? (
             <span className='text-black-b text-body-2 mx-2'>

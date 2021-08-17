@@ -14,8 +14,8 @@ import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-import SecondaryButton from './Buttons/SecondaryButton'
 import LinkWrapper from './Buttons/LinkWrapper'
+import PrimaryButton from './Buttons/PrimaryButton'
 
 const tabs = [
   {id: 0, title: 'DESCRIPTION'},
@@ -54,12 +54,14 @@ const ProductDescription: FC = observer(() => {
           </span>
         </div>
       </div>
-      <SecondaryButton
-        onClick={() => setShowPhone(true)}
-        className='text-body-2 text-black-b order-0 mb-4'>
-        <IcPhone className='fill-current h-4 w-4 mr-2' />
-        {showPhone ? phoneNum : t('MAKE_A_CALL')}
-      </SecondaryButton>
+      {phoneNum && (
+        <PrimaryButton
+          onClick={() => setShowPhone(true)}
+          className='m:hidden text-body-2 text-black-b order-0 mb-4'>
+          <IcPhone className='fill-current h-4 w-4 mr-2' />
+          {showPhone ? phoneNum : t('MAKE_A_CALL')}
+        </PrimaryButton>
+      )}
       <div className='mb-2 s:mb-4 m:hidden'>
         <UserCard />
       </div>

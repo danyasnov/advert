@@ -23,7 +23,7 @@ const LocationMobile: FC<Props> = ({isOpen, onClose}) => {
       ariaHideApp={false}
       contentLabel='Location Modal'
       className='absolute w-full  bg-white-a inset-x-0 mx-auto flex outline-none'
-      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto'>
+      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
       <div className='flex flex-col w-full absolute bg-white z-10 left-0'>
         <div className='px-4 s:px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
           <span className='text-h-2 text-black-b font-bold'>
