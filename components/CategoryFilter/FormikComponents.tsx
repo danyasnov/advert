@@ -70,7 +70,11 @@ export const FormikField: FC<IFormikField> = ({field}) => {
         // @ts-ignore
         ...multiselects.top.map(getSelectOptions),
         // @ts-ignore
-        ...multiselects.other.map(getSelectOptions),
+        ...(multiselects.other
+          ? // @ts-ignore
+            multiselects.other
+          : []
+        ).map(getSelectOptions),
       ]
       props.placeholder = name
       props.isFilterable = isFilterable

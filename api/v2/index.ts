@@ -10,6 +10,7 @@ import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
 import {defaultFilter} from '../../utils'
 
+const cache = new Map()
 export const fetchProducts = (
   state: CookiesState,
   payload: FetchAdvertisesPayload = {},
@@ -55,14 +56,21 @@ export const fetchProducts = (
   return rest.advertises.fetchList(payloadData)
 }
 
-export const fetchCategories = (
+export const fetchCategories = async (
   language: string,
 ): Promise<RestResponse<CACategoryModel[]>> => {
+  const key = `categories-${language}`
+
+  const cached: RestResponse<CACategoryModel[]> = cache.get(key)
+  if (cached) return cached
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
-  return rest.categories.fetchTree()
+  const result = rest.categories.fetchTree()
+  cache.set(key, result)
+
+  return result
 }
 
 export const fetchCategoryData = (

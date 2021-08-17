@@ -336,7 +336,10 @@ export const getUrlQueryFromFilter = (
                 // @ts-ignore
                 ...currentField.multiselects.top,
                 // @ts-ignore
-                ...currentField.multiselects.other,
+                ...(currentField.multiselects.other
+                  ? // @ts-ignore
+                    currentField.multiselects.other
+                  : []),
               ].find(({id}) => id === valueId)?.value,
           )
           break
@@ -410,7 +413,15 @@ export const getFilterFromQuery = (
             // @ts-ignore
             parsedValue = parsedValue.map(
               (valueId) =>
-                currentField.multiselects.find((m) => m.value === valueId)?.id,
+                [
+                  // @ts-ignore
+                  ...currentField.multiselects.top,
+                  // @ts-ignore
+                  ...(currentField.multiselects.other
+                    ? // @ts-ignore
+                      currentField.multiselects.other
+                    : []),
+                ].find((m) => m.value === valueId)?.id,
             )
             break
           }
@@ -492,7 +503,10 @@ export const getFormikInitialFromQuery = (
                 // @ts-ignore
                 ...currentField.multiselects.top,
                 // @ts-ignore
-                ...currentField.multiselects.other,
+                ...(currentField.multiselects.other
+                  ? // @ts-ignore
+                    currentField.multiselects.other
+                  : []),
               ].find((m) => m.value === valueId)
               return {
                 value: option.id,
