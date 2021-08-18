@@ -6,6 +6,7 @@ import {
   getFilterFromQuery,
   getQueryValue,
   processCookies,
+  redirect,
   withLocationQuery,
 } from '../../../helpers'
 import {
@@ -28,7 +29,7 @@ export default function Home({isProduct}) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {query, resolvedUrl} = ctx
+  const {query, resolvedUrl, res} = ctx
   let state = await processCookies(ctx)
   const countryCode = getQueryValue(query, 'country')
   const sortBy = getQueryValue(query, 'sortBy') ?? null
@@ -58,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let similarProductsPromise
   let currentCategory
-  let categoryData
+  let categoryData = null
   if (product) {
     similarProductsPromise = fetchProducts(state, {
       limit: 4,
@@ -67,8 +68,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   } else {
     currentCategory = findCategoryByQuery(query.categories, categories)
-    categoryData =
-      (await fetchCategoryData(state, currentCategory?.id))?.result ?? null
+    if (currentCategory) {
+      categoryData =
+        (await fetchCategoryData(state, currentCategory?.id))?.result ?? null
+    } else if (
+      (countryCode !== 'all' &&
+        !countries.find((c) => c.isoCode === countryCode)) ||
+      !currentCategory
+    ) {
+      return redirect('/countries', res)
+    }
   }
 
   const promises: Promise<any>[] = []
@@ -92,8 +101,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     promises.push(fetchProducts(state, {filter}))
   }
 
-  const response = await Promise.allSettled(promises).then((res) =>
-    res.map((p) => (p.status === 'fulfilled' ? p.value : null)),
+  const response = await Promise.allSettled(promises).then((promiseRes) =>
+    promiseRes.map((p) => (p.status === 'fulfilled' ? p.value : null)),
   )
 
   let productsStore = {}
@@ -111,9 +120,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   } else {
     const [productsResponse] = response
+    const products = productsResponse?.result?.data ?? null
     productsStore = {
       // @ts-ignore
-      products: productsResponse?.result?.data ?? null,
+      products,
       // @ts-ignore
       count: productsResponse?.headers?.pagination.count,
       // @ts-ignore

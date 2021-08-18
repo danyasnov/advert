@@ -30,7 +30,9 @@ const LocationSelector: FC<Props> = ({
     <div className='flex flex-col'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col mt-2 pt-4'>
-          {title && <h1 className='text-h-2 text-black-a mb-2'>{title}</h1>}
+          {title && (
+            <h1 className='text-h-2 text-black-a mb-2 font-bold'>{title}</h1>
+          )}
           {subTitle && (
             <span className='text-h-4 text-black-b mb-4'>{subTitle}</span>
           )}

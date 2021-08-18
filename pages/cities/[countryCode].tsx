@@ -2,7 +2,7 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import {head, isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import {getQueryValue, processCookies} from '../../helpers'
+import {getQueryValue, processCookies, redirect} from '../../helpers'
 import {fetchCountries} from '../../api/v1'
 import {fetchCategories} from '../../api/v2'
 import LocationContents from '../../components/Layouts/LocationContents'
@@ -17,7 +17,7 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
-  const {query, res} = ctx
+  const {query} = ctx
   const countryCode = getQueryValue(query, 'countryCode')
   const countries = await fetchCountries(state.language)
   const promises = [fetchCategories(state.language)]
@@ -26,31 +26,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
   const categories = categoriesData?.result ?? null
-  let citiesByAlphabet = null
-  let isEmptyCities = isEmpty(cities)
-  if (!isEmptyCities) {
-    citiesByAlphabet = cities.reduce((acc, value) => {
-      if (value.has_adverts === '0') return acc
-      const result: City & {href: string} = {
-        ...value,
-        href: `/${countryCode}/${value.slug}`,
-      }
-      if (acc[head(result.word)]) {
-        acc[head(result.word)].push(result)
-      } else {
-        acc[head(result.word)] = [result]
-      }
-      return acc
-    }, {})
-    isEmptyCities = isEmpty(citiesByAlphabet)
-  }
+  const citiesByAlphabet = cities.reduce((acc, value) => {
+    if (value.has_adverts === '0') return acc
+    const result: City & {href: string} = {
+      ...value,
+      href: `/${countryCode}/${value.slug}`,
+    }
+    if (acc[head(result.word)]) {
+      acc[head(result.word)].push(result)
+    } else {
+      acc[head(result.word)] = [result]
+    }
+    return acc
+  }, {})
 
-  if (isEmptyCities) {
-    res.setHeader('location', `/${countryCode}/all`)
-    res.statusCode = 302
-    res.end()
-    return
-  }
   // eslint-disable-next-line consistent-return
   return {
     props: {

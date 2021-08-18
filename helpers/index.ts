@@ -12,7 +12,7 @@ import {
 import {destroyCookie, parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
-import {IncomingMessage} from 'http'
+import {IncomingMessage, ServerResponse} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
@@ -593,10 +593,12 @@ export const withLocationQuery = async (
       // @ts-ignore
       updatedState.searchBy = 'countryAndCity'
       updatedState.cityId = toString(city.id)
+      updatedState.countryId = country.id
     } else if (region) {
       // @ts-ignore
       updatedState.searchBy = 'countryAndRegion'
       updatedState.regionId = toString(region.id)
+      updatedState.countryId = country.id
     } else {
       // @ts-ignore
       updatedState.searchBy = 'onlyCountry'
@@ -615,4 +617,16 @@ export const shallowUpdateQuery = (queryString?: string): void => {
     window.location.pathname
   }${queryString ? `?${queryString}` : ''}`
   window.history.pushState({path: newurl}, '', newurl)
+}
+
+export const redirect = (
+  url: string,
+  res: ServerResponse,
+): {props: Record<string, never>} => {
+  res.setHeader('location', url)
+  res.statusCode = 301
+  res.end()
+  return {
+    props: {},
+  }
 }

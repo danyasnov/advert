@@ -1,5 +1,5 @@
 import {GetServerSideProps} from 'next'
-import {getQueryValue, processCookies} from '../../helpers'
+import {getQueryValue, processCookies, redirect} from '../../helpers'
 import {fetchProductDetails} from '../../api/v2'
 
 export default function Home() {
@@ -15,13 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const response = await fetchProductDetails(state, param)
   if (response.result) {
     const {url} = response.result.advert
-    res.setHeader('location', url)
-    res.statusCode = 302
-    res.end()
-  } else {
-    throw new Error("can't find advert")
+    return redirect(url, res)
   }
-  return {
-    props: {},
-  }
+  throw new Error("can't find advert")
 }
