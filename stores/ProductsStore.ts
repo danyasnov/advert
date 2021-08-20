@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, toJS} from 'mobx'
+import {action, makeAutoObservable} from 'mobx'
 import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
@@ -7,7 +7,7 @@ import {ParsedUrlQuery} from 'querystring'
 import {toast} from 'react-toastify'
 import {RootStore} from './RootStore'
 import {makeRequest} from '../api'
-import {Filter} from '../types'
+import {Filter, ProductFetchState} from '../types'
 
 const cancelToken = axios.CancelToken
 
@@ -35,7 +35,7 @@ export interface IProductsStore {
   similarProducts: Array<AdvertiseListItemModel>
   discountedProducts: Array<AdvertiseListItemModel>
   hydrate(data: IProductsHydration): void
-  state: State
+  state: ProductFetchState
   page: number
   newPage: number
   limit: number
@@ -62,12 +62,11 @@ interface FetchOptions {
   isScroll?: boolean
   query?: ParsedUrlQuery
 }
-type State = 'done' | 'pending' | 'error' | 'pending-scroll'
 export const PAGE_LIMIT = 40
 export class ProductsStore implements IProductsStore {
   root
 
-  state: State = 'done'
+  state: ProductFetchState = 'done'
 
   products = []
 

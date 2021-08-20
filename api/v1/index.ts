@@ -1,5 +1,10 @@
 import {RestResponse} from 'front-api/src/api/request'
-import {CountryModel, GeoPositionItemModel} from 'front-api/src/models/index'
+import {
+  CountryModel,
+  GeoPositionItemModel,
+  OwnerModel,
+  ReviewModel,
+} from 'front-api/src/models/index'
 import axios, {AxiosPromise} from 'axios'
 import {SettingsLanguageModel} from 'front-api'
 import {API_URL, getRest} from '../index'
@@ -75,4 +80,33 @@ export const fetchLanguages = (
   })
   const rest = getRest(storage)
   return rest.oldRest.fetchLanguages(language)
+}
+
+export const fetchUser = async (
+  id: string,
+  language: string,
+): Promise<RestResponse<OwnerModel>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  const userData = await rest.oldRest.userInfo(id)
+  if (userData.result && userData.result.settings) {
+    if (userData.result.settings.personal === undefined) {
+      userData.result.settings.personal = null
+    }
+  }
+  return userData
+}
+
+export const fetchUserRatings = async (
+  id: string,
+  page = 1,
+  language: string,
+): Promise<RestResponse<ReviewModel[]>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.oldRest.fetchUserRatings(id, page)
 }

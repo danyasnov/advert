@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import Head from 'next/head'
+import {useRouter} from 'next/router'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -16,7 +17,17 @@ import Button from '../Buttons/Button'
 
 const MainLayout: FC = observer(() => {
   const {locationCodes} = useGeneralStore()
-  const {freeProducts, discountedProducts} = useProductsStore()
+  const {
+    freeProducts,
+    discountedProducts,
+    products,
+    state,
+    count,
+    page,
+    fetchProducts,
+    applyFilter,
+  } = useProductsStore()
+  const {query} = useRouter()
   const {t} = useTranslation()
 
   return (
@@ -51,7 +62,17 @@ const MainLayout: FC = observer(() => {
                   </LinkWrapper>
                 }
               />
-              <ScrollableCardGroup />
+              <ScrollableCardGroup
+                products={products}
+                count={count}
+                page={page}
+                state={state}
+                fetchProducts={() =>
+                  fetchProducts({page: page + 1, isScroll: true, query}).then(
+                    () => applyFilter(),
+                  )
+                }
+              />
             </div>
           </main>
           {/* <aside */}

@@ -26,6 +26,8 @@ export interface CookiesState {
   cookieAccepted?: boolean
 }
 
+export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
+
 export interface SerializedCookiesState {
   userLocation?: string
   searchLocation?: string

@@ -19,6 +19,7 @@ import {
   LanguagesStore,
 } from './LanguagesStore'
 import {GeneralStore, IGeneralsHydration, IGeneralStore} from './GeneralStore'
+import {IUserHydration, IUserStore, UserStore} from './UserStore'
 
 export interface IRootStoreHydration {
   categoriesStore: ICategoriesHydration
@@ -26,12 +27,14 @@ export interface IRootStoreHydration {
   countriesStore: ICountriesHydration
   languagesStore: ILanguagesHydration
   generalStore: IGeneralsHydration
+  userStore: IUserHydration
 }
 
 export interface IRootStore {
   categoriesStore: ICategoriesStore
   productsStore: IProductsStore
   countriesStore: ICountriesStore
+  userStore: IUserStore
   languagesStore: ILanguagesStore
   generalStore: IGeneralStore
   hydrate(data: IRootStoreHydration): void
@@ -48,12 +51,15 @@ export class RootStore implements IRootStore {
 
   generalStore
 
+  userStore
+
   constructor() {
     this.categoriesStore = new CategoriesStore(this)
     this.productsStore = new ProductsStore(this)
     this.countriesStore = new CountriesStore(this)
     this.languagesStore = new LanguagesStore(this)
     this.generalStore = new GeneralStore(this)
+    this.userStore = new UserStore(this)
   }
 
   hydrate(data: IRootStoreHydration): void {
@@ -71,6 +77,9 @@ export class RootStore implements IRootStore {
     }
     if (data.generalStore) {
       this.generalStore.hydrate(data.generalStore)
+    }
+    if (data.userStore) {
+      this.userStore.hydrate(data.userStore)
     }
   }
 }

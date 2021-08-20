@@ -1,6 +1,14 @@
 import {RestResponse} from 'front-api/src/api/request'
-import {AdvertiseListResponse} from 'front-api/src/models/index'
-import {AdvertiseDetail, CACategoryDataModel, CACategoryModel} from 'front-api'
+import {
+  AdvertiseListResponse,
+  RestFetchUserProductsPayload,
+} from 'front-api/src/models/index'
+import {
+  AdvertiseDetail,
+  AdvertiseListItemModel,
+  CACategoryDataModel,
+  CACategoryModel,
+} from 'front-api'
 import {isObject, isNil} from 'lodash'
 import axios, {AxiosPromise} from 'axios'
 import {getSearchByFilter} from '../../helpers'
@@ -67,7 +75,7 @@ export const fetchCategories = async (
     language,
   })
   const rest = getRest(storage)
-  const result = rest.categories.fetchTree()
+  const result = rest.categories.fetchTree(false)
   cache.set(key, result)
 
   return result
@@ -121,4 +129,26 @@ export const fetchProductByUrl = (
       headers: {lang: {code: lang}},
     },
   })
+}
+
+export const fetchUserSale = (
+  payload: RestFetchUserProductsPayload,
+  language: string,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.fetchUserSaleProducts(payload)
+}
+
+export const fetchUserSold = (
+  payload: RestFetchUserProductsPayload,
+  language: string,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.fetchUserSoldProducts(payload)
 }

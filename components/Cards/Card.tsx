@@ -48,14 +48,15 @@ const Card: FC<Props> = ({
     const step = 1 / length
     const position = elX / elW
     const index = Math.floor(position / step)
-    if (index) embla.scrollTo(index)
+    if (!Number.isNaN(index)) embla.scrollTo(index)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elW, elX, embla, images?.length])
   useEffect(() => {
-    if (embla)
+    if (embla) {
       embla.on('select', () => {
         setCurrentIndex(embla.selectedScrollSnap() || 0)
       })
+    }
   }, [embla])
   return (
     <div

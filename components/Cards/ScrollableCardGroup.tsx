@@ -1,31 +1,37 @@
 import {FC} from 'react'
-import {observer} from 'mobx-react-lite'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import {useRouter} from 'next/router'
-import {useProductsStore} from '../../providers/RootStoreProvider'
+import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
 import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
 
-const ScrollableCardGroup: FC = observer(() => {
-  const {products, state, count, page, fetchProducts, applyFilter} =
-    useProductsStore()
-  const hasMore = count > page * PAGE_LIMIT
-  const {query} = useRouter()
+interface Props {
+  products: AdvertiseListItemModel[]
+  state: string
+  count: number
+  page: number
+  limit?: number
+  fetchProducts: () => void
+}
+const ScrollableCardGroup: FC<Props> = ({
+  products = [],
+  state,
+  count,
+  page,
+  fetchProducts,
+  limit = PAGE_LIMIT,
+}) => {
+  const hasMore = count > page * limit
   const {t} = useTranslation()
   return (
     <div className='flex flex-col m:items-start relative'>
       <InfiniteScroll
-        dataLength={products.length}
-        next={() => {
-          fetchProducts({page: page + 1, isScroll: true, query}).then(() =>
-            applyFilter(),
-          )
-        }}
+        dataLength={products?.length}
+        next={fetchProducts}
         hasMore={hasMore}
         loader={
           <div className='flex justify-center'>
@@ -56,6 +62,6 @@ const ScrollableCardGroup: FC = observer(() => {
       <LoaderWrapper show={state === 'pending'} />
     </div>
   )
-})
+}
 
 export default ScrollableCardGroup

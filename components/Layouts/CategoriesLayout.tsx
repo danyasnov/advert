@@ -13,12 +13,15 @@ import QuickCategories from '../QuickCategories'
 import {
   useCategoriesStore,
   useCountriesStore,
+  useProductsStore,
 } from '../../providers/RootStoreProvider'
 import {getQueryValue} from '../../helpers'
 
 const CategoriesLayout: FC = observer(() => {
   const [showFilter, setShowFilter] = useState(false)
   const {query} = useRouter()
+  const {products, state, count, page, fetchProducts, applyFilter} =
+    useProductsStore()
   const citySlug: string = getQueryValue(query, 'city')
   const {categoryData} = useCategoriesStore()
   const {citiesBySlug} = useCountriesStore()
@@ -53,7 +56,17 @@ const CategoriesLayout: FC = observer(() => {
                 <div className='s:hidden w-48 my-6'>
                   <SortSelect id='mobile-sort' />
                 </div>
-                <ScrollableCardGroup />
+                <ScrollableCardGroup
+                  products={products}
+                  count={count}
+                  page={page}
+                  state={state}
+                  fetchProducts={() =>
+                    fetchProducts({page: page + 1, isScroll: true, query}).then(
+                      () => applyFilter(),
+                    )
+                  }
+                />
               </div>
             )}
             {showFilter && (

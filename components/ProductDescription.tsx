@@ -4,18 +4,14 @@ import {useTranslation} from 'next-i18next'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
 import IcPhone from 'icons/material/Phone.svg'
-import IcViber from 'icons/material/Viber.svg'
-import IcWhatsapp from 'icons/material/Whatsapp.svg'
-import IcTelegram from 'icons/material/Telegram.svg'
-import IcFacebook from 'icons/material/Facebook.svg'
-import IcVk from 'icons/material/Vk.svg'
+
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-import LinkWrapper from './Buttons/LinkWrapper'
 import PrimaryButton from './Buttons/PrimaryButton'
+import SocialButtons from './SocialButtons'
 
 const tabs = [
   {id: 0, title: 'DESCRIPTION'},
@@ -80,43 +76,8 @@ const ProductDescription: FC = observer(() => {
         {activeTab === 1 && <CharacteristicsTab />}
       </div>
       <div className='flex justify-between flex-col s:flex-row'>
-        <div className='flex space-x-2 mt-4 mb-2'>
-          <LinkWrapper
-            target='_blank'
-            title='Telegram'
-            href={`https://telegram.me/share/url?url=${shortUrl}`}
-            className='p-2 border border-shadow-b rounded-lg'>
-            <IcTelegram className='fill-current text-black-c h-6 w-6 ' />
-          </LinkWrapper>
-          <LinkWrapper
-            target='_blank'
-            title='Facebook'
-            href={`https://www.facebook.com/sharer.php?u=${shortUrl}`}
-            className='p-2 border border-shadow-b rounded-lg'>
-            <IcFacebook className='fill-current text-black-c h-6 w-6 ' />
-          </LinkWrapper>
-          <LinkWrapper
-            target='_blank'
-            title='Viber'
-            href={`viber://forward?text=250+Benz+CLA+${shortUrl}`}
-            className='p-2 border border-shadow-b rounded-lg'>
-            <IcViber className='fill-current text-black-c h-6 w-6 ' />
-          </LinkWrapper>
-          <LinkWrapper
-            target='_blank'
-            title='Whatsapp'
-            href={`whatsapp://send?text=250+Benz+CLA ${shortUrl}`}
-            className='p-2 border border-shadow-b rounded-lg'>
-            <IcWhatsapp className='fill-current text-black-c h-6 w-6 ' />
-          </LinkWrapper>
-          <LinkWrapper
-            target='_blank'
-            title='VK'
-            href={`https://vk.com/share.php?url=${shortUrl}`}
-            className='p-2 border border-shadow-b rounded-lg'>
-            <IcVk className='fill-current text-black-c h-6 w-6 ' />
-          </LinkWrapper>
-        </div>
+        <SocialButtons link={shortUrl} />
+
         <div className='flex justify-end mt-4 text-body-2 flex-col s:flex-row s:space-x-4'>
           {/* <SecondaryButton */}
           {/*  onClick={notImplementedAlert} */}
