@@ -101,12 +101,11 @@ export const fetchUser = async (
 
 export const fetchUserRatings = async (
   id: string,
-  page = 1,
   language: string,
 ): Promise<RestResponse<ReviewModel[]>> => {
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
-  return rest.oldRest.fetchUserRatings(id, page)
+  return rest.oldRest.fetchUserRatings(id, null)
 }

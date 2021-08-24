@@ -2,27 +2,34 @@ import {FC, useEffect, useState} from 'react'
 import Head from 'next/head'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {toJS} from 'mobx'
+import {size} from 'lodash'
+import IcUser from 'icons/material/User.svg'
+import IcClear from 'icons/material/Clear.svg'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
-import {useUserStore} from '../../providers/RootStoreProvider'
+import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
 import UserProfile from '../UserProfile'
 import Tabs from '../Tabs'
+import UserRatings from '../UserRatings'
+import UserSidebar from '../UserSidebar'
+import Button from '../Buttons/Button'
 
-const getTabs = (t: TFunction) => [
-  {title: t('SALE'), id: 1},
-  {title: t('SOLD'), id: 2},
-  {title: t('REVIEWS'), id: 3},
+const getTabs = (t: TFunction, sizes) => [
+  {title: `${t('SALE')} ${sizes[1]}`, id: 1},
+  {title: `${t('SOLD')} ${sizes[2]}`, id: 2},
+  {title: `${t('REVIEWS')} ${sizes[3]}`, id: 3},
 ]
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [activeTab, setActiveTab] = useState(1)
-  const {products, user, fetchProducts} = useUserStore()
+  const {products, user, fetchProducts, fetchRatings, ratings} = useUserStore()
+  const {setFooterVisibility} = useGeneralStore()
   const {userSale, userSold} = products
-  console.log(toJS(user))
+  const [showProfile, setShowProfile] = useState(false)
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
-  }, [fetchProducts])
+    fetchRatings()
+  }, [fetchProducts, fetchRatings])
   const seoString = `${user.name} - ${t('SELLER_PROFILE')}`
   return (
     <HeaderFooterWrapper>
@@ -30,40 +37,71 @@ const UserLayout: FC = observer(() => {
         <title>{seoString}</title>
         <meta name='description' content={seoString} />
       </Head>
-      <div className='bg-white px-4 s:px-8 flex'>
+      <div className='hidden s:block m:hidden sticky top-0 z-20 mt-px'>
+        <div className='absolute'>
+          <UserSidebar />
+        </div>
+      </div>
+      <div className='bg-white px-4 s:pl-20 m:pl-8 s:px-8 flex relative'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
-          <aside className='hidden m:block w-72 mt-8'>
+          <aside className='w-72 mt-8 hidden m:block'>
             <UserProfile />
           </aside>
           <main className='m:w-608px l:w-896px relative'>
-            <Tabs
-              items={getTabs(t)}
-              onChange={(id) => setActiveTab(id)}
-              value={activeTab}
-            />
-            {activeTab === 1 && (
-              <ScrollableCardGroup
-                products={userSale.items}
-                page={userSale.page}
-                count={userSale.count}
-                state={userSale.state}
-                limit={userSale.limit}
-                fetchProducts={() => {
-                  fetchProducts({page: userSale.page + 1, path: 'userSale'})
+            <div className='flex justify-end mt-2 s:hidden'>
+              <Button
+                onClick={() => {
+                  setShowProfile(!showProfile)
+                  setFooterVisibility(showProfile)
                 }}
-              />
-            )}
-            {activeTab === 2 && (
-              <ScrollableCardGroup
-                products={userSold.items}
-                page={userSold.page}
-                count={userSold.count}
-                state={userSold.state}
-                limit={userSold.limit}
-                fetchProducts={() => {
-                  fetchProducts({page: userSold.page + 1, path: 'userSold'})
-                }}
-              />
+                className='w-10 h-10 rounded-full bg-white shadow-xl'>
+                {showProfile ? (
+                  <IcClear className='fill-current text-black-c w-6 h-6' />
+                ) : (
+                  <IcUser className='fill-current text-black-c w-6 h-6' />
+                )}
+              </Button>
+            </div>
+            {showProfile ? (
+              <UserProfile />
+            ) : (
+              <>
+                <Tabs
+                  items={getTabs(t, {
+                    1: size(userSale.items),
+                    2: size(userSold.items),
+                    3: size(ratings),
+                  })}
+                  onChange={(id) => setActiveTab(id)}
+                  value={activeTab}
+                />
+                <div className='block s:hidden h-4' />
+                {activeTab === 1 && (
+                  <ScrollableCardGroup
+                    products={userSale.items}
+                    page={userSale.page}
+                    count={userSale.count}
+                    state={userSale.state}
+                    limit={userSale.limit}
+                    fetchProducts={() => {
+                      fetchProducts({page: userSale.page + 1, path: 'userSale'})
+                    }}
+                  />
+                )}
+                {activeTab === 2 && (
+                  <ScrollableCardGroup
+                    products={userSold.items}
+                    page={userSold.page}
+                    count={userSold.count}
+                    state={userSold.state}
+                    limit={userSold.limit}
+                    fetchProducts={() => {
+                      fetchProducts({page: userSold.page + 1, path: 'userSold'})
+                    }}
+                  />
+                )}
+                {activeTab === 3 && <UserRatings />}
+              </>
             )}
           </main>
         </div>

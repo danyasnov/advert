@@ -1,6 +1,6 @@
 import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {fetchUser, fetchCountries, fetchUserRatings} from '../../api/v1'
+import {fetchUser, fetchCountries} from '../../api/v1'
 import {getLocationCodes, getQueryValue, processCookies} from '../../helpers'
 import {fetchCategories, fetchUserSale} from '../../api/v2'
 import UserLayout from '../../components/Layouts/UserLayout'
@@ -25,7 +25,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
     )
 
-  // const ratings = await fetchUserRatings(userId, 1, state.language)
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
   const userStore = {

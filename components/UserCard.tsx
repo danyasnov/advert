@@ -1,11 +1,12 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import IcStar from 'icons/material/Star.svg'
 import IcAdvert from 'icons/material/Advert.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
+import UserAvatar from './UserAvatar'
+import UserRatingMinified from './UserRatingMinified'
 
 const UserCard: FC = observer(() => {
   const {product} = useProductsStore()
@@ -15,28 +16,18 @@ const UserCard: FC = observer(() => {
     <div className='flex flex-col bg-white px-2 py-6'>
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
-          <div className='w-16 h-16 rounded-full overflow-hidden mb-2 bg-black-c'>
-            {!!product.owner.image && (
-              <ImageWrapper
-                width={64}
-                height={64}
-                objectFit='cover'
-                type={product.owner.image}
-                alt='avatar'
-              />
-            )}
-          </div>
+          <UserAvatar url={product.owner.image} />
           {/* <IcPersonAdd className='fill-current h-6 w-6 ' /> */}
         </div>
         <div>
           <span className='text-brand-b1 text-h-3 font-bold'>
             {product.owner.name}
           </span>
-          <div className='text-brand-a1 text-body-2 flex items-center mb-2'>
-            <IcStar className='fill-current h-6 w-6 mr-2' />
-            <span className='mr-1'>{product.owner.ratingMark}</span>
-            <span>({product.owner.ratingMarkCnt})</span>
-          </div>
+          <UserRatingMinified
+            ratingMark={product.owner.ratingMark}
+            ratingMarkCnt={product.owner.ratingMarkCnt}
+          />
+
           <div className='flex items-center mb-2'>
             <IcAdvert className='fill-current text-black-c h-6 w-6 mr-2' />
             <span className='text-black-c text-body-2'>
@@ -50,9 +41,9 @@ const UserCard: FC = observer(() => {
       </div>
       <div className='flex text-black-c text-body-3 items-center'>
         <span className='mr-2'>{t('I_SPEAK')}</span>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           {product.owner.languages.map((l) => (
-            <div className='mr-2 w-3 h-3' key={l}>
+            <div className='mr-2 w-3 h-4' key={l}>
               <ImageWrapper
                 type={`https://adverto.sale/img/flags/${l}.png`}
                 alt='lang'

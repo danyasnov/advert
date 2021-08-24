@@ -1,5 +1,5 @@
 import {action, makeAutoObservable} from 'mobx'
-import {OwnerModel} from 'front-api/src/models/index'
+import {OwnerModel, ReviewModel} from 'front-api/src/models/index'
 import {AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {toast} from 'react-toastify'
@@ -21,6 +21,8 @@ export interface IUserStore {
   user: OwnerModel
   products: Record<string, Partial<ProductSummary>>
   fetchProducts: (payload: FetchPayload) => Promise<void>
+  fetchRatings: () => Promise<void>
+  ratings: ReviewModel[]
 }
 
 interface ProductSummary {
@@ -51,33 +53,20 @@ export class UserStore implements IUserStore {
     userSold: {},
   }
 
-  fetchProducts = (payload: FetchPayload): Promise<void> => {
-    const {path} = payload
-    const currentScope = this.products[path]
-    if (currentScope?.cancelTokenSource) {
-      currentScope.cancelTokenSource.cancel('got_new_request')
-    }
-    currentScope.cancelTokenSource = cancelToken.source()
+  ratings: ReviewModel[] = []
 
-    currentScope.state = 'pending-scroll'
+  fetchRatings = (): Promise<void> => {
     const config: AxiosRequestConfig = {
-      url: urlMap[path],
+      url: '/api/user-ratings',
       method: 'POST',
       data: {
         userId: this.user.hash,
-        page: 1,
       },
-    }
-    config.cancelToken = currentScope.cancelTokenSource.token
-    if (payload.page) {
-      config.data.page = payload.page
-      config.data.cacheId = currentScope.cacheId
     }
 
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {
         if (!response.data || isEmpty(response.data) || response?.data?.error) {
-          currentScope.state = 'pending'
           if (response?.data?.error) {
             toast.error(response.data.error)
           }
@@ -85,38 +74,21 @@ export class UserStore implements IUserStore {
             !response.data || isEmpty(response.data) || response?.data?.error,
           )
         }
-        const {
-          result,
-          headers: {
-            pagination: {count, page, limit},
-            cacheId,
-          },
-        } = response.data
-        if (page === 1) {
-          currentScope.items = result
-        } else {
-          currentScope.items = [...(currentScope.items || []), ...result]
-        }
-        currentScope.cacheId = cacheId
 
-        currentScope.page = page
-        currentScope.limit = limit
-        currentScope.count = count
+        this.ratings = response?.data?.result
 
-        currentScope.state = 'done'
         return Promise.resolve()
       }),
       action('fetchError', (error) => {
         if (error?.message !== 'got_new_request') {
           toast.error(error.message)
-          currentScope.state = 'error'
         }
         return Promise.reject(error)
       }),
     )
   }
 
-  fetchRatings = (payload: FetchPayload): Promise<void> => {
+  fetchProducts = (payload: FetchPayload): Promise<void> => {
     const {path} = payload
     const currentScope = this.products[path]
     if (currentScope?.cancelTokenSource) {
