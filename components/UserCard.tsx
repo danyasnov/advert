@@ -7,6 +7,7 @@ import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
 import UserRatingMinified from './UserRatingMinified'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const UserCard: FC = observer(() => {
   const {product} = useProductsStore()
@@ -20,9 +21,13 @@ const UserCard: FC = observer(() => {
           {/* <IcPersonAdd className='fill-current h-6 w-6 ' /> */}
         </div>
         <div>
-          <span className='text-brand-b1 text-h-3 font-bold'>
-            {product.owner.name}
-          </span>
+          <LinkWrapper
+            href={`/user/${product.owner.hash}`}
+            title={product.owner.name}>
+            <h3 className='text-brand-b1 text-h-3 font-bold'>
+              {product.owner.name}
+            </h3>
+          </LinkWrapper>
           <UserRatingMinified
             ratingMark={product.owner.ratingMark}
             ratingMarkCnt={product.owner.ratingMarkCnt}
