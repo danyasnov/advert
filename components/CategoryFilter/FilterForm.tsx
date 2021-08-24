@@ -4,7 +4,6 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {
   FormikCheckbox,
   FormikField,
@@ -201,7 +200,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         fetchProducts({query: router.query}).then(() => setSubmitting(false))
       }}>
       {({resetForm}) => (
-        <Form className='space-y-8 divide-y w-full'>
+        <Form className='w-full'>
           <div className='space-y-6'>
             {!isEmpty(options) && (
               <Select
@@ -250,11 +249,14 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
           </div>
 
           {!isEmpty(aggregatedFields) && (
-            <div className='space-y-6 pt-8'>
-              {aggregatedFields.map((field) => {
-                return <FormikField field={field} key={field.id} />
-              })}
-            </div>
+            <>
+              <div className='h-px bg-shadow-b my-8' />
+              <div className='space-y-6'>
+                {aggregatedFields.map((field) => {
+                  return <FormikField field={field} key={field.id} />
+                })}
+              </div>
+            </>
           )}
 
           <div className='space-y-6 pt-8'>
@@ -269,17 +271,20 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               label={t('ONLY_WITH_DISCOUNT')}
             />
           </div>
-          <div className='pt-4 flex justify-center s:justify-between m:flex-col'>
+          <div className='h-px bg-shadow-b mt-8' />
+          <div className='sticky bottom-0 pt-4 pb-2 bg-white'>
             {!isFilterApplied && (
               <PrimaryButton
                 onClick={() => {
                   if (setShowFilter) setShowFilter(false)
                   applyFilter()
                 }}
-                className='w-full s:w-min py-3 px-3.5 m:w-full m:mb-2 whitespace-nowrap'>
+                className='w-full s:w-min py-3 px-3.5 m:w-full whitespace-nowrap'>
                 {t('SHOW_ADVERTS', {count: newCount})}
               </PrimaryButton>
             )}
+          </div>
+          <div className='flex justify-center s:justify-between m:flex-col border-0 '>
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues(true)})
