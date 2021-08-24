@@ -38,9 +38,7 @@ const ScrollableCardGroup: FC<Props> = ({
             <Loader />
           </div>
         }>
-        <div
-          className={`grid grid-cols-2 xs:grid-cols-3 -mx-1 s:mt-4 s:flex s:-mx-2 m:-mx-2 s:flex-wrap s:justify-start
-      ${state === 'pending' ? 'opacity-40' : ''}`}>
+        <div className='grid grid-cols-2 xs:grid-cols-3 -mx-1 s:mt-4 s:flex s:-mx-2 m:-mx-2 s:flex-wrap s:justify-start'>
           {isEmpty(products) ? (
             <span className='text-black-b text-body-2 mx-2'>
               {t('ADVERT_NOT_FOUND')}
@@ -59,7 +57,7 @@ const ScrollableCardGroup: FC<Props> = ({
           )}
         </div>
       </InfiniteScroll>
-      <LoaderWrapper show={state === 'pending'} />
+      <LoaderWrapper show={state === 'pending-scroll'} />
     </div>
   )
 }
