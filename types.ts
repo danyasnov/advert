@@ -77,4 +77,5 @@ export interface City {
   // eslint-disable-next-line camelcase
   has_adverts: '0' | '1'
   slug: string
+  type?: string
 }

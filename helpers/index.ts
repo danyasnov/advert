@@ -553,11 +553,7 @@ export const getLocationCodes = (ctx?): string => {
 export const withLocationQuery = async (
   state: CookiesState,
   query: ParsedUrlQuery,
-  {
-    countries,
-    cities,
-    regions,
-  }: {countries: CountryModel[]; cities: City[]; regions: City[]},
+  {countries, locations}: {countries: CountryModel[]; locations: City[]},
 ): Promise<CookiesState> => {
   const updatedState = state
   const countryCode = getQueryValue(query, 'country')
@@ -568,10 +564,14 @@ export const withLocationQuery = async (
       : null
   let region = null
   let city = null
-  if (country && cityCode !== 'all') {
-    region = regions.find((c) => c.slug === cityCode)
-    if (!region) {
-      city = cities.find((c) => c.slug === cityCode)
+  if (country && cityCode !== 'all' && !isEmpty(locations)) {
+    if (locations[0].type === 'region') {
+      // eslint-disable-next-line prefer-destructuring
+      region = locations[0]
+    }
+    if (locations[0].type === 'city') {
+      // eslint-disable-next-line prefer-destructuring
+      city = locations[0]
     }
   }
 

@@ -19,10 +19,7 @@ import {fetchCountries} from '../../../api/v1'
 import ProductLayout from '../../../components/Layouts/ProductLayout'
 import {defaultFilter} from '../../../utils'
 import {Filter} from '../../../types'
-import {
-  fetchCitiesByCountryCode,
-  fetchRegionsByCountryCode,
-} from '../../../api/db'
+import {fetchCityOrRegionsBySlug} from '../../../api/db'
 
 export default function Home({isProduct}) {
   return isProduct ? <ProductLayout /> : <CategoriesLayout />
@@ -33,10 +30,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let state = await processCookies(ctx)
   const countryCode = getQueryValue(query, 'country')
   const sortBy = getQueryValue(query, 'sortBy') ?? null
+  const cityCode = getQueryValue(query, 'city')
   const countries = (await fetchCountries(state.language)) ?? null
-  const cities = await fetchCitiesByCountryCode(countryCode, state.language)
-  const regions = await fetchRegionsByCountryCode(countryCode, state.language)
-  state = await withLocationQuery(state, query, {countries, cities, regions})
+  const locations = await fetchCityOrRegionsBySlug(
+    countryCode,
+    cityCode,
+    state.language,
+  )
+  state = await withLocationQuery(state, query, {countries, locations})
 
   let categories
   try {
@@ -150,7 +151,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         productsStore,
         countriesStore: {
           countries,
-          cities,
+          cities: locations,
         },
       },
       ...(await serverSideTranslations(state.language)),
