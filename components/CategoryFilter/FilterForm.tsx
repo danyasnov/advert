@@ -271,7 +271,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               label={t('ONLY_WITH_DISCOUNT')}
             />
           </div>
-          <div className='h-px bg-shadow-b mt-8' />
+          <div className='h-px bg-shadow-b mt-8 hidden m:block' />
           <div className='sticky bottom-0 pt-4 pb-2 bg-white'>
             {!isFilterApplied && (
               <PrimaryButton
@@ -284,7 +284,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               </PrimaryButton>
             )}
           </div>
-          <div className='flex justify-center s:justify-between m:flex-col border-0 '>
+          <div className='flex justify-center s:justify-between m:flex-col border-0'>
             <SecondaryButton
               onClick={() => {
                 resetForm({values: getInitialValues(true)})
