@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 const {withSentryConfig} = require('@sentry/nextjs')
-const {i18n} = require('./next-i18next.config')
 
 const nextConfig = {
   eslint: {
@@ -35,6 +34,14 @@ const nextConfig = {
     })
 
     return config
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
+    ]
   },
 }
 
