@@ -1,7 +1,12 @@
 import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {fetchUser, fetchCountries} from '../../api/v1'
-import {getLocationCodes, getQueryValue, processCookies} from '../../helpers'
+import {
+  getLocationCodes,
+  getQueryValue,
+  processCookies,
+  redirect,
+} from '../../helpers'
 import {fetchCategories, fetchUserSale} from '../../api/v2'
 import UserLayout from '../../components/Layouts/UserLayout'
 
@@ -10,7 +15,7 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {query} = ctx
+  const {query, res} = ctx
   const state = await processCookies(ctx)
   const userId = getQueryValue(query, 'id')
 
@@ -40,6 +45,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       userSold: {},
     },
   }
+
+  if (!userData?.result) return redirect('/countries', res)
 
   return {
     props: {

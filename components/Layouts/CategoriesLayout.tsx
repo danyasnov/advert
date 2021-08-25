@@ -30,7 +30,7 @@ const CategoriesLayout: FC = observer(() => {
   const title = categoryData
     ? // @ts-ignore
       categoryData.metaTitle.replace('#LOCATION#', cityTitle || '')
-    : t('MAIN_PAGE_TITLE')
+    : t('LOCATION_PAGE_TITLE', {location: cityTitle || ''})
   const description = categoryData
     ? // @ts-ignore
       categoryData.metaDescription.replace('#LOCATION#', cityTitle || '')

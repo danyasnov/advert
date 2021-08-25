@@ -6,9 +6,9 @@ interface Props {
   size?: number
 }
 const UserAvatar: FC<Props> = ({url, size = 16}) => {
+  const className = `w-${size} h-${size} rounded-full overflow-hidden bg-black-c z-20`
   return (
-    <div
-      className={`w-${size} h-${size} rounded-full overflow-hidden bg-black-c z-20`}>
+    <div className={className}>
       {!!url && (
         <ImageWrapper
           width={size * 4}

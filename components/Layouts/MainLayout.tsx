@@ -33,7 +33,7 @@ const MainLayout: FC = observer(() => {
   return (
     <HeaderFooterWrapper>
       <Head>
-        <title>{t('MAIN_PAGE_TITLE')}</title>
+        <title>{t('SITE_MAIN_PAGE_META_TITLE')}</title>
         <meta name='description' content={t('MAIN_PAGE_DESCRIPTION')} />
       </Head>
       <Button className='s:hidden flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap fixed left-1/2 -translate-x-1/2	w-40 z-10 bottom-20'>

@@ -30,7 +30,7 @@ const UserLayout: FC = observer(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
   }, [fetchProducts, fetchRatings])
-  const seoString = `${user.name} - ${t('SELLER_PROFILE')}`
+  const seoString = t('USER_PAGE_TITLE', {hash: user.hash})
   return (
     <HeaderFooterWrapper>
       <Head>

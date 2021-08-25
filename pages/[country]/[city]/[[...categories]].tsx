@@ -37,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     cityCode,
     state.language,
   )
+  const isValidCountry = !!countries.find((c) => c.isoCode === countryCode)
   state = await withLocationQuery(state, query, {countries, locations})
 
   let categories
@@ -73,9 +74,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       categoryData =
         (await fetchCategoryData(state, currentCategory?.id))?.result ?? null
     } else if (
-      (countryCode !== 'all' &&
-        !countries.find((c) => c.isoCode === countryCode)) ||
-      !currentCategory
+      (countryCode !== 'all' && !isValidCountry) ||
+      (!currentCategory && query.categories)
     ) {
       return redirect('/countries', res)
     }
