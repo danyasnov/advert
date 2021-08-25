@@ -2,6 +2,7 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {useHoverDirty} from 'react-use'
+import {isEmpty} from 'lodash'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import ImageWrapper from './ImageWrapper'
 import useSliderButtons from '../hooks/useSliderButtons'
@@ -33,6 +34,7 @@ const ProductPhotos: FC = observer(() => {
         setActivePhotoIndex(embla.selectedScrollSnap() || 0)
       })
   }, [embla])
+  if (isEmpty(product.advert.images)) return null
   return (
     <div>
       <div className='overflow-hidden relative' ref={viewportRef}>
