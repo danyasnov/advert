@@ -62,17 +62,19 @@ const MainLayout: FC = observer(() => {
                   </LinkWrapper>
                 }
               />
-              <ScrollableCardGroup
-                products={products}
-                count={count}
-                page={page}
-                state={state}
-                fetchProducts={() =>
-                  fetchProducts({page: page + 1, isScroll: true, query}).then(
-                    () => applyFilter(),
-                  )
-                }
-              />
+              <div className='mx-4 s:mx-8 m:mx-0'>
+                <ScrollableCardGroup
+                  products={products}
+                  count={count}
+                  page={page}
+                  state={state}
+                  fetchProducts={() =>
+                    fetchProducts({page: page + 1, isScroll: true, query}).then(
+                      () => applyFilter(),
+                    )
+                  }
+                />
+              </div>
             </div>
           </main>
           {/* <aside */}
