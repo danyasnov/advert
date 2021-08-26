@@ -1,0 +1,36 @@
+{
+  "name": "Adverto.sale - free classifieds web site",
+  "lang": "en",
+  "short_name": "Adverto",
+  "developer": {
+    "name": "Adverto Solutions LTD",
+    "url": "https://adverto.sale"
+  },
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#FF9514",
+  "description": "Classifieds web site all over the world -  private and companies adverts, as well as shops selling and buying goods or services. Place an advert for free on Adverto",
+  "prefer_related_applications": true,
+  "related_applications": [{
+    "platform": "play",
+    "id": "adverto.sale",
+    "url": "https://play.google.com/store/apps/details?id=adverto.sale&hl=<?=$lang?>"
+  }, {
+    "platform": "itunes",
+    "url": "https://itunes.apple.com/us/app/adverto/id1287862488"
+  }],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

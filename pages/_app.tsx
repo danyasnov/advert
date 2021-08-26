@@ -9,6 +9,7 @@ import {ToastContainer} from 'react-toastify'
 import NProgress from 'nprogress'
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
+import Head from 'next/head'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
@@ -35,13 +36,21 @@ function MyApp({Component, pageProps}: AppProps) {
     }
   }, [router])
   return (
-    // @ts-ignore
-    <RootStoreProvider hydrationData={pageProps.hydrationData}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Component {...pageProps} />
-      <ToastContainer />
-      <CookiesWarning />
-    </RootStoreProvider>
+    <>
+      <Head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        />
+      </Head>
+      {/* @ts-ignore */}
+      <RootStoreProvider hydrationData={pageProps.hydrationData}>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <Component {...pageProps} />
+        <ToastContainer />
+        <CookiesWarning />
+      </RootStoreProvider>
+    </>
   )
 }
 

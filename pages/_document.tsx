@@ -21,6 +21,7 @@ class MyDocument extends Document {
             href='https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap'
             rel='stylesheet'
           />
+          <meta name='format-detection' content='telephone=no' />
           <meta name='apple-itunes-app' content='app-id=1287862488' />
           <link
             rel='apple-touch-icon'
@@ -39,10 +40,40 @@ class MyDocument extends Document {
             sizes='16x16'
             href='/favicon-16x16.png'
           />
-          <link rel='manifest' href='/site.webmanifest' />
-          <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5' />
-          <meta name='msapplication-TileColor' content='#da532c' />
-          <meta name='theme-color' content='#ffffff' />
+          <link rel='manifest' href='/manifest.json' />
+          <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#FF9514' />
+          <meta name='theme-color' content='#FF9514' />
+          <link
+            href='https://adverto.sale/inc/opensearch.xml'
+            rel='search'
+            type='application/opensearchdescription+xml'
+            title='Adverto Search'
+          />
+
+          <noscript>
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+            <img
+              height='1'
+              width='1'
+              style={{display: 'none'}}
+              src='https://www.facebook.com/tr?id=1735830353144099&ev=PageView&noscript=1'
+            />
+          </noscript>
+
+          <script
+            async
+            src='https://www.googletagmanager.com/gtag/js?id=UA-131255061-3'
+          />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'UA-131255061-3');`),
+            }}
+          />
         </Head>
         <body>
           <Main />

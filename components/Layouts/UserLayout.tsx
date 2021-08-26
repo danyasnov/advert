@@ -1,5 +1,4 @@
 import {FC, useEffect, useState} from 'react'
-import Head from 'next/head'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {size} from 'lodash'
@@ -13,6 +12,7 @@ import Tabs from '../Tabs'
 import UserRatings from '../UserRatings'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
+import MetaTags from '../MetaTags'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('SALE')} ${sizes[1]}`, id: 1},
@@ -30,13 +30,12 @@ const UserLayout: FC = observer(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
   }, [fetchProducts, fetchRatings])
-  const seoString = t('USER_PAGE_TITLE', {hash: user.hash})
   return (
     <HeaderFooterWrapper>
-      <Head>
-        <title>{seoString}</title>
-        <meta name='description' content={seoString} />
-      </Head>
+      <MetaTags
+        title={t('USER_PAGE_TITLE', {hash: user.hash})}
+        description={t('USER_PAGE_DESCRIPTION', {hash: user.hash})}
+      />
       <div className='hidden s:block m:hidden sticky top-0 z-20 mt-px'>
         <div className='absolute'>
           <UserSidebar />

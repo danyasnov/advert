@@ -3,6 +3,7 @@ import {RootStore} from './RootStore'
 
 interface Document {
   title: string
+  description: string
   content: string
 }
 export interface IGeneralsHydration {

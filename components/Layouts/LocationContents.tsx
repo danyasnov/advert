@@ -1,12 +1,12 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
-import Head from 'next/head'
 import {useTranslation} from 'next-i18next'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
 import LocationSelector from '../LocationSelector'
 import {getQueryValue} from '../../helpers'
+import MetaTags from '../MetaTags'
 
 interface Props {
   subtitle: string
@@ -25,10 +25,7 @@ const LocationContents: FC<Props> = observer(({subtitle}) => {
     : t('COUNTRIES_PAGE_TITLE')
   return (
     <>
-      <Head>
-        <title>{seoString}</title>
-        <meta name='description' content={seoString} />
-      </Head>
+      <MetaTags title={seoString} />
       <HeaderFooterWrapper>
         <div className='bg-white px-4 s:px-8 flex'>
           <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>

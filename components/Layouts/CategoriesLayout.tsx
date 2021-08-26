@@ -1,5 +1,4 @@
 import {FC, useState} from 'react'
-import Head from 'next/head'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -16,6 +15,7 @@ import {
   useProductsStore,
 } from '../../providers/RootStoreProvider'
 import {getQueryValue} from '../../helpers'
+import MetaTags from '../MetaTags'
 
 const CategoriesLayout: FC = observer(() => {
   const [showFilter, setShowFilter] = useState(false)
@@ -37,10 +37,7 @@ const CategoriesLayout: FC = observer(() => {
     : t('MAIN_PAGE_DESCRIPTION')
   return (
     <HeaderFooterWrapper>
-      <Head>
-        <title>{title}</title>
-        <meta name='description' content={description} />
-      </Head>
+      <MetaTags title={title} description={description} />
       <div className='bg-white px-4 s:px-8 flex'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
           <main className='m:w-608px l:w-896px relative'>
