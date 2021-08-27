@@ -52,8 +52,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     isFilterApplied,
   } = useProductsStore()
 
-  const {categoryDataFieldsById, categories, categoryDataFieldsBySlug} =
-    useCategoriesStore()
+  const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
