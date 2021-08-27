@@ -11,7 +11,11 @@ require_once(__DIR__ . '/../config.php');
 $options = getopt("d:");
 
 if (empty($options['d'])) {
-    $domain = $_SERVER['SERVER_NAME'];
+    if ($_SERVER === null || !array_key_exists('SERVER_NAME', $_SERVER)) {
+        $domain = 'adverto.sale';
+    } else {
+        $domain = $_SERVER['SERVER_NAME'];
+    }
 } else {
     $domain = $options['d'];
 }
@@ -129,7 +133,7 @@ foreach ($countries as $country) {
     for ($offset = 0; $offset <= $points_count; $offset += $limit) {
         $sitemapName = 'sitemap-' . $subdomain . '-locs-' . $country['alpha2'] . '-' . $i . '.xml';
 
-        $fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+        $fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
         if (!$handle = fopen($fname, 'w+')) {
             return false;
@@ -205,7 +209,7 @@ $i = 1;
 for ($offset = 0; $offset <= $advs_count; $offset += $limit) {
     $sitemapName = 'sitemap-' . $subdomain . '-advs-' . $i . '.xml';
 
-    $fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+    $fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
     if (!$handle = fopen($fname, 'w+')) {
         return false;
@@ -323,7 +327,7 @@ foreach ($countries as $country) {
 
                 $sitemapName = 'sitemap-' . $subdomain . '-cats-' . $country['alpha2'] . '-' . $i . '.xml';
 
-                $fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+                $fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
                 if (!$handle = fopen($fname, 'w+')) {
                     return false;
@@ -378,7 +382,7 @@ foreach ($countries as $country) {
 
         $sitemapName = 'sitemap-' . $subdomain . '-cats-' . $country['alpha2'] . '-' . $i . '.xml';
 
-        $fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+        $fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
         if (!$handle = fopen($fname, 'w+')) {
             return false;
@@ -439,7 +443,7 @@ $i = 1;
 for ($offset = 0; $offset <= $users_count; $offset += $limit) {
     $sitemapName = 'sitemap-' . $subdomain . '-usrs-' . $i . '.xml';
 
-    $fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+    $fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
     if (!$handle = fopen($fname, 'w+')) {
         return false;
@@ -500,7 +504,7 @@ for ($offset = 0; $offset <= $users_count; $offset += $limit) {
 //////// SITEMAP /////////
 $indexContent .= '</sitemapindex>' . "\n";
 
-$fname = __DIR__ . '/../sitemaps/sitemap-' . $subdomain . '.xml';
+$fname = __DIR__ . '/../public/sitemaps/sitemap-' . $subdomain . '.xml';
 if (!$handle = fopen($fname, 'w+')) {
     return false;
 }
