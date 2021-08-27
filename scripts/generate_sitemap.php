@@ -6,7 +6,7 @@ set_time_limit(0);
  * Генерирует sitemap
  */
 define('CONNECTION', true);
-require_once(__DIR__ . '/config.dist.php');
+require_once(__DIR__ . '/../config.php');
 
 $options = getopt("d:");
 

@@ -40,25 +40,24 @@ function error_handler()
     log_error($e);
 }
 
-// require_once(__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 
 const LOG_PATH = '/opt/php-logs/adverto.sale/';
 
-// $stream = new RotatingFileHandler(LOG_PATH . 'error.log', 10, Logger::ERROR);
+$stream = new RotatingFileHandler(LOG_PATH . 'error.log', 10, Logger::ERROR);
 
 // create a log channel
-// $logger = new Logger('adverto.site');
-// $logger->pushHandler($stream);
+$logger = new Logger('adverto.site');
+$logger->pushHandler($stream);
 
 function log_error($error) {
     global $logger;
 
-print_r($error);
     // add records to the log
-//     $logger->error(json_encode($error));
+    $logger->error(json_encode($error));
 }
 
 /* DB Config */
