@@ -14,16 +14,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const promises = [
     fetchProducts(state),
-    // fetchProducts(state, {filter: {priceMax: 0}}),
-    // fetchProducts(state, {filter: {onlyDiscounted: true}}),
-    // fetchCountries(state.language),
-    // fetchCategories(state.language),
+    fetchProducts(state, {filter: {priceMax: 0}}),
+    fetchProducts(state, {filter: {onlyDiscounted: true}}),
+    fetchCountries(state.language),
+    fetchCategories(state.language),
   ]
 
   const [
     productsResponse,
-    // freeProductsResponse,
-    // discountedProductsResponse,
+    freeProductsResponse,
+    discountedProductsResponse,
     countriesData,
     categoriesData,
   ] = await Promise.allSettled(promises).then((res) =>
@@ -31,8 +31,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   )
   const categories = categoriesData?.result ?? null
   const productsStore = {
-    // freeProducts: freeProductsResponse?.result?.data ?? null,
-    // discountedProducts: discountedProductsResponse?.result?.data ?? null,
+    freeProducts: freeProductsResponse?.result?.data ?? null,
+    discountedProducts: discountedProductsResponse?.result?.data ?? null,
 
     products: productsResponse?.result?.data ?? null,
     count: productsResponse?.headers?.pagination.count,
