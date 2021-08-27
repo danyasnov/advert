@@ -14,8 +14,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const promises = [
     fetchProducts(state),
-    fetchProducts(state, {filter: {priceMax: 0}}),
-    fetchProducts(state, {filter: {onlyDiscounted: true}}),
+    fetchProducts(state, {filter: {priceMax: 0}, limit: 10}),
+    fetchProducts(state, {filter: {onlyDiscounted: true}, limit: 10}),
     fetchCountries(state.language),
     fetchCategories(state.language),
   ]

@@ -18,7 +18,7 @@ if (defined('CONNECTION') && constant('CONNECTION')) {
     // Подключение к СУБД, выбор кодировки и базы данных.
     $db = Database_Mysql::create($config['database_host'], $config['database_user'], $config['database_password'])
         ->setCharset('utf8')
-        ->setDatabaseName('adv');
+        ->setDatabaseName('advretoapi_db1');
     $db->query("SET NAMES utf8mb4");
 }
 
