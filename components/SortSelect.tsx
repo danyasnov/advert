@@ -4,6 +4,7 @@ import {TFunction, useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import IcSort from 'icons/material/Sort.svg'
 import {useRouter} from 'next/router'
+import {isEmpty} from 'lodash'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
@@ -41,8 +42,14 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
   const state: SerializedCookiesState = parseCookies()
-  const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
-    useProductsStore()
+  const {
+    sortBy,
+    setSortBy,
+    fetchProducts,
+    hideDistanceSort,
+    applyFilter,
+    products,
+  } = useProductsStore()
 
   const [options, setOptions] = useState(withIcons(getSortOptions(t)))
   useEffect(() => {
@@ -55,7 +62,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchBy])
-
+  if (isEmpty(products)) return null
   return (
     <LinkSelect
       id={id}

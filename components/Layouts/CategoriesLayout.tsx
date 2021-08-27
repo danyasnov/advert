@@ -49,7 +49,7 @@ const CategoriesLayout: FC = observer(() => {
               showFilter={showFilter}
             />
             {!showFilter && (
-              <div className='border-t border-shadow-b'>
+              <div className='border-t border-shadow-b s:pt-8'>
                 <div className='s:hidden w-48 my-6'>
                   <SortSelect id='mobile-sort' />
                 </div>
