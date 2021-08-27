@@ -6,7 +6,7 @@ set_time_limit(0);
  * Генерирует sitemap
  */
 define('CONNECTION', true);
-require_once(__DIR__ . '/../config.php');
+require_once(__DIR__ . '/config.dist.php');
 
 $options = getopt("d:");
 
@@ -34,7 +34,7 @@ $indexContent .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0
 /////// OTHER /////////
 $sitemapName = 'sitemap-' . $subdomain . '-oth.xml';
 
-$fname = __DIR__ . '/../sitemaps/' . $sitemapName;
+$fname = __DIR__ . '/../public/sitemaps/' . $sitemapName;
 
 if (!$handle = fopen($fname, 'w+')) {
     return false;
