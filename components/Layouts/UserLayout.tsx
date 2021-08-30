@@ -35,6 +35,7 @@ const UserLayout: FC = observer(() => {
       <MetaTags
         title={t('USER_PAGE_TITLE', {hash: user.hash})}
         description={t('USER_PAGE_DESCRIPTION', {hash: user.hash})}
+        user={user}
       />
       <div className='hidden s:block m:hidden sticky top-0 z-20 mt-px'>
         <div className='absolute'>

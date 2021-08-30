@@ -1,14 +1,15 @@
 import {FC} from 'react'
 import Head from 'next/head'
-import {AdvertiseFullModel} from 'front-api/src/models/index'
+import {AdvertiseFullModel, OwnerModel} from 'front-api/src/models/index'
 import Script from 'next/script'
 
 interface Props {
   title: string
   description?: string
   product?: AdvertiseFullModel
+  user?: OwnerModel
 }
-const MetaTags: FC<Props> = ({title, description, product}) => {
+const MetaTags: FC<Props> = ({title, description, product, user}) => {
   return (
     <>
       <Head>
