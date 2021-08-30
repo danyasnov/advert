@@ -16,6 +16,7 @@ interface Props {
   page: number
   limit?: number
   hideNotFoundDescription?: boolean
+  enableFourthColumnForM?: boolean
   fetchProducts: () => void
 }
 const ScrollableCardGroup: FC<Props> = ({
@@ -24,6 +25,7 @@ const ScrollableCardGroup: FC<Props> = ({
   count,
   page,
   fetchProducts,
+  enableFourthColumnForM,
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
 }) => {
@@ -46,14 +48,16 @@ const ScrollableCardGroup: FC<Props> = ({
             <Loader />
           </div>
         }>
-        <div className='grid grid-cols-2 xs:grid-cols-3'>
+        <div
+          className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 ${
+            enableFourthColumnForM ? 'm:grid-cols-4 m:gap-x-15 m:gap-y-6' : ''
+          }`}>
           {products.map((p) => (
             <LinkWrapper
               title={p.title}
               href={p.url}
               key={p.hash}
-              target='_blank'
-              className='px-1 pb-2 s:px-2 s:pb-4'>
+              target='_blank'>
               <Card product={p} />
             </LinkWrapper>
           ))}

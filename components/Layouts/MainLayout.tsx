@@ -66,6 +66,7 @@ const MainLayout: FC = observer(() => {
                 <ScrollableCardGroup
                   products={products}
                   count={count}
+                  enableFourthColumnForM
                   page={page}
                   state={state}
                   fetchProducts={() =>
