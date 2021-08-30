@@ -5,6 +5,7 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -60,24 +61,24 @@ class MyDocument extends Document {
             />
           </noscript>
 
-          <script
+          <Script
             async
             src='https://www.googletagmanager.com/gtag/js?id=UA-131255061-3'
           />
-          <script
+          <Script
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(`window.dataLayer = window.dataLayer || [];
+              __html: `window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
           
-            gtag('config', 'UA-131255061-3');`),
+            gtag('config', 'UA-131255061-3');`,
             }}
           />
-          <script
+          <Script
             type='text/javascript'
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(`(function (d, w, c) {
+              __html: `(function (d, w, c) {
   (w[c] = w[c] || []).push(function () {
     try {
       w.yaCounter46964940 = new Ya.Metrika({
@@ -104,7 +105,7 @@ class MyDocument extends Document {
   } else {
     f()
   }
-})(document, window, 'yandex_metrika_callbacks')`),
+})(document, window, 'yandex_metrika_callbacks')`,
             }}
           />
           <noscript>

@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import Head from 'next/head'
 import {AdvertiseFullModel} from 'front-api/src/models/index'
+import Script from 'next/script'
 
 interface Props {
   title: string
@@ -31,7 +32,7 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
       <meta name='apple-mobile-web-app-title' content={title} />
       {product ? (
         <>
-          <script
+          <Script
             type='application/ld+json'
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
@@ -55,10 +56,10 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
               }),
             }}
           />
-          <script
+          <Script
             type='application/ld+json'
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(`!function(f,b,e,v,n,t,s)
+              __html: `!function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -80,15 +81,15 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
     // @ts-ignore
     product.currencyCode
   }'
-});`),
+});`,
             }}
           />
         </>
       ) : (
         <>
-          <script
+          <Script
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(`!function(f,b,e,v,n,t,s)
+              __html: `!function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};
               if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -97,10 +98,10 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
               s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '1735830353144099');
-            fbq('track', 'PageView');`),
+            fbq('track', 'PageView');`,
             }}
           />
-          <script
+          <Script
             type='application/ld+json'
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
