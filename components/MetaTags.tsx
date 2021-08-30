@@ -2,6 +2,7 @@ import {FC} from 'react'
 import Head from 'next/head'
 import {AdvertiseFullModel, OwnerModel} from 'front-api/src/models/index'
 import Script from 'next/script'
+import {first} from 'lodash'
 
 interface Props {
   title: string
@@ -10,6 +11,7 @@ interface Props {
   user?: OwnerModel
 }
 const MetaTags: FC<Props> = ({title, description, product, user}) => {
+  const imageUrl = first(product?.images) || user?.imageUrl
   return (
     <>
       <Head>
@@ -28,19 +30,11 @@ const MetaTags: FC<Props> = ({title, description, product, user}) => {
         />
         <meta
           property='og:image'
-          content={
-            product && product.images[0]
-              ? product.images[0]
-              : 'https://adverto.sale/img/logo_playmarket.jpg'
-          }
+          content={imageUrl || 'https://adverto.sale/img/logo_playmarket.jpg'}
         />
         <meta
           property='og:image:secure_url'
-          content={
-            product && product.images[0]
-              ? product.images[0]
-              : 'https://adverto.sale/img/logo_playmarket.jpg'
-          }
+          content={imageUrl || 'https://adverto.sale/img/logo_playmarket.jpg'}
         />
         <meta property='og:image:type' content='image/jpeg' />
         <meta property='og:image:width' content='512' />
