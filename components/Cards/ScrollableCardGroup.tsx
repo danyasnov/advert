@@ -40,7 +40,7 @@ const ScrollableCardGroup: FC<Props> = ({
             <Loader />
           </div>
         }>
-        <div className='grid grid-cols-2 xs:grid-cols-3 '>
+        <div className='grid grid-cols-2 xs:grid-cols-3'>
           {products.map((p) => (
             <LinkWrapper
               title={p.title}

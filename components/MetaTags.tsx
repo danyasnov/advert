@@ -10,26 +10,28 @@ interface Props {
 }
 const MetaTags: FC<Props> = ({title, description, product}) => {
   return (
-    <Head>
-      <title>{title}</title>
-      <meta name='description' content={description || title} />
-      <meta name='twitter:card' content={title} />
-      <meta property='og:title' content={title} />
-      <meta property='og:type' content='website' />
-      <meta property='og:url' content='https://adverto.sale/' />
-      <meta
-        property='og:image'
-        content='https://adverto.sale/img/logo_playmarket.jpg'
-      />
-      <meta
-        property='og:image:secure_url'
-        content='https://adverto.sale/img/logo_playmarket.jpg'
-      />
-      <meta property='og:image:type' content='image/jpeg' />
-      <meta property='og:image:width' content='512' />
-      <meta property='og:image:height' content='512' />
-      <meta property='og:description' content={description} />
-      <meta name='apple-mobile-web-app-title' content={title} />
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name='description' content={description || title} />
+        <meta name='twitter:card' content={title} />
+        <meta property='og:title' content={title} />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://adverto.sale/' />
+        <meta
+          property='og:image'
+          content='https://adverto.sale/img/logo_playmarket.jpg'
+        />
+        <meta
+          property='og:image:secure_url'
+          content='https://adverto.sale/img/logo_playmarket.jpg'
+        />
+        <meta property='og:image:type' content='image/jpeg' />
+        <meta property='og:image:width' content='512' />
+        <meta property='og:image:height' content='512' />
+        <meta property='og:description' content={description} />
+        <meta name='apple-mobile-web-app-title' content={title} />
+      </Head>
       {product ? (
         <>
           <Script
@@ -119,7 +121,51 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
           />
         </>
       )}
-    </Head>
+      <Script src='https://www.googletagmanager.com/gtag/js?id=UA-131255061-3' />
+      <Script
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'UA-131255061-3');`,
+        }}
+      />
+      <Script
+        type='text/javascript'
+        dangerouslySetInnerHTML={{
+          __html: `(function (d, w, c) {
+  (w[c] = w[c] || []).push(function () {
+    try {
+      w.yaCounter46964940 = new Ya.Metrika({
+        id: 46964940,
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true,
+        trackHash: true,
+        ecommerce: 'dataLayer',
+      })
+    } catch (e) {}
+  })
+  const n = d.getElementsByTagName('script')[0]
+  const s = d.createElement('script')
+  const f = function () {
+    n.parentNode.insertBefore(s, n)
+  }
+  s.type = 'text/javascript'
+  s.async = true
+  s.src = 'https://cdn.jsdelivr.net/npm/yandex-metrica-watch/watch.js'
+  if (w.opera == '[object Opera]') {
+    d.addEventListener('DOMContentLoaded', f, false)
+  } else {
+    f()
+  }
+})(document, window, 'yandex_metrika_callbacks')`,
+        }}
+      />
+    </>
   )
 }
 export default MetaTags

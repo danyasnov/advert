@@ -74,7 +74,7 @@ const UserLayout: FC = observer(() => {
                   onChange={(id) => setActiveTab(id)}
                   value={activeTab}
                 />
-                <div className='block s:hidden h-4' />
+                <div className='block h-4 m:h-6' />
                 {activeTab === 1 && (
                   <ScrollableCardGroup
                     products={userSale.items}
