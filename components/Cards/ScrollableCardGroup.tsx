@@ -49,7 +49,7 @@ const ScrollableCardGroup: FC<Props> = ({
           </div>
         }>
         <div
-          className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 ${
+          className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 ${
             enableFourthColumnForM ? 'm:grid-cols-4 m:gap-x-15 m:gap-y-6' : ''
           }`}>
           {products.map((p) => (
