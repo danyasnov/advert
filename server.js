@@ -87,7 +87,8 @@ app.prepare().then(() => {
     } else if (
       cookies.language === 'en' &&
       !host.startsWith('localhost') &&
-      !host.startsWith('fpreprod')
+      !host.startsWith('fpreprod') &&
+      !host.startsWith('adverto')
     ) {
       res.redirect(`${getProtocol(host)}://${getDomain(host)}${pathname}`)
       return res.end()
