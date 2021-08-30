@@ -29,7 +29,7 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
           property='og:image'
           content={
             product && product.images[0]
-              ? `https://adverto.sale${product.images[0]}`
+              ? product.images[0]
               : 'https://adverto.sale/img/logo_playmarket.jpg'
           }
         />
@@ -37,7 +37,7 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
           property='og:image:secure_url'
           content={
             product && product.images[0]
-              ? `https://adverto.sale${product.images[0]}`
+              ? product.images[0]
               : 'https://adverto.sale/img/logo_playmarket.jpg'
           }
         />
