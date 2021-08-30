@@ -82,6 +82,7 @@ const UserLayout: FC = observer(() => {
                     count={userSale.count}
                     state={userSale.state}
                     limit={userSale.limit}
+                    hideNotFoundDescription
                     fetchProducts={() => {
                       fetchProducts({page: userSale.page + 1, path: 'userSale'})
                     }}
@@ -93,6 +94,7 @@ const UserLayout: FC = observer(() => {
                     page={userSold.page}
                     count={userSold.count}
                     state={userSold.state}
+                    hideNotFoundDescription
                     limit={userSold.limit}
                     fetchProducts={() => {
                       fetchProducts({page: userSold.page + 1, path: 'userSold'})

@@ -13,8 +13,21 @@ const Placeholder: FC = () => {
     </div>
   )
 }
+
 const AdvertNotFound: FC = () => {
+  return (
+    <div className='my-4 s:my-8 flex flex-col justify-center'>
+      <div className='space-x-4 s:space-x-8 flex justify-center mb-12'>
+        <Placeholder />
+        <Placeholder />
+      </div>
+    </div>
+  )
+}
+
+const AdvertNotFoundWithDescription: FC = () => {
   const {t} = useTranslation()
+
   return (
     <div className='my-4 s:my-8 flex flex-col justify-center'>
       <div className='space-x-4 s:space-x-8 flex justify-center mb-12'>
@@ -30,4 +43,5 @@ const AdvertNotFound: FC = () => {
     </div>
   )
 }
-export default AdvertNotFound
+
+export {AdvertNotFound, AdvertNotFoundWithDescription}

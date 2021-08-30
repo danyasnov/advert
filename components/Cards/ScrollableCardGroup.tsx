@@ -7,7 +7,7 @@ import LoaderWrapper from '../LoaderWrapper'
 import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
-import AdvertNotFound from '../AdvertNotFound'
+import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
 
 interface Props {
   products: AdvertiseListItemModel[]
@@ -15,6 +15,7 @@ interface Props {
   count: number
   page: number
   limit?: number
+  hideNotFoundDescription?: boolean
   fetchProducts: () => void
 }
 const ScrollableCardGroup: FC<Props> = ({
@@ -24,10 +25,15 @@ const ScrollableCardGroup: FC<Props> = ({
   page,
   fetchProducts,
   limit = PAGE_LIMIT,
+  hideNotFoundDescription,
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products)) {
-    return <AdvertNotFound />
+    return hideNotFoundDescription ? (
+      <AdvertNotFound />
+    ) : (
+      <AdvertNotFoundWithDescription />
+    )
   }
   return (
     <div className='flex flex-col m:items-start relative'>
