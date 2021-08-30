@@ -17,19 +17,37 @@ const MetaTags: FC<Props> = ({title, description, product}) => {
         <meta name='twitter:card' content={title} />
         <meta property='og:title' content={title} />
         <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://adverto.sale/' />
+        <meta
+          property='og:url'
+          content={
+            product
+              ? `https://adverto.sale${product.url}`
+              : 'https://adverto.sale'
+          }
+        />
         <meta
           property='og:image'
-          content='https://adverto.sale/img/logo_playmarket.jpg'
+          content={
+            product && product.images[0]
+              ? `https://adverto.sale${product.images[0]}`
+              : 'https://adverto.sale/img/logo_playmarket.jpg'
+          }
         />
         <meta
           property='og:image:secure_url'
-          content='https://adverto.sale/img/logo_playmarket.jpg'
+          content={
+            product && product.images[0]
+              ? `https://adverto.sale${product.images[0]}`
+              : 'https://adverto.sale/img/logo_playmarket.jpg'
+          }
         />
         <meta property='og:image:type' content='image/jpeg' />
         <meta property='og:image:width' content='512' />
         <meta property='og:image:height' content='512' />
-        <meta property='og:description' content={description} />
+        <meta
+          property='og:description'
+          content={product ? product.description : description}
+        />
         <meta name='apple-mobile-web-app-title' content={title} />
       </Head>
       {product ? (
