@@ -4,18 +4,21 @@ import {useTranslation} from 'next-i18next'
 import {SerializedCookiesState} from '../types'
 import Button from './Buttons/Button'
 import {setCookiesObject} from '../helpers'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 const DevBanner: FC = () => {
+  const {setCookiesWarnVisibility} = useGeneralStore()
   const state: SerializedCookiesState = parseCookies()
   const {t} = useTranslation()
   const [hide, setHide] = useState(false)
   if (state.cookieAccepted || hide) return null
   return (
-    <div className='fixed inset-x-0 bottom-0 bg-shadow-overlay text-white flex justify-between px-4 s:px-8 m:px-10 px-12 items-center py-2'>
-      <h5 className='text-h-5 font-bold'>{t('COOKIES_WARNING')}</h5>
+    <div className='fixed inset-x-0 bottom-0 bg-shadow-overlay text-white flex flex-col s:flex-row justify-between px-4 s:px-8 m:px-10 items-center py-2'>
+      <h5 className='text-h-5 font-bold mb-2 s:mb-0'>{t('COOKIES_WARNING')}</h5>
       <Button
         className='text-body-3 p-2 bg-brand-a1 rounded'
         onClick={() => {
+          setCookiesWarnVisibility(false)
           setCookiesObject({cookieAccepted: true})
           setHide(true)
         }}>
