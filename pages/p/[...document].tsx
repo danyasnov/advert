@@ -29,6 +29,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const countries = countriesData ?? null
 
   const document = doc[0]
+  if (!document) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/countries',
+      },
+    }
+  }
   return {
     props: {
       hydrationData: {
