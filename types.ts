@@ -79,3 +79,11 @@ export interface City {
   slug: string
   type?: string
 }
+export interface CoverLink {
+  // eslint-disable-next-line camelcase
+  hash_link: string
+  // eslint-disable-next-line camelcase
+  firebase_link: string
+  // eslint-disable-next-line camelcase
+  date_off: number
+}

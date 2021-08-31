@@ -96,3 +96,10 @@ export const fetchDocuments = async (path: string) => {
   cache.set(key, result)
   return result
 }
+
+export const fetchFirebaseLink = async (hash: string) => {
+  return sequelize.query(
+    `SELECT hash_link, firebase_link, date_off FROM adv_cover_links WHERE hash_link='${hash}'`,
+    {type: QueryTypes.SELECT},
+  )
+}
