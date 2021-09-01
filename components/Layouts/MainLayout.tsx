@@ -16,6 +16,7 @@ import TitleWithSeparator from '../TitleWithSeparator'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
+import useScrollDirection from '../../hooks/useScrollDirection'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -34,6 +35,7 @@ const MainLayout: FC = observer(() => {
   const {query} = useRouter()
   const {t} = useTranslation()
 
+  const scrollDir = useScrollDirection()
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -41,10 +43,18 @@ const MainLayout: FC = observer(() => {
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
       {cookies.cookieAccepted && (
-        <Button className='s:hidden flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap fixed left-1/2 -translate-x-1/2	w-40 z-10 bottom-20'>
-          <LinkWrapper href='/new-ad' title={t('NEW_AD')}>
-            <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
-          </LinkWrapper>
+        <Button
+          className={`${
+            scrollDir === 'up' ? '' : 'translate-y-full'
+          } transform ease-in-out duration-200 s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
+          <div className='mb-2'>
+            <LinkWrapper
+              href='/new-ad'
+              title={t('NEW_AD')}
+              className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
+              <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
+            </LinkWrapper>
+          </div>
         </Button>
       )}
       <div className='bg-black-e py-8 m:flex'>
