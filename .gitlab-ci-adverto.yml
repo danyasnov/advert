@@ -17,7 +17,7 @@ default:
     - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
     - git config --global url.ssh://git@gitlab.com.insteadOf https://gitlab.com
 
-build:
+build develop:
   stage: build
   variables:
   script:
@@ -30,7 +30,7 @@ build:
     refs: 
       - develop
 
-build:
+build-master:
   stage: build
   variables:
   script:
