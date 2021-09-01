@@ -928,7 +928,7 @@
   "NOTHING_FIND_TEXT": "Try to change your search terms or add a search to your favorites and track the appearance of new ads",
   "NOTIFICATION_OPTIONS": "Notification options",
   "NOTIFICATION_SETTINGS": "Notification settings",
-  "NUMBER_OF_DAYS_TO_DELETE_DRAFT": "{{count}} day(s) before deletion",
+  "NUMBER_OF_DAYS_TO_DELETE_DRAFT": "Before deletion {{count}} day(s)",
   "OBSCENE_CONTENT_DESCRIPTION": "Pornographic, extremist, erotic, obscene content",
   "OBSCENE_CONTENT_TITLE": "Obscene content",
   "ON_ADVERTO": "{{yersAndMonth}} on Adverto",

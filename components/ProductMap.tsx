@@ -22,7 +22,7 @@ const ProductMap: FC = observer(() => {
           <span>{product.advert.location.description}</span>
         </div>
         <Button onClick={() => setMapVisible(!mapVisible)}>
-          {t('LOCATION_OF_GOODS')}
+          <span className='hidden s:block'>{t('LOCATION_OF_GOODS')}</span>
           <IcArrowDropDown className='w-6 h-6 fill-current text-black-c ml-2' />
         </Button>
       </div>

@@ -928,7 +928,7 @@
   "NOTHING_FIND_TEXT": "Попробуйте изменить условия поиска или добавьте поиск в Избранное и отслеживайте появление новых объявлений",
   "NOTIFICATION_OPTIONS": "Параметры уведомлений",
   "NOTIFICATION_SETTINGS": "Настройки уведомлений",
-  "NUMBER_OF_DAYS_TO_DELETE_DRAFT": "{{count}} дней до удаления",
+  "NUMBER_OF_DAYS_TO_DELETE_DRAFT": "До удаления {{count}} дн.",
   "OBSCENE_CONTENT_DESCRIPTION": "Порнографическое, экстремистское, эротическое, нецензурное содержание",
   "OBSCENE_CONTENT_TITLE": "Непристойное содержание",
   "ON_ADVERTO": "{{yersAndMonth}} on Adverto",
