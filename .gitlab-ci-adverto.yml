@@ -1,4 +1,76 @@
-include:
-  - project: 'adverto/cicd'
-    ref: master
-    file: '.gitlab-ci-react-front.yml'
+#include:
+#  - project: 'adverto/cicd'
+#    ref: master
+#    file: '.gitlab-ci-react-front.yml'
+
+stages:
+  - build
+  - deploy
+
+variables:
+  GIT_SSL_NO_VERIFY: "true"
+  DOCKER_TLS_CERTDIR: ""
+
+default:
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - git config --global url.ssh://git@gitlab.com.insteadOf https://gitlab.com
+
+build develop:
+  stage: build
+  variables:
+  script:
+    - docker pull registry.forumplay.com/adverto/react-frontend:cache
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.adverto.sale:10.55.1.11 --cache-from registry.forumplay.com/adverto/react-frontend:cache -t registry.forumplay.com/adverto/react-frontend:develop .
+    - docker push registry.forumplay.com/adverto/react-frontend:master
+  tags: 
+    - build-react
+  only:
+    refs: 
+      - develop
+
+build-master:
+  stage: build
+  variables:
+  script:
+    - docker pull registry.forumplay.com/adverto/react-frontend:cache
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.adverto.sale:10.55.1.11 --cache-from registry.forumplay.com/adverto/react-frontend:cache -t registry.forumplay.com/adverto/react-frontend:master .
+    - docker push registry.forumplay.com/adverto/react-frontend:master
+  tags: 
+    - build-react
+  only:
+    refs: 
+      - master
+
+
+deploy_preprod:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY_DEPLOY_PREPROD}" | tr -d '\r' | ssh-add -
+    - git config --global url.ssh://git@gitlab.com.insteadOf https://gitlab.com
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    - if: $CI_COMMIT_BRANCH =~ /^master|dev|dev-.*$/
+      when: on_success
+    - when: never
+  script:
+    - ssh -o StrictHostKeyChecking=no -o "SendEnv=CI_*" -o RequestTTY=no "deploy@${PREPROD_SERVER}"
+  tags: 
+    - deploy-preprod
+
+
+deploy-prod:
+  stage: deploy
+  variables:
+  script:
+    - cd /opt/react-frontend
+    - docker-compose pull
+    - docker-compose up -d
+  tags: 
+    - deploy-react
+  only:
+    refs: 
+      - master
