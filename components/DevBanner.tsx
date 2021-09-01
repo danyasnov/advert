@@ -13,6 +13,7 @@ const DevBanner: FC = () => {
 
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
+
     setShow(state.showDevBanner !== 'false')
   }, [])
 
