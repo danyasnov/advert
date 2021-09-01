@@ -29,7 +29,6 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
       </span>
     )
   }
-  console.log(content)
   return (
     // height hack because tailwind h-16 not working here
     <div
