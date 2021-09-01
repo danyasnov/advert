@@ -13,7 +13,7 @@ const UserRatings: FC = observer(() => {
       {ratings.map((r) => (
         <div className='flex w-full mb-4'>
           <div className='mr-2'>
-            <UserAvatar url={r.userImage} />
+            <UserAvatar url={r.userImage} name={r.userName} />
             {/* <UserRatingMinified */}
             {/*  ratingMark={product.owner.ratingMark} */}
             {/*  ratingMarkCnt={product.owner.ratingMarkCnt} */}

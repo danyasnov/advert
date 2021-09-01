@@ -14,7 +14,7 @@ const UserProfile: FC = observer(() => {
     <div className='flex flex-col'>
       <h1 className='text-h-2 text-black-b font-bold mb-4'>{user.name}</h1>
       <div className='flex mb-2'>
-        <UserAvatar url={user.imageUrl} />
+        <UserAvatar url={user.imageUrl} name={user.name} />
         <div className='ml-2 flex flex-col justify-between'>
           <Rating rating={user.rating} ratingCount={user.ratingCount} />
           <span className='text-body-3 text-black-b'>

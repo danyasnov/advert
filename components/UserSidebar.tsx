@@ -42,7 +42,7 @@ const UserSidebar: FC = observer(() => {
             <IcKeyboardArrowRight className='fill-current text-black-c h-8 w-8' />
           </Button>
           <div className='flex flex-col items-center space-y-4'>
-            <UserAvatar url={user.imageUrl} size={10} />
+            <UserAvatar url={user.imageUrl} size={10} name={user.name} />
             <IcShare className='fill-current text-black-c h-6 w-6' />
           </div>
         </>

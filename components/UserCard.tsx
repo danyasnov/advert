@@ -17,7 +17,7 @@ const UserCard: FC = observer(() => {
     <div className='flex flex-col bg-white px-2 py-6'>
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
-          <UserAvatar url={product.owner.image} />
+          <UserAvatar url={product.owner.image} name={product.owner.name} />
           {/* <IcPersonAdd className='fill-current h-6 w-6 ' /> */}
         </div>
         <div>

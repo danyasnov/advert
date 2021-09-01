@@ -3,21 +3,39 @@ import ImageWrapper from './ImageWrapper'
 
 interface Props {
   url?: string
+  name?: string
   size?: number
 }
-const UserAvatar: FC<Props> = ({url, size = 16}) => {
-  const className = `w-${size} h-${size} rounded-full overflow-hidden bg-black-c z-20`
+const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
+  let content
+  if (url) {
+    content = (
+      <ImageWrapper
+        width={size * 4}
+        height={size * 4}
+        objectFit='cover'
+        type={url}
+        alt='avatar'
+      />
+    )
+  } else if (name) {
+    content = (
+      <span className='text-h-1 text-white w-full text-center'>
+        {name
+          .split(' ')
+          .map((word) => word[0].toUpperCase())
+          .slice(0, 2)
+          .join('')}
+      </span>
+    )
+  }
+  console.log(content)
   return (
-    <div className={className}>
-      {!!url && (
-        <ImageWrapper
-          width={size * 4}
-          height={size * 4}
-          objectFit='cover'
-          type={url}
-          alt='avatar'
-        />
-      )}
+    // height hack because tailwind h-16 not working here
+    <div
+      className='rounded-full overflow-hidden bg-black-c flex items-center'
+      style={{height: size * 4, width: size * 4}}>
+      {content}
     </div>
   )
 }
