@@ -1,4 +1,4 @@
 include:
-  - project: 'devops/cicd'
+  - project: 'adverto/cicd'
     ref: master
     file: '.gitlab-ci-react-front.yml'
