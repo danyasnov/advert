@@ -22,6 +22,19 @@ build:
   variables:
   script:
     - docker pull registry.forumplay.com/adverto/react-frontend:cache
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.adverto.sale:10.55.1.11 --cache-from registry.forumplay.com/adverto/react-frontend:cache -t registry.forumplay.com/adverto/react-frontend:develop .
+    - docker push registry.forumplay.com/adverto/react-frontend:master
+  tags: 
+    - build-react
+  only:
+    refs: 
+      - develop
+
+build:
+  stage: build
+  variables:
+  script:
+    - docker pull registry.forumplay.com/adverto/react-frontend:cache
     - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.adverto.sale:10.55.1.11 --cache-from registry.forumplay.com/adverto/react-frontend:cache -t registry.forumplay.com/adverto/react-frontend:master .
     - docker push registry.forumplay.com/adverto/react-frontend:master
   tags: 
@@ -29,7 +42,7 @@ build:
   only:
     refs: 
       - master
-      - develop
+
 
 deploy_preprod:
   stage: deploy
