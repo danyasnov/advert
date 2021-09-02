@@ -119,7 +119,7 @@ const Footer: FC = observer(() => {
                     />
                   </a>
                   <a
-                    className='hidden l:block p-2'
+                    className='p-2 mt-2'
                     href='https://apps.apple.com/ru/app/adverto/id1287862488?itsct=apps_box_badge&amp;itscg=30200'
                     style={{
                       borderRadius: '13px',
