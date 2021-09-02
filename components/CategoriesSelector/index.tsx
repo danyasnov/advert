@@ -1,11 +1,14 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import {useRouter} from 'next/router'
+import {observer} from 'mobx-react-lite'
 import CategoriesButton from './CategoriesButton'
 import useOnClickOutside from '../../hooks/useOnClickOutside'
 import CategoriesMobileSelector from './CategoriesMobileSelector'
 import CategoriesDesktopSelector from './CategoriesDesktopSelector'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
-const CategoriesSelector: FC = () => {
+const CategoriesSelector: FC = observer(() => {
+  const {setShowContent} = useGeneralStore()
   const [show, setShow] = useState(false)
   const ref = useRef()
   useOnClickOutside(ref, () => {
@@ -16,6 +19,10 @@ const CategoriesSelector: FC = () => {
   useEffect(() => {
     setShow(false)
   }, [router.asPath])
+
+  useEffect(() => {
+    setShowContent(!show)
+  }, [setShowContent, show])
 
   return (
     <div ref={ref}>
@@ -37,6 +44,6 @@ const CategoriesSelector: FC = () => {
       )}
     </div>
   )
-}
+})
 
 export default CategoriesSelector

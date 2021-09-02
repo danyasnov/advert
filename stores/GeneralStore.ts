@@ -14,9 +14,11 @@ export interface IGeneralStore {
   root: RootStore
   showFooter: boolean
   showCookiesWarn: boolean
+  showContent: boolean
   document: Document
   locationCodes: string
   setFooterVisibility: (visible: boolean) => void
+  setShowContent: (visible: boolean) => void
   toggleCookiesWarnVisibility: () => void
   hydrate(data: IGeneralsHydration): void
 }
@@ -28,12 +30,18 @@ export class GeneralStore implements IGeneralStore {
 
   showCookiesWarn = false
 
+  showContent = true
+
   document
 
   locationCodes = ''
 
   setFooterVisibility = (visible: boolean): void => {
     this.showFooter = visible
+  }
+
+  setShowContent = (visible: boolean): void => {
+    this.showContent = visible
   }
 
   toggleCookiesWarnVisibility = (): void => {
