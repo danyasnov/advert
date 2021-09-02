@@ -48,7 +48,7 @@ const LocationSelector: FC<Props> = ({
       </div>
       <div className='flex flex-wrap'>
         {Object.entries(items).map(([key, values]) => (
-          <div className='flex flex-col w-1/6 mb-4' key={key}>
+          <div className='flex flex-col w-1/3 s:w-1/6 mb-4' key={key}>
             <div className='text-black-b h-10 bg-black-e flex items-center mb-2 pl-4'>
               {key}
             </div>
