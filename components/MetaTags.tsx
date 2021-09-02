@@ -16,7 +16,7 @@ interface Props {
   product?: AdvertiseDetail
   user?: OwnerModel
 }
-const MetaTags: FC<Props> = ({title, description, product, user}) => {
+const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
   const imageUrl = first(advert?.images) || user?.imageUrl
   console.log(toJS(advert))
