@@ -68,8 +68,8 @@ const UserLayout: FC = observer(() => {
               <>
                 <Tabs
                   items={getTabs(t, {
-                    1: size(userSale.items),
-                    2: size(userSold.items),
+                    1: userSale.count,
+                    2: userSold.count,
                     3: size(ratings),
                   })}
                   onChange={(id) => setActiveTab(id)}
