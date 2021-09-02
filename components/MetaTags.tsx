@@ -1,17 +1,25 @@
 import {FC} from 'react'
 import Head from 'next/head'
-import {AdvertiseFullModel, OwnerModel} from 'front-api/src/models/index'
+import {
+  AdvertiseDetail,
+  AdvertiseFullModel,
+  OwnerModel,
+} from 'front-api/src/models/index'
 import Script from 'next/script'
 import {first} from 'lodash'
+import {DateTime} from 'luxon'
+import {toJS} from 'mobx'
 
 interface Props {
   title: string
   description?: string
-  product?: AdvertiseFullModel
+  product?: AdvertiseDetail
   user?: OwnerModel
 }
 const MetaTags: FC<Props> = ({title, description, product, user}) => {
-  const imageUrl = first(product?.images) || user?.imageUrl
+  const {advert, owner} = product
+  const imageUrl = first(advert?.images) || user?.imageUrl
+  console.log(toJS(advert))
   return (
     <>
       <Head>
@@ -23,8 +31,8 @@ const MetaTags: FC<Props> = ({title, description, product, user}) => {
         <meta
           property='og:url'
           content={
-            product
-              ? `https://adverto.sale${product.url}`
+            advert
+              ? `https://adverto.sale${advert.url}`
               : 'https://adverto.sale'
           }
         />
@@ -41,11 +49,11 @@ const MetaTags: FC<Props> = ({title, description, product, user}) => {
         <meta property='og:image:height' content='512' />
         <meta
           property='og:description'
-          content={product ? product.description : description}
+          content={advert ? advert.description : description}
         />
         <meta name='apple-mobile-web-app-title' content={title} />
       </Head>
-      {product ? (
+      {advert ? (
         <>
           <Script
             type='application/ld+json'
@@ -53,15 +61,23 @@ const MetaTags: FC<Props> = ({title, description, product, user}) => {
               __html: JSON.stringify({
                 '@context': 'http://schema.org',
                 '@type': 'Product',
-                name: product.title,
-                description: product.description,
-                image: product.images,
+                name: advert.title,
+                description: advert.description,
+                image: advert.images,
                 offers: {
                   '@type': 'Offer',
                   // @ts-ignore
-                  price: product.priceFloat,
+                  price: advert.priceFloat,
                   // @ts-ignore
-                  priceCurrency: product.currencyCode,
+                  priceCurrency: advert.currencyCode,
+                  priceValidUntil: DateTime.local()
+                    .plus({months: 1})
+                    .toISODate(),
+                  availability: 'https://schema.org/InStock',
+                  url: `https://adverto.sale${advert.url}`,
+                  sku: owner.hash,
+                  description: advert.description,
+                  image: advert.images,
                 },
                 potentialAction: {
                   '@type': 'SearchAction',
@@ -85,16 +101,16 @@ const MetaTags: FC<Props> = ({title, description, product, user}) => {
   fbq('init', '1735830353144099');
   fbq('track', 'PageView');
   fbq('track', 'ViewContent', {
-  content_name: '${product.title}',
-  content_ids: ['${product.hash}'],
+  content_name: '${advert.title}',
+  content_ids: ['${advert.hash}'],
   content_type: 'product',
   value: ${
     // @ts-ignore
-    product.priceFloat
+    advert.priceFloat
   },
   currency: '${
     // @ts-ignore
-    product.currencyCode
+    advert.currencyCode
   }'
 });`,
             }}
