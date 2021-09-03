@@ -1,14 +1,13 @@
 import {FC} from 'react'
 import IcAdvertoLogoInverseSquare from 'icons/logo/AdvertoLogoInverseSquare.svg'
 import IcAdvertoLogoInverseLandscape from 'icons/logo/AdvertoLogoInverseLandscape.svg'
-import {useRouter} from 'next/router'
-import Button from './Buttons/Button'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const Logo: FC = () => {
-  const router = useRouter()
   return (
-    <Button
-      onClick={() => router.push('/')}
+    <LinkWrapper
+      title='logo'
+      href='/'
       className='flex flex-col justify-center cursor-pointer'>
       <IcAdvertoLogoInverseSquare width={40} height={40} className='l:hidden' />
       <IcAdvertoLogoInverseLandscape
@@ -16,7 +15,7 @@ const Logo: FC = () => {
         height={32}
         className='hidden l:block'
       />
-    </Button>
+    </LinkWrapper>
   )
 }
 
