@@ -4,7 +4,8 @@ import {useTranslation} from 'next-i18next'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
 import IcPhone from 'icons/material/Phone.svg'
-
+import {size} from 'lodash'
+import {FieldDTO} from 'front-api/src/models/index'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
@@ -13,10 +14,12 @@ import UserCard from './UserCard'
 import PrimaryButton from './Buttons/PrimaryButton'
 import SocialButtons from './SocialButtons'
 
-const tabs = [
-  {id: 0, title: 'DESCRIPTION'},
-  {id: 1, title: 'CHARACTERISTICS_TAB'},
-]
+const getTabs = (description: string, fields: FieldDTO[]) => {
+  const tabs = []
+  if (description) tabs.push({id: 0, title: 'DESCRIPTION'})
+  if (size(fields)) tabs.push({id: 1, title: 'CHARACTERISTICS_TAB'})
+  return tabs
+}
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
@@ -25,7 +28,8 @@ const ProductDescription: FC = observer(() => {
   const {t} = useTranslation()
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {shortUrl, favoriteCounter, views, dateUpdated, fields} = advert
+  const {shortUrl, favoriteCounter, views, dateUpdated, fields, description} =
+    advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
@@ -68,7 +72,7 @@ const ProductDescription: FC = observer(() => {
 
       <div className='h-full flex flex-col'>
         <Tabs
-          items={fields.length ? tabs : [tabs[0]]}
+          items={getTabs(description, fields)}
           value={activeTab}
           onChange={(id) => setActiveTab(id)}
         />
@@ -98,6 +102,7 @@ const ProductDescription: FC = observer(() => {
 const DescriptionTab: FC = observer(() => {
   const {product} = useProductsStore()
 
+  if (!product.advert.description) return null
   return (
     <div className='bg-white p-4 text-black-b text-body-1'>
       {product.advert.description}

@@ -1,5 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import {isEmpty} from 'lodash'
 import Button from './Buttons/Button'
 
 interface Props {
@@ -12,6 +13,10 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
   const {t} = useTranslation()
   let widthClass
   switch (items.length) {
+    case 1: {
+      widthClass = 'w-full'
+      break
+    }
     case 2: {
       widthClass = 'w-1/2'
       break
@@ -24,6 +29,7 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
       widthClass = ''
     }
   }
+  if (isEmpty(items)) return null
   return (
     <div className='flex h-12'>
       {items.map((i) => {
