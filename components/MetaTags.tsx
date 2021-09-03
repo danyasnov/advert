@@ -1,10 +1,6 @@
 import {FC} from 'react'
 import Head from 'next/head'
-import {
-  AdvertiseDetail,
-  AdvertiseFullModel,
-  OwnerModel,
-} from 'front-api/src/models/index'
+import {AdvertiseDetail, OwnerModel} from 'front-api/src/models/index'
 import Script from 'next/script'
 import {first} from 'lodash'
 import {DateTime} from 'luxon'
@@ -15,9 +11,27 @@ interface Props {
   product?: AdvertiseDetail
   user?: OwnerModel
 }
+
+const brandTitles = {
+  Бренд: 1,
+  Μάρκα: 1,
+  Brand: 1,
+  Marka: 1,
+  Marca: 1,
+}
 const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
   const imageUrl = first(advert?.images) || user?.imageUrl
+  let brand
+  if (advert) {
+    advert.fields.forEach((f) => {
+      if (brandTitles[f.fieldNameText]) {
+        // eslint-disable-next-line prefer-destructuring
+        brand = f.fieldValueText[0]
+      }
+    })
+  }
+  console.log('brand', brand)
   return (
     <>
       <Head>
@@ -82,6 +96,15 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
                   target: 'https://adverto.sale/all/all?q={search_query}',
                   'query-input': 'required name=search_query',
                 },
+
+                ...(brand
+                  ? {
+                      brand: {
+                        '@type': 'Brand',
+                        name: brand,
+                      },
+                    }
+                  : {}),
               }),
             }}
           />
