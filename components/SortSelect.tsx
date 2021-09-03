@@ -21,23 +21,24 @@ const withIcons = (options) => {
   }))
 }
 
-const getSortOptions = (t: TFunction) => [
-  {
-    value: 'date_updated-asc',
-    label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
-  },
-  {
-    value: 'date_updated-desc',
-    label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
-  },
-  {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
-  {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
-  {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
-  {
-    value: 'distance-desc',
-    label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
-  },
-]
+const getSortOptions = (t: TFunction) =>
+  withIcons([
+    {
+      value: 'date_updated-asc',
+      label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
+    },
+    {
+      value: 'date_updated-desc',
+      label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
+    },
+    {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
+    {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
+    {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
+    {
+      value: 'distance-desc',
+      label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
+    },
+  ])
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
@@ -51,7 +52,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     products,
   } = useProductsStore()
 
-  const [options, setOptions] = useState(withIcons(getSortOptions(t)))
+  const [options, setOptions] = useState(getSortOptions(t))
   useEffect(() => {
     setOptions(
       state.searchBy !== 'coords' || hideDistanceSort

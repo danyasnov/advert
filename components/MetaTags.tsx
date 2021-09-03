@@ -31,7 +31,6 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
       }
     })
   }
-  console.log('brand', brand)
   return (
     <>
       <Head>
