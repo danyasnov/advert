@@ -115,6 +115,7 @@ module.exports = {
       },
       minHeight: {
         10: '2.5rem',
+        'half-screen': '50vh',
       },
       minWidth: {
         10: '2.5rem',

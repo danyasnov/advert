@@ -57,7 +57,7 @@ const Footer: FC = observer(() => {
   return (
     <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
-        <div className='flex justify-center space-x-4 mb-2 l:mb-0 l:pr-6'>
+        <div className='flex justify-center space-x-4 l:mb-0 l:pr-6'>
           {mainCountriesIds.map((id) => (
             <LinkWrapper
               key={id}
@@ -73,16 +73,16 @@ const Footer: FC = observer(() => {
             className='font-bold'
           />
         </div>
-        <div className='flex justify-center space-x-4 border-shadow-b border-t pt-2 w-min l:border-t-0 l:border-l l:pt-0 l:pl-6'>
-          {/* {mainCities.map((i) => ( */}
-          {/*  <LinkButton key={i} onClick={notImplementedAlert} label={i} /> */}
-          {/* ))} */}
-          {/* <LinkButton */}
-          {/*  onClick={notImplementedAlert} */}
-          {/*  label={t('ALL_CITIES')} */}
-          {/*  className='font-bold' */}
-          {/* /> */}
-        </div>
+        {/* <div className='flex justify-center space-x-4 border-shadow-b border-t pt-2 w-min l:border-t-0 l:border-l l:pt-0 l:pl-6'> */}
+        {/* {mainCities.map((i) => ( */}
+        {/*  <LinkButton key={i} onClick={notImplementedAlert} label={i} /> */}
+        {/* ))} */}
+        {/* <LinkButton */}
+        {/*  onClick={notImplementedAlert} */}
+        {/*  label={t('ALL_CITIES')} */}
+        {/*  className='font-bold' */}
+        {/* /> */}
+        {/* </div> */}
       </div>
       <div
         className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${

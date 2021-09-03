@@ -21,7 +21,7 @@ const ProductLayout: FC = () => {
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />
-      <div className='bg-black-e py-4 m:flex px-4 s:px-8 m:py-8'>
+      <div className='bg-black-e py-4 m:flex px-4 s:px-8 m:py-8 min-h-half-screen'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-608px l:w-896px'>
             <ProductHeader />
