@@ -53,7 +53,7 @@ export class UserStore implements IUserStore {
     userSold: {},
   }
 
-  ratings: ReviewModel[] = []
+  ratings: ReviewModel[]
 
   fetchRatings = (): Promise<void> => {
     const config: AxiosRequestConfig = {

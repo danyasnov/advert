@@ -8,7 +8,6 @@ import {
 import Script from 'next/script'
 import {first} from 'lodash'
 import {DateTime} from 'luxon'
-import {toJS} from 'mobx'
 
 interface Props {
   title: string
@@ -19,7 +18,6 @@ interface Props {
 const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
   const imageUrl = first(advert?.images) || user?.imageUrl
-  console.log(toJS(advert))
   return (
     <>
       <Head>

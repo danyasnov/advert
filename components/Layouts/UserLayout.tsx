@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {size} from 'lodash'
+import {isNumber} from 'lodash'
 import IcUser from 'icons/material/User.svg'
 import IcClear from 'icons/material/Clear.svg'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
@@ -69,8 +69,8 @@ const UserLayout: FC = observer(() => {
                 <Tabs
                   items={getTabs(t, {
                     1: userSale.count,
-                    2: userSold.count,
-                    3: size(ratings),
+                    2: isNumber(userSold.count) ? userSold.count : '',
+                    3: isNumber(ratings?.length) ? ratings.length : '',
                   })}
                   onChange={(id) => setActiveTab(id)}
                   value={activeTab}

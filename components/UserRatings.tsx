@@ -8,6 +8,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 
 const UserRatings: FC = observer(() => {
   const {ratings} = useUserStore()
+  if (!ratings) return null
   return (
     <div className='flex flex-col mt-2'>
       {ratings.map((r) => (
