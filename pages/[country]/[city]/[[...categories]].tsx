@@ -111,13 +111,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (product && similarProductsPromise) {
     const [similarProductsResponse] = response
     if (product?.advert?.block) {
-      productsStore = undefined
-    } else {
-      productsStore = {
-        // @ts-ignore
-        product: product ?? null,
-        similarProducts: similarProductsResponse?.result?.data ?? null,
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/countries',
+        },
       }
+    }
+    productsStore = {
+      // @ts-ignore
+      product: product ?? null,
+      similarProducts: similarProductsResponse?.result?.data ?? null,
     }
   } else {
     const [productsResponse] = response
