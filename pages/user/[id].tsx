@@ -43,7 +43,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   }
 
-  if (!userData?.result) return redirect('/countries', res)
+  if (!userData?.result)
+    return {
+      redirect: {
+        destination: '/countries',
+        permanent: false,
+      },
+    }
 
   return {
     props: {

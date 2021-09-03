@@ -325,7 +325,7 @@ export const getUrlQueryFromFilter = (
     Object.entries(fieldValues).map(([key, value]) => {
       let stringValue = ''
       const currentField = fieldById[key]
-      switch (currentField.fieldType) {
+      switch (currentField?.fieldType) {
         case 'select':
         case 'iconselect':
         case 'multiselect': {
@@ -406,7 +406,7 @@ export const getFilterFromQuery = (
 
         let parsedValue = decodeURIComponent(value as string).split(',')
         // eslint-disable-next-line default-case
-        switch (currentField.fieldType) {
+        switch (currentField?.fieldType) {
           case 'select':
           case 'iconselect':
           case 'multiselect': {
@@ -493,7 +493,7 @@ export const getFormikInitialFromQuery = (
 
         let parsedValue = decodeURIComponent(value as string).split(',')
         // eslint-disable-next-line default-case
-        switch (currentField.fieldType) {
+        switch (currentField?.fieldType) {
           case 'select':
           case 'iconselect':
           case 'multiselect': {

@@ -1,5 +1,5 @@
 import {GetServerSideProps} from 'next'
-import {getQueryValue, processCookies, redirect} from '../../helpers'
+import {getQueryValue, processCookies} from '../../helpers'
 import {fetchProductDetails} from '../../api/v2'
 
 export default function Home() {
@@ -7,7 +7,7 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const {query, res} = ctx
+  const {query} = ctx
   const state = await processCookies(ctx)
   const param = getQueryValue(query, 'country')
 
@@ -15,7 +15,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const response = await fetchProductDetails(state, param)
   if (response.result) {
     const {url} = response.result.advert
-    return redirect(url, res)
+    return {
+      redirect: {
+        destination: url,
+        permanent: false,
+      },
+    }
   }
-  throw new Error("can't find advert")
+  return {
+    redirect: {
+      destination: '/countries',
+      permanent: false,
+    },
+  }
 }

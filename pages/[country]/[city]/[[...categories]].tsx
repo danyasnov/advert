@@ -77,7 +77,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       (countryCode !== 'all' && !isValidCountry) ||
       (!currentCategory && query.categories)
     ) {
-      return redirect('/countries', res)
+      return {
+        redirect: {
+          destination: '/countries',
+          permanent: false,
+        },
+      }
     }
   }
 
