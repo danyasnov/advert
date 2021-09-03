@@ -12,14 +12,15 @@ const cancelToken = axios.CancelToken
 
 export interface IUserHydration {
   user: OwnerModel
-  products: Record<string, Partial<ProductSummary>>
+  userSale: ProductSummary
 }
 
 export interface IUserStore {
   root: RootStore
   hydrate(data: IUserHydration): void
   user: OwnerModel
-  products: Record<string, Partial<ProductSummary>>
+  userSale: Partial<ProductSummary>
+  userSold: Partial<ProductSummary>
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   ratings: ReviewModel[]
@@ -48,10 +49,9 @@ export class UserStore implements IUserStore {
 
   user
 
-  products: Record<string, Partial<ProductSummary>> = {
-    userSale: {},
-    userSold: {},
-  }
+  userSale: Partial<ProductSummary> = {}
+
+  userSold: Partial<ProductSummary> = {}
 
   ratings: ReviewModel[]
 
@@ -90,7 +90,7 @@ export class UserStore implements IUserStore {
 
   fetchProducts = (payload: FetchPayload): Promise<void> => {
     const {path} = payload
-    const currentScope = this.products[path]
+    const currentScope = this[path]
     if (currentScope?.cancelTokenSource) {
       currentScope.cancelTokenSource.cancel('got_new_request')
     }
@@ -160,6 +160,6 @@ export class UserStore implements IUserStore {
 
   hydrate(data?: IUserHydration): void {
     this.user = data?.user ?? null
-    this.products = data?.products ?? {userSale: {}, userSold: {}}
+    this.userSale = data?.userSale ?? {}
   }
 }

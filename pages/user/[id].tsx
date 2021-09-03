@@ -34,15 +34,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const countries = countriesData ?? null
   const userStore = {
     user: userData?.result ?? null,
-    products: {
-      userSale: {
-        items: userSaleData?.result ?? [],
-        cacheId: userSaleData?.headers?.cacheId ?? null,
-        page: userSaleData?.headers?.pagination?.page ?? 1,
-        limit: userSaleData?.headers?.pagination?.limit ?? 20,
-        count: userSaleData?.headers?.pagination?.count ?? 0,
-      },
-      userSold: {},
+    userSale: {
+      items: userSaleData?.result ?? [],
+      cacheId: userSaleData?.headers?.cacheId ?? null,
+      page: userSaleData?.headers?.pagination?.page ?? 1,
+      limit: userSaleData?.headers?.pagination?.limit ?? 20,
+      count: userSaleData?.headers?.pagination?.count ?? 0,
     },
   }
 

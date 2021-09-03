@@ -22,9 +22,9 @@ const getTabs = (t: TFunction, sizes) => [
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [activeTab, setActiveTab] = useState(1)
-  const {products, user, fetchProducts, fetchRatings, ratings} = useUserStore()
+  const {userSale, userSold, user, fetchProducts, fetchRatings, ratings} =
+    useUserStore()
   const {setFooterVisibility} = useGeneralStore()
-  const {userSale, userSold} = products
   const [showProfile, setShowProfile] = useState(false)
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})

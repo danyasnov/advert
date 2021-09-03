@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {processCookies} from '../../helpers'
-import {fetchUserSale, fetchUserSold} from '../../api/v2'
+import {fetchUserSold} from '../../api/v2'
 
 export default async (
   req: NextApiRequest,
