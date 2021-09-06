@@ -20,7 +20,7 @@
     "embla-carousel": "^4.5.3",
     "express": "^4.17.1",
     "formik": "^2.2.9",
-    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#06e6e94d330b8d6fb3dbebc9efc507f8bc9f0541",
+    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#7725e3b7f2db9200581e11bf124f8b1cba66649c",
     "google-map-react": "^2.1.10",
     "is-ip": "^3.1.0",
     "lodash": "^4.17.21",

@@ -171,13 +171,13 @@ export const processCookies = async (
     if (state.regionId) {
       const regions = await fetchRegions(state.countryId, 'en')
       const region = (regions.result ?? []).find((c) => c.id === state.regionId)
-      if (region?.word) {
-        state.regionOrCityCode = region?.word
+      if (region?.slug) {
+        state.regionOrCityCode = region?.slug
         if (state.cityId) {
           const cities = await fetchCities(state.regionId, 'en')
           const city = (cities.result ?? []).find((c) => c.id === state.cityId)
-          if (city?.word) {
-            state.regionOrCityCode = city?.word
+          if (city?.slug) {
+            state.regionOrCityCode = city?.slug
           }
         }
       }

@@ -28,7 +28,12 @@ const fetchRegions = (countryId) => {
     ): SelectItem[] => {
       const {data} = res
       const items = data.result || []
-      return items.map((r) => ({value: r.id, label: r.value, word: r.word}))
+      return items.map((r) => ({
+        value: r.id,
+        label: r.value,
+        word: r.word,
+        slug: r.slug,
+      }))
     },
   )
 }
@@ -51,6 +56,7 @@ const fetchCities = (regionId) => {
         label: r.value,
         hasAdverts: r.has_adverts,
         word: r.word,
+        slug: r.slug,
       }))
     },
   )
@@ -84,10 +90,12 @@ const TextForm: FC<Props> = observer(({onClose}) => {
   const [country, setCountry] = useState<
     (SelectItem & {isoCode?: string}) | null
   >(null)
-  const [region, setRegion] = useState<(SelectItem & {word: string}) | null>(
-    null,
-  )
-  const [city, setCity] = useState<(SelectItem & {word?: string}) | null>(null)
+  const [region, setRegion] = useState<
+    (SelectItem & {word?: string; slug?: string}) | null
+  >(null)
+  const [city, setCity] = useState<
+    (SelectItem & {word?: string; slug?: string}) | null
+  >(null)
   const [regionOptions, setRegionOptions] = useState<SelectItem[]>([])
   const [cityOptions, setCityOptions] = useState<SelectItem[]>([])
   const onChangeCountry = (item) => {
@@ -163,14 +171,14 @@ const TextForm: FC<Props> = observer(({onClose}) => {
     if (city?.value) {
       addressArray.push(city.label)
       state.cityId = city.value.toString()
-      query.city = city.word
+      query.city = city.slug
     } else {
       destroyCookiesWrapper(null, 'cityId')
     }
     if (region?.value) {
       addressArray.push(region.label)
       state.regionId = region.value.toString()
-      query.city = region.word
+      query.city = region.slug
     } else {
       destroyCookiesWrapper(null, 'regionId')
     }

@@ -1,7 +1,8 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useEmblaCarousel} from 'embla-carousel/react'
+import {parseCookies} from 'nookies'
 import ImageWrapper from './ImageWrapper'
 import {
   useCategoriesStore,
@@ -11,11 +12,19 @@ import TitleWithSeparator from './TitleWithSeparator'
 import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 import LinkWrapper from './Buttons/LinkWrapper'
+import {SerializedCookiesState} from '../types'
+import {getLocationCodes} from '../helpers'
 
 const CategoriesSlider: FC = observer(() => {
   const {categoriesWithoutAll} = useCategoriesStore()
-  const {locationCodes} = useGeneralStore()
+  const {locationCodes: defaultLocationCodes} = useGeneralStore()
+  const [locationCodes, setLocationCodes] = useState(defaultLocationCodes)
+  const cookies: SerializedCookiesState = parseCookies()
+
   const {t} = useTranslation()
+  useEffect(() => {
+    setLocationCodes(getLocationCodes())
+  }, [cookies.cityId, cookies.regionId, cookies.countryId])
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
