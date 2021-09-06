@@ -267,7 +267,10 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           }}>
           {t('CLEAN')}
         </SecondaryButton>
-        <PrimaryButton onClick={onSubmit} className='ml-4' disabled={!country}>
+        <PrimaryButton
+          onClick={country && onSubmit}
+          className='ml-4'
+          disabled={!country}>
           {t('APPLY')}
         </PrimaryButton>
       </div>

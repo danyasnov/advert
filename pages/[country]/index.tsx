@@ -18,14 +18,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         destination: url,
-        permanent: false,
+        statusCode: 301,
       },
     }
   }
   return {
     redirect: {
       destination: '/countries',
-      permanent: false,
+      statusCode: 301,
     },
   }
 }

@@ -80,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return {
         redirect: {
           destination: '/countries',
-          permanent: false,
+          statusCode: 301,
         },
       }
     }
@@ -118,7 +118,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (product?.advert?.block) {
       return {
         redirect: {
-          permanent: false,
+          statusCode: 301,
           destination: '/countries',
         },
       }

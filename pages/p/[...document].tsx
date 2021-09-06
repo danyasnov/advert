@@ -32,8 +32,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!document) {
     return {
       redirect: {
-        permanent: false,
         destination: '/countries',
+        statusCode: 301,
       },
     }
   }

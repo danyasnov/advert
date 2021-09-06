@@ -7,8 +7,10 @@ import {
 } from 'front-api/src/models/index'
 import axios, {AxiosPromise} from 'axios'
 import {SettingsLanguageModel} from 'front-api'
-import {API_URL, getRest} from '../index'
+import {getRest} from '../index'
 import Storage from '../../stores/Storage'
+
+const API_V1_URL = 'https://api.adverto.sale'
 
 export const fetchCountries = (
   language: string,
@@ -52,7 +54,7 @@ export const fetchSearchSuggestion = (
   }
   return axios({
     method: 'post',
-    url: `${API_URL}/v1/search_suggestions.php`,
+    url: `${API_V1_URL}/v1/search_suggestions.php`,
     data: `query=${JSON.stringify(payload)}`,
   })
 }
@@ -67,7 +69,7 @@ export const fetchCategorySuggestion = (
   }
   return axios({
     method: 'post',
-    url: `${API_URL}/v1/search_suggestions_category.php`,
+    url: `${API_V1_URL}/v1/search_suggestions_category.php`,
     data: `query=${JSON.stringify(payload)}`,
   })
 }
