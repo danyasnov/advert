@@ -39,13 +39,14 @@ const ProductPhotos: FC = observer(() => {
     <div>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
-          {product.advert.images.map((i) => (
+          {product.advert.images.map((i, index) => (
             <div key={i} className='relative min-w-full'>
               <ImageWrapper
                 type={i}
                 layout='fill'
                 alt={i}
                 objectFit='contain'
+                priority={index === 0}
               />
             </div>
           ))}
