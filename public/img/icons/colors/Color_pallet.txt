@@ -1,0 +1,24 @@
+col-beige #F5E5CA
+col-black #000000
+col-blue #00BFFF
+col-brown #8B572A
+col-cyan #3A7BFF
+col-darkred #AF2C2C
+col-green #66C224
+col-grey #C6C6C6
+col-khaki #ABBC83
+col-orange #FF8F00
+col-purple #A840FF
+col-red #FF2A26
+col-rose #FFCBDB
+col-white #FFFFFF
+col-yellow #F7D31E
+col-metallic #7D8589 > #7D8589 > #B4B9BB
+col-multi # -
+
+
+
+
+
+
+
