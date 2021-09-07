@@ -91,7 +91,7 @@ export const fetchDocuments = async (path: string) => {
   const cached = cache.get(key)
   if (cached) return cached
   const result = await sequelize.query(
-    `SELECT * FROM adv_site_content WHERE id_lang=2 AND url='/${path}/'`,
+    `SELECT * FROM adv_site_content_new WHERE id_lang=2 AND url='/${path}/'`,
     {type: QueryTypes.SELECT},
   )
   cache.set(key, result)

@@ -32,7 +32,7 @@ const withIcons = (opts) =>
     ...o,
     icon: (
       <ImageWrapper
-        type={`https://adverto.sale/img/flags/${o.value}.png`}
+        type={`/img/flags/${o.value}.png`}
         alt={o.value}
         width={16}
         height={16}
