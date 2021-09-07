@@ -12,7 +12,7 @@ import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
 import PrimaryButton from './Buttons/PrimaryButton'
-import SocialButtons from './SocialButtons'
+import SharePopup from './SharePopup'
 
 const getTabs = (description: string, fields: FieldDTO[]) => {
   const tabs = []
@@ -79,8 +79,11 @@ const ProductDescription: FC = observer(() => {
         {activeTab === 0 && <DescriptionTab />}
         {activeTab === 1 && <CharacteristicsTab />}
       </div>
-      <div className='flex justify-between flex-col s:flex-row'>
-        <SocialButtons link={shortUrl} />
+      <div className='flex justify-between flex-col s:flex-row my-4'>
+        <SharePopup
+          userHash={product.owner.hash}
+          productHash={product.advert.hash}
+        />
 
         <div className='flex justify-end mt-4 text-body-2 flex-col s:flex-row s:space-x-4'>
           {/* <SecondaryButton */}

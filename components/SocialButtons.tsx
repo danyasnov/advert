@@ -11,7 +11,7 @@ interface Props {
 }
 const SocialButtons: FC<Props> = ({link}) => {
   return (
-    <div className='flex space-x-2 mt-4 mb-2 justify-between'>
+    <div className='flex space-x-4 justify-between'>
       <LinkWrapper
         target='_blank'
         title='Telegram'

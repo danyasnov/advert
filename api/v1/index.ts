@@ -4,6 +4,7 @@ import {
   GeoPositionItemModel,
   OwnerModel,
   ReviewModel,
+  CoverLinkType,
 } from 'front-api/src/models/index'
 import axios, {AxiosPromise} from 'axios'
 import {SettingsLanguageModel} from 'front-api'
@@ -42,6 +43,19 @@ export const fetchCities = (
   })
   const rest = getRest(storage)
   return rest.geo.fetchCityByRegion(region)
+}
+
+export const restCoverLink = (
+  link: string,
+  hashLink: string,
+  type: CoverLinkType,
+  language: string,
+): Promise<string> => {
+  const storage = new Storage({
+    language,
+  })
+  const rest = getRest(storage)
+  return rest.systemApi.restCoverLink(link, hashLink, type)
 }
 
 export const fetchSearchSuggestion = (

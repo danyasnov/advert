@@ -1,6 +1,7 @@
 const plugin = require('tailwindcss/plugin')
 const lineClamp = require('@tailwindcss/line-clamp')
 const typography = require('@tailwindcss/typography')
+const tooltipArrow = require('tailwindcss-tooltip-arrow-after')
 
 const capitalizeFirst = plugin(({addUtilities}) => {
   const newUtilities = {
@@ -129,6 +130,15 @@ module.exports = {
         'adverto-background': "url('/img/adverto-background.png')",
       }),
     },
+    tooltipArrows: (theme) => ({
+      arrow: {
+        borderColor: theme('colors.white'),
+        borderWidth: 1,
+        backgroundColor: theme('colors.white'),
+        size: 10,
+        offset: 150,
+      },
+    }),
   },
   variants: {
     extend: {
@@ -140,5 +150,5 @@ module.exports = {
       ringColor: ['focus-visible'],
     },
   },
-  plugins: [capitalizeFirst, lineClamp, typography],
+  plugins: [capitalizeFirst, lineClamp, typography, tooltipArrow()],
 }

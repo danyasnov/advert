@@ -4,8 +4,8 @@ import {useTranslation} from 'next-i18next'
 import {useUserStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import Rating from '../assets/icons/material/Rating'
-import SocialButtons from './SocialButtons'
 import UserAvatar from './UserAvatar'
+import SharePopup from './SharePopup'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -44,8 +44,8 @@ const UserProfile: FC = observer(() => {
             </span>
           </div>
         </div>
-        <div className='mt-2'>
-          <SocialButtons link={`https://adverto.sale/user/${user.hash}`} />
+        <div className='pb-8 pt-4'>
+          <SharePopup userHash={user.hash} />
         </div>
       </div>
     </div>
