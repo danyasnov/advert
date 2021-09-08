@@ -27,7 +27,7 @@ const UserSidebar: FC = observer(() => {
       {!collapsed && (
         <div className=''>
           <Button
-            className='absolute top-4 -right-4 w-8 h-8 z-10 bg-white rounded-r-full shadow-2xl z-0'
+            className='absolute top-4 -right-4 w-8 h-8 z-10 bg-white rounded-r-full shadow-2xl'
             onClick={() => setCollapsed(true)}>
             <IcClear className='fill-current text-black-c h-7 w-7' />
           </Button>
@@ -37,11 +37,11 @@ const UserSidebar: FC = observer(() => {
       {collapsed && (
         <>
           <Button
-            className='absolute top-3 -right-4 w-8 h-8 z-10 bg-white rounded-r-full z-0'
+            className='absolute top-3 -right-4 w-8 h-8 z-10 bg-white rounded-r-full'
             onClick={() => setCollapsed(false)}>
             <IcKeyboardArrowRight className='fill-current text-black-c h-8 w-8' />
           </Button>
-          <div className='flex flex-col items-center space-y-4'>
+          <div className='flex flex-col items-center space-y-4 z-10'>
             <UserAvatar url={user.imageUrl} size={10} name={user.name} />
             <IcShare className='fill-current text-black-c h-6 w-6' />
           </div>
