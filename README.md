@@ -6,4 +6,4 @@ changed CI script for preprod
 removed Host Key Verification for preprod
 added cache
 fixed KEY
-changed cicd path
+changed refs to master - deploy if pushed/merged to master
