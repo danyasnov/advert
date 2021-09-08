@@ -75,12 +75,17 @@ export const fetchSearchSuggestion = (
 
 export const fetchCategorySuggestion = (
   phrase: string,
-  lang: string,
+  language: string,
 ): AxiosPromise => {
   const payload = {
     phrase,
-    lang,
+    lang: language,
   }
+  // const storage = new Storage({
+  //   language,
+  // })
+  // const rest = getRest(storage)
+  // return rest.categories.suggestSearchCategories(phrase)
   return axios({
     method: 'post',
     url: `${API_V1_URL}/v1/search_suggestions_category.php`,
