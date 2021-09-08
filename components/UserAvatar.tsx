@@ -24,7 +24,7 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
       <span className={`${fontSize} text-white w-full text-center`}>
         {name
           .split(' ')
-          .map((word) => word[0].toUpperCase())
+          .map((word) => (word[0] || '').toUpperCase())
           .slice(0, 2)
           .join('')}
       </span>
