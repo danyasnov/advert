@@ -84,7 +84,7 @@ const SearchAutocomplete: FC<Props> = ({
   }
 
   return (
-    <div className='flex flex-col w-full '>
+    <div className='flex flex-col w-full'>
       <div className='flex' {...getComboboxProps()}>
         <input
           {...getInputProps({
@@ -105,7 +105,7 @@ const SearchAutocomplete: FC<Props> = ({
       </div>
       <ul
         {...getMenuProps()}
-        className='z-10 bg-white shadow-xl absolute top-81px left-8 right-8 s:left-24 s:right-24 s:top-89px m:left-48 m:right-48  l:left-80 l:right-80'>
+        className='z-10 bg-white shadow-xl absolute top-81px left-8 right-8 s:left-24 s:right-24 s:top-89px m:left-48 m:right-48 l:left-80 l:right-80'>
         {isOpen &&
           inputItems.map((item, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions

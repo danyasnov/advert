@@ -33,7 +33,7 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
   return (
     // height hack because tailwind h-16 not working here
     <div
-      className='rounded-full overflow-hidden bg-black-c flex items-center z-20'
+      className='rounded-full overflow-hidden bg-black-c flex items-center'
       style={{height: size * 4, width: size * 4}}>
       {content}
     </div>
