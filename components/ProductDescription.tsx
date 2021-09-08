@@ -23,13 +23,13 @@ const getTabs = (description: string, fields: FieldDTO[]) => {
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
-  const [activeTab, setActiveTab] = useState(0)
   const [showPhone, setShowPhone] = useState(false)
   const {t} = useTranslation()
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {shortUrl, favoriteCounter, views, dateUpdated, fields, description} =
-    advert
+  const {favoriteCounter, views, dateUpdated, fields, description} = advert
+  const [activeTab, setActiveTab] = useState(description ? 0 : 1)
+
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
