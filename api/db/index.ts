@@ -1,19 +1,6 @@
 import {QueryTypes, Sequelize} from 'sequelize'
 import {City} from '../../types'
-// eslint-disable-next-line camelcase
-import configDev from '../../config_dev.json'
-
-let config
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  config = require('../../config.json')
-  console.log('MODULE_FOUND using config', config.host)
-} catch (e) {
-  if (e.code === 'MODULE_NOT_FOUND') {
-    config = configDev
-    console.log('MODULE_NOT_FOUND using config_dev', config.host)
-  }
-}
+import config from '../../config.json'
 
 const sequelize = new Sequelize(
   config.database,
