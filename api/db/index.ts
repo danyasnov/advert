@@ -7,11 +7,11 @@ let config
 try {
   // eslint-disable-next-line global-require,import/no-unresolved
   config = require('../../config.json')
-  console.log('MODULE_FOUND using config')
+  console.log('MODULE_FOUND using config', config.host)
 } catch (e) {
   if (e.code === 'MODULE_NOT_FOUND') {
-    console.log('MODULE_NOT_FOUND using config_dev')
     config = configDev
+    console.log('MODULE_NOT_FOUND using config_dev', config.host)
   }
 }
 
