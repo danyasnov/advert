@@ -35,6 +35,7 @@ export const parseIp = (
 
 export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
   let url = `${process.env.API_URL}/v2/geo/mylocation`
+
   if (isIp(ip as string) && ip !== '::1') {
     url += `?ip=${ip}`
   }
