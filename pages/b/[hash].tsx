@@ -18,6 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     getQueryValue(query, 'hash'),
     link,
     config.host,
+    config.database,
   )
 
   return {
