@@ -20,7 +20,9 @@ export const getRest = (storage: AppStorage): RestApi =>
     isLogEnabled: true,
     isLogRequest: true,
     isLogResponse: false,
-    sendLog: (msg) => msg.includes('[request]') && console.log(`\n${msg}\n`),
+    sendLog: (msg) =>
+      (msg.includes('[request]') || msg.includes('[response]')) &&
+      console.log(`\n${msg}\n`),
     analyticsService: new DummyAnalytics(),
   })
 

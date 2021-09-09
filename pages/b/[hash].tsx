@@ -12,7 +12,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const link = (await fetchFirebaseLink(
     getQueryValue(query, 'hash'),
   )) as CoverLink[]
-  console.log('fetchFirebaseLink test console', link[0])
 
   return {
     redirect: {
