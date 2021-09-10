@@ -7,10 +7,14 @@ import {useProductsStore} from '../providers/RootStoreProvider'
 import ImageWrapper from './ImageWrapper'
 import useSliderButtons from '../hooks/useSliderButtons'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
+import Button from './Buttons/Button'
+import PhotosModal from './PhotosModal'
+import Thumb from './Thumb'
 
 const ProductPhotos: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
+  const [showModal, setShowModal] = useState(false)
 
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
@@ -40,7 +44,10 @@ const ProductPhotos: FC = observer(() => {
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
           {product.advert.images.map((i, index) => (
-            <div key={i} className='relative min-w-full'>
+            <Button
+              key={i}
+              className='relative min-w-full'
+              onClick={() => setShowModal(true)}>
               <ImageWrapper
                 type={i}
                 layout='fill'
@@ -48,7 +55,7 @@ const ProductPhotos: FC = observer(() => {
                 objectFit='contain'
                 priority={index === 0}
               />
-            </div>
+            </Button>
           ))}
         </div>
         <FullHeightSliderButton
@@ -76,44 +83,9 @@ const ProductPhotos: FC = observer(() => {
             />
           ))}
       </div>
+      <PhotosModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   )
 })
-
-interface ThumbProps {
-  url: string
-  onHover: (number) => void
-  index: number
-  activePhotoIndex: number
-}
-
-const Thumb: FC<ThumbProps> = ({url, onHover, index, activePhotoIndex}) => {
-  const ref = useRef()
-
-  const isHovering = useHoverDirty(ref)
-  useEffect(() => {
-    if (isHovering) {
-      onHover(index)
-    }
-  }, [index, isHovering, onHover])
-  return (
-    <div
-      className={`mx-1 mb-2 w-12 h-12 s:w-26 relative ${
-        isHovering || activePhotoIndex === index
-          ? 'border border-brand-a1'
-          : 'border border-transparent'
-      }`}
-      ref={ref}>
-      <ImageWrapper
-        type={url}
-        alt={url}
-        layout='fill'
-        key={url}
-        objectFit='cover'
-        priority
-      />
-    </div>
-  )
-}
 
 export default ProductPhotos

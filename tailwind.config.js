@@ -81,6 +81,7 @@ module.exports = {
         '1024px': '1024px',
         '1208px': '1208px',
         '1360px': '1360px',
+        '95%': '95%',
       },
       gridTemplateColumns: {
         'category-selector-m': '202px 202px 202px 336px',
