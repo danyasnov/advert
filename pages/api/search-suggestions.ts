@@ -18,6 +18,9 @@ export default async (
   ]
   return Promise.all(promises).then((result) => {
     // @ts-ignore
-    res.json([...result[0].result, ...result[1].data.data])
+    res.json([
+      ...result[0].result.slice(0, 5),
+      ...result[1].data.data.slice(0, 5),
+    ])
   })
 }

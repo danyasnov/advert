@@ -619,14 +619,23 @@ export const shallowUpdateQuery = (queryString?: string): void => {
   window.history.pushState({path: newurl}, '', newurl)
 }
 
-export const redirect = (
-  url: string,
-  res: ServerResponse,
-): {props: Record<string, never>} => {
-  res.setHeader('location', url)
-  res.statusCode = 301
-  res.end()
-  return {
-    props: {},
-  }
+export const getCategoriesSlugsPathFromIds = (
+  ids: string[],
+  categories: Array<CACategoryModel>,
+): string[] => {
+  const slugs = []
+  let currentSearchItems = categories
+  ids.some((id) => {
+    const currentCategory = currentSearchItems.find(
+      (c) => c.id === parseInt(id, 10),
+    )
+    if (currentCategory) {
+      slugs.push(currentCategory.slug)
+      currentSearchItems = currentCategory.items
+      return false
+    }
+    return true
+  })
+
+  return slugs
 }

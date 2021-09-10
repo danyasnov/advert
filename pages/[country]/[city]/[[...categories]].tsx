@@ -6,7 +6,6 @@ import {
   getFilterFromQuery,
   getQueryValue,
   processCookies,
-  redirect,
   withLocationQuery,
 } from '../../../helpers'
 import {

@@ -1,12 +1,7 @@
 import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {fetchUser, fetchCountries} from '../../api/v1'
-import {
-  getLocationCodes,
-  getQueryValue,
-  processCookies,
-  redirect,
-} from '../../helpers'
+import {getLocationCodes, getQueryValue, processCookies} from '../../helpers'
 import {fetchCategories, fetchUserSale} from '../../api/v2'
 import UserLayout from '../../components/Layouts/UserLayout'
 

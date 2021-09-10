@@ -31,7 +31,6 @@ const Search: FC = () => {
     <>
       <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b '>
         <SearchAutocomplete
-          placeholder={t('SEARCH')}
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
         />
