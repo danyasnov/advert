@@ -17,6 +17,7 @@ export default async (
     fetchSearchSuggestion(searchData, language),
   ]
   return Promise.all(promises).then((result) => {
+    // @ts-ignore
     res.json([...result[0].result, ...result[1].data.data])
   })
 }
