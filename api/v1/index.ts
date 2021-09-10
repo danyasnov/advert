@@ -58,10 +58,10 @@ export const restCoverLink = (
   return rest.systemApi.restCoverLink(link, hashLink, type)
 }
 
-export const fetchSearchSuggestion = (
+export const fetchSearchSuggestion = async (
   phrase: string,
   lang: string,
-): AxiosPromise => {
+): Promise<any> => {
   const payload = {
     phrase,
     lang,
