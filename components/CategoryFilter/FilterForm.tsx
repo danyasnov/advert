@@ -111,7 +111,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
 
   useEffect(() => {
     if (formikRef.current) {
-      formikRef.current.resetForm({values: getInitialValues()})
+      formikRef.current.resetForm({values: getInitialValues(true)})
       resetFilter()
     }
     /* eslint-disable react-hooks/exhaustive-deps */
@@ -145,6 +145,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       initialValues={initialValues}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
         const {priceRange, onlyWithPhoto, onlyDiscounted, fields} = values
+        console.log('values', values)
 
         const mappedFields = Object.fromEntries(
           Object.entries(fields)
