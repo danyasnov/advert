@@ -139,6 +139,13 @@ module.exports = {
         size: 10,
         offset: 150,
       },
+      'location-popup-arrow': {
+        borderColor: theme('colors.white'),
+        borderWidth: 1,
+        backgroundColor: theme('colors.white'),
+        size: 10,
+        offset: 70,
+      },
     }),
   },
   variants: {

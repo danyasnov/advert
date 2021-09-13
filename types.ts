@@ -24,6 +24,7 @@ export interface CookiesState {
   regionOrCityCode?: string
   showDevBanner?: boolean
   cookieAccepted?: boolean
+  showLocationPopup?: boolean
 }
 
 export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
@@ -42,6 +43,7 @@ export interface SerializedCookiesState {
   regionOrCityCode?: string
   showDevBanner?: string
   cookieAccepted?: string
+  showLocationPopup?: string
 }
 
 export interface Filter {

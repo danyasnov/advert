@@ -22,6 +22,8 @@ const SearchAutocomplete: FC<Props> = observer(
     const router = useRouter()
     const onInputValueChange = useCallback(
       debounce(({inputValue}) => {
+        handleSelectedItemChange(inputValue)
+
         if (!inputValue) return setInputItems([])
         return makeRequest({
           method: 'get',
@@ -103,9 +105,6 @@ const SearchAutocomplete: FC<Props> = observer(
                 }
               },
             })}
-            onChange={(e) => {
-              handleSelectedItemChange(e.target.value)
-            }}
             placeholder={t('SEARCH')}
             className='px-3.5 py-2.5 text-black-b text-body-2 rounded-2 w-full h-full'
             id='search-autocomplete'

@@ -10,6 +10,7 @@ import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import SearchAutocomplete from './Selects/SearchAutocomplete'
 import LocationMobile from './Location/LocationMobile'
 import LocationDesktop from './Location/LocationDesktop'
+import LocationPopup from './Location/LocationPopup'
 
 const Search: FC = () => {
   const cookies = parseCookies()
@@ -29,30 +30,33 @@ const Search: FC = () => {
 
   return (
     <>
-      <div
-        className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b overflow-hidden'
-        // @ts-ignore
-        style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}>
+      <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
         <SearchAutocomplete
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
         />
-        <Button
-          onClick={() => setLocationModalShow(true)}
-          className='flex min-w-10 flex-shrink-0'>
-          <div className='flex flex-row items-center px-3.5'>
-            <IcMyLocation
-              width={24}
-              height={23}
-              className='fill-current text-black-c'
-            />
-            {!!address && (
-              <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'>
-                {address}
-              </span>
-            )}
+        <div className='flex'>
+          <Button
+            onClick={() => setLocationModalShow(true)}
+            className='flex min-w-10 flex-shrink-0'>
+            <div className='flex flex-row items-center px-3.5'>
+              <IcMyLocation
+                width={24}
+                height={23}
+                className='fill-current text-black-c'
+              />
+              {!!address && (
+                <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'>
+                  {address}
+                </span>
+              )}
+            </div>
+          </Button>
+          <div className='hidden m:block absolute top-28'>
+            <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
           </div>
-        </Button>
+        </div>
+
         <Button
           type='submit'
           onClick={() => {
