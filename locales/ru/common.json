@@ -445,7 +445,7 @@
   "OR": "or",
   "OS_VERSION": "Operating system version",
   "PAID_SERVICES": "Продать быстрее",
-  "PASSWORD_TOO_SHORT": "Пароль должен состоять от 5 до 20 символов",
+  "PASSWORD_TOO_SHORT": "Пароль должен состоять от 6 до 20 символов",
   "PASS_NOT_CORRECT": "Неверный пароль",
   "PROCEED_TO_CHECKOUT": "Proceed to checkout",
   "PAYMENT_ERROR": "Payment error. Please try again later.",

@@ -445,7 +445,7 @@
   "OR": "or",
   "OS_VERSION": "Operating system version",
   "PAID_SERVICES": "Daha hızlı sat",
-  "PASSWORD_TOO_SHORT": "Şifre 5 ila 20 karakter arasında olmalıdır",
+  "PASSWORD_TOO_SHORT": "Şifre 6 ila 20 karakter arasında olmalıdır",
   "PASS_NOT_CORRECT": "Invalid password",
   "PROCEED_TO_CHECKOUT": "Proceed to checkout",
   "PAYMENT_ERROR": "Payment error. Please try again later.",

@@ -1,7 +1,6 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
-import {useHoverDirty} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import ImageWrapper from './ImageWrapper'
@@ -83,7 +82,9 @@ const ProductPhotos: FC = observer(() => {
             />
           ))}
       </div>
-      <PhotosModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      {showModal && (
+        <PhotosModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      )}
     </div>
   )
 })

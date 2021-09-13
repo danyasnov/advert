@@ -445,7 +445,7 @@
   "OR": "or",
   "OS_VERSION": "Operating system version",
   "PAID_SERVICES": "Sell faster",
-  "PASSWORD_TOO_SHORT": "Password must be between 5 and 20 characters",
+  "PASSWORD_TOO_SHORT": "Password must be between 6 and 20 characters",
   "PASS_NOT_CORRECT": "Invalid password",
   "PROCEED_TO_CHECKOUT": "Proceed to checkout",
   "PAYMENT_ERROR": "Payment error. Please try again later.",

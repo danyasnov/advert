@@ -1,7 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import ReactModal from 'react-modal'
-import {useTranslation} from 'next-i18next'
-import {useLockBodyScroll, useWindowSize} from 'react-use'
+import {useLockBodyScroll} from 'react-use'
 import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {isEmpty} from 'lodash'

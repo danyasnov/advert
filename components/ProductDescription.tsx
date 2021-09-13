@@ -107,7 +107,7 @@ const DescriptionTab: FC = observer(() => {
 
   if (!product.advert.description) return null
   return (
-    <div className='bg-white p-4 text-black-b text-body-1'>
+    <div className='bg-white p-4 text-black-b text-body-1 break-words'>
       {product.advert.description}
     </div>
   )

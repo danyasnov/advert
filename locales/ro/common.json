@@ -445,7 +445,7 @@
   "OR": "or",
   "OS_VERSION": "Operating system version",
   "PAID_SERVICES": "Vindem mai repede",
-  "PASSWORD_TOO_SHORT": "Parola trebuie să conțină de la 5 la 20 de simboluri",
+  "PASSWORD_TOO_SHORT": "Parola trebuie să conțină de la 6 la 20 de simboluri",
   "PASS_NOT_CORRECT": "Invalid password",
   "PROCEED_TO_CHECKOUT": "Proceed to checkout",
   "PAYMENT_ERROR": "Payment error. Please try again later.",
