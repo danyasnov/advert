@@ -104,3 +104,25 @@ export const fetchFirebaseLink = async (hash: string) => {
     {type: QueryTypes.SELECT},
   )
 }
+
+export const incrementDeeplinkCounter = async (hash: string) => {
+  return sequelize.query(
+    `UPDATE adv_cover_links SET count_view=count_view+1, time_view=${Math.floor(
+      new Date().getTime() / 1000,
+    )} WHERE hash_link='${hash}'`,
+    {type: QueryTypes.SELECT},
+  )
+}
+export const addMetaToDeeplink = async (
+  hash: string,
+  ip: string,
+  referrer: string,
+  userAgent: string,
+) => {
+  return sequelize.query(
+    `INSERT INTO adv_cover_links_log VALUES ('${hash}', ${Math.floor(
+      new Date().getTime() / 1000,
+    )}, '${ip}', '${referrer}', '${userAgent}')`,
+    {type: QueryTypes.SELECT},
+  )
+}
