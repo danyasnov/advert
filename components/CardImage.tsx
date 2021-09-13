@@ -5,6 +5,7 @@ import ImageWrapper from './ImageWrapper'
 interface Props {
   url: string
   alt: string
+  fallbackUrl?: string
 }
 const getImageUrl = (url, screenWidth): string => {
   if (!screenWidth) return url
@@ -22,7 +23,7 @@ const getImageUrl = (url, screenWidth): string => {
   }
   return url
 }
-const CardImage: FC<Props> = ({url, alt}) => {
+const CardImage: FC<Props> = ({url, alt, fallbackUrl}) => {
   const size = useWindowSize()
   const [croppedImageUrl, setCroppedImageUrl] = useState<string>()
   useEffect(() => {
@@ -33,6 +34,7 @@ const CardImage: FC<Props> = ({url, alt}) => {
     <ImageWrapper
       type={croppedImageUrl}
       alt={alt}
+      fallbackUrl={fallbackUrl}
       layout='fill'
       objectFit='cover'
     />

@@ -72,6 +72,8 @@ const Card: FC<Props> = ({
             <div className='relative min-w-full'>
               <CardImage
                 url={`/img/subcategories/${product.categoryId}.jpg`}
+                // @ts-ignore
+                fallbackUrl={`/img/subcategories/${product.rootCategoryId}.jpg`}
                 alt={title}
               />
             </div>
