@@ -5,7 +5,7 @@ import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
 import Button from './Buttons/Button'
-import {getQueryValue} from '../helpers'
+import {getLocationCodes, getQueryValue} from '../helpers'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import SearchAutocomplete from './Selects/SearchAutocomplete'
 import LocationMobile from './Location/LocationMobile'
@@ -52,6 +52,14 @@ const Search: FC = () => {
         </Button>
         <Button
           type='submit'
+          onClick={() => {
+            router.push({
+              pathname: `/${getLocationCodes()}`,
+              query: {
+                q: selectedItem,
+              },
+            })
+          }}
           className='text-body-2 capitalize text-black-b py-2.5 px-3.5'>
           {t('FIND')}
         </Button>
