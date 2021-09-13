@@ -29,7 +29,10 @@ const Search: FC = () => {
 
   return (
     <>
-      <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b overflow-hidden'>
+      <div
+        className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b overflow-hidden'
+        // @ts-ignore
+        style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}>
         <SearchAutocomplete
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
