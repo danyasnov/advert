@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import {
   FormikCheckbox,
   FormikField,
@@ -50,6 +51,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     newCount,
     applyFilter,
     isFilterApplied,
+    filter,
   } = useProductsStore()
 
   const {categoryDataFieldsById, categories} = useCategoriesStore()
@@ -85,19 +87,19 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       fields: {},
     }
     if (reset || isEmpty(aggregatedFields)) return defaultValues
-    const filter = getFormikInitialFromQuery(
+    const queryFilter = getFormikInitialFromQuery(
       router.query,
       aggregatedFields.reduce((acc, val) => ({...acc, [val.slug]: val}), {}),
     )
 
-    if (filter) {
+    if (queryFilter) {
       let condition = conditionOptions[0]
       // eslint-disable-next-line prefer-destructuring
-      if (filter.condition === '1') condition = conditionOptions[1]
+      if (queryFilter.condition === '1') condition = conditionOptions[1]
       // eslint-disable-next-line prefer-destructuring
-      if (filter.condition === '2') condition = conditionOptions[2]
+      if (queryFilter.condition === '2') condition = conditionOptions[2]
       const values: Partial<Values> = {
-        ...filter,
+        ...queryFilter,
         condition,
       }
 
@@ -115,6 +117,14 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [JSON.stringify(router.query.categories)])
   const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
+
+  // hack to show models after selecting brands of auto
+  useEffect(() => {
+    const {fields = {}} = filter
+    if (fields[1991] && !fields[1992] && !isFilterApplied) {
+      applyFilter()
+    }
+  }, [filter, isFilterApplied])
   const currentCategoriesOptions =
     findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
     []
@@ -173,7 +183,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
         if (values.condition.value === 1) condition = '1'
         if (values.condition.value === 2) condition = '2'
 
-        const filter = {
+        const filterResult = {
           condition,
           priceMin: parseInt(priceRange[0], 10) || undefined,
           priceMax: parseInt(priceRange[1], 10) || undefined,
@@ -182,7 +192,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
           fields: mappedFields,
         }
 
-        const updatedFilter = setFilter(filter)
+        const updatedFilter = setFilter(filterResult)
         const params = new URLSearchParams(window.location.search)
         const sortBy = params.get('sortBy')
         const newParams = new URLSearchParams(
