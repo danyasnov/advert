@@ -9,6 +9,7 @@ import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import Button from './Buttons/Button'
 import PhotosModal from './PhotosModal'
 import Thumb from './Thumb'
+import ExclusiveMark from './ExclusiveMark'
 
 const ProductPhotos: FC = observer(() => {
   const {product} = useProductsStore()
@@ -39,7 +40,12 @@ const ProductPhotos: FC = observer(() => {
   }, [embla])
   if (isEmpty(product.advert.images)) return null
   return (
-    <div>
+    <div className='relative'>
+      {product.advert.isExclusive && (
+        <div className='absolute left-4 top-5 z-30'>
+          <ExclusiveMark />
+        </div>
+      )}
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
           {product.advert.images.map((i, index) => (

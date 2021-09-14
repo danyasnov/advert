@@ -1,7 +1,6 @@
 import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
-import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
