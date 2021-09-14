@@ -56,12 +56,12 @@ $others = [];
 $sitePages = $db->query("
   SELECT
     url
-  FROM adv_site_content
+  FROM adv_site_content_new
   WHERE page_type = 1 and id <> 1 AND NOT url LIKE '/cp/%'
 ")->fetch_assoc_array();
 
 foreach ($sitePages as $sitePage) {
-    $others[] = $sitePage['url'];
+    $others[] = '/p/' . $sitePage['url'];
 }
 
 $others[] = '/countries/';
