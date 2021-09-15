@@ -25,6 +25,11 @@ export interface CookiesState {
   showDevBanner?: boolean
   cookieAccepted?: boolean
   showLocationPopup?: boolean
+  userCountryId?: string
+  hash?: string
+  promo?: string
+  authType?: number
+  phone?: string
 }
 
 export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
@@ -44,6 +49,11 @@ export interface SerializedCookiesState {
   showDevBanner?: string
   cookieAccepted?: string
   showLocationPopup?: string
+  userCountryId?: string
+  hash?: string
+  promo?: string
+  authType?: string
+  phone?: string
 }
 
 export interface Filter {

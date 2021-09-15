@@ -14,6 +14,7 @@ import ImageWrapper from './ImageWrapper'
 import {SelectItem} from './Selects/Select'
 import {SerializedCookiesState} from '../types'
 import LinkWrapper from './Buttons/LinkWrapper'
+import LoginModal from './Auth/LoginModal'
 
 const options = [
   {
@@ -49,6 +50,7 @@ const Header: FC = () => {
     const state: SerializedCookiesState = parseCookies()
     setLang(state.language)
   }, [])
+  const [showLogin, setShowLogin] = useState(false)
 
   return (
     <header className='flex s:justify-center relative shadow-lg z-10'>
@@ -85,14 +87,10 @@ const Header: FC = () => {
                 placeholder={t('LANGUAGES')}
               />
             </div>
-            <LinkWrapper
-              href='https://old.adverto.sale'
-              title={t('LOGIN')}
-              target='_blank'
-              className='flex'>
+            <Button className='flex' onClick={() => setShowLogin(true)}>
               <IcLogin className='fill-current text-brand-b1 mr-2 h-4 w-4' />
               <span className='text-body-3 text-brand-b1'>{t('LOGIN')}</span>
-            </LinkWrapper>
+            </Button>
           </div>
         </div>
         <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-8'>
@@ -108,6 +106,9 @@ const Header: FC = () => {
           </Button>
         </div>
       </div>
+      {showLogin && (
+        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+      )}
     </header>
   )
 }

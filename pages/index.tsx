@@ -1,7 +1,7 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {getLocationCodes, processCookies} from '../helpers'
-import {fetchCountries} from '../api/v1'
+import {getLocationCodes, processCookies, setCookiesObject} from '../helpers'
+import {activateWithCode, fetchCountries} from '../api/v1'
 import {fetchCategories, fetchProducts} from '../api/v2'
 import MainLayout from '../components/Layouts/MainLayout'
 
@@ -11,6 +11,22 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
+  const {query} = ctx
+  const {action, id, email, code} = query
+  let showActivationAlert = false
+  let showErrorActivationAlert = false
+  if (action && id && email && code) {
+    const result = await activateWithCode(code as string, id as string)
+    const {promo, hash} = result?.result || {}
+    if (promo && hash) {
+      setCookiesObject({promo, hash}, ctx)
+      state.promo = promo
+      state.hash = hash
+      showActivationAlert = true
+    } else {
+      showErrorActivationAlert = true
+    }
+  }
 
   const promises = [
     fetchProducts(state),
@@ -33,12 +49,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const productsStore = {
     freeProducts: freeProductsResponse?.result?.data ?? null,
     discountedProducts: discountedProductsResponse?.result?.data ?? null,
-
     products: productsResponse?.result?.data ?? null,
-    count: productsResponse?.headers?.pagination.count,
-    page: productsResponse?.headers?.pagination.page,
-    limit: productsResponse?.headers?.pagination.limit,
-    cacheId: productsResponse?.headers?.cacheId,
+    count: productsResponse?.headers?.pagination.count ?? null,
+    page: productsResponse?.headers?.pagination.page ?? null,
+    limit: productsResponse?.headers?.pagination.limit ?? null,
+    cacheId: productsResponse?.headers?.cacheId ?? null,
   }
   const countries = countriesData ?? null
   return {
@@ -52,6 +67,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           countries,
         },
         generalStore: {
+          showActivationAlert,
+          showErrorActivationAlert,
           locationCodes: getLocationCodes(ctx),
         },
       },

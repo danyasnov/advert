@@ -5,8 +5,11 @@ import {
   OwnerModel,
   ReviewModel,
   CoverLinkType,
+  RegistrationType,
+  AuthType,
+  AuthUserResponse,
 } from 'front-api/src/models/index'
-import axios, {AxiosPromise} from 'axios'
+import axios from 'axios'
 import {SettingsLanguageModel} from 'front-api'
 import {getRest} from '../index'
 import Storage from '../../stores/Storage'
@@ -61,6 +64,7 @@ export const restCoverLink = (
 export const fetchSearchSuggestion = async (
   phrase: string,
   lang: string,
+  // @ts-ignore
 ): Promise<any> => {
   const payload = {
     phrase,
@@ -129,4 +133,96 @@ export const fetchUserRatings = async (
   })
   const rest = getRest(storage)
   return rest.oldRest.fetchUserRatings(id, null)
+}
+
+export const checkPhoneNumber = async (
+  type: number,
+  incoming: string,
+): Promise<RestResponse<string>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  // @ts-ignore
+  return rest.oldRest.checkPhoneNumber(type, incoming)
+}
+
+export const sendCode = async (
+  type: number,
+  incoming: string,
+): Promise<RestResponse<string>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  // @ts-ignore
+  return rest.oldRest.resendCode(type, incoming)
+}
+export const authWithCode = async (
+  phone: string,
+  code: string,
+): Promise<RestResponse<string>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  // @ts-ignore
+  return rest.oldRest.authWithCode(phone, code)
+}
+export const activateWithCode = async (
+  code: string,
+  checkId: string,
+): Promise<RestResponse<AuthUserResponse>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.oldRest.activateWithCode(code, Number(checkId))
+}
+
+export const authWithPassword = async (
+  incoming: string,
+  password: string,
+): Promise<RestResponse<AuthUserResponse>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.oldRest.authWithPassword(incoming, password)
+}
+
+export const createUser = async (payload: {
+  incoming: string
+  name: string
+  surname: string
+  accountType: RegistrationType
+  authType: AuthType
+  pass: string
+  url?: string
+  referLink?: string
+  image?: string
+  language: string
+  latitude: number
+  longitude: number
+}): Promise<RestResponse<number>> => {
+  const {
+    incoming,
+    name,
+    surname,
+    accountType,
+    authType,
+    pass,
+    url,
+    referLink,
+    image,
+    language,
+    latitude,
+    longitude,
+  } = payload
+  const storage = new Storage({
+    language,
+    location: {latitude, longitude},
+  })
+  const rest = getRest(storage)
+  return rest.oldRest.createUser(
+    incoming,
+    name,
+    surname,
+    accountType,
+    authType,
+    pass,
+    url,
+    referLink,
+    image,
+  )
 }

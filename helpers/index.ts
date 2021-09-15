@@ -156,6 +156,7 @@ export const processCookies = async (
     addressByGps = await getAddressByGPS(state.searchLocation, state.language)
     if (addressByGps.result) {
       state.countryCode = addressByGps.result.country.code
+      state.userCountryId = addressByGps.result.country.id
       if (addressByGps.result.region?.slug) {
         state.regionOrCityCode = addressByGps.result.region.slug
         if (addressByGps.result.city?.slug) {

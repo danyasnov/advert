@@ -9,12 +9,16 @@ interface Document {
 export interface IGeneralsHydration {
   locationCodes: string
   document: Document
+  showActivationAlert: boolean
+  showErrorActivationAlert: boolean
 }
 export interface IGeneralStore {
   root: RootStore
   showFooter: boolean
   showCookiesWarn: boolean
   showContent: boolean
+  showActivationAlert: boolean
+  showErrorActivationAlert: boolean
   document: Document
   locationCodes: string
   setFooterVisibility: (visible: boolean) => void
@@ -29,6 +33,10 @@ export class GeneralStore implements IGeneralStore {
   showFooter = true
 
   showCookiesWarn = false
+
+  showActivationAlert = false
+
+  showErrorActivationAlert = false
 
   showContent = true
 
@@ -56,5 +64,7 @@ export class GeneralStore implements IGeneralStore {
   hydrate(data?: IGeneralsHydration): void {
     this.locationCodes = data?.locationCodes ?? ''
     this.document = data?.document ?? ''
+    this.showActivationAlert = data?.showActivationAlert ?? false
+    this.showErrorActivationAlert = data?.showErrorActivationAlert ?? false
   }
 }

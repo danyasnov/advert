@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -85,6 +85,7 @@ const MainLayout: FC = observer(() => {
                   enableFourthColumnForM
                   page={page}
                   state={state}
+                  hideNotFoundDescription
                   fetchProducts={() =>
                     fetchProducts({page: page + 1, isScroll: true, query}).then(
                       () => applyFilter(),

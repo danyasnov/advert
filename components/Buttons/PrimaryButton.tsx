@@ -9,13 +9,18 @@ interface Props {
   disabled?: boolean
 }
 
-const PrimaryButton: FC<Props> = ({children, className, onClick, disabled}) => {
+const PrimaryButton: FC<Props> = ({
+  children,
+  className,
+  onClick,
+  disabled = false,
+}) => {
   return (
     <Button
       className={`rounded-lg py-3 px-3.5 text-body-2 bg-brand-a1 text-white-a ${
         disabled ? disabledClass : ''
       } ${className || ''}`}
-      onClick={onClick}>
+      onClick={() => !disabled && onClick()}>
       {children}
     </Button>
   )

@@ -5,8 +5,8 @@ import NumberFormat from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {get} from 'lodash'
-import Select, {SelectItem} from '../Selects/Select'
-import Button from '../Buttons/Button'
+import Select, {SelectItem} from './Selects/Select'
+import Button from './Buttons/Button'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -21,10 +21,18 @@ interface IFormikSelect {
   isFilterable: boolean
   isMulti: boolean
 }
-interface IFormikNumber {
+interface IFormikRange {
   placeholder: string
   minValue?: number
   maxValue?: number
+}
+interface IFormikNumber {
+  placeholder: string
+  value: number
+  mask?: string
+  format?: string
+  thousandSeparator?: string
+  allowEmptyFormatting?: boolean
 }
 interface IFormikField {
   field: CACategoryDataFieldModel
@@ -151,17 +159,24 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   field,
   form,
   placeholder,
+  mask,
+  format,
+  allowEmptyFormatting,
+  thousandSeparator = ' ',
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
   return (
     <NumberFormat
-      value={value || ''}
-      onValueChange={({floatValue}) => {
-        setFieldValue(name, floatValue)
+      value={value}
+      onValueChange={({value: inputValue}) => {
+        setFieldValue(name, inputValue)
       }}
-      thousandSeparator={' '}
+      mask={mask}
+      allowEmptyFormatting={allowEmptyFormatting}
+      format={format}
+      thousandSeparator={thousandSeparator}
       placeholder={placeholder}
       className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
         isValid ? '' : 'border-error'
@@ -169,29 +184,31 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
     />
   )
 }
-export const FormikText: FC<IFormikNumber & FieldProps> = ({
-  field,
-  form,
-  placeholder,
-}) => {
+export const FormikText: FC<
+  {placeholder: string; value: number; type?: string} & FieldProps
+> = ({field, form, placeholder, type = 'text'}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
   return (
-    <input
-      value={value || ''}
-      onChange={(e) => {
-        setFieldValue(name, e.target.value)
-      }}
-      placeholder={placeholder}
-      className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
-        isValid ? '' : 'border-error'
-      }`}
-    />
+    <div className='flex flex-col'>
+      <input
+        type={type}
+        value={value || ''}
+        onChange={(e) => {
+          setFieldValue(name, e.target.value)
+        }}
+        placeholder={placeholder}
+        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+          isValid ? 'border-shadow-b' : 'border-error'
+        }`}
+      />
+      <span className='text-body-3 text-error'>{errors[name]}</span>
+    </div>
   )
 }
 
-export const FormikRange: FC<FieldProps & IFormikNumber> = ({
+export const FormikRange: FC<FieldProps & IFormikRange> = ({
   field,
   form,
   placeholder,

@@ -18,6 +18,7 @@
     "axios-curlirize": "^1.4.0",
     "downshift": "^6.1.7",
     "embla-carousel": "^4.5.3",
+    "emoji-regex": "^9.2.2",
     "express": "^4.17.1",
     "firebase-dynamic-links": "^1.1.0",
     "formik": "^2.2.9",
@@ -37,6 +38,7 @@
     "rc-slider": "^9.7.2",
     "react": "^17.0.2",
     "react-aim": "^0.2.3",
+    "react-auth-code-input": "^1.2.1",
     "react-dom": "^17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.14.3",
@@ -48,7 +50,8 @@
     "sequelize": "^6.6.5",
     "swr": "^0.5.6",
     "tailwindcss": "^2.2.7",
-    "tailwindcss-tooltip-arrow-after": "^1.0.0"
+    "tailwindcss-tooltip-arrow-after": "^1.0.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",

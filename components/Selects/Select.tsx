@@ -5,7 +5,7 @@ import {defaultStyles} from './styles'
 
 interface Props {
   options: Array<SelectItem>
-  placeholder: string
+  placeholder?: string
   onChange: (value: SelectItem) => void
   value?: SelectItem
   isSearchable?: boolean

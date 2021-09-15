@@ -10,7 +10,7 @@ import {
   FormikField,
   FormikRange,
   FormikSegmented,
-} from './FormikComponents'
+} from '../FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import Select, {SelectItem} from '../Selects/Select'

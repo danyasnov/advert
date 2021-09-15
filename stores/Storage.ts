@@ -22,7 +22,7 @@ interface CurrentProfile {
   searchRadius?: number
 }
 interface StorageOptions {
-  language: string
+  language?: string
   location?: LocationModel
   userLocation?: LocationModel
   searchRadius?: number
