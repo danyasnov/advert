@@ -1,4 +1,5 @@
 import {QueryTypes, Sequelize} from 'sequelize'
+import {size} from 'lodash'
 import {City} from '../../types'
 import config from '../../config.json'
 
@@ -94,7 +95,7 @@ export const fetchDocuments = async (path: string) => {
     `SELECT * FROM adv_site_content_new WHERE id_lang=2 AND url='/${path}/'`,
     {type: QueryTypes.SELECT},
   )
-  cache.set(key, result)
+  if (size(result)) cache.set(key, result)
   return result
 }
 
