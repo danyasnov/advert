@@ -94,7 +94,7 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
           </span>
         </div>
       )}
-      <div className='flex mt-4 flex-row -mx-1 flex-wrap justify-center hidden l:block'>
+      <div className='mt-4 flex-row -mx-1 flex-wrap justify-center hidden l:flex'>
         {product.advert.images.length > 1 &&
           product.advert.images.map((i, index) => (
             <Thumb
