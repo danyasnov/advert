@@ -42,7 +42,6 @@ const CategoriesDesktopSelector: FC = observer(() => {
   )
   const [thirdLevelItems, setThirdLevelItems] = useState([])
   const [fourthLevelItems, setFourthLevelItems] = useState([])
-
   return (
     <div
       className='absolute top-105px inset-x-0 z-10 bg-white divide-x divide-shadow-b
@@ -111,6 +110,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
         <div className='hidden m:block'>
           <div className='pl-12 pt-6 l:pl-6'>
             <ImageWrapper
+              key={activeCategory?.slug}
               type={`/img/categories/${activeCategory?.slug}.jpg`}
               alt={activeCategory?.slug}
               width={288}
