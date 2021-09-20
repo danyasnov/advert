@@ -389,7 +389,7 @@ export const getFilterFromQuery = (
     'sortBy',
   ]
 
-  const baseFilter = pick(query, baseFields)
+  const baseFilter: any = pick(query, baseFields)
   baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
   baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
   if (baseFilter.priceMax) baseFilter.priceMax = toNumber(baseFilter.priceMax)
@@ -470,10 +470,10 @@ export const getFormikInitialFromQuery = (
     'sortBy',
   ]
 
-  const baseFilter = pick(queryData, baseFields)
+  const baseFilter: any = pick(queryData, baseFields)
   baseFilter.onlyWithPhoto = baseFilter.onlyWithPhoto === 'true'
   baseFilter.onlyDiscounted = baseFilter.onlyDiscounted === 'true'
-  const priceRange: string[] = [
+  const priceRange: number[] = [
     baseFilter.priceMin ? toNumber(baseFilter.priceMin) : undefined,
     baseFilter.priceMax ? toNumber(baseFilter.priceMax) : undefined,
   ]

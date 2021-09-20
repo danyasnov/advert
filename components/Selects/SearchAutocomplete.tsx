@@ -32,7 +32,8 @@ const SearchAutocomplete: FC<Props> = observer(
         }).then((res) => {
           setInputItems(
             res.data
-              .map((i) => {
+              // eslint-disable-next-line camelcase
+              .map((i: {path_id: string[]; path_word: string[]}) => {
                 if (isString(i)) {
                   return {primary: i}
                 }
