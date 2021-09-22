@@ -131,6 +131,10 @@ export const processCookies = async (
       }
     } catch (e) {
       console.error(e)
+      state.userLocation = {
+        latitude: 34.6841,
+        longitude: 33.0379,
+      }
     }
   } else {
     state.userLocation = JSON.parse(cookies.userLocation)
