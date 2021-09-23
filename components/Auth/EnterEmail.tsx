@@ -10,6 +10,7 @@ import {FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const schema = object().shape({
   email: string().email().required(),
@@ -17,6 +18,7 @@ const schema = object().shape({
 const EnterEmail: FC<PageProps> = observer(({dispatch, onClose}) => {
   const {t} = useTranslation()
   const [showPass, setShowPass] = useState(false)
+  const {triggerUpdate} = useGeneralStore()
   const msgPass = 'PASSWORD_TOO_SHORT'
 
   const validatePass = (value) => {
@@ -53,6 +55,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose}) => {
             hash,
             promo,
           })
+          triggerUpdate()
           onClose()
         } else {
           const incoming = values.email.toLocaleLowerCase()

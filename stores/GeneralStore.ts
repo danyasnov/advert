@@ -19,6 +19,8 @@ export interface IGeneralStore {
   showContent: boolean
   showActivationAlert: boolean
   showErrorActivationAlert: boolean
+  triggerUpdate: () => void
+  trigger: boolean
   document: Document
   locationCodes: string
   setFooterVisibility: (visible: boolean) => void
@@ -37,6 +39,12 @@ export class GeneralStore implements IGeneralStore {
   showActivationAlert = false
 
   showErrorActivationAlert = false
+
+  triggerUpdate = (): void => {
+    this.trigger = !this.trigger
+  }
+
+  trigger
 
   showContent = true
 

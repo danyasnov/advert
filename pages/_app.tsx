@@ -35,6 +35,7 @@ function MyApp({Component, pageProps}: AppProps) {
       router.events.off('routeChangeError', handleStop)
     }
   }, [router])
+
   return (
     <>
       <Head>

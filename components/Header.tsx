@@ -1,7 +1,5 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'next-i18next'
-import IcWallet from 'icons/material/Wallet.svg'
-import IcLogin from 'icons/material/Login.svg'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import Button from './Buttons/Button'
@@ -15,6 +13,7 @@ import {SelectItem} from './Selects/Select'
 import {SerializedCookiesState} from '../types'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LoginModal from './Auth/LoginModal'
+import Auth from './Auth'
 
 const options = [
   {
@@ -67,7 +66,7 @@ const Header: FC = () => {
             {/*    label={t('APPLICATION_HELP')} */}
             {/*  /> */}
           </div>
-          <div className='flex justify-end w-full s:w-auto space-x-4'>
+          <div className='flex justify-end w-full s:w-auto space-x-4 items-center'>
             {/* <LinkButton */}
             {/*  onClick={notImplementedAlert} */}
             {/*  label={t('WALLET')} */}
@@ -87,10 +86,7 @@ const Header: FC = () => {
                 placeholder={t('LANGUAGES')}
               />
             </div>
-            <Button className='flex' onClick={() => setShowLogin(true)}>
-              <IcLogin className='fill-current text-brand-b1 mr-2 h-4 w-4' />
-              <span className='text-body-3 text-brand-b1'>{t('LOGIN')}</span>
-            </Button>
+            <Auth onLogin={() => setShowLogin(true)} />
           </div>
         </div>
         <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-8'>

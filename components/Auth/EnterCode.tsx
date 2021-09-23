@@ -4,13 +4,16 @@ import {AuthType} from 'front-api/src/models/index'
 import AuthCode from 'react-auth-code-input'
 import {toast} from 'react-toastify'
 import {get} from 'lodash'
+import {observer} from 'mobx-react-lite'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
 import LinkButton from '../Buttons/LinkButton'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
-const EnterCode: FC<PageProps> = ({state, dispatch, onClose}) => {
+const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
   const {t} = useTranslation()
+  const {triggerUpdate} = useGeneralStore()
   const [isInvalid, setIsInvalid] = useState(false)
   const [counter, setCounter] = useState(60)
   const [disabled, setDisabled] = useState(true)
@@ -67,6 +70,7 @@ const EnterCode: FC<PageProps> = ({state, dispatch, onClose}) => {
               hash,
               promo,
             })
+            triggerUpdate()
             onClose()
           }
         }}
@@ -116,5 +120,5 @@ const EnterCode: FC<PageProps> = ({state, dispatch, onClose}) => {
       </div>
     </div>
   )
-}
+})
 export default EnterCode
