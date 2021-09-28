@@ -100,6 +100,7 @@ module.exports = {
         'black-c': '#7C7E83',
         'black-d': '#BDBEC2',
         'black-e': '#F8F8F8',
+        'black-f': '#A8ABB0',
         'white-a': '#FFFFFF',
         'white-d': 'rgba(12, 13, 13, 0.2)',
         'image-placeholder': 'rgb(234,233,233)',

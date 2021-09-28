@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "firebase-dynamic-links": "^1.1.0",
     "formik": "^2.2.9",
-    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#7725e3b7f2db9200581e11bf124f8b1cba66649c",
+    "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#197b076d0c00398d3d105dac3e7fa2789ada0352",
     "google-map-react": "^2.1.10",
     "is-ip": "^3.1.0",
     "lodash": "^4.17.21",

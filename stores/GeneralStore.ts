@@ -1,4 +1,5 @@
 import {makeAutoObservable} from 'mobx'
+import {OwnerModel} from 'front-api/src/models/index'
 import {RootStore} from './RootStore'
 
 interface Document {
@@ -8,6 +9,7 @@ interface Document {
 }
 export interface IGeneralsHydration {
   locationCodes: string
+  userHash: string
   document: Document
   showActivationAlert: boolean
   showErrorActivationAlert: boolean
@@ -18,16 +20,22 @@ export interface IGeneralStore {
   showCookiesWarn: boolean
   showContent: boolean
   showActivationAlert: boolean
+  user: OwnerModel
+  setUser: (user: OwnerModel) => void
   showErrorActivationAlert: boolean
+  activeUserPage: PagesType
+  setActiveUserPage: (page: PagesType) => void
   triggerUpdate: () => void
   trigger: boolean
   document: Document
   locationCodes: string
+  userHash: string
   setFooterVisibility: (visible: boolean) => void
   setShowContent: (visible: boolean) => void
   toggleCookiesWarnVisibility: () => void
   hydrate(data: IGeneralsHydration): void
 }
+export type PagesType = 'adverts' | 'favorites' | 'reviews' | 'drafts'
 
 export class GeneralStore implements IGeneralStore {
   root
@@ -40,9 +48,23 @@ export class GeneralStore implements IGeneralStore {
 
   showErrorActivationAlert = false
 
+  user
+
+  activeUserPage = 'adverts' as PagesType
+
+  setActiveUserPage = (page: PagesType): void => {
+    this.activeUserPage = page
+  }
+
   triggerUpdate = (): void => {
     this.trigger = !this.trigger
   }
+
+  setUser = (user: OwnerModel): void => {
+    this.user = user
+  }
+
+  userHash = ''
 
   trigger
 
@@ -72,6 +94,7 @@ export class GeneralStore implements IGeneralStore {
   hydrate(data?: IGeneralsHydration): void {
     this.locationCodes = data?.locationCodes ?? ''
     this.document = data?.document ?? ''
+    this.userHash = data?.userHash ?? ''
     this.showActivationAlert = data?.showActivationAlert ?? false
     this.showErrorActivationAlert = data?.showErrorActivationAlert ?? false
   }

@@ -19,10 +19,11 @@ const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
   useEffect(() => {
     if (showActivationAlert) {
       toast.success(t('ACCOUNT_ACTIVATED'))
+      router.push('/')
     } else if (showErrorActivationAlert) {
       toast.error(t('CODE_NOT_CORRECT'))
+      router.push('/')
     }
-    router.push('/')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

@@ -5,11 +5,13 @@ import AuthCode from 'react-auth-code-input'
 import {toast} from 'react-toastify'
 import {get} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {Secure} from 'front-api/src/helpers/userSecure'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
 import LinkButton from '../Buttons/LinkButton'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import Storage from '../../stores/Storage'
 
 const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
   const {t} = useTranslation()
@@ -66,10 +68,22 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
             toast.error(t(result.data.error))
           } else {
             const {hash, promo} = get(result, 'data.result', {})
-            setCookiesObject({
-              hash,
-              promo,
-            })
+            if (state.authType === AuthType.phone) {
+              const storage = new Storage({
+                phone: state.incoming,
+                promo,
+                userHash: hash,
+                authType: state.authType,
+              })
+              const secure = new Secure(storage)
+              const token = secure.createUserSecure()
+              setCookiesObject({
+                hash,
+                promo,
+                token,
+              })
+            }
+
             triggerUpdate()
             onClose()
           }

@@ -152,3 +152,48 @@ export const fetchUserSold = (
   const rest = getRest(storage)
   return rest.advertises.fetchUserSoldProducts(payload)
 }
+
+export const fetchUserFavorites = (
+  payload: RestFetchUserProductsPayload,
+  language: string,
+  token: string,
+  userHash: string,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.fetchUserFavorites(payload)
+}
+
+export const fetchUserOnModeration = (
+  payload: RestFetchUserProductsPayload,
+  language: string,
+  token: string,
+  userHash: string,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.fetchUserOnModerationProducts(payload)
+}
+
+export const fetchUserArchive = (
+  payload: RestFetchUserProductsPayload,
+  language: string,
+  token: string,
+  userHash: string,
+): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.fetchUserArchiveProducts(payload)
+}

@@ -25,6 +25,10 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
       widthClass = 'w-1/3'
       break
     }
+    case 4: {
+      widthClass = 'w-1/4'
+      break
+    }
     default: {
       widthClass = ''
     }

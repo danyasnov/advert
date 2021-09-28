@@ -226,6 +226,8 @@ export const processCookies = async (
       }
     }
   }
+  if (cookies.hash) state.hash = cookies.hash
+  if (cookies.token) state.token = cookies.token
   setCookiesObject(state, ctx)
   return state
 }

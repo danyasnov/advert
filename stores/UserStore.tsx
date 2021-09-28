@@ -21,6 +21,9 @@ export interface IUserStore {
   user: OwnerModel
   userSale: Partial<ProductSummary>
   userSold: Partial<ProductSummary>
+  userFavorite: Partial<ProductSummary>
+  userOnModeration: Partial<ProductSummary>
+  userArchive: Partial<ProductSummary>
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   ratings: ReviewModel[]
@@ -43,6 +46,9 @@ interface FetchPayload {
 const urlMap = {
   userSale: '/api/user-sale',
   userSold: '/api/user-sold',
+  userFavorite: '/api/user-favorites',
+  userOnModeration: '/api/user-on-moderation',
+  userArchive: '/api/user-archive',
 }
 export class UserStore implements IUserStore {
   root
@@ -52,6 +58,12 @@ export class UserStore implements IUserStore {
   userSale: Partial<ProductSummary> = {}
 
   userSold: Partial<ProductSummary> = {}
+
+  userFavorite: Partial<ProductSummary> = {}
+
+  userOnModeration: Partial<ProductSummary> = {}
+
+  userArchive: Partial<ProductSummary> = {}
 
   ratings: ReviewModel[]
 

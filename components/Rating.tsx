@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {isFinite} from 'lodash'
-import RatingStars from '../../../components/RatingStars'
+import RatingStars from './RatingStars'
 
 interface Props {
   rating: number

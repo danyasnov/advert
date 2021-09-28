@@ -3,9 +3,10 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useUserStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
-import Rating from '../assets/icons/material/Rating'
+import Rating from './Rating'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
+import UserMenuList from './UserMenuList'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -14,7 +15,7 @@ const UserProfile: FC = observer(() => {
     <div className='flex flex-col'>
       <h1 className='text-h-2 text-black-b font-bold mb-4'>{user.name}</h1>
       <div className='flex mb-2'>
-        <UserAvatar url={user.imageUrl} name={user.name} />
+        <UserAvatar url={user.imageUrl} name={user.name} key={user.imageUrl} />
         <div className='ml-2 flex flex-col justify-between'>
           <Rating rating={user.rating} ratingCount={user.ratingCount} />
           <span className='text-body-3 text-black-b'>
@@ -27,7 +28,7 @@ const UserProfile: FC = observer(() => {
           {user.settings.location.description}
         </span>
       )}
-      <div className='divide-y divide-shadow-b'>
+      <div className=''>
         <div className='flex divide-x divide-shadow-b justify-between mt-3 mb-4'>
           <div className='flex flex-col w-1/2 items-center'>
             <span className='text-h-3 text-black-b font-bold'>
@@ -44,6 +45,7 @@ const UserProfile: FC = observer(() => {
             </span>
           </div>
         </div>
+        <UserMenuList collapsed={false} />
         <div className='pb-8 pt-4'>
           <SharePopup userHash={user.hash} />
         </div>

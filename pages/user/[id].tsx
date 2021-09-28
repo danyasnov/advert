@@ -57,6 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         generalStore: {
           locationCodes: getLocationCodes(ctx),
+          userHash: state.hash ?? '',
         },
         userStore,
       },

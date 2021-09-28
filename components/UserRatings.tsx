@@ -1,14 +1,16 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
+import {isEmpty} from 'lodash'
 import {useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import {unixToDate} from '../utils'
 import RatingStars from './RatingStars'
 import LinkWrapper from './Buttons/LinkWrapper'
+import {AdvertNotFound} from './AdvertNotFound'
 
 const UserRatings: FC = observer(() => {
   const {ratings} = useUserStore()
-  if (!ratings) return null
+  if (isEmpty(ratings)) return <AdvertNotFound />
   return (
     <div className='flex flex-col mt-2'>
       {ratings.map((r) => (

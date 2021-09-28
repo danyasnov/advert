@@ -13,6 +13,8 @@ interface CurrentProfile {
   language?: string
   countryId?: string
   regionId?: string
+  userHash?: string
+  token?: string
   cityId?: string
   searchBy?: 'coords' | 'id'
   withPhoto: boolean
@@ -30,6 +32,14 @@ interface StorageOptions {
   regionId?: string
   cityId?: string
   searchBy?: 'coords' | 'id'
+  authType?: AuthType
+  userHash?: string
+  email?: string
+  password?: string
+  phone?: string
+  promo?: string
+  socialId?: string
+  token?: string
 }
 
 export default class Storage implements AppStorage {
@@ -43,6 +53,14 @@ export default class Storage implements AppStorage {
       cityId,
       regionId,
       searchBy,
+      authType,
+      userHash,
+      email,
+      password,
+      phone,
+      promo,
+      socialId,
+      token,
     } = data
     this.memoryState = {
       withPhoto: false,
@@ -54,6 +72,14 @@ export default class Storage implements AppStorage {
       cityId,
       regionId,
       searchBy,
+      authType,
+      userHash,
+      email,
+      password,
+      phone,
+      promo,
+      socialId,
+      token,
     }
   }
 
@@ -103,23 +129,41 @@ export default class Storage implements AppStorage {
     return this.memoryState?.userLocation ?? null
   }
 
-  userHash: string
+  get authType(): AuthType | null {
+    return this.memoryState?.authType ?? null
+  }
 
-  phone: string
+  get userHash(): string | null {
+    return this.memoryState?.userHash ?? null
+  }
+
+  get email(): string | null {
+    return this.memoryState?.email ?? null
+  }
+
+  get password(): string | null {
+    return this.memoryState?.password ?? null
+  }
+
+  get phone(): string | null {
+    return this.memoryState?.phone ?? null
+  }
+
+  get promo(): string | null {
+    return this.memoryState?.promo ?? null
+  }
+
+  get socialId(): string | null {
+    return this.memoryState?.socialId ?? null
+  }
+
+  get token(): string | null {
+    return this.memoryState?.token ?? null
+  }
 
   withPhoto: boolean
 
-  authType: AuthType
-
   fcmToken: string
-
-  password: string
-
-  socialId: string
-
-  promo: string
-
-  email: string
 
   appVersion: number
 
