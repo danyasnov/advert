@@ -92,6 +92,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               component={FormikText}
               placeholder={t('SURNAME')}
             />
+
             <Field
               name='pass'
               component={FormikText}
