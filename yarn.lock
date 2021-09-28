@@ -5925,10 +5925,9 @@ react-aim@^0.2.3:
   resolved "https://registry.yarnpkg.com/react-aim/-/react-aim-0.2.3.tgz#4783f27460214c1c10562492a08e2480ad09bc5e"
   integrity sha512-llc6sDCRrCIj7XMU18c1+J/3/csmbRb3AywThephS4mk0Y/Uxbl25o4yw/HtYElTogZ9imoNwm3tQEkY802c3A==
 
-react-auth-code-input@^1.2.1:
+react-auth-code-input@danyasnov/react-auth-code-input:
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-auth-code-input/-/react-auth-code-input-1.2.1.tgz#6042207d2f9688aa06d48594889e5f70675a44be"
-  integrity sha512-+S5yBwi/lv/2/jolaryx1veHXDIomeIL/YOx1HVpqIWFlFz2eXWFNN8aA3RniJmp+YzVc5G04gQlFLpXT8Km+w==
+  resolved "https://codeload.github.com/danyasnov/react-auth-code-input/tar.gz/441420b96f7f8c74fa058d7fb0745c160b3856e4"
 
 react-dom@^17.0.2:
   version "17.0.2"

@@ -45,6 +45,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
     <div className='flex flex-col items-center pt-6'>
       <AuthCode
         characters={4}
+        inputType='number'
         onChange={async (value) => {
           setIsInvalid(false)
           if (value.length < 4) return
@@ -119,7 +120,11 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
         onClick={() => {
           dispatch({type: 'setPage', page: AuthPages.enterPhone})
         }}
-        label={t('ANOTHER_PHONE_NUMBER')}
+        label={t(
+          state.authType === AuthType.phone
+            ? 'ANOTHER_PHONE_NUMBER'
+            : 'EDIT_EMAIL',
+        )}
       />
       {!!counter && (
         <span className='text-body-3 text-black-b mb-2'>
