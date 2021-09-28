@@ -21,7 +21,7 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
   } else if (name) {
     const fontSize = size >= 16 ? 'text-h-1' : 'text-h-2'
     content = (
-      <span className={`${fontSize} text-white w-full text-center`}>
+      <span className={`${fontSize} text-white w-full text-center `}>
         {name
           .split(' ')
           .map((word) => (word[0] || '').toUpperCase())
@@ -33,7 +33,7 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
   return (
     // height hack because tailwind h-16 not working here
     <div
-      className='rounded-full overflow-hidden bg-black-c flex items-center'
+      className='rounded-full overflow-hidden bg-black-c flex items-center z-20'
       style={{height: size * 4, width: size * 4}}>
       {content}
     </div>

@@ -8,6 +8,7 @@ import UserProfile from './UserProfile'
 import {useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import Button from './Buttons/Button'
+import UserMenuList from './UserMenuList'
 
 const UserSidebar: FC = observer(() => {
   const {user} = useUserStore()
@@ -43,7 +44,8 @@ const UserSidebar: FC = observer(() => {
           </Button>
           <div className='flex flex-col items-center space-y-4'>
             <UserAvatar url={user.imageUrl} size={10} name={user.name} />
-            <IcShare className='fill-current text-black-c h-6 w-6' />
+            <UserMenuList collapsed />
+            {/* <IcShare className='fill-current text-black-c h-6 w-6' /> */}
           </div>
         </>
       )}

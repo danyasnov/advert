@@ -11,7 +11,7 @@ import {PagesType} from '../stores/GeneralStore'
 interface Props {
   collapsed: boolean
 }
-const UserMenuList: FC<Props> = observer(() => {
+const UserMenuList: FC<Props> = observer(({collapsed}) => {
   const {t} = useTranslation()
   const {setActiveUserPage, activeUserPage, userHash} = useGeneralStore()
   const {user} = useUserStore()
@@ -19,13 +19,13 @@ const UserMenuList: FC<Props> = observer(() => {
 
   const list = [
     {
-      icon: <IcAdvert className='fill-current h-6 w-6 mr-1' />,
+      icon: <IcAdvert className='fill-current h-6 w-6' />,
       title: t('ADS'),
       id: 'adverts',
       show: true,
     },
     {
-      icon: <IcStar className='fill-current h-6 w-6 mr-1' />,
+      icon: <IcStar className='fill-current h-6 w-6' />,
       title: t('REVIEWS'),
       id: 'reviews',
       show: true,
@@ -37,7 +37,7 @@ const UserMenuList: FC<Props> = observer(() => {
     //   show: isCurrentUser,
     // },
     {
-      icon: <IcLike className='fill-current h-6 w-6 mr-1' />,
+      icon: <IcLike className='fill-current h-6 w-6' />,
       title: t('FAVORITE'),
       id: 'favorites',
       show: isCurrentUser,
@@ -50,13 +50,17 @@ const UserMenuList: FC<Props> = observer(() => {
         return (
           <Button onClick={() => setActiveUserPage(i.id as PagesType)}>
             <div
-              className={`flex text-black-f items-center py-3 pl-4 w-full rounded-lg ${
+              className={`flex text-black-f items-center ${
+                collapsed ? 'py-3 px-3' : 'py-3 pl-4'
+              } w-full rounded-lg ${
                 i.id === activeUserPage ? 'bg-brand-a2' : ''
               }`}>
-              {i.icon}
-              <span className='text-body-2 ml-2 flex items-center h-full text-black-b'>
-                {i.title}
-              </span>
+              <div className={collapsed ? '' : 'mr-1'}>{i.icon}</div>
+              {!collapsed && (
+                <span className='text-body-2 ml-2 flex items-center h-full text-black-b'>
+                  {i.title}
+                </span>
+              )}
             </div>
           </Button>
         )
