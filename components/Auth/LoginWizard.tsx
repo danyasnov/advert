@@ -69,12 +69,14 @@ interface State {
   incoming: string | null
   authType: number | null
   userId: number | null
+  password: string | null
   page: {title: string; component: FC}
 }
 const initialState: State = {
   incoming: null,
   authType: null,
   userId: null,
+  password: null,
   page: AuthPages.initialPage,
 }
 
@@ -88,6 +90,8 @@ const reducer = (state, action) => {
       return {...state, userId: action.userId}
     case 'setPage':
       return {...state, page: action.page}
+    case 'setPassword':
+      return {...state, password: action.password}
     default:
       throw new Error()
   }

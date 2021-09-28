@@ -6,16 +6,18 @@ import {useTranslation} from 'next-i18next'
 import {AuthType, RestResponseCodes} from 'front-api/src/models/index'
 import {get, size} from 'lodash'
 import {toast} from 'react-toastify'
+import {Secure} from 'front-api/src/helpers/userSecure'
 import {FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import Storage from '../../stores/Storage'
 
 const schema = object().shape({
   email: string().email().required(),
 })
-const EnterEmail: FC<PageProps> = observer(({dispatch, onClose}) => {
+const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const {t} = useTranslation()
   const [showPass, setShowPass] = useState(false)
   const {triggerUpdate} = useGeneralStore()
@@ -49,12 +51,23 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose}) => {
           if (result.data?.error) {
             return toast.error(t(result.data?.error))
           }
-          const {hash, promo} = get(result, 'data.result', {})
 
-          setCookiesObject({
-            hash,
-            promo,
-          })
+          const {hash, promo} = get(result, 'data.result', {})
+          if (state.authType === AuthType.email) {
+            const storage = new Storage({
+              password: values.pass,
+              email: values.email,
+              userHash: hash,
+              authType: state.authType,
+            })
+            const secure = new Secure(storage)
+            const token = secure.createUserSecure()
+            setCookiesObject({
+              hash,
+              promo,
+              token,
+            })
+          }
           triggerUpdate()
           onClose()
         } else {

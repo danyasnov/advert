@@ -46,7 +46,7 @@ const marksMap = {
   56: 50,
   70: 100,
   84: 200,
-  100: 300,
+  100: 5000,
 }
 
 const zoomMarksMap = {
@@ -57,7 +57,7 @@ const zoomMarksMap = {
   56: 8,
   70: 7,
   84: 6,
-  100: 5,
+  100: 1,
 }
 
 const invertedMarksMap = objectFlip(marksMap)

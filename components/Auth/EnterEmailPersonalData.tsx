@@ -76,8 +76,9 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
         if (!result?.data?.result) return
         dispatch({type: 'setUserId', userId: result.data.result})
         dispatch({type: 'setPage', page: AuthPages.enterCode})
+        dispatch({type: 'setPassword', password: values.pass})
       }}>
-      {({submitForm, errors}) => (
+      {({submitForm, }) => (
         <div className='px-4 pt-4 flex flex-col justify-between h-full'>
           <Form className='space-y-4 pb-8'>
             <Field

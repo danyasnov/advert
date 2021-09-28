@@ -19,9 +19,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const result = await activateWithCode(code as string, id as string)
     const {promo, hash} = result?.result || {}
     if (promo && hash) {
-      setCookiesObject({promo, hash}, ctx)
-      state.promo = promo
-      state.hash = hash
       showActivationAlert = true
     } else {
       showErrorActivationAlert = true

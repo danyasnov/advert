@@ -83,7 +83,21 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
                 token,
               })
             }
-
+            if (state.authType === AuthType.email) {
+              const storage = new Storage({
+                password: state.password,
+                email: state.incoming,
+                userHash: hash,
+                authType: state.authType,
+              })
+              const secure = new Secure(storage)
+              const token = secure.createUserSecure()
+              setCookiesObject({
+                hash,
+                promo,
+                token,
+              })
+            }
             triggerUpdate()
             onClose()
           }
