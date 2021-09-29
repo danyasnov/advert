@@ -59,7 +59,7 @@ const Card: FC<Props> = ({
   }, [embla])
   return (
     <div
-      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
+      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}
       // @ts-ignore safari fix border radius
@@ -105,10 +105,10 @@ const Card: FC<Props> = ({
         </div>
       </div>
       <div
-        className={`p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 ${
+        className={`p-2 flex flex-col justify-between flex-1 ${
           variant === 'default' ? 'bg-white' : 'bg-brand-a2'
         }`}>
-        <div className='flex flex-col'>
+        <div className='flex flex-col pb-4'>
           <div className='flex items-start mb-1'>
             <span className='text-body-3 text-black-b line-clamp-2 flex-1 break-words'>
               {title}
