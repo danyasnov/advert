@@ -100,6 +100,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
             {showPass && (
               <Field
                 name='pass'
+                type='password'
                 component={FormikText}
                 validate={validatePass}
                 placeholder={t('PASSWORD')}
