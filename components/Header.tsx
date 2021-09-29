@@ -103,7 +103,11 @@ const Header: FC = () => {
         </div>
       </div>
       {showLogin && (
-        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+        <LoginModal
+          isOpen={showLogin}
+          // eslint-disable-next-line no-alert
+          onClose={() => setShowLogin(!window.confirm(t('EXIT')))}
+        />
       )}
     </header>
   )
