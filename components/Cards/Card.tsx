@@ -2,8 +2,8 @@ import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcVisibility from 'icons/material/Visibility.svg'
-import {useMouseHovered} from 'react-use'
-import {isEmpty} from 'lodash'
+import {useIntersection, useMouseHovered} from 'react-use'
+import {isEmpty, isNumber} from 'lodash'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -19,7 +19,7 @@ const Card: FC<Props> = ({
 }) => {
   const {title, images, price, oldPrice, dateUpdated, views, location} = product
   const [currentIndex, setCurrentIndex] = useState(0)
-
+  const [intersectionRatio, setIntersectionRatio] = useState<number>(1)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
     align: 'start',
@@ -35,6 +35,12 @@ const Card: FC<Props> = ({
   }, [embla, setLockParentScroll])
 
   const ref = useRef(null)
+  const intersection = useIntersection(ref, {
+    root: null,
+    rootMargin: '500px',
+    threshold: 0,
+  })
+
   const {elX, elW} = useMouseHovered(ref, {
     bound: true,
     whenHovered: true,
@@ -57,6 +63,17 @@ const Card: FC<Props> = ({
       })
     }
   }, [embla])
+
+  useEffect(() => {
+    if (
+      isNumber(intersection?.intersectionRatio) &&
+      intersection?.intersectionRatio !== intersectionRatio
+    ) {
+      setIntersectionRatio(intersection?.intersectionRatio)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intersection?.intersectionRatio])
+  const inView = intersectionRatio > 0
   return (
     <div
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden ${
@@ -67,42 +84,50 @@ const Card: FC<Props> = ({
       ref={ref}>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
-          {isEmpty(images) ? (
-            <div className='relative min-w-full'>
-              <CardImage
-                url={`/img/subcategories/${product.categoryId}.jpg`}
-                // @ts-ignore
-                fallbackUrl={`/img/subcategories/${product.rootCategoryId}.jpg`}
-                alt={title}
-              />
-            </div>
-          ) : (
-            images.map((i) => (
-              <div key={i} className='relative min-w-full'>
-                <CardImage url={i} alt={title} />
+          {inView && (
+            <>
+              {isEmpty(images) ? (
+                <div className='relative min-w-full'>
+                  <CardImage
+                    url={`/img/subcategories/${product.categoryId}.jpg`}
+                    // @ts-ignore
+                    fallbackUrl={`/img/subcategories/${product.rootCategoryId}.jpg`}
+                    alt={title}
+                  />
+                </div>
+              ) : (
+                images.map((i) => (
+                  <div key={i} className='relative min-w-full'>
+                    <CardImage url={i} alt={title} />
+                  </div>
+                ))
+              )}
+            </>
+          )}
+        </div>
+        {inView && (
+          <>
+            {images.length > 1 && (
+              <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
+                {images.map((i, index) => (
+                  <div
+                    key={i}
+                    className={`w-4 h-0.5 ${
+                      currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
+                    }`}
+                  />
+                ))}
               </div>
-            ))
-          )}
-        </div>
-        {images.length > 1 && (
-          <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
-            {images.map((i, index) => (
-              <div
-                key={i}
-                className={`w-4 h-0.5 ${
-                  currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
-                }`}
-              />
-            ))}
-          </div>
+            )}
+            <div className='absolute inset-x-0 bottom-0 pb-2 px-2'>
+              {location.distance && (
+                <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
+                  {location.distance}
+                </span>
+              )}
+            </div>
+          </>
         )}
-        <div className='absolute inset-x-0 bottom-0 pb-2 px-2'>
-          {location.distance && (
-            <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
-              {location.distance}
-            </span>
-          )}
-        </div>
       </div>
       <div
         className={`p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 ${
