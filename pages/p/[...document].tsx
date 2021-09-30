@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const promises = [
     fetchCountries(state.language),
     fetchCategories(state.language),
-    fetchDocuments(param),
+    fetchDocuments(param, state.language),
   ]
   const [countriesData, categoriesData, doc] = await Promise.allSettled(
     promises,

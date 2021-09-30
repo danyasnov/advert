@@ -85,17 +85,30 @@ ORDER BY word`,
     {type: QueryTypes.SELECT},
   )
 }
-//
-// 1-ru 2-en
-export const fetchDocuments = async (path: string) => {
-  const key = `docs-${path}`
+
+const langs = {
+  en: 2,
+  ru: 1,
+  ro: 57,
+  el: 25,
+  uk: 67,
+  tr: 38,
+}
+export const fetchDocuments = async (path: string, lang = 'en') => {
+  const key = `docs-${path}-${lang}`
   const cached = cache.get(key)
   if (cached) return cached
   const result = await sequelize.query(
-    `SELECT * FROM adv_site_content_new WHERE id_lang=2 AND url='/${path}/'`,
+    `SELECT * FROM adv_site_content_new WHERE id_lang=${
+      langs[lang] || 2
+    } AND url='/${path}/'`,
     {type: QueryTypes.SELECT},
   )
-  if (size(result)) cache.set(key, result)
+  if (size(result)) {
+    cache.set(key, result)
+  } else if (langs[lang] !== 2) {
+    return fetchDocuments(path, 'en')
+  }
   return result
 }
 
