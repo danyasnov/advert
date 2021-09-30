@@ -11,18 +11,18 @@ export interface IGeneralsHydration {
   locationCodes: string
   userHash: string
   document: Document
-  showActivationAlert: boolean
-  showErrorActivationAlert: boolean
+  showSuccessAlert: string
+  showErrorAlert: string
 }
 export interface IGeneralStore {
   root: RootStore
   showFooter: boolean
   showCookiesWarn: boolean
   showContent: boolean
-  showActivationAlert: boolean
+  showSuccessAlert: string
   user: OwnerModel
   setUser: (user: OwnerModel) => void
-  showErrorActivationAlert: boolean
+  showErrorAlert: string
   activeUserPage: PagesType
   setActiveUserPage: (page: PagesType) => void
   triggerUpdate: () => void
@@ -44,9 +44,9 @@ export class GeneralStore implements IGeneralStore {
 
   showCookiesWarn = false
 
-  showActivationAlert = false
+  showSuccessAlert = ''
 
-  showErrorActivationAlert = false
+  showErrorAlert = ''
 
   user
 
@@ -95,7 +95,7 @@ export class GeneralStore implements IGeneralStore {
     this.locationCodes = data?.locationCodes ?? ''
     this.document = data?.document ?? ''
     this.userHash = data?.userHash ?? ''
-    this.showActivationAlert = data?.showActivationAlert ?? false
-    this.showErrorActivationAlert = data?.showErrorActivationAlert ?? false
+    this.showSuccessAlert = data?.showSuccessAlert ?? ''
+    this.showErrorAlert = data?.showErrorAlert ?? ''
   }
 }

@@ -127,3 +127,18 @@ export const addMetaToDeeplink = async (
     {type: QueryTypes.SELECT},
   )
 }
+
+export const fetchUser = async (
+  hash: string,
+): Promise<{hash: string; lang: number}[]> => {
+  return sequelize.query(
+    `SELECT hash, email, name, surname, lang FROM adv_users WHERE hash='${hash}'`,
+    {type: QueryTypes.SELECT},
+  )
+}
+export const setUserPass = async (hash: string, pass: string) => {
+  return sequelize.query(
+    `UPDATE adv_users SET email_pass='${pass}' WHERE hash='${hash}'`,
+    {type: QueryTypes.SELECT},
+  )
+}

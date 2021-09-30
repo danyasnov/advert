@@ -14,10 +14,14 @@ const LoginModal: FC<Props> = ({isOpen, onClose}) => {
   const {t} = useTranslation()
   useLockBodyScroll()
   const [title, setTitle] = useState(t('LOG_IN'))
+  const handleClose = () => {
+    const confirm = window.confirm(t('EXIT'))
+    if (confirm) onClose()
+  }
   return (
     <ReactModal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
       shouldCloseOnOverlayClick
       ariaHideApp={false}
       contentLabel={title}
@@ -26,7 +30,7 @@ const LoginModal: FC<Props> = ({isOpen, onClose}) => {
       <div className='flex flex-col w-full'>
         <div className='px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
           <span className='text-h-2 text-black-b font-bold'>{title}</span>
-          <Button onClick={onClose}>
+          <Button onClick={handleClose}>
             <IcClear className='fill-current text-black-d h-6 w-6' />
           </Button>
         </div>

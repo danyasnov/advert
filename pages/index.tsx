@@ -12,17 +12,20 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
   const {query} = ctx
-  const {action, id, email, code} = query
-  let showActivationAlert = false
-  let showErrorActivationAlert = false
+  const {action, id, email, code, success} = query
+  let showSuccessAlert = ''
+  let showErrorAlert = ''
   if (action && id && email && code) {
     const result = await activateWithCode(code as string, id as string)
     const {promo, hash} = result?.result || {}
     if (promo && hash) {
-      showActivationAlert = true
+      showSuccessAlert = 'ACCOUNT_ACTIVATED'
     } else {
-      showErrorActivationAlert = true
+      showErrorAlert = 'CODE_NOT_CORRECT'
     }
+  }
+  if (success) {
+    showSuccessAlert = success as string
   }
 
   const promises = [
@@ -64,8 +67,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           countries,
         },
         generalStore: {
-          showActivationAlert,
-          showErrorActivationAlert,
+          showSuccessAlert,
+          showErrorAlert,
           locationCodes: getLocationCodes(ctx),
         },
       },

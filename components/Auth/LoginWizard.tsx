@@ -8,6 +8,7 @@ import EnterPhone from './EnterPhone'
 import EnterPersonalData from './EnterPersonalData'
 import EnterEmail from './EnterEmail'
 import EnterEmailPersonalData from './EnterEmailPersonalData'
+import PasswordRestoration from './PasswordRestoration'
 
 export interface PageProps {
   state: State
@@ -63,6 +64,10 @@ export const AuthPages = {
   enterEmailPersonalData: {
     title: 'PERSONAL_DATA',
     component: EnterEmailPersonalData,
+  },
+  passwordRestoration: {
+    title: 'PASSWORD_RESTORATION',
+    component: PasswordRestoration,
   },
 }
 interface State {

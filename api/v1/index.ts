@@ -181,6 +181,14 @@ export const authWithPassword = async (
   return rest.oldRest.authWithPassword(incoming, password)
 }
 
+export const remindPassword = async (
+  email: string,
+): Promise<RestResponse<unknown>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.oldRest.remindPassword(email)
+}
+
 export const createUser = async (payload: {
   incoming: string
   name: string

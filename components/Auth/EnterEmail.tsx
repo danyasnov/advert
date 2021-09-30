@@ -13,6 +13,7 @@ import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import Storage from '../../stores/Storage'
+import LinkButton from '../Buttons/LinkButton'
 
 const schema = object().shape({
   email: string().email().required(),
@@ -98,13 +99,25 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
               placeholder={t('FORM_EMAIL')}
             />
             {showPass && (
-              <Field
-                name='pass'
-                type='password'
-                component={FormikText}
-                validate={validatePass}
-                placeholder={t('PASSWORD')}
-              />
+              <>
+                <Field
+                  name='pass'
+                  type='password'
+                  component={FormikText}
+                  validate={validatePass}
+                  placeholder={t('PASSWORD')}
+                />
+                <LinkButton
+                  onClick={() =>
+                    dispatch({
+                      type: 'setPage',
+                      page: AuthPages.passwordRestoration,
+                    })
+                  }
+                  label={t('FORGOT_PASSWORD')}
+                  className='pl-4'
+                />
+              </>
             )}
           </Form>
           <div className='-mx-4'>

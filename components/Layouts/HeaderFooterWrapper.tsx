@@ -12,15 +12,14 @@ interface Props {
   children: ReactNode
 }
 const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
-  const {showContent, showActivationAlert, showErrorActivationAlert} =
-    useGeneralStore()
+  const {showContent, showSuccessAlert, showErrorAlert} = useGeneralStore()
   const {t} = useTranslation()
   const router = useRouter()
   useEffect(() => {
-    if (showActivationAlert) {
+    if (showSuccessAlert) {
       toast.success(t('ACCOUNT_ACTIVATED'))
       router.push('/')
-    } else if (showErrorActivationAlert) {
+    } else if (showErrorAlert) {
       toast.error(t('CODE_NOT_CORRECT'))
       router.push('/')
     }
