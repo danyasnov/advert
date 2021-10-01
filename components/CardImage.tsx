@@ -1,5 +1,6 @@
 import {FC, useEffect, useState} from 'react'
-import useWindowSize from '../hooks/useWindowSize'
+import {useWindowSize} from 'react-use'
+
 import ImageWrapper from './ImageWrapper'
 
 interface Props {
