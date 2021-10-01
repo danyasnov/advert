@@ -46,7 +46,7 @@ export default async (
         androidPackageName: 'adverto.sale',
       },
       iosInfo: {
-        iosBundleId: 'id1287862488',
+        iosBundleId: 'sale.adverto.adverto',
       },
     },
   })
