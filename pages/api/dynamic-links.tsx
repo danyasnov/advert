@@ -47,6 +47,7 @@ export default async (
       },
       iosInfo: {
         iosBundleId: 'sale.adverto.adverto',
+        iosAppStoreId: '1287862488',
       },
     },
   })
