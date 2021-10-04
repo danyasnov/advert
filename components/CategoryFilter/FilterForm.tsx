@@ -54,6 +54,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     filter,
   } = useProductsStore()
 
+  const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
@@ -110,9 +111,11 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   }
 
   useEffect(() => {
-    if (formikRef.current) {
+    if (formikRef.current && prevCategoryQueryRef.current) {
       formikRef.current.resetForm({values: getInitialValues(true)})
       resetFilter()
+    } else {
+      prevCategoryQueryRef.current = JSON.stringify(router.query.categories)
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [JSON.stringify(router.query.categories)])
@@ -130,7 +133,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const currentOption =
     options.find((o) => o.value === currentCategory.id) ?? null
 
-  console.log('initialValues', initialValues)
   return (
     <Formik
       validateOnChange
@@ -139,7 +141,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       initialValues={initialValues}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
         const {priceRange, onlyWithPhoto, onlyDiscounted, fields} = values
-        console.log('values', values)
 
         const mappedFields = Object.fromEntries(
           Object.entries(fields)
