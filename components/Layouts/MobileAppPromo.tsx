@@ -8,7 +8,7 @@ const MobileAppPromo: FC = () => {
     <div className='flex justify-center items-center h-screen bg-adverto-background bg-repeat'>
       <main className='flex flex-col justify-center items-center'>
         <IcAdvertoLogoSquare width={136} height={136} />
-        <span className='mt-20 mb-12 text-h-2 text-black-b font-bold'>
+        <span className='mt-20 mb-12 text-h-2 text-black-b font-bold text-center'>
           {t('MOBILE_APP_PROMO')}
         </span>
         <div className='flex items-center justify-center'>
