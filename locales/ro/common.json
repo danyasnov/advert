@@ -1042,7 +1042,7 @@
   "SEARCH_AT": "Search at {{cityOrCountry}}",
   "SEARCH_BY WRITTEN_TEXT": "Specify place with text",
   "SEARCH_DRAW_ON_MAP": "Circle on the map",
-  "SEARCH_RESULTS_BY_QUERY": "SEARCH_RESULTS_BY_QUERY",
+  "SEARCH_RESULTS_BY_QUERY": "Search results for the query {{query}}",
   "SEARCH_SETTINGS_SAVED": "Search settings saved",
   "SEARCH_SUBSCRIPTION": "Search subscription",
   "SECURED_DEAL": "Secured deal",
