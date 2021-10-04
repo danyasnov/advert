@@ -182,7 +182,7 @@ export class ProductsStore implements IProductsStore {
         }
         this.newCacheId = cacheId
 
-        this.newAggregatedFields = aggregatedFields
+        this.aggregatedFields = aggregatedFields
         this.newPage = page
         this.newLimit = limit
         this.newCount = count
@@ -204,7 +204,6 @@ export class ProductsStore implements IProductsStore {
   applyFilter = (): void => {
     this.products = this.newProducts
     this.cacheId = this.newCacheId
-    this.aggregatedFields = this.newAggregatedFields
     this.page = this.newPage
     this.limit = this.newLimit
     this.count = this.newCount

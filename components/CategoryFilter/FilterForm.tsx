@@ -118,13 +118,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   }, [JSON.stringify(router.query.categories)])
   const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
 
-  // hack to show models after selecting brands of auto
-  useEffect(() => {
-    const {fields = {}} = filter
-    if (fields[1991] && !fields[1992] && !isFilterApplied) {
-      applyFilter()
-    }
-  }, [filter, isFilterApplied])
   const currentCategoriesOptions =
     findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
     []
@@ -137,6 +130,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const currentOption =
     options.find((o) => o.value === currentCategory.id) ?? null
 
+  console.log('initialValues', initialValues)
   return (
     <Formik
       validateOnChange
