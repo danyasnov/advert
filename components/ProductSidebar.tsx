@@ -1,18 +1,28 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcPhone from 'icons/material/Phone.svg'
+import {parseCookies} from 'nookies'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import UserCard from './UserCard'
 import ProductInfoIcons from './ProductInfoIcons'
 import PrimaryButton from './Buttons/PrimaryButton'
+import SecondaryButton from './Buttons/SecondaryButton'
+import LinkWrapper from './Buttons/LinkWrapper'
+import {SerializedCookiesState} from '../types'
 
 const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
   const [showPhone, setShowPhone] = useState(false)
-  const {owner} = product
+  const {owner, advert} = product
   const {phoneNum} = owner
+  const [showChat, setShowChat] = useState(false)
+
+  useEffect(() => {
+    const state: SerializedCookiesState = parseCookies()
+    if (state.aup) setShowChat(true)
+  }, [])
   return (
     <div className='flex flex-col'>
       <span className='text-black-b text-h-1 mb-4 font-bold'>
@@ -30,9 +40,17 @@ const ProductSidebar: FC = observer(() => {
         </PrimaryButton>
       )}
       <ProductInfoIcons />
-      {/* <PrimaryButton onClick={notImplementedAlert} className='my-4'> */}
-      {/*  {t('SEND_A_MESSAGE')} */}
-      {/* </PrimaryButton> */}
+
+      {showChat && (
+        <LinkWrapper
+          target='_blank'
+          href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
+          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2'
+          title={t('SEND_A_MESSAGE')}>
+          {t('SEND_A_MESSAGE')}
+        </LinkWrapper>
+      )}
+
       <UserCard />
     </div>
   )

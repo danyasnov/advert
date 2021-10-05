@@ -14,7 +14,7 @@ const UserCard: FC = observer(() => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col bg-white px-2 py-6'>
+    <div className='flex flex-col bg-white px-2 py-6 rounded-lg'>
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
           <UserAvatar url={product.owner.image} name={product.owner.name} />

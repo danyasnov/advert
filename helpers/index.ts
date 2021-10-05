@@ -6,15 +6,17 @@ import {
   CountryModel,
 } from 'front-api/src'
 import {
+  AuthType,
   CACategoryDataFieldModel,
   GeoPositionModel,
 } from 'front-api/src/models/index'
 import {destroyCookie, parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
-import {IncomingMessage, ServerResponse} from 'http'
+import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
+import crypto from 'crypto'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -25,6 +27,7 @@ import {
 } from '../types'
 import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
 import {clearFalsyValues} from '../utils'
+import PublicKey from '../PublicKey'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -228,6 +231,25 @@ export const processCookies = async (
   }
   if (cookies.hash) state.hash = cookies.hash
   if (cookies.token) state.token = cookies.token
+  if (cookies.authType) state.authType = toNumber(cookies.authType)
+  if (!cookies.aup && state.hash && state.token && state.authType) {
+    const data = Buffer.from(
+      JSON.stringify({
+        hash: state.hash,
+        auth_type: state.authType === AuthType.phone ? 'phone' : 'email',
+        time_auth: Math.floor(new Date().getTime() / 1000),
+      }),
+    )
+    const encrypted = crypto.publicEncrypt(
+      {
+        key: PublicKey,
+        padding: crypto.constants.RSA_PKCS1_PADDING,
+      },
+      data,
+    )
+    const base64 = encrypted.toString('base64')
+    state.aup = base64.match(new RegExp(`.{0,${76}}`, 'g')).join('\r\n')
+  }
   setCookiesObject(state, ctx)
   return state
 }

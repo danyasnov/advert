@@ -82,6 +82,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
                 hash,
                 promo,
                 token,
+                authType: state.authType,
               })
             }
             if (state.authType === AuthType.email) {
@@ -97,6 +98,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
                 hash,
                 promo,
                 token,
+                authType: state.authType,
               })
             }
             triggerUpdate()

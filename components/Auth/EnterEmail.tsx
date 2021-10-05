@@ -67,6 +67,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
               hash,
               promo,
               token,
+              authType: state.authType,
             })
           }
           triggerUpdate()

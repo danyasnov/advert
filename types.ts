@@ -31,6 +31,7 @@ export interface CookiesState {
   authType?: number
   phone?: string
   token?: string
+  aup?: string
 }
 
 export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
@@ -56,6 +57,7 @@ export interface SerializedCookiesState {
   authType?: string
   phone?: string
   token?: string
+  aup?: string
 }
 
 export interface Filter {
