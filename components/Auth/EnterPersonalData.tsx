@@ -58,7 +58,6 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
             <Field
               name='surname'
               component={FormikText}
-              validate={validateName}
               placeholder={t('SURNAME')}
             />
           </Form>
