@@ -97,6 +97,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
 
             <Field
               name='pass'
+              type='password'
               component={FormikText}
               validate={validatePass}
               placeholder={t('PASSWORD')}

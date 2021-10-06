@@ -173,21 +173,21 @@ const TextForm: FC<Props> = observer(({onClose}) => {
       state.cityId = city.value.toString()
       query.city = city.slug
     } else {
-      destroyCookiesWrapper(null, 'cityId')
+      destroyCookiesWrapper('cityId')
     }
     if (region?.value) {
       addressArray.push(region.label)
       state.regionId = region.value.toString()
       query.city = region.slug
     } else {
-      destroyCookiesWrapper(null, 'regionId')
+      destroyCookiesWrapper('regionId')
     }
     if (country?.value) {
       addressArray.push(country.label)
       state.countryId = country.value.toString()
       query.country = country.isoCode
     } else {
-      destroyCookiesWrapper(null, 'countryId')
+      destroyCookiesWrapper('countryId')
     }
     state.searchBy = 'id'
     // eslint-disable-next-line prefer-destructuring

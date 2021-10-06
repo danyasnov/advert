@@ -101,7 +101,7 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
   })
 }
 
-export const destroyCookiesWrapper = (ctx = null, name: string): void => {
+export const destroyCookiesWrapper = (name: string, ctx?): void => {
   const options: Partial<{path: string; maxAge: number; domain: string}> = {
     path: '/',
   }

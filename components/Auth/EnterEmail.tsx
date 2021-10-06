@@ -7,11 +7,11 @@ import {AuthType, RestResponseCodes} from 'front-api/src/models/index'
 import {get, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {Secure} from 'front-api/src/helpers/userSecure'
+import {useRouter} from 'next/router'
 import {FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
 import Storage from '../../stores/Storage'
 import LinkButton from '../Buttons/LinkButton'
 
@@ -20,8 +20,8 @@ const schema = object().shape({
 })
 const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const {t} = useTranslation()
+  const router = useRouter()
   const [showPass, setShowPass] = useState(false)
-  const {triggerUpdate} = useGeneralStore()
   const msgPass = 'PASSWORD_TOO_SHORT'
 
   const validatePass = (value) => {
@@ -69,8 +69,8 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
               token,
               authType: state.authType,
             })
+            router.reload()
           }
-          triggerUpdate()
           onClose()
         } else {
           const incoming = values.email.toLocaleLowerCase()

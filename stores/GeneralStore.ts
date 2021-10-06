@@ -25,8 +25,6 @@ export interface IGeneralStore {
   showErrorAlert: string
   activeUserPage: PagesType
   setActiveUserPage: (page: PagesType) => void
-  triggerUpdate: () => void
-  trigger: boolean
   document: Document
   locationCodes: string
   userHash: string
@@ -56,17 +54,11 @@ export class GeneralStore implements IGeneralStore {
     this.activeUserPage = page
   }
 
-  triggerUpdate = (): void => {
-    this.trigger = !this.trigger
-  }
-
   setUser = (user: OwnerModel): void => {
     this.user = user
   }
 
   userHash = ''
-
-  trigger
 
   showContent = true
 

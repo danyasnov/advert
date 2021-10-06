@@ -6,16 +6,16 @@ import {toast} from 'react-toastify'
 import {get} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {Secure} from 'front-api/src/helpers/userSecure'
+import {useRouter} from 'next/router'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
 import LinkButton from '../Buttons/LinkButton'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
 import Storage from '../../stores/Storage'
 
 const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
   const {t} = useTranslation()
-  const {triggerUpdate} = useGeneralStore()
+  const router = useRouter()
   const [isInvalid, setIsInvalid] = useState(false)
   const [counter, setCounter] = useState(60)
   const [disabled, setDisabled] = useState(true)
@@ -101,7 +101,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
                 authType: state.authType,
               })
             }
-            triggerUpdate()
+            router.reload()
             onClose()
           }
         }}
