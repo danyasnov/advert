@@ -16,7 +16,7 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
     let error = ''
-    if (size(value) < 1 || size(value) > 50) {
+    if (size(value) < 2 || size(value) > 100) {
       error = msg
     }
     return error
@@ -27,7 +27,6 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
         name: '',
         surname: '',
       }}
-      validateOnChange={false}
       onSubmit={async (values) => {
         const result = await makeRequest({
           url: '/api/create-user',
@@ -56,6 +55,7 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
             <Field
               name='surname'
               component={FormikText}
+              validate={validateName}
               placeholder={t('SURNAME')}
             />
           </Form>

@@ -31,7 +31,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
-    if (size(value) < 1 || size(value) > 50) {
+    if (size(value) < 2 || size(value) > 100) {
       return t(msgName)
     }
     return ''
@@ -58,7 +58,6 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
         surname: '',
         pass: '',
       }}
-      validateOnChange={false}
       onSubmit={async (values) => {
         const result = await makeRequest({
           url: '/api/create-user',
