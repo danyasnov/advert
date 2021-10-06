@@ -12,7 +12,7 @@ interface Props {
 }
 const LoginModal: FC<Props> = ({isOpen, onClose}) => {
   const {t} = useTranslation()
-  useLockBodyScroll()
+  // useLockBodyScroll()
   const [title, setTitle] = useState(t('LOG_IN'))
   const handleClose = () => {
     const confirm = window.confirm(t('EXIT'))
