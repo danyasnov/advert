@@ -4,6 +4,7 @@ import {AuthType} from 'front-api/src/models/index'
 import {Field, Form, Formik} from 'formik'
 import {size} from 'lodash'
 import {parseCookies} from 'nookies'
+import {toast} from 'react-toastify'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
 import {FormikText} from '../FormikComponents'
@@ -39,6 +40,8 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
           },
           method: 'POST',
         })
+
+        if (result?.data?.error) toast.error(t(result?.data?.error))
         if (!result?.data?.result) return
         dispatch({type: 'setPage', page: AuthPages.enterCode})
         dispatch({type: 'setUserId', userId: result?.data?.result})

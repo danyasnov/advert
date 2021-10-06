@@ -5,6 +5,7 @@ import {Field, Form, Formik} from 'formik'
 import {size} from 'lodash'
 import {parseCookies} from 'nookies'
 import emojiRegex from 'emoji-regex'
+import {toast} from 'react-toastify'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {FormikText} from '../FormikComponents'
 import {SerializedCookiesState} from '../../types'
@@ -72,6 +73,8 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
           },
           method: 'POST',
         })
+        if (result?.data?.error) toast.error(t(result?.data?.error))
+
         if (!result?.data?.result) return
         dispatch({type: 'setUserId', userId: result.data.result})
         dispatch({type: 'setPage', page: AuthPages.enterCode})
