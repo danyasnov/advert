@@ -37,7 +37,7 @@ const Card: FC<Props> = ({
   const ref = useRef(null)
   const intersection = useIntersection(ref, {
     root: null,
-    rootMargin: '500px',
+    rootMargin: '1000px',
     threshold: 0,
   })
 
@@ -70,6 +70,9 @@ const Card: FC<Props> = ({
       intersection?.intersectionRatio !== intersectionRatio
     ) {
       setIntersectionRatio(intersection?.intersectionRatio)
+      if (intersectionRatio > 0) {
+        embla.reInit()
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intersection?.intersectionRatio])
