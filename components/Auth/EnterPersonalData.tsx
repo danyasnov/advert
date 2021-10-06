@@ -17,7 +17,7 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
     let error = ''
-    if (size(value) < 2 || size(value) > 100) {
+    if (size(value) < 2 || size(value) > 90) {
       error = msg
     }
     return error

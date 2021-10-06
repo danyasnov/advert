@@ -32,7 +32,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
-    if (size(value) < 2 || size(value) > 100) {
+    if (size(value) < 2 || size(value) > 90) {
       return t(msgName)
     }
     return ''
