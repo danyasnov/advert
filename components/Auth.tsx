@@ -67,7 +67,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
         <div className='relative'>
           <Button onClick={() => setShowPopup(!showPopup)}>
             <UserAvatar url={user.imageUrl} size={4} name={user.name} />
-            <span className='ml-2 text-brand-b1 text-body-3 flex items-center'>
+            <span className='ml-2 text-brand-b1 text-body-3 truncate max-w-100px inline-block'>
               {user.name}
             </span>
           </Button>
