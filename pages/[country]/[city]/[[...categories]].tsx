@@ -153,6 +153,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           countries,
           cities: locations,
         },
+        generalStore: {
+          userHash: state.hash ?? '',
+        },
       },
       ...(await serverSideTranslations(state.language)),
     },

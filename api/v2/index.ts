@@ -1,6 +1,7 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListResponse,
+  RemoveFromSaleType,
   RestFetchUserProductsPayload,
 } from 'front-api/src/models/index'
 import {
@@ -196,4 +197,49 @@ export const fetchUserArchive = (
   })
   const rest = getRest(storage)
   return rest.advertises.fetchUserArchiveProducts(payload)
+}
+
+export const deleteAdv = (
+  hash: string,
+  language: string,
+  token: string,
+  userHash: string,
+) => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.delete(hash)
+}
+
+export const publishAdv = (
+  hash: string,
+  language: string,
+  token: string,
+  userHash: string,
+) => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.activate(hash)
+}
+export const deactivateAdv = (
+  hash: string,
+  soldMode: RemoveFromSaleType,
+  language: string,
+  token: string,
+  userHash: string,
+) => {
+  const storage = new Storage({
+    language,
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.deactivate(hash, soldMode)
 }

@@ -1,5 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import ProductHeader from '../ProductHeader'
 import ProductDescription from '../ProductDescription'

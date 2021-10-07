@@ -18,11 +18,11 @@ interface Props {
 const Auth: FC<Props> = observer(({onLogin}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const router = useRouter()
-  const ref = useRef(null)
   const [showLogin, setShowLogin] = useState(false)
   const {t} = useTranslation()
   const {setUser, user} = useGeneralStore()
   const [showPopup, setShowPopup] = useState(false)
+  const ref = useRef(null)
   useClickAway(ref, () => {
     setShowPopup(false)
   })
@@ -62,7 +62,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
     },
   ]
   return (
-    <>
+    <div ref={ref}>
       {user ? (
         <div className='relative'>
           <Button onClick={() => setShowPopup(!showPopup)}>
@@ -72,9 +72,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
             </span>
           </Button>
           {showPopup && (
-            <div
-              className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden'
-              ref={ref}>
+            <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden'>
               {options.map(({title, onClick}) => (
                 <Button
                   className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-2'
@@ -98,7 +96,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
           )}
         </>
       )}
-    </>
+    </div>
   )
 })
 export default Auth

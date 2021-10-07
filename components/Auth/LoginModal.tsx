@@ -13,7 +13,7 @@ const LoginModal: FC<Props> = ({isOpen, onClose}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
   const handleClose = () => {
-    const confirm = window.confirm(t('EXIT'))
+    const confirm = window.confirm(t('EXIT_REGISTRATION'))
     if (confirm) onClose()
   }
   return (

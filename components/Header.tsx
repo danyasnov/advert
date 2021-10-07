@@ -107,11 +107,7 @@ const Header: FC = observer(() => {
         </div>
       </div>
       {showLogin && (
-        <LoginModal
-          isOpen={showLogin}
-          // eslint-disable-next-line no-alert
-          onClose={() => setShowLogin(false)}
-        />
+        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
       )}
     </header>
   )

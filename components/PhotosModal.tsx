@@ -75,7 +75,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       </Button>
       <div className='flex flex-col w-full h-full bg-image-placeholder overflow-hidden'>
         <div className='overflow-hidden relative h-full' ref={viewportRef}>
-          <div className='flex  h-full'>
+          <div className='flex h-full'>
             {/* @ts-ignore */}
             {items.map((item, index) => {
               if (item.type === 'video') {
