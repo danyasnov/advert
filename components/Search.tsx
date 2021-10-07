@@ -30,7 +30,7 @@ const Search: FC = () => {
 
   return (
     <>
-      <div className='flex h-10 w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
+      <div className='flex w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
         <SearchAutocomplete
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
