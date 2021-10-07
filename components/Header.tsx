@@ -2,6 +2,7 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
+import {observer} from 'mobx-react-lite'
 import Button from './Buttons/Button'
 import Logo from './Logo'
 import Search from './Search'
@@ -14,6 +15,7 @@ import {SerializedCookiesState} from '../types'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LoginModal from './Auth/LoginModal'
 import Auth from './Auth'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 const options = [
   {
@@ -40,16 +42,16 @@ const withIcons = (opts) =>
     ),
   }))
 
-const Header: FC = () => {
+const Header: FC = observer(() => {
   const router = useRouter()
   const {t} = useTranslation()
   const [lang, setLang] = useState<string>()
   const languages = useRef(withIcons(options))
+  const {showLogin, setShowLogin} = useGeneralStore()
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
     setLang(state.language)
   }, [])
-  const [showLogin, setShowLogin] = useState(false)
 
   return (
     <header className='flex s:justify-center relative shadow-lg z-10'>
@@ -111,6 +113,6 @@ const Header: FC = () => {
       )}
     </header>
   )
-}
+})
 
 export default Header

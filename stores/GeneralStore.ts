@@ -31,6 +31,8 @@ export interface IGeneralStore {
   setFooterVisibility: (visible: boolean) => void
   setShowContent: (visible: boolean) => void
   toggleCookiesWarnVisibility: () => void
+  setShowLogin: (value: boolean) => void
+  showLogin: boolean
   hydrate(data: IGeneralsHydration): void
 }
 export type PagesType = 'adverts' | 'favorites' | 'reviews' | 'drafts'
@@ -61,6 +63,12 @@ export class GeneralStore implements IGeneralStore {
   userHash = ''
 
   showContent = true
+
+  showLogin = false
+
+  setShowLogin = (value: boolean): void => {
+    this.showLogin = value
+  }
 
   document
 

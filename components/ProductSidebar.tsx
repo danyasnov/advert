@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcPhone from 'icons/material/Phone.svg'
 import {parseCookies} from 'nookies'
-import {useProductsStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import UserCard from './UserCard'
 import ProductInfoIcons from './ProductInfoIcons'
 import PrimaryButton from './Buttons/PrimaryButton'
@@ -18,10 +18,11 @@ const ProductSidebar: FC = observer(() => {
   const {owner, advert} = product
   const {phoneNum} = owner
   const [showChat, setShowChat] = useState(false)
+  const {setShowLogin} = useGeneralStore()
 
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
-    if (state.aup) setShowChat(true)
+    setShowChat(!!state.hash)
   }, [])
   return (
     <div className='flex flex-col'>
@@ -41,7 +42,7 @@ const ProductSidebar: FC = observer(() => {
       )}
       <ProductInfoIcons />
 
-      {showChat && (
+      {showChat ? (
         <LinkWrapper
           target='_blank'
           href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
@@ -49,6 +50,14 @@ const ProductSidebar: FC = observer(() => {
           title={t('SEND_A_MESSAGE')}>
           {t('SEND_A_MESSAGE')}
         </LinkWrapper>
+      ) : (
+        <SecondaryButton
+          className='mb-2'
+          onClick={() => {
+            setShowLogin(true)
+          }}>
+          {t('SEND_A_MESSAGE')}
+        </SecondaryButton>
       )}
 
       <UserCard />
