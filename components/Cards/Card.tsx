@@ -150,7 +150,7 @@ const Card: FC<Props> = ({
         </div>
         <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
           <span suppressHydrationWarning className='inline-flex items-center'>
-            {unixToDate(dateUpdated)}
+            {dateUpdated && unixToDate(dateUpdated)}
           </span>
           <div className='flex items-center'>
             <div>
