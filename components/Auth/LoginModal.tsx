@@ -4,7 +4,6 @@ import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
 import Button from '../Buttons/Button'
 import LoginWizard from './LoginWizard'
-import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 
 interface Props {
   isOpen: boolean
@@ -12,7 +11,6 @@ interface Props {
 }
 const LoginModal: FC<Props> = ({isOpen, onClose}) => {
   const {t} = useTranslation()
-  useDisableBodyScroll(isOpen)
   const [title, setTitle] = useState(t('LOG_IN'))
   const handleClose = () => {
     const confirm = window.confirm(t('EXIT'))

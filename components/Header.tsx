@@ -16,6 +16,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 import LoginModal from './Auth/LoginModal'
 import Auth from './Auth'
 import {useGeneralStore} from '../providers/RootStoreProvider'
+import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const options = [
   {
@@ -52,6 +53,7 @@ const Header: FC = observer(() => {
     const state: SerializedCookiesState = parseCookies()
     setLang(state.language)
   }, [])
+  useDisableBodyScroll(showLogin)
 
   return (
     <header className='flex s:justify-center relative shadow-lg z-10'>
