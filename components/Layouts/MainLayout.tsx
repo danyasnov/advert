@@ -57,6 +57,12 @@ const MainLayout: FC = observer(() => {
           </div>
         </Button>
       )}
+      <Button
+        onClick={() => {
+          throw new Error('test sentry')
+        }}>
+        test sentry
+      </Button>
       <div className='bg-black-e py-8 m:flex min-h-half-screen'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-944px l:w-896px space-y-12'>
