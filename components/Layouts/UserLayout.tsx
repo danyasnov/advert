@@ -66,7 +66,7 @@ const UserLayout: FC = observer(() => {
           <UserSidebar />
         </div>
       </div>
-      <div className='bg-white px-4 s:pl-16 m:pl-8 s:px-8 flex relative min-h-half-screen'>
+      <div className='bg-white px-4 s:pl-16 m:pl-8 s:px-8 flex relative min-h-2/3'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
           <aside className='w-72 mt-8 hidden m:block'>
             <UserProfile />
