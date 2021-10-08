@@ -55,8 +55,8 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <Button
         onClick={onClose}
-        className='absolute top-5 left-5 l:top-0 l:-right-10 cursor-pointer z-10'>
-        <IcClear className='fill-current text-black-b l:text-white h-10 w-10' />
+        className='absolute top-5 right-5 cursor-pointer z-10'>
+        <IcClear className='fill-current text-black-b h-10 w-10' />
       </Button>
       <div className='flex flex-col w-full h-full bg-image-placeholder overflow-hidden'>
         <div className='overflow-hidden relative h-full' ref={viewportRef}>
