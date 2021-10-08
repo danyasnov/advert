@@ -473,7 +473,7 @@ export const getFilterFromQuery = (
           }
         }
 
-        return [currentField.id, parsedValue]
+        return [currentField?.id, parsedValue]
       }),
     )
   }
