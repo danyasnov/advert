@@ -88,7 +88,7 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
         </div>
       </div>
       {product.advert.images.length > 1 && (
-        <div className='block l:hidden absolute right-1/2 left-1/2 bottom-5'>
+        <div className='block  absolute right-1/2 left-1/2 bottom-5 l:bottom-24'>
           <span className='text-white bg-shadow-overlay rounded p-1 text-body-2 whitespace-nowrap'>
             {activePhotoIndex + 1} / {product.advert.images.length}
           </span>
