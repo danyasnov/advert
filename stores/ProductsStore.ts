@@ -55,6 +55,7 @@ export interface IProductsStore {
   setSortBy: (value: string) => void
   applyFilter: () => void
   isFilterApplied: boolean
+  setProducts: (items: AdvertiseListItemModel[], path: string) => void
 }
 
 interface FetchOptions {
@@ -129,6 +130,10 @@ export class ProductsStore implements IProductsStore {
       onlyFromSubscribed: false,
       fields: {},
     }
+  }
+
+  setProducts = (items: AdvertiseListItemModel[], path: string): void => {
+    this[path] = items
   }
 
   fetchProducts = (opts?: Partial<FetchOptions>): Promise<void> => {

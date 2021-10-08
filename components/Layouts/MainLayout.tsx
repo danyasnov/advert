@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -17,6 +17,7 @@ import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import useScrollDirection from '../../hooks/useScrollDirection'
+import {makeRequest} from '../../api'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -31,9 +32,34 @@ const MainLayout: FC = observer(() => {
     page,
     fetchProducts,
     applyFilter,
+    setProducts,
   } = useProductsStore()
   const {query} = useRouter()
   const {t} = useTranslation()
+
+  useEffect(() => {
+    const initProducts = async () => {
+      fetchProducts().then(applyFilter)
+      const url = '/api/products'
+      const freeProductsPromise = makeRequest({
+        url,
+        data: {filter: {priceMax: 0}, limit: 10},
+        method: 'post',
+      })
+      const discountedProductsPromise = makeRequest({
+        url,
+        data: {filter: {onlyDiscounted: true}, limit: 10},
+        method: 'post',
+      })
+      Promise.all([freeProductsPromise, discountedProductsPromise]).then(
+        (res) => {
+          setProducts(res[0].data.result.data, 'freeProducts')
+          setProducts(res[1].data.result.data, 'discountedProducts')
+        },
+      )
+    }
+    initProducts()
+  }, [])
 
   const scrollDir = useScrollDirection()
   return (

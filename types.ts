@@ -1,4 +1,5 @@
-import {LocationModel} from 'front-api/src/index'
+import {AdvertiseListItemModel, LocationModel} from 'front-api/src/index'
+import {CancelTokenSource} from 'axios'
 
 export interface LocationIdFilter {
   cityId?: number
@@ -102,4 +103,13 @@ export interface CoverLink {
   firebase_link: string
   // eslint-disable-next-line camelcase
   date_off: number
+}
+export interface ProductSummary {
+  items: AdvertiseListItemModel[]
+  cacheId: string
+  count: number
+  page: number
+  limit: number
+  state: ProductFetchState
+  cancelTokenSource?: CancelTokenSource
 }

@@ -1,11 +1,10 @@
 import {action, makeAutoObservable} from 'mobx'
 import {OwnerModel, ReviewModel} from 'front-api/src/models/index'
-import {AdvertiseListItemModel} from 'front-api'
-import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
+import axios, {AxiosRequestConfig} from 'axios'
 import {toast} from 'react-toastify'
 import {isEmpty} from 'lodash'
 import {RootStore} from './RootStore'
-import {ProductFetchState} from '../types'
+import {ProductSummary} from '../types'
 import {makeRequest} from '../api'
 
 const cancelToken = axios.CancelToken
@@ -27,16 +26,6 @@ export interface IUserStore {
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   ratings: ReviewModel[]
-}
-
-interface ProductSummary {
-  items: AdvertiseListItemModel[]
-  cacheId: string
-  count: number
-  page: number
-  limit: number
-  state: ProductFetchState
-  cancelTokenSource?: CancelTokenSource
 }
 
 interface FetchPayload {
