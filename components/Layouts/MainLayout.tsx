@@ -59,7 +59,14 @@ const MainLayout: FC = observer(() => {
       )
     }
     initProducts()
-  }, [])
+  }, [
+    cookies.countryId,
+    cookies.searchLocation,
+    cookies.searchRadius,
+    cookies.searchBy,
+    cookies.cityId,
+    cookies.regionId,
+  ])
 
   const scrollDir = useScrollDirection()
   return (

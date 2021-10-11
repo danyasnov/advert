@@ -8,8 +8,9 @@ import useSliderButtons from '../hooks/useSliderButtons'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import Button from './Buttons/Button'
 import PhotosModal from './PhotosModal'
-import Thumb from './Thumb'
 import ExclusiveMark from './ExclusiveMark'
+import {ThumbObject} from '../types'
+import {Thumb, VideoThumb} from './Thumb'
 
 const ProductPhotos: FC = observer(() => {
   const {product} = useProductsStore()
@@ -18,11 +19,21 @@ const ProductPhotos: FC = observer(() => {
 
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
+  // @ts-ignore
+  if (isEmpty(product.advert.images) && isEmpty(product.advert.videos)) {
+    return null
+  }
+  const getItems = (items, type) => items.map((i) => ({src: i, type}))
+  const items = [
+    // @ts-ignore
+    ...getItems(product.advert.videos, 'video'),
+    ...getItems(product.advert.images, 'image'),
+  ]
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
     align: 'start',
     containScroll: 'trimSnaps',
-    draggable: product.advert.images.length > 1,
+    draggable: items.length > 1,
     speed: 30,
   })
 
@@ -48,20 +59,37 @@ const ProductPhotos: FC = observer(() => {
       )}
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
-          {product.advert.images.map((i, index) => (
-            <Button
-              key={i}
-              className='relative min-w-full'
-              onClick={() => setShowModal(true)}>
-              <ImageWrapper
-                type={i}
-                layout='fill'
-                alt={i}
-                objectFit='contain'
-                priority={index === 0}
-              />
-            </Button>
-          ))}
+          {/* @ts-ignore */}
+          {items.map((item, index) => {
+            if (item.type === 'video') {
+              return (
+                // eslint-disable-next-line jsx-a11y/media-has-caption
+                <video
+                  src={item.src}
+                  key={item.src}
+                  controls
+                  disablePictureInPicture
+                  muted
+                  controlsList='nodownload noremoteplayback noplaybackrate'
+                  className='min-w-full h-full px-16 '
+                />
+              )
+            }
+            return (
+              <Button
+                key={item.src}
+                className='relative min-w-full'
+                onClick={() => setShowModal(true)}>
+                <ImageWrapper
+                  type={item.src}
+                  layout='fill'
+                  alt={item.src}
+                  objectFit='contain'
+                  priority={index === 0}
+                />
+              </Button>
+            )
+          })}
         </div>
         <FullHeightSliderButton
           onClick={scrollPrev}
@@ -77,19 +105,32 @@ const ProductPhotos: FC = observer(() => {
         />
       </div>
       <div className='flex mt-4 flex-row -mx-1 flex-wrap'>
-        {product.advert.images.length > 1 &&
-          product.advert.images.map((i, index) => (
-            <Thumb
-              url={i}
-              key={i}
+        {items.map((item, index) =>
+          item.type === 'video' ? (
+            <VideoThumb
+              url={item.src}
+              key={item.src}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}
             />
-          ))}
+          ) : (
+            <Thumb
+              url={item.src}
+              key={item.src}
+              onHover={onHover}
+              index={index}
+              activePhotoIndex={activePhotoIndex}
+            />
+          ),
+        )}
       </div>
       {showModal && (
-        <PhotosModal isOpen={showModal} onClose={() => setShowModal(false)} />
+        <PhotosModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          items={items as ThumbObject[]}
+        />
       )}
     </div>
   )

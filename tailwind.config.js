@@ -102,6 +102,7 @@ module.exports = {
         'black-e': '#F8F8F8',
         'black-f': '#A8ABB0',
         'white-a': '#FFFFFF',
+        'white-b': 'rgba(255, 255, 255, 0.6)',
         'white-d': 'rgba(12, 13, 13, 0.2)',
         'image-placeholder': 'rgb(234,233,233)',
         'notification-success': 'rgba(0, 163, 0, 1)',

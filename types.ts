@@ -113,3 +113,8 @@ export interface ProductSummary {
   state: ProductFetchState
   cancelTokenSource?: CancelTokenSource
 }
+
+export interface ThumbObject {
+  src: string
+  type: 'image' | 'video'
+}

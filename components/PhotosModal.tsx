@@ -1,25 +1,23 @@
 import {FC, useEffect, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
-import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {isEmpty} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
-import {useProductsStore} from '../providers/RootStoreProvider'
 import useSliderButtons from '../hooks/useSliderButtons'
-import Thumb from './Thumb'
+import {Thumb, VideoThumb} from './Thumb'
+import {ThumbObject} from '../types'
 
 interface Props {
   isOpen: boolean
   onClose: () => void
+  items: ThumbObject[]
 }
 
-const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
-  const {product} = useProductsStore()
-  if (!product) return null
+const PhotosModal: FC<Props> = ({isOpen, onClose, items}) => {
   useLockBodyScroll()
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
@@ -27,7 +25,7 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
     loop: true,
     align: 'start',
     containScroll: 'trimSnaps',
-    draggable: product.advert.images.length > 1,
+    draggable: items.length > 1,
     speed: 30,
   })
 
@@ -43,7 +41,7 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
         setActivePhotoIndex(embla.selectedScrollSnap() || 0)
       })
   }, [embla])
-  if (isEmpty(product.advert.images)) return null
+  if (isEmpty(items)) return null
 
   return (
     <ReactModal
@@ -61,53 +59,79 @@ const PhotosModal: FC<Props> = observer(({isOpen, onClose}) => {
       <div className='flex flex-col w-full h-full bg-image-placeholder overflow-hidden'>
         <div className='overflow-hidden relative h-full' ref={viewportRef}>
           <div className='flex  h-full'>
-            {product.advert.images.map((i, index) => (
-              <div key={i} className='relative min-w-full'>
-                <ImageWrapper
-                  type={i}
-                  layout='fill'
-                  alt={i}
-                  objectFit='contain'
-                  priority={index === 0}
-                />
-              </div>
-            ))}
+            {/* @ts-ignore */}
+            {items.map((item, index) => {
+              if (item.type === 'video') {
+                return (
+                  // eslint-disable-next-line jsx-a11y/media-has-caption
+                  <video
+                    src={item.src}
+                    key={item.src}
+                    controls
+                    disablePictureInPicture
+                    muted
+                    controlsList='nodownload noremoteplayback noplaybackrate'
+                    className='min-w-full h-full px-16 '
+                  />
+                )
+              }
+              return (
+                <div key={item.src} className='relative min-w-full'>
+                  <ImageWrapper
+                    type={item.src}
+                    layout='fill'
+                    alt={item.src}
+                    objectFit='contain'
+                    priority={index === 0}
+                  />
+                </div>
+              )
+            })}
           </div>
           <FullHeightSliderButton
             onClick={scrollPrev}
             enabled={prevBtnEnabled}
             direction='left'
-            className='absolute inset-y-0 left-0 hidden l:block'
+            className='absolute inset-y-0 left-0'
           />
           <FullHeightSliderButton
             onClick={scrollNext}
             enabled={nextBtnEnabled}
             direction='right'
-            className='absolute inset-y-0 right-0 hidden l:block'
+            className='absolute inset-y-0 right-0'
           />
         </div>
       </div>
-      {product.advert.images.length > 1 && (
+      {items.length > 1 && (
         <div className='block  absolute right-1/2 left-1/2 bottom-5 l:bottom-24'>
           <span className='text-white bg-shadow-overlay rounded p-1 text-body-2 whitespace-nowrap'>
-            {activePhotoIndex + 1} / {product.advert.images.length}
+            {activePhotoIndex + 1} / {items.length}
           </span>
         </div>
       )}
       <div className='mt-4 flex-row -mx-1 flex-wrap justify-center hidden l:flex'>
-        {product.advert.images.length > 1 &&
-          product.advert.images.map((i, index) => (
-            <Thumb
-              url={i}
-              key={i}
+        {items.map((item, index) =>
+          item.type === 'video' ? (
+            <VideoThumb
+              url={item.src}
+              key={item.src}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}
             />
-          ))}
+          ) : (
+            <Thumb
+              url={item.src}
+              key={item.src}
+              onHover={onHover}
+              index={index}
+              activePhotoIndex={activePhotoIndex}
+            />
+          ),
+        )}
       </div>
     </ReactModal>
   )
-})
+}
 
 export default PhotosModal
