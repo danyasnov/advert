@@ -58,7 +58,7 @@ const ProductPhotos: FC = observer(() => {
         </div>
       )}
       <div className='overflow-hidden relative' ref={viewportRef}>
-        <div className='flex w-full h-250px s:h-100 bg-image-placeholder'>
+        <div className='flex w-full h-250px s:h-100 '>
           {/* @ts-ignore */}
           {items.map((item, index) => {
             if (item.type === 'video') {
@@ -78,7 +78,7 @@ const ProductPhotos: FC = observer(() => {
             return (
               <Button
                 key={item.src}
-                className='relative min-w-full'
+                className='relative min-w-full bg-image-placeholder'
                 onClick={() => setShowModal(true)}>
                 <ImageWrapper
                   type={item.src}
