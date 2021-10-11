@@ -50,13 +50,19 @@ app.prepare().then(() => {
     if (!cookies.language) {
       let language
 
-      // eslint-disable-next-line no-restricted-syntax
-      for (const browserLang of languages) {
-        if (locales.includes(browserLang.code)) {
-          language = browserLang.code
-          break
+      const subDomainLang = locales.find((l) => pathname.startsWith(l))
+      if (subDomainLang) {
+        language = subDomainLang
+      } else {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const browserLang of languages) {
+          if (locales.includes(browserLang.code)) {
+            language = browserLang.code
+            break
+          }
         }
       }
+
       if (language && language !== 'en') {
         req.locale = language
 
