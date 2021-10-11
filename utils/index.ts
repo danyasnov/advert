@@ -1,13 +1,15 @@
 import {DateTime} from 'luxon'
 import {FilterPublication} from 'front-api/src/models/index'
 
+const dateFormat = 'dd.LL.yyyy'
+const timeFormat = 't'
 export const unixToDate = (unix: number): string => {
   const date = DateTime.fromSeconds(unix)
-  return date.toLocaleString(DateTime.DATE_SHORT)
+  return date.toFormat(dateFormat)
 }
 export const unixToDateTime = (unix: number): string => {
   const date = DateTime.fromSeconds(unix)
-  return date.toLocaleString(DateTime.DATETIME_SHORT)
+  return date.toFormat(`${timeFormat} ${dateFormat}`)
 }
 
 export const getFirstNonEmptyArray = <T extends unknown>(
