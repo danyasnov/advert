@@ -27,12 +27,10 @@ const ProductLayout: FC = () => {
             <ProductHeader />
             <ProductPhotos />
             <ProductDescription />
-            <div className='-mx-4'>
-              <ProductsSlider
-                products={similarProducts}
-                title={t('SIMILAR_ADS_TAB')}
-              />
-            </div>
+            <ProductsSlider
+              products={similarProducts}
+              title={t('SIMILAR_ADS_TAB')}
+            />
           </main>
           <aside className='hidden m:block w-288px'>
             <ProductSidebar />
