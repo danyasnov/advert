@@ -50,7 +50,7 @@ app.prepare().then(() => {
     if (!cookies.language) {
       let language
 
-      const subDomainLang = locales.find((l) => pathname.startsWith(l))
+      const subDomainLang = locales.find((l) => host.startsWith(l))
       // const subDomainLang = null
       if (subDomainLang) {
         language = subDomainLang
