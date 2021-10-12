@@ -14,8 +14,8 @@ import {makeRequest} from '../../api'
 const forbiddenSymbols = ["'", '!', '+', '"', '/', '\\', '`', '(', ')']
 const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const {t} = useTranslation()
-  const msgName = 'TOO_SHORT_NAME_OR_SURNAME'
-  const msgPass = 'PASSWORD_TOO_SHORT'
+  const msgName = t('TOO_SHORT_NAME_OR_SURNAME')
+  const msgPass = t('PASSWORD_TOO_SHORT')
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {

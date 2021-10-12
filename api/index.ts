@@ -11,7 +11,9 @@ import {DummyAnalytics} from '../helpers'
 import Storage from '../stores/Storage'
 
 if (!process.env.PRODUCTION) curlirize(axios)
-export const {API_URL} = process.env
+
+// export const {API_URL} = process.env
+const API_URL = 'https://api.adverto.sale'
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
@@ -34,7 +36,7 @@ export const parseIp = (
   req.socket?.remoteAddress
 
 export const getLocationByIp = (ip: string | string[]): AxiosPromise => {
-  let url = `${process.env.API_URL}/v2/geo/mylocation`
+  let url = `${API_URL}/v2/geo/mylocation`
   if (isIp(ip as string) && ip !== '::1') {
     url += `?ip=${ip}`
   }

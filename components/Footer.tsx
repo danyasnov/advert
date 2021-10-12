@@ -12,6 +12,7 @@ import IcTwitter from 'icons/social/Twitter.svg'
 import {head} from 'lodash'
 import {useRouter} from 'next/router'
 import {CountryModel} from 'front-api'
+import {parseCookies} from 'nookies'
 import {
   useCategoriesStore,
   useCountriesStore,
@@ -20,6 +21,7 @@ import {
 import LinkButton from './Buttons/LinkButton'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LocationSelector from './LocationSelector'
+import {SerializedCookiesState} from '../types'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
@@ -39,6 +41,7 @@ const Footer: FC = observer(() => {
   const {push} = useRouter()
   const {showFooter} = useGeneralStore()
   const {countries} = useCountriesStore()
+  const state: SerializedCookiesState = parseCookies()
   const countriesByAlphabet = countries.reduce((acc, value) => {
     if (value.has_adverts === '0') return acc
     const result: CountryModel & {href: string} = {

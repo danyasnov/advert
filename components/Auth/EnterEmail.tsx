@@ -19,7 +19,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const {t} = useTranslation()
   const router = useRouter()
   const [showPass, setShowPass] = useState(false)
-  const msgPass = 'PASSWORD_TOO_SHORT'
+  const msgPass = t('PASSWORD_TOO_SHORT')
 
   const validatePass = (value) => {
     let error = ''
@@ -30,8 +30,8 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   }
   const schema = object().shape({
     email: string()
-      .email(t('EMAIL_REQUIRED_FIELD'))
-      .required(t('EMAIL_MUST_BE_A_VALID_EMAIL')),
+      .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
+      .required(t('EMAIL_REQUIRED_FIELD')),
   })
   return (
     <Formik

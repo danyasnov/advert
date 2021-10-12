@@ -24,10 +24,10 @@ const ProductPhotos: FC = observer(() => {
   if (isEmpty(product.advert.images) && isEmpty(product.advert.videos)) {
     return null
   }
-  const getItems = (items, type) => items.map((i) => ({src: i, type}))
+  const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
   const items = [
     // @ts-ignore
-    ...getItems(product.advert.videos, 'video'),
+    ...getItems(product.advert?.videos, 'video'),
     ...getItems(product.advert.images, 'image'),
   ]
   const [viewportRef, embla] = useEmblaCarousel({
