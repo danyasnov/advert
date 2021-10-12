@@ -15,9 +15,6 @@ import {setCookiesObject} from '../../helpers'
 import Storage from '../../stores/Storage'
 import LinkButton from '../Buttons/LinkButton'
 
-const schema = object().shape({
-  email: string().email().required(),
-})
 const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const {t} = useTranslation()
   const router = useRouter()
@@ -31,6 +28,11 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
     }
     return error
   }
+  const schema = object().shape({
+    email: string()
+      .email(t('EMAIL_REQUIRED_FIELD'))
+      .required(t('EMAIL_MUST_BE_A_VALID_EMAIL')),
+  })
   return (
     <Formik
       initialValues={{
