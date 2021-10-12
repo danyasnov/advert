@@ -15,11 +15,12 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   items: ThumbObject[]
+  currentIndex: number
 }
 
-const PhotosModal: FC<Props> = ({isOpen, onClose, items}) => {
+const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
   useLockBodyScroll()
-  const [activePhotoIndex, setActivePhotoIndex] = useState(0)
+  const [activePhotoIndex, setActivePhotoIndex] = useState(currentIndex)
 
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -27,6 +28,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items}) => {
     containScroll: 'trimSnaps',
     draggable: items.length > 1,
     speed: 30,
+    startIndex: currentIndex,
   })
 
   const onHover = (index) => {

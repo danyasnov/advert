@@ -16,6 +16,7 @@ const ProductPhotos: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
   const [showModal, setShowModal] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
@@ -79,7 +80,10 @@ const ProductPhotos: FC = observer(() => {
               <Button
                 key={item.src}
                 className='relative min-w-full bg-image-placeholder'
-                onClick={() => setShowModal(true)}>
+                onClick={() => {
+                  setShowModal(true)
+                  setCurrentIndex(index)
+                }}>
                 <ImageWrapper
                   type={item.src}
                   layout='fill'
@@ -130,6 +134,7 @@ const ProductPhotos: FC = observer(() => {
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           items={items as ThumbObject[]}
+          currentIndex={currentIndex}
         />
       )}
     </div>
