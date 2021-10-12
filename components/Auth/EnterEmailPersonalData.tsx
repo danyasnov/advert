@@ -11,20 +11,7 @@ import {FormikText} from '../FormikComponents'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 
-const forbiddenSymbols = [
-  "'",
-  '!',
-  '+',
-  '"',
-  '/',
-  '\\',
-  '`',
-  '(',
-  ')',
-  '\\n',
-  '\\r',
-  '\\t',
-]
+const forbiddenSymbols = ["'", '!', '+', '"', '/', '\\', '`', '(', ')']
 const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const {t} = useTranslation()
   const msgName = 'TOO_SHORT_NAME_OR_SURNAME'
