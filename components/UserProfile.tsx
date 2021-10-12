@@ -13,7 +13,9 @@ const UserProfile: FC = observer(() => {
   const {t} = useTranslation()
   return (
     <div className='flex flex-col'>
-      <h1 className='text-h-2 text-black-b font-bold mb-4'>{user.name}</h1>
+      <h1 className='text-h-2 text-black-b font-bold mb-4 break-words'>
+        {user.name}
+      </h1>
       <div className='flex mb-2'>
         <UserAvatar url={user.imageUrl} name={user.name} key={user.imageUrl} />
         <div className='ml-2 flex flex-col justify-between'>

@@ -25,6 +25,13 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
     }
     return ''
   }
+  const validateSurname = (value) => {
+    const trimmed = value.trim()
+    if (size(trimmed) > 90) {
+      return t(msgName)
+    }
+    return ''
+  }
   const validatePass = (value) => {
     const regex = emojiRegex()
     if (regex.test(value)) {
@@ -82,6 +89,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             <Field
               name='surname'
               component={FormikText}
+              validate={validateSurname}
               placeholder={t('SURNAME')}
             />
 
