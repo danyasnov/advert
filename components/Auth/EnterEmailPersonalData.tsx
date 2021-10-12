@@ -19,7 +19,8 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
-    if (size(value) < 2 || size(value) > 90) {
+    const trimmed = value.trim()
+    if (size(trimmed) < 2 || size(trimmed) > 90) {
       return t(msgName)
     }
     return ''
@@ -56,7 +57,9 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
             lang: cookies.language,
-            ...values,
+            name: values.name.trim(),
+            surname: values.surname.trim(),
+            pass: values.pass,
           },
           method: 'POST',
         })

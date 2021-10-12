@@ -16,11 +16,11 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
-    let error = ''
-    if (size(value) < 2 || size(value) > 90) {
-      error = msg
+    const trimmed = value.trim()
+    if (size(trimmed) < 2 || size(trimmed) > 90) {
+      return msg
     }
-    return error
+    return ''
   }
   return (
     <Formik
@@ -36,7 +36,8 @@ const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
             authType: state.authType,
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
-            ...values,
+            name: values.name.trim(),
+            surname: values.surname.trim(),
           },
           method: 'POST',
         })
