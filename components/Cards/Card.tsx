@@ -1,9 +1,18 @@
-import {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react'
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import IcVisibility from 'icons/material/Visibility.svg'
-import {useIntersection, useMouseHovered} from 'react-use'
-import {isEmpty, isNumber} from 'lodash'
+import {useMouseHovered} from 'react-use'
+import {isEmpty} from 'lodash'
+import {useInView} from 'react-intersection-observer'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -19,7 +28,6 @@ const Card: FC<Props> = ({
 }) => {
   const {title, images, price, oldPrice, dateUpdated, views, location} = product
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [intersectionRatio, setIntersectionRatio] = useState<number>(1)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
     align: 'start',
@@ -33,14 +41,9 @@ const Card: FC<Props> = ({
     embla.on('pointerDown', () => setLockParentScroll(true))
     embla.on('pointerUp', () => setLockParentScroll(false))
   }, [embla, setLockParentScroll])
-
   const ref = useRef(null)
-  const intersection = useIntersection(ref, {
-    root: null,
-    rootMargin: '1000px',
-    threshold: 0,
-  })
 
+  const [inViewRef, inView] = useInView()
   const {elX, elW} = useMouseHovered(ref, {
     bound: true,
     whenHovered: true,
@@ -63,20 +66,19 @@ const Card: FC<Props> = ({
       })
     }
   }, [embla])
-
+  const setRefs = useCallback(
+    (node) => {
+      ref.current = node
+      inViewRef(node)
+    },
+    [inViewRef],
+  )
   useEffect(() => {
-    if (
-      isNumber(intersection?.intersectionRatio) &&
-      intersection?.intersectionRatio !== intersectionRatio
-    ) {
-      setIntersectionRatio(intersection?.intersectionRatio)
-      if (intersectionRatio > 0) {
-        embla.reInit()
-      }
+    if (inView) {
+      embla.reInit()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [intersection?.intersectionRatio])
-  const inView = intersectionRatio > 0
+  }, [inView])
   return (
     <div
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col ${
@@ -84,7 +86,7 @@ const Card: FC<Props> = ({
       }`}
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
-      ref={ref}>
+      ref={setRefs}>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {inView && (

@@ -8,6 +8,7 @@ import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
+import CardsLoader from '../CardsLoader'
 
 interface Props {
   products: AdvertiseListItemModel[]
@@ -30,6 +31,9 @@ const ScrollableCardGroup: FC<Props> = ({
   hideNotFoundDescription,
 }) => {
   const hasMore = count > page * limit
+  if (isEmpty(products) && state === 'pending') {
+    return <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
+  }
   if (isEmpty(products)) {
     return hideNotFoundDescription ? (
       <AdvertNotFound />
@@ -43,13 +47,12 @@ const ScrollableCardGroup: FC<Props> = ({
         dataLength={products?.length}
         next={fetchProducts}
         hasMore={hasMore}
+        scrollThreshold='2000px'
         loader={
-          <div className='flex justify-center'>
-            <Loader />
-          </div>
+          <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
         }>
         <div
-          className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 ${
+          className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4 ${
             enableFourthColumnForM ? 'm:grid-cols-4 m:gap-x-15 m:gap-y-6' : ''
           }`}>
           {products.map((p) => (
@@ -63,7 +66,6 @@ const ScrollableCardGroup: FC<Props> = ({
           ))}
         </div>
       </InfiniteScroll>
-      <LoaderWrapper show={state === 'pending-scroll'} />
     </div>
   )
 }

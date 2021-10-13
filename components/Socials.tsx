@@ -1,5 +1,4 @@
 import {FC} from 'react'
-import {observer} from 'mobx-react-lite'
 import IcFB from 'icons/social/FB.svg'
 import IcInstagram from 'icons/social/Instagram.svg'
 import IcYouTube from 'icons/social/YouTube.svg'
@@ -95,7 +94,7 @@ const socials = {
   ],
 }
 
-const Socials: FC = observer(() => {
+const Socials: FC = () => {
   const state: SerializedCookiesState = parseCookies()
   const {language} = state
   const currentSocials = socials[language || 'en']
@@ -108,6 +107,6 @@ const Socials: FC = observer(() => {
       ))}
     </div>
   )
-})
+}
 
 export default Socials

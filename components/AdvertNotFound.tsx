@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 
-const Placeholder: FC = () => {
+export const Placeholder: FC = () => {
   return (
     <div className='min-w-40 w-40 s:w-56 m:w-48 l:w-53 border border-shadow-b rounded-lg overflow-hidden'>
       <div className='h-40 s:h-56 m:h-48 l:h-53 bg-shadow-b' />

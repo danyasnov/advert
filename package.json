@@ -42,6 +42,7 @@
     "react-auth-code-input": "danyasnov/react-auth-code-input#725be697365041e19e1d136b1e69e14ba666d8da",
     "react-dom": "^17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-intersection-observer": "^8.32.1",
     "react-modal": "^3.14.3",
     "react-number-format": "^4.7.3",
     "react-select": "^4.3.1",
