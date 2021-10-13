@@ -72,7 +72,7 @@ export const getShortAddress = (addressObj: GeoPositionModel = {}): string => {
   if (city) addressArray.push(city.word)
   if (region) addressArray.push(region.word)
   if (country) addressArray.push(country.word)
-  return addressArray[0]
+  return addressArray[0] || ''
 }
 
 export const getLocationQuery = (
