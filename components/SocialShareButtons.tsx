@@ -9,7 +9,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 interface Props {
   link: string
 }
-const SocialButtons: FC<Props> = ({link}) => {
+const SocialShareButtons: FC<Props> = ({link}) => {
   return (
     <div className='flex space-x-4 justify-between'>
       <LinkWrapper
@@ -51,4 +51,4 @@ const SocialButtons: FC<Props> = ({link}) => {
   )
 }
 
-export default SocialButtons
+export default SocialShareButtons

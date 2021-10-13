@@ -4,7 +4,7 @@ import IcShare from 'icons/material/Share.svg'
 import {useTranslation} from 'next-i18next'
 import {useClickAway} from 'react-use'
 import {toast} from 'react-toastify'
-import SocialButtons from './SocialButtons'
+import SocialShareButtons from './SocialShareButtons'
 import SecondaryButton from './Buttons/SecondaryButton'
 import {makeRequest} from '../api'
 import Button from './Buttons/Button'
@@ -57,7 +57,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
       {show && link && (
         <div className='flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3 arrow-top'>
           <h2 className='text-h-2 text-black-b font-bold mb-4'>{t('SHARE')}</h2>
-          <SocialButtons link={link} />
+          <SocialShareButtons link={link} />
           <div className='bg-black-e p-2 mt-5 flex justify-between rounded'>
             <input
               type='text'

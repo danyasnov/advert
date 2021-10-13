@@ -22,6 +22,7 @@ import LinkButton from './Buttons/LinkButton'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LocationSelector from './LocationSelector'
 import {SerializedCookiesState} from '../types'
+import Socials from './Socials'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
 const mainCities: Array<string> = [
@@ -145,20 +146,7 @@ const Footer: FC = observer(() => {
           <Section
             title={t('SOCIAL_NETWORK')}
             className='m:col-span-3 l:col-span-2'
-            body={
-              <div className='flex space-x-2'>
-                <LinkWrapper
-                  href='https://www.facebook.com/advertoapp/'
-                  title='Facebook'
-                  target='_blank'>
-                  <IcFB width={24} height={24} />
-                </LinkWrapper>
-                {/* <IcInstagram width={24} height={24} /> */}
-                {/* <IcVK width={24} height={24} /> */}
-                {/* <IcYouTube width={24} height={24} /> */}
-                {/* <IcTwitter width={24} height={24} /> */}
-              </div>
-            }
+            body={<Socials />}
           />
           <Section
             title={t('CATEGORIES')}
