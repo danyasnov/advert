@@ -98,6 +98,7 @@ const Socials: FC = () => {
   const state: SerializedCookiesState = parseCookies()
   const {language} = state
   const currentSocials = socials[language || 'en']
+  console.log('language', language, currentSocials)
   return (
     <div className='flex space-x-2'>
       {currentSocials.map((s) => (
