@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
 import {useEmblaCarousel} from 'embla-carousel/react'
@@ -21,6 +21,7 @@ interface Props {
 const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
   useLockBodyScroll()
   const [activePhotoIndex, setActivePhotoIndex] = useState(currentIndex)
+  const videosRef = useRef([])
 
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -34,17 +35,31 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
   const onHover = (index) => {
     setActivePhotoIndex(index)
     embla.scrollTo(index)
+    if (
+      index !== activePhotoIndex &&
+      items[activePhotoIndex].type === 'video'
+    ) {
+      videosRef.current[activePhotoIndex].pause()
+    }
   }
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
   useEffect(() => {
     if (embla)
       embla.on('select', () => {
-        setActivePhotoIndex(embla.selectedScrollSnap() || 0)
+        const newIndex = embla.selectedScrollSnap() ?? 0
+        setActivePhotoIndex((prevIndex) => {
+          if (newIndex !== prevIndex && items[prevIndex].type === 'video') {
+            videosRef.current[prevIndex].pause()
+          }
+          return newIndex
+        })
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [embla])
-  if (isEmpty(items)) return null
-
+  if (isEmpty(items)) {
+    return null
+  }
   return (
     <ReactModal
       isOpen={isOpen}
@@ -67,6 +82,9 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
                 return (
                   // eslint-disable-next-line jsx-a11y/media-has-caption
                   <video
+                    ref={(node) => {
+                      videosRef.current[index] = node
+                    }}
                     src={item.src}
                     key={item.src}
                     controls

@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useEmblaCarousel} from 'embla-carousel/react'
 import {isEmpty} from 'lodash'
@@ -12,24 +12,26 @@ import ExclusiveMark from './ExclusiveMark'
 import {ThumbObject} from '../types'
 import {Thumb, VideoThumb} from './Thumb'
 
+const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
+
 const ProductPhotos: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
-  const [showModal, setShowModal] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const [activePhotoIndex, setActivePhotoIndex] = useState(0)
-
-  // @ts-ignore
-  if (isEmpty(product.advert.images) && isEmpty(product.advert.videos)) {
-    return null
-  }
-  const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
   const items = [
     // @ts-ignore
     ...getItems(product.advert?.videos, 'video'),
     ...getItems(product.advert.images, 'image'),
   ]
+  if (isEmpty(items)) {
+    return null
+  }
+  const videosRef = useRef([])
+
+  const [showModal, setShowModal] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0)
+
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
     align: 'start',
@@ -41,16 +43,29 @@ const ProductPhotos: FC = observer(() => {
   const onHover = (index) => {
     setActivePhotoIndex(index)
     embla.scrollTo(index)
+    if (
+      index !== activePhotoIndex &&
+      items[activePhotoIndex].type === 'video'
+    ) {
+      videosRef.current[activePhotoIndex].pause()
+    }
   }
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
   useEffect(() => {
     if (embla)
       embla.on('select', () => {
-        setActivePhotoIndex(embla.selectedScrollSnap() || 0)
+        const newIndex = embla.selectedScrollSnap() ?? 0
+        setActivePhotoIndex((prevIndex) => {
+          if (newIndex !== prevIndex && items[prevIndex].type === 'video') {
+            videosRef.current[prevIndex].pause()
+          }
+          return newIndex
+        })
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [embla])
-  if (isEmpty(product.advert.images)) return null
+
   return (
     <div className='relative'>
       {product.advert.isExclusive && (
@@ -59,13 +74,16 @@ const ProductPhotos: FC = observer(() => {
         </div>
       )}
       <div className='overflow-hidden relative' ref={viewportRef}>
-        <div className='flex w-full h-250px s:h-100 '>
+        <div className='flex w-full h-250px s:h-100'>
           {/* @ts-ignore */}
           {items.map((item, index) => {
             if (item.type === 'video') {
               return (
                 // eslint-disable-next-line jsx-a11y/media-has-caption
                 <video
+                  ref={(node) => {
+                    videosRef.current[index] = node
+                  }}
                   src={item.src}
                   key={item.src}
                   controls
