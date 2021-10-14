@@ -1,9 +1,10 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import IcFB from 'icons/social/FB.svg'
 import IcInstagram from 'icons/social/Instagram.svg'
 import IcYouTube from 'icons/social/YouTube.svg'
 import IcTikTok from 'icons/social/TikTok.svg'
 import {parseCookies} from 'nookies'
+import {observer} from 'mobx-react-lite'
 import LinkWrapper from './Buttons/LinkWrapper'
 import {SerializedCookiesState} from '../types'
 
@@ -94,20 +95,22 @@ const socials = {
   ],
 }
 
-const Socials: FC = () => {
-  const state: SerializedCookiesState = parseCookies()
-  const {language} = state
-  const currentSocials = socials[language || 'en']
-  console.log('language', language, currentSocials)
+const Socials: FC = observer(() => {
+  const [current, setCurrent] = useState([])
+  useEffect(() => {
+    const state: SerializedCookiesState = parseCookies()
+    const {language} = state
+    setCurrent(socials[language || 'en'])
+  }, [])
   return (
     <div className='flex space-x-2'>
-      {currentSocials.map((s) => (
+      {current.map((s) => (
         <LinkWrapper key={s.url} href={s.url} title={s.title} target='_blank'>
           {s.icon}
         </LinkWrapper>
       ))}
     </div>
   )
-}
+})
 
 export default Socials

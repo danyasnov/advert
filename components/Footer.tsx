@@ -1,14 +1,6 @@
 import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
-import IcGooglePlay from 'icons/stores/GooglePlay.svg'
-import IcAppStore from 'icons/stores/AppStore.svg'
-import IcAppGallery from 'icons/stores/AppGallery.svg'
-import IcFB from 'icons/social/FB.svg'
-import IcInstagram from 'icons/social/Instagram.svg'
-import IcVK from 'icons/social/VK.svg'
-import IcYouTube from 'icons/social/YouTube.svg'
-import IcTwitter from 'icons/social/Twitter.svg'
 import {head} from 'lodash'
 import {useRouter} from 'next/router'
 import {CountryModel} from 'front-api'
@@ -25,15 +17,7 @@ import {SerializedCookiesState} from '../types'
 import Socials from './Socials'
 
 const mainCountriesIds = ['643', '804', '112', '300', '792', '196']
-const mainCities: Array<string> = [
-  'санкт-Петербург',
-  'екатеринбург',
-  'лимассол',
-  'стамбул',
-  'никоссия',
-  'пафос',
-  'афины',
-]
+
 const Footer: FC = observer(() => {
   const {ids, byId: categoriesById} = useCategoriesStore()
   const {byId: countriesById} = useCountriesStore()
@@ -76,16 +60,6 @@ const Footer: FC = observer(() => {
             className='font-bold'
           />
         </div>
-        {/* <div className='flex justify-center space-x-4 border-shadow-b border-t pt-2 w-min l:border-t-0 l:border-l l:pt-0 l:pl-6'> */}
-        {/* {mainCities.map((i) => ( */}
-        {/*  <LinkButton key={i} onClick={notImplementedAlert} label={i} /> */}
-        {/* ))} */}
-        {/* <LinkButton */}
-        {/*  onClick={notImplementedAlert} */}
-        {/*  label={t('ALL_CITIES')} */}
-        {/*  className='font-bold' */}
-        {/* /> */}
-        {/* </div> */}
       </div>
       <div
         className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${
@@ -151,9 +125,6 @@ const Footer: FC = observer(() => {
           <Section
             title={t('CATEGORIES')}
             className='s:col-span-2 m:col-span-4 l:col-span-4'
-            // headerLink={
-            //   <LinkButton onClick={notImplementedAlert} label={t('ALL')} />
-            // }
             body={
               <div className='grid grid-cols-2 grid-rows-6 grid-flow-col place-items-start gap-y-2'>
                 {ids.map((id) => (
