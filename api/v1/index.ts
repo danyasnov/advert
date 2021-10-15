@@ -9,9 +9,8 @@ import {
   AuthType,
   AuthUserResponse,
 } from 'front-api/src/models/index'
-import axios from 'axios'
 import {SettingsLanguageModel} from 'front-api'
-import {getRest} from '../index'
+import {getRest, makeRequest} from '../index'
 import Storage from '../../stores/Storage'
 
 const API_V1_URL = 'https://api.adverto.sale'
@@ -70,7 +69,7 @@ export const fetchSearchSuggestion = async (
     phrase,
     lang,
   }
-  return axios({
+  return makeRequest({
     method: 'post',
     url: `${API_V1_URL}/v1/search_suggestions.php`,
     data: `query=${JSON.stringify(payload)}`,
@@ -81,20 +80,11 @@ export const fetchCategorySuggestion = (
   phrase: string,
   language: string,
 ): Promise<RestResponse<any>> => {
-  // const payload = {
-  //   phrase,
-  //   lang: language,
-  // }
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
   return rest.categories.suggestSearchCategories(phrase)
-  // return axios({
-  //   method: 'post',
-  //   url: `${API_V1_URL}/v1/search_suggestions_category.php`,
-  //   data: `query=${JSON.stringify(payload)}`,
-  // })
 }
 
 export const fetchLanguages = (

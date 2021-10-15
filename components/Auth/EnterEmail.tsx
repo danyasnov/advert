@@ -8,7 +8,7 @@ import {get, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {Secure} from 'front-api/src/helpers/userSecure'
 import {useRouter} from 'next/router'
-import {FormikText} from '../FormikComponents'
+import {FormikPassword, FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
 import {setCookiesObject} from '../../helpers'
@@ -98,6 +98,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           <Form className='pb-8 space-y-2'>
             <Field
               name='email'
+              disabled={showPass}
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
             />
@@ -105,8 +106,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
               <>
                 <Field
                   name='pass'
-                  type='password'
-                  component={FormikText}
+                  component={FormikPassword}
                   validate={validatePass}
                   placeholder={t('PASSWORD')}
                 />

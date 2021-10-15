@@ -7,7 +7,7 @@ import {parseCookies} from 'nookies'
 import emojiRegex from 'emoji-regex'
 import {toast} from 'react-toastify'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
-import {FormikText} from '../FormikComponents'
+import {FormikPassword, FormikText} from '../FormikComponents'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 
@@ -95,8 +95,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
 
             <Field
               name='pass'
-              type='password'
-              component={FormikText}
+              component={FormikPassword}
               validate={validatePass}
               placeholder={t('PASSWORD')}
             />

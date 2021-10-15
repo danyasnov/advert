@@ -1,10 +1,12 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import {Field, FieldProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {get} from 'lodash'
+import IcVisibility from 'icons/material/Visibility.svg'
+import IcHidden from 'icons/material/Hidden.svg'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 
@@ -185,14 +187,20 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   )
 }
 export const FormikText: FC<
-  {placeholder: string; value: number; type?: string} & FieldProps
-> = ({field, form, placeholder, type = 'text'}) => {
+  {
+    placeholder: string
+    value: number
+    type?: string
+    disabled: boolean
+  } & FieldProps
+> = ({field, form, placeholder, type = 'text', disabled}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
   return (
     <div className='flex flex-col'>
       <input
+        disabled={disabled}
         type={type}
         value={value || ''}
         onChange={(e) => {
@@ -203,6 +211,45 @@ export const FormikText: FC<
           isValid ? 'border-shadow-b' : 'border-error'
         }`}
       />
+      <span className='text-body-3 text-error'>{errors[name]}</span>
+    </div>
+  )
+}
+
+export const FormikPassword: FC<
+  {placeholder: string; value: number} & FieldProps
+> = ({field, form, placeholder}) => {
+  const {name, value} = field
+  const {setFieldValue, errors} = form
+  const isValid = !errors[name]
+  const [type, setType] = useState('password')
+  return (
+    <div className='flex flex-col'>
+      <div className='relative'>
+        <input
+          type={type}
+          value={value || ''}
+          onChange={(e) => {
+            setFieldValue(name, e.target.value)
+          }}
+          placeholder={placeholder}
+          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b text-body-2 ${
+            isValid ? 'border-shadow-b' : 'border-error'
+          }`}
+        />
+        <div className='absolute top-2 right-2'>
+          {type === 'password' && (
+            <Button onClick={() => setType('text')}>
+              <IcVisibility className='fill-current text-black-c h-6 w-6' />
+            </Button>
+          )}
+          {type === 'text' && (
+            <Button onClick={() => setType('password')}>
+              <IcHidden className='fill-current text-black-c h-6 w-6' />
+            </Button>
+          )}
+        </div>
+      </div>
       <span className='text-body-3 text-error'>{errors[name]}</span>
     </div>
   )

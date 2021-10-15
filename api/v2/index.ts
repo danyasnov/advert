@@ -10,9 +10,9 @@ import {
   CACategoryModel,
 } from 'front-api'
 import {isObject, isNil} from 'lodash'
-import axios, {AxiosPromise} from 'axios'
+import {AxiosPromise} from 'axios'
 import {getSearchByFilter} from '../../helpers'
-import {API_URL, getRest} from '../index'
+import {API_URL, getRest, makeRequest} from '../index'
 import {CookiesState, FetchAdvertisesPayload} from '../../types'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
@@ -121,7 +121,7 @@ export const fetchProductByUrl = (
   lang: string,
   url: string,
 ): AxiosPromise<{data: AdvertiseDetail}> => {
-  return axios({
+  return makeRequest({
     method: 'post',
     url: `${API_URL}/v2/advert/by-url`,
     data: {
