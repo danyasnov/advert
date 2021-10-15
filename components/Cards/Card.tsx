@@ -13,6 +13,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
+import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -26,7 +27,16 @@ const Card: FC<Props> = ({
   setLockParentScroll,
   variant = 'default',
 }) => {
-  const {title, images, price, oldPrice, dateUpdated, views, location} = product
+  const {
+    title,
+    images,
+    price,
+    oldPrice,
+    dateUpdated,
+    views,
+    location,
+    hasVideo,
+  } = product
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -124,11 +134,14 @@ const Card: FC<Props> = ({
                 ))}
               </div>
             )}
-            <div className='absolute inset-x-0 bottom-0 pb-2 px-2'>
+            <div className='absolute inset-x-0 bottom-0 pb-2 px-2 flex justify-between'>
               {location.distance && (
                 <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
                   {location.distance}
                 </span>
+              )}
+              {hasVideo && (
+                <IcPlayCircle className='fill-current text-white h-4 w-4' />
               )}
             </div>
           </>
