@@ -12,18 +12,17 @@ import Storage from '../stores/Storage'
 
 if (!process.env.PRODUCTION) curlirize(axios)
 
-// export const {API_URL} = process.env
-export const API_URL = 'https://api.adverto.sale'
+export const {API_URL} = process.env
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
     isDev: true,
     storage,
-    isLogEnabled: true,
     isLogRequest: true,
     isLogResponse: false,
-    sendLog: (msg) => msg.includes('[request]') && console.log(`\n${msg}\n`),
+    sendLog: (msg) => msg.includes('curl') && console.log(`\n${msg}\n`),
     analyticsService: new DummyAnalytics(),
+    endpoint: API_URL,
   })
 
 export const makeRequest = (config: AxiosRequestConfig): AxiosPromise =>
