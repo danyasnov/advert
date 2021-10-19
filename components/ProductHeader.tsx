@@ -109,6 +109,7 @@ const ProductHeader: FC = observer(() => {
                 <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
                   {options.map(({title, onClick}) => (
                     <Button
+                      key={title}
                       className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-2'
                       onClick={() => {
                         onClick()
@@ -138,23 +139,25 @@ const ProductHeader: FC = observer(() => {
           </div>
         </div>
       </div>
-      <DeactivateAdvModal
-        isOpen={showDeactivateModal}
-        onClose={() => setShowDeactivateModal(false)}
-        onSelect={(value: RemoveFromSaleType) => {
-          makeRequest({
-            url: `/api/deactivate-adv`,
-            method: 'post',
-            data: {
-              hash: advert.hash,
-              soldMode: value,
-            },
-          }).then(() => {
-            router.push(`/user/${owner.hash}`)
-          })
-        }}
-        advert={advert}
-      />
+      {showDeactivateModal && (
+        <DeactivateAdvModal
+          isOpen={showDeactivateModal}
+          onClose={() => setShowDeactivateModal(false)}
+          onSelect={(value: RemoveFromSaleType) => {
+            makeRequest({
+              url: `/api/deactivate-adv`,
+              method: 'post',
+              data: {
+                hash: advert.hash,
+                soldMode: value,
+              },
+            }).then(() => {
+              router.push(`/user/${owner.hash}`)
+            })
+          }}
+          advert={advert}
+        />
+      )}
     </div>
   )
 })
