@@ -80,11 +80,13 @@ const ProductHeader: FC = observer(() => {
   }
 
   const options = getOptions()
+  const isFree = advert.price.startsWith('0 ')
+
   return (
     <div>
       <div className='flex justify-between w-full items-center mb-2'>
         <h1 className='text-h-4 font-bold m:text-h-1 text-black-b'>
-          {product.advert.title}
+          {advert.title}
         </h1>
         <div className='flex ml-4 self-start' ref={ref}>
           {/* <Button onClick={notImplementedAlert} className='mr-2'> */}
@@ -123,12 +125,12 @@ const ProductHeader: FC = observer(() => {
       </div>
       <div className='flex flex-col m:hidden'>
         <span className='text-h-2 text-black-b font-bold'>
-          {product.advert.price}
+          {isFree ? t('FREE') : advert.price}
         </span>
         <div className='flex flex-col s:flex-row s:items-center s:mb-4 s:mt-2 s:justify-between'>
-          {!!product.advert.oldPrice && (
+          {!!advert.oldPrice && (
             <span className='text-body-3 text-notification-success mt-1 s:mt-0 line-through	'>
-              {product.advert.oldPrice}
+              {advert.oldPrice}
             </span>
           )}
           <div className='my-2 s:my-0'>

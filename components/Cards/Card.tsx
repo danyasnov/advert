@@ -14,6 +14,7 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
+import {useTranslation} from 'next-i18next'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 
@@ -27,6 +28,7 @@ const Card: FC<Props> = ({
   setLockParentScroll,
   variant = 'default',
 }) => {
+  const {t} = useTranslation()
   const {
     title,
     images,
@@ -89,6 +91,7 @@ const Card: FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
+  const isFree = price.startsWith('0 ')
   return (
     <div
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col ${
@@ -158,7 +161,9 @@ const Card: FC<Props> = ({
             </span>
             {/* <IcMoreVert className='fill-current text-black-c h-4 w-4' /> */}
           </div>
-          <span className='text-body-1 text-black-b font-bold'>{price}</span>
+          <span className='text-body-1 text-black-b font-bold'>
+            {isFree ? t('FREE') : price}
+          </span>
           <span className='text-body-3 text-black-c line-through'>
             {oldPrice}
           </span>

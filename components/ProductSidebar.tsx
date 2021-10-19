@@ -24,13 +24,15 @@ const ProductSidebar: FC = observer(() => {
     const state: SerializedCookiesState = parseCookies()
     setShowChat(!!state.hash)
   }, [])
+  const isFree = advert.price.startsWith('0 ')
+
   return (
     <div className='flex flex-col'>
       <span className='text-black-b text-h-1 mb-4 font-bold'>
-        {product.advert.price}
+        {isFree ? t('FREE') : advert.price}
       </span>
       <span className='text-body-1 text-error line-through mb-4'>
-        {product.advert.oldPrice}
+        {advert.oldPrice}
       </span>
       {phoneNum && (
         <PrimaryButton
