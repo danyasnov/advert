@@ -106,6 +106,7 @@ module.exports = {
         'white-d': 'rgba(12, 13, 13, 0.2)',
         'image-placeholder': 'rgb(234,233,233)',
         'notification-success': 'rgba(0, 163, 0, 1)',
+        'notification-info': '#80B2FF',
         error: '#CC3237',
       },
       inset: {

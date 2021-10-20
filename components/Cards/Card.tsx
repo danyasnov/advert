@@ -17,6 +17,7 @@ import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
+import CardBadge from './CardBadge'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -94,12 +95,13 @@ const Card: FC<Props> = ({
   const isFree = price.startsWith('0 ')
   return (
     <div
-      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col ${
+      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col relative ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
+      <CardBadge state={product.state} />
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {inView && (
@@ -108,8 +110,11 @@ const Card: FC<Props> = ({
                 <div className='relative min-w-full'>
                   <CardImage
                     url={`/img/subcategories/${product.categoryId}.jpg`}
-                    // @ts-ignore
-                    fallbackUrl={`/img/subcategories/${product.rootCategoryId}.jpg`}
+                    fallbackUrl={[
+                      // @ts-ignore
+                      `/img/subcategories/${product.rootCategoryId}.jpg`,
+                      `/img/CommonPlaceholder.jpg`,
+                    ]}
                     alt={title}
                   />
                 </div>

@@ -6,7 +6,7 @@ import ImageWrapper from './ImageWrapper'
 interface Props {
   url: string
   alt: string
-  fallbackUrl?: string
+  fallbackUrl?: string | string[]
 }
 const getImageUrl = (url, screenWidth): string => {
   if (!screenWidth) return url

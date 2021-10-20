@@ -10,7 +10,7 @@ interface Props {
   width?: number
   height?: number
   priority?: boolean
-  fallbackUrl?: string
+  fallbackUrl?: string | string[]
 }
 
 const ImageWrapper: FC<Props> = ({
@@ -26,6 +26,7 @@ const ImageWrapper: FC<Props> = ({
 }) => {
   const [hide, setHide] = useState(false)
   const [imgSrc, setImgSrc] = useState(type)
+  const [fallbackIndex, setFallbackIndex] = useState(0)
   if (!type || hide) return null
   return (
     // @ts-ignore
@@ -41,7 +42,12 @@ const ImageWrapper: FC<Props> = ({
       priority={priority}
       onError={() => {
         if (fallbackUrl) {
-          setImgSrc(fallbackUrl)
+          if (Array.isArray(fallbackUrl)) {
+            setImgSrc(fallbackUrl[fallbackIndex])
+            setFallbackIndex(fallbackIndex + 1)
+          } else {
+            setImgSrc(fallbackUrl)
+          }
         } else {
           setHide(true)
         }
