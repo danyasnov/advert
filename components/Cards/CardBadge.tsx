@@ -19,12 +19,12 @@ const CardBadge: FC<Props> = ({state}) => {
     }
     case 'draft': {
       message = 'MODERATION'
-      color = 'bg-black=c'
+      color = 'bg-notification-info'
       break
     }
     case 'archived': {
       message = 'ARCHIVED'
-      color = 'bg-notification-info'
+      color = 'bg-black-c'
       break
     }
     default: {
