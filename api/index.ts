@@ -12,8 +12,8 @@ import Storage from '../stores/Storage'
 
 if (!process.env.PRODUCTION) curlirize(axios)
 
-export const API_URL = 'https://api.adverto.sale'
-// export const {API_URL} = process.env
+// export const API_URL = 'https://api.adverto.sale'
+export const {API_URL} = process.env
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
