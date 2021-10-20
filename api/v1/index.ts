@@ -10,10 +10,10 @@ import {
   AuthUserResponse,
 } from 'front-api/src/models/index'
 import {SettingsLanguageModel} from 'front-api'
-import {getRest, makeRequest} from '../index'
+import {API_URL, getRest, makeRequest} from '../index'
 import Storage from '../../stores/Storage'
 
-const API_V1_URL = 'https://api.adverto.sale'
+// const API_V1_URL = 'https://api.adverto.sale'
 
 export const fetchCountries = (
   language: string,
@@ -71,7 +71,7 @@ export const fetchSearchSuggestion = async (
   }
   return makeRequest({
     method: 'post',
-    url: `${API_V1_URL}/v1/search_suggestions.php`,
+    url: `${API_URL}/v1/search_suggestions.php`,
     data: `query=${JSON.stringify(payload)}`,
   })
 }
