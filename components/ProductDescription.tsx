@@ -76,7 +76,7 @@ const ProductDescription: FC = observer(() => {
         <LinkWrapper
           target='_blank'
           href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
-          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2'
+          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2 m:hidden'
           title={t('SEND_A_MESSAGE')}>
           {t('SEND_A_MESSAGE')}
         </LinkWrapper>
