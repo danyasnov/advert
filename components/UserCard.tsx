@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcAdvert from 'icons/material/Advert.svg'
+import IcPersonAdd from 'icons/material/PersonAdd.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
@@ -18,7 +19,7 @@ const UserCard: FC = observer(() => {
       <div className='flex mb-3'>
         <div className='flex flex-col items-center mr-5'>
           <UserAvatar url={product.owner.image} name={product.owner.name} />
-          {/* <IcPersonAdd className='fill-current h-6 w-6 ' /> */}
+          {/* <IcPersonAdd className='fill-current text-black-c h-6 w-6 ' /> */}
         </div>
         <div>
           <LinkWrapper

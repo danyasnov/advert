@@ -1,22 +1,17 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {useTranslation} from 'next-i18next'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
-import IcPhone from 'icons/material/Phone.svg'
 import {size} from 'lodash'
 import {FieldDTO} from 'front-api/src/models/index'
-import {parseCookies} from 'nookies'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-import PrimaryButton from './Buttons/PrimaryButton'
 import SharePopup from './SharePopup'
-import LinkWrapper from './Buttons/LinkWrapper'
-import SecondaryButton from './Buttons/SecondaryButton'
-import {SerializedCookiesState} from '../types'
+import CallButton from './Buttons/CallButton'
+import ChatButton from './Buttons/ChatButton'
 
 const getTabs = (description: string, fields: FieldDTO[]) => {
   const tabs = []
@@ -27,19 +22,12 @@ const getTabs = (description: string, fields: FieldDTO[]) => {
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
-  const [showPhone, setShowPhone] = useState(false)
-  const {t} = useTranslation()
   const {advert, owner} = product
   const {phoneNum} = owner
   const {favoriteCounter, views, dateUpdated, fields, description} = advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
-  const [showChat, setShowChat] = useState(false)
   const {setShowLogin, userHash} = useGeneralStore()
 
-  useEffect(() => {
-    const state: SerializedCookiesState = parseCookies()
-    setShowChat(!!state.hash)
-  }, [])
   const isUserAdv = userHash === owner.hash
 
   return (
@@ -66,33 +54,10 @@ const ProductDescription: FC = observer(() => {
           </span>
         </div>
       </div>
-      {phoneNum && (
-        <PrimaryButton
-          onClick={() => setShowPhone(true)}
-          className='m:hidden text-body-2 text-black-b order-0 mb-4'>
-          <IcPhone className='fill-current h-4 w-4 mr-2' />
-          {showPhone ? phoneNum : t('MAKE_A_CALL')}
-        </PrimaryButton>
-      )}
       {!isUserAdv && (
-        <div className='w-full'>
-          {showChat ? (
-            <LinkWrapper
-              target='_blank'
-              href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
-              className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2 m:hidden'
-              title={t('SEND_A_MESSAGE')}>
-              {t('SEND_A_MESSAGE')}
-            </LinkWrapper>
-          ) : (
-            <SecondaryButton
-              className='mb-2 m:hidden w-full'
-              onClick={() => {
-                setShowLogin(true)
-              }}>
-              {t('SEND_A_MESSAGE')}
-            </SecondaryButton>
-          )}
+        <div className='m:hidden'>
+          <CallButton phoneNum={phoneNum} />
+          <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </div>
       )}
 
