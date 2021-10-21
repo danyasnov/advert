@@ -97,7 +97,7 @@ export const fetchCategoryData = (
     searchBy: state.searchBy,
   })
   const rest = getRest(storage)
-  return rest.categories.fetchCategoryData(id)
+  return rest.categories.fetchCategoryData({id})
 }
 
 export const fetchProductDetails = (
