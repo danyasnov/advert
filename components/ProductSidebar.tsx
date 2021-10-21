@@ -18,13 +18,14 @@ const ProductSidebar: FC = observer(() => {
   const {owner, advert} = product
   const {phoneNum} = owner
   const [showChat, setShowChat] = useState(false)
-  const {setShowLogin} = useGeneralStore()
+  const {setShowLogin, userHash} = useGeneralStore()
 
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
     setShowChat(!!state.hash)
   }, [])
   const isFree = advert.price.startsWith('0 ')
+  const isUserAdv = userHash === owner.hash
 
   return (
     <div className='flex flex-col'>
@@ -34,7 +35,7 @@ const ProductSidebar: FC = observer(() => {
       <span className='text-body-1 text-error line-through mb-4'>
         {advert.oldPrice}
       </span>
-      {phoneNum && (
+      {phoneNum && !showPhone && (
         <PrimaryButton
           onClick={() => setShowPhone(true)}
           className='hidden m:flex text-body-2 text-black-b order-0 mb-4'>
@@ -42,24 +43,33 @@ const ProductSidebar: FC = observer(() => {
           {showPhone ? phoneNum : t('MAKE_A_CALL')}
         </PrimaryButton>
       )}
+      {showPhone && !isUserAdv && (
+        <div className='hidden m:flex text-body-2 text-black-b order-0 mb-4'>
+          <IcPhone className='fill-current h-4 w-4 mr-2' />
+          {showPhone ? phoneNum : t('MAKE_A_CALL')}
+        </div>
+      )}
       <ProductInfoIcons />
-
-      {showChat ? (
-        <LinkWrapper
-          target='_blank'
-          href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
-          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2'
-          title={t('SEND_A_MESSAGE')}>
-          {t('SEND_A_MESSAGE')}
-        </LinkWrapper>
-      ) : (
-        <SecondaryButton
-          className='mb-2'
-          onClick={() => {
-            setShowLogin(true)
-          }}>
-          {t('SEND_A_MESSAGE')}
-        </SecondaryButton>
+      {!isUserAdv && (
+        <div className='w-full'>
+          {showChat ? (
+            <LinkWrapper
+              target='_blank'
+              href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
+              className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-4 mt-2'
+              title={t('SEND_A_MESSAGE')}>
+              {t('SEND_A_MESSAGE')}
+            </LinkWrapper>
+          ) : (
+            <SecondaryButton
+              className='mb-4 mt-2 w-full'
+              onClick={() => {
+                setShowLogin(true)
+              }}>
+              {t('SEND_A_MESSAGE')}
+            </SecondaryButton>
+          )}
+        </div>
       )}
 
       <UserCard />

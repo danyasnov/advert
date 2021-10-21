@@ -34,12 +34,14 @@ const ProductDescription: FC = observer(() => {
   const {favoriteCounter, views, dateUpdated, fields, description} = advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
   const [showChat, setShowChat] = useState(false)
-  const {setShowLogin} = useGeneralStore()
+  const {setShowLogin, userHash} = useGeneralStore()
 
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
     setShowChat(!!state.hash)
   }, [])
+  const isUserAdv = userHash === owner.hash
+
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
@@ -72,23 +74,28 @@ const ProductDescription: FC = observer(() => {
           {showPhone ? phoneNum : t('MAKE_A_CALL')}
         </PrimaryButton>
       )}
-      {showChat ? (
-        <LinkWrapper
-          target='_blank'
-          href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
-          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2 m:hidden'
-          title={t('SEND_A_MESSAGE')}>
-          {t('SEND_A_MESSAGE')}
-        </LinkWrapper>
-      ) : (
-        <SecondaryButton
-          className='mb-2'
-          onClick={() => {
-            setShowLogin(true)
-          }}>
-          {t('SEND_A_MESSAGE')}
-        </SecondaryButton>
+      {!isUserAdv && (
+        <div className='w-full'>
+          {showChat ? (
+            <LinkWrapper
+              target='_blank'
+              href={`https://old.adverto.sale/cp/chat/#message-productId=${advert.hash}`}
+              className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center mb-2 m:hidden'
+              title={t('SEND_A_MESSAGE')}>
+              {t('SEND_A_MESSAGE')}
+            </LinkWrapper>
+          ) : (
+            <SecondaryButton
+              className='mb-2 m:hidden w-full'
+              onClick={() => {
+                setShowLogin(true)
+              }}>
+              {t('SEND_A_MESSAGE')}
+            </SecondaryButton>
+          )}
+        </div>
       )}
+
       <div className='mb-2 s:mb-4 m:hidden'>
         <UserCard />
       </div>
@@ -106,7 +113,7 @@ const ProductDescription: FC = observer(() => {
         {activeTab === 0 && <DescriptionTab />}
         {activeTab === 1 && <CharacteristicsTab />}
       </div>
-      <div className='flex justify-between flex-col s:flex-row my-4'>
+      <div className='flex justify-between flex-col s:flex-row mt-4 mb-20'>
         <SharePopup
           userHash={product.owner.hash}
           productHash={product.advert.hash}

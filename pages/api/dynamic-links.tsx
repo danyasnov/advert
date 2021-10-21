@@ -40,7 +40,7 @@ export default async (
 
   const {shortLink} = await firebaseDynamicLinks.createLink({
     dynamicLinkInfo: {
-      domainUriPrefix: 'https://ca67r.app.goo.gl',
+      domainUriPrefix: 'https://adverto.page.link',
       link: testStr,
       androidInfo: {
         androidPackageName: 'adverto.sale',
