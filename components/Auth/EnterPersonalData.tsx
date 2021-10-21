@@ -12,7 +12,7 @@ import {SerializedCookiesState} from '../../types'
 
 const EnterPersonalData: FC<PageProps> = ({dispatch, state}) => {
   const {t} = useTranslation()
-  const msg = 'TOO_SHORT_NAME_OR_SURNAME'
+  const msg = t('TOO_SHORT_NAME_OR_SURNAME')
   const cookies: SerializedCookiesState = parseCookies()
   const userLocation = JSON.parse(cookies.userLocation)
   const validateName = (value) => {
