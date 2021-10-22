@@ -80,7 +80,7 @@ const ProductHeader: FC = observer(() => {
   }
 
   const options = getOptions()
-  const isFree = advert.price.startsWith('0 ')
+  const isFree = advert.price === '0'
 
   return (
     <div>
