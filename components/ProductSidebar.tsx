@@ -14,7 +14,7 @@ const ProductSidebar: FC = observer(() => {
   const {phoneNum} = owner
   const {setShowLogin, userHash} = useGeneralStore()
 
-  const isFree = advert.price.startsWith('0 ')
+  const isFree = advert.price === '0'
   const isUserAdv = userHash === owner.hash
 
   return (

@@ -92,7 +92,7 @@ const Card: FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
-  const isFree = price.startsWith('0 ')
+  const isFree = price === '0'
   return (
     <div
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col relative ${
