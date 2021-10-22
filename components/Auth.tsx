@@ -5,6 +5,7 @@ import {useTranslation} from 'next-i18next'
 import IcLogin from 'icons/material/Login.svg'
 import {useRouter} from 'next/router'
 import {useClickAway} from 'react-use'
+import localforage from 'localforage'
 import {SerializedCookiesState} from '../types'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
@@ -57,6 +58,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
         destroyCookiesWrapper('promo')
         destroyCookiesWrapper('authType')
         destroyCookiesWrapper('aup')
+        localforage.clear()
         router.reload()
       },
     },

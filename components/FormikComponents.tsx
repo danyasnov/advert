@@ -190,27 +190,33 @@ export const FormikText: FC<
   {
     placeholder: string
     value: number
+    rows?: number
     type?: string
     disabled: boolean
+    isTextarea?: boolean
   } & FieldProps
-> = ({field, form, placeholder, type = 'text', disabled}) => {
+> = ({field, form, rows, placeholder, type = 'text', disabled, isTextarea}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
+  const props = {
+    disabled,
+    rows,
+    type,
+    value: value || '',
+    onChange: (e) => {
+      setFieldValue(name, e.target.value)
+    },
+    placeholder,
+    className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+      isValid ? 'border-shadow-b' : 'border-error'
+    }`,
+  }
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
   return (
     <div className='flex flex-col'>
-      <input
-        disabled={disabled}
-        type={type}
-        value={value || ''}
-        onChange={(e) => {
-          setFieldValue(name, e.target.value)
-        }}
-        placeholder={placeholder}
-        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
-          isValid ? 'border-shadow-b' : 'border-error'
-        }`}
-      />
+      {Component}
       <span className='text-body-3 text-error'>{errors[name]}</span>
     </div>
   )

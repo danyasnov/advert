@@ -25,6 +25,7 @@
     "front-api": "git+ssh://git@gitlab.adverto.sale:2222/adverto/front-api.git#d30021e185da2eafac1239eb1b346b4448d8962f",
     "google-map-react": "^2.1.10",
     "is-ip": "^3.1.0",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "luxon": "^2.0.2",
     "md5": "^2.3.0",

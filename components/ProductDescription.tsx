@@ -12,6 +12,7 @@ import UserCard from './UserCard'
 import SharePopup from './SharePopup'
 import CallButton from './Buttons/CallButton'
 import ChatButton from './Buttons/ChatButton'
+import ProductNotes from './ProductNotes'
 
 const getTabs = (description: string, fields: FieldDTO[]) => {
   const tabs = []
@@ -24,7 +25,8 @@ const ProductDescription: FC = observer(() => {
   if (!product) return null
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {favoriteCounter, views, dateUpdated, fields, description} = advert
+  const {favoriteCounter, views, dateUpdated, fields, description, hash} =
+    advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
   const {setShowLogin, userHash} = useGeneralStore()
 
@@ -33,25 +35,25 @@ const ProductDescription: FC = observer(() => {
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
-        <div>
-          {/* <OutlineButton */}
-          {/*  onClick={notImplementedAlert} */}
-          {/*  className='text-black-b text-body-2 mb-4 s:mb-0'> */}
-          {/*  {t('ADD_NOTE')} */}
-          {/* </OutlineButton> */}
-        </div>
-        <div className='flex items-center space-x-6 justify-between'>
-          <div className='text-black-b text-body-3 flex items-center'>
-            <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
-            {favoriteCounter}
+        <div className='flex justify-between w-full flex-col s:flex-row '>
+          <div className='w-full hidden s:block'>
+            {userHash && <ProductNotes hash={hash} />}
           </div>
-          <div className='text-black-b text-body-3 flex items-center'>
-            <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
-            {views}
+          <div className='ml-0 s:ml-4 flex space-x-4'>
+            <div className='text-black-b text-body-3 flex items-center '>
+              <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
+              {favoriteCounter}
+            </div>
+            <div className='text-black-b text-body-3 flex items-center'>
+              <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
+              {views}
+            </div>
+            <span
+              suppressHydrationWarning
+              className='text-black-b text-body-3 whitespace-nowrap flex items-center'>
+              {unixToDateTime(dateUpdated)}
+            </span>
           </div>
-          <span suppressHydrationWarning className='text-black-b text-body-3'>
-            {unixToDateTime(dateUpdated)}
-          </span>
         </div>
       </div>
       {!isUserAdv && (
