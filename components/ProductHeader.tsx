@@ -128,12 +128,10 @@ const ProductHeader: FC = observer(() => {
         <span className='text-h-2 text-black-b font-bold'>
           {isFree ? t('FREE') : advert.price}
         </span>
-        <div className='flex flex-col s:flex-row s:items-center s:mb-4 s:mt-2 s:justify-between'>
-          {!!advert.oldPrice && (
-            <span className='text-body-3 text-notification-success mt-1 s:mt-0 line-through	'>
-              {advert.oldPrice}
-            </span>
-          )}
+        <div className='flex flex-col s:flex-row s:items-center s:mb-4 s:mt-2 justify-between'>
+          <span className='text-body-3 text-error mt-1 s:mt-0 line-through'>
+            {advert.oldPrice}
+          </span>
           <div className='my-2 s:my-0'>
             <ProductInfoIcons />
           </div>

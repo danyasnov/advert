@@ -18,13 +18,15 @@ const ProductSidebar: FC = observer(() => {
   const isUserAdv = userHash === owner.hash
 
   return (
-    <div className='flex flex-col'>
-      <span className='text-black-b text-h-1 mb-4 font-bold'>
+    <div className='flex flex-col space-y-4'>
+      <span className='text-black-b text-h-1 font-bold'>
         {isFree ? t('FREE') : advert.price}
       </span>
-      <span className='text-body-1 text-error line-through mb-4'>
-        {advert.oldPrice}
-      </span>
+      {!!advert.oldPrice && (
+        <span className='text-body-1 text-error line-through'>
+          {advert.oldPrice}
+        </span>
+      )}
       {!isUserAdv && (
         <>
           <CallButton phoneNum={phoneNum} />

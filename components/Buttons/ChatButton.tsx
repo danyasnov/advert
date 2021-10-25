@@ -18,7 +18,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
     setShowChat(!!state.hash)
   }, [])
   return (
-    <div className='w-full mb-4'>
+    <div className='w-full'>
       {showChat ? (
         <LinkWrapper
           target='_blank'

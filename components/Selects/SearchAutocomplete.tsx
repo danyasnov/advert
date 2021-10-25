@@ -64,6 +64,7 @@ const SearchAutocomplete: FC<Props> = observer(
       getComboboxProps,
       highlightedIndex,
       getItemProps,
+      closeMenu,
     } = useCombobox({
       id: 'search-autocomplete',
       items: inputItems,
@@ -120,6 +121,7 @@ const SearchAutocomplete: FC<Props> = observer(
               <li
                 {...getItemProps({item, index})}
                 onClick={() => {
+                  closeMenu()
                   redirect(item)
                 }}
                 className={`flex flex-col h-14 px-4 py-3 justify-center  ${

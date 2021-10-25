@@ -34,7 +34,7 @@ const ProductDescription: FC = observer(() => {
 
   return (
     <div className='mt-4 mb-4 flex flex-col'>
-      <div className='flex flex-col justify-between mb-6 s:flex-row s:items-center'>
+      <div className='flex flex-col justify-between mb-4 s:flex-row s:items-center'>
         <div className='flex justify-between w-full flex-col s:flex-row '>
           <div className='w-full hidden s:block'>
             {userHash && <ProductNotes hash={hash} />}
@@ -57,7 +57,7 @@ const ProductDescription: FC = observer(() => {
         </div>
       </div>
       {!isUserAdv && (
-        <div className='m:hidden'>
+        <div className='m:hidden my-4 space-y-4'>
           <CallButton phoneNum={phoneNum} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </div>

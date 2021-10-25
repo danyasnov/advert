@@ -9,8 +9,9 @@ interface Props {
 const CallButton: FC<Props> = ({phoneNum}) => {
   const [showPhone, setShowPhone] = useState(false)
   const {t} = useTranslation()
+  if (!phoneNum) return null
   return (
-    <div className='w-full mb-4'>
+    <div className='w-full'>
       {phoneNum && !showPhone && (
         <PrimaryButton
           onClick={() => setShowPhone(true)}
