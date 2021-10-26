@@ -4,6 +4,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
 import {size} from 'lodash'
 import {FieldDTO} from 'front-api/src/models/index'
+import {useTranslation} from 'next-i18next'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
@@ -116,7 +117,7 @@ const DescriptionTab: FC = observer(() => {
 
 const CharacteristicsTab: FC = observer(() => {
   const {product} = useProductsStore()
-
+  const {t} = useTranslation()
   return (
     <div className='bg-white p-4 text-black-c text-body-3 space-y-2'>
       {product.advert.fields.map((field) => {
@@ -125,7 +126,9 @@ const CharacteristicsTab: FC = observer(() => {
             <div>{field.fieldNameText}</div>
             <div>
               {field.fieldValueText.map((fieldValue) => (
-                <span key={fieldValue}>{fieldValue}</span>
+                <span key={fieldValue}>
+                  {fieldValue === 'true' ? t('YES') : fieldValue}
+                </span>
               ))}
             </div>
           </div>
