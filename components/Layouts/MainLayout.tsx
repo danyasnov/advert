@@ -98,7 +98,7 @@ const MainLayout: FC = observer(() => {
               products={discountedProducts}
               title={t('DISCOUNTED_GOODS')}
             />
-            <ProductsSlider products={freeProducts} title={t('FREE')} />
+            <ProductsSlider products={freeProducts} title={t('GIVE_AWAY')} />
             <div>
               <TitleWithSeparator
                 title={t('RECOMMENDATIONS_FOR_YOU')}
