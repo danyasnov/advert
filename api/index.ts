@@ -21,7 +21,7 @@ export const getRest = (storage: AppStorage): RestApi =>
     storage,
     isLogRequest: true,
     isLogResponse: false,
-    sendLog: (msg) => msg.includes('curl') && console.log(`\n${msg}\n`),
+    sendLog: (msg) => msg.includes('curl ') && console.log(`\n${msg}\n`),
     analyticsService: new DummyAnalytics(),
     endpoint: API_URL,
   })

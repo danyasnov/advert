@@ -58,7 +58,7 @@ const ProductNotes: FC<Props> = ({hash}) => {
     init()
   }, [hash])
   return (
-    <div className='w-full'>
+    <div className='w-full mb-2 s:mb-0'>
       {note ? (
         <div className='flex w-full items-center '>
           <span className='text-black-b w-full text-body-1 rounded-lg bg-brand-a2 py-2.5 px-4 whitespace-nowrap s:max-w-sm m:max-w-xs l:max-w-md truncate block'>
@@ -70,7 +70,9 @@ const ProductNotes: FC<Props> = ({hash}) => {
         </div>
       ) : (
         <div>
-          <SecondaryButton onClick={() => setShowModal(true)}>
+          <SecondaryButton
+            className='w-full s:w-min'
+            onClick={() => setShowModal(true)}>
             {t('ADD_NOTE')}
           </SecondaryButton>
         </div>

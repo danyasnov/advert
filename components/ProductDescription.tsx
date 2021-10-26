@@ -36,8 +36,8 @@ const ProductDescription: FC = observer(() => {
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex flex-col justify-between mb-4 s:flex-row s:items-center'>
         <div className='flex justify-between w-full flex-col s:flex-row '>
-          <div className='w-full hidden s:block'>
-            {userHash && <ProductNotes hash={hash} />}
+          <div className='w-full '>
+            {!isUserAdv && userHash && <ProductNotes hash={hash} />}
           </div>
           <div className='ml-0 s:ml-4 flex space-x-4'>
             <div className='text-black-b text-body-3 flex items-center '>
