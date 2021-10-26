@@ -52,7 +52,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     // inconsistent url when go back in browser
     const fixedUrl = resolvedUrl.split('?')[0]
-    const productRes = await fetchProductByUrl(state.language, fixedUrl)
+    const productRes = await fetchProductByUrl(
+      state.language,
+      fixedUrl,
+      state.hash,
+    )
     product = productRes.data?.data
   } catch (e) {
     console.log(e)

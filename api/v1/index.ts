@@ -224,3 +224,17 @@ export const createUser = async (payload: {
     image,
   )
 }
+
+export const toggleFavorite = async (
+  hash: string,
+  operation: 1 | 2,
+  token: string,
+  userHash: string,
+): Promise<RestResponse<number>> => {
+  const storage = new Storage({
+    token,
+    userHash,
+  })
+  const rest = getRest(storage)
+  return rest.advertises.toggleFavorite(hash, operation)
+}

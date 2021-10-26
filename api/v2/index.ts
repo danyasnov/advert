@@ -121,14 +121,19 @@ export const fetchProductDetails = (
 export const fetchProductByUrl = (
   lang: string,
   url: string,
+  userHash?: string,
 ): AxiosPromise<{data: AdvertiseDetail}> => {
+  const data = {
+    data: {url},
+    headers: {
+      lang: {code: lang},
+      ...(userHash ? {user: {hash: userHash}} : {}),
+    },
+  }
   return makeRequest({
     method: 'post',
     url: `${API_URL}/v2/advert/by-url`,
-    data: {
-      data: {url},
-      headers: {lang: {code: lang}},
-    },
+    data,
   })
 }
 
