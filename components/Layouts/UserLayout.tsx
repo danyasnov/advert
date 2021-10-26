@@ -87,7 +87,7 @@ const UserLayout: FC = observer(() => {
               </Button>
             </div>
             {showProfile ? (
-              <UserProfile />
+              <UserProfile onSelect={() => setShowProfile(false)} />
             ) : (
               <>
                 {activeUserPage === 'adverts' && (

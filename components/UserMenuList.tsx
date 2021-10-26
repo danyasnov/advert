@@ -4,14 +4,16 @@ import IcStar from 'icons/material/Star.svg'
 import IcLike from 'icons/material/Like.svg'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
+import {noop} from 'lodash'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {PagesType} from '../stores/GeneralStore'
 
 interface Props {
   collapsed: boolean
+  onSelect?: () => void
 }
-const UserMenuList: FC<Props> = observer(({collapsed}) => {
+const UserMenuList: FC<Props> = observer(({collapsed, onSelect = noop}) => {
   const {t} = useTranslation()
   const {setActiveUserPage, activeUserPage, userHash} = useGeneralStore()
   const {user} = useUserStore()
@@ -48,7 +50,11 @@ const UserMenuList: FC<Props> = observer(({collapsed}) => {
       {list.map((i) => {
         if (!i.show) return null
         return (
-          <Button onClick={() => setActiveUserPage(i.id as PagesType)}>
+          <Button
+            onClick={() => {
+              setActiveUserPage(i.id as PagesType)
+              onSelect()
+            }}>
             <div
               className={`flex text-black-f items-center ${
                 collapsed ? 'py-3 px-3' : 'py-3 pl-4'

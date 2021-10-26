@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {noop} from 'lodash'
 import {useUserStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import Rating from './Rating'
@@ -8,7 +9,11 @@ import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
 import UserMenuList from './UserMenuList'
 
-const UserProfile: FC = observer(() => {
+interface Props {
+  onSelect?: () => void
+}
+
+const UserProfile: FC<Props> = observer(({onSelect = noop}) => {
   const {user} = useUserStore()
   const {t} = useTranslation()
   return (
@@ -47,7 +52,7 @@ const UserProfile: FC = observer(() => {
             </span>
           </div>
         </div>
-        <UserMenuList collapsed={false} />
+        <UserMenuList collapsed={false} onSelect={onSelect} />
         <div className='pb-8 pt-4'>
           <SharePopup userHash={user.hash} />
         </div>
