@@ -283,7 +283,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         }}
         thousandSeparator={' '}
         placeholder={t('TITLE_FROM', {title: placeholder})}
-        className={`border rounded-l-2xl ${commonClass}`}
+        className={`border rounded-l-2xl focus:relative ${commonClass}`}
       />
       <NumberFormat
         value={mappedValue[1]}
@@ -292,7 +292,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         }}
         thousandSeparator={' '}
         placeholder={t('UP_TO')}
-        className={`border-t border-b border-r rounded-r-2xl ${commonClass}`}
+        className={`border rounded-r-2xl focus:relative ${commonClass}`}
       />
     </div>
   )

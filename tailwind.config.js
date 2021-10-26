@@ -162,6 +162,7 @@ module.exports = {
       borderWidth: ['first', 'last'],
       ringWidth: ['focus-visible'],
       ringColor: ['focus-visible'],
+      position: ['focus']
     },
   },
   plugins: [capitalizeFirst, lineClamp, typography, tooltipArrow()],
