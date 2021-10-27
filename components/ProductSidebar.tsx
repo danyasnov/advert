@@ -11,7 +11,6 @@ const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
   const {owner, advert} = product
-  const {phoneNum} = owner
   const {setShowLogin, userHash} = useGeneralStore()
 
   const isFree = advert.price === '0'
