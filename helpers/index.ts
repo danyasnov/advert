@@ -176,6 +176,7 @@ export const processCookies = async (
     const countries = await fetchCountries(state.language)
     const country = (countries ?? []).find((c) => c.id === state.countryId)
     state.countryCode = country?.isoCode || ''
+    state.userCountryId = country?.id
     if (state.regionId) {
       const regions = await fetchRegions(state.countryId, 'en')
       const region = (regions.result ?? []).find((c) => c.id === state.regionId)
