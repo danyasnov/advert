@@ -282,6 +282,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               <PrimaryButton
                 onClick={() => {
                   if (setShowFilter) setShowFilter(false)
+                  window.scrollTo({behavior: 'smooth', top: 0, left: 0})
                   applyFilter()
                 }}
                 className='w-full s:w-min py-3 px-3.5 m:w-full whitespace-nowrap'>
