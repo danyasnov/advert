@@ -71,7 +71,7 @@ const ProductNotes: FC<Props> = ({hash}) => {
       ) : (
         <div>
           <SecondaryButton
-            className='w-full s:w-min'
+            className='w-full s:w-min whitespace-nowrap'
             onClick={() => setShowModal(true)}>
             {t('ADD_NOTE')}
           </SecondaryButton>

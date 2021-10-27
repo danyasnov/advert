@@ -29,7 +29,7 @@ const ProductSidebar: FC = observer(() => {
       )}
       {!isUserAdv && (
         <>
-          <CallButton phoneNum={phoneNum} />
+          <CallButton product={product} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </>
       )}

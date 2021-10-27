@@ -25,7 +25,6 @@ const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
   const {advert, owner} = product
-  const {phoneNum} = owner
   const {favoriteCounter, views, dateUpdated, fields, description, hash} =
     advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
@@ -59,7 +58,7 @@ const ProductDescription: FC = observer(() => {
       </div>
       {!isUserAdv && (
         <div className='m:hidden my-4 space-y-4'>
-          <CallButton phoneNum={phoneNum} />
+          <CallButton product={product} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </div>
       )}
