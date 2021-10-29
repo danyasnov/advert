@@ -25,12 +25,12 @@ const ProductDescription: FC = observer(() => {
   if (!product) return null
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {favoriteCounter, views, dateUpdated, fields, description} = advert
+  const {favoriteCounter, views, dateUpdated, fields, description, state} =
+    advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
   const {setShowLogin, userHash} = useGeneralStore()
 
   const isUserAdv = userHash === owner.hash
-  console.log(toJS(advert))
 
   return (
     <div className='mt-4 mb-4 flex flex-col'>
@@ -56,7 +56,7 @@ const ProductDescription: FC = observer(() => {
           </span>
         </div>
       </div>
-      {!isUserAdv && (
+      {!isUserAdv && state !== 'sold' && (
         <div className='m:hidden'>
           <CallButton phoneNum={phoneNum} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
