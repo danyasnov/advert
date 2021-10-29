@@ -26,7 +26,7 @@ const ProductSidebar: FC = observer(() => {
           {advert.oldPrice}
         </span>
       )}
-      {!isUserAdv && (
+      {!isUserAdv && advert.state !== 'sold' && (
         <>
           <CallButton product={product} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />

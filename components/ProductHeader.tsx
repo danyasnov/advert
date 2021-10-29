@@ -5,6 +5,7 @@ import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import ProductInfoIcons from './ProductInfoIcons'
 import ProductLike from './ProductLike'
 import ProductMenu from './ProductMenu'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const ProductHeader: FC = observer(() => {
   const {product} = useProductsStore()
@@ -16,6 +17,17 @@ const ProductHeader: FC = observer(() => {
   const isFree = advert.price === '0'
   return (
     <div>
+      {advert.state === 'sold' && (
+        <div className='bg-sold-background rounded-lg	px-4 py-5 mb-4'>
+          <span className='text-body-1 font-bold'>{t('ITEM_SOLD')}</span>{' '}
+          <LinkWrapper
+            className='text-body-1 text-brand-b1'
+            href={`/user/${owner.hash}`}
+            title={t('YOU_CAN_SEE_OTHER_ADS_OF_SELLER')}>
+            {t('YOU_CAN_SEE_OTHER_ADS_OF_SELLER')}
+          </LinkWrapper>
+        </div>
+      )}
       <div className='flex justify-between w-full items-center mb-2'>
         <h1 className='text-h-4 font-bold m:text-h-1 text-black-b'>
           {advert.title}
