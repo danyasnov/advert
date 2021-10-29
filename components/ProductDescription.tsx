@@ -4,6 +4,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import IcLike from 'icons/material/Like.svg'
 import {size} from 'lodash'
 import {FieldDTO} from 'front-api/src/models/index'
+import {toJS} from 'mobx'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
@@ -29,6 +30,7 @@ const ProductDescription: FC = observer(() => {
   const {setShowLogin, userHash} = useGeneralStore()
 
   const isUserAdv = userHash === owner.hash
+  console.log(toJS(advert))
 
   return (
     <div className='mt-4 mb-4 flex flex-col'>
@@ -106,7 +108,7 @@ const DescriptionTab: FC = observer(() => {
 
   if (!product.advert.description) return null
   return (
-    <div className='bg-white p-4 text-black-b text-body-1 break-words'>
+    <div className='bg-white p-4 text-black-b text-body-1 break-words whitespace-pre-wrap'>
       {product.advert.description}
     </div>
   )
