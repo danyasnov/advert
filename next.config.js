@@ -41,6 +41,10 @@ const nextConfig = {
         source: '/robots.txt',
         destination: '/api/robots',
       },
+      {
+        source: '/api/upload/:type',
+        destination: 'https://api.adverto.sale/files/:type/upload',
+      },
     ]
   },
 }

@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useTranslation} from 'next-i18next'

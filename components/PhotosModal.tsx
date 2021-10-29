@@ -1,7 +1,7 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import {isEmpty} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
 import Button from './Buttons/Button'

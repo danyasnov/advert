@@ -1,6 +1,7 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListResponse,
+  FieldsModel,
   RemoveFromSaleType,
   RestFetchUserProductsPayload,
 } from 'front-api/src/models/index'
@@ -9,12 +10,18 @@ import {
   AdvertiseListItemModel,
   CACategoryDataModel,
   CACategoryModel,
+  CAParamsModel,
+  Unknown,
 } from 'front-api'
 import {isObject, isNil} from 'lodash'
 import {AxiosPromise} from 'axios'
 import {getSearchByFilter} from '../../helpers'
 import {API_URL, getRest, makeRequest} from '../index'
-import {CookiesState, FetchAdvertisesPayload} from '../../types'
+import {
+  CookiesState,
+  FetchAdvertisesPayload,
+  SerializedCookiesState,
+} from '../../types'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
 import {defaultFilter} from '../../utils'
@@ -86,6 +93,7 @@ export const fetchCategories = async (
 export const fetchCategoryData = (
   state: CookiesState,
   id: number,
+  editFields?: FieldsModel,
 ): Promise<RestResponse<CACategoryDataModel>> => {
   const storage = new Storage({
     language: state.language,
@@ -98,7 +106,7 @@ export const fetchCategoryData = (
     searchBy: state.searchBy,
   })
   const rest = getRest(storage)
-  return rest.categories.fetchCategoryData({id})
+  return rest.categories.fetchCategoryData({id, editFields})
 }
 
 export const fetchProductDetails = (
@@ -248,4 +256,22 @@ export const deactivateAdv = (
   })
   const rest = getRest(storage)
   return rest.advertises.deactivate(hash, soldMode)
+}
+
+export const submitDraft = (
+  state: CookiesState,
+  params: CAParamsModel,
+  shouldUpdate: boolean,
+  dependenceSequenceId: number | Unknown,
+) => {
+  const storage = new Storage({
+    token: state.token,
+    userHash: state.hash,
+  })
+  const rest = getRest(storage)
+  return rest.createAdvertise.submitAdvertise(
+    params,
+    shouldUpdate,
+    dependenceSequenceId,
+  )
 }

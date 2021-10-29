@@ -4,10 +4,9 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import {
   FormikCheckbox,
-  FormikField,
+  FormikFilterField,
   FormikRange,
   FormikSegmented,
 } from '../FormikComponents'
@@ -258,7 +257,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               <div className='h-px bg-shadow-b my-8' />
               <div className='space-y-6'>
                 {aggregatedFields.map((field) => {
-                  return <FormikField field={field} key={field.id} />
+                  return <FormikFilterField field={field} key={field.id} />
                 })}
               </div>
             </>

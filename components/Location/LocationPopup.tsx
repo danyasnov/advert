@@ -31,7 +31,7 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
       <span className='text-black-b mb-4'>
         {t('LOCATION_MESSAGE_QUESTION')}
       </span>
-      <PrimaryButton className='text-black-a mb-2 w-full' onClick={onClick}>
+      <PrimaryButton className='mb-2 w-full' onClick={onClick}>
         {t('LOCATION_YES')}
       </PrimaryButton>
       <SecondaryButton

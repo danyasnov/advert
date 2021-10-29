@@ -8,8 +8,9 @@ import {
   RegistrationType,
   AuthType,
   AuthUserResponse,
+  CurrencyModel,
 } from 'front-api/src/models/index'
-import {SettingsLanguageModel} from 'front-api'
+import {SettingsLanguageModel, LocationModel} from 'front-api'
 import {API_URL, getRest, makeRequest} from '../index'
 import Storage from '../../stores/Storage'
 
@@ -237,4 +238,13 @@ export const toggleFavorite = async (
   })
   const rest = getRest(storage)
   return rest.advertises.toggleFavorite(hash, operation)
+}
+
+export const fetchCurrenciesByGPS = async (
+  location: LocationModel,
+  language: string,
+): Promise<{result: CurrencyModel[]; error: string}> => {
+  const storage = new Storage({language})
+  const rest = getRest(storage)
+  return rest.geo.fetchCurrencyByLocation(location)
 }

@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-export const defaultStyles = {
+export const getDefaultStyles = (isInvalid) => ({
   control: (provided, state) => ({
     ...provided,
     borderRadius: 8,
     boxShadow: 'none',
-    borderColor: 'rgba(12, 13, 13, 0,1)',
+    borderColor: isInvalid ? '#CC3237' : 'rgba(12, 13, 13, 0,1)',
+    '&:hover': {
+      borderColor: isInvalid ? '#CC3237' : 'hsl(0, 0%, 70%)',
+    },
     ...(state.isFocused
       ? {
-          borderColor: '#1E4592',
+          borderColor: isInvalid ? '#CC3237' : '#1E4592',
           '&:hover': {
-            borderColor: '#1E4592',
+            borderColor: isInvalid ? '#CC3237' : '#1E4592',
           },
         }
       : {}),
@@ -48,7 +51,7 @@ export const defaultStyles = {
     ...provided,
     paddingLeft: '12px',
   }),
-}
+})
 
 export const LinkStyles = {
   control: (provided) => ({

@@ -1,6 +1,6 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import {isEmpty} from 'lodash'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import ImageWrapper from './ImageWrapper'

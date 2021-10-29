@@ -4,16 +4,23 @@ import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import Button from './Button'
 
 interface Props {
-  children?: ReactNode
   className?: string
   direction: 'left' | 'right'
-  enabled: boolean
+  disabled?: boolean
+  hide?: boolean
   onClick: () => void
 }
-const SliderButton: FC<Props> = ({direction, enabled, onClick, className}) => {
-  if (!enabled) return null
+const SliderButton: FC<Props> = ({
+  direction,
+  disabled,
+  hide,
+  onClick,
+  className,
+}) => {
+  if (hide) return null
   return (
     <Button
+      disabled={disabled}
       onClick={onClick}
       className={`w-8 h-8 bg-white rounded-full shadow-xl ${className || ''}`}>
       {direction === 'left' ? (

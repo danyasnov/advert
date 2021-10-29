@@ -7,7 +7,7 @@
         @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
     }
 
-    input {
+    input:not(.manual-outline), textarea {
         @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
     }
 
@@ -17,15 +17,15 @@
 }
 
 .fixed-breakpoints-width {
-    @apply s:w-768px m:w-1024px l:w-1360px
+    @apply s:w-768px m:w-1024px l:w-1440px
 }
 
 .header-width {
-    @apply s:w-704px m:w-944px l:w-1208px
+    @apply w-full s:w-704px m:w-944px l:w-1208px
 }
 
 .category-selector-width {
-    @apply s:w-768px m:w-1024px l:w-1360px
+    @apply s:w-768px m:w-1024px l:w-1440px
 }
 
 .slider-button {
@@ -33,7 +33,7 @@
 }
 
 .categories-selector-item {
-    @apply flex w-full px-4 py-2 items-center justify-start text-body-2 h-10 hover:bg-brand-a2 text-left whitespace-normal
+    @apply flex w-full px-4 py-2 items-center justify-start text-body-2 h-10 hover:bg-nc-accent text-left whitespace-normal rounded-lg
 }
 
 .segmented-option-border-fix:last-child {
@@ -55,4 +55,8 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
+}
+
+.nc-gradient-brand {
+    @apply bg-gradient-to-r from-brand-a1 to-brand-a3
 }

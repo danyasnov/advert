@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
 import TitleWithSeparator from '../TitleWithSeparator'
@@ -46,13 +46,13 @@ const ProductsSlider: FC<Props> = ({products, title}) => {
         </div>
         <SliderButton
           onClick={scrollPrev}
-          enabled={prevBtnEnabled}
+          hide={prevBtnEnabled}
           direction='left'
           className='slider-button left-1 s:left-5 m:left-1 m:-left-4'
         />
         <SliderButton
           onClick={scrollNext}
-          enabled={nextBtnEnabled}
+          hide={nextBtnEnabled}
           direction='right'
           className='slider-button right-1 s:right-5 m:-right-4'
         />

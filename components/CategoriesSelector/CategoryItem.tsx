@@ -15,7 +15,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   const {id, name, icon} = category
   const url = icon?.icon?.url
   const className = `${
-    isActive ? 'bg-brand-a2' : ''
+    isActive ? 'bg-nc-accent' : ''
   } categories-selector-item text-black-b`
 
   const elBody = (

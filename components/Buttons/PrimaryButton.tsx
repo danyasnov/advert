@@ -19,11 +19,11 @@ const PrimaryButton: FC<Props> = ({
 }) => {
   return (
     <Button
-      className={`rounded-lg py-3 px-3.5 text-body-2 bg-brand-a1 text-white-a ${
-        disabled ? disabledClass : ''
+      className={`rounded-lg py-3 px-6 text-body-2 text-white-a ${
+        disabled ? disabledClass : 'nc-gradient-brand'
       } ${className || ''}`}
       type={type}
-      onClick={() => !disabled && onClick()}>
+      onClick={() => !disabled && onClick && onClick()}>
       {children}
     </Button>
   )

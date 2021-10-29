@@ -2,6 +2,7 @@ const plugin = require('tailwindcss/plugin')
 const lineClamp = require('@tailwindcss/line-clamp')
 const typography = require('@tailwindcss/typography')
 const tooltipArrow = require('tailwindcss-tooltip-arrow-after')
+const forms = require('@tailwindcss/forms')
 
 const capitalizeFirst = plugin(({addUtilities}) => {
   const newUtilities = {
@@ -29,12 +30,14 @@ module.exports = {
       'h-3': ['18px', '20px'],
       'h-4': ['16px', '20px'],
       'h-5': ['14px', '16px'],
+      'headline-6': ['28px', '34px'],
+      'headline-8': ['20px', '28px'],
     },
     screens: {
       xs: '576px',
       s: '768px',
       m: '1024px',
-      l: '1360px',
+      l: '1440px',
     },
     extend: {
       borderRadius: {
@@ -81,7 +84,7 @@ module.exports = {
         '944px': '944px',
         '1024px': '1024px',
         '1208px': '1208px',
-        '1360px': '1360px',
+        '1440px': '1440px',
         '95%': '95%',
       },
       gridTemplateColumns: {
@@ -91,6 +94,7 @@ module.exports = {
       colors: {
         'brand-a1': '#FF9514',
         'brand-a2': '#FFEEDD',
+        'brand-a3': '#FA6D20',
         'brand-b1': '#1E4592',
         'shadow-overlay': 'rgba(12, 13, 13, 0.4)',
         'shadow-a': 'rgba(12, 13, 13, 0.2)',
@@ -108,6 +112,18 @@ module.exports = {
         'notification-success': 'rgba(0, 163, 0, 1)',
         'notification-info': '#80B2FF',
         error: '#CC3237',
+        'nc-title': '#172029',
+        'nc-primary': '#FF8514',
+        'nc-placeholder': '#89A3BE',
+        'nc-primary-text': '#333F48',
+        'nc-secondary-text': '#68757E',
+        'nc-salmon': '#FFEAD7',
+        'nc-accent': '#DEF0FF',
+        'nc-icon': '#89A3BE',
+        'nc-icon-hover': '#6C859F',
+        'nc-link': '#0058A6',
+        'nc-back': '#F6F8F9',
+        'nc-dropzone-border': '#CCDBEB',
         'sold-background': 'rgba(255,64,64, 0.2)',
       },
       inset: {
@@ -123,6 +139,7 @@ module.exports = {
       },
       minHeight: {
         10: '2.5rem',
+        20: '5rem',
         '1/2': '50vh',
         '2/3': '66vh',
       },
@@ -154,17 +171,32 @@ module.exports = {
         offset: 70,
       },
     }),
+    gradientColorStops: (theme) => ({
+      ...theme('colors'),
+    }),
   },
   variants: {
     extend: {
       fontWeight: ['first'],
-      margin: ['first'],
+      margin: ['first', 'last'],
+      padding: ['first', 'last'],
       borderRadius: ['first', 'last'],
       borderWidth: ['first', 'last'],
       ringWidth: ['focus-visible'],
       ringColor: ['focus-visible'],
-      position: ['focus']
+      position: ['focus'],
+      colors: ['checked', 'focused'],
+      backgroundColor: ['checked'],
+      borderColor: ['focus-within'],
     },
   },
-  plugins: [capitalizeFirst, lineClamp, typography, tooltipArrow()],
+  plugins: [
+    capitalizeFirst,
+    lineClamp,
+    typography,
+    tooltipArrow(),
+    forms({
+      strategy: 'class',
+    }),
+  ],
 }

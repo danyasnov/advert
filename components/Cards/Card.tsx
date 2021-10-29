@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'

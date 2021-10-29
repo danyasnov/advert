@@ -5,19 +5,22 @@ import {CACategoryModel} from 'front-api'
 import CategoryItem from './CategoryItem'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import {getLocationCodes} from '../../helpers'
+import Button from '../Buttons/Button'
 
 interface ColItemProps {
   category: CACategoryModel
   isActive: boolean
   onMouseEnter?: (c: CACategoryModel) => void
-  href: string
+  href?: string
+  onClick?: () => void
 }
 
 interface ColProps {
   items: Array<CACategoryModel>
   onMouseEnter?: (c: CACategoryModel) => void
   activeId?: number | undefined
-  urlPath: string
+  urlPath?: string
+  onClick?: () => void
 }
 
 // @ts-ignore
@@ -26,11 +29,15 @@ interface ColProps {
 })
 class FirstColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
-    const {category, isActive, href} = this.props
+    const {category, isActive, href, onClick} = this.props
     const {name} = category
 
     return (
-      <CategoryItem category={category} href={href} isActive={isActive}>
+      <CategoryItem
+        category={category}
+        href={href}
+        isActive={isActive}
+        onClick={onClick}>
         {name}
       </CategoryItem>
     )
@@ -51,11 +58,33 @@ class ColItem extends PureComponent<ColItemProps> {
       <LinkWrapper
         title={name}
         className={`${
-          isActive ? 'bg-brand-a2' : ''
+          isActive ? 'bg-nc-accent' : ''
         } categories-selector-item text-black-b first:text-brand-b1 first:border-b`}
         href={href}>
         {name}
       </LinkWrapper>
+    )
+  }
+}
+
+// @ts-ignore
+@source({
+  mouseEnter: (props) => {
+    props.onMouseEnter(props.category)
+  },
+})
+class ButtonColItem extends PureComponent<ColItemProps> {
+  render(): ReactNode {
+    const {category, isActive, onClick} = this.props
+    const {name} = category
+    return (
+      <Button
+        className={`${
+          isActive ? 'bg-nc-accent' : ''
+        } categories-selector-item text-black-b`}
+        onClick={onClick}>
+        {name}
+      </Button>
     )
   }
 }
@@ -83,4 +112,27 @@ class Col extends PureComponent<ColProps> {
   }
 }
 
-export {FirstColItem, Col}
+// @ts-ignore
+@target()
+class ButtonCol extends PureComponent<ColProps> {
+  render(): ReactNode {
+    const {items, onMouseEnter, activeId, onClick} = this.props
+    return (
+      <div className='h-full'>
+        {items.map((c) => {
+          return (
+            <ButtonColItem
+              key={c.id}
+              onClick={onClick}
+              isActive={c.id === activeId}
+              category={c}
+              onMouseEnter={onMouseEnter}
+            />
+          )
+        })}
+      </div>
+    )
+  }
+}
+
+export {FirstColItem, Col, ButtonColItem, ButtonCol}

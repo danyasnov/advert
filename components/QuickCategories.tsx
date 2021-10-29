@@ -1,7 +1,7 @@
 import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import {isEmpty} from 'lodash'
 import IcSort from 'icons/material/Sort.svg'
 import {useCategoriesStore} from '../providers/RootStoreProvider'

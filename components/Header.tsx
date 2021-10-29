@@ -17,6 +17,7 @@ import LoginModal from './Auth/LoginModal'
 import Auth from './Auth'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
+import PrimaryButton from './Buttons/PrimaryButton'
 
 const options = [
   {
@@ -57,7 +58,7 @@ const Header: FC = observer(() => {
 
   return (
     <header className='flex s:justify-center relative shadow-lg z-10'>
-      <div className='w-full header-width'>
+      <div className='header-width'>
         <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
           <div className='hidden s:flex space-x-4'>
             {/*  <LinkButton */}
@@ -99,11 +100,11 @@ const Header: FC = observer(() => {
             <CategoriesSelector />
             <Search />
           </div>
-          <Button className='hidden s:flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
-            <LinkWrapper href='/new-ad' title={t('NEW_AD')}>
+          <PrimaryButton className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
+            <LinkWrapper href='/advert/create' title={t('NEW_AD')}>
               <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
             </LinkWrapper>
-          </Button>
+          </PrimaryButton>
         </div>
       </div>
       {showLogin && (

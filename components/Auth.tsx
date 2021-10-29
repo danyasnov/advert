@@ -6,6 +6,7 @@ import IcLogin from 'icons/material/Login.svg'
 import {useRouter} from 'next/router'
 import {useClickAway} from 'react-use'
 import localforage from 'localforage'
+import {bool} from 'yup'
 import {SerializedCookiesState} from '../types'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
@@ -14,9 +15,10 @@ import UserAvatar from './UserAvatar'
 import {destroyCookiesWrapper} from '../helpers'
 
 interface Props {
-  onLogin: () => void
+  onLogin?: () => void
+  hide?: boolean
 }
-const Auth: FC<Props> = observer(({onLogin}) => {
+const Auth: FC<Props> = observer(({onLogin, hide}) => {
   const cookies: SerializedCookiesState = parseCookies()
   const router = useRouter()
   const [showLogin, setShowLogin] = useState(false)
@@ -63,6 +65,7 @@ const Auth: FC<Props> = observer(({onLogin}) => {
       },
     },
   ]
+  if (hide) return null
   return (
     <div ref={ref}>
       {user ? (

@@ -118,3 +118,6 @@ export interface ThumbObject {
   src: string
   type: 'image' | 'video'
 }
+
+export type PhotoFile = File & {url: string; hash: number}
+export type VideoFile = File & {loading: boolean; url: string; hash: number}

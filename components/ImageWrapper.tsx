@@ -4,6 +4,7 @@ import Image from 'next/image'
 interface Props {
   type: string
   alt: string
+  id?: string
   className?: string
   objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
   layout?: 'fixed' | 'intrinsic' | 'responsive' | 'fill'
@@ -11,6 +12,10 @@ interface Props {
   height?: number
   priority?: boolean
   fallbackUrl?: string | string[]
+  onLoadingComplete?: (size: {
+    naturalWidth: number
+    naturalHeight: number
+  }) => void
 }
 
 const ImageWrapper: FC<Props> = ({
@@ -23,6 +28,8 @@ const ImageWrapper: FC<Props> = ({
   objectFit,
   priority,
   fallbackUrl,
+  id,
+  onLoadingComplete,
 }) => {
   const [hide, setHide] = useState(false)
   const [imgSrc, setImgSrc] = useState(type)
@@ -40,6 +47,8 @@ const ImageWrapper: FC<Props> = ({
       layout={layout}
       objectFit={objectFit}
       priority={priority}
+      onLoadingComplete={onLoadingComplete}
+      id={id}
       onError={() => {
         if (fallbackUrl) {
           if (Array.isArray(fallbackUrl)) {

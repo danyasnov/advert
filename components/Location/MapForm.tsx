@@ -17,6 +17,8 @@ import {
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
 import Button from '../Buttons/Button'
+import {getPosition} from '../../utils'
+import SvgMapMarker from '../../assets/icons/SvgMapMarker'
 
 const getMark = (label) => ({
   style: {
@@ -62,20 +64,6 @@ const zoomMarksMap = {
 
 const invertedMarksMap = objectFlip(marksMap)
 
-const getPosition = (): Promise<{
-  lat: number
-  lng: number
-}> => {
-  return new Promise((resolve, reject) =>
-    navigator.geolocation.getCurrentPosition((position) => {
-      resolve({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      })
-    }, reject),
-  )
-}
-
 interface Props {
   onClose: () => void
 }
@@ -86,7 +74,7 @@ const MapForm: FC<Props> = ({onClose}) => {
   const {t} = useTranslation()
   const initialLocation = useRef(null)
 
-  const [location, setLocation] = useState(() => {
+  const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     let loc
     if (searchLocation) {
       loc = JSON.parse(searchLocation)
@@ -192,7 +180,7 @@ const MapForm: FC<Props> = ({onClose}) => {
                     radius: marksMap[radius] * 1000,
                   })
                   const svgMarker = {
-                    path: 'M14 39L13.6274 39.3334L14 39.7499L14.3726 39.3334L14 39ZM14 39C14.3726 39.3334 14.3727 39.3333 14.3729 39.3331L14.3734 39.3325L14.3754 39.3302L14.3829 39.3218L14.4117 39.2894C14.437 39.2608 14.4741 39.2187 14.5224 39.1635C14.6189 39.0532 14.7599 38.8906 14.9391 38.6804C15.2974 38.2602 15.8084 37.6495 16.4213 36.8855C17.6465 35.358 19.281 33.2152 20.9164 30.7547C22.5509 28.2956 24.1923 25.5102 25.4266 22.6982C26.6582 19.8922 27.5 17.025 27.5 14.4118C27.5 6.75161 21.4624 0.5 14 0.5C6.53761 0.5 0.5 6.75161 0.5 14.4118C0.5 17.025 1.34179 19.8922 2.57341 22.6982C3.80766 25.5102 5.44909 28.2956 7.08359 30.7547C8.719 33.2152 10.3535 35.358 11.5787 36.8855C12.1916 37.6495 12.7026 38.2602 13.0609 38.6804C13.2401 38.8906 13.3811 39.0532 13.4776 39.1635C13.5259 39.2187 13.563 39.2608 13.5883 39.2894L13.6171 39.3218L13.6246 39.3302L13.6266 39.3325L13.6271 39.3331C13.6273 39.3333 13.6274 39.3334 14 39Z',
+                    path: SvgMapMarker,
                     fillColor: '#FF9514',
                     fillOpacity: 1,
                     strokeColor: '#FFFFFF',

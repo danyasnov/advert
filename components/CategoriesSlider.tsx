@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {useEmblaCarousel} from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import {parseCookies} from 'nookies'
 import ImageWrapper from './ImageWrapper'
 import {
@@ -60,13 +60,13 @@ const CategoriesSlider: FC = observer(() => {
         </div>
         <SliderButton
           onClick={scrollPrev}
-          enabled={prevBtnEnabled}
+          hide={prevBtnEnabled}
           direction='left'
           className='slider-button left-1 s:left-5 m:left-0'
         />
         <SliderButton
           onClick={scrollNext}
-          enabled={nextBtnEnabled}
+          hide={nextBtnEnabled}
           direction='right'
           className='slider-button right-1 s:right-5 m:right-0'
         />

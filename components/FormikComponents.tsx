@@ -7,6 +7,7 @@ import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {get} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
+import Switch from 'react-switch'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 
@@ -15,6 +16,8 @@ interface IFormikSegmented {
 }
 interface IFormikCheckbox {
   label: string
+  hideLabel?: boolean
+  labelPosition?: 'left' | 'right'
 }
 interface IFormikSelect {
   label: string
@@ -46,6 +49,8 @@ interface FieldOptions {
   label?: string
   isFilterable?: boolean
   isMulti?: boolean
+  hideLabel?: boolean
+  maxLength?: number
   maxValue?: number
   minValue?: number
   validate?: (value: any) => string
@@ -57,7 +62,7 @@ const getSelectOptions = (o) => ({
   // disabled: o.count === 0,
 })
 
-export const FormikField: FC<IFormikField> = ({field}) => {
+export const FormikFilterField: FC<IFormikField> = ({field}) => {
   // @ts-ignore
   const {
     fieldType,
@@ -130,6 +135,102 @@ export const FormikField: FC<IFormikField> = ({field}) => {
   if (!component) return null
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Field name={`fields.${id}`} component={component} {...props} />
+}
+
+export const FormikCreateField: FC<IFormikField> = ({field}) => {
+  // @ts-ignore
+  const {
+    fieldType,
+    multiselects,
+    id,
+    name,
+    isFilterable,
+    maxValue,
+    minValue,
+    slug,
+    maxLength,
+    isFillingRequired,
+  } = field
+  let component
+  const props: FieldOptions = {}
+  switch (fieldType) {
+    case 'select':
+    case 'iconselect':
+    case 'multiselect': {
+      component = FormikSelect
+      props.options = [
+        // @ts-ignore
+        ...multiselects.top.map(getSelectOptions),
+        // @ts-ignore
+        ...(multiselects.other
+          ? // @ts-ignore
+            multiselects.other
+          : []
+        ).map(getSelectOptions),
+      ]
+      props.placeholder = name
+      props.isFilterable = isFilterable
+      props.isMulti = fieldType === 'multiselect'
+      break
+    }
+    case 'int': {
+      component = FormikNumber
+      props.placeholder = name
+      props.maxValue = maxValue
+      props.minValue = minValue
+      props.maxLength = maxLength
+      props.validate = (value = []) => {
+        const [min, max] = value
+        let parsedMin
+        let parsedMax
+        if (min) parsedMin = parseFloat(min)
+        if (max) parsedMax = parseFloat(max)
+        let error
+        if ((parsedMin || parsedMin === 0) && (parsedMax || parsedMax === 0)) {
+          if (parsedMin > parsedMax) {
+            error = 'parsedMin should be lesser than parsedMax'
+          }
+        }
+
+        return error
+      }
+      break
+    }
+    case 'string': {
+      component = FormikText
+      props.placeholder = name
+      break
+    }
+    case 'checkbox': {
+      component = FormikSwitch
+      props.label = name
+      props.hideLabel = true
+      break
+    }
+    default: {
+      component = null
+    }
+  }
+
+  const validate = (value) => {
+    let msg
+    if (isFillingRequired && !value) {
+      console.log('isFillingRequired && !value', isFillingRequired && !value)
+
+      msg = 'err'
+    }
+    return msg
+  }
+  if (!component) return null
+  return (
+    <Field
+      name={`fields.${id}`}
+      component={component}
+      validate={validate}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    />
+  )
 }
 
 export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
@@ -302,28 +403,82 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   field,
   form,
   label,
+  hideLabel,
 }) => {
   const {name, value} = field
   const {setFieldValue} = form
+  const input = (
+    <>
+      <input
+        type='checkbox'
+        name={name}
+        checked={value}
+        id={name}
+        onChange={() => setFieldValue(name, !value)}
+        className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
+      />
+      <div
+        className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
+       flex-shrink-0 justify-center items-center mr-2'>
+        <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+      </div>
+    </>
+  )
   return (
     <div className=''>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label className='select-none text-black-b cursor-pointer flex items-center'>
-        <input
-          type='checkbox'
-          name={name}
-          checked={value}
-          id={name}
-          onChange={() => setFieldValue(name, !value)}
-          className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-        />
-        <div
-          className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
-       flex-shrink-0 justify-center items-center mr-2'>
-          <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
-        </div>
-        {label}
-      </label>
+      {hideLabel ? (
+        input
+      ) : (
+        // eslint-disable-next-line jsx-a11y/label-has-associated-control
+        <label className='select-none text-black-b cursor-pointer flex items-center'>
+          {input}
+          {label}
+        </label>
+      )}
+    </div>
+  )
+}
+
+export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
+  field,
+  form,
+  label,
+  hideLabel,
+  labelPosition = 'left',
+}) => {
+  const {name, value} = field
+  const {setFieldValue} = form
+  const input = (
+    <Switch
+      offColor='#ACB9C3'
+      onColor='#FF8514'
+      uncheckedIcon={false}
+      checkedIcon={false}
+      height={16}
+      width={28}
+      handleDiameter={14}
+      onChange={(checked) => setFieldValue(name, checked)}
+      checked={!!value}
+    />
+  )
+  return (
+    <div>
+      {hideLabel ? (
+        input
+      ) : (
+        // eslint-disable-next-line jsx-a11y/label-has-associated-control
+        <label className='flex items-center'>
+          {label && (
+            <span
+              className={`text-nc-title text-body-1 whitespace-nowrap ${
+                labelPosition === 'left' ? 'mr-3' : 'order-last ml-3'
+              }`}>
+              {label}
+            </span>
+          )}
+          {input}
+        </label>
+      )}
     </div>
   )
 }
@@ -337,7 +492,8 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isMulti,
 }) => {
   const {name, value} = field
-  const {setFieldValue} = form
+  const {setFieldValue, errors} = form
+  const isInvalid = !!get(errors, name)
   return (
     <Select
       id={name}
@@ -347,6 +503,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
       placeholder={placeholder}
       isSearchable={isFilterable}
       isMulti={isMulti}
+      isInvalid={isInvalid}
       onChange={(item) => setFieldValue(name, item)}
     />
   )
