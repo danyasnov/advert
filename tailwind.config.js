@@ -108,6 +108,7 @@ module.exports = {
         'notification-success': 'rgba(0, 163, 0, 1)',
         'notification-info': '#80B2FF',
         error: '#CC3237',
+        'sold-background': 'rgba(255,64,64, 0.2)',
       },
       inset: {
         '89px': '89px',
