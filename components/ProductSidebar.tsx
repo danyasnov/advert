@@ -26,13 +26,13 @@ const ProductSidebar: FC = observer(() => {
           {advert.oldPrice}
         </span>
       )}
+      <ProductInfoIcons />
       {!isUserAdv && advert.state !== 'sold' && (
         <>
           <CallButton product={product} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </>
       )}
-      <ProductInfoIcons />
       <UserCard />
     </div>
   )
