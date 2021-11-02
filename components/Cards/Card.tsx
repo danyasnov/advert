@@ -15,9 +15,11 @@ import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
+import ProductLike from '../ProductLike'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -102,6 +104,14 @@ const Card: FC<Props> = ({
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
       <CardBadge state={product.state} />
+      <div className='absolute top-1 right-1 w-6 h-6 z-20'>
+        <ProductLike
+          userHash={product.owner.hash}
+          color='white'
+          hash={product.hash}
+          isFavorite={product.isFavorite}
+        />
+      </div>
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {inView && (

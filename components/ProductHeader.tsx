@@ -33,7 +33,11 @@ const ProductHeader: FC = observer(() => {
           {advert.title}
         </h1>
         <div className='flex ml-4 space-x-2'>
-          {userHash && !isUserAdv && <ProductLike product={product} />}
+          <ProductLike
+            userHash={product.owner.hash}
+            hash={product.advert.hash}
+            isFavorite={product.advert.isFavorite}
+          />
           {isUserAdv && <ProductMenu product={product} />}
         </div>
       </div>

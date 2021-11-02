@@ -34,6 +34,7 @@ export const fetchProducts = (
     regionId: state.regionId,
     cityId: state.cityId,
     searchBy: state.searchBy,
+    userHash: state.hash,
   })
   const rest = getRest(storage)
 

@@ -1,10 +1,10 @@
-import {FC, ReactNode} from 'react'
+import {FC, MouseEventHandler, ReactNode} from 'react'
 
 interface Props {
   children?: ReactNode
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  onClick?: () => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 const Button: FC<Props> = ({children, className, onClick, type = 'button'}) => {
   return (
