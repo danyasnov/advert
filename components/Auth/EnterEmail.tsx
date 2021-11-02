@@ -108,7 +108,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
                   name='pass'
                   component={FormikPassword}
                   validate={validatePass}
-                  placeholder={t('PASSWORD')}
+                  placeholder={t('ENTER_PASSWORD')}
                 />
                 <LinkButton
                   onClick={() =>

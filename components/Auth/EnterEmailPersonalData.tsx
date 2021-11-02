@@ -97,7 +97,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               name='pass'
               component={FormikPassword}
               validate={validatePass}
-              placeholder={t('PASSWORD')}
+              placeholder={t('ENTER_PASSWORD')}
             />
           </Form>
           <div className='-mx-4'>
