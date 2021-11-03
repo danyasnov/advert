@@ -107,7 +107,7 @@ export class UserStore implements IUserStore {
       },
     }
     config.cancelToken = currentScope.cancelTokenSource.token
-    if (payload.page) {
+    if (payload.page && payload.page !== 1) {
       config.data.page = payload.page
       config.data.cacheId = currentScope.cacheId
     }

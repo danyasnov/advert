@@ -1,5 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import IcLikeEmpty from 'icons/material/LikeEmpty.svg'
+import IcLikeEmptyWhite from 'icons/material/LikeEmptyWhite.svg'
 import IcLike from 'icons/material/Like.svg'
 import {parseCookies} from 'nookies'
 import Button from './Buttons/Button'
@@ -43,11 +44,13 @@ const ProductLike: FC<Props> = ({
       {like ? (
         <IcLike className='fill-current text-error' width={24} height={24} />
       ) : (
-        <IcLikeEmpty
-          className={`fill-current text-${color}`}
-          width={24}
-          height={24}
-        />
+        <>
+          {color === 'white' ? (
+            <IcLikeEmptyWhite className='fill-current' width={24} height={24} />
+          ) : (
+            <IcLikeEmpty className='fill-current' width={24} height={24} />
+          )}
+        </>
       )}
     </Button>
   )
