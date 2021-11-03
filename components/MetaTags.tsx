@@ -170,7 +170,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           />
         </>
       )}
-      <Script src='https://www.googletagmanager.com/gtag/js?id=UA-131255061-3' />
+      <Script src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1' />
       <Script
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
@@ -178,7 +178,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
           
-            gtag('config', 'UA-131255061-3');`,
+            gtag('config', 'UA-211806856-1');`,
         }}
       />
       <Script
