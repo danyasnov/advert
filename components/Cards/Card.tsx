@@ -110,6 +110,7 @@ const Card: FC<Props> = ({
           color='white'
           hash={product.hash}
           isFavorite={product.isFavorite}
+          state={product.state}
         />
       </div>
       <div className='overflow-hidden relative' ref={viewportRef}>

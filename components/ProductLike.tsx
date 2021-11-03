@@ -3,6 +3,7 @@ import IcLikeEmpty from 'icons/material/LikeEmpty.svg'
 import IcLikeEmptyWhite from 'icons/material/LikeEmptyWhite.svg'
 import IcLike from 'icons/material/Like.svg'
 import {parseCookies} from 'nookies'
+import {AdvertiseState} from 'front-api/src/models/index'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import {SerializedCookiesState} from '../types'
@@ -12,18 +13,20 @@ interface Props {
   userHash: string
   isFavorite: boolean
   color?: string
+  state: AdvertiseState
 }
 const ProductLike: FC<Props> = ({
   hash,
   isFavorite,
   color = 'black-c',
   userHash,
+  state,
 }) => {
   const [like, setLike] = useState(isFavorite)
   const [show, setShow] = useState(false)
   useEffect(() => {
-    const state: SerializedCookiesState = parseCookies()
-    setShow(state.hash && state.hash !== userHash)
+    const cookies: SerializedCookiesState = parseCookies()
+    setShow(cookies.hash && cookies.hash !== userHash && state !== 'sold')
   }, [userHash])
   if (!show) return null
   return (

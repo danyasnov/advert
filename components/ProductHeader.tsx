@@ -37,6 +37,7 @@ const ProductHeader: FC = observer(() => {
             userHash={product.owner.hash}
             hash={product.advert.hash}
             isFavorite={product.advert.isFavorite}
+            state={product.advert.state}
           />
           {isUserAdv && <ProductMenu product={product} />}
         </div>
