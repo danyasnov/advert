@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "N43A55SQ4P.sale.adverto.adverto",
+        "paths": ["*", "/"]
+      }
+    ]
+  }
+}
