@@ -46,6 +46,10 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true)
     const {pathname} = parsedUrl
 
+    // if deeplink - no need to redirect or set cookies
+    if (pathname.includes('/b/')) {
+      return handle(req, res)
+    }
     // first visit
     if (!cookies.language) {
       let language
