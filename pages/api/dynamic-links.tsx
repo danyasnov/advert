@@ -1,22 +1,9 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {FirebaseDynamicLinks} from 'firebase-dynamic-links'
 import {CoverLinkType} from 'front-api/src/models/index'
 import {processCookies} from '../../helpers'
 import {restCoverLink} from '../../api/v1'
-
-const firebaseDynamicLinks = new FirebaseDynamicLinks(
-  'AIzaSyAkw1JlCOKOU-AIsBfpl3onL0m46DaydRQ',
-)
-const generateHashLink = () => {
-  const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-  let randomString = ''
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < 7; i++) {
-    const randomPoz = Math.floor(Math.random() * charSet.length)
-    randomString += charSet.substring(randomPoz, randomPoz + 1)
-  }
-  return randomString
-}
+import {getRest} from '../../api'
+import Storage from '../../stores/Storage'
 
 export default async (
   req: NextApiRequest,
@@ -27,31 +14,23 @@ export default async (
 
   const {productHash, userHash} = body
   let type
-  let testStr
-  const hashLink = generateHashLink()
+  let link
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  const linkHash = rest.deeplinkUtils.generateDeeplinkHash()
 
   if (productHash && userHash) {
     type = CoverLinkType.shareAdvert
-    testStr = `https://adverto.sale/${productHash}?action=advert&id=${productHash}&dynamic_link_refer_hash=${hashLink}&user=${userHash}`
+    link = rest.deeplinkUtils.generateProductLink(
+      linkHash,
+      productHash,
+      userHash,
+    )
   } else if (userHash) {
     type = CoverLinkType.shareOtherProfile
-    testStr = `https://adverto.sale/user/${userHash}?action=profile&id=${userHash}&dynamic_link_refer_hash=${hashLink}`
+    link = rest.deeplinkUtils.generateUserLink(linkHash, userHash)
   }
 
-  const {shortLink} = await firebaseDynamicLinks.createLink({
-    dynamicLinkInfo: {
-      domainUriPrefix: 'https://adverto.page.link',
-      link: testStr,
-      androidInfo: {
-        androidPackageName: 'adverto.sale',
-      },
-      iosInfo: {
-        iosBundleId: 'sale.adverto.adverto',
-        iosAppStoreId: '1287862488',
-      },
-    },
-  })
-
-  const result = await restCoverLink(shortLink, hashLink, type, state.language)
+  const result = await restCoverLink(link, linkHash, type, state.language)
   return res.json(result)
 }
