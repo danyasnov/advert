@@ -5,8 +5,6 @@ import {Formik, Form, Field, useFormikContext} from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
-  CAParamContent,
-  CurrencyModel,
   FieldsModel,
 } from 'front-api/src/models/index'
 import {isEmpty, isEqual, parseInt, size} from 'lodash'
@@ -19,7 +17,6 @@ import {
   FormikSelect,
   FormikSwitch,
 } from '../FormikComponents'
-import FormikAutoSave from '../FormikAutoSave'
 import AdvertDescription from './AdvertDescription'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import AdvertPrice from './AdvertPrice'
@@ -130,10 +127,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       condition: condition?.value,
       fields: mappedFields,
       degradation: 'absent',
-      isTop: false,
-      isSecureDeal: false,
-      isVip: false,
-      isFastSale: false,
     }
     makeRequest({
       url: '/api/submit-draft',
@@ -188,6 +181,10 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           isBargainPossible: false,
           isSwapPossible: false,
           isExclusive: false,
+          isTop: false,
+          isSecureDeal: false,
+          isVip: false,
+          isFastSale: false,
           price: '',
           // @ts-ignore
           currency: currencies[0],
@@ -218,7 +215,8 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         validateOnBlur={false}
         validateOnChange={false}
         onSubmit={onSubmit}>
-          {({submitForm}) => (<Form className='w-full space-y-12 my-6 pb-20'>
+        {({submitForm}) => (
+          <Form className='w-full space-y-12 my-6 pb-20'>
             <div className='flex w-full'>
               <div className='w-4/12'>
                 <span className='text-body-1 text-nc-title'>
