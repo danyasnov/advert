@@ -3,6 +3,7 @@ import {CACategoryModel} from 'front-api/src/index'
 import MapPage from './MapPage'
 import CategoryPage from './CategoryPage'
 import FormPage from './FormPage'
+import DropZone from './AdvertMedia/DropZone'
 
 export interface PageProps {
   state: State

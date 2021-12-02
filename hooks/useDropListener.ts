@@ -7,7 +7,6 @@ const useDropListener = ({onDragEnter, onDragLeave}) => {
       if (e.dataTransfer.types[0] === 'Files') {
         counter += 1
         if (counter === 1) {
-          // document.body.style.pointerEvents = 'none'
           onDragEnter()
         }
       }
@@ -16,7 +15,6 @@ const useDropListener = ({onDragEnter, onDragLeave}) => {
       if (e.dataTransfer.types[0] === 'Files') {
         counter -= 1
         if (counter === 0) {
-          // document.body.style.pointerEvents = ''
           onDragLeave()
         }
       }
@@ -26,7 +24,6 @@ const useDropListener = ({onDragEnter, onDragLeave}) => {
       if (e.dataTransfer.types[0] === 'Files') {
         counter -= 1
         if (counter === 0) {
-          // document.body.style.pointerEvents = ''
           onDragLeave()
         }
       }

@@ -4,6 +4,8 @@ import {instanceOf} from 'prop-types'
 import {swap} from '../../../utils'
 import AdvertPhotosContainer from './AdvertPhotosContainer'
 import {PhotoFile} from '../../../types'
+import AdvertUploadButton from './AdvertUploadButton'
+import DropZone from './DropZone'
 
 const AdvertPhotos: FC<
   {
@@ -24,6 +26,7 @@ const AdvertPhotos: FC<
       setFieldValue(name, photos)
     }
   }, [photos])
+
   return (
     <AdvertPhotosContainer
       distance={1}

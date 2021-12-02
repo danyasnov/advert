@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {Formik, Form, Field, useFormikContext} from 'formik'
@@ -10,6 +10,7 @@ import {
 import {isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
+import {useDropzone} from 'react-dropzone'
 import {PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import {
@@ -163,9 +164,9 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   if (category?.data?.fields) {
     fieldsArray = category.data.fields
   }
-  console.log(location)
 
   if (!category || isEmpty(currencies) || !user) return null
+
   return (
     <div className='w-full'>
       <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8'>

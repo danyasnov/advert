@@ -35,7 +35,7 @@
     "mobx-react-lite": "^3.2.2",
     "mysql2": "^2.3.2",
     "next": "^11.1.2",
-    "next-i18next": "^8.6.0",
+    "next-i18next": "8.6.0",
     "nookies": "^2.5.2",
     "nprogress": "^0.2.0",
     "rc-slider": "^9.7.4",
