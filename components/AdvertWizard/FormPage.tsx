@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo, useRef, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {Formik, Form, Field, useFormikContext} from 'formik'
@@ -24,6 +24,8 @@ import AdvertPhotos from './AdvertMedia/AdvertPhotos'
 import AdvertVideos from './AdvertMedia/AdvertVideos'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import OutlineButton from '../Buttons/OutlineButton'
+import AdvertFormField from './AdvertFormField'
+import AdvertFormHeading from './AdvertFormHeading'
 
 const mapFields = (rawFields, fieldsById) => {
   return Object.fromEntries(
@@ -77,9 +79,22 @@ const mapCategoryData = (
     }, {}),
   }
 }
+
+const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
+  onChangeFields,
+}) => {
+  const {values} = useFormikContext()
+  useEffect(() => {
+    // @ts-ignore
+    onChangeFields(values.fields)
+    // @ts-ignore
+  }, [values.fields])
+  return null
+}
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push} = useRouter()
   const [currencies, setCurrencies] = useState<[]>([])
+  const [initialValues, setInitialValues] = useState({})
   const {languagesByIsoCode, user} = useGeneralStore()
   const fieldsRef = useRef({})
   const {t} = useTranslation()
@@ -93,6 +108,32 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     latitude: state.location.lat,
     longitude: state.location.lng,
   }
+
+  useEffect(() => {
+    if (size(currencies)) {
+      if (state.formData) {
+        setInitialValues(state.formData)
+      } else {
+        setInitialValues({
+          fields: {},
+          content: [],
+          photos: [],
+          videos: [],
+          condition: null,
+          isBargainPossible: false,
+          isSwapPossible: false,
+          isExclusive: false,
+          isTop: false,
+          isSecureDeal: false,
+          isVip: false,
+          isFastSale: false,
+          price: '',
+          // @ts-ignore
+          currency: currencies[0],
+        })
+      }
+    }
+  }, [state.formData, currencies])
   useEffect(() => {
     makeRequest({
       url: '/api/category-data',
@@ -102,6 +143,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       },
     }).then((data) => {
       setCategoryData(mapCategoryData(data.data.result))
+      console.log(data.data.result)
     })
     makeRequest({
       url: '/api/currencies-by-gps',
@@ -170,46 +212,46 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   return (
     <div className='w-full'>
       <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8'>
-        {t('SELECT_CATEGORY')}
+        {category.data.name}
       </h3>
       <Formik
-        initialValues={{
-          fields: {},
-          content: [],
-          photos: [],
-          videos: [],
-          condition: null,
-          isBargainPossible: false,
-          isSwapPossible: false,
-          isExclusive: false,
-          isTop: false,
-          isSecureDeal: false,
-          isVip: false,
-          isFastSale: false,
-          price: '',
-          // @ts-ignore
-          currency: currencies[0],
-        }}
+        enableReinitialize
+        initialValues={initialValues}
         validate={(values) => {
           const errors: any = {}
-          const {photos, content} = values
+          const {photos, content, condition, price} = values
 
           const categoryData = category.data
 
           const mainContent = content.find(
             (c) => c.langCode === user.mainLanguage.isoCode,
           )
+          let isMissingFields = false
+          const missingFieldsMsg = t('ADVERT_CREATING_HELP_ALERT')
+
+          if (!price && !categoryData.allowFree) {
+            isMissingFields = true
+            errors.price = missingFieldsMsg
+          }
+
+          if (!condition) {
+            isMissingFields = true
+            errors.condition = missingFieldsMsg
+          }
 
           if (!mainContent.title) {
-            const msg = t('ADVERT_CREATING_HELP_ALERT')
-            errors.content = t(msg)
-            toast.error(msg)
+            isMissingFields = true
+            errors.content = missingFieldsMsg
           }
 
           if (size(photos) < categoryData.minPhotos) {
             const msg = t('PHOTO_ERROR', {minPhotos: categoryData.minPhotos})
             errors.photos = msg
             toast.error(msg)
+          }
+
+          if (isMissingFields) {
+            toast.error(missingFieldsMsg)
           }
           return errors
         }}
@@ -218,139 +260,136 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         onSubmit={onSubmit}>
         {({submitForm, values}) => (
           <Form className='w-full space-y-12 my-6 pb-20'>
-            <div className='flex w-full'>
-              <div className='w-4/12'>
-                <span className='text-body-1 text-nc-title'>
-                  {t('TITLE_AND_DESCRIPTION')}
-                </span>
-                <span className='text-body-1 text-nc-primary ml-1'>*</span>
-              </div>
-
-              {user && (
-                <div className='w-8/12'>
-                  <Field
-                    name='content'
-                    component={AdvertDescription}
-                    user={user}
-                    languagesByIsoCode={languagesByIsoCode}
-                  />
-                </div>
-              )}
+            <div>
+              <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
+              <AdvertFormField
+                body={
+                  <div className='w-8/12'>
+                    <Field
+                      name='content'
+                      component={AdvertDescription}
+                      user={user}
+                      languagesByIsoCode={languagesByIsoCode}
+                    />
+                  </div>
+                }
+                label={t('TITLE_AND_DESCRIPTION')}
+                labelClassName='mt-2'
+                isRequired
+              />
             </div>
-            <div className='flex w-full'>
-              <div className='w-4/12'>
-                <span className='text-body-1 text-nc-title'>
-                  {t('PRODUCT_PHOTOS')}
-                </span>
-                <span className='text-body-1 text-nc-primary ml-1'>*</span>
-              </div>
-              <div className='w-8/12'>
-                <Field
-                  component={AdvertPhotos}
-                  name='photos'
-                  maxPhotos={category.data.maxPhotos}
+
+            <div>
+              <AdvertFormHeading title={t('UPLOAD_PHOTO_AND_VIDEO')} />
+              <AdvertFormField
+                body={
+                  <div className='w-8/12'>
+                    <Field
+                      component={AdvertPhotos}
+                      name='photos'
+                      maxPhotos={category.data.maxPhotos}
+                    />
+                  </div>
+                }
+                label={t('PRODUCT_PHOTOS')}
+                isRequired
+              />
+              <AdvertFormField
+                body={
+                  <div className='w-8/12'>
+                    <AdvertVideos />
+                  </div>
+                }
+                label={t('PRODUCT_VIDEO')}
+                hide={!category.data.allowVideo}
+              />
+            </div>
+
+            <div>
+              <AdvertFormHeading title={t('ENTER_PRICE')} />
+              <div className='space-y-4'>
+                <AdvertFormField
+                  body={
+                    <div className='w-4/12'>
+                      <Field
+                        name='price'
+                        component={AdvertPrice}
+                        currencies={currencies}
+                        allowSecureDeal={category.data.allowSecureDeal}
+                      />
+                    </div>
+                  }
+                  isRequired={!category.data.allowFree}
+                  label={t('PRICE')}
+                  labelClassName='mt-2'
+                />
+                <AdvertFormField
+                  body={
+                    <div className='w-4/12'>
+                      <Field name='isSwapPossible' component={FormikSwitch} />
+                    </div>
+                  }
+                  className='items-center'
+                  label={t('EXCHANGE')}
+                />
+                <AdvertFormField
+                  body={
+                    <div className='w-4/12'>
+                      <Field
+                        name='isBargainPossible'
+                        component={FormikSwitch}
+                      />
+                    </div>
+                  }
+                  className='items-center'
+                  label={t('BARGAIN')}
                 />
               </div>
             </div>
-            {category.data.allowVideo && (
-              <div className='flex w-full'>
-                <div className='w-4/12'>
-                  <span className='text-body-1 text-nc-title'>
-                    {t('PRODUCT_VIDEO')}
-                  </span>
-                  <span className='text-body-1 text-nc-primary ml-1'>*</span>
-                </div>
-                <div className='w-8/12'>
-                  <AdvertVideos />
-                </div>
-              </div>
-            )}
-            <div className='space-y-4'>
-              <div className='flex w-full'>
-                <div className='w-4/12'>
-                  <span className='text-body-1 text-nc-title'>
-                    {t('PRICE')}
-                  </span>
-                  <span className='text-body-1 text-nc-primary ml-1'>*</span>
-                </div>
-                <div className='w-4/12'>
-                  <Field
-                    name='price'
-                    component={AdvertPrice}
-                    currencies={currencies}
-                    allowSecureDeal={category.data.allowSecureDeal}
-                  />
-                </div>
-              </div>
-              <div className='flex w-full'>
-                <div className='w-4/12'>
-                  <span className='text-body-1 text-nc-title'>
-                    {t('EXCHANGE')}
-                  </span>
-                </div>
-                <div className='w-4/12'>
-                  <Field name='isSwapPossible' component={FormikSwitch} />
-                </div>
-              </div>
-              <div className='flex w-full'>
-                <div className='w-4/12'>
-                  <span className='text-body-1 text-nc-title'>
-                    {t('BARGAIN')}
-                  </span>
-                </div>
-                <div className='w-4/12'>
-                  <Field name='isBargainPossible' component={FormikSwitch} />
-                </div>
-              </div>
-            </div>
             <div>
-              <p className='text-nc-title text-h-2 font-medium mb-6'>
-                {t('PRODUCT_FEATURES')}
-              </p>
+              <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
               <div className='space-y-4'>
-                <div className='flex items-center'>
-                  <span className='w-4/12 text-body-1 text-nc-title'>
-                    {t('CONDITION')}
-
-                    <span className='text-body-1 text-nc-primary ml-1'>*</span>
-                  </span>
-                  <div className='w-5/12'>
-                    <Field
-                      component={FormikSelect}
-                      name='condition'
-                      options={[
-                        {
-                          value: 'new',
-                          label: t('NEW_PRODUCT'),
-                        },
-                        {
-                          value: 'used',
-                          label: t('USED_PRODUCT'),
-                        },
-                      ]}
-                      placeholder={t('CONDITION')}
-                    />
-                  </div>
-                </div>
-                {fieldsArray.map((f) => (
-                  <div className='flex items-center' key={f.id}>
-                    <span className='w-4/12 text-body-1 text-nc-title'>
-                      {f.name}
-                      {f.isFillingRequired ? (
-                        <span className='text-body-1 text-nc-primary ml-1'>
-                          *
-                        </span>
-                      ) : (
-                        ''
-                      )}
-                    </span>
+                <AdvertFormField
+                  body={
                     <div className='w-5/12'>
-                      <FormikCreateField field={f} />
+                      <Field
+                        component={FormikSelect}
+                        name='condition'
+                        options={[
+                          {
+                            value: 'new',
+                            label: t('NEW_PRODUCT'),
+                          },
+                          {
+                            value: 'used',
+                            label: t('USED_PRODUCT'),
+                          },
+                        ]}
+                        placeholder={t('CONDITION')}
+                      />
                     </div>
-                  </div>
+                  }
+                  className='items-center'
+                  isRequired
+                  labelClassName='mt-2'
+                  label={t('CONDITION')}
+                />
+                {fieldsArray.map((f) => (
+                  <AdvertFormField
+                    key={f.id}
+                    body={
+                      <div className='w-5/12'>
+                        <FormikCreateField field={f} />
+                      </div>
+                    }
+                    className='items-center'
+                    isRequired={f.isFillingRequired}
+                    label={f.name}
+                  />
                 ))}
               </div>
             </div>
+
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
               <OutlineButton
                 onClick={() => {
@@ -376,17 +415,5 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     </div>
   )
 })
-
-const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
-  onChangeFields,
-}) => {
-  const {values} = useFormikContext()
-  useEffect(() => {
-    // @ts-ignore
-    onChangeFields(values.fields)
-    // @ts-ignore
-  }, [values.fields])
-  return null
-}
 
 export default FormPage

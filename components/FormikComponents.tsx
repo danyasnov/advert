@@ -215,8 +215,6 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
   const validate = (value) => {
     let msg
     if (isFillingRequired && !value) {
-      console.log('isFillingRequired && !value', isFillingRequired && !value)
-
       msg = 'err'
     }
     return msg

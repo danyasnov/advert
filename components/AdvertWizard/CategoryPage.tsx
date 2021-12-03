@@ -63,9 +63,16 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
       </OutlineButton>
       <PrimaryButton
         onClick={() => {
+          const category = last(selected)
+          // if (state.category?.id && category.id !== state.category?.id) {
+          //   dispatch({
+          //     type: 'setFormData',
+          //     formData: null,
+          //   })
+          // }
           dispatch({
             type: 'setCategory',
-            category: last(selected),
+            category,
           })
           dispatch({
             type: 'setPage',

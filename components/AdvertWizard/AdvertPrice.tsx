@@ -1,8 +1,9 @@
 import {FC, useState} from 'react'
 import {FieldProps} from 'formik'
 import NumberFormat from 'react-number-format'
-import {CAParamContent, CurrencyModel} from 'front-api/src/models/index'
+import {CurrencyModel} from 'front-api/src/models/index'
 import {useTranslation} from 'next-i18next'
+import {size} from 'lodash'
 import RadioButtons from '../RadioButtons'
 
 interface Props {
@@ -48,17 +49,19 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           </span>
         )}
       </div>
-      <div className='mt-2'>
-        <RadioButtons
-          value={currency.code}
-          options={currencyOptions}
-          onChange={(v) => {
-            const cur = currencies.find((c) => c.code === v)
-            setFieldValue('currency', cur)
-          }}
-          name='currency'
-        />
-      </div>
+      {size(currencies) > 1 && (
+        <div className='mt-2'>
+          <RadioButtons
+            value={currency.code}
+            options={currencyOptions}
+            onChange={(v) => {
+              const cur = currencies.find((c) => c.code === v)
+              setFieldValue('currency', cur)
+            }}
+            name='currency'
+          />
+        </div>
+      )}
     </div>
   )
 }
