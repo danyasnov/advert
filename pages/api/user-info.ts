@@ -10,7 +10,7 @@ export default async (
   const {hash} = body
   const state = await processCookies({req})
 
-  return fetchUser(hash, state.language, state.token)
+  return fetchUser(hash, state.language)
     .then((response) => {
       res.json(response)
     })
