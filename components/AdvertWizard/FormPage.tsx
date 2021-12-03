@@ -165,7 +165,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       price: values.price,
       categoryId,
       userHash: user.hash,
-      videos: [],
       location,
       condition: condition?.value,
       fields: mappedFields,

@@ -39,7 +39,7 @@ const AdvertVideos: FC<FieldProps> = ({
       }).then((res) => {
         const result = res.data.items[0]
         setVideo(res.data.items[0])
-        setFieldValue(name, result)
+        setFieldValue(name, [result])
       })
     },
     [video],
@@ -62,7 +62,7 @@ const AdvertVideos: FC<FieldProps> = ({
             url={video.url}
             onRemove={() => {
               setVideo(null)
-              setFieldValue(name, null)
+              setFieldValue(name, [])
             }}
           />
         )}
