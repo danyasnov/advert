@@ -1,4 +1,4 @@
-import {FC, ReactNode} from 'react'
+import {FC, MouseEventHandler, ReactNode} from 'react'
 import Button from './Button'
 import {disabledClass} from './styles'
 
@@ -6,7 +6,7 @@ interface Props {
   children?: ReactNode
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  onClick?: () => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
 }
 
@@ -23,7 +23,7 @@ const PrimaryButton: FC<Props> = ({
         disabled ? disabledClass : 'nc-gradient-brand'
       } ${className || ''}`}
       type={type}
-      onClick={() => !disabled && onClick && onClick()}>
+      onClick={(e) => !disabled && onClick && onClick(e)}>
       {children}
     </Button>
   )

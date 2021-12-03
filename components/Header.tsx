@@ -45,11 +45,11 @@ const withIcons = (opts) =>
   }))
 
 const Header: FC = observer(() => {
-  const router = useRouter()
+  const {reload, push} = useRouter()
   const {t} = useTranslation()
   const [lang, setLang] = useState<string>()
   const languages = useRef(withIcons(options))
-  const {showLogin, setShowLogin} = useGeneralStore()
+  const {showLogin, setShowLogin, user} = useGeneralStore()
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()
     setLang(state.language)
@@ -83,7 +83,7 @@ const Header: FC = observer(() => {
                 id='language-select'
                 onChange={({value}) => {
                   setCookiesObject({language: value as string})
-                  router.reload()
+                  reload()
                 }}
                 value={languages.current.find(({value}) => value === lang)}
                 options={languages.current as SelectItem[]}
@@ -100,10 +100,16 @@ const Header: FC = observer(() => {
             <CategoriesSelector />
             <Search />
           </div>
-          <PrimaryButton className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
-            <LinkWrapper href='/advert/create' title={t('NEW_AD')}>
-              <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
-            </LinkWrapper>
+          <PrimaryButton
+            className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
+            onClick={() => {
+              if (!user) {
+                setShowLogin(true)
+              } else {
+                push('/advert/create')
+              }
+            }}>
+            <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
           </PrimaryButton>
         </div>
       </div>
