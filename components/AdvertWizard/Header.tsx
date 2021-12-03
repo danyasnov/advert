@@ -20,8 +20,8 @@ const Header: FC = observer(() => {
         </h1>
       </div>
       <div className='flex items-center space-x-6'>
-        <IcNotificationsNone className='fill-current h-6 w-6 text-black-c' />
-        <IcHelpOutline className='fill-current h-6 w-6 text-black-c' />
+        {/* <IcNotificationsNone className='fill-current h-6 w-6 text-black-c' /> */}
+        {/* <IcHelpOutline className='fill-current h-6 w-6 text-black-c' /> */}
         <UserAvatar url={user?.imageUrl} size={10} />
       </div>
 
