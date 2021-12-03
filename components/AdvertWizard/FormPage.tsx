@@ -297,7 +297,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
               <AdvertFormField
                 body={
                   <div className='w-8/12'>
-                    <AdvertVideos />
+                    <Field
+                      component={AdvertVideos}
+                      name='videos'
+                      // maxVideoDuration={category.data.maxVideoDuration}
+                    />
                   </div>
                 }
                 label={t('PRODUCT_VIDEO')}

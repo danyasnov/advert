@@ -25,7 +25,7 @@ const AdvertUploadButton: FC<{
 
   const {getRootProps, getInputProps} = useDropzone({
     accept,
-    maxSize: 26214400,
+    maxSize: type === 'photo' ? 26214400 : 31457280,
     onDrop,
     disabled,
     maxFiles,

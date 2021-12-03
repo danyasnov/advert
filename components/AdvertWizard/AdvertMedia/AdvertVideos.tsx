@@ -1,4 +1,5 @@
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {FieldProps} from 'formik'
 import useDropListener from '../../../hooks/useDropListener'
 import {makeRequest} from '../../../api'
 import DropZone from './DropZone'
@@ -6,8 +7,17 @@ import AdvertUploadButton from './AdvertUploadButton'
 import AdvertVideo from './AdvertVideo'
 import {VideoFile} from '../../../types'
 
-const AdvertVideos: FC = () => {
+// interface Props {
+//   // maxVideoDuration?: number
+// }
+const AdvertVideos: FC<FieldProps> = ({
+  // maxVideoDuration,
+  field,
+  form,
+}) => {
   const [video, setVideo] = useState<VideoFile>()
+  const {name} = field
+  const {setFieldValue} = form
   const [isDragging, setIsDragging] = useState(false)
 
   useDropListener({
@@ -16,7 +26,7 @@ const AdvertVideos: FC = () => {
   })
 
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    async (acceptedFiles) => {
       const file = acceptedFiles[0]
       const formData = new FormData()
       formData.append('video', file)
@@ -27,7 +37,9 @@ const AdvertVideos: FC = () => {
         data: formData,
         url: '/api/upload/video',
       }).then((res) => {
+        const result = res.data.items[0]
         setVideo(res.data.items[0])
+        setFieldValue(name, result)
       })
     },
     [video],
@@ -50,6 +62,7 @@ const AdvertVideos: FC = () => {
             url={video.url}
             onRemove={() => {
               setVideo(null)
+              setFieldValue(name, null)
             }}
           />
         )}
@@ -61,5 +74,19 @@ const AdvertVideos: FC = () => {
     </div>
   )
 }
+
+// const getVideoDuration = (file) => {
+//   return new Promise((resolve) => {
+//     const video = document.createElement('video')
+//     video.preload = 'metadata'
+//     video.onloadedmetadata = () => {
+//       window.URL.revokeObjectURL(video.src)
+//       const {duration} = video
+//       resolve(duration)
+//     }
+//
+//     video.srcObject = file
+//   })
+// }
 
 export default AdvertVideos

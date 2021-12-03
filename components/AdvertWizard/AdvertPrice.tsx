@@ -35,7 +35,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
       <div className='px-3.5 py-2 border rounded-lg flex flex-col focus-within:border-nc-primary'>
         <NumberFormat
           value={value}
-          suffix={` ${currency.code}`}
+          suffix={` ${currency?.code}`}
           onValueChange={({value: newValue}) => {
             setFieldValue(name, newValue)
           }}
