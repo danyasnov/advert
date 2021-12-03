@@ -127,7 +127,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       location,
       condition: condition?.value,
       fields: mappedFields,
-      degradation: 'absent',
+      degradation: state.degradation,
     }
     makeRequest({
       url: '/api/submit-draft',

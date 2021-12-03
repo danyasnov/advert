@@ -15,8 +15,8 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 
 const zoomRadiusMap = {
   0: 15,
-  1: 13,
-  5: 11,
+  1: 14,
+  2: 13,
 }
 
 const MapPage: FC<PageProps> = ({dispatch, state}) => {
@@ -49,10 +49,11 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     if (marker.current) marker.current.setPosition(center)
     setLocation(center)
   }
-  const onChangeRadius = (data) => {
-    setRadius(data)
-    mapRef.current.setZoom(zoomRadiusMap[data])
-    circle.current.setRadius(data * 1000)
+  const onChangeRadius = (value, key) => {
+    dispatch({type: 'setDegradation', degradation: key})
+    setRadius(value)
+    mapRef.current.setZoom(zoomRadiusMap[value])
+    circle.current.setRadius(value * 1000)
   }
 
   const onSubmit = () => {

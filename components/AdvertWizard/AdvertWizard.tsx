@@ -1,9 +1,9 @@
 import React, {Dispatch, FC, useReducer} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
+import {TypeOfDegradation} from 'front-api/src/models/index'
 import MapPage from './MapPage'
 import CategoryPage from './CategoryPage'
 import FormPage from './FormPage'
-import DropZone from './AdvertMedia/DropZone'
 
 export interface PageProps {
   state: State
@@ -22,11 +22,13 @@ interface State {
     lng: number
   } | null
   category: CACategoryModel | null
+  degradation: TypeOfDegradation
   page: FC
 }
 const initialState: State = {
   location: null,
   category: null,
+  degradation: 'absent',
   page: AdvertPages.mapPage,
 }
 
@@ -36,12 +38,10 @@ const reducer = (state, action) => {
       return {...state, location: action.location}
     case 'setCategory':
       return {...state, category: action.category}
-    case 'setUserId':
-      return {...state, userId: action.userId}
+    case 'setDegradation':
+      return {...state, degradation: action.degradation}
     case 'setPage':
       return {...state, page: action.page}
-    case 'setPassword':
-      return {...state, password: action.password}
     default:
       throw new Error()
   }

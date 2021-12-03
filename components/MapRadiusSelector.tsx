@@ -9,31 +9,40 @@ import IcLocationBigHover from 'icons/location/LocationBigHover.svg'
 import IcLocationActive from 'icons/location/LocationActive.svg'
 import IcLocationSmallActive from 'icons/location/LocationSmallActive.svg'
 import IcLocationBigActive from 'icons/location/LocationBigActive.svg'
+import {
+  DEGRADATION_TYPE_ABSENT,
+  DEGRADATION_TYPE_HIGH,
+  DEGRADATION_TYPE_LOW,
+  TypeOfDegradation,
+} from 'front-api/src/models/index'
 import Button from './Buttons/Button'
 
 interface Props {
   radius: number
-  setRadius: (value: number) => void
+  setRadius: (radius: number, key: TypeOfDegradation) => void
 }
 
 const options = [
   {
-    title: 'MY_POSITION',
-    value: 0,
+    title: DEGRADATION_TYPE_ABSENT.title,
+    value: DEGRADATION_TYPE_ABSENT.radius,
+    key: DEGRADATION_TYPE_ABSENT.key,
     icon: IcLocation,
     iconActive: IcLocationActive,
     iconHover: IcLocationHover,
   },
   {
-    title: 'RADIUS_N_KM',
-    value: 1,
+    title: DEGRADATION_TYPE_LOW.title,
+    value: DEGRADATION_TYPE_LOW.radius,
+    key: DEGRADATION_TYPE_LOW.key,
     icon: IcLocationSmall,
     iconActive: IcLocationSmallActive,
     iconHover: IcLocationSmallHover,
   },
   {
-    title: 'RADIUS_N_KM',
-    value: 5,
+    title: DEGRADATION_TYPE_HIGH.title,
+    value: DEGRADATION_TYPE_HIGH.radius,
+    key: DEGRADATION_TYPE_HIGH.key,
     icon: IcLocationBig,
     iconActive: IcLocationBigActive,
     iconHover: IcLocationBigHover,
@@ -49,8 +58,8 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
         const Icon = isCurrent ? o.iconActive : o.icon
         return (
           <Button
-            key={o.value}
-            onClick={() => setRadius(o.value)}
+            key={o.key}
+            onClick={() => setRadius(o.value, o.key)}
             className={`flex px-4 py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
               isCurrent ? 'bg-nc-accent' : ''
             }`}>
