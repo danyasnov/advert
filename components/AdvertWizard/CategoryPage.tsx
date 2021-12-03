@@ -4,12 +4,12 @@ import {useTranslation} from 'next-i18next'
 import {first, isEmpty, last} from 'lodash'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {AdvertPages, PageProps} from './AdvertWizard'
+import OutlineButton from '../Buttons/OutlineButton'
 
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
@@ -51,7 +51,16 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   )
 
   const footer = (
-    <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-29 py-2.5'>
+    <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5'>
+      <OutlineButton
+        onClick={() => {
+          dispatch({
+            type: 'setPage',
+            page: AdvertPages.mapPage,
+          })
+        }}>
+        {t('BACK')}
+      </OutlineButton>
       <PrimaryButton
         onClick={() => {
           dispatch({

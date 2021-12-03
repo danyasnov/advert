@@ -9,7 +9,7 @@ interface Props {
 const OutlineButton: FC<Props> = ({children, className, onClick}) => {
   return (
     <Button
-      className={`px-12 py-3 border border-shadow-b rounded-lg ${
+      className={`px-6 py-3 border border-shadow-b rounded-lg text-nc-title text-body-2 ${
         className || ''
       }`}
       onClick={onClick}>

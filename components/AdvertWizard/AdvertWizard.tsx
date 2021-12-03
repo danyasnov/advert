@@ -23,12 +23,14 @@ interface State {
   } | null
   category: CACategoryModel | null
   degradation: TypeOfDegradation
+  formData: unknown
   page: FC
 }
 const initialState: State = {
   location: null,
   category: null,
   degradation: 'absent',
+  formData: null,
   page: AdvertPages.mapPage,
 }
 
@@ -42,6 +44,8 @@ const reducer = (state, action) => {
       return {...state, degradation: action.degradation}
     case 'setPage':
       return {...state, page: action.page}
+    case 'setFormData':
+      return {...state, formData: action.formData}
     default:
       throw new Error()
   }

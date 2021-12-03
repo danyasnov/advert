@@ -101,9 +101,11 @@ export const fetchLanguages = (
 export const fetchUser = async (
   id: string,
   language: string,
+  token: string,
 ): Promise<RestResponse<OwnerModel>> => {
   const storage = new Storage({
     language,
+    token,
   })
   const rest = getRest(storage)
   const userData = await rest.oldRest.userInfo(id)

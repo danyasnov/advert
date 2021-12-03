@@ -10,8 +10,7 @@ import {
 import {isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
-import {useDropzone} from 'react-dropzone'
-import {PageProps} from './AdvertWizard'
+import {AdvertPages, PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import {
   FormikCreateField,
@@ -24,6 +23,7 @@ import AdvertPrice from './AdvertPrice'
 import AdvertPhotos from './AdvertMedia/AdvertPhotos'
 import AdvertVideos from './AdvertMedia/AdvertVideos'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import OutlineButton from '../Buttons/OutlineButton'
 
 const mapFields = (rawFields, fieldsById) => {
   return Object.fromEntries(
@@ -216,7 +216,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         validateOnBlur={false}
         validateOnChange={false}
         onSubmit={onSubmit}>
-        {({submitForm}) => (
+        {({submitForm, values}) => (
           <Form className='w-full space-y-12 my-6 pb-20'>
             <div className='flex w-full'>
               <div className='w-4/12'>
@@ -351,7 +351,20 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 ))}
               </div>
             </div>
-            <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-29 py-2.5 z-10'>
+            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
+              <OutlineButton
+                onClick={() => {
+                  dispatch({
+                    type: 'setFormData',
+                    page: values,
+                  })
+                  dispatch({
+                    type: 'setPage',
+                    page: AdvertPages.categoryPage,
+                  })
+                }}>
+                {t('BACK')}
+              </OutlineButton>
               <PrimaryButton onClick={submitForm}>
                 {t('CONTINUE')}
               </PrimaryButton>

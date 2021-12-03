@@ -4,6 +4,9 @@ import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
+import {degradations} from 'front-api/src/models/index'
+import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -12,6 +15,7 @@ import MapRadiusSelector from '../MapRadiusSelector'
 import SvgMapMarker from '../../assets/icons/SvgMapMarker'
 import PlacesTextSearch from '../Selects/PlacesTextSearch'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const zoomRadiusMap = {
   0: 15,
@@ -19,24 +23,32 @@ const zoomRadiusMap = {
   2: 13,
 }
 
-const MapPage: FC<PageProps> = ({dispatch, state}) => {
+const MapPage: FC<PageProps> = observer(({dispatch, state}) => {
   const [location, setLocation] = useState<{lat: number; lng: number}>()
-  const [radius, setRadius] = useState<number>(0)
+  const {user} = useGeneralStore()
+  console.log(toJS(user))
+  const [radius, setRadius] = useState<number>(
+    degradations.find((d) => d.key === state.degradation)?.radius,
+  )
   const {t} = useTranslation()
   const initialLocation = useRef(null)
   useEffect(() => {
-    const cookies: SerializedCookiesState = parseCookies()
-    const {searchLocation, userLocation} = cookies
-    let loc
-    if (userLocation) {
-      loc = JSON.parse(userLocation)
+    let locationValue
+    if (state.location) {
+      locationValue = state.location
     } else {
-      loc = JSON.parse(searchLocation)
+      const cookies: SerializedCookiesState = parseCookies()
+      const {searchLocation, userLocation} = cookies
+      let loc
+      if (userLocation) {
+        loc = JSON.parse(userLocation)
+      } else {
+        loc = JSON.parse(searchLocation)
+      }
+      locationValue = {lat: loc.latitude, lng: loc.longitude}
     }
-    const value = {lat: loc.latitude, lng: loc.longitude}
-
-    initialLocation.current = value
-    setLocation(value)
+    initialLocation.current = locationValue
+    setLocation(locationValue)
   }, [])
 
   const circle = useRef(null)
@@ -160,7 +172,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
               onChange={onChangeMap}
               yesIWantToUseGoogleMapApiInternals
               margin={[1, 2, 3, 4]}
-              defaultZoom={15}
+              defaultZoom={zoomRadiusMap[radius]}
               onGoogleApiLoaded={onGoogleApiLoaded}
             />
             <div className='absolute bottom-6 left-3'>
@@ -169,13 +181,11 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
           </>
         )}
       </div>
-      <div className='flex w-full justify-end mt-4'>
-        <PrimaryButton onClick={onSubmit} className='ml-4'>
-          {t('APPLY')}
-        </PrimaryButton>
+      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-29 py-2.5'>
+        <PrimaryButton onClick={onSubmit}>{t('APPLY')}</PrimaryButton>
       </div>
     </div>
   )
-}
+})
 
 export default MapPage
