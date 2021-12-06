@@ -5,6 +5,7 @@ import {head} from 'lodash'
 import {useRouter} from 'next/router'
 import {CountryModel} from 'front-api'
 import {parseCookies} from 'nookies'
+import IcAppGallery from 'icons/stores/AppGallery.svg'
 import {
   useCategoriesStore,
   useCountriesStore,
@@ -85,7 +86,7 @@ const Footer: FC = observer(() => {
                 <div className='text-body-3 text-black-b capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
-                <div className='flex flex-wrap items-center'>
+                <div className='flex flex-wrap items-center justify-around s:justify-start'>
                   <a
                     href='https://play.google.com/store/apps/details?id=adverto.sale&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
                     className='l:mr-2 inline-flex m:-ml-2'
@@ -111,6 +112,11 @@ const Footer: FC = observer(() => {
                         height: '40px',
                       }}
                     />
+                  </a>
+                  <a
+                    className='m:pt-1 l:pt-0'
+                    href='https://appgallery.huawei.com/app/C104708185'>
+                    <IcAppGallery className='h-10 w-30' />
                   </a>
                 </div>
               </>
