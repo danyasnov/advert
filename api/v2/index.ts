@@ -122,6 +122,8 @@ export const fetchProductDetails = (
     regionId: state.regionId,
     cityId: state.cityId,
     searchBy: state.searchBy,
+    userHash: state.hash,
+    token: state.token,
   })
   const rest = getRest(storage)
   return rest.advertises.fetchDetail(hash)

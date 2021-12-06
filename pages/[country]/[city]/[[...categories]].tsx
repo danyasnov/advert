@@ -52,18 +52,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let product
 
   try {
-    const hash = last(resolvedUrl.split('_'))
+    const splited = resolvedUrl.split('_')
     let productRes
 
-    // if (hash) {
-    //   productRes = await fetchProductDetails(state, hash)
-    // } else {
-    // inconsistent url when go back in browser
-    const fixedUrl = resolvedUrl.split('?')[0]
-    productRes = await fetchProductByUrl(state.language, fixedUrl, state.hash)
-    // }
-
-    product = productRes.data?.data
+    if (splited.length > 1) {
+      productRes = await fetchProductDetails(state, last(splited))
+      product = productRes.result
+    } else {
+      // inconsistent url when go back in browser
+      const fixedUrl = resolvedUrl.split('?')[0]
+      productRes = await fetchProductByUrl(state.language, fixedUrl, state.hash)
+      product = productRes.data?.data
+    }
   } catch (e) {
     console.log(e)
   }
