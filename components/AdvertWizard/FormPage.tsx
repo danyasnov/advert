@@ -143,7 +143,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       },
     }).then((data) => {
       setCategoryData(mapCategoryData(data.data.result))
-      console.log(data.data.result)
     })
     makeRequest({
       url: '/api/currencies-by-gps',
@@ -177,7 +176,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       },
       method: 'post',
     }).then((res) => {
-      console.log(res)
       if (res.status === 200) {
         push(`/user/${user.hash}`)
       }
