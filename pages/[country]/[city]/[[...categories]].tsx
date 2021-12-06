@@ -1,5 +1,6 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
+import {last} from 'lodash'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
   findCategoryByQuery,
@@ -12,6 +13,7 @@ import {
   fetchCategories,
   fetchCategoryData,
   fetchProductByUrl,
+  fetchProductDetails,
   fetchProducts,
 } from '../../../api/v2'
 import {fetchCountries} from '../../../api/v1'
@@ -50,13 +52,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let product
 
   try {
+    const hash = last(resolvedUrl.split('_'))
+    let productRes
+
+    // if (hash) {
+    //   productRes = await fetchProductDetails(state, hash)
+    // } else {
     // inconsistent url when go back in browser
     const fixedUrl = resolvedUrl.split('?')[0]
-    const productRes = await fetchProductByUrl(
-      state.language,
-      fixedUrl,
-      state.hash,
-    )
+    productRes = await fetchProductByUrl(state.language, fixedUrl, state.hash)
+    // }
+
     product = productRes.data?.data
   } catch (e) {
     console.log(e)

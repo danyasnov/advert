@@ -7,7 +7,7 @@ export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     method: 'get',
     url: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
     params: {
-      key: 'AIzaSyD7ODnv9LTVQlLHbldXp8Ke-4KaD2YLYuA',
+      key: process.env.GOOGLE_API,
       input: query.query,
       language: 'ru',
     },
