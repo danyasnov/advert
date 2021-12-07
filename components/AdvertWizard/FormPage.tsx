@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {Formik, Form, Field, useFormikContext} from 'formik'
@@ -7,7 +7,7 @@ import {
   CACategoryDataModel,
   FieldsModel,
 } from 'front-api/src/models/index'
-import {isEmpty, isEqual, parseInt, size} from 'lodash'
+import {debounce, isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import {AdvertPages, PageProps} from './AdvertWizard'
@@ -27,7 +27,7 @@ import OutlineButton from '../Buttons/OutlineButton'
 import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
 
-const mapFields = (rawFields, fieldsById) => {
+const mapFields = (rawFields = [], fieldsById = {}) => {
   return Object.fromEntries(
     Object.entries(rawFields)
       .map(([key, value]) => {
@@ -182,22 +182,25 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     })
   }
 
-  const onChangeFields = (fields) => {
-    const mappedFields = mapFields(fields, category.fieldsById)
-    if (!isEqual(mappedFields, fieldsRef.current)) {
-      fieldsRef.current = mappedFields
-      makeRequest({
-        url: '/api/category-data',
-        method: 'post',
-        data: {
-          id: categoryId,
-          editFields: mappedFields,
-        },
-      }).then((res) => {
-        setCategoryData(mapCategoryData(res.data.result))
-      })
-    }
-  }
+  const onChangeFields = useCallback(
+    debounce((newFields) => {
+      const mappedFields = mapFields(newFields, category.fieldsById)
+      if (!isEqual(mappedFields, fieldsRef.current)) {
+        fieldsRef.current = mappedFields
+        makeRequest({
+          url: '/api/category-data',
+          method: 'post',
+          data: {
+            id: categoryId,
+            editFields: mappedFields,
+          },
+        }).then((res) => {
+          setCategoryData(mapCategoryData(res.data.result))
+        })
+      }
+    }, 1000),
+    [category, fieldsRef],
+  )
 
   let fieldsArray = []
   if (category?.data?.fields) {

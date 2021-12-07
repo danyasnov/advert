@@ -1,7 +1,7 @@
 import {FC, useState} from 'react'
 import {Field, FieldProps} from 'formik'
 import {useTranslation} from 'next-i18next'
-import NumberFormat from 'react-number-format'
+import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {get} from 'lodash'
@@ -35,6 +35,7 @@ interface IFormikNumber {
   placeholder: string
   value: number
   mask?: string
+  maxLength?: number
   format?: string
   thousandSeparator?: string
   allowEmptyFormatting?: boolean
@@ -205,6 +206,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'string': {
       component = FormikText
       props.placeholder = name
+      props.maxLength = maxLength
       break
     }
     case 'checkbox': {
@@ -265,6 +267,7 @@ export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
 export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   field,
   form,
+  maxLength,
   placeholder,
   mask,
   format,
@@ -274,12 +277,18 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
+  const isAllowed = (p: NumberFormatProps) => {
+    if (!maxLength) return true
+    if (p.value.toString().length > maxLength) return false
+    return true
+  }
   return (
     <NumberFormat
       value={value}
       onValueChange={({value: inputValue}) => {
         setFieldValue(name, inputValue)
       }}
+      isAllowed={isAllowed}
       mask={mask}
       allowEmptyFormatting={allowEmptyFormatting}
       format={format}
@@ -296,11 +305,21 @@ export const FormikText: FC<
     placeholder: string
     value: number
     rows?: number
+    maxLength?: number
     type?: string
     disabled: boolean
     isTextarea?: boolean
   } & FieldProps
-> = ({field, form, rows, placeholder, type = 'text', disabled, isTextarea}) => {
+> = ({
+  field,
+  form,
+  rows,
+  placeholder,
+  type = 'text',
+  disabled,
+  isTextarea,
+  maxLength,
+}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const isValid = !errors[name]
@@ -310,7 +329,12 @@ export const FormikText: FC<
     type,
     value: value || '',
     onChange: (e) => {
-      setFieldValue(name, e.target.value)
+      const str = e.target.value
+      if (maxLength) {
+        if (str.length <= maxLength) setFieldValue(name, str)
+      } else {
+        setFieldValue(name, str)
+      }
     },
     placeholder,
     className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${

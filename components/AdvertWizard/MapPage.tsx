@@ -25,8 +25,6 @@ const zoomRadiusMap = {
 
 const MapPage: FC<PageProps> = observer(({dispatch, state}) => {
   const [location, setLocation] = useState<{lat: number; lng: number}>()
-  const {user} = useGeneralStore()
-  console.log(toJS(user))
   const [radius, setRadius] = useState<number>(
     degradations.find((d) => d.key === state.degradation)?.radius,
   )
