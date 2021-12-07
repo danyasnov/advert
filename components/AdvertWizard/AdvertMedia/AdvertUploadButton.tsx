@@ -11,7 +11,8 @@ const AdvertUploadButton: FC<{
   disabled: boolean
   type: string
   maxFiles?: number
-}> = ({onDrop, disabled, maxFiles = 1, type}) => {
+  maxSize?: number
+}> = ({onDrop, disabled, maxFiles = 1, type, maxSize}) => {
   const ref = useRef()
   const {t} = useTranslation()
   const isHovering = useHoverDirty(ref)
@@ -25,7 +26,7 @@ const AdvertUploadButton: FC<{
 
   const {getRootProps, getInputProps} = useDropzone({
     accept,
-    maxSize: type === 'photo' ? 26214400 : 31457280,
+    maxSize: type === 'photo' ? 26214400 : maxSize || Infinity,
     onDrop,
     disabled,
     maxFiles,

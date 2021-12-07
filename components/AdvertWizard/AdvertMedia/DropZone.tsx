@@ -10,7 +10,8 @@ const DropZone: FC<{
   disabled: boolean
   type: 'photo' | 'video'
   maxFiles?: number
-}> = ({onDrop, disabled, maxFiles = 1, type}) => {
+  maxSize?: number
+}> = ({onDrop, disabled, maxFiles = 1, type, maxSize}) => {
   const {t} = useTranslation()
   let accept
   if (type === 'photo') {
@@ -22,7 +23,7 @@ const DropZone: FC<{
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     accept,
-    maxSize: type === 'photo' ? 26214400 : 31457280,
+    maxSize: type === 'photo' ? 26214400 : maxSize || Infinity,
     onDrop,
     disabled,
     maxFiles,

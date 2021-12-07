@@ -300,7 +300,8 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     <Field
                       component={AdvertVideos}
                       name='videos'
-                      // maxVideoDuration={category.data.maxVideoDuration}
+                      categoryId={category.data.id}
+                      maxVideoDuration={category.data.maxVideoDuration}
                     />
                   </div>
                 }
