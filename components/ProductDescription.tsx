@@ -26,8 +26,15 @@ const ProductDescription: FC = observer(() => {
   if (!product) return null
   const {advert, owner} = product
   const {phoneNum} = owner
-  const {favoriteCounter, views, dateUpdated, fields, description, state,hash} =
-    advert
+  const {
+    favoriteCounter,
+    views,
+    dateUpdated,
+    fields,
+    description,
+    state,
+    hash,
+  } = advert
   const [activeTab, setActiveTab] = useState(description ? 0 : 1)
   const {setShowLogin, userHash} = useGeneralStore()
 

@@ -9,7 +9,7 @@ export const unixToDate = (unix: number): string => {
 }
 export const unixToDateTime = (unix: number): string => {
   const date = DateTime.fromSeconds(unix)
-  return date.toFormat(`${timeFormat} ${dateFormat}`)
+  return date.toFormat(`${dateFormat} ${timeFormat}`)
 }
 
 export const getFirstNonEmptyArray = <T>(...items: T[]): T | null => {
