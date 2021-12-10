@@ -129,9 +129,9 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
   return null
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
+  console.log('state.draft', state.draft)
   const {push} = useRouter()
 
-  const [currencies, setCurrencies] = useState<[]>([])
   const [initialValues, setInitialValues] = useState({})
   const {languagesByIsoCode, user} = useGeneralStore()
   const fieldsRef = useRef({})
@@ -152,20 +152,16 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   } | null>(() => mapCategoryData(state.draft.data))
 
   const {categoryId} = state.draft
-  const location = {
-    latitude: state.draft.location.latitude,
-    longitude: state.draft.location.longitude,
-  }
 
   useEffect(() => {
-    if (size(currencies)) {
+    if (size(state.draft.currencies)) {
       const {draft} = state
       const mappedFields = mapOriginalFields(draft.fields, category.fieldsById)
       setInitialValues({
         fields: mappedFields,
         content: draft.content ?? [],
         photos: draft.photos ?? [],
-        videos: draft.videos ?? null,
+        videos: draft.videos ?? [],
         condition: draft.condition
           ? conditionOptions.current.find((c) => draft.condition === c.value)
           : null,
@@ -178,22 +174,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         isFastSale: draft.isFastSale ?? false,
         price: draft.price ?? '',
         // @ts-ignore
-        currency: currencies[0],
+        currency: state.draft.currencies[0],
       })
     }
-  }, [state.draft, currencies])
+  }, [state.draft])
 
-  useEffect(() => {
-    makeRequest({
-      url: '/api/currencies-by-gps',
-      method: 'post',
-      data: {
-        location,
-      },
-    }).then((data) => {
-      setCurrencies(data.data.result)
-    })
-  }, [])
   const onSubmit = (values) => {
     const {fields, condition} = values
 
@@ -247,7 +232,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     fieldsArray = category.data.fields
   }
 
-  if (!category || isEmpty(currencies) || !user) return null
+  if (!category || !user) return null
 
   return (
     <div className='w-full'>
@@ -359,7 +344,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                       <Field
                         name='price'
                         component={AdvertPrice}
-                        currencies={currencies}
+                        currencies={state.draft.currencies}
                         allowSecureDeal={category.data.allowSecureDeal}
                       />
                     </div>

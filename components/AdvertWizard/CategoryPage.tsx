@@ -38,10 +38,6 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
           <Button
             onClick={() => {
               setSelected([])
-              dispatch({
-                type: 'setCategory',
-                category: null,
-              })
             }}>
             <IcKeyboardArrowLeft className='fill-current text-nc-primary w-7 h-7' />
           </Button>
@@ -68,7 +64,6 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
         onClick={() => {
           const {draft} = state
           const category = last(selected)
-          let categoryData
           if (draft.categoryId !== category.id) {
             makeRequest({
               url: '/api/category-data',
@@ -78,25 +73,26 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
               },
             })
               .then((res) => {
-                categoryData = res.data.result
+                const categoryData = res.data.result
+                const newDraft = {
+                  ...draft,
+                  categoryId: categoryData.id,
+                  data: categoryData,
+                }
+                dispatch({
+                  type: 'setDraft',
+                  draft: newDraft,
+                })
                 return makeRequest({
                   url: '/api/save-draft',
                   method: 'post',
                   data: {
                     hash: query.hash,
-                    draft: {
-                      ...draft,
-                      categoryId: category.id,
-                      data: categoryData,
-                    },
+                    draft: newDraft,
                   },
                 })
               })
               .then(() => {
-                dispatch({
-                  type: 'setCategory',
-                  category,
-                })
                 dispatch({
                   type: 'setPage',
                   page: AdvertPages.formPage,

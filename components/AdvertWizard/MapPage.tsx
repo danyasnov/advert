@@ -103,27 +103,21 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
           toast.error(t('EMPTY_COORDS'))
           return Promise.reject()
         }
+        newDraft.currencies = currencies
+        dispatch({
+          type: 'setDraft',
+          draft: newDraft,
+        })
         return makeRequest({
           url: '/api/save-draft',
           method: 'post',
           data: {
             hash: query.hash,
-            draft: {...newDraft, currencies},
+            draft: newDraft,
           },
         })
       })
       .then(() => {
-        dispatch({
-          type: 'setLocation',
-          location: {
-            latitude,
-            longitude,
-          },
-        })
-        dispatch({
-          type: 'setDegradation',
-          degradation,
-        })
         dispatch({
           type: 'setPage',
           page: AdvertPages.categoryPage,
