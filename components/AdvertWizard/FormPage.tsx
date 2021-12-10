@@ -390,14 +390,14 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                             component={FormikSelect}
                             name='condition'
                             options={conditionOptions.current}
-                            placeholder={t('CONDITION')}
+                            placeholder={t('PROD_CONDITION')}
                           />
                         </div>
                       }
                       className='items-center'
                       isRequired
                       labelClassName='mt-2'
-                      label={t('CONDITION')}
+                      label={t('PROD_CONDITION')}
                     />
                   )}
                   {fieldsArray.map((f) => (
