@@ -16,12 +16,14 @@ interface Props {
   // onChange: (value: CAParamContent[]) => void
   user: OwnerModel
   languagesByIsoCode: Record<string, SettingsLanguageModel>
+  maxDescriptionLength: number
 }
 const AdvertDescription: FC<Props & FieldProps> = ({
   field,
   form,
   user,
   languagesByIsoCode,
+  maxDescriptionLength,
 }) => {
   const {t} = useTranslation()
   const {name, value} = field
@@ -113,7 +115,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
         </div>
         <textarea
           rows={5}
-          maxLength={3000}
+          maxLength={maxDescriptionLength}
           value={description}
           onChange={(e) => {
             const updatedValue = value.map((v) =>
@@ -125,7 +127,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
         />
       </div>
       <span className='text-nc-icon justify-end flex text-body-4 mr-4 mt-1'>
-        {`${description.length}/3000`}
+        {`${description.length}/${maxDescriptionLength}`}
       </span>
       <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5'>
         <Field

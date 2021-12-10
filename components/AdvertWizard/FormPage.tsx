@@ -284,7 +284,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         validateOnChange={false}
         onSubmit={onSubmit}>
         {({submitForm}) => (
-          <Form className='w-full space-y-12 my-6 pb-20'>
+          <Form className='w-full space-y-12 my-6 mb-96 pb-24'>
             <div>
               <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
               <AdvertFormField
@@ -292,6 +292,9 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                   <div className='w-8/12'>
                     <Field
                       name='content'
+                      maxDescriptionLength={
+                        state.draft.data.descriptionLengthMax
+                      }
                       component={AdvertDescription}
                       user={user}
                       languagesByIsoCode={languagesByIsoCode}
