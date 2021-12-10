@@ -259,7 +259,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             errors.price = missingFieldsMsg
           }
 
-          if (!condition) {
+          if (!condition && category.data.allowUsed) {
             isMissingFields = true
             errors.condition = missingFieldsMsg
           }
@@ -278,13 +278,14 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           if (isMissingFields) {
             toast.error(missingFieldsMsg)
           }
+          console.log('errors', errors)
           return errors
         }}
         validateOnBlur={false}
         validateOnChange={false}
         onSubmit={onSubmit}>
         {({submitForm}) => (
-          <Form className='w-full space-y-12 my-6 mb-96 pb-24'>
+          <Form className='w-full space-y-12 my-6 mb-24'>
             <div>
               <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
               <AdvertFormField
@@ -292,9 +293,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                   <div className='w-8/12'>
                     <Field
                       name='content'
-                      maxDescriptionLength={
-                        state.draft.data.descriptionLengthMax
-                      }
+                      maxDescriptionLength={category.data.descriptionLengthMax}
                       component={AdvertDescription}
                       user={user}
                       languagesByIsoCode={languagesByIsoCode}
@@ -379,40 +378,45 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 />
               </div>
             </div>
-            <div>
-              <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
-              <div className='space-y-4'>
-                <AdvertFormField
-                  body={
-                    <div className='w-5/12'>
-                      <Field
-                        component={FormikSelect}
-                        name='condition'
-                        options={conditionOptions.current}
-                        placeholder={t('CONDITION')}
+            {category.data.allowUsed ||
+              (!isEmpty(fieldsArray) && (
+                <div className='mb-96'>
+                  <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
+                  <div className='space-y-4'>
+                    {category.data.allowUsed && (
+                      <AdvertFormField
+                        body={
+                          <div className='w-5/12'>
+                            <Field
+                              component={FormikSelect}
+                              name='condition'
+                              options={conditionOptions.current}
+                              placeholder={t('CONDITION')}
+                            />
+                          </div>
+                        }
+                        className='items-center'
+                        isRequired
+                        labelClassName='mt-2'
+                        label={t('CONDITION')}
                       />
-                    </div>
-                  }
-                  className='items-center'
-                  isRequired
-                  labelClassName='mt-2'
-                  label={t('CONDITION')}
-                />
-                {fieldsArray.map((f) => (
-                  <AdvertFormField
-                    key={f.id}
-                    body={
-                      <div className='w-5/12'>
-                        <FormikCreateField field={f} />
-                      </div>
-                    }
-                    className='items-center'
-                    isRequired={f.isFillingRequired}
-                    label={f.name}
-                  />
-                ))}
-              </div>
-            </div>
+                    )}
+                    {fieldsArray.map((f) => (
+                      <AdvertFormField
+                        key={f.id}
+                        body={
+                          <div className='w-5/12'>
+                            <FormikCreateField field={f} />
+                          </div>
+                        }
+                        className='items-center'
+                        isRequired={f.isFillingRequired}
+                        label={f.name}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
 
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
               <OutlineButton
