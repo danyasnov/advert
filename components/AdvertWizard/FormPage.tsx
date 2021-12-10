@@ -378,45 +378,44 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 />
               </div>
             </div>
-            {category.data.allowUsed ||
-              (!isEmpty(fieldsArray) && (
-                <div className='mb-96'>
-                  <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
-                  <div className='space-y-4'>
-                    {category.data.allowUsed && (
-                      <AdvertFormField
-                        body={
-                          <div className='w-5/12'>
-                            <Field
-                              component={FormikSelect}
-                              name='condition'
-                              options={conditionOptions.current}
-                              placeholder={t('CONDITION')}
-                            />
-                          </div>
-                        }
-                        className='items-center'
-                        isRequired
-                        labelClassName='mt-2'
-                        label={t('CONDITION')}
-                      />
-                    )}
-                    {fieldsArray.map((f) => (
-                      <AdvertFormField
-                        key={f.id}
-                        body={
-                          <div className='w-5/12'>
-                            <FormikCreateField field={f} />
-                          </div>
-                        }
-                        className='items-center'
-                        isRequired={f.isFillingRequired}
-                        label={f.name}
-                      />
-                    ))}
-                  </div>
+            {(category.data.allowUsed || !isEmpty(fieldsArray)) && (
+              <div className='mb-96'>
+                <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
+                <div className='space-y-4'>
+                  {category.data.allowUsed && (
+                    <AdvertFormField
+                      body={
+                        <div className='w-5/12'>
+                          <Field
+                            component={FormikSelect}
+                            name='condition'
+                            options={conditionOptions.current}
+                            placeholder={t('CONDITION')}
+                          />
+                        </div>
+                      }
+                      className='items-center'
+                      isRequired
+                      labelClassName='mt-2'
+                      label={t('CONDITION')}
+                    />
+                  )}
+                  {fieldsArray.map((f) => (
+                    <AdvertFormField
+                      key={f.id}
+                      body={
+                        <div className='w-5/12'>
+                          <FormikCreateField field={f} />
+                        </div>
+                      }
+                      className='items-center'
+                      isRequired={f.isFillingRequired}
+                      label={f.name}
+                    />
+                  ))}
                 </div>
-              ))}
+              </div>
+            )}
 
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
               <OutlineButton

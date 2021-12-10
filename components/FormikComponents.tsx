@@ -63,11 +63,14 @@ const getSelectOptions = (o) => ({
   // disabled: o.count === 0,
 })
 
-const getCreateOptions = (o) => ({
-  value: o.id,
-  label: o.value,
-  disabled: o.itemType === 'title',
-})
+const getCreateOptions = (o) => {
+  if (o.isOther) return null
+  return {
+    value: o.id,
+    label: o.value,
+    disabled: o.itemType === 'title',
+  }
+}
 
 export const FormikFilterField: FC<IFormikField> = ({field}) => {
   // @ts-ignore
@@ -165,15 +168,18 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
+      // @ts-ignore
       props.options = [
         // @ts-ignore
-        ...multiselects.top.map(getCreateOptions),
+        ...multiselects.top.map(getCreateOptions).filter((o) => !!o),
         // @ts-ignore
         ...(multiselects.other
           ? // @ts-ignore
             multiselects.other
           : []
-        ).map(getCreateOptions),
+        )
+          .map(getCreateOptions)
+          .filter((o) => !!o),
       ]
       props.placeholder = name
       props.isFilterable = isFilterable
