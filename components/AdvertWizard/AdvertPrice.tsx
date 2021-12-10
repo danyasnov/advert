@@ -39,6 +39,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           onValueChange={({value: newValue}) => {
             setFieldValue(name, newValue)
           }}
+          isAllowed={({value: priceValue}) => priceValue.length < 16}
           thousandSeparator={' '}
           // placeholder={placeholder}
           className='w-full text-nc-primary-text text-body-1 outline-none manual-outline'
