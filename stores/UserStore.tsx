@@ -1,5 +1,5 @@
-import {action, makeAutoObservable} from 'mobx'
-import {OwnerModel, ReviewModel} from 'front-api/src/models/index'
+import {action, makeAutoObservable, toJS} from 'mobx'
+import {DraftModel, OwnerModel, ReviewModel} from 'front-api/src/models/index'
 import axios, {AxiosRequestConfig} from 'axios'
 import {toast} from 'react-toastify'
 import {isEmpty} from 'lodash'
@@ -19,12 +19,14 @@ export interface IUserStore {
   hydrate(data: IUserHydration): void
   user: OwnerModel
   userSale: Partial<ProductSummary>
+  drafts: DraftModel[]
   userSold: Partial<ProductSummary>
   userFavorite: Partial<ProductSummary>
   userOnModeration: Partial<ProductSummary>
   userArchive: Partial<ProductSummary>
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
+  fetchDrafts: () => Promise<void>
   ratings: ReviewModel[]
 }
 
@@ -38,6 +40,7 @@ const urlMap = {
   userFavorite: '/api/user-favorites',
   userOnModeration: '/api/user-on-moderation',
   userArchive: '/api/user-archive',
+  drafts: '/api/fetch-drafts',
 }
 export class UserStore implements IUserStore {
   root
@@ -54,7 +57,47 @@ export class UserStore implements IUserStore {
 
   userArchive: Partial<ProductSummary> = {}
 
+  drafts: DraftModel[] = []
+
   ratings: ReviewModel[]
+
+  fetchDrafts = (): Promise<void> => {
+    const config: AxiosRequestConfig = {
+      url: '/api/fetch-drafts',
+      method: 'POST',
+    }
+
+    return makeRequest(config).then(
+      action('fetchSuccess', (response) => {
+        if (!response.data || isEmpty(response.data) || response?.data?.error) {
+          if (response?.data?.error) {
+            toast.error(response.data.error)
+          }
+          return Promise.reject(
+            !response.data || isEmpty(response.data) || response?.data?.error,
+          )
+        }
+        const drafts = response?.data?.result
+
+        this.drafts = Array.isArray(drafts)
+          ? drafts.map((d) => ({
+              ...d.advertDraft,
+              hash: d.hash,
+              title: d.hash,
+              images: d.images ? d.images : [],
+            }))
+          : []
+
+        return Promise.resolve()
+      }),
+      action('fetchError', (error) => {
+        if (error?.message !== 'got_new_request') {
+          toast.error(error.message)
+        }
+        return Promise.reject(error)
+      }),
+    )
+  }
 
   fetchRatings = (): Promise<void> => {
     const config: AxiosRequestConfig = {

@@ -5,8 +5,7 @@ import {parseCookies} from 'nookies'
 import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
 import {degradations} from 'front-api/src/models/index'
-import {observer} from 'mobx-react-lite'
-import {toJS} from 'mobx'
+import {useRouter} from 'next/router'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -15,7 +14,7 @@ import MapRadiusSelector from '../MapRadiusSelector'
 import SvgMapMarker from '../../assets/icons/SvgMapMarker'
 import PlacesTextSearch from '../Selects/PlacesTextSearch'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {makeRequest} from '../../api'
 
 const zoomRadiusMap = {
   0: 15,
@@ -23,17 +22,30 @@ const zoomRadiusMap = {
   2: 13,
 }
 
-const MapPage: FC<PageProps> = observer(({dispatch, state}) => {
-  const [location, setLocation] = useState<{lat: number; lng: number}>()
+const MapPage: FC<PageProps> = ({dispatch, state}) => {
+  const {query} = useRouter()
+  const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
+    if (state.draft.location) {
+      const {latitude: lat, longitude: lng} = state.draft.location
+      return {lat, lng}
+    }
+    return null
+  })
+  const [degradation, setDegradation] = useState<string>(() => {
+    if (state.draft.degradation) {
+      return state.draft.degradation
+    }
+    return 'absent'
+  })
   const [radius, setRadius] = useState<number>(
-    degradations.find((d) => d.key === state.degradation)?.radius,
+    degradations.find((d) => d.key === state.draft.degradation)?.radius ?? 0,
   )
   const {t} = useTranslation()
   const initialLocation = useRef(null)
   useEffect(() => {
     let locationValue
-    if (state.location) {
-      locationValue = state.location
+    if (state.draft.location) {
+      locationValue = state.draft.location
     } else {
       const cookies: SerializedCookiesState = parseCookies()
       const {searchLocation, userLocation} = cookies
@@ -59,21 +71,48 @@ const MapPage: FC<PageProps> = observer(({dispatch, state}) => {
     if (marker.current) marker.current.setPosition(center)
     setLocation(center)
   }
-  const onChangeRadius = (value, key) => {
-    dispatch({type: 'setDegradation', degradation: key})
+  const onChangeRadius = (value: number, key: string) => {
     setRadius(value)
+    setDegradation(key)
     mapRef.current.setZoom(zoomRadiusMap[value])
     circle.current.setRadius(value * 1000)
   }
 
   const onSubmit = () => {
-    dispatch({
-      type: 'setLocation',
-      location,
-    })
-    dispatch({
-      type: 'setPage',
-      page: AdvertPages.categoryPage,
+    const {lat: latitude, lng: longitude} = location
+    const {draft} = state
+    const newDraft = {
+      ...draft,
+      location: {
+        latitude,
+        longitude,
+      },
+      degradation,
+    }
+
+    makeRequest({
+      url: '/api/save-draft',
+      method: 'post',
+      data: {
+        hash: query.hash,
+        draft: newDraft,
+      },
+    }).then(() => {
+      dispatch({
+        type: 'setLocation',
+        location: {
+          latitude,
+          longitude,
+        },
+      })
+      dispatch({
+        type: 'setDegradation',
+        degradation,
+      })
+      dispatch({
+        type: 'setPage',
+        page: AdvertPages.categoryPage,
+      })
     })
   }
 
@@ -184,6 +223,6 @@ const MapPage: FC<PageProps> = observer(({dispatch, state}) => {
       </div>
     </div>
   )
-})
+}
 
 export default MapPage

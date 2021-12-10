@@ -8,7 +8,6 @@ import {
 } from 'react'
 import {SortableContainer, SortableContainerProps} from 'react-sortable-hoc'
 import {random} from 'lodash'
-import {useTranslation} from 'next-i18next'
 import useDropListener from '../../../hooks/useDropListener'
 import {rotate} from '../../../utils'
 import AdvertUploadButton from './AdvertUploadButton'
@@ -115,7 +114,7 @@ const AdvertPhotosContainer: ComponentClass<
             loading={p.loading}
             url={p.url}
             index={index}
-            key={p.id}
+            key={p.hash}
             onRemove={() => {
               setPhotos(photos.filter((v) => v.hash !== p.hash))
             }}

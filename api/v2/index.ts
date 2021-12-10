@@ -277,3 +277,32 @@ export const submitDraft = (
     dependenceSequenceId,
   )
 }
+export const saveDraft = (
+  state: CookiesState,
+  draft: CAParamsModel,
+  hash?: string,
+) => {
+  const storage = new Storage({
+    token: state.token,
+    userHash: state.hash,
+  })
+  const rest = getRest(storage)
+  return rest.createAdvertise.saveDraft({draft, hash})
+}
+export const fetchDraft = (state: CookiesState, hash: string) => {
+  const storage = new Storage({
+    token: state.token,
+    userHash: state.hash,
+  })
+  const rest = getRest(storage)
+  return rest.createAdvertise.fetchDraft(hash)
+}
+
+export const fetchDrafts = (state: CookiesState) => {
+  const storage = new Storage({
+    token: state.token,
+    userHash: state.hash,
+  })
+  const rest = getRest(storage)
+  return rest.createAdvertise.fetchListDrafts()
+}

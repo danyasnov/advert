@@ -27,7 +27,14 @@ import OutlineButton from '../Buttons/OutlineButton'
 import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
 
-const mapFields = (rawFields = [], fieldsById = {}) => {
+const findSelectValue = (id, options) => {
+  const option = options.find((o) => id === o.id)
+  return {
+    label: option.value,
+    value: option.id,
+  }
+}
+const mapFormikFields = (rawFields = [], fieldsById = {}) => {
   return Object.fromEntries(
     Object.entries(rawFields)
       .map(([key, value]) => {
@@ -65,6 +72,36 @@ const mapFields = (rawFields = [], fieldsById = {}) => {
       .filter(([, value]) => !!value),
   )
 }
+const mapOriginalFields = (rawFields = {}, fieldsById = {}) => {
+  return Object.fromEntries(
+    Object.entries(rawFields)
+      .map(([key, value]) => {
+        const field = fieldsById[key]
+        let mappedValue
+        switch (field.fieldType) {
+          case 'select':
+          case 'iconselect': {
+            mappedValue = findSelectValue(value[0], field.multiselects.top)
+            break
+          }
+          case 'multiselect': {
+            if (Array.isArray(value) && value.length) {
+              mappedValue = value.map((v) =>
+                findSelectValue(v, field.multiselects.top),
+              )
+            }
+            break
+          }
+          default: {
+            // eslint-disable-next-line prefer-destructuring
+            if (value) mappedValue = value[0]
+          }
+        }
+        return [key, mappedValue]
+      })
+      .filter(([, value]) => !!value),
+  )
+}
 const mapCategoryData = (
   category: CACategoryDataModel,
 ): {
@@ -93,57 +130,60 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push} = useRouter()
+
   const [currencies, setCurrencies] = useState<[]>([])
   const [initialValues, setInitialValues] = useState({})
   const {languagesByIsoCode, user} = useGeneralStore()
   const fieldsRef = useRef({})
   const {t} = useTranslation()
+  const conditionOptions = useRef([
+    {
+      value: 'new',
+      label: t('NEW_PRODUCT'),
+    },
+    {
+      value: 'used',
+      label: t('USED_PRODUCT'),
+    },
+  ])
   const [category, setCategoryData] = useState<{
     data: CACategoryDataModel
     fieldsById: Record<string, CACategoryDataFieldModel>
-  } | null>(null)
+  } | null>(() => mapCategoryData(state.draft.data))
 
-  const categoryId = state.category.id
+  const {categoryId} = state.draft
   const location = {
-    latitude: state.location.lat,
-    longitude: state.location.lng,
+    latitude: state.draft.location.latitude,
+    longitude: state.draft.location.longitude,
   }
 
   useEffect(() => {
     if (size(currencies)) {
-      if (state.formData) {
-        setInitialValues(state.formData)
-      } else {
-        setInitialValues({
-          fields: {},
-          content: [],
-          photos: [],
-          videos: [],
-          condition: null,
-          isBargainPossible: false,
-          isSwapPossible: false,
-          isExclusive: false,
-          isTop: false,
-          isSecureDeal: false,
-          isVip: false,
-          isFastSale: false,
-          price: '',
-          // @ts-ignore
-          currency: currencies[0],
-        })
-      }
+      const {draft} = state
+      const mappedFields = mapOriginalFields(draft.fields, category.fieldsById)
+      setInitialValues({
+        fields: mappedFields,
+        content: draft.content ?? [],
+        photos: draft.photos ?? [],
+        videos: draft.videos ?? null,
+        condition: draft.condition
+          ? conditionOptions.current.find((c) => draft.condition === c.value)
+          : null,
+        isBargainPossible: draft.isBargainPossible ?? false,
+        isSwapPossible: draft.isSwapPossible ?? false,
+        isExclusive: draft.isExclusive ?? false,
+        isTop: draft.isTop ?? false,
+        isSecureDeal: draft.isSecureDeal ?? false,
+        isVip: draft.isVip ?? false,
+        isFastSale: draft.isFastSale ?? false,
+        price: draft.price ?? '',
+        // @ts-ignore
+        currency: currencies[0],
+      })
     }
-  }, [state.formData, currencies])
+  }, [state.draft, currencies])
+
   useEffect(() => {
-    makeRequest({
-      url: '/api/category-data',
-      method: 'post',
-      data: {
-        id: categoryId,
-      },
-    }).then((data) => {
-      setCategoryData(mapCategoryData(data.data.result))
-    })
     makeRequest({
       url: '/api/currencies-by-gps',
       method: 'post',
@@ -154,21 +194,19 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       setCurrencies(data.data.result)
     })
   }, [])
-  const onSubmit = async (values) => {
+  const onSubmit = (values) => {
     const {fields, condition} = values
 
-    const mappedFields = mapFields(fields, category.fieldsById)
+    const mappedFields = mapFormikFields(fields, category.fieldsById)
 
     const data = {
+      ...state.draft,
       ...values,
-      price: values.price,
-      categoryId,
       userHash: user.hash,
-      location,
       condition: condition?.value,
       fields: mappedFields,
-      degradation: state.degradation,
     }
+
     makeRequest({
       url: '/api/submit-draft',
       data: {
@@ -176,15 +214,17 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       },
       method: 'post',
     }).then((res) => {
-      if (res.status === 200) {
+      if (res.data.status === 200) {
         push(`/user/${user.hash}`)
+      } else if (res.data.error) {
+        toast.error(t(res.data.error))
       }
     })
   }
 
   const onChangeFields = useCallback(
     debounce((newFields) => {
-      const mappedFields = mapFields(newFields, category.fieldsById)
+      const mappedFields = mapFormikFields(newFields, category.fieldsById)
       if (!isEqual(mappedFields, fieldsRef.current)) {
         fieldsRef.current = mappedFields
         makeRequest({
@@ -258,7 +298,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         validateOnBlur={false}
         validateOnChange={false}
         onSubmit={onSubmit}>
-        {({submitForm, values}) => (
+        {({submitForm}) => (
           <Form className='w-full space-y-12 my-6 pb-20'>
             <div>
               <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
@@ -360,16 +400,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                       <Field
                         component={FormikSelect}
                         name='condition'
-                        options={[
-                          {
-                            value: 'new',
-                            label: t('NEW_PRODUCT'),
-                          },
-                          {
-                            value: 'used',
-                            label: t('USED_PRODUCT'),
-                          },
-                        ]}
+                        options={conditionOptions.current}
                         placeholder={t('CONDITION')}
                       />
                     </div>
@@ -398,10 +429,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
               <OutlineButton
                 onClick={() => {
-                  dispatch({
-                    type: 'setFormData',
-                    page: values,
-                  })
                   dispatch({
                     type: 'setPage',
                     page: AdvertPages.categoryPage,

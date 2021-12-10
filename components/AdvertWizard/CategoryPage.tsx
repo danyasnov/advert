@@ -4,15 +4,18 @@ import {useTranslation} from 'next-i18next'
 import {first, isEmpty, last} from 'lodash'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import {observer} from 'mobx-react-lite'
+import {useRouter} from 'next/router'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import OutlineButton from '../Buttons/OutlineButton'
+import {makeRequest} from '../../api'
 
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
+  const {query} = useRouter()
   const {categoriesWithoutAll: categories} = useCategoriesStore()
 
   const [selected, setSelected] = useState<CACategoryModel[]>([])
@@ -63,21 +66,48 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
       </OutlineButton>
       <PrimaryButton
         onClick={() => {
+          const {draft} = state
           const category = last(selected)
-          // if (state.category?.id && category.id !== state.category?.id) {
-          //   dispatch({
-          //     type: 'setFormData',
-          //     formData: null,
-          //   })
-          // }
-          dispatch({
-            type: 'setCategory',
-            category,
-          })
-          dispatch({
-            type: 'setPage',
-            page: AdvertPages.formPage,
-          })
+          let categoryData
+          if (draft.categoryId !== category.id) {
+            makeRequest({
+              url: '/api/category-data',
+              method: 'post',
+              data: {
+                id: category.id,
+              },
+            })
+              .then((res) => {
+                categoryData = res.data.result
+                return makeRequest({
+                  url: '/api/save-draft',
+                  method: 'post',
+                  data: {
+                    hash: query.hash,
+                    draft: {
+                      ...draft,
+                      categoryId: category.id,
+                      data: categoryData,
+                    },
+                  },
+                })
+              })
+              .then(() => {
+                dispatch({
+                  type: 'setCategory',
+                  category,
+                })
+                dispatch({
+                  type: 'setPage',
+                  page: AdvertPages.formPage,
+                })
+              })
+          } else {
+            dispatch({
+              type: 'setPage',
+              page: AdvertPages.formPage,
+            })
+          }
         }}
         disabled={!valid}>
         {t('APPLY')}
@@ -119,7 +149,7 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
       <div className='flex mb-15'>
         <div className='grid grid-cols-3 w-full gap-x-4'>
           {selected.map((parentCategory, index) => (
-            <div className='flex flex-col'>
+            <div className='flex flex-col' key={parentCategory.id}>
               {parentCategory.items.map((c) => (
                 <Button
                   key={c.id}

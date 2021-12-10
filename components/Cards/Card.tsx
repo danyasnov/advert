@@ -11,7 +11,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
@@ -104,15 +104,18 @@ const Card: FC<Props> = ({
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
       <CardBadge state={product.state} />
-      <div className='absolute top-1 right-1 w-6 h-6 z-20'>
-        <ProductLike
-          userHash={product.owner.hash}
-          color='white'
-          hash={product.hash}
-          isFavorite={product.isFavorite}
-          state={product.state}
-        />
-      </div>
+      {product?.owner?.hash && (
+        <div className='absolute top-1 right-1 w-6 h-6 z-20'>
+          <ProductLike
+            userHash={product.owner.hash}
+            color='white'
+            hash={product.hash}
+            isFavorite={product.isFavorite}
+            state={product.state}
+          />
+        </div>
+      )}
+
       <div className='overflow-hidden relative' ref={viewportRef}>
         <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
           {inView && (
@@ -154,7 +157,7 @@ const Card: FC<Props> = ({
               </div>
             )}
             <div className='absolute inset-x-0 bottom-0 pb-2 px-2 flex justify-between'>
-              {location.distance && (
+              {location?.distance && (
                 <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
                   {location.distance}
                 </span>
@@ -184,17 +187,19 @@ const Card: FC<Props> = ({
             {oldPrice}
           </span>
         </div>
-        <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-          <span suppressHydrationWarning className='inline-flex items-center'>
-            {dateUpdated && unixToDate(dateUpdated)}
-          </span>
-          <div className='flex items-center'>
-            <div>
-              <IcVisibility className='fill-current text-black-d h-4 w-4' />
+        {dateUpdated && views && (
+          <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
+            <span suppressHydrationWarning className='inline-flex items-center'>
+              {dateUpdated && unixToDate(dateUpdated)}
+            </span>
+            <div className='flex items-center'>
+              <div>
+                <IcVisibility className='fill-current text-black-d h-4 w-4' />
+              </div>
+              <span className='ml-1'>{views}</span>
             </div>
-            <span className='ml-1'>{views}</span>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import IcLike from 'icons/material/Like.svg'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {noop} from 'lodash'
+import IcCreate from 'icons/material/Create.svg'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {PagesType} from '../stores/GeneralStore'
@@ -32,12 +33,12 @@ const UserMenuList: FC<Props> = observer(({collapsed, onSelect = noop}) => {
       id: 'reviews',
       show: true,
     },
-    // {
-    //   icon: <IcCreate className='fill-current h-6 w-6 mr-1' />,
-    //   title: t('DRAFTS'),
-    //   id: 'drafts',
-    //   show: isCurrentUser,
-    // },
+    {
+      icon: <IcCreate className='fill-current h-6 w-6 mr-1' />,
+      title: t('DRAFTS'),
+      id: 'drafts',
+      show: isCurrentUser,
+    },
     {
       icon: <IcLike className='fill-current h-6 w-6' />,
       title: t('FAVORITE'),

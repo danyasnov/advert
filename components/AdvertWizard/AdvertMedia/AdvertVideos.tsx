@@ -1,7 +1,8 @@
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import {FieldProps} from 'formik'
 import {toast} from 'react-toastify'
 import {useTranslation} from 'next-i18next'
+import {size} from 'lodash'
 import useDropListener from '../../../hooks/useDropListener'
 import {makeRequest} from '../../../api'
 import DropZone from './DropZone'
@@ -14,17 +15,22 @@ interface Props {
   categoryId: number
 }
 const AdvertVideos: FC<FieldProps & Props> = ({
-  // maxVideoDuration,
   field,
   form,
   categoryId,
   maxVideoDuration,
 }) => {
   const {t} = useTranslation()
-  const [video, setVideo] = useState<VideoFile>()
-  const {name} = field
+  const {name, value} = field
+
+  const [video, setVideo] = useState<VideoFile>(value || null)
   const {setFieldValue} = form
   const [isDragging, setIsDragging] = useState(false)
+  useEffect(() => {
+    if (size(value) > 0) {
+      setVideo(value[0])
+    }
+  }, [value])
 
   useDropListener({
     onDragEnter: () => setIsDragging(true),

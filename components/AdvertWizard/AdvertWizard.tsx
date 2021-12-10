@@ -1,13 +1,15 @@
-import React, {Dispatch, FC, useReducer} from 'react'
-import {CACategoryModel} from 'front-api/src/index'
+import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
+import {CACategoryModel, CAParamsModel} from 'front-api/src/index'
 import {TypeOfDegradation} from 'front-api/src/models/index'
+import {useRouter} from 'next/router'
 import MapPage from './MapPage'
 import CategoryPage from './CategoryPage'
 import FormPage from './FormPage'
+import {makeRequest} from '../../api'
 
 export interface PageProps {
   state: State
-  dispatch: Dispatch<Partial<State & {type: string}>>
+  dispatch: Dispatch<any>
   onClose: () => void
 }
 
@@ -17,43 +19,85 @@ export const AdvertPages = {
   formPage: FormPage,
 }
 interface State {
-  location: {
-    lat: number
-    lng: number
-  } | null
-  category: CACategoryModel | null
-  degradation: TypeOfDegradation
-  formData: unknown
   page: FC
+  draft: CAParamsModel
 }
 const initialState: State = {
-  location: null,
-  category: null,
-  degradation: 'absent',
-  formData: null,
+  draft: null,
   page: AdvertPages.mapPage,
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'setLocation':
-      return {...state, location: action.location}
+      return {
+        ...state,
+        draft: {
+          ...state.draft,
+          location: action.location,
+        },
+      }
     case 'setCategory':
-      return {...state, category: action.category}
+      return {
+        ...state,
+        draft: {
+          ...state.draft,
+          categoryId: action.category.id,
+          data: action.category,
+        },
+      }
     case 'setDegradation':
-      return {...state, degradation: action.degradation}
+      return {
+        ...state,
+        draft: {
+          ...state.draft,
+          degradation: action.degradation,
+        },
+      }
     case 'setPage':
       return {...state, page: action.page}
-    case 'setFormData':
-      return {...state, formData: action.formData}
+
+    case 'setDraft':
+      return {...state, draft: action.draft}
     default:
       throw new Error()
   }
 }
 const LoginWizard: FC = () => {
+  const {query} = useRouter()
+  const [isFetched, setIsFetched] = useState(false)
+
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  useEffect(() => {
+    makeRequest({
+      url: `/api/fetch-draft`,
+      data: {hash: query.hash},
+      method: 'post',
+    }).then((res) => {
+      const {advertDraft} = res.data.result
+      dispatch({
+        type: 'setDraft',
+        draft: advertDraft,
+      })
+      let page
+      if (!advertDraft.location || !advertDraft.degradation) {
+        page = AdvertPages.mapPage
+      } else if (!advertDraft.categoryId || !advertDraft.data) {
+        page = AdvertPages.categoryPage
+      } else {
+        page = AdvertPages.formPage
+      }
+      dispatch({
+        type: 'setPage',
+        page,
+      })
+      setIsFetched(true)
+    })
+  }, [])
+
   const Component = state.page
+  if (!isFetched) return null
 
   return <Component state={state} dispatch={dispatch} />
 }

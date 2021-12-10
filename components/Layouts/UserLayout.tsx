@@ -4,6 +4,7 @@ import {TFunction, useTranslation} from 'next-i18next'
 import {isNumber} from 'lodash'
 import IcUser from 'icons/material/User.svg'
 import IcClear from 'icons/material/Clear.svg'
+import {AdvertiseListItemModel} from 'front-api/src/index'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -13,6 +14,8 @@ import UserRatings from '../UserRatings'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
+import LinkWrapper from '../Buttons/LinkWrapper'
+import Card from '../Cards/Card'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')} ${sizes[1]}`, id: 1},
@@ -33,6 +36,8 @@ const UserLayout: FC = observer(() => {
     userFavorite,
     userOnModeration,
     userArchive,
+    fetchDrafts,
+    drafts,
   } = useUserStore()
   const {setFooterVisibility, userHash, activeUserPage, setActiveUserPage} =
     useGeneralStore()
@@ -45,6 +50,7 @@ const UserLayout: FC = observer(() => {
       fetchProducts({page: 1, path: 'userOnModeration'})
       fetchProducts({page: 1, path: 'userArchive'})
       fetchProducts({page: 1, path: 'userFavorite'})
+      fetchDrafts()
     }
     return () => setActiveUserPage('adverts')
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
@@ -191,6 +197,28 @@ const UserLayout: FC = observer(() => {
                         })
                       }}
                     />
+                  </div>
+                )}
+                {activeUserPage === 'drafts' && (
+                  <div className='mt-8'>
+                    <h1 className='text-h-1 text-black-b font-bold mb-6'>
+                      {t('DRAFTS')}
+                    </h1>
+                    <div className='flex flex-col m:items-start relative'>
+                      <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
+                        {drafts.map((d) => (
+                          <LinkWrapper
+                            title={d.hash}
+                            href={`/advert/create/${d.hash}`}
+                            key={d.hash}
+                            target='_blank'>
+                            <Card
+                              product={d as unknown as AdvertiseListItemModel}
+                            />
+                          </LinkWrapper>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </>

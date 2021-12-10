@@ -9,9 +9,9 @@ const AdvertPhotos: FC<
     maxPhotos: number
   } & FieldProps
 > = ({maxPhotos, field, form}) => {
-  const {name} = field
+  const {name, value} = field
   const {setFieldValue} = form
-  const [photos, setPhotos] = useState<PhotoFile[]>([])
+  const [photos, setPhotos] = useState<PhotoFile[]>(value || [])
   const onSortEnd = useCallback(
     ({oldIndex, newIndex}) => {
       setPhotos(swap(photos, oldIndex, newIndex))
@@ -23,6 +23,9 @@ const AdvertPhotos: FC<
       setFieldValue(name, photos)
     }
   }, [photos])
+  useEffect(() => {
+    if (value) setPhotos(value)
+  }, [value])
 
   return (
     <AdvertPhotosContainer

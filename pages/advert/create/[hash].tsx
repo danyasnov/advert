@@ -1,9 +1,9 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import AdvertWizardLayout from '../../components/Layouts/AdvertWizardLayout'
-import {processCookies} from '../../helpers'
-import {fetchCategories} from '../../api/v2'
-import {fetchLanguages} from '../../api/v1'
+import AdvertWizardLayout from '../../../components/Layouts/AdvertWizardLayout'
+import {processCookies} from '../../../helpers'
+import {fetchCategories} from '../../../api/v2'
+import {fetchLanguages} from '../../../api/v1'
 
 export default function Home() {
   return <AdvertWizardLayout />

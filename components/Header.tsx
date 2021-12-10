@@ -18,6 +18,7 @@ import Auth from './Auth'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import PrimaryButton from './Buttons/PrimaryButton'
+import {makeRequest} from '../api'
 
 const options = [
   {
@@ -102,11 +103,19 @@ const Header: FC = observer(() => {
           </div>
           <PrimaryButton
             className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
-            onClick={() => {
+            onClick={async () => {
               if (!user) {
                 setShowLogin(true)
               } else {
-                push('/advert/create')
+                makeRequest({
+                  url: '/api/save-draft',
+                  method: 'POST',
+                  data: {
+                    draft: {},
+                  },
+                }).then((res) => {
+                  push(`/advert/create/${res.data.result.hash}`)
+                })
               }
             }}>
             <span className='capitalize-first text-white'>{t('NEW_AD')}</span>

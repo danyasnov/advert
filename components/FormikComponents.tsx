@@ -186,21 +186,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       props.maxValue = maxValue
       props.minValue = minValue
       props.maxLength = maxLength
-      props.validate = (value = []) => {
-        const [min, max] = value
-        let parsedMin
-        let parsedMax
-        if (min) parsedMin = parseFloat(min)
-        if (max) parsedMax = parseFloat(max)
-        let error
-        if ((parsedMin || parsedMin === 0) && (parsedMax || parsedMax === 0)) {
-          if (parsedMin > parsedMax) {
-            error = 'parsedMin should be lesser than parsedMax'
-          }
-        }
 
-        return error
-      }
       break
     }
     case 'string': {
