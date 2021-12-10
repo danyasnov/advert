@@ -76,6 +76,7 @@ const LoginWizard: FC = () => {
       method: 'post',
     }).then((res) => {
       const {advertDraft} = res.data.result
+      console.log('advertDraft', advertDraft)
       dispatch({
         type: 'setDraft',
         draft: advertDraft,

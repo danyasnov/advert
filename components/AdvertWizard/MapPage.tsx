@@ -6,6 +6,7 @@ import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
 import {degradations} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
+import {toast} from 'react-toastify'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -89,31 +90,45 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
       },
       degradation,
     }
-
     makeRequest({
-      url: '/api/save-draft',
+      url: '/api/currencies-by-gps',
       method: 'post',
       data: {
-        hash: query.hash,
-        draft: newDraft,
+        location: {latitude, longitude},
       },
-    }).then(() => {
-      dispatch({
-        type: 'setLocation',
-        location: {
-          latitude,
-          longitude,
-        },
-      })
-      dispatch({
-        type: 'setDegradation',
-        degradation,
-      })
-      dispatch({
-        type: 'setPage',
-        page: AdvertPages.categoryPage,
-      })
     })
+      .then((data) => {
+        const currencies = data.data.result
+        if (!currencies) {
+          toast.error(t('EMPTY_COORDS'))
+          return Promise.reject()
+        }
+        return makeRequest({
+          url: '/api/save-draft',
+          method: 'post',
+          data: {
+            hash: query.hash,
+            draft: {...newDraft, currencies},
+          },
+        })
+      })
+      .then(() => {
+        dispatch({
+          type: 'setLocation',
+          location: {
+            latitude,
+            longitude,
+          },
+        })
+        dispatch({
+          type: 'setDegradation',
+          degradation,
+        })
+        dispatch({
+          type: 'setPage',
+          page: AdvertPages.categoryPage,
+        })
+      })
   }
 
   const handleOnLoad = (map, maps) => {
