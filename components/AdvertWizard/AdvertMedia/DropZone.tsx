@@ -23,7 +23,7 @@ const DropZone: FC<{
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
     accept,
-    maxSize: type === 'photo' ? 26214400 : maxSize || Infinity,
+    maxSize: type === 'photo' ? 26214400 : maxSize || 31457280,
     onDrop,
     disabled,
     maxFiles,

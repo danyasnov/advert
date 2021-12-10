@@ -317,7 +317,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                   </div>
                 }
                 label={t('PRODUCT_PHOTOS')}
-                isRequired
+                isRequired={category.data.minPhotos > 0}
               />
               <AdvertFormField
                 body={

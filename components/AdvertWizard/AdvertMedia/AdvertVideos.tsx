@@ -46,7 +46,9 @@ const AdvertVideos: FC<FieldProps & Props> = ({
       formData.append('categoryId', categoryId.toString())
       setVideo({...file, loading: true})
       makeRequest({
-        headers: {'Content-Type': 'multipart/form-data'},
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
         method: 'post',
         data: formData,
         url: '/api/upload/video',
