@@ -64,7 +64,7 @@ const reducer = (state, action) => {
   }
 }
 const LoginWizard: FC = () => {
-  const {query} = useRouter()
+  const {query, push} = useRouter()
   const [isFetched, setIsFetched] = useState(false)
 
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -75,8 +75,10 @@ const LoginWizard: FC = () => {
       data: {hash: query.hash},
       method: 'post',
     }).then((res) => {
+      if (!res?.data?.result?.advertDraft) {
+        return push('/')
+      }
       const {advertDraft} = res.data.result
-      console.log('advertDraft', advertDraft)
       dispatch({
         type: 'setDraft',
         draft: advertDraft,
