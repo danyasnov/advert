@@ -64,6 +64,11 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     setLocation(locationValue)
   }, [])
 
+  useEffect(() => {
+    if (marker.current) {
+      marker.current.visible = radius === 0
+    }
+  }, [radius])
   const circle = useRef(null)
   const marker = useRef(null)
   const mapRef = useRef(null)

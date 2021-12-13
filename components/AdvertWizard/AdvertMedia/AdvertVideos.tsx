@@ -60,7 +60,6 @@ const AdvertVideos: FC<FieldProps & Props> = ({
         })
         .catch((e) => {
           setVideo(null)
-          console.log(e)
           if (e.response.data.code) {
             if (e?.response?.data?.code === 'FILE_SIZE_PROBLEM')
               toast.error(
