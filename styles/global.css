@@ -60,3 +60,7 @@ input[type=number] {
 .nc-gradient-brand {
     @apply bg-gradient-to-r from-brand-a1 to-brand-a3
 }
+
+.Toastify__toast-body {
+    white-space: pre-line
+}
