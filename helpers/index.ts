@@ -17,6 +17,7 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
+import * as Sentry from '@sentry/nextjs'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -521,6 +522,10 @@ export const getFormikInitialFromQuery = (
       Object.entries(fieldsFilter).map(([key, value]) => {
         const currentField = categoryDataFieldsBySlug[key]
 
+        if (!currentField) {
+          Sentry.captureException({key, value, categoryDataFieldsBySlug})
+        }
+
         let parsedValue = decodeURIComponent(value as string).split(',')
         // eslint-disable-next-line default-case
         switch (currentField?.fieldType) {
@@ -564,7 +569,7 @@ export const getFormikInitialFromQuery = (
           }
         }
 
-        return [currentField.id, parsedValue]
+        return [currentField?.id, parsedValue]
       }),
     )
   }
