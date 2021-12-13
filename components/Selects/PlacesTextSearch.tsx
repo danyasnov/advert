@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
 import {useCombobox} from 'downshift'
 import {debounce} from 'lodash'
 import {useTranslation} from 'next-i18next'
@@ -11,13 +11,17 @@ interface Props {
     label: string
     geometry: {location: {lat: number; lng: number}}
   }) => void
+  label: string
 }
 
-const PlacesTextSearch: FC<Props> = ({handleSelectLocation}) => {
+const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
   const {t} = useTranslation()
   const [focused, setFocused] = useState(false)
   const [item, setItem] = useState({label: ''})
   const [inputItems, setInputItems] = useState([])
+  useEffect(() => {
+    setItem({label})
+  }, [label])
   const onInputValueChange = useCallback(
     debounce(({inputValue}) => {
       if (!inputValue) {

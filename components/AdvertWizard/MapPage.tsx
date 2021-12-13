@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom'
 import {degradations} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
+import {get} from 'lodash'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -38,6 +39,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     }
     return 'absent'
   })
+  const [label, setLabel] = useState('')
   const [radius, setRadius] = useState<number>(
     degradations.find((d) => d.key === state.draft.degradation)?.radius ?? 0,
   )
@@ -71,6 +73,19 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     if (circle.current) circle.current.setCenter(center)
     if (marker.current) marker.current.setPosition(center)
     setLocation(center)
+    makeRequest({
+      url: '/api/fetch-place-info',
+      method: 'post',
+      data: {
+        location: {
+          latitude: center.lat,
+          longitude: center.lng,
+        },
+      },
+    }).then((res) => {
+      const address = get(res, 'data.results[0].formatted_address')
+      if (address) setLabel(address)
+    })
   }
   const onChangeRadius = (value: number, key: string) => {
     setRadius(value)
@@ -210,7 +225,10 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
         {location && (
           <>
             <div className='absolute top-3 left-3 w-608px z-10'>
-              <PlacesTextSearch handleSelectLocation={handleSelectLocation} />
+              <PlacesTextSearch
+                handleSelectLocation={handleSelectLocation}
+                label={label}
+              />
             </div>
             <GoogleMapReact
               bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
