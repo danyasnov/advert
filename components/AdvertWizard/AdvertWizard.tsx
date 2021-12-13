@@ -63,7 +63,7 @@ const reducer = (state, action) => {
       throw new Error()
   }
 }
-const LoginWizard: FC = () => {
+const AdvertWizard: FC = () => {
   const {query, push} = useRouter()
   const [isFetched, setIsFetched] = useState(false)
 
@@ -105,4 +105,4 @@ const LoginWizard: FC = () => {
   return <Component state={state} dispatch={dispatch} />
 }
 
-export default LoginWizard
+export default AdvertWizard

@@ -206,7 +206,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
         {t('INSPECTION_PLACE_TIP')}
       </span>
 
-      <div style={{width: '100%', height: '500px'}} className='relative'>
+      <div className='relative min-h-full w-full'>
         {location && (
           <>
             <div className='absolute top-3 left-3 w-608px z-10'>
