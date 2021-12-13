@@ -5,6 +5,7 @@ import IcLike from 'icons/material/Like.svg'
 import {size} from 'lodash'
 import {FieldDTO} from 'front-api/src/models/index'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import Tabs from './Tabs'
@@ -132,9 +133,10 @@ const CharacteristicsTab: FC = observer(() => {
           <div className='flex justify-between' key={field.fieldNameText}>
             <div>{field.fieldNameText}</div>
             <div>
-              {field.fieldValueText.map((fieldValue) => (
+              {field.fieldValueText.map((fieldValue, index, array) => (
                 <span key={fieldValue}>
                   {fieldValue === 'true' ? t('YES') : fieldValue}
+                  {array.length !== index + 1 ? ', ' : ''}
                 </span>
               ))}
             </div>
