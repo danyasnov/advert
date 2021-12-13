@@ -17,7 +17,7 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import * as Sentry from '@sentry/nextjs'
+import {captureException} from '@sentry/nextjs'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -523,7 +523,7 @@ export const getFormikInitialFromQuery = (
         const currentField = categoryDataFieldsBySlug[key]
 
         if (!currentField) {
-          Sentry.captureException({key, value, categoryDataFieldsBySlug})
+          captureException({key, value, categoryDataFieldsBySlug})
         }
 
         let parsedValue = decodeURIComponent(value as string).split(',')

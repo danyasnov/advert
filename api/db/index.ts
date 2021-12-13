@@ -1,5 +1,6 @@
 import {QueryTypes, Sequelize} from 'sequelize'
 import {size} from 'lodash'
+import {captureException} from '@sentry/nextjs'
 import {City} from '../../types'
 import config from '../../config.json'
 
@@ -12,7 +13,14 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   },
 )
-
+const langs = {
+  en: 2,
+  ru: 1,
+  ro: 57,
+  el: 25,
+  uk: 67,
+  tr: 38,
+}
 const cache = new Map()
 
 export const fetchCitiesByCountryCode = async (
@@ -22,8 +30,9 @@ export const fetchCitiesByCountryCode = async (
   const key = `cities-${code}-${lang}`
   const cached: City[] = cache.get(key)
   if (cached) return cached
-  const result: City[] = await sequelize.query(
-    `SELECT
+  try {
+    const result: City[] = await sequelize.query(
+      `SELECT
     l.id,
     IFNULL(lt.content, l.word) as word,
     IFNULL(ha.has_adverts, false) as has_adverts,
@@ -34,10 +43,14 @@ FROM adv_locations l
          LEFT JOIN adv_countries ac on ac.id_location = l.root_id
 WHERE l.type = 'city' AND ac.alpha2 = '${code}'
 ORDER BY word`,
-    {type: QueryTypes.SELECT},
-  )
-  cache.set(key, result)
-  return result
+      {type: QueryTypes.SELECT},
+    )
+    cache.set(key, result)
+    return result
+  } catch (e) {
+    captureException(e)
+    return []
+  }
 }
 
 export const fetchRegionsByCountryCode = async (
@@ -47,8 +60,9 @@ export const fetchRegionsByCountryCode = async (
   const key = `regions-${code}-${lang}`
   const cached: City[] = cache.get(key)
   if (cached) return cached
-  const result: City[] = await sequelize.query(
-    `SELECT
+  try {
+    const result: City[] = await sequelize.query(
+      `SELECT
     l.id,
     IFNULL(lt.content, l.word) as word,
     IFNULL(ha.has_adverts, false) as has_adverts,
@@ -59,18 +73,23 @@ FROM adv_locations l
          LEFT JOIN adv_countries ac on ac.id_location = l.root_id
 WHERE l.type = 'region' AND ac.alpha2 = '${code}'
 ORDER BY word`,
-    {type: QueryTypes.SELECT},
-  )
-  cache.set(key, result)
-  return result
+      {type: QueryTypes.SELECT},
+    )
+    cache.set(key, result)
+    return result
+  } catch (e) {
+    captureException(e)
+    return []
+  }
 }
 export const fetchCityOrRegionsBySlug = async (
   country: string,
   slug: string,
   lang: string,
 ): Promise<City[]> => {
-  return sequelize.query(
-    `SELECT
+  try {
+    const result: City[] = await sequelize.query(
+      `SELECT
     l.id,
     IFNULL(lt.content, l.word) as word,
     IFNULL(ha.has_adverts, false) as has_adverts,
@@ -82,50 +101,62 @@ FROM adv_locations l
          LEFT JOIN adv_countries ac on ac.id_location = l.root_id
 WHERE (l.type = 'region' OR l.type = 'city') AND l.slug = '${slug}' AND ac.alpha2 = '${country}'
 ORDER BY word`,
-    {type: QueryTypes.SELECT},
-  )
+      {type: QueryTypes.SELECT},
+    )
+    return result
+  } catch (e) {
+    captureException(e)
+    return []
+  }
 }
 
-const langs = {
-  en: 2,
-  ru: 1,
-  ro: 57,
-  el: 25,
-  uk: 67,
-  tr: 38,
-}
 export const fetchDocuments = async (path: string, lang = 'en') => {
   const key = `docs-${path}-${lang}`
   const cached = cache.get(key)
   if (cached) return cached
-  const result = await sequelize.query(
-    `SELECT * FROM adv_site_content_new WHERE id_lang=${
-      langs[lang] || 2
-    } AND url='/${path}/'`,
-    {type: QueryTypes.SELECT},
-  )
-  if (size(result)) {
-    cache.set(key, result)
-  } else if (langs[lang] !== 2) {
-    return fetchDocuments(path, 'en')
+  try {
+    const result = await sequelize.query(
+      `SELECT * FROM adv_site_content_new WHERE id_lang=${
+        langs[lang] || 2
+      } AND url='/${path}/'`,
+      {type: QueryTypes.SELECT},
+    )
+    if (size(result)) {
+      cache.set(key, result)
+    } else if (langs[lang] !== 2) {
+      return fetchDocuments(path, 'en')
+    }
+    return result
+  } catch (e) {
+    captureException(e)
+    return []
   }
-  return result
 }
 
 export const fetchFirebaseLink = async (hash: string) => {
-  return sequelize.query(
-    `SELECT hash_link, firebase_link, date_off FROM adv_cover_links WHERE hash_link='${hash}'`,
-    {type: QueryTypes.SELECT},
-  )
+  try {
+    const result = await sequelize.query(
+      `SELECT hash_link, firebase_link, date_off FROM adv_cover_links WHERE hash_link='${hash}'`,
+      {type: QueryTypes.SELECT},
+    )
+    return result
+  } catch (e) {
+    captureException(e)
+    return []
+  }
 }
 
 export const incrementDeeplinkCounter = async (hash: string) => {
-  return sequelize.query(
-    `UPDATE adv_cover_links SET count_view=count_view+1, time_view=${Math.floor(
-      new Date().getTime() / 1000,
-    )} WHERE hash_link='${hash}'`,
-    {type: QueryTypes.SELECT},
-  )
+  try {
+    return await sequelize.query(
+      `UPDATE adv_cover_links SET count_view=count_view+1, time_view=${Math.floor(
+        new Date().getTime() / 1000,
+      )} WHERE hash_link='${hash}'`,
+      {type: QueryTypes.SELECT},
+    )
+  } catch (e) {
+    captureException(e)
+  }
 }
 export const addMetaToDeeplink = async (
   hash: string,
@@ -133,25 +164,38 @@ export const addMetaToDeeplink = async (
   referrer: string,
   userAgent: string,
 ) => {
-  return sequelize.query(
-    `INSERT INTO adv_cover_links_log VALUES ('${hash}', ${Math.floor(
-      new Date().getTime() / 1000,
-    )}, '${ip}', '${referrer}', '${userAgent}')`,
-    {type: QueryTypes.SELECT},
-  )
+  try {
+    return await sequelize.query(
+      `INSERT INTO adv_cover_links_log VALUES ('${hash}', ${Math.floor(
+        new Date().getTime() / 1000,
+      )}, '${ip}', '${referrer}', '${userAgent}')`,
+      {type: QueryTypes.SELECT},
+    )
+  } catch (e) {
+    captureException(e)
+  }
 }
 
 export const fetchUser = async (
   hash: string,
 ): Promise<{hash: string; lang: number}[]> => {
-  return sequelize.query(
-    `SELECT hash, email, name, surname, lang FROM adv_users WHERE hash='${hash}'`,
-    {type: QueryTypes.SELECT},
-  )
+  try {
+    return await sequelize.query(
+      `SELECT hash, email, name, surname, lang FROM adv_users WHERE hash='${hash}'`,
+      {type: QueryTypes.SELECT},
+    )
+  } catch (e) {
+    captureException(e)
+    return []
+  }
 }
 export const setUserPass = async (hash: string, pass: string) => {
-  return sequelize.query(
-    `UPDATE adv_users SET email_pass='${pass}' WHERE hash='${hash}'`,
-    {type: QueryTypes.SELECT},
-  )
+  try {
+    return await sequelize.query(
+      `UPDATE adv_users SET email_pass='${pass}' WHERE hash='${hash}'`,
+      {type: QueryTypes.SELECT},
+    )
+  } catch (e) {
+    captureException(e)
+  }
 }
