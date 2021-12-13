@@ -101,7 +101,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               errors[name] ? 'border-error' : 'border-shadow-b'
             }`}
             value={title}
-            maxLength={50}
+            maxLength={150}
             onChange={(e) => {
               const updatedValue = value.map((v) =>
                 v.langCode === language ? {...v, title: e.target.value} : v,
@@ -110,7 +110,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             }}
           />
           <span className='absolute inset-y-0 right-0 text-nc-icon items-center flex text-body-4 mr-4'>
-            {`${title.length}/50`}
+            {`${title.length}/150`}
           </span>
         </div>
         <textarea
