@@ -191,7 +191,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
   }
 
   const handleSelectLocation = (item) => {
-    if (!item) return
+    if (!item?.geometry?.location) return
     setLocation(item.geometry.location)
     circle.current.setCenter(item.geometry.location)
     marker.current.setPosition(item.geometry.location)
