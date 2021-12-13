@@ -519,58 +519,56 @@ export const getFormikInitialFromQuery = (
 
   if (!isEmpty(fieldsFilter)) {
     result.fields = Object.fromEntries(
-      Object.entries(fieldsFilter).map(([key, value]) => {
-        const currentField = categoryDataFieldsBySlug[key]
+      Object.entries(fieldsFilter)
+        .map(([key, value]) => {
+          const currentField = categoryDataFieldsBySlug[key]
 
-        if (!currentField) {
-          captureException({key, value, categoryDataFieldsBySlug})
-        }
-
-        let parsedValue = decodeURIComponent(value as string).split(',')
-        // eslint-disable-next-line default-case
-        switch (currentField?.fieldType) {
-          case 'select':
-          case 'iconselect':
-          case 'multiselect': {
-            // @ts-ignore
-            parsedValue = parsedValue.map((valueId) => {
-              const option = [
-                // @ts-ignore
-                ...currentField.multiselects.top,
-                // @ts-ignore
-                ...(currentField.multiselects.other
-                  ? // @ts-ignore
-                    currentField.multiselects.other
-                  : []),
-              ].find((m) => m.value === valueId)
-              return {
-                value: option.id,
-                label: option.value,
+          let parsedValue = decodeURIComponent(value as string).split(',')
+          // eslint-disable-next-line default-case
+          switch (currentField?.fieldType) {
+            case 'select':
+            case 'iconselect':
+            case 'multiselect': {
+              // @ts-ignore
+              parsedValue = parsedValue.map((valueId) => {
+                const option = [
+                  // @ts-ignore
+                  ...currentField.multiselects.top,
+                  // @ts-ignore
+                  ...(currentField.multiselects.other
+                    ? // @ts-ignore
+                      currentField.multiselects.other
+                    : []),
+                ].find((m) => m.value === valueId)
+                return {
+                  value: option.id,
+                  label: option.value,
+                }
+              })
+              break
+            }
+            case 'checkbox': {
+              // @ts-ignore
+              parsedValue = parsedValue[0] === 'true'
+              break
+            }
+            case 'int': {
+              const range = parsedValue[0].split('-')
+              const parsed = []
+              if (range[0]) {
+                parsed.push(toNumber(range[0]))
               }
-            })
-            break
-          }
-          case 'checkbox': {
-            // @ts-ignore
-            parsedValue = parsedValue[0] === 'true'
-            break
-          }
-          case 'int': {
-            const range = parsedValue[0].split('-')
-            const parsed = []
-            if (range[0]) {
-              parsed.push(toNumber(range[0]))
+              if (range[1]) {
+                parsed.push(toNumber(range[1]))
+              }
+              parsedValue = parsed
+              break
             }
-            if (range[1]) {
-              parsed.push(toNumber(range[1]))
-            }
-            parsedValue = parsed
-            break
           }
-        }
 
-        return [currentField?.id, parsedValue]
-      }),
+          return [currentField?.id, parsedValue]
+        })
+        .filter(([key]) => !!key),
     )
   }
 
