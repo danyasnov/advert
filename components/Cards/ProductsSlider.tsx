@@ -46,13 +46,13 @@ const ProductsSlider: FC<Props> = ({products, title}) => {
         </div>
         <SliderButton
           onClick={scrollPrev}
-          hide={prevBtnEnabled}
+          hide={!prevBtnEnabled}
           direction='left'
           className='slider-button left-1 s:left-5 m:left-1 m:-left-4'
         />
         <SliderButton
           onClick={scrollNext}
-          hide={nextBtnEnabled}
+          hide={!nextBtnEnabled}
           direction='right'
           className='slider-button right-1 s:right-5 m:-right-4'
         />

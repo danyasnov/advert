@@ -60,13 +60,13 @@ const CategoriesSlider: FC = observer(() => {
         </div>
         <SliderButton
           onClick={scrollPrev}
-          hide={prevBtnEnabled}
+          hide={!prevBtnEnabled}
           direction='left'
           className='slider-button left-1 s:left-5 m:left-0'
         />
         <SliderButton
           onClick={scrollNext}
-          hide={nextBtnEnabled}
+          hide={!nextBtnEnabled}
           direction='right'
           className='slider-button right-1 s:right-5 m:right-0'
         />
