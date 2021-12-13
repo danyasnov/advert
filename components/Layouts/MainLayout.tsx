@@ -53,8 +53,8 @@ const MainLayout: FC = observer(() => {
       })
       Promise.all([freeProductsPromise, discountedProductsPromise]).then(
         (res) => {
-          setProducts(res[0].data.result.data, 'freeProducts')
-          setProducts(res[1].data.result.data, 'discountedProducts')
+          setProducts(res[0].data?.result?.data || [], 'freeProducts')
+          setProducts(res[1].data?.result?.data || [], 'discountedProducts')
         },
       )
     }
