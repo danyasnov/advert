@@ -142,6 +142,7 @@ module.exports = {
         20: '5rem',
         '1/2': '50vh',
         '2/3': '66vh',
+        '9/10': '90vh',
       },
       minWidth: {
         10: '2.5rem',
