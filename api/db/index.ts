@@ -152,7 +152,7 @@ export const incrementDeeplinkCounter = async (hash: string) => {
       `UPDATE adv_cover_links SET count_view=count_view+1, time_view=${Math.floor(
         new Date().getTime() / 1000,
       )} WHERE hash_link='${hash}'`,
-      {type: QueryTypes.SELECT},
+      {type: QueryTypes.UPDATE},
     )
   } catch (e) {
     captureException(e)
@@ -169,7 +169,7 @@ export const addMetaToDeeplink = async (
       `INSERT INTO adv_cover_links_log VALUES ('${hash}', ${Math.floor(
         new Date().getTime() / 1000,
       )}, '${ip}', '${referrer}', '${userAgent}')`,
-      {type: QueryTypes.SELECT},
+      {type: QueryTypes.INSERT},
     )
   } catch (e) {
     captureException(e)
