@@ -124,6 +124,7 @@ module.exports = {
         'nc-icon-hover': '#6C859F',
         'nc-link': '#0058A6',
         'nc-back': '#F6F8F9',
+        'nc-info': '#F2F6FA',
         'nc-dropzone-border': '#CCDBEB',
         'sold-background': 'rgba(255,64,64, 0.2)',
       },

@@ -129,7 +129,10 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <span className='text-nc-icon justify-end flex text-body-4 mr-4 mt-1'>
         {`${description.length}/${maxDescriptionLength}`}
       </span>
-      <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5'>
+      <span className='text-body-3 text-nc-secondary-text'>
+        {t('OTHER_LANGUAGES_REFERENCE')}
+      </span>
+      <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 mt-4'>
         <Field
           component={FormikSwitch}
           name='isExclusive'

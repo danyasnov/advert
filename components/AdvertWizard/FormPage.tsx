@@ -300,6 +300,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     />
                   </div>
                 }
+                labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
                 label={t('TITLE_AND_DESCRIPTION')}
                 labelClassName='mt-2'
                 isRequired
