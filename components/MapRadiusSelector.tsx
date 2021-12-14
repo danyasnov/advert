@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcLocation from 'icons/location/Location.svg'
 import IcLocationSmall from 'icons/location/LocationSmall.svg'
@@ -15,7 +15,11 @@ import {
   DEGRADATION_TYPE_LOW,
   TypeOfDegradation,
 } from 'front-api/src/models/index'
+import {parseCookies} from 'nookies'
+import IcClear from 'icons/material/Clear.svg'
 import Button from './Buttons/Button'
+import {SerializedCookiesState} from '../types'
+import {setCookiesObject} from '../helpers'
 
 interface Props {
   radius: number
@@ -51,25 +55,52 @@ const options = [
 
 const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
   const {t} = useTranslation()
+  const [showHint, setShowHint] = useState(false)
+  useEffect(() => {
+    const state: SerializedCookiesState = parseCookies()
+    const {showCreateAdvMapHint} = state
+    setShowHint(showCreateAdvMapHint !== 'false')
+  }, [])
+  const hideHint = () => {
+    setShowHint(false)
+    setCookiesObject({showCreateAdvMapHint: false})
+  }
   return (
-    <div className='flex rounded-xl p-1 bg-white space-x-0.5'>
-      {options.map((o) => {
-        const isCurrent = radius === o.value
-        const Icon = isCurrent ? o.iconActive : o.icon
-        return (
+    <div className='relative'>
+      {showHint && (
+        <div className='bg-nc-link flex flex-col w-362px rounded-2xl p-4 items-start map-hint-arrow-bottom absolute bottom-4'>
+          <div className='flex text-white items-start mb-4'>
+            <div className='text-h-3'>{t('TIP_MAP_CREATE_ADS')}</div>
+            <Button onClick={hideHint}>
+              <IcClear className='fill-current h-4 w-4' />
+            </Button>
+          </div>
           <Button
-            key={o.key}
-            onClick={() => setRadius(o.value, o.key)}
-            className={`flex px-4 py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
-              isCurrent ? 'bg-nc-accent' : ''
-            }`}>
-            <Icon className='h-5 w-5 mr-1' />
-            <span className='text-body-1 font-normal'>
-              {t(o.title, {n: o.value})}
-            </span>
+            onClick={hideHint}
+            className='text-nc-link rounded-lg bg-white px-3 py-1.5 text-body-1'>
+            {t('CLEAR')}
           </Button>
-        )
-      })}
+        </div>
+      )}
+      <div className='flex rounded-xl p-1 bg-white space-x-0.5'>
+        {options.map((o) => {
+          const isCurrent = radius === o.value
+          const Icon = isCurrent ? o.iconActive : o.icon
+          return (
+            <Button
+              key={o.key}
+              onClick={() => setRadius(o.value, o.key)}
+              className={`flex px-4 py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
+                isCurrent ? 'bg-nc-accent' : ''
+              }`}>
+              <Icon className='h-5 w-5 mr-1' />
+              <span className='text-body-1 font-normal'>
+                {t(o.title, {n: o.value})}
+              </span>
+            </Button>
+          )
+        })}
+      </div>
     </div>
   )
 }

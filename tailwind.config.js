@@ -74,6 +74,7 @@ module.exports = {
         '288px': '288px',
         '320px': '320px',
         '328px': '328px',
+        '362px': '362px',
         '480px': '480px',
         '596px': '596px',
         '608px': '608px',
@@ -170,6 +171,13 @@ module.exports = {
         backgroundColor: theme('colors.white'),
         size: 10,
         offset: 70,
+      },
+      'map-hint-arrow': {
+        borderColor: theme('colors.nc-link'),
+        borderWidth: 1,
+        backgroundColor: theme('colors.nc-link'),
+        size: 10,
+        offset: 25,
       },
     }),
     gradientColorStops: (theme) => ({
