@@ -58,7 +58,7 @@ input[type=number] {
 }
 
 .nc-gradient-brand {
-    @apply bg-gradient-to-r from-brand-a1 to-brand-a3
+    @apply bg-gradient-to-r from-brand-a3 to-brand-a1
 }
 
 .Toastify__toast-body {
