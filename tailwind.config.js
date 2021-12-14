@@ -18,7 +18,7 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      sans: ['IBM Plex Sans', 'sans-serif'],
+      sans: ['Fira Sans', 'sans-serif'],
     },
     fontSize: {
       'body-1': ['16px', '20px'],
