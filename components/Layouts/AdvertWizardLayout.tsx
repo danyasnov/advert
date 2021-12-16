@@ -12,7 +12,7 @@ const CategoriesLayout: FC = observer(() => {
     <>
       <Header />
       <MetaTags title={t('NEW_AD')} />
-      <div className='bg-white px-29 pb-44 flex min-h-9/10'>
+      <div className='bg-white px-29 pb-44 flex min-h-9/10 flex justify-center'>
         <AdvertWizard />
       </div>
     </>
