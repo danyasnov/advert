@@ -93,6 +93,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <div className='flex flex-col w-full rounded-b-lg overflow-hidden'>
         <div className='relative'>
           <input
+            placeholder={t('ENTER_THE_TITLE')}
             className={`border text-body-2 py-3 pl-4 pr-15 w-full text-nc-primary-text ${
               errors[name] ? 'border-error' : 'border-shadow-b'
             }`}
@@ -110,6 +111,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           </span>
         </div>
         <textarea
+          placeholder={t('ENTER_DESCRIPTION')}
           rows={5}
           maxLength={maxDescriptionLength}
           value={description}
