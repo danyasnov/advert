@@ -3,7 +3,7 @@ import {FieldProps} from 'formik'
 import NumberFormat from 'react-number-format'
 import {CurrencyModel} from 'front-api/src/models/index'
 import {useTranslation} from 'next-i18next'
-import {size} from 'lodash'
+import {get, size} from 'lodash'
 import RadioButtons from '../RadioButtons'
 
 interface Props {
@@ -16,7 +16,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
   currencies,
   allowSecureDeal,
 }) => {
-  const {setFieldValue, errors, values} = form
+  const {setFieldValue, values} = form
   const {currency} = values
   const [currencyOptions] = useState(
     currencies.map((c) => ({title: c.code, value: c.code})),
@@ -41,7 +41,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           }}
           isAllowed={({value: priceValue}) => priceValue.length < 16}
           thousandSeparator={' '}
-          // placeholder={placeholder}
+          placeholder={get(currencies, '[0].code', '')}
           className='w-full text-nc-primary-text text-body-1 outline-none manual-outline'
         />
         {!!safeDealPrice && (

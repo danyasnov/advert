@@ -26,6 +26,7 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 import OutlineButton from '../Buttons/OutlineButton'
 import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
+import SideNavigation from './SideNavigation'
 
 const findSelectValue = (id, options) => {
   const option = options.find((o) => id === o.id)
@@ -129,8 +130,9 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
   return null
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
-  console.log('state.draft', state.draft)
   const {push} = useRouter()
+
+  const headerRefs = useRef([])
 
   const [initialValues, setInitialValues] = useState({})
   const {languagesByIsoCode, user} = useGeneralStore()
@@ -235,207 +237,245 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   if (!category || !user) return null
 
   return (
-    <div className='w-full'>
+    <div className=''>
       <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8'>
         {category.data.name}
       </h3>
-      <Formik
-        enableReinitialize
-        initialValues={initialValues}
-        validate={(values) => {
-          const errors: any = {}
-          const {photos, content, condition, price} = values
+      <div className='flex'>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validate={(values) => {
+            const errors: any = {}
+            const {photos, content, condition, price} = values
 
-          const categoryData = category.data
+            const categoryData = category.data
 
-          const mainContent = content.find(
-            (c) => c.langCode === user.mainLanguage.isoCode,
-          )
-          let isMissingFields = false
-          const missingFieldsMsg = t('ADVERT_CREATING_HELP_ALERT')
+            const mainContent = content.find(
+              (c) => c.langCode === user.mainLanguage.isoCode,
+            )
+            let isMissingFields = false
+            const missingFieldsMsg = t('ADVERT_CREATING_HELP_ALERT')
 
-          if (!price && !categoryData.allowFree) {
-            isMissingFields = true
-            errors.price = missingFieldsMsg
-          }
+            if (!price && !categoryData.allowFree) {
+              isMissingFields = true
+              errors.price = missingFieldsMsg
+            }
 
-          if (!condition && category.data.allowUsed) {
-            isMissingFields = true
-            errors.condition = missingFieldsMsg
-          }
+            if (!condition && category.data.allowUsed) {
+              isMissingFields = true
+              errors.condition = missingFieldsMsg
+            }
 
-          if (!mainContent.title) {
-            isMissingFields = true
-            errors.content = missingFieldsMsg
-          }
+            if (!mainContent.title) {
+              isMissingFields = true
+              errors.content = missingFieldsMsg
+            }
 
-          if (size(photos) < categoryData.minPhotos) {
-            const msg = t('PHOTO_ERROR', {minPhotos: categoryData.minPhotos})
-            errors.photos = msg
-            toast.error(msg)
-          }
+            if (size(photos) < categoryData.minPhotos) {
+              const msg = t('PHOTO_ERROR', {minPhotos: categoryData.minPhotos})
+              errors.photos = msg
+              toast.error(msg)
+            }
 
-          if (isMissingFields) {
-            toast.error(missingFieldsMsg)
-          }
-          console.log('errors', errors)
-          return errors
-        }}
-        validateOnBlur={false}
-        validateOnChange={false}
-        onSubmit={onSubmit}>
-        {({submitForm}) => (
-          <Form className='w-full space-y-12 my-6 mb-24'>
-            <div>
-              <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
-              <AdvertFormField
-                body={
-                  <div className='w-8/12'>
-                    <Field
-                      name='content'
-                      maxDescriptionLength={category.data.descriptionLengthMax}
-                      component={AdvertDescription}
-                      user={user}
-                      languagesByIsoCode={languagesByIsoCode}
-                    />
-                  </div>
-                }
-                labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
-                label={t('TITLE_AND_DESCRIPTION')}
-                labelClassName='mt-2'
-                isRequired
-              />
-            </div>
-
-            <div>
-              <AdvertFormHeading title={t('UPLOAD_PHOTO_AND_VIDEO')} />
-              <AdvertFormField
-                body={
-                  <div className='w-8/12'>
-                    <Field
-                      component={AdvertPhotos}
-                      name='photos'
-                      maxPhotos={category.data.maxPhotos}
-                    />
-                  </div>
-                }
-                label={t('PRODUCT_PHOTOS')}
-                isRequired={category.data.minPhotos > 0}
-              />
-              <AdvertFormField
-                body={
-                  <div className='w-8/12'>
-                    <Field
-                      component={AdvertVideos}
-                      name='videos'
-                      categoryId={category.data.id}
-                      maxVideoDuration={category.data.maxVideoDuration}
-                    />
-                  </div>
-                }
-                label={t('PRODUCT_VIDEO')}
-                hide={!category.data.allowVideo}
-              />
-            </div>
-
-            <div>
-              <AdvertFormHeading title={t('ENTER_PRICE')} />
-              <div className='space-y-4'>
+            if (isMissingFields) {
+              toast.error(missingFieldsMsg)
+            }
+            // console.log('errors', errors)
+            return errors
+          }}
+          validateOnBlur={false}
+          validateOnChange={false}
+          onSubmit={onSubmit}>
+          {({submitForm}) => (
+            <Form className='flex flex-col space-y-12 mt-6 mb-24 w-full'>
+              <div>
+                <AdvertFormHeading
+                  title={t('ENTER_TITLE_AND_DESCRIPTION')}
+                  ref={(ref) => {
+                    headerRefs.current[0] = {
+                      ref,
+                      title: t('TITLE_AND_DESCRIPTION'),
+                    }
+                  }}
+                />
                 <AdvertFormField
                   body={
-                    <div className='w-4/12'>
+                    <div className='max-w-592px'>
                       <Field
-                        name='price'
-                        component={AdvertPrice}
-                        currencies={state.draft.currencies}
-                        allowSecureDeal={category.data.allowSecureDeal}
+                        name='content'
+                        maxDescriptionLength={
+                          category.data.descriptionLengthMax
+                        }
+                        component={AdvertDescription}
+                        user={user}
+                        languagesByIsoCode={languagesByIsoCode}
                       />
                     </div>
                   }
-                  isRequired={!category.data.allowFree}
-                  label={t('PRICE')}
+                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
+                  label={t('TITLE_AND_DESCRIPTION')}
                   labelClassName='mt-2'
-                />
-                <AdvertFormField
-                  body={
-                    <div className='w-4/12'>
-                      <Field name='isSwapPossible' component={FormikSwitch} />
-                    </div>
-                  }
-                  className='items-center'
-                  label={t('EXCHANGE')}
-                />
-                <AdvertFormField
-                  body={
-                    <div className='w-4/12'>
-                      <Field
-                        name='isBargainPossible'
-                        component={FormikSwitch}
-                      />
-                    </div>
-                  }
-                  className='items-center'
-                  label={t('BARGAIN')}
+                  isRequired
                 />
               </div>
-            </div>
-            {(category.data.allowUsed || !isEmpty(fieldsArray)) && (
-              <div className='mb-96'>
-                <AdvertFormHeading title={t('PRODUCT_FEATURES')} />
+              <div>
+                <AdvertFormHeading
+                  title={t('UPLOAD_PHOTO_AND_VIDEO')}
+                  ref={(ref) => {
+                    headerRefs.current[1] = {
+                      ref,
+                      title: t('PHOTO_AND_VIDEO'),
+                    }
+                  }}
+                />
+                <AdvertFormField
+                  body={
+                    <div className='w-full'>
+                      <Field
+                        component={AdvertPhotos}
+                        name='photos'
+                        maxPhotos={category.data.maxPhotos}
+                      />
+                    </div>
+                  }
+                  label={t('PRODUCT_PHOTOS')}
+                  isRequired={category.data.minPhotos > 0}
+                />
+                <AdvertFormField
+                  body={
+                    <div className='w-8/12'>
+                      <Field
+                        component={AdvertVideos}
+                        name='videos'
+                        categoryId={category.data.id}
+                        maxVideoDuration={category.data.maxVideoDuration}
+                      />
+                    </div>
+                  }
+                  label={t('PRODUCT_VIDEO')}
+                  hide={!category.data.allowVideo}
+                />
+              </div>
+
+              <div>
+                <AdvertFormHeading
+                  title={t('ENTER_PRICE')}
+                  ref={(ref) => {
+                    headerRefs.current[2] = {
+                      ref,
+                      title: t('PRICE'),
+                    }
+                  }}
+                />
                 <div className='space-y-4'>
-                  {category.data.allowUsed && (
-                    <AdvertFormField
-                      body={
-                        <div className='w-5/12'>
-                          <Field
-                            component={FormikSelect}
-                            name='condition'
-                            options={conditionOptions.current}
-                            placeholder={t('PROD_CONDITION')}
-                          />
-                        </div>
-                      }
-                      className='items-center'
-                      isRequired
-                      labelClassName='mt-2'
-                      label={t('PROD_CONDITION')}
-                    />
-                  )}
-                  {fieldsArray.map((f) => (
-                    <AdvertFormField
-                      key={f.id}
-                      body={
-                        <div className='w-5/12'>
-                          <FormikCreateField field={f} />
-                        </div>
-                      }
-                      className='items-center'
-                      isRequired={f.isFillingRequired}
-                      label={f.name}
-                    />
-                  ))}
+                  <AdvertFormField
+                    body={
+                      <div className='w-4/12'>
+                        <Field
+                          name='price'
+                          component={AdvertPrice}
+                          currencies={state.draft.currencies}
+                          allowSecureDeal={category.data.allowSecureDeal}
+                        />
+                      </div>
+                    }
+                    isRequired={!category.data.allowFree}
+                    label={t('PRICE')}
+                    labelClassName='mt-2'
+                  />
+                  <AdvertFormField
+                    body={
+                      <div className='w-4/12'>
+                        <Field name='isSwapPossible' component={FormikSwitch} />
+                      </div>
+                    }
+                    className='items-center'
+                    label={t('EXCHANGE')}
+                  />
+                  <AdvertFormField
+                    body={
+                      <div className='w-4/12'>
+                        <Field
+                          name='isBargainPossible'
+                          component={FormikSwitch}
+                        />
+                      </div>
+                    }
+                    className='items-center'
+                    label={t('BARGAIN')}
+                  />
                 </div>
               </div>
-            )}
+              {(category.data.allowUsed || !isEmpty(fieldsArray)) && (
+                <div className='mb-96'>
+                  <AdvertFormHeading
+                    title={t('PRODUCT_FEATURES')}
+                    ref={(ref) => {
+                      headerRefs.current[3] = {
+                        ref,
+                        title: t('PARAMETERS'),
+                      }
+                    }}
+                  />
+                  <div className='space-y-4'>
+                    {category.data.allowUsed && (
+                      <AdvertFormField
+                        body={
+                          <div className='w-5/12'>
+                            <Field
+                              component={FormikSelect}
+                              name='condition'
+                              options={conditionOptions.current}
+                              placeholder={t('PROD_CONDITION')}
+                            />
+                          </div>
+                        }
+                        className='items-center'
+                        isRequired
+                        labelClassName='mt-2'
+                        label={t('PROD_CONDITION')}
+                      />
+                    )}
+                    {fieldsArray.map((f) => (
+                      <AdvertFormField
+                        key={f.id}
+                        body={
+                          <div className='w-5/12'>
+                            <FormikCreateField field={f} />
+                          </div>
+                        }
+                        className='items-center'
+                        isRequired={f.isFillingRequired}
+                        label={f.name}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
-              <OutlineButton
-                onClick={() => {
-                  dispatch({
-                    type: 'setPage',
-                    page: AdvertPages.categoryPage,
-                  })
-                }}>
-                {t('BACK')}
-              </OutlineButton>
-              <PrimaryButton onClick={submitForm}>
-                {t('CONTINUE')}
-              </PrimaryButton>
-            </div>
-            <CategoryUpdater onChangeFields={onChangeFields} />
-          </Form>
-        )}
-      </Formik>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
+                <OutlineButton
+                  onClick={() => {
+                    dispatch({
+                      type: 'setPage',
+                      page: AdvertPages.categoryPage,
+                    })
+                  }}>
+                  {t('BACK')}
+                </OutlineButton>
+                <PrimaryButton onClick={submitForm}>
+                  {t('CONTINUE')}
+                </PrimaryButton>
+              </div>
+              <CategoryUpdater onChangeFields={onChangeFields} />
+            </Form>
+          )}
+        </Formik>
+        <div className=' ml-12 flex w-full'>
+          <SideNavigation items={headerRefs.current} />
+        </div>
+      </div>
     </div>
   )
 })

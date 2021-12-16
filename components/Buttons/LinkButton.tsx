@@ -3,7 +3,7 @@ import Button from './Button'
 
 interface Props {
   onClick: () => void
-  label: string
+  label?: string
   children?: ReactNode
   className?: string
   nowrap?: boolean

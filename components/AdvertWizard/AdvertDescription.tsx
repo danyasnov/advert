@@ -4,16 +4,12 @@ import useEmblaCarousel from 'embla-carousel-react'
 import {SettingsLanguageModel} from 'front-api'
 import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
-import {last} from 'lodash'
 import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
 import {FormikSwitch} from '../FormikComponents'
-import PrimaryButton from '../Buttons/PrimaryButton'
 
 interface Props {
-  // value: CAParamContent[]
-  // onChange: (value: CAParamContent[]) => void
   user: OwnerModel
   languagesByIsoCode: Record<string, SettingsLanguageModel>
   maxDescriptionLength: number
@@ -27,7 +23,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 }) => {
   const {t} = useTranslation()
   const {name, value} = field
-  const {setFieldValue, errors, values} = form
+  const {setFieldValue, errors} = form
   const [language, setLanguage] = useState(user.mainLanguage.isoCode)
   const [valueDict, setValueDict] = useState<Record<string, CAParamContent>>({})
 

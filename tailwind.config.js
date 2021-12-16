@@ -138,6 +138,8 @@ module.exports = {
         '100px': '100px',
         44: '11rem',
         64: '16rem',
+        '592px': '592px',
+        '288px': '288px',
       },
       minHeight: {
         10: '2.5rem',
@@ -150,6 +152,7 @@ module.exports = {
         10: '2.5rem',
         40: '10rem',
         52: '13rem',
+        '288px': '288px',
       },
       outline: {
         'brand-a1': ['2px solid #FF9514', '1px'],
