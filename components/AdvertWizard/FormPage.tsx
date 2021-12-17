@@ -301,17 +301,13 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 />
                 <AdvertFormField
                   body={
-                    <div className='max-w-592px'>
-                      <Field
-                        name='content'
-                        maxDescriptionLength={
-                          category.data.descriptionLengthMax
-                        }
-                        component={AdvertDescription}
-                        user={user}
-                        languagesByIsoCode={languagesByIsoCode}
-                      />
-                    </div>
+                    <Field
+                      name='content'
+                      maxDescriptionLength={category.data.descriptionLengthMax}
+                      component={AdvertDescription}
+                      user={user}
+                      languagesByIsoCode={languagesByIsoCode}
+                    />
                   }
                   labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
                   label={t('TITLE_AND_DESCRIPTION')}
@@ -342,7 +338,9 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         maxPhotos={category.data.maxPhotos}
                       />
                       <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
-                        {t('TIP_FOR_ADDING_A_PHOTO')}
+                        {t('TIP_FOR_ADDING_A_PHOTO', {
+                          maxPhotos: category.data.maxPhotos,
+                        })}
                       </p>
                     </div>
                   }
@@ -360,7 +358,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         maxVideoDuration={category.data.maxVideoDuration}
                       />
                       <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
-                        {t('INFORMATION_ BY_DOWNLOADING_VIDEO')}
+                        {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
+                          descriptionLengthMax: `${
+                            category.data.maxVideoDuration || 30
+                          } MB`,
+                        })}
                       </p>
                     </div>
                   }
@@ -383,7 +385,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 <div className='space-y-4'>
                   <AdvertFormField
                     body={
-                      <div className='w-4/12'>
+                      <div className='w-1/3 l:w-4/12'>
                         <Field
                           name='price'
                           component={AdvertPrice}
@@ -402,7 +404,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         <Field name='isSwapPossible' component={FormikSwitch} />
                       </div>
                     }
-                    className='items-center'
+                    className='l:items-center'
                     label={t('EXCHANGE')}
                   />
                   <AdvertFormField
@@ -414,7 +416,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         />
                       </div>
                     }
-                    className='items-center'
+                    className='l:items-center'
                     label={t('BARGAIN')}
                   />
                 </div>
@@ -434,7 +436,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     {category.data.allowUsed && (
                       <AdvertFormField
                         body={
-                          <div className='w-5/12'>
+                          <div className='w-1/2 l:w-5/12'>
                             <Field
                               component={FormikSelect}
                               name='condition'
@@ -443,7 +445,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                             />
                           </div>
                         }
-                        className='items-center'
+                        className='l:items-center'
                         isRequired
                         labelClassName='mt-2'
                         label={t('PROD_CONDITION')}
@@ -453,11 +455,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                       <AdvertFormField
                         key={f.id}
                         body={
-                          <div className='w-5/12'>
+                          <div className='w-1/2 l:w-5/12'>
                             <FormikCreateField field={f} />
                           </div>
                         }
-                        className='items-center'
+                        className='l:items-center'
                         isRequired={f.isFillingRequired}
                         label={f.name}
                       />
@@ -484,7 +486,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             </Form>
           )}
         </Formik>
-        <div className=' ml-12 flex w-full'>
+        <div className='ml-12 hidden l:flex w-full max-w-288px '>
           <SideNavigation items={headerRefs.current} />
         </div>
       </div>

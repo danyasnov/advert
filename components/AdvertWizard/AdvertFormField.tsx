@@ -20,7 +20,7 @@ const AdvertFormField: FC<Props> = ({
 }) => {
   if (hide) return null
   return (
-    <div className={`flex w-full ${className || ''}`}>
+    <div className={`flex-col l:flex-row flex w-full ${className || ''}`}>
       <div className='flex flex-col max-w-288px min-w-288px mr-8'>
         <span
           className={`text-body-1 text-nc-title mb-4 ${labelClassName || ''}`}>
@@ -30,7 +30,7 @@ const AdvertFormField: FC<Props> = ({
           )}
         </span>
         {labelDescription && (
-          <span className='text-nc-primary-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-line'>
+          <span className='hidden l:flex text-nc-primary-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-line'>
             {labelDescription}
           </span>
         )}
