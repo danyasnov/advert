@@ -332,14 +332,22 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 <AdvertFormField
                   body={
                     <div className='w-full'>
+                      <p className='text-body-2 text-nc-title mb-3'>
+                        {t('ADD_PHOTO_HINT')}
+                      </p>
+
                       <Field
                         component={AdvertPhotos}
                         name='photos'
                         maxPhotos={category.data.maxPhotos}
                       />
+                      <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                        {t('TIP_FOR_ADDING_A_PHOTO')}
+                      </p>
                     </div>
                   }
                   label={t('PRODUCT_PHOTOS')}
+                  labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
                   isRequired={category.data.minPhotos > 0}
                 />
                 <AdvertFormField
@@ -351,9 +359,13 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         categoryId={category.data.id}
                         maxVideoDuration={category.data.maxVideoDuration}
                       />
+                      <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                        {t('INFORMATION_ BY_DOWNLOADING_VIDEO')}
+                      </p>
                     </div>
                   }
                   label={t('PRODUCT_VIDEO')}
+                  labelDescription={t('TIP_FOR_VIDEO')}
                   hide={!category.data.allowVideo}
                 />
               </div>
