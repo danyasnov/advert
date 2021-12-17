@@ -39,7 +39,7 @@ const DropZone: FC<{
       <div
         className={`flex bg-nc-back h-full min-h-20 rounded-lg border-dashed border
            items-center justify-center flex-col ${
-             isDragActive ? 'border-nc-primary' : 'border-nc-dropzone-border'
+             isDragActive ? 'border-nc-primary' : 'border-nc-border'
            }`}>
         <input {...getInputProps()} />
         {type === 'photo' && (

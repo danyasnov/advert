@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {CACategoryModel} from 'front-api'
 import {useTranslation} from 'next-i18next'
-import {first, isEmpty, last} from 'lodash'
+import {first, isEmpty, last, toNumber} from 'lodash'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
@@ -12,6 +12,7 @@ import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import OutlineButton from '../Buttons/OutlineButton'
 import {makeRequest} from '../../api'
+import SearchCategories from './SearchCategories'
 
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
@@ -31,22 +32,76 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   }, [selected])
   const rootCategory = first(selected)
 
+  const onSubmit = (id) => {
+    const {draft} = state
+
+    if (draft.categoryId !== id) {
+      makeRequest({
+        url: '/api/category-data',
+        method: 'post',
+        data: {
+          id,
+        },
+      })
+        .then((res) => {
+          const categoryData = res.data.result
+          const newDraft = {
+            ...draft,
+            categoryId: categoryData.id,
+            data: categoryData,
+          }
+          dispatch({
+            type: 'setDraft',
+            draft: newDraft,
+          })
+          return makeRequest({
+            url: '/api/save-draft',
+            method: 'post',
+            data: {
+              hash: query.hash,
+              draft: newDraft,
+            },
+          })
+        })
+        .then(() => {
+          dispatch({
+            type: 'setPage',
+            page: AdvertPages.formPage,
+          })
+        })
+    } else {
+      dispatch({
+        type: 'setPage',
+        page: AdvertPages.formPage,
+      })
+    }
+  }
+
   const header = (
-    <h3 className='text-headline-8 text-hc-title font-bold mb-4 mt-8'>
-      {rootCategory ? (
-        <div className='flex'>
-          <Button
-            onClick={() => {
-              setSelected([])
-            }}>
-            <IcKeyboardArrowLeft className='fill-current text-nc-primary w-7 h-7' />
-          </Button>
-          {rootCategory.name}
-        </div>
-      ) : (
-        t('SELECT_CATEGORY')
-      )}
-    </h3>
+    <div className='mb-6'>
+      <h3 className='text-headline-8 text-hc-title font-bold mb-6 mt-8'>
+        {rootCategory ? (
+          <div className='flex'>
+            <Button
+              onClick={() => {
+                setSelected([])
+              }}>
+              <IcKeyboardArrowLeft className='fill-current text-nc-primary w-7 h-7' />
+            </Button>
+            {rootCategory.name}
+          </div>
+        ) : (
+          t('SELECT_CATEGORY')
+        )}
+      </h3>
+      <div className='w-1/2'>
+        <SearchCategories
+          handleSelectedItemChange={(item) => {
+            onSubmit(toNumber(item.id))
+          }}
+        />
+      </div>
+    </div>
   )
 
   const footer = (
@@ -62,48 +117,8 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
       </OutlineButton>
       <PrimaryButton
         onClick={() => {
-          const {draft} = state
           const category = last(selected)
-          if (draft.categoryId !== category.id) {
-            makeRequest({
-              url: '/api/category-data',
-              method: 'post',
-              data: {
-                id: category.id,
-              },
-            })
-              .then((res) => {
-                const categoryData = res.data.result
-                const newDraft = {
-                  ...draft,
-                  categoryId: categoryData.id,
-                  data: categoryData,
-                }
-                dispatch({
-                  type: 'setDraft',
-                  draft: newDraft,
-                })
-                return makeRequest({
-                  url: '/api/save-draft',
-                  method: 'post',
-                  data: {
-                    hash: query.hash,
-                    draft: newDraft,
-                  },
-                })
-              })
-              .then(() => {
-                dispatch({
-                  type: 'setPage',
-                  page: AdvertPages.formPage,
-                })
-              })
-          } else {
-            dispatch({
-              type: 'setPage',
-              page: AdvertPages.formPage,
-            })
-          }
+          onSubmit(category.id)
         }}
         disabled={!valid}>
         {t('APPLY')}

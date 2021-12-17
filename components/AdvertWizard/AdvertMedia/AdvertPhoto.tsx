@@ -22,7 +22,7 @@ const AdvertPhoto: ComponentClass<
   return (
     <div
       className={`h-34 w-34 flex rounded-lg overflow-hidden border
-     border-nc-dropzone-border relative cursor-pointer relative`}>
+     border-nc-border relative cursor-pointer relative`}>
       {loading && (
         <div className='absolute z-10 inset-0 flex justify-center items-center  '>
           <CircularProgress
