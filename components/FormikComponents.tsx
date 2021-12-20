@@ -4,10 +4,11 @@ import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
-import {get} from 'lodash'
+import {get, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
+import {toast} from 'react-toastify'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 
@@ -148,6 +149,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 }
 
 export const FormikCreateField: FC<IFormikField> = ({field}) => {
+  const {t} = useTranslation()
   // @ts-ignore
   const {
     fieldType,
@@ -216,6 +218,19 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     let msg
     if (isFillingRequired && !value) {
       msg = 'err'
+    }
+    if (minValue || maxValue) {
+      const num = toNumber(value)
+      if (num < minValue || num > maxValue) {
+        toast.error(
+          t('VALUE_MUST_BE_BETWEEN', {
+            fieldName: name,
+            min: minValue,
+            max: maxValue,
+          }),
+        )
+        msg = 'err'
+      }
     }
     return msg
   }
