@@ -468,7 +468,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 </div>
               )}
 
-              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10'>
                 <OutlineButton
                   onClick={() => {
                     dispatch({
