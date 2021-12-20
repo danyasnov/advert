@@ -486,7 +486,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             </Form>
           )}
         </Formik>
-        <div className='ml-12 hidden l:flex w-full max-w-288px '>
+        <div className='ml-12 hidden m:flex w-full max-w-288px '>
           <SideNavigation items={headerRefs.current} />
         </div>
       </div>
