@@ -63,7 +63,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               <Button
                 key={l.isoCode}
                 onClick={() => setLanguage(l.isoCode)}
-                className={`last:mr-20 px-4 py-3 text-body-2 border-b whitespace-nowrap ${
+                className={`px-4 py-3 text-body-2 border-b whitespace-nowrap ${
                   language === l.isoCode
                     ? 'text-nc-title font-medium border-brand-a1'
                     : 'text-nc-link border-nc-link'
@@ -73,8 +73,11 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             ))}
           </div>
         </div>
-        {(prevBtnEnabled || nextBtnEnabled) && (
-          <div className='flex items-center space-x-1 h-10'>
+        <div
+          className={`w-18 flex items-center space-x-1 h-10 ${
+            prevBtnEnabled || nextBtnEnabled ? '' : 'invisible'
+          }`}>
+          <>
             <SliderButton
               onClick={scrollPrev}
               disabled={!prevBtnEnabled}
@@ -87,8 +90,8 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               direction='right'
               className={`${nextBtnEnabled ? 'bg-nc-accent' : ''}`}
             />
-          </div>
-        )}
+          </>
+        </div>
       </div>
       <div className='flex flex-col w-full rounded-b-lg overflow-hidden'>
         <div className='relative'>

@@ -1270,5 +1270,6 @@
   "COST_GOODS": "Стоимость товара",
   "MONEY WILL BE RESERVED_BY_ADVERTO_BEFORE_RECEIVING_THE_GOODS": "Деньги будут зарезервированы Адверто до получения товара",
   "MORE_ABOUT_A_SAFE_TRANSACTION": "Подробнее о Безопасной сделке ",
-  "SEARCH_BY_CATEGORIES": "Поиск по категориям"
+  "SEARCH_BY_CATEGORIES": "Поиск по категориям",
+  "VIDEO_LIMITATION_ERROR": "Максимальный размер видео 100мб. Попробуйте загрузить видео меньшего размера"
 }
