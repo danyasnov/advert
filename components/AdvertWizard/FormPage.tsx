@@ -396,6 +396,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     }
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
+                    labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2'
                   />
                   <AdvertFormField
@@ -404,6 +405,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         <Field name='isSwapPossible' component={FormikSwitch} />
                       </div>
                     }
+                    labelTip={t('POSSIBLE_EXCHANGE_TIP')}
                     className='l:items-center'
                     label={t('EXCHANGE')}
                   />

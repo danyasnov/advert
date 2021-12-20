@@ -8,6 +8,7 @@ import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
 import {FormikSwitch} from '../FormikComponents'
+import Tip from './Tip'
 
 interface Props {
   user: OwnerModel
@@ -133,13 +134,16 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <span className='text-body-3 text-nc-secondary-text'>
         {t('OTHER_LANGUAGES_REFERENCE')}
       </span>
-      <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 mt-4'>
-        <Field
-          component={FormikSwitch}
-          name='isExclusive'
-          label={t('ONLY_ON_ADVERTO')}
-          labelPosition='right'
-        />
+      <div className='flex space-x-2 items-center mt-4'>
+        <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '>
+          <Field
+            component={FormikSwitch}
+            name='isExclusive'
+            label={t('ONLY_ON_ADVERTO')}
+            labelPosition='right'
+          />
+        </div>
+        <Tip message={t('EXCLUSIVE_ON_ADVERTO_TIP')} placement='left' />
       </div>
     </div>
   )
