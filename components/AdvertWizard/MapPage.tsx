@@ -250,7 +250,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
           </>
         )}
       </div>
-      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-29 py-2.5'>
+      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5'>
         <PrimaryButton onClick={onSubmit}>{t('APPLY')}</PrimaryButton>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import '../styles/global.css'
 import '../styles/radio.css'
 import '../styles/loader.css'
+import '../styles/tooltip.css'
 import 'rc-slider/assets/index.css'
 import 'react-toastify/dist/ReactToastify.css'
 import 'nprogress/nprogress.css'

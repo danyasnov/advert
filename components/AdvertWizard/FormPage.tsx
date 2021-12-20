@@ -396,6 +396,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     }
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
+                    labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2'
                   />
                   <AdvertFormField
@@ -404,6 +405,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         <Field name='isSwapPossible' component={FormikSwitch} />
                       </div>
                     }
+                    labelTip={t('POSSIBLE_EXCHANGE_TIP')}
                     className='l:items-center'
                     label={t('EXCHANGE')}
                   />
@@ -468,7 +470,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 </div>
               )}
 
-              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-29 py-2.5 z-10'>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10'>
                 <OutlineButton
                   onClick={() => {
                     dispatch({
@@ -486,7 +488,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             </Form>
           )}
         </Formik>
-        <div className='ml-12 hidden l:flex w-full max-w-288px '>
+        <div className='ml-12 hidden m:flex w-full max-w-288px '>
           <SideNavigation items={headerRefs.current} />
         </div>
       </div>
