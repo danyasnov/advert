@@ -27,7 +27,7 @@ const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
   }, [])
   return (
     <>
-      <DevBanner />
+      {/* <DevBanner /> */}
       <Header />
       <div className={showContent ? '' : 'hidden'}>
         {children}
