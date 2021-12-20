@@ -27,12 +27,12 @@ const DevBanner: FC = () => {
       <span className='text-body-2 text-black-c text-center my-2'>
         {t('BANNER_TEXT_OLD_SITE')}
       </span>
-      <LinkWrapper
-        href='https://old.adverto.sale'
-        title='old site'
-        className='text-body-2 text-brand-b1 pb-2'>
-        {t('BANNER_LINK_OLD_SITE')}
-      </LinkWrapper>
+      {/* <LinkWrapper */}
+      {/*  href='https://old.adverto.sale' */}
+      {/*  title='old site' */}
+      {/*  className='text-body-2 text-brand-b1 pb-2'> */}
+      {/*  {t('BANNER_LINK_OLD_SITE')} */}
+      {/* </LinkWrapper> */}
       <Button
         className='absolute top-0 right-0 pt-2 pr-2'
         onClick={() => {
