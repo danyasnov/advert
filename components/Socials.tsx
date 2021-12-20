@@ -28,11 +28,11 @@ const socials = {
   el: [
     {
       ...fb,
-      url: 'https://www.facebook.com/Adverto_EL-108380018240729',
+      url: 'https://www.facebook.com/adverto.el',
     },
     {
       ...ig,
-      url: 'https://www.instagram.com/adverto_sale',
+      url: 'https://www.instagram.com/adverto_el/',
     },
     {
       ...yt,
@@ -56,7 +56,7 @@ const socials = {
   en: [
     {
       ...fb,
-      url: 'https://www.facebook.com/adverto.sale.official',
+      url: 'https://www.facebook.com/Adverto_official-233833728555124',
     },
     {
       ...ig,
