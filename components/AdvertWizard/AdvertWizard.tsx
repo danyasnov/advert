@@ -1,7 +1,7 @@
 import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
-import {CACategoryModel, CAParamsModel} from 'front-api/src/index'
-import {TypeOfDegradation} from 'front-api/src/models/index'
+import { CAParamsModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
+import {captureException} from '@sentry/nextjs'
 import MapPage from './MapPage'
 import CategoryPage from './CategoryPage'
 import FormPage from './FormPage'
@@ -71,78 +71,92 @@ const AdvertWizard: FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    console.log(query)
-    if (query.action === 'create') {
-      makeRequest({
-        url: `/api/fetch-draft`,
-        data: {hash: query.hash},
-        method: 'post',
-      }).then((res) => {
-        if (!res?.data?.result?.advertDraft) {
-          return push('/')
-        }
-        const {advertDraft} = res.data.result
-        dispatch({
-          type: 'setDraft',
-          draft: advertDraft,
-        })
-        let page
-        if (!advertDraft.location || !advertDraft.degradation) {
-          page = AdvertPages.mapPage
-        } else if (!advertDraft.categoryId || !advertDraft.data) {
-          page = AdvertPages.categoryPage
-        } else {
-          page = AdvertPages.formPage
-        }
-        dispatch({
-          type: 'setPage',
-          page,
-        })
-        setIsFetched(true)
-      })
-    }
-    if (query.action === 'edit') {
-      makeRequest({
-        url: `/api/fetch-edit-advertise`,
-        data: {hash: query.hash},
-        method: 'post',
-      }).then((advertRes) => {
-        if (!advertRes?.data?.result) {
-          return push('/')
-        }
-        const {result} = advertRes.data
-        makeRequest({
-          url: '/api/category-data',
-          method: 'post',
-          data: {
-            id: result.categoryId,
-            editFields: result.fields,
-          },
-        }).then((categoryRes) => {
-          const categoryData = categoryRes.data.result
-          console.log({...result, data: categoryData})
+    // eslint-disable-next-line consistent-return
+    const fetch = async () => {
+      if (query.action === 'create') {
+        try {
+          const draftRes = await makeRequest({
+            url: `/api/fetch-draft`,
+            data: {hash: query.hash},
+            method: 'post',
+          })
+          if (!draftRes?.data?.result?.advertDraft) {
+            return push('/')
+          }
+          const {advertDraft} = draftRes.data.result
           dispatch({
             type: 'setDraft',
-            draft: {...result, data: categoryData},
+            draft: advertDraft,
+          })
+          let page
+          if (!advertDraft.location || !advertDraft.degradation) {
+            page = AdvertPages.mapPage
+          } else if (!advertDraft.categoryId || !advertDraft.data) {
+            page = AdvertPages.categoryPage
+          } else {
+            page = AdvertPages.formPage
+          }
+          dispatch({
+            type: 'setPage',
+            page,
+          })
+          setIsFetched(true)
+        } catch (e) {
+          captureException(e)
+        }
+      }
+      if (query.action === 'edit') {
+        try {
+          const advertRes = await makeRequest({
+            url: `/api/fetch-edit-advertise`,
+            data: {hash: query.hash},
+            method: 'post',
+          })
+
+          if (!advertRes?.data?.result) {
+            return push('/')
+          }
+          const {result} = advertRes.data
+          const categoryRes = await makeRequest({
+            url: '/api/category-data',
+            method: 'post',
+            data: {
+              id: result.categoryId,
+              editFields: result.fields,
+            },
+          })
+          const currenciesRes = await makeRequest({
+            url: '/api/currencies-by-gps',
+            method: 'post',
+            data: {
+              location: result.location,
+            },
+          })
+          const currencies = currenciesRes.data.result
+
+          const categoryData = categoryRes.data.result
+          dispatch({
+            type: 'setDraft',
+            draft: {
+              ...result,
+              data: categoryData,
+              currencies,
+              currency: currencies.find((c) => c.code === result.currency),
+            },
           })
           dispatch({
             type: 'setPage',
             page: AdvertPages.formPage,
           })
           setIsFetched(true)
-        })
-      })
+        } catch (e) {
+          captureException(e)
+        }
+      }
     }
+    fetch()
   }, [])
-  // makeRequest({
-  //   url: '/api/currencies-by-gps',
-  //   method: 'post',
-  //   data: {
-  //     location: {latitude, longitude},
-  //   },
-  // }).then((data) => {
-  //   const currencies = data.data.result
-  // })
+
   const Component = state.page
   if (!isFetched) return null
 

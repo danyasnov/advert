@@ -85,7 +85,8 @@ const ProductPhotos: FC = observer(() => {
                     videosRef.current[index] = node
                   }}
                   src={item.src}
-                  key={item.src}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`${item.src}-${index}`}
                   controls
                   disablePictureInPicture
                   muted
@@ -96,7 +97,8 @@ const ProductPhotos: FC = observer(() => {
             }
             return (
               <Button
-                key={item.src}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${item.src}-${index}`}
                 className='relative min-w-full bg-image-placeholder'
                 onClick={() => {
                   setShowModal(true)
@@ -131,7 +133,8 @@ const ProductPhotos: FC = observer(() => {
           item.type === 'video' ? (
             <VideoThumb
               url={item.src}
-              key={item.src}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${item.src}-${index}`}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}
@@ -139,7 +142,8 @@ const ProductPhotos: FC = observer(() => {
           ) : (
             <Thumb
               url={item.src}
-              key={item.src}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${item.src}-${index}`}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}

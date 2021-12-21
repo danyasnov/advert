@@ -6,6 +6,7 @@ import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {AdvertiseDetail} from 'front-api'
 import {RemoveFromSaleType} from 'front-api/src/models/index'
+import {toJS} from 'mobx'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import DeactivateAdvModal from './DeactivateAdvModal'
@@ -66,6 +67,9 @@ const ProductMenu: FC<Props> = ({product}) => {
       },
     }
     const items = []
+    if (['active', 'archived', 'blocked'].includes(advert.state)) {
+      items.push(edit)
+    }
     if (
       ['archived', 'sold', 'blockedPermanently', 'blocked'].includes(
         advert.state,
@@ -77,7 +81,7 @@ const ProductMenu: FC<Props> = ({product}) => {
       items.push(remove)
     }
     if (advert.state === 'active') {
-      items.push(edit, deactivate)
+      items.push(deactivate)
     }
     return items
   }
@@ -95,9 +99,10 @@ const ProductMenu: FC<Props> = ({product}) => {
           />
           {showPopup && (
             <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
-              {options.map(({title, onClick}) => (
+              {options.map(({title, onClick}, index) => (
                 <Button
-                  key={title}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
                   className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-2'
                   onClick={() => {
                     onClick()

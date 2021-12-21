@@ -86,7 +86,8 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
                       videosRef.current[index] = node
                     }}
                     src={item.src}
-                    key={item.src}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`${item.src}-${index}`}
                     controls
                     disablePictureInPicture
                     muted
@@ -96,7 +97,9 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
                 )
               }
               return (
-                <div key={item.src} className='relative min-w-full'>
+                <div // eslint-disable-next-line react/no-array-index-key
+                  key={`${item.src}-${index}`}
+                  className='relative min-w-full'>
                   <ImageWrapper
                     type={item.src}
                     layout='fill'
@@ -134,7 +137,8 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
           item.type === 'video' ? (
             <VideoThumb
               url={item.src}
-              key={item.src}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${item.src}-${index}`}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}
@@ -142,7 +146,8 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
           ) : (
             <Thumb
               url={item.src}
-              key={item.src}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${item.src}-${index}`}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}

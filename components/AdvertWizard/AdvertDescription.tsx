@@ -60,18 +60,25 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex'>
-            {userLanguages.map((l) => (
-              <Button
-                key={l.isoCode}
-                onClick={() => setLanguage(l.isoCode)}
-                className={`px-4 py-3 text-body-2 border-b whitespace-nowrap ${
-                  language === l.isoCode
-                    ? 'text-nc-title font-medium border-brand-a1'
-                    : 'text-nc-link border-nc-link'
-                }`}>
-                {languagesByIsoCode[l.isoCode]?.name}
-              </Button>
-            ))}
+            {userLanguages.map((l) => {
+              const current = valueDict[l.isoCode]
+              const isFilled = current?.title || current?.description
+              return (
+                <Button
+                  key={l.isoCode}
+                  onClick={() => setLanguage(l.isoCode)}
+                  className={`px-4 py-3 text-body-2 border-b whitespace-nowrap ${
+                    // eslint-disable-next-line no-nested-ternary
+                    language === l.isoCode
+                      ? 'text-nc-title font-medium border-brand-a1'
+                      : isFilled
+                      ? 'text-nc-link border-nc-link'
+                      : 'text-nc-placeholder'
+                  }`}>
+                  {languagesByIsoCode[l.isoCode]?.name}
+                </Button>
+              )
+            })}
           </div>
         </div>
         <div
@@ -104,9 +111,18 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             value={title}
             maxLength={150}
             onChange={(e) => {
-              const updatedValue = value.map((v) =>
-                v.langCode === language ? {...v, title: e.target.value} : v,
-              )
+              let updatedValue
+              if (!value.find((v) => v.langCode === language)) {
+                updatedValue = [
+                  ...value,
+                  {langCode: language, title: e.target.value, description: ''},
+                ]
+              } else {
+                updatedValue = value.map((v) =>
+                  v.langCode === language ? {...v, title: e.target.value} : v,
+                )
+              }
+
               setFieldValue(name, updatedValue)
             }}
           />
@@ -120,9 +136,19 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           maxLength={maxDescriptionLength}
           value={description}
           onChange={(e) => {
-            const updatedValue = value.map((v) =>
-              v.langCode === language ? {...v, description: e.target.value} : v,
-            )
+            let updatedValue
+            if (!value.find((v) => v.langCode === language)) {
+              updatedValue = [
+                ...value,
+                {langCode: language, title: '', description: e.target.value},
+              ]
+            } else {
+              updatedValue = value.map((v) =>
+                v.langCode === language
+                  ? {...v, description: e.target.value}
+                  : v,
+              )
+            }
             setFieldValue(name, updatedValue)
           }}
           className='text-body-1 px-4 pt-3 pb-6 rounded-b-lg text-nc-primary-text w-full pb-4 border border-t-0 border-shadow-b'

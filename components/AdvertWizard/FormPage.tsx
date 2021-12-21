@@ -131,7 +131,7 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
   return null
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
-  const {push} = useRouter()
+  const {push, query} = useRouter()
 
   const headerRefs = useRef([])
 
@@ -199,11 +199,16 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       url: '/api/submit-draft',
       data: {
         params: data,
+        shouldUpdate: query.action === 'edit',
       },
       method: 'post',
     }).then((res) => {
       if (res.data.status === 200) {
-        push(`/user/${user.hash}?activeTab=1`)
+        if (query.action === 'create') {
+          push(`/user/${user.hash}?activeTab=1`)
+        } else {
+          push(`/user/${user.hash}`)
+        }
       } else if (res.data.error) {
         toast.error(t(res.data.error))
       }
