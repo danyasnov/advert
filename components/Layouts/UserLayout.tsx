@@ -1,10 +1,11 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber} from 'lodash'
+import {isNumber, toNumber} from 'lodash'
 import IcUser from 'icons/material/User.svg'
 import IcClear from 'icons/material/Clear.svg'
 import {AdvertiseListItemModel} from 'front-api/src/index'
+import {useRouter} from 'next/router'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -26,7 +27,10 @@ const getTabs = (t: TFunction, sizes) => [
 
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
-  const [activeTab, setActiveTab] = useState(2)
+  const {query} = useRouter()
+  const [activeTab, setActiveTab] = useState(
+    query.activeTab ? toNumber(query.activeTab) : 2,
+  )
   const {
     userSale,
     userSold,

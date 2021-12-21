@@ -85,7 +85,7 @@ const Select: FC<Props> = ({
       isClearable={isClearable}
       isMulti={isMulti}
       closeMenuOnSelect={!isMulti}
-      menuPortalTarget={document.body}
+      menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
       styles={{
         ...getDefaultStyles(isInvalid),
         ...propsStyles,
