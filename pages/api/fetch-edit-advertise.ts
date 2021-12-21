@@ -1,8 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {processCookies} from '../../helpers'
-import {
-  fetchEditAdvertise,
-} from '../../api/v2'
+import {fetchEditAdvertise} from '../../api/v2'
 
 export default async (
   req: NextApiRequest,
