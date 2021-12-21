@@ -85,9 +85,11 @@ const Select: FC<Props> = ({
       isClearable={isClearable}
       isMulti={isMulti}
       closeMenuOnSelect={!isMulti}
+      menuPortalTarget={document.body}
       styles={{
         ...getDefaultStyles(isInvalid),
         ...propsStyles,
+        menuPortal: (base) => ({...base, zIndex: 9999}),
       }}
       isOptionDisabled={(option) => option.disabled}
       className='react-select'
