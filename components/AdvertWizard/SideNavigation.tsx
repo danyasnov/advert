@@ -9,6 +9,7 @@ const SideNavigation: FC<Props> = ({items}) => {
     <div className='flex flex-col items-start space-y-4 fixed'>
       {items.map((i) => (
         <LinkButton
+          key={i.title}
           onClick={() => {
             i.ref.scrollIntoView({behavior: 'smooth'})
           }}>

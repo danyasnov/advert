@@ -3,6 +3,7 @@ import {FC} from 'react'
 import IcQuestionMark from 'icons/material/QuestionMark.svg'
 import {usePopperTooltip} from 'react-popper-tooltip'
 import * as PopperJS from '@popperjs/core'
+import {isMobile} from 'react-device-detect'
 import Button from '../Buttons/Button'
 
 interface Props {
@@ -19,6 +20,7 @@ const Tip: FC<Props> = ({message, placement}) => {
   } = usePopperTooltip({
     placement,
     offset: [10, 10],
+    trigger: isMobile ? 'click' : 'hover',
   })
   return (
     <div>
