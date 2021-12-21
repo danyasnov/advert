@@ -16,6 +16,7 @@ import {
   FormikCreateField,
   FormikSelect,
   FormikSwitch,
+  getCreateOptions,
 } from '../FormikComponents'
 import AdvertDescription from './AdvertDescription'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
@@ -254,22 +255,22 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             const mainContent = content.find(
               (c) => c.langCode === user.mainLanguage.isoCode,
             )
-            let isMissingFields = false
-            const missingFieldsMsg = t('ADVERT_CREATING_HELP_ALERT')
 
             if (!price && !categoryData.allowFree) {
-              isMissingFields = true
-              errors.price = missingFieldsMsg
+              errors.price = t('PRICE_ERROR')
+              toast.error(errors.price)
             }
 
             if (!condition && category.data.allowUsed) {
-              isMissingFields = true
-              errors.condition = missingFieldsMsg
+              errors.condition = t('FIELD_REQUIRED_ERROR', {
+                field: t('ADVERT_TYPE'),
+              })
+              toast.error(errors.condition)
             }
 
             if (!mainContent.title) {
-              isMissingFields = true
-              errors.content = missingFieldsMsg
+              errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
+              toast.error(errors.content)
             }
 
             if (size(photos) < categoryData.minPhotos) {
@@ -278,9 +279,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
               toast.error(msg)
             }
 
-            if (isMissingFields) {
-              toast.error(missingFieldsMsg)
-            }
             // console.log('errors', errors)
             return errors
           }}
@@ -453,19 +451,21 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         label={t('PROD_CONDITION')}
                       />
                     )}
-                    {fieldsArray.map((f) => (
-                      <AdvertFormField
-                        key={f.id}
-                        body={
-                          <div className='w-1/2 l:w-5/12'>
-                            <FormikCreateField field={f} />
-                          </div>
-                        }
-                        className='l:items-center'
-                        isRequired={f.isFillingRequired}
-                        label={f.name}
-                      />
-                    ))}
+                    {fieldsArray.map((f) =>
+                      isEmpty(getCreateOptions(f.multiselects)) ? null : (
+                        <AdvertFormField
+                          key={f.id}
+                          body={
+                            <div className='w-1/2 l:w-5/12'>
+                              <FormikCreateField field={f} />
+                            </div>
+                          }
+                          className='l:items-center'
+                          isRequired={f.isFillingRequired}
+                          label={f.name}
+                        />
+                      ),
+                    )}
                   </div>
                 </div>
               )}

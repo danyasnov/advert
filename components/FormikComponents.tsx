@@ -64,27 +64,31 @@ const getSelectOptions = (o) => ({
   // disabled: o.count === 0,
 })
 
-const getCreateOptions = (o) => {
-  if (o.isOther) return null
-  return {
-    value: o.id,
-    label: o.value,
-    disabled: o.itemType === 'title',
-  }
+export const getCreateOptions = (multiselects = {}) => {
+  return [
+    // @ts-ignore
+    ...multiselects.top,
+    // @ts-ignore
+    ...(multiselects.other
+      ? // @ts-ignore
+        multiselects.other
+      : []),
+  ]
+    .map((o) =>
+      o.isOther
+        ? null
+        : {
+            value: o.id,
+            label: o.value,
+            disabled: o.itemType === 'title',
+          },
+    )
+    .filter((o) => !!o)
 }
 
 export const FormikFilterField: FC<IFormikField> = ({field}) => {
-  // @ts-ignore
-  const {
-    fieldType,
-    multiselects,
-    id,
-    name,
-    isFilterable,
-    maxValue,
-    minValue,
-    slug,
-  } = field
+  const {fieldType, multiselects, id, name, isFilterable, maxValue, minValue} =
+    field
   let component
   const props: FieldOptions = {}
   switch (fieldType) {
@@ -150,16 +154,13 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 
 export const FormikCreateField: FC<IFormikField> = ({field}) => {
   const {t} = useTranslation()
-  // @ts-ignore
   const {
     fieldType,
-    multiselects,
     id,
     name,
     isFilterable,
     maxValue,
     minValue,
-    slug,
     maxLength,
     isFillingRequired,
   } = field
@@ -170,19 +171,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
-      // @ts-ignore
-      props.options = [
-        // @ts-ignore
-        ...multiselects.top.map(getCreateOptions).filter((o) => !!o),
-        // @ts-ignore
-        ...(multiselects.other
-          ? // @ts-ignore
-            multiselects.other
-          : []
-        )
-          .map(getCreateOptions)
-          .filter((o) => !!o),
-      ]
+      props.options = getCreateOptions(field.multiselects)
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'
@@ -217,19 +206,21 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
   const validate = (value) => {
     let msg
     if (isFillingRequired && !value) {
-      msg = 'err'
+      msg = t('FIELD_REQUIRED_ERROR', {
+        field: name,
+      })
+      toast.error(msg)
     }
     if (minValue || maxValue) {
       const num = toNumber(value)
       if (num < minValue || num > maxValue) {
-        toast.error(
-          t('VALUE_MUST_BE_BETWEEN', {
-            fieldName: name,
-            min: minValue,
-            max: maxValue,
-          }),
-        )
-        msg = 'err'
+        const error = t('VALUE_MUST_BE_BETWEEN', {
+          fieldName: name,
+          min: minValue,
+          max: maxValue,
+        })
+        toast.error(msg)
+        msg = error
       }
     }
     return msg
@@ -528,18 +519,21 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
-  const isInvalid = !!get(errors, name)
+  const error = get(errors, name)
   return (
-    <Select
-      id={name}
-      value={value || []}
-      options={options}
-      isClearable
-      placeholder={placeholder}
-      isSearchable={isFilterable}
-      isMulti={isMulti}
-      isInvalid={isInvalid}
-      onChange={(item) => setFieldValue(name, item)}
-    />
+    <div>
+      <Select
+        id={name}
+        value={value || []}
+        options={options}
+        isClearable
+        placeholder={placeholder}
+        isSearchable={isFilterable}
+        isMulti={isMulti}
+        isInvalid={!!error}
+        onChange={(item) => setFieldValue(name, item)}
+      />
+      <span className='text-body-3 text-error'>{error}</span>
+    </div>
   )
 }

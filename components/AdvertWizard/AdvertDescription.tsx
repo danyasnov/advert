@@ -128,9 +128,13 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           className='text-body-1 px-4 pt-3 pb-6 rounded-b-lg text-nc-primary-text w-full pb-4 border border-t-0 border-shadow-b'
         />
       </div>
-      <span className='text-nc-icon justify-end flex text-body-4 mr-4 mt-1'>
-        {`${description.length}/${maxDescriptionLength}`}
-      </span>
+      <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
+        <span className='text-body-3 text-error'>{errors[name]}</span>
+        <span className='text-nc-icon flex text-body-4 justify-center'>
+          {`${description.length}/${maxDescriptionLength}`}
+        </span>
+      </div>
+
       <span className='text-body-3 text-nc-secondary-text'>
         {t('OTHER_LANGUAGES_REFERENCE')}
       </span>

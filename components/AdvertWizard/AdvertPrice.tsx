@@ -16,7 +16,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
   currencies,
   allowSecureDeal,
 }) => {
-  const {setFieldValue, values} = form
+  const {setFieldValue, values, errors} = form
   const {currency} = values
   const [currencyOptions] = useState(
     currencies.map((c) => ({title: c.code, value: c.code})),
@@ -32,7 +32,10 @@ const AdvertPrice: FC<FieldProps & Props> = ({
 
   return (
     <div>
-      <div className='px-3.5 py-2 border rounded-lg flex flex-col focus-within:border-nc-primary'>
+      <div
+        className={`px-3.5 py-2 border rounded-lg flex flex-col ${
+          errors[name] ? 'border-error' : 'focus-within:border-nc-primary'
+        }`}>
         <NumberFormat
           value={value}
           suffix={` ${currency?.code}`}
@@ -50,6 +53,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           </span>
         )}
       </div>
+      <span className='text-body-3 text-error'>{errors[name]}</span>
       {size(currencies) > 1 && (
         <div className='mt-2'>
           <RadioButtons
