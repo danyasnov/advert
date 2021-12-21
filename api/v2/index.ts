@@ -129,6 +129,26 @@ export const fetchProductDetails = (
   return rest.advertises.fetchDetail(hash)
 }
 
+export const fetchEditAdvertise = (
+  state: CookiesState,
+  hash: string,
+): Promise<RestResponse<CAParamsModel>> => {
+  const storage = new Storage({
+    language: state.language,
+    location: state.searchLocation,
+    userLocation: state.userLocation,
+    searchRadius: state.searchRadius,
+    countryId: state.countryId,
+    regionId: state.regionId,
+    cityId: state.cityId,
+    searchBy: state.searchBy,
+    userHash: state.hash,
+    token: state.token,
+  })
+  const rest = getRest(storage)
+  return rest.createAdvertise.fetchEditAdvertise(hash)
+}
+
 export const fetchProductByUrl = (
   lang: string,
   url: string,

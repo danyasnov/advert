@@ -65,40 +65,84 @@ const reducer = (state, action) => {
 }
 const AdvertWizard: FC = () => {
   const {query, push} = useRouter()
+
   const [isFetched, setIsFetched] = useState(false)
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    makeRequest({
-      url: `/api/fetch-draft`,
-      data: {hash: query.hash},
-      method: 'post',
-    }).then((res) => {
-      if (!res?.data?.result?.advertDraft) {
-        return push('/')
-      }
-      const {advertDraft} = res.data.result
-      dispatch({
-        type: 'setDraft',
-        draft: advertDraft,
+    console.log(query)
+    if (query.action === 'create') {
+      makeRequest({
+        url: `/api/fetch-draft`,
+        data: {hash: query.hash},
+        method: 'post',
+      }).then((res) => {
+        if (!res?.data?.result?.advertDraft) {
+          return push('/')
+        }
+        const {advertDraft} = res.data.result
+        dispatch({
+          type: 'setDraft',
+          draft: advertDraft,
+        })
+        let page
+        if (!advertDraft.location || !advertDraft.degradation) {
+          page = AdvertPages.mapPage
+        } else if (!advertDraft.categoryId || !advertDraft.data) {
+          page = AdvertPages.categoryPage
+        } else {
+          page = AdvertPages.formPage
+        }
+        dispatch({
+          type: 'setPage',
+          page,
+        })
+        setIsFetched(true)
       })
-      let page
-      if (!advertDraft.location || !advertDraft.degradation) {
-        page = AdvertPages.mapPage
-      } else if (!advertDraft.categoryId || !advertDraft.data) {
-        page = AdvertPages.categoryPage
-      } else {
-        page = AdvertPages.formPage
-      }
-      dispatch({
-        type: 'setPage',
-        page,
+    }
+    if (query.action === 'edit') {
+      makeRequest({
+        url: `/api/fetch-edit-advertise`,
+        data: {hash: query.hash},
+        method: 'post',
+      }).then((advertRes) => {
+        if (!advertRes?.data?.result) {
+          return push('/')
+        }
+        const {result} = advertRes.data
+        makeRequest({
+          url: '/api/category-data',
+          method: 'post',
+          data: {
+            id: result.categoryId,
+            editFields: result.fields,
+          },
+        }).then((categoryRes) => {
+          const categoryData = categoryRes.data.result
+          console.log({...result, data: categoryData})
+          dispatch({
+            type: 'setDraft',
+            draft: {...result, data: categoryData},
+          })
+          dispatch({
+            type: 'setPage',
+            page: AdvertPages.formPage,
+          })
+          setIsFetched(true)
+        })
       })
-      setIsFetched(true)
-    })
+    }
   }, [])
-
+  // makeRequest({
+  //   url: '/api/currencies-by-gps',
+  //   method: 'post',
+  //   data: {
+  //     location: {latitude, longitude},
+  //   },
+  // }).then((data) => {
+  //   const currencies = data.data.result
+  // })
   const Component = state.page
   if (!isFetched) return null
 

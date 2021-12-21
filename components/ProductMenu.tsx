@@ -59,6 +59,12 @@ const ProductMenu: FC<Props> = ({product}) => {
         setShowDeactivateModal(true)
       },
     }
+    const edit = {
+      title: t('EDIT_AD'),
+      onClick: () => {
+        router.push(`/advert/edit/${advert.hash}`)
+      },
+    }
     const items = []
     if (
       ['archived', 'sold', 'blockedPermanently', 'blocked'].includes(
@@ -71,7 +77,7 @@ const ProductMenu: FC<Props> = ({product}) => {
       items.push(remove)
     }
     if (advert.state === 'active') {
-      items.push(deactivate)
+      items.push(edit, deactivate)
     }
     return items
   }
