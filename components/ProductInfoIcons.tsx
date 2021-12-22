@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcConditionNew from 'icons/material/ConditionNew.svg'
+import IcUsed from 'icons/material/Used.svg'
 import IcAutoRenew from 'icons/material/AutoRenew.svg'
 import IcDiscount from 'icons/material/Discount.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
@@ -27,10 +28,15 @@ const ProductInfoIcons: FC = observer(() => {
         </span>
       )}
 
-      {product.advert.condition === 'new' && (
+      {product.advert.condition === 'new' ? (
         <span className='flex items-center'>
           <IcConditionNew className='fill-current text-black-c h-6 w-6 mr-1' />
           {t('NEW_PRODUCT')}
+        </span>
+      ) : (
+        <span className='flex items-center'>
+          <IcUsed className='fill-current text-black-c h-6 w-6 mr-1' />
+          {t('USED_PRODUCT')}
         </span>
       )}
     </div>
