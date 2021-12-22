@@ -57,7 +57,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
       {size(currencies) > 1 && (
         <div className='mt-2'>
           <RadioButtons
-            value={currency.code}
+            value={currency?.code}
             options={currencyOptions}
             onChange={(v) => {
               const cur = currencies.find((c) => c.code === v)

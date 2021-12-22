@@ -131,6 +131,7 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
   return null
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
+  console.log(state.draft)
   const {push, query} = useRouter()
 
   const headerRefs = useRef([])
@@ -402,28 +403,35 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2'
                   />
-                  <AdvertFormField
-                    body={
-                      <div className='w-4/12'>
-                        <Field name='isSwapPossible' component={FormikSwitch} />
-                      </div>
-                    }
-                    labelTip={t('POSSIBLE_EXCHANGE_TIP')}
-                    className='l:items-center'
-                    label={t('EXCHANGE')}
-                  />
-                  <AdvertFormField
-                    body={
-                      <div className='w-4/12'>
-                        <Field
-                          name='isBargainPossible'
-                          component={FormikSwitch}
-                        />
-                      </div>
-                    }
-                    className='l:items-center'
-                    label={t('BARGAIN')}
-                  />
+                  {!!category.data.isProduct && (
+                    <>
+                      <AdvertFormField
+                        body={
+                          <div className='w-4/12'>
+                            <Field
+                              name='isSwapPossible'
+                              component={FormikSwitch}
+                            />
+                          </div>
+                        }
+                        labelTip={t('POSSIBLE_EXCHANGE_TIP')}
+                        className='l:items-center'
+                        label={t('EXCHANGE')}
+                      />
+                      <AdvertFormField
+                        body={
+                          <div className='w-4/12'>
+                            <Field
+                              name='isBargainPossible'
+                              component={FormikSwitch}
+                            />
+                          </div>
+                        }
+                        className='l:items-center'
+                        label={t('BARGAIN')}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
               {(category.data.allowUsed || !isEmpty(fieldsArray)) && (

@@ -11,7 +11,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
-import {isEmpty, size} from 'lodash'
+import {isEmpty, isNumber, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
@@ -187,7 +187,7 @@ const Card: FC<Props> = ({
             {oldPrice}
           </span>
         </div>
-        {dateUpdated && views && (
+        {isNumber(dateUpdated) && isNumber(views) && (
           <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
             <span suppressHydrationWarning className='inline-flex items-center'>
               {dateUpdated && unixToDate(dateUpdated)}
