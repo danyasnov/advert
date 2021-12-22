@@ -464,8 +464,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         label={t('PROD_CONDITION')}
                       />
                     )}
-                    {fieldsArray.map((f) =>
-                      isEmpty(getCreateOptions(f.multiselects)) ? null : (
+                    {fieldsArray.map((f) => {
+                      return isEmpty(getCreateOptions(f.multiselects)) &&
+                        ['select', 'multiselect', 'iconselect'].includes(
+                          f.fieldType,
+                        ) ? null : (
                         <AdvertFormField
                           key={f.id}
                           body={
@@ -477,8 +480,8 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                           isRequired={f.isFillingRequired}
                           label={f.name}
                         />
-                      ),
-                    )}
+                      )
+                    })}
                   </div>
                 </div>
               )}
