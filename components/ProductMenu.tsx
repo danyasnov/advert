@@ -67,11 +67,11 @@ const ProductMenu: FC<Props> = ({product}) => {
       },
     }
     const items = []
-    if (['active', 'archived', 'blocked'].includes(advert.state)) {
+    if (['active', 'archived', 'blocked', 'draft'].includes(advert.state)) {
       items.push(edit)
     }
     if (
-      ['archived', 'sold', 'blockedPermanently', 'blocked'].includes(
+      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
         advert.state,
       )
     ) {
@@ -87,6 +87,7 @@ const ProductMenu: FC<Props> = ({product}) => {
   }
 
   const options = getOptions()
+  console.log(toJS(advert))
   if (isEmpty(options)) return null
   return (
     <>
