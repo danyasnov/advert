@@ -64,7 +64,7 @@ const AdvertVideos: FC<FieldProps & Props> = ({
             if (e?.response?.data?.code === 'FILE_SIZE_PROBLEM')
               toast.error(
                 `${t('FILE_SIZE_PROBLEM')}\n${t('FILE_SIZE_PROBLEM_MESSAGE', {
-                  size: maxVideoDuration || 30,
+                  size: getMaxVideoSizeMB(maxVideoDuration),
                 })}`,
               )
           }
@@ -72,7 +72,7 @@ const AdvertVideos: FC<FieldProps & Props> = ({
     },
     [video],
   )
-  const maxSize = maxVideoDuration * 1000000
+  const maxSize = getMaxVideoSizeMB(maxVideoDuration) * 10000000
   return (
     <div className='mb-4 w-full relative'>
       <div
@@ -114,18 +114,8 @@ const AdvertVideos: FC<FieldProps & Props> = ({
   )
 }
 
-// const getVideoDuration = (file) => {
-//   return new Promise((resolve) => {
-//     const video = document.createElement('video')
-//     video.preload = 'metadata'
-//     video.onloadedmetadata = () => {
-//       window.URL.revokeObjectURL(video.src)
-//       const {duration} = video
-//       resolve(duration)
-//     }
-//
-//     video.srcObject = file
-//   })
-// }
+const getMaxVideoSizeMB = (maxVideoDuration: number) => {
+  return maxVideoDuration > 100 ? 100 : maxVideoDuration || 30
+}
 
 export default AdvertVideos
