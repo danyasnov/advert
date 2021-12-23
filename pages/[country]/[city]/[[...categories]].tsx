@@ -99,8 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (product) {
     promises.push(similarProductsPromise)
   } else {
-    const filterQueryData =
-      categoryData && getFilterFromQuery(query, categoryData)
+    const filterQueryData = getFilterFromQuery(query, categoryData)
 
     const filter: Partial<Filter> = filterQueryData || {}
     if (currentCategory?.id) {

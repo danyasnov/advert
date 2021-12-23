@@ -79,11 +79,20 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   )
 
   const getInitialValues = (reset?: boolean): Values => {
+    // #todo it was hotfix, needs to be refactored
+    const onlyDiscounted = reset
+      ? false
+      : router.query.onlyDiscounted === 'true'
+    const priceRange = [
+      '',
+      // eslint-disable-next-line no-nested-ternary
+      reset ? '' : router.query.priceMax === '0' ? '0' : '',
+    ]
     const defaultValues = {
       condition: conditionOptions[0],
-      priceRange: ['', ''],
+      priceRange,
       onlyWithPhoto: false,
-      onlyDiscounted: false,
+      onlyDiscounted,
       fields: {},
     }
     if (reset || isEmpty(aggregatedFields)) return defaultValues

@@ -428,7 +428,7 @@ export const getFilterFromQuery = (
   const fieldsFilter = omit(query, [...baseFields, ...excludedFields])
   const result = {...baseFilter}
 
-  if (!isEmpty(fieldsFilter)) {
+  if (!isEmpty(fieldsFilter) && category) {
     result.fieldValues = Object.fromEntries(
       Object.entries(fieldsFilter).map(([key, value]) => {
         // if (key === 'vin-number0') debugger

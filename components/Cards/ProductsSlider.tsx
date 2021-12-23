@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, ReactNode} from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
@@ -11,9 +11,10 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 interface Props {
   products: AdvertiseListItemModel[]
   title: string
+  rightContent?: ReactNode
 }
 
-const ProductsSlider: FC<Props> = ({products, title}) => {
+const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -29,7 +30,7 @@ const ProductsSlider: FC<Props> = ({products, title}) => {
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>
-      <TitleWithSeparator title={title} />
+      <TitleWithSeparator title={title} rightContent={rightContent} />
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>

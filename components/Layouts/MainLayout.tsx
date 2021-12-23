@@ -33,12 +33,16 @@ const MainLayout: FC = observer(() => {
     fetchProducts,
     applyFilter,
     setProducts,
+    resetFilter,
+    setFilter,
   } = useProductsStore()
   const {query} = useRouter()
   const {t} = useTranslation()
 
   useEffect(() => {
     const initProducts = async () => {
+      resetFilter()
+      setFilter({categoryId: null})
       fetchProducts().then(applyFilter)
       const url = '/api/products'
       const freeProductsPromise = makeRequest({
@@ -97,8 +101,27 @@ const MainLayout: FC = observer(() => {
             <ProductsSlider
               products={discountedProducts}
               title={t('DISCOUNTED_GOODS')}
+              rightContent={
+                <LinkWrapper
+                  title={t('SEE_ALL')}
+                  className='text-body-3 text-brand-b1'
+                  href={`${locationCodes}?onlyDiscounted=true`}>
+                  {t('SEE_ALL')}
+                </LinkWrapper>
+              }
             />
-            <ProductsSlider products={freeProducts} title={t('GIVE_AWAY')} />
+            <ProductsSlider
+              products={freeProducts}
+              title={t('GIVE_AWAY')}
+              rightContent={
+                <LinkWrapper
+                  title={t('SEE_ALL')}
+                  className='text-body-3 text-brand-b1'
+                  href={`${locationCodes}?priceMax=0`}>
+                  {t('SEE_ALL')}
+                </LinkWrapper>
+              }
+            />
             <div>
               <TitleWithSeparator
                 title={t('RECOMMENDATIONS_FOR_YOU')}

@@ -29,6 +29,7 @@ const CategoriesSlider: FC = observer(() => {
     align: 'start',
     containScroll: 'trimSnaps',
     slidesToScroll: 1,
+    loop: true,
   })
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
@@ -38,13 +39,13 @@ const CategoriesSlider: FC = observer(() => {
       <TitleWithSeparator title={t('CATEGORIES')} />
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
-          <div className='flex space-x-4 mx-4 s:mx-8  m:mx-0'>
+          <div className='flex mx-4 s:mx-8  m:mx-0'>
             {categoriesWithoutAll.map((c) => (
               <LinkWrapper
                 key={c.id}
                 title={c.name}
                 href={`/${locationCodes}/${c.slug}`}
-                className='relative cursor-pointer'>
+                className='relative cursor-pointer mr-4'>
                 <ImageWrapper
                   type={`/img/categories/${c.slug}.jpg`}
                   width={136}
