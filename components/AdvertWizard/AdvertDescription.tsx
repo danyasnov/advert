@@ -69,7 +69,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                 <Button
                   key={l.isoCode}
                   onClick={() => setLanguage(l.isoCode)}
-                  className={`px-4 py-3 text-body-2 border-b whitespace-nowrap ${
+                  className={`px-4 py-3 text-body-2 border-b whitespace-nowrap hover:bg-nc-accent hover:text-nc-link ${
                     // eslint-disable-next-line no-nested-ternary
                     language === l.isoCode
                       ? 'text-nc-title font-medium border-brand-a1'
