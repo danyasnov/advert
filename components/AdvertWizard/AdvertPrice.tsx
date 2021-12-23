@@ -44,6 +44,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           }}
           isAllowed={({value: priceValue}) => priceValue.length < 16}
           thousandSeparator={' '}
+          decimalScale={2}
           placeholder={get(currencies, '[0].code', '')}
           className='w-full text-nc-primary-text text-body-1 outline-none manual-outline'
         />

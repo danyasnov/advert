@@ -774,6 +774,7 @@
   "CHOOSE_CITY_TITLE": "Choose City",
   "CHOOSE_COUNTRY_TITLE": "Choose Country",
   "CHOOSE_REGION_TITLE": "Choose Region",
+  "CHOOSE_TARIFF_FOR_PROMOTION": "Choose one of the tariffs for promotion:",
   "CHOSEN_LIMITS": "Arama sınırları",
   "CITY": "Şehir",
   "CLEAR": "Clear",
@@ -1259,7 +1260,7 @@
   "VIEW_PAGE_PREVIEW": "Sayfa önizlemesini görüntüle",
   "VIEW_PROFILE_PREVIEW": "View profile preview",
   "VIP_AD": "VIP reklam",
-  "VIP_AD_TEXT": "• Çift reklam boyutu + seçim\n• Yaklaşık 50 kat daha fazla görüntüleme sağlar\n• Ana sayfanın en üstünde ve kategori içinde yerleştirme\n• Şirket logosunu arama sonuçlarına ve reklama yerleştirme yeteneği",
+  "VIP_AD_TEXT": "• Ana sayfanın en üstünde ve kategori içinde yerleştirme\n• Şirket logosunu arama sonuçlarına ve reklama yerleştirme yeteneği\n• Çift reklam boyutu + seçim",
   "WAITING_FOR_MODERATION": "moderasyon bekleniyor",
   "WALLET": "Wallet",
   "WAYS_COMMUNICATION": "iletişim yöntemleri",
@@ -1270,6 +1271,8 @@
   "WRITE_SUPPORT": "İletişim desteği",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "Satıcının diğer ilanlarını görebilirsiniz.",
+  "YOUR_ADV_ON_MODERATION": "YOUR_ADV_ON_MODERATION",
+  "YOUR_ADV_ON_MODERATION_INFO": "As soon as the ad is moderated, it will immediately appear in the list of ads",
   "YOUR_NOTE": "Notunuz",
   "YOUR_NOTE_WITHOUT_DATE": "Notunuz:"
 }
