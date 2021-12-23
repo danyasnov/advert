@@ -774,6 +774,7 @@
   "CHOOSE_CITY_TITLE": "Choose City",
   "CHOOSE_COUNTRY_TITLE": "Choose Country",
   "CHOOSE_REGION_TITLE": "Choose Region",
+  "CHOOSE_TARIFF_FOR_PROMOTION": "Choose one of the tariffs for promotion:",
   "CHOSEN_LIMITS": "Search limits",
   "CITY": "City",
   "CLEAR": "Clear",
@@ -1259,7 +1260,7 @@
   "VIEW_PAGE_PREVIEW": "Page preview",
   "VIEW_PROFILE_PREVIEW": "View profile preview",
   "VIP_AD": "VIP advertisement",
-  "VIP_AD_TEXT": "• Double advertisement size + highlighting.\n• Brings about 50 times more views.\n• Placement at the top of the main page and within its category.\n• Placement of the company logo in the search results and in the advertisement.",
+  "VIP_AD_TEXT": "• Placement at the top of the main page and at the top within the category\n• Ability to place the company logo in the ad\n• Double ad size + selection",
   "WAITING_FOR_MODERATION": "Pending for moderation",
   "WALLET": "Wallet",
   "WAYS_COMMUNICATION": "Communication methods",
@@ -1270,6 +1271,8 @@
   "WRITE_SUPPORT": "Contact support",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "You can view other advertisements of the seller",
+  "YOUR_ADV_ON_MODERATION": "YOUR_ADV_ON_MODERATION",
+  "YOUR_ADV_ON_MODERATION_INFO": "As soon as the ad is moderated, it will immediately appear in the list of ads",
   "YOUR_NOTE": "Your note",
   "YOUR_NOTE_WITHOUT_DATE": "Your notes:"
 }

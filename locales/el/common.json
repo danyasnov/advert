@@ -774,6 +774,7 @@
   "CHOOSE_CITY_TITLE": "Choose City",
   "CHOOSE_COUNTRY_TITLE": "Choose Country",
   "CHOOSE_REGION_TITLE": "Choose Region",
+  "CHOOSE_TARIFF_FOR_PROMOTION": "Choose one of the tariffs for promotion:",
   "CHOSEN_LIMITS": "Όρια αναζήτησης",
   "CITY": "Πόλη",
   "CLEAR": "Clear",
@@ -1259,7 +1260,7 @@
   "VIEW_PAGE_PREVIEW": "Προεπισκόπηση σελίδας",
   "VIEW_PROFILE_PREVIEW": "View profile preview",
   "VIP_AD": "VIP αγγελία",
-  "VIP_AD_TEXT": "• Διπλό μέγεθος διαφήμισης + επισήμανση\n• Φέρνει περίπου 50 φορές περισσότερες προβολές\n• Τοποθέτηση στην κορυφή της κύριας σελίδας και εντός της κατηγορίας\n• Δυνατότητα τοποθέτησης του λογότυπου της εταίρειας στα αποτελεσμάτα αναζήτησης καθώς και στην διαφημιστική αγγελία.",
+  "VIP_AD_TEXT": "• Τοποθέτηση στην κορυφή της κύριας σελίδας και εντός της κατηγορίας\n• Δυνατότητα τοποθέτησης του λογότυπου της εταίρειας στα αποτελεσμάτα αναζήτησης καθώς και στην διαφημιστική αγγελία.\n• Διπλό μέγεθος διαφήμισης + επισήμανση",
   "WAITING_FOR_MODERATION": "Εκκρεμεί έλεγχος",
   "WALLET": "Wallet",
   "WAYS_COMMUNICATION": "Μέθοδοι επικοινωνίας",
@@ -1270,6 +1271,8 @@
   "WRITE_SUPPORT": "Επικονωνήστε με την ομαδα υποστήριξης",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "Μπορείτε να δείτε και άλλες αγγελίες από τον πωλητή",
+  "YOUR_ADV_ON_MODERATION": "YOUR_ADV_ON_MODERATION",
+  "YOUR_ADV_ON_MODERATION_INFO": "As soon as the ad is moderated, it will immediately appear in the list of ads",
   "YOUR_NOTE": "Η σημείωσή σας",
   "YOUR_NOTE_WITHOUT_DATE": "Οι σημειώσεις σας:"
 }

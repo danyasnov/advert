@@ -774,6 +774,7 @@
   "CHOOSE_CITY_TITLE": "Choose City",
   "CHOOSE_COUNTRY_TITLE": "Choose Country",
   "CHOOSE_REGION_TITLE": "Choose Region",
+  "CHOOSE_TARIFF_FOR_PROMOTION": "Choose one of the tariffs for promotion:",
   "CHOSEN_LIMITS": "Межі пошуку",
   "CITY": "Місто",
   "CLEAR": "Зрозуміло",
@@ -1259,7 +1260,7 @@
   "VIEW_PAGE_PREVIEW": "Подивитися превью сторінки",
   "VIEW_PROFILE_PREVIEW": "View profile preview",
   "VIP_AD": "VIP-оголошення",
-  "VIP_AD_TEXT": "• Подвійний розмір оголошення + виділення\n• Дає приблизно в 50 разів більше переглядів\n• Розміщення зверху головної сторінки та всередині оголошення\n• Можливість розмістити логотип компанії у результатах пошуку та в оголошенні",
+  "VIP_AD_TEXT": "• Розміщення зверху головної сторінки та всередині оголошення\n• Можливість розмістити логотип компанії у результатах пошуку та в оголошенні\n• Подвійний розмір оголошення + виділення\n",
   "WAITING_FOR_MODERATION": "Очікування модерації",
   "WALLET": "Wallet",
   "WAYS_COMMUNICATION": "Способи зв'язку",
@@ -1270,6 +1271,8 @@
   "WRITE_SUPPORT": "Написати у підтримку",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "Ви можете переглянути інші оголошення продавця.",
+  "YOUR_ADV_ON_MODERATION": "YOUR_ADV_ON_MODERATION",
+  "YOUR_ADV_ON_MODERATION_INFO": "As soon as the ad is moderated, it will immediately appear in the list of ads",
   "YOUR_NOTE": "Ваш нотаток",
   "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:"
 }
