@@ -6,7 +6,7 @@ import IcAddPhoto from 'icons/material/AddPhoto.svg'
 import IcAddVideo from 'icons/material/AddVideo.svg'
 
 const DropZone: FC<{
-  onDrop: (acceptedFiles: any) => void
+  onDrop: (acceptedFiles: any, rejectedFiles: any) => void
   disabled: boolean
   type: 'photo' | 'video'
   maxFiles?: number

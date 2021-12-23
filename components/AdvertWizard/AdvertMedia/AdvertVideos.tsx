@@ -38,7 +38,33 @@ const AdvertVideos: FC<FieldProps & Props> = ({
   })
 
   const onDrop = useCallback(
-    async (acceptedFiles) => {
+    async (acceptedFiles, rejectedFiles) => {
+      const sizeError = `${t('FILE_SIZE_PROBLEM')}\n${t(
+        'FILE_SIZE_PROBLEM_MESSAGE',
+        {
+          size: getMaxVideoSizeMB(maxVideoDuration),
+        },
+      )}`
+      if (size(rejectedFiles)) {
+        let isTooManyFiles = false
+        let isFileTooLarge = false
+        rejectedFiles.forEach((r) => {
+          r.errors.forEach((e) => {
+            if (e.code === 'too-many-files') {
+              isTooManyFiles = true
+            }
+            if (e.code === 'file-too-large') {
+              isFileTooLarge = true
+            }
+          })
+        })
+        if (isTooManyFiles) {
+          toast.error(t('VIDEO_QUANTITY_ERROR'))
+        }
+        if (isFileTooLarge) {
+          toast.error(sizeError)
+        }
+      }
       const file = acceptedFiles[0]
       if (!file) return
       const formData = new FormData()
@@ -60,19 +86,15 @@ const AdvertVideos: FC<FieldProps & Props> = ({
         })
         .catch((e) => {
           setVideo(null)
-          if (e.response.data.code) {
-            if (e?.response?.data?.code === 'FILE_SIZE_PROBLEM')
-              toast.error(
-                `${t('FILE_SIZE_PROBLEM')}\n${t('FILE_SIZE_PROBLEM_MESSAGE', {
-                  size: getMaxVideoSizeMB(maxVideoDuration),
-                })}`,
-              )
+          if (e?.response?.data?.code) {
+            if (e.response.data.code === 'FILE_SIZE_PROBLEM')
+              toast.error(sizeError)
           }
         })
     },
     [video],
   )
-  const maxSize = getMaxVideoSizeMB(maxVideoDuration) * 10000000
+  const maxSize = getMaxVideoSizeMB(maxVideoDuration) * 1000000
   return (
     <div className='mb-4 w-full relative'>
       <div

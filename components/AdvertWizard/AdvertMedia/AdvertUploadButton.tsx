@@ -7,7 +7,7 @@ import IcAddPhoto from 'icons/material/AddPhoto.svg'
 import IcAddVideo from 'icons/material/AddVideo.svg'
 
 const AdvertUploadButton: FC<{
-  onDrop: (acceptedFiles: any) => void
+  onDrop: (acceptedFiles: any, rejectedFiles: any) => void
   disabled: boolean
   type: string
   maxFiles?: number
