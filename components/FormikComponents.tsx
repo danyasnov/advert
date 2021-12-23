@@ -274,28 +274,32 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
-  const isValid = !errors[name]
+  const error = get(errors, name)
+  const isValid = !error
   const isAllowed = (p: NumberFormatProps) => {
     if (!maxLength) return true
     if (p.value.toString().length > maxLength) return false
     return true
   }
   return (
-    <NumberFormat
-      value={value}
-      onValueChange={({value: inputValue}) => {
-        setFieldValue(name, inputValue)
-      }}
-      isAllowed={isAllowed}
-      mask={mask}
-      allowEmptyFormatting={allowEmptyFormatting}
-      format={format}
-      thousandSeparator={thousandSeparator}
-      placeholder={placeholder}
-      className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
-        isValid ? '' : 'border-error'
-      }`}
-    />
+    <div>
+      <NumberFormat
+        value={value}
+        onValueChange={({value: inputValue}) => {
+          setFieldValue(name, inputValue)
+        }}
+        isAllowed={isAllowed}
+        mask={mask}
+        allowEmptyFormatting={allowEmptyFormatting}
+        format={format}
+        thousandSeparator={thousandSeparator}
+        placeholder={placeholder}
+        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+          isValid ? '' : 'border-error'
+        }`}
+      />
+      <span className='text-body-3 text-error'>{error}</span>
+    </div>
   )
 }
 export const FormikText: FC<
@@ -320,7 +324,8 @@ export const FormikText: FC<
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
-  const isValid = !errors[name]
+  const error = get(errors, name)
+  const isValid = !error
   const props = {
     disabled,
     rows,
@@ -344,7 +349,7 @@ export const FormikText: FC<
   return (
     <div className='flex flex-col'>
       {Component}
-      <span className='text-body-3 text-error'>{errors[name]}</span>
+      <span className='text-body-3 text-error'>{error}</span>
     </div>
   )
 }
@@ -354,7 +359,8 @@ export const FormikPassword: FC<
 > = ({field, form, placeholder}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
-  const isValid = !errors[name]
+  const error = get(errors, name)
+  const isValid = !error
   const [type, setType] = useState('password')
   return (
     <div className='flex flex-col'>
@@ -383,7 +389,7 @@ export const FormikPassword: FC<
           )}
         </div>
       </div>
-      <span className='text-body-3 text-error'>{errors[name]}</span>
+      <span className='text-body-3 text-error'>{error}</span>
     </div>
   )
 }
@@ -396,7 +402,8 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   const {name, value} = field
   const {setFieldValue, errors} = form
   const {t} = useTranslation()
-  const isValid = !get(errors, name)
+  const error = get(errors, name)
+  const isValid = !error
   const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-2 ${
     isValid ? '' : 'border-error'
   }`

@@ -205,11 +205,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       method: 'post',
     }).then((res) => {
       if (res.data.status === 200) {
-        if (query.action === 'create') {
-          push(`/user/${user.hash}?activeTab=1`)
-        } else {
-          push(`/user/${user.hash}`)
-        }
+        push(`/user/${user.hash}?activeTab=1`)
       } else if (res.data.error) {
         toast.error(t(res.data.error))
       }
