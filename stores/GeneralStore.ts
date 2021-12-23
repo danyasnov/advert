@@ -20,7 +20,6 @@ export interface IGeneralStore {
   root: RootStore
   showFooter: boolean
   showCookiesWarn: boolean
-  showContent: boolean
   showSuccessAlert: string
   user: OwnerModel
   setUser: (user: OwnerModel) => void
@@ -31,7 +30,6 @@ export interface IGeneralStore {
   locationCodes: string
   userHash: string
   setFooterVisibility: (visible: boolean) => void
-  setShowContent: (visible: boolean) => void
   toggleCookiesWarnVisibility: () => void
   setShowLogin: (value: boolean) => void
   showLogin: boolean
@@ -68,8 +66,6 @@ export class GeneralStore implements IGeneralStore {
 
   userHash = ''
 
-  showContent = true
-
   showLogin = false
 
   setShowLogin = (value: boolean): void => {
@@ -82,10 +78,6 @@ export class GeneralStore implements IGeneralStore {
 
   setFooterVisibility = (visible: boolean): void => {
     this.showFooter = visible
-  }
-
-  setShowContent = (visible: boolean): void => {
-    this.showContent = visible
   }
 
   toggleCookiesWarnVisibility = (): void => {

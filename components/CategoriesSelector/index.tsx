@@ -8,7 +8,6 @@ import CategoriesDesktopSelector from './CategoriesDesktopSelector'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const CategoriesSelector: FC = observer(() => {
-  const {setShowContent} = useGeneralStore()
   const [show, setShow] = useState(false)
   const ref = useRef()
   useOnClickOutside(ref, () => {
@@ -19,10 +18,6 @@ const CategoriesSelector: FC = observer(() => {
   useEffect(() => {
     setShow(false)
   }, [router.asPath])
-
-  useEffect(() => {
-    setShowContent(!show)
-  }, [setShowContent, show])
 
   return (
     <div ref={ref}>
