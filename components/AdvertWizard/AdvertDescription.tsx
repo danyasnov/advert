@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import {SettingsLanguageModel} from 'front-api'
 import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
+import {useRouter} from 'next/router'
 import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
@@ -22,6 +23,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   languagesByIsoCode,
   maxDescriptionLength,
 }) => {
+  const {query} = useRouter()
   const {t} = useTranslation()
   const {name, value} = field
   const {setFieldValue, errors} = form
@@ -164,17 +166,19 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <span className='text-body-3 text-nc-secondary-text'>
         {t('OTHER_LANGUAGES_REFERENCE')}
       </span>
-      <div className='flex space-x-2 items-center mt-4'>
-        <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '>
-          <Field
-            component={FormikSwitch}
-            name='isExclusive'
-            label={t('ONLY_ON_ADVERTO')}
-            labelPosition='right'
-          />
+      {query.action === 'create' && (
+        <div className='flex space-x-2 items-center mt-4'>
+          <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '>
+            <Field
+              component={FormikSwitch}
+              name='isExclusive'
+              label={t('ONLY_ON_ADVERTO')}
+              labelPosition='right'
+            />
+          </div>
+          <Tip message={t('EXCLUSIVE_ON_ADVERTO_TIP')} placement='left' />
         </div>
-        <Tip message={t('EXCLUSIVE_ON_ADVERTO_TIP')} placement='left' />
-      </div>
+      )}
     </div>
   )
 }
