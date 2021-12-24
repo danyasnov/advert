@@ -11,7 +11,7 @@ import {FormikPassword, FormikText} from '../FormikComponents'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 
-const forbiddenSymbols = ["'", '!', '+', '"', '/', '\\', '`', '(', ')']
+const regexp = /^[A-Za-z0-9<>±!@#$%^*()\-+/|`.,~?{}[\]:;]*$/
 const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const {t} = useTranslation()
   const msgName = t('TOO_SHORT_NAME_OR_SURNAME')
@@ -37,10 +37,8 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
     if (regex.test(value)) {
       return t('PASSWORD_MUST_NOT_CONTAIN_EMOJI')
     }
-    if (forbiddenSymbols.some((f) => value.includes(f))) {
-      return `${t(
-        'PASSWORD_MUST_NOT_CONTAIN_PROHIBITED_SYMBOLS',
-      )} ${forbiddenSymbols.join(' ')}`
+    if (!regexp.test(value)) {
+      return t('ERROR_PASSWORD_FORBIDDEN_SYMBOLS')
     }
     if (size(value) < 6 || size(value) > 20) {
       return t(msgPass)
