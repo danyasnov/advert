@@ -42,6 +42,32 @@ const CategoriesDesktopSelector: FC = observer(() => {
   )
   const [thirdLevelItems, setThirdLevelItems] = useState([])
   const [fourthLevelItems, setFourthLevelItems] = useState([])
+  const handleHoverFirstCol = (cat: CACategoryModel) => {
+    const secondItems = withAllProductsButton(cat.items)
+    setActiveCategory(cat)
+    setSecondLevelItems(secondItems)
+    setSecondColumnActiveCategory(undefined)
+    setThirdColumnActiveCategory(undefined)
+    setFourthColumnActiveCategory(undefined)
+    setThirdLevelItems([])
+    setFourthLevelItems([])
+  }
+  const handleHoverSecondCol = (cat) => {
+    setThirdLevelItems(withAllProductsButton(cat.items))
+    setSecondColumnActiveCategory(cat)
+    setThirdColumnActiveCategory(undefined)
+    setFourthColumnActiveCategory(undefined)
+    setFourthLevelItems([])
+  }
+  const handleHoverThirdCol = (cat) => {
+    setFourthLevelItems(withAllProductsButton(cat.items))
+    setThirdColumnActiveCategory(cat)
+    setFourthColumnActiveCategory(undefined)
+  }
+  const handleHoverFourthCol = (cat) => {
+    setFourthColumnActiveCategory(cat)
+  }
+
   return (
     <div
       className='absolute top-105px inset-x-0 z-10 bg-white divide-x divide-shadow-b
@@ -54,16 +80,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
             key={c.id}
             href={`/${getLocationCodes()}/${c.slug}`}
             isActive={activeCategory?.id === c.id}
-            onMouseEnter={(cat) => {
-              const secondItems = withAllProductsButton(cat.items)
-              setActiveCategory(cat)
-              setSecondLevelItems(secondItems)
-              setSecondColumnActiveCategory(undefined)
-              setThirdColumnActiveCategory(undefined)
-              setFourthColumnActiveCategory(undefined)
-              setThirdLevelItems([])
-              setFourthLevelItems([])
-            }}
+            onMouseEnter={handleHoverFirstCol}
           />
         ))}
       </div>
@@ -72,13 +89,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           urlPath={activeCategory?.slug}
           activeId={secondColumnActiveCategory?.id}
           items={secondLevelItems}
-          onMouseEnter={(cat) => {
-            setThirdLevelItems(withAllProductsButton(cat.items))
-            setSecondColumnActiveCategory(cat)
-            setThirdColumnActiveCategory(undefined)
-            setFourthColumnActiveCategory(undefined)
-            setFourthLevelItems([])
-          }}
+          onMouseEnter={handleHoverSecondCol}
         />
       </div>
       <div className='pb-4'>
@@ -86,22 +97,16 @@ const CategoriesDesktopSelector: FC = observer(() => {
           items={thirdLevelItems}
           urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}`}
           activeId={thirdColumnActiveCategory?.id}
-          onMouseEnter={(cat) => {
-            setFourthLevelItems(withAllProductsButton(cat.items))
-            setThirdColumnActiveCategory(cat)
-            setFourthColumnActiveCategory(undefined)
-          }}
+          onMouseEnter={handleHoverThirdCol}
         />
       </div>
       {!isEmpty(fourthLevelItems) && (
-        <div className='pb-4'>
+        <div className='pb-4 hidden m:block'>
           <Col
             items={fourthLevelItems}
             urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
             activeId={fourthColumnActiveCategory?.id}
-            onMouseEnter={(cat) => {
-              setFourthColumnActiveCategory(cat)
-            }}
+            onMouseEnter={handleHoverFourthCol}
           />
         </div>
       )}

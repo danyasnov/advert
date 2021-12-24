@@ -1,5 +1,6 @@
 import {FC} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
+import {isMobile} from 'react-device-detect'
 import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
@@ -33,7 +34,12 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       {elBody}
     </Button>
   ) : (
-    <LinkWrapper title={name} className={className} key={id} href={href}>
+    <LinkWrapper
+      title={name}
+      className={className}
+      key={id}
+      href={href}
+      preventDefault={isMobile && !isActive}>
       {elBody}
     </LinkWrapper>
   )

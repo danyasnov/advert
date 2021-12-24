@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import {FC, ReactNode} from 'react'
 import Link from 'next/link'
 
@@ -7,6 +8,7 @@ interface Props {
   className?: string
   title: string
   target?: '_self' | '_blank'
+  preventDefault?: boolean
 }
 
 const LinkWrapper: FC<Props> = ({
@@ -14,12 +16,18 @@ const LinkWrapper: FC<Props> = ({
   children,
   className,
   title,
+  preventDefault,
   target = '_self',
 }) => {
   return (
     <Link href={href}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a target={target} title={title} className={className || ''}>
+      <a
+        target={target}
+        title={title}
+        className={className || ''}
+        onClick={(e) => {
+          if (preventDefault) e.preventDefault()
+        }}>
         {children}
       </a>
     </Link>

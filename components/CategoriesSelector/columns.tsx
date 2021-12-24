@@ -2,6 +2,7 @@
 import {source, target} from 'react-aim'
 import {PureComponent, ReactNode} from 'react'
 import {CACategoryModel} from 'front-api'
+import {isMobile} from 'react-device-detect'
 import CategoryItem from './CategoryItem'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import {getLocationCodes} from '../../helpers'
@@ -56,6 +57,7 @@ class ColItem extends PureComponent<ColItemProps> {
     const {name} = category
     return (
       <LinkWrapper
+        preventDefault={isMobile && !isActive && category.id !== 0}
         title={name}
         className={`${
           isActive ? 'bg-nc-accent' : ''
