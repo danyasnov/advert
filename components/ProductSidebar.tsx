@@ -6,6 +6,7 @@ import UserCard from './UserCard'
 import ProductInfoIcons from './ProductInfoIcons'
 import CallButton from './Buttons/CallButton'
 import ChatButton from './Buttons/ChatButton'
+import DeactivateAdvButton from './Buttons/DeactivateAdvButton'
 
 const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
@@ -32,6 +33,9 @@ const ProductSidebar: FC = observer(() => {
           <CallButton product={product} />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </>
+      )}
+      {isUserAdv && advert.state === 'active' && (
+        <DeactivateAdvButton product={product} />
       )}
       <UserCard />
     </div>
