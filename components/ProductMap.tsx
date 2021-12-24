@@ -21,13 +21,13 @@ const ProductMap: FC = observer(() => {
           <IcPinDrop className='w-6 h-6 fill-current text-black-c mr-2' />
           <span>{product.advert.location.description}</span>
         </div>
-        <Button onClick={() => setMapVisible(!mapVisible)}>
+        <Button onClick={() => setMapVisible(!mapVisible)} id='map'>
           <span className='hidden s:block'>{t('LOCATION_OF_GOODS')}</span>
           <IcArrowDropDown className='w-6 h-6 fill-current text-black-c ml-2' />
         </Button>
       </div>
       {mapVisible && (
-        <div className='w-full h-96'>
+        <div className='w-full h-96' data-test-id='map-body'>
           <GoogleMapReact
             bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
             center={{

@@ -12,6 +12,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
   return (
     <div className='flex flex-col p-4 space-y-4 pb-8'>
       <SecondaryButton
+        id='login-by-phone'
         onClick={() => {
           dispatch({
             type: 'setPage',
@@ -26,6 +27,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
         {t('BY_PHONE_NUMBER')}
       </SecondaryButton>
       <SecondaryButton
+        id='login-by-email'
         onClick={() => {
           dispatch({
             type: 'setPage',

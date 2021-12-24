@@ -21,6 +21,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
     <div className='w-full'>
       {showChat ? (
         <LinkWrapper
+          id='chat'
           target='_blank'
           href={`https://old.adverto.sale/cp/chat/#message-productId=${hash}`}
           className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b flex justify-center'
@@ -29,6 +30,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
         </LinkWrapper>
       ) : (
         <SecondaryButton
+          id='chat'
           className='w-full'
           onClick={() => {
             setShowLogin(true)

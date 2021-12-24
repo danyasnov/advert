@@ -6,6 +6,7 @@ interface Props {
   href: string
   children: ReactNode
   className?: string
+  id?: string
   title: string
   target?: '_self' | '_blank'
   preventDefault?: boolean
@@ -16,12 +17,14 @@ const LinkWrapper: FC<Props> = ({
   children,
   className,
   title,
+  id,
   preventDefault,
   target = '_self',
 }) => {
   return (
     <Link href={href}>
       <a
+        data-test-id={id}
         target={target}
         title={title}
         className={className || ''}

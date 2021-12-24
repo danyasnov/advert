@@ -282,7 +282,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
     return true
   }
   return (
-    <div>
+    <div data-test-id={name}>
       <NumberFormat
         value={value}
         onValueChange={({value: inputValue}) => {
@@ -327,6 +327,7 @@ export const FormikText: FC<
   const error = get(errors, name)
   const isValid = !error
   const props = {
+    'data-test-id': name,
     disabled,
     rows,
     type,
@@ -366,6 +367,7 @@ export const FormikPassword: FC<
     <div className='flex flex-col'>
       <div className='relative'>
         <input
+          data-test-id={name}
           type={type}
           value={value || ''}
           onChange={(e) => {

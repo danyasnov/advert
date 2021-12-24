@@ -15,7 +15,6 @@ interface Props {
   isClearable?: boolean
   isMulti?: boolean
   id?: string
-  styles?
 }
 
 const CustomOption = (props) => {

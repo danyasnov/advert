@@ -70,14 +70,18 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
     <div ref={ref}>
       {user ? (
         <div className='relative'>
-          <Button onClick={() => setShowPopup(!showPopup)}>
+          <Button
+            onClick={() => setShowPopup(!showPopup)}
+            id='user-menu-button'>
             <UserAvatar url={user.imageUrl} size={4} name={user.name} />
             <span className='ml-2 text-brand-b1 text-body-3 truncate max-w-100px inline-block'>
               {user.name}
             </span>
           </Button>
           {showPopup && (
-            <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden'>
+            <div
+              className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden'
+              data-test-id='user-menu-body'>
               {options.map(({title, onClick}) => (
                 <Button
                   className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-2'

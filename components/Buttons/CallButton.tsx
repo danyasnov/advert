@@ -22,6 +22,7 @@ const CallButton: FC<Props> = ({product}) => {
     <div className='w-full'>
       {phoneNum && (
         <PrimaryButton
+          id='call'
           onClick={() => setShowPhone(true)}
           className='w-full text-body-2 text-black-b order-0 '>
           <IcPhone className='fill-current h-4 w-4 mr-2' />

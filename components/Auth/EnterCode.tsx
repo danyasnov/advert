@@ -106,7 +106,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
           }
         }}
         containerClassName='space-x-2'
-        inputClassName={`w-14 h-18 p-4 text-h-1 text-black-b font-bold border rounded-lg ${
+        inputClassName={`w-14 h-18 p-4 text-h-1 text-black-b font-bold border rounded-lg login-code-input ${
           isInvalid ? 'border-error' : 'border-shadow-b'
         }`}
       />

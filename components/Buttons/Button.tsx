@@ -6,6 +6,7 @@ interface Props {
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
   onClick?: MouseEventHandler<HTMLButtonElement>
+  id?: string
 }
 const Button: FC<Props> = ({
   children,
@@ -13,6 +14,7 @@ const Button: FC<Props> = ({
   onClick,
   type = 'button',
   disabled,
+  id,
 }) => {
   return (
     <button
@@ -20,6 +22,7 @@ const Button: FC<Props> = ({
       type={type}
       className={`flex items-center justify-center ${className || ''}`}
       disabled={disabled}
+      data-test-id={id}
       onClick={onClick}>
       {children}
     </button>

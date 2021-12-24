@@ -32,8 +32,10 @@ export const Controls: FC<{
   const {t} = useTranslation()
   return (
     <div className='p-4 flex border-t border-shadow-b justify-end space-x-2'>
-      <SecondaryButton onClick={onBack}>{t('BACK')}</SecondaryButton>
-      <PrimaryButton onClick={onNext} disabled={nextDisabled}>
+      <SecondaryButton id='login-back' onClick={onBack}>
+        {t('BACK')}
+      </SecondaryButton>
+      <PrimaryButton id='login-next' onClick={onNext} disabled={nextDisabled}>
         {nextLabel || t('NEXT')}
       </PrimaryButton>
     </div>

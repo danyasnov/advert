@@ -19,11 +19,13 @@ const ProductSidebar: FC = observer(() => {
 
   return (
     <div className='flex flex-col space-y-4'>
-      <span className='text-black-b text-h-1 font-bold'>
+      <span className='text-black-b text-h-1 font-bold' data-test-id='price'>
         {isFree ? t('FREE') : advert.price}
       </span>
       {!!advert.oldPrice && (
-        <span className='text-body-1 text-error line-through'>
+        <span
+          data-test-id='old-price'
+          className='text-body-1 text-error line-through'>
           {advert.oldPrice}
         </span>
       )}

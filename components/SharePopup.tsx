@@ -26,6 +26,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
   return (
     <div className='z-10 absolute' ref={ref}>
       <SecondaryButton
+        id='share'
         onClick={async () => {
           if (link && !show) {
             setShow(true)
@@ -55,7 +56,9 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
         {t(loading ? 'LOADING_LO' : 'SHARE')}
       </SecondaryButton>
       {show && link && (
-        <div className='flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3 arrow-top'>
+        <div
+          className='flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3 arrow-top'
+          data-test-id='share-popup'>
           <h2 className='text-h-2 text-black-b font-bold mb-4'>{t('SHARE')}</h2>
           <SocialShareButtons link={link} />
           <div className='bg-black-e p-2 mt-5 flex justify-between rounded'>

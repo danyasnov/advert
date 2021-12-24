@@ -76,6 +76,7 @@ const Select: FC<Props> = ({
   return (
     <RS
       inputId={id}
+      id={id}
       value={value}
       options={options}
       placeholder={placeholder}
