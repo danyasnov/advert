@@ -42,7 +42,9 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           onValueChange={({value: newValue}) => {
             setFieldValue(name, newValue)
           }}
-          isAllowed={({value: priceValue}) => priceValue.length < 16}
+          isAllowed={({value: priceValue}) => {
+            return priceValue.split('.')[0].length < 16
+          }}
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={get(currencies, '[0].code', '')}
