@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
 import {isMobile} from 'react-device-detect'
+import {useWindowSize} from 'react-use'
 import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
@@ -18,6 +19,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   const className = `${
     isActive ? 'bg-nc-accent' : ''
   } categories-selector-item text-black-b`
+  const {width} = useWindowSize()
 
   const elBody = (
     <>
@@ -39,7 +41,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       className={className}
       key={id}
       href={href}
-      preventDefault={isMobile && !isActive}>
+      preventDefault={width <= 768 ? false : isMobile && !isActive}>
       {elBody}
     </LinkWrapper>
   )
