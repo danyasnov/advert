@@ -3,7 +3,7 @@ import {FieldProps} from 'formik'
 import NumberFormat from 'react-number-format'
 import {CurrencyModel} from 'front-api/src/models/index'
 import {useTranslation} from 'next-i18next'
-import {get, size} from 'lodash'
+import {size} from 'lodash'
 import RadioButtons from '../RadioButtons'
 
 interface Props {
@@ -47,7 +47,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           }}
           thousandSeparator={' '}
           decimalScale={2}
-          placeholder={get(currencies, '[0].code', '')}
+          placeholder={currency?.code}
           className='w-full text-nc-primary-text text-body-1 outline-none manual-outline'
         />
         {!!safeDealPrice && (
