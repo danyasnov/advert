@@ -5,6 +5,7 @@ import {SettingsLanguageModel} from 'front-api'
 import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
+import IcExclamation from 'icons/material/Exclamation.svg'
 import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
@@ -62,7 +63,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex'>
-            {userLanguages.map((l) => {
+            {userLanguages.map((l, index) => {
               const current = valueDict[l.isoCode]
               const isFilled = current?.title || current?.description
               return (
@@ -78,6 +79,9 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                       : 'text-nc-placeholder'
                   }`}>
                   {languagesByIsoCode[l.isoCode]?.name}
+                  {errors[name] && index === 0 && (
+                    <IcExclamation className='ml-2 w-4 h-4' />
+                  )}
                 </Button>
               )
             })}

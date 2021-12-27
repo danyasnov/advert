@@ -270,7 +270,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
               toast.error(errors.condition)
             }
 
-            if (!mainContent.title) {
+            if (!mainContent?.title) {
               errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
               toast.error(errors.content)
             }
@@ -489,7 +489,10 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                       type: 'setPage',
                       page: AdvertPages.categoryPage,
                     })
-                  }}>
+                  }}
+                  className={
+                    query.action === 'create' ? 'visible' : 'invisible'
+                  }>
                   {t('BACK')}
                 </OutlineButton>
                 <PrimaryButton onClick={submitForm}>
