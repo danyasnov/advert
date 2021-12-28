@@ -15,18 +15,15 @@ import {
 } from 'front-api'
 import {isObject, isNil} from 'lodash'
 import {AxiosPromise} from 'axios'
+import NodeCache from 'node-cache'
 import {getSearchByFilter} from '../../helpers'
 import {API_URL, getRest, makeRequest} from '../index'
-import {
-  CookiesState,
-  FetchAdvertisesPayload,
-  SerializedCookiesState,
-} from '../../types'
+import {CookiesState, FetchAdvertisesPayload} from '../../types'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
 import {defaultFilter} from '../../utils'
 
-const cache = new Map()
+const categoriesCache = new NodeCache({stdTTL: 60 * 60 * 24})
 export const fetchProducts = (
   state: CookiesState,
   payload: FetchAdvertisesPayload = {},
@@ -78,14 +75,14 @@ export const fetchCategories = async (
 ): Promise<RestResponse<CACategoryModel[]>> => {
   const key = `categories-${language}`
 
-  const cached: RestResponse<CACategoryModel[]> = cache.get(key)
+  const cached: RestResponse<CACategoryModel[]> = categoriesCache.get(key)
   if (cached) return cached
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
   const result = rest.categories.fetchTree(false)
-  cache.set(key, result)
+  categoriesCache.set(key, result)
 
   return result
 }
