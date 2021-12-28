@@ -44,7 +44,7 @@ const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
             <ImageWrapper
               type={advert.images[0]}
               alt='Product'
-              objectFit='fill'
+              objectFit='contain'
               width={163}
               height={105}
             />

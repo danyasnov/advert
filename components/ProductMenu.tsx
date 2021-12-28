@@ -67,6 +67,7 @@ const ProductMenu: FC<Props> = ({product}) => {
       },
     }
     const items = []
+
     if (['active', 'archived', 'blocked', 'draft'].includes(advert.state)) {
       items.push(edit)
     }
