@@ -6,6 +6,7 @@ import {useRouter} from 'next/router'
 import Header from '../Header'
 import Footer from '../Footer'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import MobileAppBottomSheet from '../MobileAppBottomSheet'
 
 interface Props {
   children: ReactNode
@@ -29,6 +30,7 @@ const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
       <Header />
       {children}
       <Footer />
+      <MobileAppBottomSheet />
     </>
   )
 })

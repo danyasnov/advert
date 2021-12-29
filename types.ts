@@ -34,6 +34,7 @@ export interface CookiesState {
   token?: string
   aup?: string
   showCreateAdvMapHint?: boolean
+  showBottomSheet?: boolean
 }
 
 export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
@@ -61,6 +62,7 @@ export interface SerializedCookiesState {
   token?: string
   aup?: string
   showCreateAdvMapHint?: string
+  showBottomSheet?: string
 }
 
 export interface Filter {
