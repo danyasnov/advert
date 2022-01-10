@@ -36,6 +36,7 @@ const ChatLayout: FC = observer(() => {
             showNotifierSuccess: (message) => toast.success(message),
             showNotifierError: (message) => toast.error(message),
           },
+          // @ts-ignore
           system: {
             mediaPathMapper: () => '',
             // sendMediaMobile: async (endpoint, partName, path, params) => {
