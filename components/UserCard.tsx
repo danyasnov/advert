@@ -16,7 +16,7 @@ const UserCard: FC = observer(() => {
   const {t} = useTranslation()
 
   const langs = (
-    <div className='flex text-black-c text-body-2  items-center'>
+    <div className='flex text-black-c text-body-2 items-center'>
       <span className='mr-2'>{t('I_SPEAK')}</span>
       <div className='flex flex-wrap'>
         {product.owner.languages.map((l) => (

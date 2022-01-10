@@ -129,6 +129,9 @@ module.exports = {
         'nc-border': '#CCDBEB',
         'sold-background': 'rgba(255,64,64, 0.2)',
       },
+      zIndex: {
+        9: 9,
+      },
       inset: {
         '89px': '89px',
         '105px': '105px',

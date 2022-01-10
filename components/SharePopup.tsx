@@ -24,7 +24,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
     setShow(false)
   })
   return (
-    <div className='z-10 absolute' ref={ref}>
+    <div className='z-9 absolute' ref={ref}>
       <SecondaryButton
         id='share'
         onClick={async () => {
