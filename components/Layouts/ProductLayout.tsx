@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {toJS} from 'mobx'
+import {observer} from 'mobx-react-lite'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import ProductHeader from '../ProductHeader'
 import ProductDescription from '../ProductDescription'
@@ -11,7 +12,7 @@ import {useProductsStore} from '../../providers/RootStoreProvider'
 import {unixToDate} from '../../utils'
 import MetaTags from '../MetaTags'
 
-const ProductLayout: FC = () => {
+const ProductLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {similarProducts, product} = useProductsStore()
   const seoString = `${product.advert.title}, ${
@@ -40,6 +41,6 @@ const ProductLayout: FC = () => {
       </div>
     </HeaderFooterWrapper>
   )
-}
+})
 
 export default ProductLayout

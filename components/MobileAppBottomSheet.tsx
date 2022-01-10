@@ -8,15 +8,18 @@ import IcSamsung from 'icons/browsers/SamsungInternet.svg'
 import IcUc from 'icons/browsers/Uc.svg'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import {observer} from 'mobx-react-lite'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
 import {SerializedCookiesState} from '../types'
 import {setCookiesObject} from '../helpers'
 import LinkWrapper from './Buttons/LinkWrapper'
+import {useProductsStore} from '../providers/RootStoreProvider'
 
-const MobileAppBottomSheet: FC = () => {
+const MobileAppBottomSheet: FC = observer(() => {
   const [open, setOpen] = useState(false)
   const {t} = useTranslation()
+  const {product} = useProductsStore()
 
   useState(() => {
     const state: SerializedCookiesState = parseCookies()
@@ -53,6 +56,9 @@ const MobileAppBottomSheet: FC = () => {
             </div>
             <Button
               onClick={() => {
+                // navigator.clipboard.writeText(
+                //   `https://adverto.sale/${productId}?action=advert&id=${productId}&dynamic_link_refer_hash=${linkHash}&user=${ownerId})`,
+                // )
                 setOpen(false)
                 setCookiesObject({showBottomSheet: false})
               }}
@@ -85,7 +91,7 @@ const MobileAppBottomSheet: FC = () => {
       </BottomSheet>
     </MobileView>
   )
-}
+})
 
 const BrowserIcon: FC = () => {
   let Icon
