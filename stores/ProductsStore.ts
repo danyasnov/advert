@@ -1,5 +1,8 @@
 import {action, makeAutoObservable} from 'mobx'
-import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
+import {
+  AdvertiseDetail,
+  AdvertiseListItemModel,
+} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {isEmpty, omit} from 'lodash'
@@ -29,6 +32,7 @@ export interface IProductsHydration {
 export interface IProductsStore {
   root: RootStore
   products: Array<AdvertiseListItemModel>
+  otherProducts: Record<string, AdvertiseListItemModel[]>
   newProducts: Array<AdvertiseListItemModel>
   product: AdvertiseDetail
   freeProducts: Array<AdvertiseListItemModel>
@@ -74,6 +78,8 @@ export class ProductsStore implements IProductsStore {
   newProducts = []
 
   product
+
+  otherProducts = {}
 
   freeProducts = []
 
@@ -133,7 +139,7 @@ export class ProductsStore implements IProductsStore {
   }
 
   setProducts = (items: AdvertiseListItemModel[], path: string): void => {
-    this[path] = items
+    this.otherProducts[path] = items
   }
 
   fetchProducts = (opts?: Partial<FetchOptions>): Promise<void> => {

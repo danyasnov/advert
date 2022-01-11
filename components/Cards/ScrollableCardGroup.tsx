@@ -3,8 +3,6 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
-import LoaderWrapper from '../LoaderWrapper'
-import Loader from '../Loader'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
@@ -17,6 +15,7 @@ interface Props {
   page: number
   limit?: number
   hideNotFoundDescription?: boolean
+  disableScroll?: boolean
   enableFourthColumnForM?: boolean
   fetchProducts: () => void
 }
@@ -26,6 +25,7 @@ const ScrollableCardGroup: FC<Props> = ({
   count,
   page,
   fetchProducts,
+  disableScroll,
   enableFourthColumnForM,
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
@@ -46,7 +46,7 @@ const ScrollableCardGroup: FC<Props> = ({
       <InfiniteScroll
         dataLength={products?.length}
         next={fetchProducts}
-        hasMore={hasMore}
+        hasMore={hasMore && !disableScroll}
         scrollThreshold='2000px'
         loader={
           <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />

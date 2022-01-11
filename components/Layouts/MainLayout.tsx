@@ -3,10 +3,12 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {
+  useCategoriesStore,
   useGeneralStore,
   useProductsStore,
 } from '../../providers/RootStoreProvider'
@@ -22,10 +24,10 @@ import {makeRequest} from '../../api'
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
   const {locationCodes, showCookiesWarn} = useGeneralStore()
+  const {categoriesById} = useCategoriesStore()
   const cookies: SerializedCookiesState = parseCookies()
   const {
-    freeProducts,
-    discountedProducts,
+    otherProducts,
     products,
     state,
     count,
@@ -38,29 +40,45 @@ const MainLayout: FC = observer(() => {
   } = useProductsStore()
   const {query} = useRouter()
   const {t} = useTranslation()
-
+  const productsArr = [
+    {
+      data: {categoryId: 20},
+      name: categoriesById[20].name,
+      slug: categoriesById[20].slug,
+      url: `${locationCodes}/${categoriesById[20].slug}`,
+    },
+    {
+      data: {categoryId: 1},
+      name: categoriesById[1].name,
+      slug: categoriesById[1].slug,
+      url: `${locationCodes}/${categoriesById[1].slug}`,
+    },
+    {
+      data: {categoryId: 13},
+      name: categoriesById[13].name,
+      slug: categoriesById[13].slug,
+      url: `${locationCodes}/${categoriesById[13].slug}`,
+    },
+  ]
   useEffect(() => {
     const initProducts = async () => {
       resetFilter()
       setFilter({categoryId: null})
       fetchProducts().then(applyFilter)
       const url = '/api/products'
-      const freeProductsPromise = makeRequest({
-        url,
-        data: {filter: {priceMax: 0}, limit: 10},
-        method: 'post',
-      })
-      const discountedProductsPromise = makeRequest({
-        url,
-        data: {filter: {onlyDiscounted: true}, limit: 10},
-        method: 'post',
-      })
-      Promise.all([freeProductsPromise, discountedProductsPromise]).then(
-        (res) => {
-          setProducts(res[0].data?.result?.data || [], 'freeProducts')
-          setProducts(res[1].data?.result?.data || [], 'discountedProducts')
-        },
+
+      const promises = productsArr.map((p) =>
+        makeRequest({
+          url,
+          data: {filter: p.data, limit: 20},
+          method: 'post',
+        }),
       )
+      Promise.all(promises).then((res) => {
+        setProducts(res[0].data?.result?.data || [], productsArr[0].slug)
+        setProducts(res[1].data?.result?.data || [], productsArr[1].slug)
+        setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
+      })
     }
     initProducts()
   }, [
@@ -98,30 +116,20 @@ const MainLayout: FC = observer(() => {
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-944px l:w-896px space-y-12'>
             <CategoriesSlider />
-            <ProductsSlider
-              products={discountedProducts}
-              title={t('DISCOUNTED_GOODS')}
-              rightContent={
-                <LinkWrapper
-                  title={t('SEE_ALL')}
-                  className='text-body-3 text-brand-b1'
-                  href={`${locationCodes}?onlyDiscounted=true`}>
-                  {t('SEE_ALL')}
-                </LinkWrapper>
-              }
-            />
-            <ProductsSlider
-              products={freeProducts}
-              title={t('GIVE_AWAY')}
-              rightContent={
-                <LinkWrapper
-                  title={t('SEE_ALL')}
-                  className='text-body-3 text-brand-b1'
-                  href={`${locationCodes}?priceMax=0`}>
-                  {t('SEE_ALL')}
-                </LinkWrapper>
-              }
-            />
+            {productsArr.map((p) => (
+              <ProductsSlider
+                products={otherProducts[p.slug] || []}
+                title={p.name}
+                rightContent={
+                  <LinkWrapper
+                    title={t('SEE_ALL')}
+                    className='text-body-3 text-brand-b1'
+                    href={p.url}>
+                    {t('SEE_ALL')}
+                  </LinkWrapper>
+                }
+              />
+            ))}
             <div>
               <TitleWithSeparator
                 title={t('RECOMMENDATIONS_FOR_YOU')}
@@ -141,6 +149,7 @@ const MainLayout: FC = observer(() => {
                   enableFourthColumnForM
                   page={page}
                   state={state}
+                  disableScroll
                   hideNotFoundDescription
                   fetchProducts={() =>
                     fetchProducts({page: page + 1, isScroll: true, query}).then(
