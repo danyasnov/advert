@@ -4,6 +4,7 @@ import {AdvertiseDetail, OwnerModel} from 'front-api/src/models/index'
 import Script from 'next/script'
 import {first} from 'lodash'
 import {DateTime} from 'luxon'
+import {toJS} from 'mobx'
 
 interface Props {
   title: string
@@ -78,7 +79,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
                 offers: {
                   '@type': 'Offer',
                   // @ts-ignore
-                  price: advert.priceFloat,
+                  price: advert.priceFloat || 0,
                   // @ts-ignore
                   priceCurrency: advert.currencyCode,
                   priceValidUntil: DateTime.local()
@@ -126,7 +127,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   content_type: 'product',
   value: ${
     // @ts-ignore
-    advert.priceFloat
+    advert.priceFloat || 0
   },
   currency: '${
     // @ts-ignore
