@@ -6,7 +6,7 @@ interface Props {
   children?: ReactNode
   className?: string
   id?: string
-  onClick: () => void
+  onClick?: () => void
   disabled?: boolean
 }
 
@@ -23,7 +23,7 @@ const SecondaryButton: FC<Props> = ({
       className={`rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-2 text-black-b ${
         disabled ? disabledClass : ''
       } ${className || ''}`}
-      onClick={() => !disabled && onClick()}>
+      onClick={() => !disabled && onClick && onClick()}>
       {children}
     </Button>
   )

@@ -1093,7 +1093,7 @@
   "PAYMENT_IN_WALLET": "In the wallet",
   "PAYMENT_JSS": "JSS",
   "PAYMENT_NOT_PASSED": "Payment failed:",
-  "PAYMENT_SUMM_PAYMENT": "Amount of payment",
+  "PAYMENT_SUMM_PAYMENT": "Amount to be paid ",
   "PAYMENTS_PAYMENT_METHOD": "Payment method",
   "PAYMENTS_TO_PAYMENT": "To pay",
   "PENDING_PAYMENT": "Pending payment",

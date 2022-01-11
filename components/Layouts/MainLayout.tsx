@@ -20,6 +20,7 @@ import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import useScrollDirection from '../../hooks/useScrollDirection'
 import {makeRequest} from '../../api'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -142,7 +143,7 @@ const MainLayout: FC = observer(() => {
                   </LinkWrapper>
                 }
               />
-              <div className='mx-4 s:mx-8 m:mx-0'>
+              <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                 <ScrollableCardGroup
                   products={products}
                   count={count}
@@ -157,6 +158,12 @@ const MainLayout: FC = observer(() => {
                     )
                   }
                 />
+                <LinkWrapper
+                  title={t('SEE_ALL')}
+                  className='text-body-3 text-brand-b1'
+                  href={locationCodes}>
+                  <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
+                </LinkWrapper>
               </div>
             </div>
           </main>
