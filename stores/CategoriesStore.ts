@@ -16,6 +16,7 @@ export interface ICategoriesStore {
   byId: Record<string, CACategoryModel>
   ids: number[]
   categoryDataFieldsById: Record<string, CACategoryDataFieldModel> | null
+  categoriesById: Record<string, CACategoryModel>
   categoryDataFieldsBySlug: Record<string, CACategoryDataFieldModel> | null
   categoryDataFields: CACategoryDataFieldModel[]
   readonly categoriesWithoutAll: Array<CACategoryModel>
@@ -80,6 +81,13 @@ export class CategoriesStore implements ICategoriesStore {
 
   get categoriesWithoutAll(): Array<CACategoryModel> {
     return this.categories.filter((c) => c.slug !== 'all')
+  }
+
+  get categoriesById(): Record<string, CACategoryModel> {
+    return this.categories.reduce((acc, val) => {
+      acc[val.id] = val
+      return acc
+    }, {})
   }
 
   constructor(root: RootStore) {
