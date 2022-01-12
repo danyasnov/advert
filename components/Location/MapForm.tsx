@@ -166,7 +166,7 @@ const MapForm: FC<Props> = ({onClose}) => {
                 onChange={onChangeMap}
                 yesIWantToUseGoogleMapApiInternals
                 margin={[1, 2, 3, 4]}
-                defaultZoom={8}
+                defaultZoom={6}
                 onGoogleApiLoaded={({map, maps}) => {
                   mapRef.current = map
                   mapsRef.current = maps

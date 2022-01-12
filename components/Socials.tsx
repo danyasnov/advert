@@ -46,7 +46,7 @@ const socials = {
   ru: [
     {
       ...fb,
-      url: 'https://www.facebook.com/Adverto_RU-228551712416165',
+      url: 'https://www.facebook.com/Adverto_official-233833728555124',
     },
     {
       ...yt,
@@ -60,11 +60,15 @@ const socials = {
     },
     {
       ...ig,
-      url: 'https://www.instagram.com/adverto_sale',
+      url: 'https://www.instagram.com/adverto_sale/',
     },
     {
       ...yt,
       url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+    },
+    {
+      ...tt,
+      url: 'https://www.tiktok.com/@adverto_sale',
     },
   ],
   uk: [
