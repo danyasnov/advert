@@ -47,7 +47,7 @@
     "react": "^17.0.2",
     "react-aim": "^0.2.3",
     "react-auth-code-input": "danyasnov/react-auth-code-input#725be697365041e19e1d136b1e69e14ba666d8da",
-    "react-cssfx-loading": "^1.0.2",
+    "react-cssfx-loading": "1.0.2",
     "react-device-detect": "^2.1.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.4.2",

@@ -5859,10 +5859,10 @@ react-auth-code-input@danyasnov/react-auth-code-input#725be697365041e19e1d136b1e
   version "1.2.1"
   resolved "https://codeload.github.com/danyasnov/react-auth-code-input/tar.gz/725be697365041e19e1d136b1e69e14ba666d8da"
 
-react-cssfx-loading@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-cssfx-loading/-/react-cssfx-loading-1.0.3.tgz#8855632243a1154a01916311839a4f0b07705c25"
-  integrity sha512-Iqj1A0HNdi6oNyhjr+ZGx8PMfn/3J5+Iw+I0oTmFgL5rct3F4fgi56tnbQCdRgUdNaC2jjYYhW2Ujh8jVjkfKA==
+react-cssfx-loading@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-cssfx-loading/-/react-cssfx-loading-1.0.2.tgz#bc2482c3c6f5eac0379171a24e45a71823f5e628"
+  integrity sha512-Dzpwc5XBWfDAWAm7XREVAX1kbs2ngwlf7h7qykVR1yOlZtYWRQFnmVjE9lxL2VILNw/sRkvflX+oA7WwgpCjew==
 
 react-device-detect@^2.1.2:
   version "2.1.2"
