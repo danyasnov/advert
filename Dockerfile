@@ -10,7 +10,7 @@ RUN mkdir ~/.ssh \
     && echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - \
     && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> ~/.ssh/config \
     && yarn cache clean \
-    && yarn install --check-files --cache-folder .ycache && rm -rf .ycache
+    && yarn install --verbose --check-files --cache-folder .ycache && rm -rf .ycache
 
 # Rebuild the source code only when needed
 FROM node:14-alpine AS builder
