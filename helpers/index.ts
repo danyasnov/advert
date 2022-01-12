@@ -148,7 +148,7 @@ export const processCookies = async (
       ? state.userLocation
       : JSON.parse(cookies.searchLocation)
 
-  state.searchRadius = cookies.searchRadius ? Number(cookies.searchRadius) : 25
+  state.searchRadius = cookies.searchRadius ? Number(cookies.searchRadius) : 200
   state.searchBy = cookies.searchBy ?? 'coords'
 
   if (cookies.countryId) state.countryId = cookies.countryId
