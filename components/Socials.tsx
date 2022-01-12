@@ -60,11 +60,15 @@ const socials = {
     },
     {
       ...ig,
-      url: 'https://www.instagram.com/adverto_sale',
+      url: 'https://www.instagram.com/adverto_sale/',
     },
     {
       ...yt,
       url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+    },
+    {
+      ...tt,
+      url: 'https://www.tiktok.com/@adverto_sale',
     },
   ],
   uk: [
