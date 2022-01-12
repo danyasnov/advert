@@ -1,15 +1,18 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {makeRequest} from '../../api'
+import {processCookies} from '../../helpers'
 
-export default (
+export default async (
   req: NextApiRequest,
   res: NextApiResponse,
-): Promise<void> | void => {
+): Promise<void> => {
   const {body} = req
   const {location} = body
   if (!location) {
     return res.json({error: 'no location'})
   }
+  const state = await processCookies({req})
+
   const {longitude, latitude} = location
   const base = 'https://maps.googleapis.com/maps/api'
   return makeRequest({
@@ -18,7 +21,7 @@ export default (
     params: {
       key: process.env.GOOGLE_API,
       latlng: `${latitude},${longitude}`,
-      language: 'ru',
+      language: state.language,
     },
   }).then(({data}) => {
     res.json(data)
