@@ -46,7 +46,7 @@ const socials = {
   ru: [
     {
       ...fb,
-      url: 'https://www.facebook.com/Adverto_RU-228551712416165',
+      url: 'https://www.facebook.com/Adverto_official-233833728555124',
     },
     {
       ...yt,
