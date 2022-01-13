@@ -105,24 +105,26 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   )
 
   const footer = (
-    <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5'>
-      <OutlineButton
-        onClick={() => {
-          dispatch({
-            type: 'setPage',
-            page: AdvertPages.mapPage,
-          })
-        }}>
-        {t('BACK')}
-      </OutlineButton>
-      <PrimaryButton
-        onClick={() => {
-          const category = last(selected)
-          onSubmit(category.id)
-        }}
-        disabled={!valid}>
-        {t('APPLY')}
-      </PrimaryButton>
+    <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around'>
+      <div className='w-full l:w-1208px flex justify-between'>
+        <OutlineButton
+          onClick={() => {
+            dispatch({
+              type: 'setPage',
+              page: AdvertPages.mapPage,
+            })
+          }}>
+          {t('BACK')}
+        </OutlineButton>
+        <PrimaryButton
+          onClick={() => {
+            const category = last(selected)
+            onSubmit(category.id)
+          }}
+          disabled={!valid}>
+          {t('APPLY')}
+        </PrimaryButton>
+      </div>
     </div>
   )
 

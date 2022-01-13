@@ -145,6 +145,7 @@ module.exports = {
         '592px': '592px',
         '704px': '704px',
         '288px': '288px',
+        '1208px': '1208px',
       },
       minHeight: {
         10: '2.5rem',
