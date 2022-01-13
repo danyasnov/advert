@@ -45,6 +45,10 @@ const nextConfig = {
         source: '/api/upload/:type',
         destination: 'https://api.adverto.sale/files/:type/upload',
       },
+      {
+        source: '/api/chat',
+        destination: 'https://chat.adverto.sale',
+      },
     ]
   },
 }

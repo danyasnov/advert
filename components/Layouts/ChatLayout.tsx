@@ -5,7 +5,6 @@ import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
 import {WebSocketConnectionUser} from 'chats'
 import {toast} from 'react-toastify'
-import dynamic from 'next/dynamic'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {SerializedCookiesState} from '../../types'
 import Storage from '../../stores/Storage'
@@ -21,8 +20,7 @@ const ChatLayout: FC = observer(() => {
       const storage = new Storage(state)
       const restApi = getRest(storage)
       // console.log('typeof window', typeof window)
-      const {Chats} = await import('chats')
-      console.log(Chats)
+      const {Chats, globalChatsStore} = await import('chats')
       Chats.init({
         deps: {
           restApi,
@@ -36,9 +34,11 @@ const ChatLayout: FC = observer(() => {
             showNotifierSuccess: (message) => toast.success(message),
             showNotifierError: (message) => toast.error(message),
           },
-          // @ts-ignore
           system: {
             mediaPathMapper: () => '',
+            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            loadDisabledAutoTranslationChatIds: () => {},
             // sendMediaMobile: async (endpoint, partName, path, params) => {
             //   return ''
             // },
@@ -64,6 +64,8 @@ const ChatLayout: FC = observer(() => {
           },
         },
       })
+      const error = await globalChatsStore.startConnection()
+      console.log(error)
     }
     init()
   }, [])
