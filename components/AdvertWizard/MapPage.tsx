@@ -264,6 +264,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
                 <div className='s:hidden mt-2 mx-2'>
                   <MobileMapSearch
                     label={label}
+                    onSubmit={onSubmit}
                     handleSelectLocation={handleSelectLocation}
                   />
                 </div>

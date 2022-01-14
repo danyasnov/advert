@@ -13,9 +13,14 @@ interface Props {
     geometry: {location: {lat: number; lng: number}}
   }) => void
   label: string
+  onSubmit: () => void
 }
 
-const MobileMapSearch: FC<Props> = ({label, handleSelectLocation}) => {
+const MobileMapSearch: FC<Props> = ({
+  label,
+  handleSelectLocation,
+  onSubmit,
+}) => {
   const [open, setOpen] = useState(false)
   const [searchResults, setSearchResults] = useState([])
   const {t} = useTranslation()
@@ -43,7 +48,6 @@ const MobileMapSearch: FC<Props> = ({label, handleSelectLocation}) => {
     }, 2000),
     [],
   )
-  console.log(searchResults)
   return (
     <div className='bg-white rounded-2xl w-full flex flex-col items-center px-2'>
       <h3 className='text-headline-8 text-h-3 font-medium	mb-2 mt-6'>
@@ -90,7 +94,9 @@ const MobileMapSearch: FC<Props> = ({label, handleSelectLocation}) => {
           ))}
         </div>
       </BottomSheet>
-      <PrimaryButton className='w-full mb-5'>{t('CONTINUE')}</PrimaryButton>
+      <PrimaryButton className='w-full mb-5' onClick={onSubmit}>
+        {t('CONTINUE')}
+      </PrimaryButton>
     </div>
   )
 }
