@@ -63,6 +63,7 @@ module.exports = {
         58: '14.5rem',
         73: '18.25rem',
         74: '18.5rem',
+        81: '20.25rem',
         82: '20.5rem',
         86: '21.5rem',
         94: '23.5rem',
@@ -94,6 +95,7 @@ module.exports = {
         'category-selector-l': '298px 299px 299px 312px',
       },
       colors: {
+        current: 'currentColor',
         'brand-a1': '#FF9514',
         'brand-a2': '#FFEEDD',
         'brand-a3': '#FA6D20',

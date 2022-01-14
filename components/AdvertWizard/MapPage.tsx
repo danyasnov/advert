@@ -8,6 +8,7 @@ import {degradations} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
 import {get} from 'lodash'
+import {useWindowSize} from 'react-use'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -17,6 +18,7 @@ import SvgMapMarker from '../../assets/icons/SvgMapMarker'
 import PlacesTextSearch from '../Selects/PlacesTextSearch'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
+import MobileMapSearch from './MobileMapSearch'
 
 const zoomRadiusMap = {
   0: 15,
@@ -26,6 +28,7 @@ const zoomRadiusMap = {
 
 const MapPage: FC<PageProps> = ({dispatch, state}) => {
   const {query} = useRouter()
+  const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     if (state.draft.location) {
       const {latitude: lat, longitude: lng} = state.draft.location
@@ -149,7 +152,9 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     const controlButtonDiv = document.createElement('div')
     ReactDOM.render(
       <Button
-        className='bg-white w-10 h-10 absolute right-2.5 top-20 rounded'
+        className={`bg-white w-10 h-10 absolute right-2.5 ${
+          width < 768 ? 'top-2.5' : 'top-20'
+        } rounded`}
         onClick={async () => {
           try {
             const center = await getPosition()
@@ -219,17 +224,17 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
 
   return (
     <div className='flex flex-col w-full'>
-      <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8'>
+      <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
         {t('INSPECTION_PLACE')}
       </h3>
-      <span className='text-nc-primary-text text-body-1 mb-6'>
+      <span className='text-nc-primary-text text-body-1 mb-6 hidden s:flex'>
         {t('INSPECTION_PLACE_TIP')}
       </span>
 
       <div className='relative min-h-full w-full'>
         {location && (
           <>
-            <div className='absolute top-3 left-3 w-608px z-10'>
+            <div className='absolute top-3 left-3 w-608px z-10 hidden s:flex'>
               <PlacesTextSearch
                 handleSelectLocation={handleSelectLocation}
                 label={label}
@@ -240,17 +245,34 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
               center={location}
               onChange={onChangeMap}
               yesIWantToUseGoogleMapApiInternals
+              options={{
+                ...(width < 768
+                  ? {
+                      zoomControl: false,
+                      fullscreenControl: false,
+                      gestureHandling: 'greedy',
+                    }
+                  : {}),
+              }}
               margin={[1, 2, 3, 4]}
               defaultZoom={zoomRadiusMap[radius]}
               onGoogleApiLoaded={onGoogleApiLoaded}
             />
-            <div className='absolute bottom-6 left-3'>
-              <MapRadiusSelector radius={radius} setRadius={onChangeRadius} />
+            <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
+              <div className='flex items-center flex-col'>
+                <MapRadiusSelector radius={radius} setRadius={onChangeRadius} />
+                <div className='s:hidden mt-2 mx-2'>
+                  <MobileMapSearch
+                    label={label}
+                    handleSelectLocation={handleSelectLocation}
+                  />
+                </div>
+              </div>
             </div>
           </>
         )}
       </div>
-      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around'>
+      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around hidden s:flex'>
         <div className='w-full l:w-1208px flex justify-end'>
           <PrimaryButton onClick={onSubmit}>{t('APPLY')}</PrimaryButton>
         </div>

@@ -39,7 +39,7 @@ const Search: FC = () => {
           <Button
             id='location'
             onClick={() => setLocationModalShow(true)}
-            className='flex min-w-10 flex-shrink-0'>
+            className='flex min-w-10 shrink-0'>
             <div className='flex flex-row items-center px-3.5'>
               <IcMyLocation
                 width={24}

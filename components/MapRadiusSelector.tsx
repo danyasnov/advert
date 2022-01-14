@@ -82,7 +82,7 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
           </Button>
         </div>
       )}
-      <div className='flex rounded-xl p-1 bg-white space-x-0.5'>
+      <div className='flex rounded-xl p-1 bg-white space-x-0.5 w-81 s:w-auto'>
         {options.map((o) => {
           const isCurrent = radius === o.value
           const Icon = isCurrent ? o.iconActive : o.icon
@@ -90,11 +90,11 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
             <Button
               key={o.key}
               onClick={() => setRadius(o.value, o.key)}
-              className={`flex px-4 py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
+              className={`flex px-1 s:px-4 py-2 s:py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
                 isCurrent ? 'bg-nc-accent' : ''
               }`}>
               <Icon className='h-5 w-5 mr-1' />
-              <span className='text-body-1 font-normal'>
+              <span className='text-body-4 s:text-body-1 font-normal'>
                 {t(o.title, {n: o.value})}
               </span>
             </Button>

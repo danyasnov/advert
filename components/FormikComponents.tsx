@@ -454,7 +454,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
       />
       <div
         className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
-       flex-shrink-0 justify-center items-center mr-2'>
+       shrink-0 justify-center items-center mr-2'>
         <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
       </div>
     </>

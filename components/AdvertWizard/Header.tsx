@@ -16,11 +16,11 @@ const Header: FC = observer(() => {
       <div className='w-full l:w-1208px flex items-center justify-between'>
         <div className='flex items-center'>
           <Logo />
-          <h1 className='ml-8 nc-title font-semibold text-headline-6'>
+          <h1 className='ml-8 nc-title font-semibold text-headline-8 s:text-headline-6'>
             {t('NEW_AD')}
           </h1>
         </div>
-        <div className='flex items-center space-x-6'>
+        <div className='flex items-center space-x-6 hidden s:flex'>
           {/* <IcNotificationsNone className='fill-current h-6 w-6 text-black-c' /> */}
           {/* <IcHelpOutline className='fill-current h-6 w-6 text-black-c' /> */}
           <UserAvatar url={user?.imageUrl} size={10} />
