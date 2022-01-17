@@ -1,9 +1,9 @@
 import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
-import { CAParamsModel} from 'front-api/src/index'
+import {CAParamsModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {captureException} from '@sentry/nextjs'
 import MapPage from './MapPage'
-import CategoryPage from './CategoryPage'
+import CategoryPage from './Categories/CategoryPage'
 import FormPage from './FormPage'
 import {makeRequest} from '../../api'
 

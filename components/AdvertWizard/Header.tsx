@@ -12,7 +12,7 @@ const Header: FC = observer(() => {
   const {t} = useTranslation()
   const {user} = useGeneralStore()
   return (
-    <header className='flex justify-around relative shadow-lg z-10 py-5 px-8 m:px-10 l:px-29'>
+    <header className='s:flex justify-around relative shadow-lg z-10 py-5 px-8 m:px-10 l:px-29 hidden'>
       <div className='w-full l:w-1208px flex items-center justify-between'>
         <div className='flex items-center'>
           <Logo />

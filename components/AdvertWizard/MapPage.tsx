@@ -9,6 +9,7 @@ import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
 import {get} from 'lodash'
 import {useWindowSize} from 'react-use'
+import IcClose from 'icons/material/Close.svg'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -27,7 +28,7 @@ const zoomRadiusMap = {
 }
 
 const MapPage: FC<PageProps> = ({dispatch, state}) => {
-  const {query} = useRouter()
+  const {query, push} = useRouter()
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     if (state.draft.location) {
@@ -224,58 +225,74 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
 
   return (
     <div className='flex flex-col w-full'>
-      <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
-        {t('INSPECTION_PLACE')}
-      </h3>
-      <span className='text-nc-primary-text text-body-1 mb-6 hidden s:flex'>
-        {t('INSPECTION_PLACE_TIP')}
-      </span>
+      <div className='flex flex-col s:hidden'>
+        <div className='flex items-center p-4'>
+          <Button
+            onClick={() => {
+              push('/')
+            }}>
+            <IcClose className='w-5 h-5 fill-current text-nc-icon mr-4' />
+          </Button>
+          <h2 className='text-nc-title font-medium text-h-2'>{t('NEW_AD')}</h2>
+        </div>
+      </div>
+      <div className='flex flex-col w-full h-full'>
+        <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
+          {t('INSPECTION_PLACE')}
+        </h3>
+        <span className='text-nc-primary-text text-body-1 mb-6 hidden s:flex'>
+          {t('INSPECTION_PLACE_TIP')}
+        </span>
 
-      <div className='relative min-h-full w-full'>
-        {location && (
-          <>
-            <div className='absolute top-3 left-3 w-608px z-10 hidden s:flex'>
-              <PlacesTextSearch
-                handleSelectLocation={handleSelectLocation}
-                label={label}
+        <div className='relative min-h-full w-full'>
+          {location && (
+            <>
+              <div className='absolute top-3 left-3 w-608px z-10 hidden s:flex'>
+                <PlacesTextSearch
+                  handleSelectLocation={handleSelectLocation}
+                  label={label}
+                />
+              </div>
+              <GoogleMapReact
+                bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
+                center={location}
+                onChange={onChangeMap}
+                yesIWantToUseGoogleMapApiInternals
+                options={{
+                  ...(width < 768
+                    ? {
+                        zoomControl: false,
+                        fullscreenControl: false,
+                        gestureHandling: 'greedy',
+                      }
+                    : {}),
+                }}
+                margin={[1, 2, 3, 4]}
+                defaultZoom={zoomRadiusMap[radius]}
+                onGoogleApiLoaded={onGoogleApiLoaded}
               />
-            </div>
-            <GoogleMapReact
-              bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
-              center={location}
-              onChange={onChangeMap}
-              yesIWantToUseGoogleMapApiInternals
-              options={{
-                ...(width < 768
-                  ? {
-                      zoomControl: false,
-                      fullscreenControl: false,
-                      gestureHandling: 'greedy',
-                    }
-                  : {}),
-              }}
-              margin={[1, 2, 3, 4]}
-              defaultZoom={zoomRadiusMap[radius]}
-              onGoogleApiLoaded={onGoogleApiLoaded}
-            />
-            <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
-              <div className='flex items-center flex-col'>
-                <MapRadiusSelector radius={radius} setRadius={onChangeRadius} />
-                <div className='s:hidden mt-2 mx-2'>
-                  <MobileMapSearch
-                    label={label}
-                    onSubmit={onSubmit}
-                    handleSelectLocation={handleSelectLocation}
+              <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
+                <div className='flex items-center flex-col'>
+                  <MapRadiusSelector
+                    radius={radius}
+                    setRadius={onChangeRadius}
                   />
+                  <div className='s:hidden mt-2 mx-2'>
+                    <MobileMapSearch
+                      label={label}
+                      onSubmit={onSubmit}
+                      handleSelectLocation={handleSelectLocation}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
-      </div>
-      <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around hidden s:flex'>
-        <div className='w-full l:w-1208px flex justify-end'>
-          <PrimaryButton onClick={onSubmit}>{t('APPLY')}</PrimaryButton>
+            </>
+          )}
+        </div>
+        <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around hidden s:flex'>
+          <div className='w-full l:w-1208px flex justify-end'>
+            <PrimaryButton onClick={onSubmit}>{t('APPLY')}</PrimaryButton>
+          </div>
         </div>
       </div>
     </div>
