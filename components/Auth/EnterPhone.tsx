@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {Field, Form, Formik} from 'formik'
 import {AuthType, RestResponseCodes} from 'front-api/src/models/index'
+import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {makeRequest} from '../../api'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
 import Select from '../Selects/Select'
@@ -10,6 +11,8 @@ import {FormikNumber} from '../FormikComponents'
 import {AuthPages, Controls, Country, PageProps} from './LoginWizard'
 
 const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
+  const {executeRecaptcha} = useGoogleReCaptcha()
+
   const {countries} = useCountriesStore()
   const cookies = parseCookies()
   const [countriesOptions] = useState(
@@ -34,6 +37,9 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         phone: '',
       }}
       onSubmit={async (values) => {
+        const token = await executeRecaptcha()
+        if (!token) return
+
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({
           url: '/api/check-phone-number',
