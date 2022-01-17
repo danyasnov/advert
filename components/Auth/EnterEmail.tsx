@@ -8,6 +8,7 @@ import {get, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {Secure} from 'front-api/src/helpers/userSecure'
 import {useRouter} from 'next/router'
+import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {FormikPassword, FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
@@ -16,6 +17,8 @@ import Storage from '../../stores/Storage'
 import LinkButton from '../Buttons/LinkButton'
 
 const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
+  const {executeRecaptcha} = useGoogleReCaptcha()
+
   const {t} = useTranslation()
   const router = useRouter()
   const [showPass, setShowPass] = useState(false)
@@ -75,6 +78,9 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           }
           onClose()
         } else {
+          const token = await executeRecaptcha()
+          // eslint-disable-next-line consistent-return
+          if (!token) return
           const incoming = values.email.toLocaleLowerCase()
           const result = await makeRequest({
             url: '/api/check-phone-number',
