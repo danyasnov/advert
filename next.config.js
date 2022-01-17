@@ -1,5 +1,5 @@
 const withPlugins = require('next-compose-plugins')
-const withTM = require('next-transpile-modules')(['front-api', 'chats'], {
+const withTM = require('next-transpile-modules')(['front-api'], {
   resolveSymlinks: false,
 })
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
