@@ -59,7 +59,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const description = valueDict[language]?.description ?? ''
 
   return (
-    <div className='max-w-704px w-full'>
+    <div className='w-screen-offset-8 s:max-w-704px s:w-full'>
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex'>
@@ -88,7 +88,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           </div>
         </div>
         <div
-          className={`w-18 flex items-center space-x-1 h-10 ${
+          className={`w-18 hidden s:flex items-center space-x-1 h-10 ${
             prevBtnEnabled || nextBtnEnabled ? '' : 'invisible'
           }`}>
           <>

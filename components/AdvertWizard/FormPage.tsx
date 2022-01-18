@@ -10,6 +10,8 @@ import {
 import {debounce, isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
+import IcArrowBack from 'icons/material/ArrowBack.svg'
+import {useWindowSize} from 'react-use'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import {
@@ -28,6 +30,7 @@ import OutlineButton from '../Buttons/OutlineButton'
 import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
 import SideNavigation from './SideNavigation'
+import Button from '../Buttons/Button'
 
 const findSelectValue = (id, options) => {
   const option = options.find((o) => id === o.id)
@@ -131,9 +134,9 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
   return null
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
-  console.log(state.draft)
   const {push, query} = useRouter()
 
+  const {width} = useWindowSize()
   const headerRefs = useRef([])
 
   const [initialValues, setInitialValues] = useState({})
@@ -241,10 +244,24 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
 
   return (
     <div className=''>
-      <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8'>
+      <div className='flex items-center p-4 s:hidden'>
+        <Button
+          onClick={() => {
+            dispatch({
+              type: 'setPage',
+              page: AdvertPages.categoryPage,
+            })
+          }}>
+          <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
+        </Button>
+        <h2 className='text-nc-title font-medium text-h-2'>
+          {category.data.name}
+        </h2>
+      </div>
+      <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:block'>
         {category.data.name}
       </h3>
-      <div className='flex'>
+      <div className='flex px-4 s:px-0'>
         <Formik
           enableReinitialize
           initialValues={initialValues}
@@ -385,7 +402,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 <div className='space-y-4'>
                   <AdvertFormField
                     body={
-                      <div className='w-1/3 l:w-4/12'>
+                      <div className='w-full s:w-1/3 l:w-4/12'>
                         <Field
                           name='price'
                           component={AdvertPrice}
@@ -403,28 +420,40 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     <>
                       <AdvertFormField
                         body={
-                          <div className='w-4/12'>
+                          <div className='w-full s:w-4/12'>
                             <Field
                               name='isSwapPossible'
                               component={FormikSwitch}
+                              // eslint-disable-next-line react/jsx-props-no-spreading
+                              {...(width < 768
+                                ? {
+                                    label: t('EXCHANGE'),
+                                  }
+                                : {})}
                             />
                           </div>
                         }
                         labelTip={t('POSSIBLE_EXCHANGE_TIP')}
                         className='l:items-center'
-                        label={t('EXCHANGE')}
+                        label={width < 768 ? undefined : t('EXCHANGE')}
                       />
                       <AdvertFormField
                         body={
-                          <div className='w-4/12'>
+                          <div className='w-full s:w-4/12'>
                             <Field
                               name='isBargainPossible'
                               component={FormikSwitch}
+                              // eslint-disable-next-line react/jsx-props-no-spreading
+                              {...(width < 768
+                                ? {
+                                    label: t('BARGAIN'),
+                                  }
+                                : {})}
                             />
                           </div>
                         }
                         className='l:items-center'
-                        label={t('BARGAIN')}
+                        label={width < 768 ? undefined : t('BARGAIN')}
                       />
                     </>
                   )}
@@ -445,7 +474,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                     {category.data.allowUsed && (
                       <AdvertFormField
                         body={
-                          <div className='w-1/2 l:w-5/12'>
+                          <div className='w-full s:w-1/2 l:w-5/12'>
                             <Field
                               component={FormikSelect}
                               name='condition'
@@ -468,13 +497,17 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         <AdvertFormField
                           key={f.id}
                           body={
-                            <div className='w-1/2 l:w-5/12'>
+                            <div className='w-full s:w-1/2 l:w-5/12'>
                               <FormikCreateField field={f} />
                             </div>
                           }
                           className='l:items-center'
                           isRequired={f.isFillingRequired}
-                          label={f.name}
+                          label={
+                            width < 768 && f.fieldType === 'checkbox'
+                              ? undefined
+                              : f.name
+                          }
                         />
                       )
                     })}

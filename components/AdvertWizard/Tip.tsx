@@ -36,7 +36,7 @@ const Tip: FC<Props> = ({message, placement}) => {
             className: 'tooltip-container',
           })}>
           <div {...getArrowProps({className: 'tooltip-arrow'})} />
-          {message}
+          <span className='text-body-1 whitespace-normal'>{message}</span>
         </div>
       )}
     </div>

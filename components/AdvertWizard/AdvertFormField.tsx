@@ -29,12 +29,14 @@ const AdvertFormField: FC<Props> = ({
           className={`flex items-center mb-4 space-x-2 ${
             labelClassName || ''
           }`}>
-          <span className='text-body-1 text-nc-title'>
-            {label}
-            {isRequired && (
-              <span className='text-body-1 text-nc-primary ml-1'>*</span>
-            )}
-          </span>
+          {!!label && (
+            <span className='text-body-1 text-nc-title'>
+              {label}
+              {isRequired && (
+                <span className='text-body-1 text-nc-primary ml-1'>*</span>
+              )}
+            </span>
+          )}
           {!!labelTip && <Tip message={labelTip} placement='right' />}
         </div>
         {labelDescription && (

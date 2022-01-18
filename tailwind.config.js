@@ -89,6 +89,7 @@ module.exports = {
         '1208px': '1208px',
         '1440px': '1440px',
         '95%': '95%',
+        'screen-offset-8': 'calc(100vw - 32px)',
       },
       gridTemplateColumns: {
         'category-selector-m': '202px 202px 202px 336px',

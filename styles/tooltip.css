@@ -1,7 +1,7 @@
 .tooltip-container {
     --tooltipBackground: #0058A6;
     --tooltipBorder: #0058A6;
-    @apply w-min text-body-1 whitespace-pre;
+    @apply w-56 s:w-min whitespace-normal text-body-1 whitespace-pre p-2 s:p-4;
     background-color: var(--tooltipBackground);
     border-radius: 16px;
     border: 1px solid var(--tooltipBorder);
@@ -9,7 +9,6 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    padding: 16px;
     transition: opacity 0.3s;
     z-index: 9999;
 

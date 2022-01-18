@@ -9,6 +9,7 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
 import {toast} from 'react-toastify'
+import {useWindowSize} from 'react-use'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 
@@ -154,6 +155,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 
 export const FormikCreateField: FC<IFormikField> = ({field}) => {
   const {t} = useTranslation()
+  const {width} = useWindowSize()
   const {
     fieldType,
     id,
@@ -195,7 +197,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'checkbox': {
       component = FormikSwitch
       props.label = name
-      props.hideLabel = true
+      props.hideLabel = width >= 768
       break
     }
     default: {
@@ -502,7 +504,7 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
         input
       ) : (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
-        <label className='flex items-center'>
+        <label className='flex items-center justify-between'>
           {label && (
             <span
               className={`text-nc-title text-body-1 whitespace-nowrap ${
