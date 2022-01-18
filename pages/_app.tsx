@@ -47,7 +47,8 @@ function MyApp({Component, pageProps}: AppProps) {
           content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
       </Head>
-      <GoogleReCaptchaProvider reCaptchaKey='6Lc5rRoeAAAAAI6cnBzWy5w8VMBSFosLig7uCJQ9'>
+      <GoogleReCaptchaProvider
+        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
         {/* @ts-ignore */}
         <RootStoreProvider hydrationData={pageProps.hydrationData}>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
