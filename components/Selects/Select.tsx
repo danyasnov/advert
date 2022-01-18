@@ -3,7 +3,7 @@ import RS from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import {getDefaultStyles} from './styles'
 
-interface Props {
+export interface SelectProps {
   options: Array<SelectItem>
   placeholder?: string
   onChange: (value: SelectItem) => void
@@ -59,7 +59,7 @@ const MenuList = ({options, children, getValue}) => {
   )
 }
 
-const Select: FC<Props> = ({
+const Select: FC<SelectProps> = ({
   options,
   placeholder,
   onChange,

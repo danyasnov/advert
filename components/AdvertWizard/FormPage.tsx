@@ -180,7 +180,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         isVip: draft.isVip ?? false,
         isFastSale: draft.isFastSale ?? false,
         price: draft.price ?? '',
-        // @ts-ignore
         currency: state.draft.currencies[0],
       })
     }
@@ -524,12 +523,14 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         page: AdvertPages.categoryPage,
                       })
                     }}
-                    className={
+                    className={`${
                       query.action === 'create' ? 'visible' : 'invisible'
-                    }>
+                    } hidden s:block`}>
                     {t('BACK')}
                   </OutlineButton>
-                  <PrimaryButton onClick={submitForm}>
+                  <PrimaryButton
+                    onClick={submitForm}
+                    className='w-full s:w-auto'>
                     {t('CONTINUE')}
                   </PrimaryButton>
                 </div>

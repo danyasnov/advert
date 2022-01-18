@@ -12,6 +12,7 @@ import {toast} from 'react-toastify'
 import {useWindowSize} from 'react-use'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
+import MobileSelect from './Selects/MobileSelect'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -531,20 +532,28 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   const {name, value} = field
   const {setFieldValue, errors} = form
   const error = get(errors, name)
+  const props = {
+    id: name,
+    value: value || [],
+    options,
+    isClearable: true,
+    placeholder,
+    isSearchable: isFilterable,
+    isMulti,
+    isInvalid: !!error,
+    onChange: (item) => setFieldValue(name, item),
+  }
   return (
-    <div>
-      <Select
-        id={name}
-        value={value || []}
-        options={options}
-        isClearable
-        placeholder={placeholder}
-        isSearchable={isFilterable}
-        isMulti={isMulti}
-        isInvalid={!!error}
-        onChange={(item) => setFieldValue(name, item)}
-      />
+    <>
+      <div className=''>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <Select {...props} />
+      </div>
+      {/* <div className='block s:hidden'> */}
+      {/*  /!* eslint-disable-next-line react/jsx-props-no-spreading *!/ */}
+      {/*  <MobileSelect {...props} /> */}
+      {/* </div> */}
       <span className='text-body-3 text-error'>{error}</span>
-    </div>
+    </>
   )
 }
