@@ -37,8 +37,10 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         phone: '',
       }}
       onSubmit={async (values) => {
-        const token = await executeRecaptcha()
-        if (!token) return
+        if (executeRecaptcha) {
+          const token = await executeRecaptcha()
+          if (!token) return
+        }
 
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({

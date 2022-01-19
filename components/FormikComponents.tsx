@@ -543,16 +543,17 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     isInvalid: !!error,
     onChange: (item) => setFieldValue(name, item),
   }
+
   return (
     <>
-      <div className=''>
+      <div className='hidden s:block'>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Select {...props} />
       </div>
-      {/* <div className='block s:hidden'> */}
-      {/*  /!* eslint-disable-next-line react/jsx-props-no-spreading *!/ */}
-      {/*  <MobileSelect {...props} /> */}
-      {/* </div> */}
+      <div className='block s:hidden'>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <MobileSelect {...props} />
+      </div>
       <span className='text-body-3 text-error'>{error}</span>
     </>
   )

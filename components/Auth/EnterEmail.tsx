@@ -78,9 +78,11 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           }
           onClose()
         } else {
-          const token = await executeRecaptcha()
-          // eslint-disable-next-line consistent-return
-          if (!token) return
+          if (executeRecaptcha) {
+            const token = await executeRecaptcha()
+            // eslint-disable-next-line consistent-return
+            if (!token) return
+          }
           const incoming = values.email.toLocaleLowerCase()
           const result = await makeRequest({
             url: '/api/check-phone-number',

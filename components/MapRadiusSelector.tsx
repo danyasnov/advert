@@ -68,9 +68,9 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
   return (
     <div className='relative'>
       {showHint && (
-        <div className='bg-nc-link flex flex-col w-362px rounded-2xl p-4 items-start map-hint-arrow-bottom absolute bottom-4'>
+        <div className='bg-nc-link flex flex-col w-56 s:w-362px rounded-2xl p-4 items-start map-hint-arrow-bottom absolute bottom-4'>
           <div className='flex text-white items-start mb-4'>
-            <div className='text-h-3'>{t('TIP_MAP_CREATE_ADS')}</div>
+            <div className='text-body-1'>{t('TIP_MAP_CREATE_ADS')}</div>
             <Button onClick={hideHint}>
               <IcClear className='fill-current h-4 w-4' />
             </Button>

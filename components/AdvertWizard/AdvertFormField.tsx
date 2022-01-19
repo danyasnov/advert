@@ -26,7 +26,7 @@ const AdvertFormField: FC<Props> = ({
     <div className={`flex-col l:flex-row flex w-full ${className || ''}`}>
       <div className='flex flex-col max-w-288px min-w-288px mr-8'>
         <div
-          className={`flex items-center mb-4 space-x-2 ${
+          className={`flex items-center mb-2 s:mb-4 space-x-2 ${
             labelClassName || ''
           }`}>
           {!!label && (

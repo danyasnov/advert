@@ -149,6 +149,7 @@ module.exports = {
         '704px': '704px',
         '288px': '288px',
         '1208px': '1208px',
+        screen: '100vw',
       },
       minHeight: {
         10: '2.5rem',

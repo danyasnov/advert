@@ -242,7 +242,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   if (!category || !user) return null
 
   return (
-    <div className=''>
+    <div className='max-w-screen'>
       <div className='flex items-center p-4 s:hidden'>
         <Button
           onClick={() => {
@@ -304,7 +304,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           validateOnChange={false}
           onSubmit={onSubmit}>
           {({submitForm}) => (
-            <Form className='flex flex-col space-y-12 mt-6 mb-24 w-full'>
+            <Form className='flex flex-col space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
               <div>
                 <AdvertFormHeading
                   title={t('ENTER_TITLE_AND_DESCRIPTION')}
