@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {Field, Form, Formik} from 'formik'
 import {AuthType, RestResponseCodes} from 'front-api/src/models/index'
-import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {makeRequest} from '../../api'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
 import Select from '../Selects/Select'
@@ -11,8 +11,7 @@ import {FormikNumber} from '../FormikComponents'
 import {AuthPages, Controls, Country, PageProps} from './LoginWizard'
 
 const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
-  const {executeRecaptcha} = useGoogleReCaptcha()
-
+  const [token, setToken] = useState()
   const {countries} = useCountriesStore()
   const cookies = parseCookies()
   const [countriesOptions] = useState(
@@ -37,10 +36,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         phone: '',
       }}
       onSubmit={async (values) => {
-        if (executeRecaptcha) {
-          const token = await executeRecaptcha()
-          if (!token) return
-        }
+        if (!token) return
 
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({
@@ -82,6 +78,12 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
               mask='_'
               allowEmptyFormatting
               minLength={country.phoneLength}
+            />
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+              onChange={(val) => {
+                setToken(val)
+              }}
             />
           </Form>
           <div className='-mx-4'>

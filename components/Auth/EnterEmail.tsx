@@ -8,7 +8,7 @@ import {get, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {Secure} from 'front-api/src/helpers/userSecure'
 import {useRouter} from 'next/router'
-import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {FormikPassword, FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
@@ -17,7 +17,7 @@ import Storage from '../../stores/Storage'
 import LinkButton from '../Buttons/LinkButton'
 
 const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
-  const {executeRecaptcha} = useGoogleReCaptcha()
+  const [retoken, setToken] = useState()
 
   const {t} = useTranslation()
   const router = useRouter()
@@ -78,11 +78,8 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           }
           onClose()
         } else {
-          if (executeRecaptcha) {
-            const token = await executeRecaptcha()
-            // eslint-disable-next-line consistent-return
-            if (!token) return
-          }
+          // eslint-disable-next-line consistent-return
+          if (!retoken) return
           const incoming = values.email.toLocaleLowerCase()
           const result = await makeRequest({
             url: '/api/check-phone-number',
@@ -130,6 +127,12 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
                 />
               </>
             )}
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+              onChange={(val) => {
+                setToken(val)
+              }}
+            />
           </Form>
           <div className='-mx-4'>
             <Controls

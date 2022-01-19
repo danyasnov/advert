@@ -8,4 +8,4 @@ added cache
 fixed KEY
 changed refs to m aster - deploy if pushed/merged to master
 
- added config.json as file variable  in CICD (#6)
+ added config.json as file varia ble  in CICD (#4)
