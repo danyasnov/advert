@@ -12,7 +12,6 @@ import NProgress from 'nprogress'
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
 import Head from 'next/head'
-import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
@@ -47,16 +46,13 @@ function MyApp({Component, pageProps}: AppProps) {
           content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
       </Head>
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
-        {/* @ts-ignore */}
-        <RootStoreProvider hydrationData={pageProps.hydrationData}>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <Component {...pageProps} />
-          <ToastContainer />
-          <CookiesWarning />
-        </RootStoreProvider>
-      </GoogleReCaptchaProvider>
+      {/* @ts-ignore */}
+      <RootStoreProvider hydrationData={pageProps.hydrationData}>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <Component {...pageProps} />
+        <ToastContainer />
+        <CookiesWarning />
+      </RootStoreProvider>
     </>
   )
 }
