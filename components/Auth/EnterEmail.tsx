@@ -79,7 +79,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           onClose()
         } else {
           // eslint-disable-next-line consistent-return
-          if (!retoken) return
+          if (!retoken && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) return
           const incoming = values.email.toLocaleLowerCase()
           const result = await makeRequest({
             url: '/api/check-phone-number',
@@ -127,12 +127,14 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
                 />
               </>
             )}
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-              onChange={(val) => {
-                setToken(val)
-              }}
-            />
+            {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                onChange={(val) => {
+                  setToken(val)
+                }}
+              />
+            )}
           </Form>
           <div className='-mx-4'>
             <Controls

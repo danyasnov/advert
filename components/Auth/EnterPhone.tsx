@@ -36,7 +36,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         phone: '',
       }}
       onSubmit={async (values) => {
-        if (!token) return
+        if (!token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) return
 
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({
@@ -79,12 +79,14 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
               allowEmptyFormatting
               minLength={country.phoneLength}
             />
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-              onChange={(val) => {
-                setToken(val)
-              }}
-            />
+            {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                onChange={(val) => {
+                  setToken(val)
+                }}
+              />
+            )}
           </Form>
           <div className='-mx-4'>
             <Controls

@@ -24,7 +24,7 @@ import SecondaryButton from '../Buttons/SecondaryButton'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
-  const {locationCodes, showCookiesWarn} = useGeneralStore()
+  const {locationCodes, setShowLogin, user} = useGeneralStore()
   const {categoriesById} = useCategoriesStore()
   const cookies: SerializedCookiesState = parseCookies()
   const {
@@ -39,7 +39,7 @@ const MainLayout: FC = observer(() => {
     resetFilter,
     setFilter,
   } = useProductsStore()
-  const {query} = useRouter()
+  const {query, push} = useRouter()
   const {t} = useTranslation()
   const productsArr = [
     {
@@ -104,12 +104,24 @@ const MainLayout: FC = observer(() => {
             scrollDir === 'up' ? '' : 'translate-y-full'
           } transform ease-in-out duration-200 s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
           <div className='mb-2'>
-            <LinkWrapper
-              href='/new-ad'
-              title={t('NEW_AD')}
-              className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'>
+            <Button
+              className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
+              onClick={() => {
+                if (!user) {
+                  setShowLogin(true)
+                }
+                makeRequest({
+                  url: '/api/save-draft',
+                  method: 'POST',
+                  data: {
+                    draft: {},
+                  },
+                }).then((res) => {
+                  push(`/advert/create/${res.data.result.hash}`)
+                })
+              }}>
               <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
-            </LinkWrapper>
+            </Button>
           </div>
         </Button>
       )}
@@ -167,10 +179,6 @@ const MainLayout: FC = observer(() => {
               </div>
             </div>
           </main>
-          {/* <aside */}
-          {/*  className='hidden m:block bg-white' */}
-          {/*  style={{width: '288px', height: '700px'}} */}
-          {/* /> */}
         </div>
       </div>
     </HeaderFooterWrapper>

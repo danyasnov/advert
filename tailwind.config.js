@@ -193,6 +193,13 @@ module.exports = {
         size: 10,
         offset: 25,
       },
+      'map-hint-arrow-mobile': {
+        borderColor: theme('colors.nc-link'),
+        borderWidth: 1,
+        backgroundColor: theme('colors.nc-link'),
+        size: 10,
+        offset: 145,
+      },
     }),
     gradientColorStops: (theme) => ({
       ...theme('colors'),
