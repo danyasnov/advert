@@ -100,7 +100,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
           {showLogin && (
             <Button className='flex' onClick={onLogin}>
               <IcLogin className='fill-current text-brand-b1 mr-2 h-4 w-4' />
-              <span className='text-body-3 text-brand-b1'>{t('LOGIN')}</span>
+              <span className='text-body-3 text-brand-b1'>{t('LOG_IN')}</span>
             </Button>
           )}
         </>
