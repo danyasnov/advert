@@ -18,7 +18,7 @@ import ProductNotes from './ProductNotes'
 
 const getTabs = (description: string, fields: FieldDTO[]) => {
   const tabs = []
-  if (description) tabs.push({id: 0, title: 'DESCRIPTION'})
+  if (description) tabs.push({id: 0, title: 'DESCRIPTION_TAB'})
   if (size(fields)) tabs.push({id: 1, title: 'CHARACTERISTICS_TAB'})
   return tabs
 }
