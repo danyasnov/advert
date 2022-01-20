@@ -344,8 +344,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 <AdvertFormField
                   body={
                     <div className='w-full'>
-                      <p className='text-body-2 text-nc-title mb-3'>
+                      <p className='text-body-2 text-nc-title mb-3 hidden s:block'>
                         {t('ADD_PHOTO_HINT')}
+                      </p>
+                      <p className='text-body-2 text-nc-title mb-3 s:hidden'>
+                        {t('SELECT_PHOTO_FROM_PHONE')}
                       </p>
 
                       <Field
