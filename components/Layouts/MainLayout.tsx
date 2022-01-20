@@ -91,7 +91,6 @@ const MainLayout: FC = observer(() => {
     cookies.regionId,
   ])
 
-  const scrollDir = useScrollDirection()
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -100,9 +99,7 @@ const MainLayout: FC = observer(() => {
       />
       {cookies.cookieAccepted && (
         <Button
-          className={`${
-            scrollDir === 'up' ? '' : 'translate-y-full'
-          } transform ease-in-out duration-200 s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
+          className={`s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
           <div className='mb-2'>
             <Button
               className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
