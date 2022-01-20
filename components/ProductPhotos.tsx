@@ -69,7 +69,7 @@ const ProductPhotos: FC = observer(() => {
   return (
     <div className='relative'>
       {product.advert.isExclusive && (
-        <div className='absolute left-4 top-5 z-30'>
+        <div className='absolute left-4 top-5 z-9'>
           <ExclusiveMark />
         </div>
       )}
