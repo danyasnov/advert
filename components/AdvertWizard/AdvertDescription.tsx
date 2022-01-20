@@ -29,23 +29,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const {name, value} = field
   const {setFieldValue, errors} = form
   const [language, setLanguage] = useState(user.mainLanguage.isoCode)
-  const [valueDict, setValueDict] = useState<Record<string, CAParamContent>>({})
 
-  useEffect(() => {
-    if (Array.isArray(value)) {
-      const dict = value.reduce((acc, val) => {
-        acc[val.langCode] = val
-        return acc
-      }, {})
-      if (!value.length) {
-        userLanguages.forEach((l) => {
-          dict[l.isoCode] = {langCode: l.isoCode, title: '', description: ''}
-          setFieldValue(name, Object.values(dict))
-        })
-      }
-      setValueDict(dict)
-    }
-  }, [value])
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -54,7 +38,20 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
   const userLanguages = [user.mainLanguage, ...user.additionalLanguages]
-
+  let valueDict = {}
+  // hotfix for jumping caret
+  if (Array.isArray(value)) {
+    valueDict = value.reduce((acc, val) => {
+      acc[val.langCode] = val
+      return acc
+    }, {})
+    if (!value.length) {
+      userLanguages.forEach((l) => {
+        valueDict[l.isoCode] = {langCode: l.isoCode, title: '', description: ''}
+        setFieldValue(name, Object.values(valueDict))
+      })
+    }
+  }
   const title = valueDict[language]?.title ?? ''
   const description = valueDict[language]?.description ?? ''
 
