@@ -1107,6 +1107,7 @@
   "PERMISSION_CAMERA": "Allow camera to take photos of the product while creating an advertisement",
   "PERMISSION_GALLERY": "Allow selection of photos from gallery while creating an advertisement",
   "PERSON": "Person",
+  "PHOTO": "Photo",
   "PHOTO_AND_VIDEO": "Photos and Videos",
   "PHOTO_DOES_NOT_MATCH_WITH PRODUCT": "The photo does not match the product",
   "PHOTO_ERROR": "At least {{minPhotos}} photos must be uploaded",

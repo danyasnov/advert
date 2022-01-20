@@ -1107,6 +1107,7 @@
   "PERMISSION_CAMERA": "Чтобы сфотографировать товар во время создания объявления",
   "PERMISSION_GALLERY": "Для выбора фото в галерее при создании объявления",
   "PERSON": "Person",
+  "PHOTO": "Фотография",
   "PHOTO_AND_VIDEO": "Фотографии и видео",
   "PHOTO_DOES_NOT_MATCH_WITH PRODUCT": "The photo does not match the product",
   "PHOTO_ERROR": "Должно быть не менее {{minPhotos}} фотографий",
