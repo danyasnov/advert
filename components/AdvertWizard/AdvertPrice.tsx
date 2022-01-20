@@ -45,6 +45,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           isAllowed={({value: priceValue}) => {
             return priceValue.split('.')[0].length < 16
           }}
+          allowNegative={false}
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={currency?.code}
