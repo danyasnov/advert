@@ -91,56 +91,59 @@ const MobileSelect: FC<SelectProps> = ({
             className={`w-full flex flex-col mb-10 ${
               isSearchable ? 'mt-20' : 'mt-10'
             }`}>
-            {filtered.map((f) => (
-              <Button
-                // @ts-ignore
-                disabled={f.disabled}
-                key={f.value}
-                className={`w-full px-4 border-b border-nc-border h-12 ${
+            {open &&
+              filtered.map((f) => (
+                <Button
                   // @ts-ignore
-                  f.disabled ? 'text-nc-secondary-text' : ''
-                }`}
-                onClick={() => {
-                  if (isMulti) {
+                  disabled={f.disabled}
+                  key={f.value}
+                  className={`w-full px-4 border-b border-nc-border h-12 ${
                     // @ts-ignore
-                    const newFiltered = value.filter((v) => v.value !== f.value)
-                    if (size(value) !== size(newFiltered)) {
-                      onChange(newFiltered)
-                    } else {
+                    f.disabled ? 'text-nc-secondary-text' : ''
+                  }`}
+                  onClick={() => {
+                    if (isMulti) {
                       // @ts-ignore
-                      onChange([...value, f])
+                      const newFiltered = value.filter(
+                        (v) => v.value !== f.value,
+                      )
+                      if (size(value) !== size(newFiltered)) {
+                        onChange(newFiltered)
+                      } else {
+                        // @ts-ignore
+                        onChange([...value, f])
+                      }
+                    } else {
+                      onChange(f)
+                      onClose()
                     }
-                  } else {
-                    onChange(f)
-                    onClose()
-                  }
-                }}>
-                <div className='w-full flex items-center justify-between'>
-                  <span className='text-body-1 text-nc-text-primary'>
-                    {f.label}
-                  </span>
-                  {isMulti && (
-                    <>
-                      <input
-                        type='checkbox'
-                        readOnly
-                        checked={
-                          // @ts-ignore
-                          !!value.find((v) => v.value === f.value)
-                        }
-                        className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-                      />
-                      <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
-                        <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
-                      </div>
-                    </>
-                  )}
-                  {f.value === value?.value && !isMulti && (
-                    <IcCheck className='fill-current text-nc-primary h-4 w-4' />
-                  )}
-                </div>
-              </Button>
-            ))}
+                  }}>
+                  <div className='w-full flex items-center justify-between'>
+                    <span className='text-body-1 text-nc-text-primary'>
+                      {f.label}
+                    </span>
+                    {isMulti && (
+                      <>
+                        <input
+                          type='checkbox'
+                          readOnly
+                          checked={
+                            // @ts-ignore
+                            !!value.find((v) => v.value === f.value)
+                          }
+                          className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
+                        />
+                        <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
+                          <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+                        </div>
+                      </>
+                    )}
+                    {f.value === value?.value && !isMulti && (
+                      <IcCheck className='fill-current text-nc-primary h-4 w-4' />
+                    )}
+                  </div>
+                </Button>
+              ))}
           </div>
           {isMulti && (
             <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white'>
