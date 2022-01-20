@@ -52,7 +52,8 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
   useEffect(() => {
     let locationValue
     if (state.draft.location) {
-      locationValue = state.draft.location
+      const {latitude: lat, longitude: lng} = state.draft.location
+      locationValue = {lat, lng}
     } else {
       const cookies: SerializedCookiesState = parseCookies()
       const {searchLocation, userLocation} = cookies
@@ -222,6 +223,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     circle.current.setCenter(item.geometry.location)
     marker.current.setPosition(item.geometry.location)
   }
+  console.log('location', location)
 
   return (
     <div className='flex flex-col w-full'>
