@@ -6,6 +6,7 @@ import {isArray, isEmpty, size} from 'lodash'
 import {FixedSizeList} from 'react-window'
 import IcCheck from 'icons/material/Check.svg'
 import IcSearch from 'icons/material/Search.svg'
+import {useWindowSize} from 'react-use'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -28,6 +29,7 @@ const MobileSelect: FC<SelectProps> = ({
   const [filtered, setFiltered] = useState(options)
   const [filter, setFilter] = useState('')
 
+  const {height} = useWindowSize()
   const onClose = () => {
     setFilter('')
     setFiltered(options)
@@ -62,33 +64,35 @@ const MobileSelect: FC<SelectProps> = ({
           onClose()
         }}
         snapPoints={({maxHeight}) => maxHeight - 40}>
-        <div className='flex flex-col items-center justify-center w-full pb-20'>
-          <h3 className='text-h-3 font-medium text-nc-title mb-6 px-4'>
-            {placeholder}
-          </h3>
-          {isSearchable && (
-            <div className='w-full px-4 relative'>
-              <IcSearch className='w-6 h-6 absolute top-3 left-5 text-nc-icon' />
-              <input
-                className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-nc-title'
-                placeholder={t('SEARCH')}
-                value={filter}
-                onChange={({target}) => {
-                  setFilter(target.value)
-                  setFiltered(
-                    options.filter((o) => {
-                      return o.label
-                        .toLowerCase()
-                        .includes(target.value.toLowerCase())
-                    }),
-                  )
-                }}
-              />
-            </div>
-          )}
-          <div className='w-full '>
+        <div className='flex flex-col items-center justify-center w-full relative'>
+          <div className='fixed top-3 pt-5 w-full flex items-center flex-col bg-white z-10 bg-white'>
+            <h3 className='text-h-3 font-medium text-nc-title pb-2 px-4'>
+              {placeholder}
+            </h3>
+            {isSearchable && (
+              <div className='w-full px-4 relative'>
+                <IcSearch className='w-6 h-6 absolute top-3 left-5 text-nc-icon' />
+                <input
+                  className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-nc-title'
+                  placeholder={t('SEARCH')}
+                  value={filter}
+                  onChange={({target}) => {
+                    setFilter(target.value)
+                    setFiltered(
+                      options.filter((o) => {
+                        return o.label
+                          .toLowerCase()
+                          .includes(target.value.toLowerCase())
+                      }),
+                    )
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div className={`w-full ${isSearchable ? 'pt-24' : 'pt-12'}`}>
             <FixedSizeList
-              height={896}
+              height={isSearchable ? height - 160 : height - 190}
               itemCount={size(filtered)}
               itemSize={48}
               width='100%'>
