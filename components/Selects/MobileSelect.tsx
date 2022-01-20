@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
 import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
@@ -28,13 +28,21 @@ const MobileSelect: FC<SelectProps> = ({
   const [open, setOpen] = useState(false)
   const [filtered, setFiltered] = useState(options)
   const [filter, setFilter] = useState('')
-
   const {height} = useWindowSize()
+  const [listHeight, setListHeight] = useState(
+    isSearchable ? height - 100 : height - 190,
+  )
+
+  useEffect(() => {
+    if (open) setListHeight(isSearchable ? height - 100 : height - 190)
+  }, [open])
+
   const onClose = () => {
     setFilter('')
     setFiltered(options)
     setOpen(false)
   }
+  if (open) console.log(listHeight)
 
   return (
     <div>
@@ -92,7 +100,7 @@ const MobileSelect: FC<SelectProps> = ({
           </div>
           <div className={`w-full ${isSearchable ? 'pt-24' : 'pt-12'}`}>
             <FixedSizeList
-              height={isSearchable ? height - 160 : height - 190}
+              height={listHeight}
               itemCount={size(filtered)}
               itemSize={48}
               width='100%'>
