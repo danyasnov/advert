@@ -28,12 +28,13 @@ const ProductInfoIcons: FC = observer(() => {
         </span>
       )}
 
-      {product.advert.condition === 'new' ? (
+      {product.advert.condition === 'new' && (
         <span className='flex items-center'>
           <IcConditionNew className='fill-current text-black-c h-6 w-6 mr-1' />
           {t('NEW_PRODUCT')}
         </span>
-      ) : (
+      )}
+      {product.advert.condition === 'used' && (
         <span className='flex items-center'>
           <IcUsed className='fill-current text-black-c h-6 w-6 mr-1' />
           {t('USED_PRODUCT')}
