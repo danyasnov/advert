@@ -11,19 +11,32 @@ import {
   CurrencyModel,
 } from 'front-api/src/models/index'
 import {SettingsLanguageModel, LocationModel} from 'front-api'
+import NodeCache from 'node-cache'
+import {size} from 'lodash'
 import {API_URL, getRest, makeRequest} from '../index'
 import Storage from '../../stores/Storage'
 
+const cache = new NodeCache({stdTTL: 60 * 60 * 24})
+
 // const API_V1_URL = 'https://api.adverto.sale'
 
-export const fetchCountries = (
+export const fetchCountries = async (
   language: string,
 ): Promise<Array<CountryModel>> => {
+  const key = `countries-${language}`
+
+  const cached: Array<CountryModel> = await cache.get(key)
+
+  if (size(cached)) {
+    return cached
+  }
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
-  return rest.oldRest.fetchCountries()
+  const result = await rest.oldRest.fetchCountries()
+  if (size(result)) cache.set(key, result)
+  return result
 }
 
 export const fetchRegions = (

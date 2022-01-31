@@ -13,7 +13,7 @@ import {
   CAParamsModel,
   Unknown,
 } from 'front-api'
-import {isObject, isNil} from 'lodash'
+import {isObject, isNil, size} from 'lodash'
 import {AxiosPromise} from 'axios'
 import NodeCache from 'node-cache'
 import {getSearchByFilter} from '../../helpers'
@@ -76,13 +76,14 @@ export const fetchCategories = async (
   const key = `categories-${language}`
 
   const cached: RestResponse<CACategoryModel[]> = categoriesCache.get(key)
+
   if (cached) return cached
   const storage = new Storage({
     language,
   })
   const rest = getRest(storage)
-  const result = rest.categories.fetchTree(false)
-  categoriesCache.set(key, result)
+  const result = await rest.categories.fetchTree(false)
+  if (result.status === 200) categoriesCache.set(key, result)
 
   return result
 }
