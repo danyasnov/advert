@@ -1,6 +1,6 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {last} from 'lodash'
+import {isEmpty, last} from 'lodash'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
   findCategoryByQuery,
@@ -147,6 +147,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       // @ts-ignore
       hideDistanceSort: state.modified || false,
       sortBy,
+    }
+    if (isEmpty(products)) {
+      res.statusCode = 404
     }
     // @ts-ignore
     categoriesStore.categoryData = categoryData

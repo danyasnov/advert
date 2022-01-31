@@ -2,8 +2,6 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import Head from 'next/head'
-import {isEmpty} from 'lodash'
 import CategoryFilter from '../CategoryFilter'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -39,9 +37,6 @@ const CategoriesLayout: FC = observer(() => {
     : t('MAIN_PAGE_DESCRIPTION')
   return (
     <HeaderFooterWrapper>
-      <Head>
-        {isEmpty(products) && <meta name='robots' content='noindex' />}
-      </Head>
       <MetaTags title={title} description={description} />
       <div className='bg-white px-4 s:px-8 flex min-h-1/2'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
