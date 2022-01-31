@@ -81,7 +81,7 @@ const MainLayout: FC = observer(() => {
         setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
       })
     }
-    initProducts()
+    // initProducts()
   }, [
     cookies.countryId,
     cookies.searchLocation,
