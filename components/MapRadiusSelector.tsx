@@ -118,7 +118,9 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
                   key={o.key}
                   onClick={() => {
                     setRadius(o.value, o.key)
-                    setShowPanel(false)
+                    if (width < 768) {
+                      setShowPanel(false)
+                    }
                   }}
                   className={`flex px-1 s:px-4 py-2 s:py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
                     isCurrent ? 'bg-nc-accent' : ''
