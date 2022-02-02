@@ -52,6 +52,7 @@ module.exports = {
         18: '4.5rem',
         26: '6.5rem',
         29: '7.25rem',
+        30: '7.5rem',
         31: '7.75rem',
         34: '8.5rem',
         35: '8.75rem',
@@ -88,6 +89,7 @@ module.exports = {
         '1024px': '1024px',
         '1208px': '1208px',
         '1440px': '1440px',
+        '1920px': '1920px',
         '95%': '95%',
         'screen-offset-8': 'calc(100vw - 32px)',
       },
@@ -148,6 +150,7 @@ module.exports = {
         '592px': '592px',
         '704px': '704px',
         '288px': '288px',
+        '960px': '960px',
         '1208px': '1208px',
         screen: '100vw',
       },
@@ -157,6 +160,7 @@ module.exports = {
         '1/2': '50vh',
         '2/3': '66vh',
         '9/10': '90vh',
+        '900px': '900px',
       },
       minWidth: {
         10: '2.5rem',
@@ -169,6 +173,8 @@ module.exports = {
       },
       backgroundImage: () => ({
         'adverto-background': "url('/img/adverto-background.png')",
+        'landing-head-bg': "url('/img/landing/head-bg.png')",
+        'landing-footer-bg': "url('/img/landing/footer-bg.png')",
       }),
     },
     tooltipArrows: (theme) => ({

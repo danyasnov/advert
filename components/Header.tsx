@@ -20,7 +20,7 @@ import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import PrimaryButton from './Buttons/PrimaryButton'
 import {makeRequest} from '../api'
 
-const options = [
+export const languageOptions = [
   {
     value: 'el',
     label: 'Eλληνική',
@@ -32,7 +32,7 @@ const options = [
   {value: 'ro', label: 'Română'},
 ]
 
-const withIcons = (opts) =>
+export const withLangIcons = (opts) =>
   opts.map((o) => ({
     ...o,
     icon: (
@@ -49,7 +49,7 @@ const Header: FC = observer(() => {
   const {reload, push} = useRouter()
   const {t} = useTranslation()
   const [lang, setLang] = useState<string>()
-  const languages = useRef(withIcons(options))
+  const languages = useRef(withLangIcons(languageOptions))
   const {showLogin, setShowLogin, user} = useGeneralStore()
   useEffect(() => {
     const state: SerializedCookiesState = parseCookies()

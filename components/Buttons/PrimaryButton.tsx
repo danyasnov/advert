@@ -26,6 +26,7 @@ const PrimaryButton: FC<Props> = ({
         disabled ? disabledClass : 'nc-gradient-brand'
       } ${className || ''}`}
       type={type}
+      disabled={disabled}
       onClick={(e) => !disabled && onClick && onClick(e)}>
       {children}
     </Button>
