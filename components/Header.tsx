@@ -19,6 +19,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import PrimaryButton from './Buttons/PrimaryButton'
 import {makeRequest} from '../api'
+import LinkButton from './Buttons/LinkButton'
 
 export const languageOptions = [
   {
@@ -66,7 +67,12 @@ const Header: FC = observer(() => {
             {/*    onClick={notImplementedAlert} */}
             {/*    label={t('FOR_BUSINESS')} */}
             {/*  /> */}
-            {/*  <LinkButton onClick={notImplementedAlert} label={t('SHOPS')} /> */}
+            <LinkWrapper
+              className='text-brand-b1 text-body-3'
+              href='/merchant'
+              title={t('SHOPS')}>
+              {t('SHOPS')}
+            </LinkWrapper>
             {/*  <LinkButton */}
             {/*    onClick={notImplementedAlert} */}
             {/*    label={t('APPLICATION_HELP')} */}
