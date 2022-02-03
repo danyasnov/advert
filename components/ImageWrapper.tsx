@@ -42,7 +42,7 @@ const ImageWrapper: FC<Props> = ({
       width={width}
       height={height}
       alt={alt}
-      className={`${className} relative`}
+      className={`${className || ''} relative`}
       // @ts-ignore
       layout={layout}
       objectFit={objectFit}
