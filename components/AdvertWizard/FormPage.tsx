@@ -16,6 +16,7 @@ import {AdvertPages, PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import {
   FormikCreateField,
+  FormikCreateFields,
   FormikSelect,
   FormikSwitch,
   getCreateOptions,
@@ -158,6 +159,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     fieldsById: Record<string, CACategoryDataFieldModel>
   } | null>(() => mapCategoryData(state.draft.data))
 
+  console.log('category', category)
   const {categoryId} = state.draft
 
   useEffect(() => {
@@ -491,28 +493,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                         label={t('PROD_CONDITION')}
                       />
                     )}
-                    {fieldsArray.map((f) => {
-                      return isEmpty(getCreateOptions(f.multiselects)) &&
-                        ['select', 'multiselect', 'iconselect'].includes(
-                          f.fieldType,
-                        ) ? null : (
-                        <AdvertFormField
-                          key={f.id}
-                          body={
-                            <div className='w-full s:w-1/2 l:w-5/12'>
-                              <FormikCreateField field={f} />
-                            </div>
-                          }
-                          className='l:items-center'
-                          isRequired={f.isFillingRequired}
-                          label={
-                            width < 768 && f.fieldType === 'checkbox'
-                              ? undefined
-                              : f.name
-                          }
-                        />
-                      )
-                    })}
+                    <FormikCreateFields fieldsArray={fieldsArray} />
                   </div>
                 </div>
               )}

@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
-import {get, toNumber} from 'lodash'
+import {get, isEmpty, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
@@ -13,6 +13,7 @@ import {useWindowSize} from 'react-use'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 import MobileSelect from './Selects/MobileSelect'
+import AdvertFormField from './AdvertWizard/AdvertFormField'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -154,6 +155,27 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
   return <Field name={`fields.${id}`} component={component} {...props} />
 }
 
+export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
+  const {width} = useWindowSize()
+
+  return fieldsArray.map((f) => {
+    return isEmpty(getCreateOptions(f.multiselects)) &&
+      ['select', 'multiselect', 'iconselect'].includes(f.fieldType) ? null : (
+      <AdvertFormField
+        key={f.id}
+        body={
+          <div className='w-full s:w-1/2 l:w-5/12'>
+            <FormikCreateField field={f} />
+          </div>
+        }
+        className='l:items-center'
+        isRequired={f.isFillingRequired}
+        label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
+      />
+    )
+  })
+}
+
 export const FormikCreateField: FC<IFormikField> = ({field}) => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -200,6 +222,9 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       props.label = name
       props.hideLabel = width >= 768
       break
+    }
+    case 'array': {
+      component =
     }
     default: {
       component = null
