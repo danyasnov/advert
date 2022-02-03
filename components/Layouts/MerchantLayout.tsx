@@ -8,6 +8,7 @@ import {Field, FormikProvider, useFormik} from 'formik'
 import {noop} from 'lodash'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
+import Head from 'next/head'
 import Logo from '../Logo'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import ImageWrapper from '../ImageWrapper'
@@ -97,6 +98,9 @@ const MerchantLayout: FC = observer(() => {
 
   return (
     <div className='flex flex-col items-center space-y-24'>
+      <Head>
+        <title>{t('LANDING_HEAD_TEXT')}</title>
+      </Head>
       <div className='flex justify-between items-center -mb-24 py-3 max-w-960px w-full'>
         <div className='flex items-center space-x-5'>
           <Logo size={70} />
