@@ -304,9 +304,10 @@ const MerchantLayout: FC = observer(() => {
                   )}
                 </div>
               </FormikProvider>
+              {isSubmitted && <span>{t('LANDING_MESSAGE')}</span>}
               <PrimaryButton
                 disabled={isSubmitted}
-                className='w-full'
+                className='w-full mt-4'
                 type='submit'
                 onClick={noop}>
                 {t('LANDING_SEND_APPLICATION')}
