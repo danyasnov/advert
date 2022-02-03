@@ -155,24 +155,33 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
   return <Field name={`fields.${id}`} component={component} {...props} />
 }
 
+// @ts-ignore
 export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
   const {width} = useWindowSize()
 
   return fieldsArray.map((f) => {
-    return isEmpty(getCreateOptions(f.multiselects)) &&
-      ['select', 'multiselect', 'iconselect'].includes(f.fieldType) ? null : (
-      <AdvertFormField
-        key={f.id}
-        body={
-          <div className='w-full s:w-1/2 l:w-5/12'>
-            <FormikCreateField field={f} />
-          </div>
-        }
-        className='l:items-center'
-        isRequired={f.isFillingRequired}
-        label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
-      />
-    )
+    if (f.fieldType === 'array') {
+      return <FormikCreateFields fieldsArray={f.arrayTypeFields} />
+    }
+    const isEmptyOptions =
+      isEmpty(getCreateOptions(f.multiselects)) &&
+      ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
+    if (!isEmptyOptions) {
+      return (
+        <AdvertFormField
+          key={f.id}
+          body={
+            <div className='w-full s:w-1/2 l:w-5/12'>
+              <FormikCreateField field={f} />
+            </div>
+          }
+          className='l:items-center'
+          isRequired={f.isFillingRequired}
+          label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
+        />
+      )
+    }
+    return null
   })
 }
 
@@ -222,9 +231,6 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       props.label = name
       props.hideLabel = width >= 768
       break
-    }
-    case 'array': {
-      component =
     }
     default: {
       component = null
