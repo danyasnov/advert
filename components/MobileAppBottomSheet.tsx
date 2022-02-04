@@ -3,6 +3,7 @@ import {BottomSheet} from 'react-spring-bottom-sheet'
 import {MobileView, browserName} from 'react-device-detect'
 import IcChrome from 'icons/browsers/Chrome.svg'
 import IcSafari from 'icons/browsers/Safari.svg'
+import IcFirefox from 'icons/browsers/Firefox.svg'
 import IcOpera from 'icons/browsers/Opera.svg'
 import IcSamsung from 'icons/browsers/SamsungInternet.svg'
 import IcUc from 'icons/browsers/Uc.svg'
@@ -105,6 +106,8 @@ const BrowserIcon: FC = () => {
     Icon = IcSamsung
   } else if (browser.includes('uc')) {
     Icon = IcUc
+  } else if (browser.includes('firefox')) {
+    Icon = IcFirefox
   } else if (browser.includes('chrome') || !Icon) {
     Icon = IcChrome
   }
