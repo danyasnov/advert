@@ -15,20 +15,23 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
   const [inputItems, setInputItems] = useState([])
   const onInputValueChange = useCallback(
     debounce(({inputValue}) => {
-      handleSelectedItemChange(inputValue)
-
       if (!inputValue) return setInputItems([])
       return makeRequest({
         method: 'get',
         url: '/api/search-suggestions',
         params: {search: inputValue.trim()},
       }).then((res) => {
+        console.log(res.data)
         setInputItems(
           res.data
             // eslint-disable-next-line camelcase
             .map((i: {cat_id: string; path_word: string[]}) => {
               if (isObject(i)) {
-                return {title: last(i.path_word), id: i.cat_id}
+                return {
+                  title: last(i.path_word),
+                  id: i.cat_id,
+                  secondary: i.path_word.slice(0, -1).join(' / '),
+                }
               }
               return null
             })
@@ -91,6 +94,9 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
               key={item.id}>
               <span className='text-body-2 text-black-b truncate'>
                 {item.title}
+              </span>
+              <span className='text-body-3 text-black-c truncate'>
+                {item.secondary}
               </span>
             </li>
           ))}
