@@ -11,15 +11,15 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
 import IcVisibility from 'icons/material/Visibility.svg'
 import {useMouseHovered} from 'react-use'
-import {isEmpty, isNumber, size} from 'lodash'
+import {isEmpty, isNumber} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
-import {toJS} from 'mobx'
 import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
+import CardExtraFields from './CardExtraFields'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -40,7 +40,14 @@ const Card: FC<Props> = ({
     dateUpdated,
     views,
     location,
+    extraFields,
     hasVideo,
+    state,
+    owner,
+    hash,
+    isFavorite,
+    categoryId,
+    rootCategoryId,
   } = product
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
@@ -103,15 +110,15 @@ const Card: FC<Props> = ({
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
-      <CardBadge state={product.state} />
-      {product?.owner?.hash && (
+      <CardBadge state={state} />
+      {owner?.hash && (
         <div className='absolute top-1 right-1 w-6 h-6 z-20'>
           <ProductLike
-            userHash={product.owner.hash}
+            userHash={owner.hash}
             color='white'
-            hash={product.hash}
-            isFavorite={product.isFavorite}
-            state={product.state}
+            hash={hash}
+            isFavorite={isFavorite}
+            state={state}
           />
         </div>
       )}
@@ -123,10 +130,10 @@ const Card: FC<Props> = ({
               {isEmpty(images) ? (
                 <div className='relative min-w-full'>
                   <CardImage
-                    url={`/img/subcategories/${product.categoryId}.jpg`}
+                    url={`/img/subcategories/${categoryId}.jpg`}
                     fallbackUrl={[
                       // @ts-ignore
-                      `/img/subcategories/${product.rootCategoryId}.jpg`,
+                      `/img/subcategories/${rootCategoryId}.jpg`,
                       `/img/CommonPlaceholder.jpg`,
                     ]}
                     alt={title}
@@ -173,7 +180,7 @@ const Card: FC<Props> = ({
         className={`p-2 flex flex-col justify-between flex-1 ${
           variant === 'default' ? 'bg-white' : 'bg-brand-a2'
         }`}>
-        <div className='flex flex-col pb-4'>
+        <div className='flex flex-col'>
           <div className='flex items-start mb-1'>
             <span className='text-body-3 text-black-b line-clamp-2 flex-1 break-words'>
               {title}
@@ -187,6 +194,7 @@ const Card: FC<Props> = ({
             {oldPrice}
           </span>
         </div>
+        <CardExtraFields extraFields={extraFields} />
         {isNumber(dateUpdated) && isNumber(views) && (
           <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
             <span suppressHydrationWarning className='inline-flex items-center'>
