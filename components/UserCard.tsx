@@ -44,7 +44,7 @@ const UserCard: FC = observer(() => {
           <LinkWrapper
             href={`/user/${product.owner.hash}`}
             title={product.owner.name}>
-            <h3 className='text-brand-b1 text-h-3 font-bold mb-2'>
+            <h3 className='text-brand-b1 text-h-3 font-bold mb-2 truncate w-44'>
               {product.owner.name}
             </h3>
           </LinkWrapper>
