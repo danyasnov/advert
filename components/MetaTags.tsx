@@ -23,8 +23,7 @@ const brandTitles = {
 }
 const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
-  const router = useRouter()
-  console.log(router)
+
   const imageUrl = first(advert?.images) || user?.imageUrl
   let brand
   if (advert) {
