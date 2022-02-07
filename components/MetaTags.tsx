@@ -40,6 +40,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
         <meta name='twitter:card' content={title} />
         <meta property='og:title' content={title} />
         <meta property='og:type' content='website' />
+        <meta name='yandex-verification' content='db8a14e599462c4c' />
         <meta
           property='og:url'
           content={
