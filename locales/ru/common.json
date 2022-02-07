@@ -769,6 +769,7 @@
   "CANT_GET_LOCATION": "Невозможно определить локацию",
   "CAREER": "Карьера",
   "CATEGORIES": "Категории",
+  "CATEGORIES_NOT_FOUND": "Категория {{title}} не найдена",
   "CHANGE_LANGUAGE": "Язык изменен",
   "CHANGE_LANGUAGE_TEXT": "Полные изменения вступят в силу после перезапуска ADVERTO.",
   "CHANGE_USER_NAME": "CHANGE_USER_NAME",

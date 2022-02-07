@@ -17,6 +17,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
     const state: SerializedCookiesState = parseCookies()
     setShowChat(!!state.hash)
   }, [])
+  return null
   return (
     <div className='w-full'>
       {showChat ? (
