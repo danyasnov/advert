@@ -186,7 +186,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     }
   }, [state.draft])
 
-  const onSubmit = (values, saveDraft) => {
+  const onSubmit = (values) => {
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -199,31 +199,31 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       fields: mappedFields,
     }
 
-    if (saveDraft) {
-      makeRequest({
-        url: '/api/save-draft',
-        method: 'post',
-        data: {
-          hash: query.hash,
-          draft: {...data, data: category.data},
-        },
-      })
-    } else {
-      makeRequest({
-        url: '/api/submit-draft',
-        data: {
-          params: data,
-          shouldUpdate: query.action === 'edit',
-        },
-        method: 'post',
-      }).then((res) => {
-        if (res.data.status === 200) {
-          push(`/user/${user.hash}?activeTab=1`)
-        } else if (res.data.error) {
-          toast.error(t(res.data.error))
-        }
-      })
-    }
+    // if (saveDraft) {
+    //   makeRequest({
+    //     url: '/api/save-draft',
+    //     method: 'post',
+    //     data: {
+    //       hash: query.hash,
+    //       draft: {...data, data: category.data},
+    //     },
+    //   })
+    // } else {
+    makeRequest({
+      url: '/api/submit-draft',
+      data: {
+        params: data,
+        shouldUpdate: query.action === 'edit',
+      },
+      method: 'post',
+    }).then((res) => {
+      if (res.data.status === 200) {
+        push(`/user/${user.hash}?activeTab=1`)
+      } else if (res.data.error) {
+        toast.error(t(res.data.error))
+      }
+    })
+    // }
   }
 
   const onChangeFields = useCallback(
