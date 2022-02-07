@@ -15,11 +15,9 @@ import {useWindowSize} from 'react-use'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import {
-  FormikCreateField,
   FormikCreateFields,
   FormikSelect,
   FormikSwitch,
-  getCreateOptions,
 } from '../FormikComponents'
 import AdvertDescription from './AdvertDescription'
 import {useGeneralStore} from '../../providers/RootStoreProvider'

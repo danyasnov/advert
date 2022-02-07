@@ -21,6 +21,7 @@ export interface SelectProps {
 export interface SelectItem {
   value: string | number
   label: string
+  disabled?: boolean
 }
 
 const OPTION_HEIGHT = 40

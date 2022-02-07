@@ -61,13 +61,7 @@ interface FieldOptions {
   validate?: (value: any) => string
 }
 
-const getSelectOptions = (o) => ({
-  value: o.id,
-  label: o.value,
-  // disabled: o.count === 0,
-})
-
-export const getCreateOptions = (multiselects = {}) => {
+export const getSelectOptions = (multiselects = {}) => {
   return [
     // @ts-ignore
     ...multiselects.top,
@@ -99,16 +93,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
-      props.options = [
-        // @ts-ignore
-        ...multiselects.top.map(getSelectOptions),
-        // @ts-ignore
-        ...(multiselects.other
-          ? // @ts-ignore
-            multiselects.other
-          : []
-        ).map(getSelectOptions),
-      ]
+      props.options = getSelectOptions(multiselects)
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = true
@@ -164,7 +149,7 @@ export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
       return <FormikCreateFields fieldsArray={f.arrayTypeFields} />
     }
     const isEmptyOptions =
-      isEmpty(getCreateOptions(f.multiselects)) &&
+      isEmpty(getSelectOptions(f.multiselects)) &&
       ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
     if (!isEmptyOptions) {
       return (
@@ -205,7 +190,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
-      props.options = getCreateOptions(field.multiselects)
+      props.options = getSelectOptions(field.multiselects)
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'

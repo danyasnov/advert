@@ -122,7 +122,7 @@ const MobileSelect: FC<SelectProps> = ({
                     <span className='text-body-1 text-nc-text-primary'>
                       {f.label}
                     </span>
-                    {isMulti && (
+                    {isMulti && !f.disabled && (
                       <>
                         <input
                           type='checkbox'

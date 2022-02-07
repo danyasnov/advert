@@ -9,7 +9,7 @@ import {
   FormikFilterField,
   FormikRange,
   FormikSegmented,
-  getCreateOptions,
+  getSelectOptions,
 } from '../FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -51,7 +51,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     newCount,
     applyFilter,
     isFilterApplied,
-    filter,
   } = useProductsStore()
 
   const prevCategoryQueryRef = useRef('')
@@ -268,7 +267,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               <div className='space-y-6'>
                 {aggregatedFields.map((field) => {
                   const isEmptyOptions =
-                    isEmpty(getCreateOptions(field.multiselects)) &&
+                    isEmpty(getSelectOptions(field.multiselects)) &&
                     ['select', 'multiselect', 'iconselect'].includes(
                       field.fieldType,
                     )
