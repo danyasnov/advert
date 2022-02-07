@@ -9,6 +9,7 @@ interface Props {
   isOpen: boolean
   onClose: () => void
 }
+
 const LoginModal: FC<Props> = ({isOpen, onClose}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
