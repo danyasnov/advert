@@ -28,7 +28,7 @@ const SideNavigation: FC<Props> = ({items, onSaveDraft}) => {
           </span>
         </LinkButton>
       ))}
-      <SecondaryButton onClick={onSaveDraft}>{t('SAVE')}</SecondaryButton>
+      {/* <SecondaryButton onClick={onSaveDraft}>{t('SAVE')}</SecondaryButton> */}
     </div>
   )
 }
