@@ -35,8 +35,7 @@
 
 [data-rsbs-overlay],
 [data-rsbs-root]:after {
-    max-width: auto;
-    max-width: var(--rsbs-max-w,auto);
+    @apply w-full s:w-704px m:w-624px;
     margin-left: env(safe-area-inset-left);
     margin-left: var(--rsbs-ml,env(safe-area-inset-left));
     margin-right: env(safe-area-inset-right);
