@@ -34,7 +34,7 @@ import SideNavigation from './SideNavigation'
 import Button from '../Buttons/Button'
 
 const findSelectValue = (id, options) => {
-  const option = options.find((o) => id === o.id)
+  const option = options.find((o) => id === o.id) || {}
   return {
     label: option.value,
     value: option.id,
@@ -136,6 +136,7 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push, query} = useRouter()
+  const formRef = useRef()
 
   const {width} = useWindowSize()
   const headerRefs = useRef([])
@@ -187,7 +188,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     }
   }, [state.draft])
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, saveDraft) => {
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -200,20 +201,31 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       fields: mappedFields,
     }
 
-    makeRequest({
-      url: '/api/submit-draft',
-      data: {
-        params: data,
-        shouldUpdate: query.action === 'edit',
-      },
-      method: 'post',
-    }).then((res) => {
-      if (res.data.status === 200) {
-        push(`/user/${user.hash}?activeTab=1`)
-      } else if (res.data.error) {
-        toast.error(t(res.data.error))
-      }
-    })
+    if (saveDraft) {
+      makeRequest({
+        url: '/api/save-draft',
+        method: 'post',
+        data: {
+          hash: query.hash,
+          draft: {...data, data: category.data},
+        },
+      })
+    } else {
+      makeRequest({
+        url: '/api/submit-draft',
+        data: {
+          params: data,
+          shouldUpdate: query.action === 'edit',
+        },
+        method: 'post',
+      }).then((res) => {
+        if (res.data.status === 200) {
+          push(`/user/${user.hash}?activeTab=1`)
+        } else if (res.data.error) {
+          toast.error(t(res.data.error))
+        }
+      })
+    }
   }
 
   const onChangeFields = useCallback(
@@ -266,6 +278,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         <Formik
           enableReinitialize
           initialValues={initialValues}
+          innerRef={formRef}
           validate={(values) => {
             const errors: any = {}
             const {photos, content, condition, price} = values
@@ -524,7 +537,11 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           )}
         </Formik>
         <div className='ml-12 hidden m:flex w-full max-w-288px '>
-          <SideNavigation items={headerRefs.current} />
+          <SideNavigation
+            items={headerRefs.current}
+            // @ts-ignore
+            onSaveDraft={() => onSubmit(formRef.current.values, true)}
+          />
         </div>
       </div>
     </div>
