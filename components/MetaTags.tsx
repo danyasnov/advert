@@ -5,6 +5,7 @@ import Script from 'next/script'
 import {first} from 'lodash'
 import {DateTime} from 'luxon'
 import {toJS} from 'mobx'
+import {useRouter} from 'next/router'
 
 interface Props {
   title: string
@@ -22,6 +23,8 @@ const brandTitles = {
 }
 const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
+  const router = useRouter()
+  console.log(router)
   const imageUrl = first(advert?.images) || user?.imageUrl
   let brand
   if (advert) {
