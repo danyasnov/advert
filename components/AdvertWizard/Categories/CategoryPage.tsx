@@ -32,6 +32,7 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
       setValid(false)
     }
   }, [selected])
+
   const rootCategory = first(selected)
 
   const onSubmit = (id) => {
