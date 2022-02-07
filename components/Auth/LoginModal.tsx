@@ -19,8 +19,8 @@ const LoginModal: FC<Props> = ({isOpen, onClose}) => {
       shouldCloseOnOverlayClick
       ariaHideApp={false}
       contentLabel={title}
-      className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0 mx-auto top-24 flex outline-none drop-shadow-2xl'
-      overlayClassName='fixed inset-0 bg-adverto-background bg-repeat max-h-screen overflow-y-auto z-20 '>
+      className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0 mx-auto top-24 flex outline-none'
+      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full'>
         <div className='px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
           <span className='text-h-2 text-black-b font-bold'>{title}</span>
