@@ -9,7 +9,7 @@ import {
   AuthType,
   CACategoryDataFieldModel,
   GeoPositionModel,
-} from 'front-api/src/models/index'
+} from 'front-api/src/models'
 import {destroyCookie, parseCookies, setCookie} from 'nookies'
 import {GetServerSidePropsContext} from 'next'
 import {ParsedUrlQuery} from 'querystring'
@@ -530,21 +530,26 @@ export const getFormikInitialFromQuery = (
             case 'iconselect':
             case 'multiselect': {
               // @ts-ignore
-              parsedValue = parsedValue.map((valueId) => {
-                const option = [
-                  // @ts-ignore
-                  ...currentField.multiselects.top,
-                  // @ts-ignore
-                  ...(currentField.multiselects.other
-                    ? // @ts-ignore
-                      currentField.multiselects.other
-                    : []),
-                ].find((m) => m.value === valueId)
-                return {
-                  value: option.id,
-                  label: option.value,
-                }
-              })
+              parsedValue = parsedValue
+                .map((valueId) => {
+                  const option = [
+                    // @ts-ignore
+                    ...currentField.multiselects.top,
+                    // @ts-ignore
+                    ...(currentField.multiselects.other
+                      ? // @ts-ignore
+                        currentField.multiselects.other
+                      : []),
+                  ].find((m) => m.value === valueId)
+                  if (!option) {
+                    return null
+                  }
+                  return {
+                    value: option.id,
+                    label: option.value,
+                  }
+                })
+                .filter((v) => !!v)
               break
             }
             case 'checkbox': {
