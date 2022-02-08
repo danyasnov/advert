@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         countriesStore: {
           countries,
           locationsByAlphabet: citiesByAlphabet,
+          language: state.language,
         },
       },
       ...(await serverSideTranslations(state.language)),

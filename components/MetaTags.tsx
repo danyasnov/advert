@@ -1,11 +1,10 @@
 import {FC} from 'react'
 import Head from 'next/head'
-import {AdvertiseDetail, OwnerModel} from 'front-api/src/models/index'
+import {AdvertiseDetail, OwnerModel} from 'front-api/src/models'
 import Script from 'next/script'
 import {first} from 'lodash'
 import {DateTime} from 'luxon'
-import {toJS} from 'mobx'
-import {useRouter} from 'next/router'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 interface Props {
   title: string
@@ -23,7 +22,28 @@ const brandTitles = {
 }
 const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
+  const {language} = useGeneralStore()
 
+  let yandexMetrikaId
+  switch (language) {
+    case 'ru':
+      yandexMetrikaId = 'db8a14e599462c4c'
+      break
+    case 'el':
+      yandexMetrikaId = '631377a5229beaf4'
+      break
+    case 'tr':
+      yandexMetrikaId = '08426b2eedf287ce'
+      break
+    case 'ro':
+      yandexMetrikaId = '3deab17f0179bbf6'
+      break
+    case 'uk':
+      yandexMetrikaId = '2c9bed981a52783d'
+      break
+    default:
+      yandexMetrikaId = 'ce08de680afab7c9'
+  }
   const imageUrl = first(advert?.images) || user?.imageUrl
   let brand
   if (advert) {
@@ -42,7 +62,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
         <meta name='twitter:card' content={title} />
         <meta property='og:title' content={title} />
         <meta property='og:type' content='website' />
-        <meta name='yandex-verification' content='db8a14e599462c4c' />
+        <meta name='yandex-verification' content={yandexMetrikaId} />
         <meta
           property='og:url'
           content={

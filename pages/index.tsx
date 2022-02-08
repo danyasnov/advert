@@ -54,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           showSuccessAlert,
           showErrorAlert,
           locationCodes: getLocationCodes(ctx),
+          language: state.language,
         },
       },
       ...(await serverSideTranslations(state.language)),

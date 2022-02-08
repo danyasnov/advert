@@ -1,6 +1,5 @@
 import {makeAutoObservable} from 'mobx'
-import {OwnerModel, SettingsLanguageModel} from 'front-api/src/models/index'
-import {CACategoryModel} from 'front-api/src/index'
+import {OwnerModel, SettingsLanguageModel} from 'front-api/src/models'
 import {RootStore} from './RootStore'
 
 interface Document {
@@ -11,6 +10,7 @@ interface Document {
 export interface IGeneralsHydration {
   locationCodes: string
   userHash: string
+  language: string
   document: Document
   showSuccessAlert: string
   showErrorAlert: string
@@ -21,6 +21,7 @@ export interface IGeneralStore {
   showFooter: boolean
   showCookiesWarn: boolean
   showSuccessAlert: string
+  language: string
   user: OwnerModel
   setUser: (user: OwnerModel) => void
   showErrorAlert: string
@@ -49,6 +50,8 @@ export class GeneralStore implements IGeneralStore {
   showCookiesWarn = false
 
   showSuccessAlert = ''
+
+  language = 'en'
 
   showErrorAlert = ''
 
@@ -103,5 +106,6 @@ export class GeneralStore implements IGeneralStore {
     this.showSuccessAlert = data?.showSuccessAlert ?? ''
     this.showErrorAlert = data?.showErrorAlert ?? ''
     this.languages = data?.languages ?? []
+    this.language = data?.language ?? 'en'
   }
 }

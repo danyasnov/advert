@@ -30,9 +30,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         categoriesStore: {
           categories,
         },
-
         generalStore: {
           languages,
+          language: state.language,
         },
       },
       ...(await serverSideTranslations(state.language)),
