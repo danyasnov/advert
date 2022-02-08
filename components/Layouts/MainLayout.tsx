@@ -105,17 +105,9 @@ const MainLayout: FC = observer(() => {
               className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
               onClick={() => {
                 if (!user) {
-                  setShowLogin(true)
+                  return setShowLogin(true)
                 }
-                makeRequest({
-                  url: '/api/save-draft',
-                  method: 'POST',
-                  data: {
-                    draft: {},
-                  },
-                }).then((res) => {
-                  push(`/advert/create/${res.data.result.hash}`)
-                })
+                return push(`/advert/create`)
               }}>
               <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
             </Button>

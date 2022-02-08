@@ -61,12 +61,16 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
             url: '/api/save-draft',
             method: 'post',
             data: {
-              hash: query.hash,
+              hash: query.hash ? query.hash : null,
               draft: newDraft,
             },
           })
         })
-        .then(() => {
+        .then((res) => {
+          if (!query.hash) {
+            const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}/${res.data.result.hash}`
+            window.history.pushState({path: newurl}, '', newurl)
+          }
           dispatch({
             type: 'setPage',
             page: AdvertPages.formPage,

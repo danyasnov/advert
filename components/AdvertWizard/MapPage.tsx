@@ -121,18 +121,18 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
       data: {
         location: {latitude, longitude},
       },
-    })
-      .then((data) => {
-        const currencies = data.data.result
-        if (!currencies) {
-          toast.error(t('EMPTY_COORDS'))
-          return Promise.reject()
-        }
-        newDraft.currencies = currencies
-        dispatch({
-          type: 'setDraft',
-          draft: newDraft,
-        })
+    }).then((data) => {
+      const currencies = data.data.result
+      if (!currencies) {
+        toast.error(t('EMPTY_COORDS'))
+        return Promise.reject()
+      }
+      newDraft.currencies = currencies
+      dispatch({
+        type: 'setDraft',
+        draft: newDraft,
+      })
+      if (query.hash) {
         return makeRequest({
           url: '/api/save-draft',
           method: 'post',
@@ -140,14 +140,18 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
             hash: query.hash,
             draft: newDraft,
           },
+        }).then(() => {
+          dispatch({
+            type: 'setPage',
+            page: AdvertPages.categoryPage,
+          })
         })
+      }
+      return dispatch({
+        type: 'setPage',
+        page: AdvertPages.categoryPage,
       })
-      .then(() => {
-        dispatch({
-          type: 'setPage',
-          page: AdvertPages.categoryPage,
-        })
-      })
+    })
   }
 
   const handleOnLoad = (map, maps) => {
