@@ -110,7 +110,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch, onClose}) => {
           isInvalid ? 'border-error' : 'border-shadow-b'
         }`}
       />
-      <span className='text-black-b text-body-3 mt-8 mb-2 text-center'>
+      <span className='text-black-b text-body-3 mt-8 mb-2 mx-6 text-center'>
         {state.authType === AuthType.phone &&
           t('SENT_SMS_WITH_ACTIVATION_CODE')}
         {state.authType === AuthType.email &&
