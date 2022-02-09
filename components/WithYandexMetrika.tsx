@@ -29,7 +29,7 @@ const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
     <>
       {enabled && (
         <YMInitializer
-          accounts={[87448874]}
+          accounts={[46964940]}
           options={{
             clickmap: true,
             trackLinks: true,
