@@ -16,6 +16,7 @@ import Head from 'next/head'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
+import WithYandexMetrika from '../components/WithYandexMetrika'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
@@ -40,7 +41,7 @@ function MyApp({Component, pageProps}: AppProps) {
   }, [router])
 
   return (
-    <>
+    <WithYandexMetrika>
       <Head>
         <meta
           name='viewport'
@@ -54,7 +55,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <ToastContainer />
         <CookiesWarning />
       </RootStoreProvider>
-    </>
+    </WithYandexMetrika>
   )
 }
 
