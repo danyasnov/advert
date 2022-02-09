@@ -91,6 +91,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
       {advert ? (
         <>
           <Script
+            id='schema'
             type='application/ld+json'
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
@@ -132,6 +133,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
             }}
           />
           <Script
+            id='fb'
             type='application/ld+json'
             dangerouslySetInnerHTML={{
               __html: `!function(f,b,e,v,n,t,s)
@@ -163,6 +165,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
       ) : (
         <>
           <Script
+            id='fbevents'
             dangerouslySetInnerHTML={{
               __html: `!function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -177,6 +180,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
             }}
           />
           <Script
+            id='schema-site'
             type='application/ld+json'
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
@@ -194,8 +198,12 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           />
         </>
       )}
-      <Script src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1' />
       <Script
+        id='gtag'
+        src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1'
+      />
+      <Script
+        id='gtag-config'
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
