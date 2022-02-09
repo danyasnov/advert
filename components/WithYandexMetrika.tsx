@@ -1,5 +1,5 @@
 import React, {ReactNode, useCallback, useEffect} from 'react'
-import Router, {useRouter} from 'next/router'
+import {useRouter} from 'next/router'
 import ym, {YMInitializer} from 'react-yandex-metrika'
 
 export type WithYandexMetrikaProps = {
@@ -29,7 +29,7 @@ const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
     <>
       {enabled && (
         <YMInitializer
-          accounts={[46964940]}
+          accounts={[87448874]}
           options={{
             clickmap: true,
             trackLinks: true,
