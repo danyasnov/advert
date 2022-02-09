@@ -1,5 +1,5 @@
 import React, {ReactNode, useCallback, useEffect} from 'react'
-import Router from 'next/router'
+import Router, {useRouter} from 'next/router'
 import ym, {YMInitializer} from 'react-yandex-metrika'
 
 export type WithYandexMetrikaProps = {
@@ -10,6 +10,7 @@ const enabled = process.env.NODE_ENV === 'production'
 
 const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
   const {children} = props
+  const router = useRouter()
 
   const hit = useCallback((url) => {
     if (enabled) {
@@ -21,7 +22,7 @@ const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
 
   useEffect(() => {
     hit(window.location.pathname + window.location.search)
-    Router.events.on('routeChangeComplete', (url: string) => hit(url))
+    router.events.on('routeChangeComplete', (url: string) => hit(url))
   }, [])
 
   return (
