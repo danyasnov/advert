@@ -88,7 +88,7 @@ const MobileSelect: FC<SelectProps> = ({
             )}
           </div>
           <div
-            className={`w-full flex flex-col mb-10 ${
+            className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
               isSearchable ? 'mt-20' : 'mt-10'
             }`}>
             {open &&
