@@ -197,6 +197,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       userHash: user.hash,
       condition: condition?.value,
       fields: mappedFields,
+      hash: query.hash,
     }
 
     // if (saveDraft) {
