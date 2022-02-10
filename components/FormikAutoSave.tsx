@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect} from 'react'
 import {useFormikContext} from 'formik'
-import debounce from 'lodash.debounce'
+import {debounce} from 'lodash'
 
 const FormikAutoSave: FC = () => {
   const formik = useFormikContext()

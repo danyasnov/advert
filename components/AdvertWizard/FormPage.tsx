@@ -6,7 +6,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
   FieldsModel,
-} from 'front-api/src/models/index'
+} from 'front-api/src/models'
 import {debounce, isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
@@ -30,6 +30,7 @@ import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
 import SideNavigation from './SideNavigation'
 import Button from '../Buttons/Button'
+import FormikAdvertAutoSave from './FormikAdvertAutoSave'
 
 const findSelectValue = (id, options) => {
   const option = options.find((o) => id === o.id) || {}
@@ -186,7 +187,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     }
   }, [state.draft])
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, saveDraft) => {
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -200,31 +201,31 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       hash: query.hash,
     }
 
-    // if (saveDraft) {
-    //   makeRequest({
-    //     url: '/api/save-draft',
-    //     method: 'post',
-    //     data: {
-    //       hash: query.hash,
-    //       draft: {...data, data: category.data},
-    //     },
-    //   })
-    // } else {
-    makeRequest({
-      url: '/api/submit-draft',
-      data: {
-        params: data,
-        shouldUpdate: query.action === 'edit',
-      },
-      method: 'post',
-    }).then((res) => {
-      if (res.data.status === 200) {
-        push(`/user/${user.hash}?activeTab=1`)
-      } else if (res.data.error) {
-        toast.error(t(res.data.error))
-      }
-    })
-    // }
+    if (saveDraft) {
+      makeRequest({
+        url: '/api/save-draft',
+        method: 'post',
+        data: {
+          hash: query.hash,
+          draft: {...data, data: category.data},
+        },
+      })
+    } else {
+      makeRequest({
+        url: '/api/submit-draft',
+        data: {
+          params: data,
+          shouldUpdate: query.action === 'edit',
+        },
+        method: 'post',
+      }).then((res) => {
+        if (res.data.status === 200) {
+          push(`/user/${user.hash}?activeTab=1`)
+        } else if (res.data.error) {
+          toast.error(t(res.data.error))
+        }
+      })
+    }
   }
 
   const onChangeFields = useCallback(
@@ -284,7 +285,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
 
             const categoryData = category.data
 
-            const mainContent = content.find(
+            const mainContent = (content || []).find(
               (c) => c.langCode === user.mainLanguage.isoCode,
             )
 
@@ -532,6 +533,9 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 </div>
               </div>
               <CategoryUpdater onChangeFields={onChangeFields} />
+              {query.action === 'create' && (
+                <FormikAdvertAutoSave onSubmit={onSubmit} />
+              )}
             </Form>
           )}
         </Formik>
