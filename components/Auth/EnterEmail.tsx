@@ -9,6 +9,7 @@ import {toast} from 'react-toastify'
 import {Secure} from 'front-api/src/helpers/userSecure'
 import {useRouter} from 'next/router'
 import ReCAPTCHA from 'react-google-recaptcha'
+import {parseCookies} from 'nookies'
 import {FormikPassword, FormikText} from '../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
 import {makeRequest} from '../../api'
@@ -23,6 +24,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const router = useRouter()
   const [showPass, setShowPass] = useState(false)
   const msgPass = t('PASSWORD_TOO_SHORT')
+  const cookies = parseCookies()
 
   const validatePass = (value) => {
     let error = ''
@@ -79,7 +81,14 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           onClose()
         } else {
           // eslint-disable-next-line consistent-return
-          if (!retoken && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) return
+          if (
+            !retoken &&
+            process.env.NEXT_PUBLIC_RECAPTCHA_KEY &&
+            !cookies.disableCaptcha
+          ) {
+            // eslint-disable-next-line consistent-return
+            return
+          }
           const incoming = values.email.toLocaleLowerCase()
           const result = await makeRequest({
             url: '/api/check-phone-number',
