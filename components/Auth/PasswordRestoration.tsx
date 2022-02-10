@@ -41,6 +41,7 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
           <Form className='pb-8 space-y-2  flex flex-col'>
             <Field
               name='email'
+              disableTrack
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
             />

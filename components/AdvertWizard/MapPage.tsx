@@ -128,6 +128,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
         return Promise.reject()
       }
       newDraft.currencies = currencies
+      if (query.hash) newDraft.hash = query.hash as string
       dispatch({
         type: 'setDraft',
         draft: newDraft,

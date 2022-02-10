@@ -71,6 +71,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
             />
             <Field
               name='phone'
+              disableTrack
               component={FormikNumber}
               validate={(value) => {
                 let error = ''

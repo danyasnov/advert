@@ -43,6 +43,7 @@ interface IFormikNumber {
   format?: string
   thousandSeparator?: string
   allowEmptyFormatting?: boolean
+  disableTrack?: boolean
 }
 interface IFormikField {
   field: CACategoryDataFieldModel
@@ -290,6 +291,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   format,
   allowEmptyFormatting,
   thousandSeparator = ' ',
+  disableTrack,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
@@ -314,8 +316,8 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
         className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
-          isValid ? '' : 'border-error'
-        }`}
+          disableTrack ? 'ym-disable-keys' : ''
+        } ${isValid ? '' : 'border-error'}`}
       />
       <span className='text-body-3 text-error'>{error}</span>
     </div>
@@ -330,6 +332,7 @@ export const FormikText: FC<
     type?: string
     disabled: boolean
     isTextarea?: boolean
+    disableTrack?: boolean
   } & FieldProps
 > = ({
   field,
@@ -340,6 +343,7 @@ export const FormikText: FC<
   disabled,
   isTextarea,
   maxLength,
+  disableTrack,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
@@ -361,8 +365,8 @@ export const FormikText: FC<
     },
     placeholder,
     className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
-      isValid ? 'border-shadow-b' : 'border-error'
-    }`,
+      disableTrack ? 'ym-disable-keys' : ''
+    } ${isValid ? 'border-shadow-b' : 'border-error'}`,
   }
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
@@ -393,7 +397,7 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b text-body-2 ${
+          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b ym-disable-keys text-body-2 ${
             isValid ? 'border-shadow-b' : 'border-error'
           }`}
         />

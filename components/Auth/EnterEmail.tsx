@@ -112,6 +112,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
           <Form className='pb-8 space-y-2'>
             <Field
               name='email'
+              disableTrack
               disabled={showPass}
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
