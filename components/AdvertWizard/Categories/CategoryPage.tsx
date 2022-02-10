@@ -19,6 +19,8 @@ import MobileCategoriesHeader from './MobileCategoriesHeader'
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
+  const hash = first(query.hash)
+
   const {categoriesWithoutAll: categories} = useCategoriesStore()
 
   const [selected, setSelected] = useState<CACategoryModel[]>([])
@@ -53,6 +55,7 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
             categoryId: categoryData.id,
             data: categoryData,
           }
+          if (hash) newDraft.hash = hash
           dispatch({
             type: 'setDraft',
             draft: newDraft,
@@ -61,13 +64,14 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
             url: '/api/save-draft',
             method: 'post',
             data: {
-              hash: query.hash ? query.hash : null,
+              hash: hash || null,
               draft: newDraft,
             },
           })
         })
         .then((res) => {
-          if (!query.hash) {
+          console.log('query.hash', hash)
+          if (!hash) {
             const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}/${res.data.result.hash}`
             window.history.pushState({path: newurl}, '', newurl)
           }

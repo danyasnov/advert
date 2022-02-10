@@ -2,6 +2,7 @@ import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
 import {CAParamsModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {captureException} from '@sentry/nextjs'
+import {first} from 'lodash'
 import MapPage from './MapPage'
 import CategoryPage from './Categories/CategoryPage'
 import FormPage from './FormPage'
@@ -65,7 +66,8 @@ const reducer = (state, action) => {
 }
 const AdvertWizard: FC = () => {
   const {query, push} = useRouter()
-  const {action, hash} = query
+  const {action} = query
+  const hash = first(query.hash)
 
   const [isFetched, setIsFetched] = useState(false)
 

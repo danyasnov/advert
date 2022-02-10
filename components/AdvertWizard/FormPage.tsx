@@ -7,7 +7,7 @@ import {
   CACategoryDataModel,
   FieldsModel,
 } from 'front-api/src/models'
-import {debounce, isEmpty, isEqual, parseInt, size} from 'lodash'
+import {debounce, first, isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -135,6 +135,8 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push, query} = useRouter()
+  const hash = first(query.hash)
+
   const formRef = useRef()
 
   const {width} = useWindowSize()
@@ -198,7 +200,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       userHash: user.hash,
       condition: condition?.value,
       fields: mappedFields,
-      hash: query.hash,
+      hash,
     }
 
     if (saveDraft) {
@@ -206,7 +208,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
         url: '/api/save-draft',
         method: 'post',
         data: {
-          hash: query.hash,
+          hash,
           draft: {...data, data: category.data},
         },
       })

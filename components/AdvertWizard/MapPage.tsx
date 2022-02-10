@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import {degradations} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
-import {get} from 'lodash'
+import {first, get} from 'lodash'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import {SerializedCookiesState} from '../../types'
@@ -29,6 +29,8 @@ const zoomRadiusMap = {
 
 const MapPage: FC<PageProps> = ({dispatch, state}) => {
   const {query, push} = useRouter()
+  const hash = first(query.hash)
+
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     if (state.draft.location) {
@@ -128,17 +130,17 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
         return Promise.reject()
       }
       newDraft.currencies = currencies
-      if (query.hash) newDraft.hash = query.hash as string
+      if (hash) newDraft.hash = hash
       dispatch({
         type: 'setDraft',
         draft: newDraft,
       })
-      if (query.hash) {
+      if (hash) {
         return makeRequest({
           url: '/api/save-draft',
           method: 'post',
           data: {
-            hash: query.hash,
+            hash,
             draft: newDraft,
           },
         }).then(() => {
