@@ -174,8 +174,9 @@ module.exports = {
       },
       backgroundImage: () => ({
         'adverto-background': "url('/img/adverto-background.png')",
-        'landing-head-bg': "url('/img/landing/head-bg.png')",
-        'landing-footer-bg': "url('/img/landing/footer-bg.png')",
+        'landing-head': "url('/img/landing/head-bg.png')",
+        'landing-footer': "url('/img/landing/footer-bg.png')",
+        'man-with-laptop': "url('/img/landing/man-with-laptop.png')",
       }),
     },
     tooltipArrows: (theme) => ({

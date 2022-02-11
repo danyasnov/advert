@@ -9,7 +9,6 @@ import {noop} from 'lodash'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import Head from 'next/head'
-import Logo from '../Logo'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import ImageWrapper from '../ImageWrapper'
 import {FormikNumber, FormikSelect, FormikText} from '../FormikComponents'
@@ -101,10 +100,16 @@ const MerchantLayout: FC = observer(() => {
       <Head>
         <title>{t('LANDING_HEAD_TEXT')}</title>
       </Head>
-      <div className='flex justify-between items-center -mb-24 py-3 max-w-960px w-full'>
+      <div className='flex justify-between items-center -mb-24 py-3 max-w-960px w-full px-6'>
         <div className='flex items-center space-x-5'>
-          <Logo size={70} />
-          <span className='text-h-2 max-w-xs'>{t('LANDING_HEAD_TEXT')}</span>
+          <img
+            src='/img/logo/AdvertoLogoSquare.png'
+            alt='Logo'
+            className='w-6 h-6 s:w-9 s:h-9 m:w-12 m:h-12 l:w-18 l:h-18'
+          />
+          <span className='text-body-4 m:text-h-2 max-w-xs'>
+            {t('LANDING_HEAD_TEXT')}
+          </span>
         </div>
         <div className='h-4 w-32'>
           <LinkSelect
@@ -120,7 +125,7 @@ const MerchantLayout: FC = observer(() => {
           />
         </div>
       </div>
-      <div className='bg-landing-head-bg flex justify-center pt-20 w-full'>
+      <div className='bg-landing-head flex justify-center pt-20 w-full'>
         <div className='max-w-960px flex w-full justify-between'>
           <div className='flex flex-col w-72 space-y-5 mt-20'>
             <span
@@ -128,12 +133,12 @@ const MerchantLayout: FC = observer(() => {
               dangerouslySetInnerHTML={{__html: t('LANDING_EARN_WITH')}}
             />
             <span
-              className='font-medium text-body-1'
+              className='l:font-medium text-body-2 font-semibold mb-5 text-center'
               dangerouslySetInnerHTML={{
                 __html: t('LANDING_LAUNCH_IN_ONE_HOUR'),
               }}
             />
-            <span className='font-medium text-brand-a1'>
+            <span className='l:font-medium text-brand-a1 text-body-2 font-semibold text-center pb-5'>
               {t('LANDING_FREE_NO_LIMIT')}
             </span>
             <PrimaryButton
@@ -144,17 +149,16 @@ const MerchantLayout: FC = observer(() => {
               {t('LANDING_START_NOW')}
             </PrimaryButton>
           </div>
-          <div style={{width: '550px', height: '700px'}} className='relative'>
-            <ImageWrapper
-              layout='fill'
-              objectFit='contain'
-              type='/img/landing/man-with-laptop.png'
+          <div style={{width: '550px', height: '700px'}} className=''>
+            <img
+              src='/img/landing/man-with-laptop.png'
               alt='man-with-laptop'
+              className='mb-5'
             />
           </div>
         </div>
       </div>
-      <div className='max-w-960px flex w-full justify-between'>
+      <div className='max-w-960px flex w-full justify-between px-9'>
         <div style={{width: '450px', height: '700px'}} className='relative'>
           <ImageWrapper
             layout='fill'
@@ -190,7 +194,7 @@ const MerchantLayout: FC = observer(() => {
           </div>
         </div>
       </div>
-      <div className='max-w-960px flex w-full justify-between'>
+      <div className='max-w-960px flex w-full justify-between px-9'>
         <div className='flex flex-col w-96'>
           <div className='ml-20 flex flex-col'>
             <span
@@ -240,7 +244,7 @@ const MerchantLayout: FC = observer(() => {
           />
         </div>
       </div>
-      <div className='bg-landing-footer-bg bg-no-repeat bg-bottom py-24 flex flex-col items-center w-full'>
+      <div className='bg-landing-footer bg-no-repeat bg-bottom py-24 flex flex-col items-center w-full'>
         <div className='w-96 flex flex-col items-center'>
           <span className='text-h-1 text-brand-a1 font-bold text-center mb-5'>
             {t('LANDING_JOIN_ADVERTO')}
