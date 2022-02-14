@@ -87,6 +87,10 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           content={advert ? advert.description : description}
         />
         <meta name='apple-mobile-web-app-title' content={title} />
+        <meta
+          name='facebook-domain-verification'
+          content='pnu04x7hblq42v4wo1993abj3wkon6'
+        />
       </Head>
       {advert ? (
         <>
@@ -144,7 +148,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1735830353144099');
+  fbq('init', '501894937955088');
   fbq('track', 'PageView');
   fbq('track', 'ViewContent', {
   content_name: '${advert.title}',
@@ -168,15 +172,15 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
             id='fbevents'
             dangerouslySetInnerHTML={{
               __html: `!function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};
               if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
               n.queue=[];t=b.createElement(e);t.async=!0;
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1735830353144099');
-            fbq('track', 'PageView');`,
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '501894937955088');
+              fbq('track', 'PageView');`,
             }}
           />
           <Script
@@ -213,6 +217,15 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
             gtag('config', 'UA-211806856-1');`,
         }}
       />
+      <noscript>
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img
+          height='1'
+          width='1'
+          style={{display: 'none'}}
+          src='https://www.facebook.com/tr?id=501894937955088&ev=PageView&noscript=1'
+        />
+      </noscript>
     </>
   )
 }
