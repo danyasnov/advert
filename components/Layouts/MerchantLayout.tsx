@@ -100,7 +100,7 @@ const MerchantLayout: FC = observer(() => {
       <Head>
         <title>{t('LANDING_HEAD_TEXT')}</title>
       </Head>
-      <div className='flex justify-between items-center l:-mb-24 py-3 max-w-960px w-full px-6 s:px-16 m:px-24'>
+      <div className='flex justify-between items-center l:-mb-24 py-3 max-w-960px l:max-w-[1124px] w-full px-6 s:px-16 m:px-24'>
         <div className='flex items-center space-x-5'>
           <img
             src='/img/logo/AdvertoLogoSquare.png'
@@ -126,7 +126,7 @@ const MerchantLayout: FC = observer(() => {
         </div>
       </div>
       <div className='bg-landing-head bg-center flex justify-center pt-20 w-full'>
-        <div className='max-w-960px flex w-full justify-between relative s:items-center'>
+        <div className='max-w-960px l:max-w-[1124px] flex w-full justify-between relative s:items-center'>
           <div className='flex flex-col w-50 s:w-[360px] m:w-[500px]  space-y-5  z-10 px-6 s:px-16 m:px-24 pb-30 s:pb-10'>
             <span
               className='text-headline-6 s:text-[45px] s:leading-[56px] m:text-h-1 font-semibold'
@@ -154,7 +154,7 @@ const MerchantLayout: FC = observer(() => {
           </div>
         </div>
       </div>
-      <div className='max-w-960px flex w-full justify-end s:justify-between s:items-center l:justify-between px-6 s:px-16 m:px-24 mt-10 relative'>
+      <div className='max-w-960px l:max-w-[1124px] flex w-full justify-end s:justify-between s:items-center l:justify-between px-6 s:px-16 m:px-24 mt-10 relative'>
         <div className='absolute s:static  z-0 w-72 s:w-[307px] m:w-[400px] l:w-596px -left-28 top-16'>
           <img src='/img/landing/phone.png' alt='phone' />
         </div>
@@ -183,7 +183,7 @@ const MerchantLayout: FC = observer(() => {
           </div>
         </div>
       </div>
-      <div className='max-w-960px flex w-full justify-between px-6 s:px-16 m:px-24 mt-60 s:mt-20 relative'>
+      <div className='max-w-960px l:max-w-[1124px] flex w-full justify-between px-6 s:px-16 m:px-24 mt-60 s:mt-20 relative'>
         <div className='flex flex-col w-72 l:w-96 z-10'>
           <div className='w-50 s:w-[350px] flex flex-col'>
             <span className='text-brand-a1 leading-none text-headline-6 s:text-[45px]  l:text-[60px] font-semibold l:font-bold pb-10 '>
