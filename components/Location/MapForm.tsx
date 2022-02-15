@@ -123,13 +123,10 @@ const MapForm: FC<Props> = ({onClose}) => {
       setCookiesObject({
         address: getShortAddress(res.data.result),
       })
-      router.push({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          ...getLocationQuery(res.data.result),
-        },
-      })
+      const {city, country} = getLocationQuery(res.data.result)
+      router.query.city = city
+      router.query.country = country
+      router.push(router)
       onClose()
     })
   }

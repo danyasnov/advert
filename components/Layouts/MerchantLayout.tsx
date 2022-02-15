@@ -22,6 +22,7 @@ import {languageOptions, withLangIcons} from '../Header'
 import LinkSelect from '../Selects/LinkSelect'
 import {setCookiesObject} from '../../helpers'
 import {makeRequest} from '../../api'
+import MetaTags from '../MetaTags'
 
 const MerchantLayout: FC = observer(() => {
   const {t} = useTranslation()
@@ -97,9 +98,7 @@ const MerchantLayout: FC = observer(() => {
 
   return (
     <div className='flex flex-col items-center l:space-y-24'>
-      <Head>
-        <title>{t('LANDING_HEAD_TEXT')}</title>
-      </Head>
+      <MetaTags title={t('LANDING_HEAD_TEXT')} />
       <div className='flex justify-between items-center l:-mb-24 py-3 max-w-960px l:max-w-[1124px] w-full px-6 s:px-16 m:px-24'>
         <div className='flex items-center space-x-5'>
           <img
