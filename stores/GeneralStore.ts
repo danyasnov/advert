@@ -9,6 +9,7 @@ interface Document {
 }
 export interface IGeneralsHydration {
   locationCodes: string
+  isProduct: boolean
   userHash: string
   language: string
   document: Document
@@ -34,6 +35,7 @@ export interface IGeneralStore {
   toggleCookiesWarnVisibility: () => void
   setShowLogin: (value: boolean) => void
   showLogin: boolean
+  isProduct: boolean
   languages: SettingsLanguageModel[]
   languagesByIsoCode: Record<string, SettingsLanguageModel>
   hydrate(data: IGeneralsHydration): void
@@ -71,6 +73,8 @@ export class GeneralStore implements IGeneralStore {
 
   showLogin = false
 
+  isProduct = false
+
   setShowLogin = (value: boolean): void => {
     this.showLogin = value
   }
@@ -107,5 +111,6 @@ export class GeneralStore implements IGeneralStore {
     this.showErrorAlert = data?.showErrorAlert ?? ''
     this.languages = data?.languages ?? []
     this.language = data?.language ?? 'en'
+    this.isProduct = data?.isProduct ?? false
   }
 }
