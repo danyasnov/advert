@@ -35,12 +35,12 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
   }
   if (isEmpty(items)) return null
   return (
-    <div className='flex'>
+    <div className='flex min-h-[48px]'>
       {items.map((i) => {
         return (
           <Button
             key={i.id}
-            className={`text-body-2  pb-2 border-b border-shadow-b ${
+            className={`text-body-2 pt-6 pb-2 border-b border-shadow-b ${
               value === i.id
                 ? 'border-b-2 border-brand-a1 pb-7px text-black-b'
                 : 'text-black-c'
