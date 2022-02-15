@@ -19,7 +19,7 @@ import MobileCategoriesHeader from './MobileCategoriesHeader'
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {query, push} = router
+  const {query} = router
   const hash = first(query.hash)
 
   const {categoriesWithoutAll: categories} = useCategoriesStore()

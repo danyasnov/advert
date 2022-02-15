@@ -1,7 +1,7 @@
 import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {Formik, Form, Field, useFormikContext} from 'formik'
+import {Formik, Form, Field, useFormikContext, FormikValues} from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
@@ -189,7 +189,8 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     }
   }, [state.draft])
 
-  const onSubmit = (values, saveDraft) => {
+  const onSubmit = (values: FormikValues, saveDraft) => {
+    console.log(values, saveDraft)
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -283,6 +284,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           innerRef={formRef}
           validate={(values) => {
             const errors: any = {}
+            // @ts-ignore
             const {photos, content, condition, price} = values
 
             const categoryData = category.data
@@ -319,7 +321,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           }}
           validateOnBlur={false}
           validateOnChange={false}
-          onSubmit={onSubmit}>
+          onSubmit={(val) => onSubmit(val, false)}>
           {({submitForm}) => (
             <Form className='flex flex-col space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
               <div>
@@ -542,11 +544,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           )}
         </Formik>
         <div className='ml-12 hidden m:flex w-full max-w-288px '>
-          <SideNavigation
-            items={headerRefs.current}
-            // @ts-ignore
-            onSaveDraft={() => onSubmit(formRef.current.values, true)}
-          />
+          <SideNavigation items={headerRefs.current} />
         </div>
       </div>
     </div>
