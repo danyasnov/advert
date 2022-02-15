@@ -99,7 +99,7 @@ const MerchantLayout: FC = observer(() => {
   return (
     <>
       <MetaTags title={t('LANDING_HEAD_TEXT')} />
-      <div className='flex flex-col items-center l:space-y-24'>
+      <div className='flex flex-col items-center l:space-y-24 overflow-x-hidden	'>
         <div className='flex justify-between items-center l:-mb-24 py-3 max-w-960px l:max-w-[1124px] w-full px-6 s:px-16 m:px-24'>
           <div className='flex items-center space-x-5'>
             <img
