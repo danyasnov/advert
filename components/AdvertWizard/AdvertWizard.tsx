@@ -2,6 +2,7 @@ import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
 import {CAParamsModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {captureException} from '@sentry/nextjs'
+import {first} from 'lodash'
 import MapPage from './MapPage'
 import CategoryPage from './Categories/CategoryPage'
 import FormPage from './FormPage'
@@ -65,6 +66,8 @@ const reducer = (state, action) => {
 }
 const AdvertWizard: FC = () => {
   const {query, push} = useRouter()
+  const {action} = query
+  const hash = first(query.hash)
 
   const [isFetched, setIsFetched] = useState(false)
 
@@ -73,11 +76,11 @@ const AdvertWizard: FC = () => {
   useEffect(() => {
     // eslint-disable-next-line consistent-return
     const fetch = async () => {
-      if (query.action === 'create') {
+      if (action === 'create' && hash) {
         try {
           const draftRes = await makeRequest({
             url: `/api/fetch-draft`,
-            data: {hash: query.hash},
+            data: {hash},
             method: 'post',
           })
           if (!draftRes?.data?.result?.advertDraft) {
@@ -104,12 +107,21 @@ const AdvertWizard: FC = () => {
         } catch (e) {
           captureException(e)
         }
-      }
-      if (query.action === 'edit') {
+      } else if (action === 'create' && !hash) {
+        dispatch({
+          type: 'setDraft',
+          draft: {},
+        })
+        dispatch({
+          type: 'setPage',
+          page: AdvertPages.mapPage,
+        })
+        setIsFetched(true)
+      } else if (action === 'edit') {
         try {
           const advertRes = await makeRequest({
             url: `/api/fetch-edit-advertise`,
-            data: {hash: query.hash},
+            data: {hash},
             method: 'post',
           })
 

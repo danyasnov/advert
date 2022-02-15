@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import {degradations} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
-import {get} from 'lodash'
+import {first, get} from 'lodash'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import {SerializedCookiesState} from '../../types'
@@ -29,6 +29,8 @@ const zoomRadiusMap = {
 
 const MapPage: FC<PageProps> = ({dispatch, state}) => {
   const {query, push} = useRouter()
+  const hash = first(query.hash)
+
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     if (state.draft.location) {
@@ -121,33 +123,38 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
       data: {
         location: {latitude, longitude},
       },
-    })
-      .then((data) => {
-        const currencies = data.data.result
-        if (!currencies) {
-          toast.error(t('EMPTY_COORDS'))
-          return Promise.reject()
-        }
-        newDraft.currencies = currencies
-        dispatch({
-          type: 'setDraft',
-          draft: newDraft,
-        })
+    }).then((data) => {
+      const currencies = data.data.result
+      if (!currencies) {
+        toast.error(t('EMPTY_COORDS'))
+        return Promise.reject()
+      }
+      newDraft.currencies = currencies
+      if (hash) newDraft.hash = hash
+      dispatch({
+        type: 'setDraft',
+        draft: newDraft,
+      })
+      if (hash) {
         return makeRequest({
           url: '/api/save-draft',
           method: 'post',
           data: {
-            hash: query.hash,
+            hash,
             draft: newDraft,
           },
+        }).then(() => {
+          dispatch({
+            type: 'setPage',
+            page: AdvertPages.categoryPage,
+          })
         })
+      }
+      return dispatch({
+        type: 'setPage',
+        page: AdvertPages.categoryPage,
       })
-      .then(() => {
-        dispatch({
-          type: 'setPage',
-          page: AdvertPages.categoryPage,
-        })
-      })
+    })
   }
 
   const handleOnLoad = (map, maps) => {

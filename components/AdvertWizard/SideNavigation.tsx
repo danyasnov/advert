@@ -1,14 +1,10 @@
 import {FC} from 'react'
-import {useTranslation} from 'next-i18next'
 import LinkButton from '../Buttons/LinkButton'
-import SecondaryButton from '../Buttons/SecondaryButton'
 
 interface Props {
   items: {title: string; ref: HTMLElement}[]
-  onSaveDraft: () => void
 }
-const SideNavigation: FC<Props> = ({items, onSaveDraft}) => {
-  const {t} = useTranslation()
+const SideNavigation: FC<Props> = ({items}) => {
   return (
     <div className='flex flex-col items-start space-y-4 fixed'>
       {items.map((i) => (
@@ -28,7 +24,6 @@ const SideNavigation: FC<Props> = ({items, onSaveDraft}) => {
           </span>
         </LinkButton>
       ))}
-      {/* <SecondaryButton onClick={onSaveDraft}>{t('SAVE')}</SecondaryButton> */}
     </div>
   )
 }

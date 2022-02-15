@@ -62,13 +62,13 @@ const Header: FC = observer(() => {
     <header className='flex s:justify-center relative shadow-lg z-10'>
       <div className='header-width'>
         <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
-          <div className='hidden s:flex space-x-4'>
+          <div className='flex space-x-4'>
             {/*  <LinkButton */}
             {/*    onClick={notImplementedAlert} */}
             {/*    label={t('FOR_BUSINESS')} */}
             {/*  /> */}
             <LinkWrapper
-              className='text-brand-b1 text-body-3'
+              className='text-brand-b1 text-body-3 whitespace-nowrap'
               href='/merchant'
               title={t('SHOPS')}>
               {t('SHOPS')}
@@ -111,18 +111,9 @@ const Header: FC = observer(() => {
             className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
             onClick={async () => {
               if (!user) {
-                setShowLogin(true)
-              } else {
-                makeRequest({
-                  url: '/api/save-draft',
-                  method: 'POST',
-                  data: {
-                    draft: {},
-                  },
-                }).then((res) => {
-                  push(`/advert/create/${res.data.result.hash}`)
-                })
+                return setShowLogin(true)
               }
+              return push(`/advert/create`)
             }}>
             <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
           </PrimaryButton>

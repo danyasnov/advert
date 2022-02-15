@@ -35,7 +35,7 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
   }
   if (isEmpty(items)) return null
   return (
-    <div className='flex h-12'>
+    <div className='flex min-h-[48px]'>
       {items.map((i) => {
         return (
           <Button

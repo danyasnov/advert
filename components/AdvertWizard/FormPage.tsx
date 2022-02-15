@@ -1,13 +1,13 @@
 import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {Formik, Form, Field, useFormikContext} from 'formik'
+import {Formik, Form, Field, useFormikContext, FormikValues} from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
   FieldsModel,
-} from 'front-api/src/models/index'
-import {debounce, isEmpty, isEqual, parseInt, size} from 'lodash'
+} from 'front-api/src/models'
+import {debounce, first, isEmpty, isEqual, parseInt, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -30,6 +30,7 @@ import AdvertFormField from './AdvertFormField'
 import AdvertFormHeading from './AdvertFormHeading'
 import SideNavigation from './SideNavigation'
 import Button from '../Buttons/Button'
+import FormikAdvertAutoSave from './FormikAdvertAutoSave'
 
 const findSelectValue = (id, options) => {
   const option = options.find((o) => id === o.id) || {}
@@ -134,6 +135,8 @@ const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
 }
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push, query} = useRouter()
+  const hash = first(query.hash)
+
   const formRef = useRef()
 
   const {width} = useWindowSize()
@@ -186,7 +189,8 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     }
   }, [state.draft])
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: FormikValues, saveDraft) => {
+    console.log(values, saveDraft)
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -197,33 +201,34 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
       userHash: user.hash,
       condition: condition?.value,
       fields: mappedFields,
+      hash,
     }
 
-    // if (saveDraft) {
-    //   makeRequest({
-    //     url: '/api/save-draft',
-    //     method: 'post',
-    //     data: {
-    //       hash: query.hash,
-    //       draft: {...data, data: category.data},
-    //     },
-    //   })
-    // } else {
-    makeRequest({
-      url: '/api/submit-draft',
-      data: {
-        params: data,
-        shouldUpdate: query.action === 'edit',
-      },
-      method: 'post',
-    }).then((res) => {
-      if (res.data.status === 200) {
-        push(`/user/${user.hash}?activeTab=1`)
-      } else if (res.data.error) {
-        toast.error(t(res.data.error))
-      }
-    })
-    // }
+    if (saveDraft) {
+      makeRequest({
+        url: '/api/save-draft',
+        method: 'post',
+        data: {
+          hash,
+          draft: {...data, data: category.data},
+        },
+      })
+    } else {
+      makeRequest({
+        url: '/api/submit-draft',
+        data: {
+          params: data,
+          shouldUpdate: query.action === 'edit',
+        },
+        method: 'post',
+      }).then((res) => {
+        if (res.data.status === 200) {
+          push(`/user/${user.hash}?activeTab=1`)
+        } else if (res.data.error) {
+          toast.error(t(res.data.error))
+        }
+      })
+    }
   }
 
   const onChangeFields = useCallback(
@@ -279,11 +284,12 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           innerRef={formRef}
           validate={(values) => {
             const errors: any = {}
+            // @ts-ignore
             const {photos, content, condition, price} = values
 
             const categoryData = category.data
 
-            const mainContent = content.find(
+            const mainContent = (content || []).find(
               (c) => c.langCode === user.mainLanguage.isoCode,
             )
 
@@ -315,7 +321,7 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
           }}
           validateOnBlur={false}
           validateOnChange={false}
-          onSubmit={onSubmit}>
+          onSubmit={(val) => onSubmit(val, false)}>
           {({submitForm}) => (
             <Form className='flex flex-col space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
               <div>
@@ -531,15 +537,14 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
                 </div>
               </div>
               <CategoryUpdater onChangeFields={onChangeFields} />
+              {query.action === 'create' && (
+                <FormikAdvertAutoSave onSubmit={onSubmit} />
+              )}
             </Form>
           )}
         </Formik>
         <div className='ml-12 hidden m:flex w-full max-w-288px '>
-          <SideNavigation
-            items={headerRefs.current}
-            // @ts-ignore
-            onSaveDraft={() => onSubmit(formRef.current.values, true)}
-          />
+          <SideNavigation items={headerRefs.current} />
         </div>
       </div>
     </div>

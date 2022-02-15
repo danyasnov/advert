@@ -80,12 +80,14 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
           <Form className='space-y-4 pb-8'>
             <Field
               name='name'
+              disableTrack
               component={FormikText}
               validate={validateName}
               placeholder={t('NAME')}
             />
             <Field
               name='surname'
+              disableTrack
               component={FormikText}
               validate={validateSurname}
               placeholder={t('SURNAME')}

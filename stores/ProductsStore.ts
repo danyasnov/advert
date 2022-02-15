@@ -1,10 +1,7 @@
 import {action, makeAutoObservable} from 'mobx'
-import {
-  AdvertiseDetail,
-  AdvertiseListItemModel,
-} from 'front-api'
+import {AdvertiseDetail, AdvertiseListItemModel} from 'front-api'
 import axios, {AxiosRequestConfig, CancelTokenSource} from 'axios'
-import {CACategoryDataFieldModel} from 'front-api/src/models/index'
+import {CACategoryDataFieldModel} from 'front-api/src/models'
 import {isEmpty, omit} from 'lodash'
 import {ParsedUrlQuery} from 'querystring'
 import {toast} from 'react-toastify'

@@ -6,6 +6,7 @@ import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
+import {observer} from 'mobx-react-lite'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
@@ -19,6 +20,7 @@ import {SerializedCookiesState} from '../../types'
 import Button from '../Buttons/Button'
 import {getPosition} from '../../utils'
 import SvgMapMarker from '../../assets/icons/SvgMapMarker'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const getMark = (label) => ({
   style: {
@@ -67,13 +69,14 @@ const invertedMarksMap = objectFlip(marksMap)
 interface Props {
   onClose: () => void
 }
-const MapForm: FC<Props> = ({onClose}) => {
+const MapForm: FC<Props> = observer(({onClose}) => {
   const router = useRouter()
   const cookies: SerializedCookiesState = parseCookies()
   const {searchLocation, userLocation, searchRadius} = cookies
   const {t} = useTranslation()
   const initialLocation = useRef(null)
 
+  const {isProduct} = useGeneralStore()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     let loc
     if (searchLocation) {
@@ -123,13 +126,19 @@ const MapForm: FC<Props> = ({onClose}) => {
       setCookiesObject({
         address: getShortAddress(res.data.result),
       })
-      router.push({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          ...getLocationQuery(res.data.result),
-        },
-      })
+      const {city, country} = getLocationQuery(res.data.result)
+      if (
+        router.pathname === '/[country]/[city]/[[...categories]]' &&
+        !isProduct
+      ) {
+        const urlArray = window.location.pathname.split('/')
+        urlArray[1] = country
+        urlArray[2] = city
+        router.push(`${urlArray.join('/')}${window.location.search}`)
+      } else {
+        router.push(router)
+      }
+
       onClose()
     })
   }
@@ -238,6 +247,6 @@ const MapForm: FC<Props> = ({onClose}) => {
       </div>
     </div>
   )
-}
+})
 
 export default MapForm

@@ -166,6 +166,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           cities: locations,
         },
         generalStore: {
+          isProduct: !!product,
           userHash: state.hash ?? '',
           language: state.language,
         },

@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {Field, Form, Formik} from 'formik'
-import {AuthType, RestResponseCodes} from 'front-api/src/models/index'
+import {AuthType, RestResponseCodes} from 'front-api/src/models'
 import ReCAPTCHA from 'react-google-recaptcha'
 import {makeRequest} from '../../api'
 import {useCountriesStore} from '../../providers/RootStoreProvider'
@@ -36,7 +36,12 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         phone: '',
       }}
       onSubmit={async (values) => {
-        if (!token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) return
+        if (
+          !token &&
+          process.env.NEXT_PUBLIC_RECAPTCHA_KEY &&
+          !cookies.disableCaptcha
+        )
+          return
 
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({
@@ -66,6 +71,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
             />
             <Field
               name='phone'
+              disableTrack
               component={FormikNumber}
               validate={(value) => {
                 let error = ''

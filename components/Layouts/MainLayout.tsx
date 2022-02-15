@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
 import {toJS} from 'mobx'
+import {isEmpty} from 'lodash'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -105,17 +106,9 @@ const MainLayout: FC = observer(() => {
               className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
               onClick={() => {
                 if (!user) {
-                  setShowLogin(true)
+                  return setShowLogin(true)
                 }
-                makeRequest({
-                  url: '/api/save-draft',
-                  method: 'POST',
-                  data: {
-                    draft: {},
-                  },
-                }).then((res) => {
-                  push(`/advert/create/${res.data.result.hash}`)
-                })
+                return push(`/advert/create`)
               }}>
               <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
             </Button>
@@ -141,17 +134,19 @@ const MainLayout: FC = observer(() => {
               />
             ))}
             <div>
-              <TitleWithSeparator
-                title={t('RECOMMENDATIONS_FOR_YOU')}
-                rightContent={
-                  <LinkWrapper
-                    title={t('SEE_ALL')}
-                    className='text-body-3 text-brand-b1'
-                    href={locationCodes}>
-                    {t('SEE_ALL')}
-                  </LinkWrapper>
-                }
-              />
+              {!isEmpty(products) && (
+                <TitleWithSeparator
+                  title={t('RECOMMENDATIONS_FOR_YOU')}
+                  rightContent={
+                    <LinkWrapper
+                      title={t('SEE_ALL')}
+                      className='text-body-3 text-brand-b1'
+                      href={locationCodes}>
+                      {t('SEE_ALL')}
+                    </LinkWrapper>
+                  }
+                />
+              )}
               <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                 <ScrollableCardGroup
                   products={products}
@@ -167,12 +162,14 @@ const MainLayout: FC = observer(() => {
                     )
                   }
                 />
-                <LinkWrapper
-                  title={t('SEE_ALL')}
-                  className='text-body-3 text-brand-b1'
-                  href={locationCodes}>
-                  <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
-                </LinkWrapper>
+                {!isEmpty(products) && (
+                  <LinkWrapper
+                    title={t('SEE_ALL')}
+                    className='text-body-3 text-brand-b1'
+                    href={locationCodes}>
+                    <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
+                  </LinkWrapper>
+                )}
               </div>
             </div>
           </main>
