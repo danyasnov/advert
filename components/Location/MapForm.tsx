@@ -124,9 +124,10 @@ const MapForm: FC<Props> = ({onClose}) => {
         address: getShortAddress(res.data.result),
       })
       const {city, country} = getLocationQuery(res.data.result)
-      router.query.city = city
-      router.query.country = country
-      router.push(router)
+      const urlArray = window.location.pathname.split('/')
+      urlArray[1] = country
+      urlArray[2] = city
+      router.push(`${urlArray.join('/')}${window.location.search}`)
       onClose()
     })
   }
