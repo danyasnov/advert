@@ -23,6 +23,7 @@ import LinkSelect from '../Selects/LinkSelect'
 import {setCookiesObject} from '../../helpers'
 import {makeRequest} from '../../api'
 import MetaTags from '../MetaTags'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 const MerchantLayout: FC = observer(() => {
   const {t} = useTranslation()
@@ -102,11 +103,11 @@ const MerchantLayout: FC = observer(() => {
       <div className='flex flex-col items-center l:space-y-24 overflow-x-hidden	'>
         <div className='flex justify-between items-center l:-mb-24 py-3 max-w-960px l:max-w-[1124px] w-full px-6 s:px-16 m:px-24'>
           <div className='flex items-center space-x-5'>
-            <img
-              src='/img/logo/AdvertoLogoSquare.png'
-              alt='Logo'
-              className='w-6 h-6 s:w-9 s:h-9 m:w-12 m:h-12 l:w-18 l:h-18'
-            />
+            <LinkWrapper href='/' title='main'>
+              <div className='w-6 h-6 s:w-9 s:h-9 m:w-12 m:h-12 l:w-18 l:h-18'>
+                <img src='/img/logo/AdvertoLogoSquare.png' alt='Logo' />
+              </div>
+            </LinkWrapper>
             <span className='text-body-4 s:text-body-3 m:text-h-2 max-w-xs'>
               {t('LANDING_HEAD_TEXT')}
             </span>
