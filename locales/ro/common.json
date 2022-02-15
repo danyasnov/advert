@@ -844,6 +844,7 @@
   "COST_GOODS": "Cost of goods",
   "COST_PAYMENT_AD_1": "3 days for {{costAdThreeDays}} {{currency}}",
   "COST_PAYMENT_AD_4": "10 days for {{costAdTenDays}} {{currency}}",
+  "COST_PER_METER": "m²",
   "COUNTRIES_PAGE_TITLE": "Caută anunțuri după țară - ADVERTO",
   "COUNTRY_MUST_BE_PRESENT": "Country must be selected",
   "COUNTRY_SELECTION": "Country selection",

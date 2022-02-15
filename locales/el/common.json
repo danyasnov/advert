@@ -844,6 +844,7 @@
   "COST_GOODS": "Κόστος προϊόντων",
   "COST_PAYMENT_AD_1": "3 days for {{costAdThreeDays}} {{currency}}",
   "COST_PAYMENT_AD_4": "10 days for {{costAdTenDays}} {{currency}}",
+  "COST_PER_METER": "m²",
   "COUNTRIES_PAGE_TITLE": "ADVERTO - Αναζητήστε αγγελίες ανά χώρα",
   "COUNTRY_MUST_BE_PRESENT": "Η χώρα είναι υποχρεωτική",
   "COUNTRY_SELECTION": "Επιλογή χώρας",

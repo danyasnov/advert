@@ -18,7 +18,8 @@ import MobileCategoriesHeader from './MobileCategoriesHeader'
 
 const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {t} = useTranslation()
-  const {query} = useRouter()
+  const router = useRouter()
+  const {query, push} = router
   const hash = first(query.hash)
 
   const {categoriesWithoutAll: categories} = useCategoriesStore()
@@ -70,10 +71,9 @@ const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
           })
         })
         .then((res) => {
-          console.log('query.hash', hash)
           if (!hash) {
-            const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}/${res.data.result.hash}`
-            window.history.pushState({path: newurl}, '', newurl)
+            router.query.hash = [res.data.result.hash]
+            router.push(router)
           }
           dispatch({
             type: 'setPage',
