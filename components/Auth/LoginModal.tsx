@@ -17,7 +17,7 @@ const LoginModal: FC<Props> = ({isOpen, onClose}) => {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
-      shouldCloseOnOverlayClick
+      shouldCloseOnOverlayClick={false}
       ariaHideApp={false}
       contentLabel={title}
       className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0  mx-auto top-1/3 s:top-24 flex outline-none drop-shadow-2xl'
