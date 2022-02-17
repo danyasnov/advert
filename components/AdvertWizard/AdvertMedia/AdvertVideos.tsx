@@ -2,7 +2,7 @@ import {FC, useCallback, useEffect, useState} from 'react'
 import {FieldProps} from 'formik'
 import {toast} from 'react-toastify'
 import {useTranslation} from 'next-i18next'
-import {size} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import useDropListener from '../../../hooks/useDropListener'
 import {makeRequest} from '../../../api'
 import DropZone from './DropZone'
@@ -23,7 +23,8 @@ const AdvertVideos: FC<FieldProps & Props> = ({
   const {t} = useTranslation()
   const {name, value} = field
 
-  const [video, setVideo] = useState<VideoFile>(value || null)
+  const [video, setVideo] = useState<VideoFile>(isEmpty(value) ? null : value)
+
   const {setFieldValue} = form
   const [isDragging, setIsDragging] = useState(false)
   useEffect(() => {

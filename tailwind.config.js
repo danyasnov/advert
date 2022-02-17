@@ -120,6 +120,8 @@ module.exports = {
         'notification-success': 'rgba(0, 163, 0, 1)',
         'notification-info': '#80B2FF',
         error: '#CC3237',
+        'nc-error': '#FF4040',
+        'nc-success': '#0EB85E',
         'nc-title': '#172029',
         'nc-primary': '#FF8514',
         'nc-placeholder': '#89A3BE',

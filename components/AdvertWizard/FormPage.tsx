@@ -1,27 +1,20 @@
 import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {Formik, Form, Field, useFormikContext, FormikValues} from 'formik'
+import {Formik, Form, Field, FormikValues} from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
-  FieldsModel,
 } from 'front-api/src/models'
-import {debounce, first, isEmpty, isEqual, parseInt, size} from 'lodash'
+import {debounce, first, get, isEmpty, isEqual, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {useWindowSize} from 'react-use'
 import {AdvertPages, PageProps} from './AdvertWizard'
 import {makeRequest} from '../../api'
-import {
-  FormikCreateFields,
-  FormikSelect,
-  FormikSwitch,
-} from '../FormikComponents'
 import AdvertDescription from './AdvertDescription'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
-import AdvertPrice from './AdvertPrice'
 import AdvertPhotos from './AdvertMedia/AdvertPhotos'
 import AdvertVideos from './AdvertMedia/AdvertVideos'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -31,108 +24,26 @@ import AdvertFormHeading from './AdvertFormHeading'
 import SideNavigation from './SideNavigation'
 import Button from '../Buttons/Button'
 import FormikAdvertAutoSave from './FormikAdvertAutoSave'
+import {
+  CategoryUpdater,
+  FormGroup,
+  mapCategoryData,
+  mapFormikFields,
+  mapOriginalFields,
+  validateCondition,
+  validateFields,
+  validatePhoto,
+  validatePrice,
+  validateTitle,
+} from './utils'
+import AdvertPrice from './AdvertPrice'
+import {
+  FormikCreateFields,
+  FormikSelect,
+  FormikSwitch,
+} from '../FormikComponents'
+import FormProgressBar from './FormProgressBar'
 
-const findSelectValue = (id, options) => {
-  const option = options.find((o) => id === o.id) || {}
-  return {
-    label: option.value,
-    value: option.id,
-  }
-}
-const mapFormikFields = (rawFields = [], fieldsById = {}) => {
-  return Object.fromEntries(
-    Object.entries(rawFields)
-      .map(([key, value]) => {
-        const field = fieldsById[key]
-        let mappedValue
-        switch (field.fieldType) {
-          case 'select':
-          case 'iconselect': {
-            // @ts-ignore
-            if (value?.value) {
-              // @ts-ignore
-              mappedValue = [value.value]
-            }
-            break
-          }
-          case 'multiselect': {
-            if (Array.isArray(value) && value.length) {
-              mappedValue = value.map((v) => v.value)
-            }
-            break
-          }
-          case 'int': {
-            const formattedValue = parseInt(value as string, 10)
-            if (!Number.isNaN(formattedValue)) {
-              mappedValue = [formattedValue]
-            }
-            break
-          }
-          default: {
-            if (value) mappedValue = [value]
-          }
-        }
-        return [key, mappedValue]
-      })
-      .filter(([, value]) => !!value),
-  )
-}
-const mapOriginalFields = (rawFields = {}, fieldsById = {}) => {
-  return Object.fromEntries(
-    Object.entries(rawFields)
-      .map(([key, value]) => {
-        const field = fieldsById[key]
-        let mappedValue
-        switch (field.fieldType) {
-          case 'select':
-          case 'iconselect': {
-            mappedValue = findSelectValue(value[0], field.multiselects.top)
-            break
-          }
-          case 'multiselect': {
-            if (Array.isArray(value) && value.length) {
-              mappedValue = value.map((v) =>
-                findSelectValue(v, field.multiselects.top),
-              )
-            }
-            break
-          }
-          default: {
-            // eslint-disable-next-line prefer-destructuring
-            if (value) mappedValue = value[0]
-          }
-        }
-        return [key, mappedValue]
-      })
-      .filter(([, value]) => !!value),
-  )
-}
-const mapCategoryData = (
-  category: CACategoryDataModel,
-): {
-  data: CACategoryDataModel
-  fieldsById: Record<string, CACategoryDataFieldModel>
-} => {
-  return {
-    data: category,
-    fieldsById: category.fields.reduce((acc, value) => {
-      acc[value.id] = value
-      return acc
-    }, {}),
-  }
-}
-
-const CategoryUpdater: FC<{onChangeFields: (fields: FieldsModel) => void}> = ({
-  onChangeFields,
-}) => {
-  const {values} = useFormikContext()
-  useEffect(() => {
-    // @ts-ignore
-    onChangeFields(values.fields)
-    // @ts-ignore
-  }, [values.fields])
-  return null
-}
 const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   const {push, query} = useRouter()
   const hash = first(query.hash)
@@ -161,7 +72,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
     fieldsById: Record<string, CACategoryDataFieldModel>
   } | null>(() => mapCategoryData(state.draft.data))
 
-  console.log('category', category)
   const {categoryId} = state.draft
 
   useEffect(() => {
@@ -190,7 +100,6 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   }, [state.draft])
 
   const onSubmit = (values: FormikValues, saveDraft) => {
-    console.log(values, saveDraft)
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -252,14 +161,27 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
   )
 
   let fieldsArray = []
+  let hasArrayType = false
   if (category?.data?.fields) {
     fieldsArray = category.data.fields
+    hasArrayType = fieldsArray.some((f) => f.fieldType === 'array')
   }
 
-  if (!category || !user) return null
+  const conditionComponent = (
+    <div className='w-full s:w-1/2 l:w-5/12'>
+      <Field
+        component={FormikSelect}
+        name='condition'
+        options={conditionOptions.current}
+        placeholder={t('PROD_CONDITION')}
+      />
+    </div>
+  )
 
+  const arrayMobileView = hasArrayType && width < 768
+  if (!category || !user) return null
   return (
-    <div className='max-w-screen'>
+    <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden'>
         <Button
           onClick={() => {
@@ -286,235 +208,396 @@ const FormPage: FC<PageProps> = observer(({state, dispatch}) => {
             const errors: any = {}
             // @ts-ignore
             const {photos, content, condition, price} = values
-
             const categoryData = category.data
-
-            const mainContent = (content || []).find(
-              (c) => c.langCode === user.mainLanguage.isoCode,
+            const titleError = validateTitle(content, user.mainLanguage, t)
+            const photoError = validatePhoto(photos, categoryData.minPhotos, t)
+            const priceError = validatePrice(price, categoryData.allowFree, t)
+            const conditionError = validateCondition(
+              condition,
+              categoryData.allowUsed,
+              t,
             )
-
-            if (!price && !categoryData.allowFree) {
-              errors.price = t('PRICE_ERROR')
-              toast.error(errors.price)
+            return {
+              ...errors,
+              ...titleError,
+              ...photoError,
+              ...priceError,
+              ...conditionError,
             }
-
-            if (!condition && category.data.allowUsed) {
-              errors.condition = t('FIELD_REQUIRED_ERROR', {
-                field: t('ADVERT_TYPE'),
-              })
-              toast.error(errors.condition)
-            }
-
-            if (!mainContent?.title) {
-              errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
-              toast.error(errors.content)
-            }
-
-            if (size(photos) < categoryData.minPhotos) {
-              const msg = t('PHOTO_ERROR', {minPhotos: categoryData.minPhotos})
-              errors.photos = msg
-              toast.error(msg)
-            }
-
-            // console.log('errors', errors)
-            return errors
           }}
           validateOnBlur={false}
           validateOnChange={false}
           onSubmit={(val) => onSubmit(val, false)}>
-          {({submitForm}) => (
-            <Form className='flex flex-col space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
+          {({submitForm, values}) => (
+            <Form
+              className={`flex flex-col ${
+                arrayMobileView ? 'space-y-4' : 'space-y-6'
+              } s:space-y-12 mt-6 mb-24 w-full`}>
+              {arrayMobileView && (
+                <FormProgressBar
+                  category={category.data}
+                  values={values}
+                  mainLanguage={user.mainLanguage}
+                />
+              )}
               <div>
-                <AdvertFormHeading
-                  title={t('ENTER_TITLE_AND_DESCRIPTION')}
-                  ref={(ref) => {
-                    headerRefs.current[0] = {
-                      ref,
-                      title: t('TITLE_AND_DESCRIPTION'),
+                <FormGroup
+                  expandView={arrayMobileView}
+                  validate={(silently) =>
+                    validateTitle(
+                      // @ts-ignore
+                      values.content,
+                      user.mainLanguage,
+                      t,
+                      silently,
+                    )
+                  }
+                  title={t('TITLE_AND_DESCRIPTION')}
+                  getCountMeta={() => {
+                    let filledCount = 0
+                    let isRequiredFilled
+                    const title = get(values, 'content[0].title')
+                    const description = get(values, 'content[0].description')
+                    if (title) {
+                      isRequiredFilled = true
+                      filledCount += 1
+                    }
+                    if (description) {
+                      filledCount += 1
+                    }
+                    return {
+                      isRequiredFilled,
+                      filledCount,
+                      maxFilled: 2,
                     }
                   }}
-                />
-                <AdvertFormField
-                  body={
-                    <Field
-                      name='content'
-                      maxDescriptionLength={category.data.descriptionLengthMax}
-                      component={AdvertDescription}
-                      user={user}
-                      languagesByIsoCode={languagesByIsoCode}
+                  header={
+                    <AdvertFormHeading
+                      title={t('ENTER_TITLE_AND_DESCRIPTION')}
+                      ref={(ref) => {
+                        headerRefs.current[0] = {
+                          ref,
+                          title: t('TITLE_AND_DESCRIPTION'),
+                        }
+                      }}
                     />
                   }
-                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
-                  label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2'
-                  isRequired
-                />
-              </div>
-              <div>
-                <AdvertFormHeading
-                  title={t('UPLOAD_PHOTO_AND_VIDEO')}
-                  ref={(ref) => {
-                    headerRefs.current[1] = {
-                      ref,
-                      title: t('PHOTO_AND_VIDEO'),
-                    }
-                  }}
-                />
-                <AdvertFormField
                   body={
-                    <div className='w-full'>
-                      <p className='text-body-2 text-nc-title mb-3 hidden s:block'>
-                        {t('ADD_PHOTO_HINT')}
-                      </p>
-                      <p className='text-body-2 text-nc-title mb-3 s:hidden'>
-                        {t('SELECT_PHOTO_FROM_PHONE')}
-                      </p>
-
-                      <Field
-                        component={AdvertPhotos}
-                        name='photos'
-                        maxPhotos={category.data.maxPhotos}
-                      />
-                      <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
-                        {t('TIP_FOR_ADDING_A_PHOTO', {
-                          maxPhotos: category.data.maxPhotos,
-                        })}
-                      </p>
-                    </div>
-                  }
-                  label={t('PRODUCT_PHOTOS')}
-                  labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
-                  isRequired={category.data.minPhotos > 0}
-                />
-                <AdvertFormField
-                  body={
-                    <div className='w-8/12'>
-                      <Field
-                        component={AdvertVideos}
-                        name='videos'
-                        categoryId={category.data.id}
-                        maxVideoDuration={category.data.maxVideoDuration}
-                      />
-                      <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
-                        {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
-                          descriptionLengthMax: `${
-                            category.data.maxVideoDuration || 30
-                          } MB`,
-                        })}
-                      </p>
-                    </div>
-                  }
-                  label={t('PRODUCT_VIDEO')}
-                  labelDescription={t('TIP_FOR_VIDEO')}
-                  hide={!category.data.allowVideo}
-                />
-              </div>
-
-              <div>
-                <AdvertFormHeading
-                  title={t('ENTER_PRICE')}
-                  ref={(ref) => {
-                    headerRefs.current[2] = {
-                      ref,
-                      title: t('PRICE'),
-                    }
-                  }}
-                />
-                <div className='space-y-4'>
-                  <AdvertFormField
-                    body={
-                      <div className='w-full s:w-1/3 l:w-4/12'>
+                    <AdvertFormField
+                      body={
                         <Field
-                          name='price'
-                          component={AdvertPrice}
-                          currencies={state.draft.currencies}
-                          allowSecureDeal={category.data.allowSecureDeal}
+                          name='content'
+                          maxDescriptionLength={
+                            category.data.descriptionLengthMax
+                          }
+                          component={AdvertDescription}
+                          user={user}
+                          languagesByIsoCode={languagesByIsoCode}
                         />
-                      </div>
-                    }
-                    isRequired={!category.data.allowFree}
-                    label={t('PRICE')}
-                    labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2'
-                  />
-                  {!!category.data.isProduct && (
+                      }
+                      labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
+                      label={t('TITLE_AND_DESCRIPTION')}
+                      labelClassName='mt-2'
+                      isRequired
+                    />
+                  }
+                />
+              </div>
+              <div>
+                <FormGroup
+                  expandView={arrayMobileView}
+                  title={t('PHOTOS_AND_VIDEOS')}
+                  header={
+                    <AdvertFormHeading
+                      title={t('UPLOAD_PHOTO_AND_VIDEO')}
+                      ref={(ref) => {
+                        headerRefs.current[1] = {
+                          ref,
+                          title: t('PHOTO_AND_VIDEO'),
+                        }
+                      }}
+                    />
+                  }
+                  body={
                     <>
                       <AdvertFormField
                         body={
-                          <div className='w-full s:w-4/12'>
+                          <div className='w-full'>
+                            <p className='text-body-2 text-nc-title mb-3 hidden s:block'>
+                              {t('ADD_PHOTO_HINT')}
+                            </p>
+                            <p className='text-body-2 text-nc-title mb-3 s:hidden'>
+                              {t('SELECT_PHOTO_FROM_PHONE')}
+                            </p>
+
                             <Field
-                              name='isSwapPossible'
-                              component={FormikSwitch}
-                              // eslint-disable-next-line react/jsx-props-no-spreading
-                              {...(width < 768
-                                ? {
-                                    label: t('EXCHANGE'),
-                                  }
-                                : {})}
+                              component={AdvertPhotos}
+                              name='photos'
+                              maxPhotos={category.data.maxPhotos}
                             />
+                            <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                              {t('TIP_FOR_ADDING_A_PHOTO', {
+                                maxPhotos: category.data.maxPhotos,
+                              })}
+                            </p>
                           </div>
                         }
-                        labelTip={t('POSSIBLE_EXCHANGE_TIP')}
-                        className='l:items-center'
-                        label={width < 768 ? undefined : t('EXCHANGE')}
+                        label={t('PRODUCT_PHOTOS')}
+                        labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
+                        isRequired={category.data.minPhotos > 0}
                       />
                       <AdvertFormField
                         body={
-                          <div className='w-full s:w-4/12'>
+                          <div className='w-8/12'>
                             <Field
-                              name='isBargainPossible'
-                              component={FormikSwitch}
-                              // eslint-disable-next-line react/jsx-props-no-spreading
-                              {...(width < 768
-                                ? {
-                                    label: t('BARGAIN'),
-                                  }
-                                : {})}
+                              component={AdvertVideos}
+                              name='videos'
+                              categoryId={category.data.id}
+                              maxVideoDuration={category.data.maxVideoDuration}
                             />
+                            <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                              {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
+                                descriptionLengthMax: `${
+                                  category.data.maxVideoDuration || 30
+                                } MB`,
+                              })}
+                            </p>
                           </div>
                         }
-                        className='l:items-center'
-                        label={width < 768 ? undefined : t('BARGAIN')}
+                        label={t('PRODUCT_VIDEO')}
+                        labelDescription={t('TIP_FOR_VIDEO')}
+                        hide={!category.data.allowVideo}
                       />
                     </>
-                  )}
-                </div>
+                  }
+                  getCountMeta={() => {
+                    let filledCount = 0
+                    let isRequiredFilled
+
+                    const photos = get(values, 'photos')
+                    const video = get(values, 'videos[0]')
+                    if (size(photos) >= category.data.minPhotos) {
+                      isRequiredFilled = true
+                      filledCount += 1
+                    }
+                    if (video) {
+                      filledCount += 1
+                    }
+
+                    return {
+                      isRequiredFilled,
+                      filledCount,
+                      maxFilled: category.data.allowVideo ? 2 : 1,
+                    }
+                  }}
+                  validate={() =>
+                    // @ts-ignore
+                    validatePhoto(values.photos, category.data.minPhotos, t)
+                  }
+                />
               </div>
-              {(category.data.allowUsed || !isEmpty(fieldsArray)) && (
-                <div className='mb-96'>
-                  <AdvertFormHeading
-                    title={t('PRODUCT_FEATURES')}
-                    ref={(ref) => {
-                      headerRefs.current[3] = {
-                        ref,
-                        title: t('PARAMETERS'),
-                      }
-                    }}
-                  />
-                  <div className='space-y-4'>
-                    {category.data.allowUsed && (
+
+              <div>
+                <FormGroup
+                  expandView={arrayMobileView}
+                  title={t('PRICE')}
+                  header={
+                    <AdvertFormHeading
+                      title={t('ENTER_PRICE')}
+                      ref={(ref) => {
+                        headerRefs.current[2] = {
+                          ref,
+                          title: t('PRICE'),
+                        }
+                      }}
+                    />
+                  }
+                  body={
+                    <div className='space-y-4'>
                       <AdvertFormField
                         body={
-                          <div className='w-full s:w-1/2 l:w-5/12'>
+                          <div className='w-full s:w-1/3 l:w-4/12'>
                             <Field
-                              component={FormikSelect}
-                              name='condition'
-                              options={conditionOptions.current}
-                              placeholder={t('PROD_CONDITION')}
+                              name='price'
+                              component={AdvertPrice}
+                              currencies={state.draft.currencies}
+                              allowSecureDeal={category.data.allowSecureDeal}
                             />
                           </div>
                         }
-                        className='l:items-center'
-                        isRequired
+                        isRequired={!category.data.allowFree}
+                        label={t('PRICE')}
+                        labelTip={t('PRICE_TIP')}
                         labelClassName='mt-2'
-                        label={t('PROD_CONDITION')}
                       />
-                    )}
-                    <FormikCreateFields fieldsArray={fieldsArray} />
-                  </div>
-                </div>
-              )}
+                      {!!category.data.isProduct && (
+                        <>
+                          <AdvertFormField
+                            body={
+                              <div className='w-full s:w-4/12'>
+                                <Field
+                                  name='isSwapPossible'
+                                  component={FormikSwitch}
+                                  // eslint-disable-next-line react/jsx-props-no-spreading
+                                  {...(width < 768
+                                    ? {
+                                        label: t('EXCHANGE'),
+                                      }
+                                    : {})}
+                                />
+                              </div>
+                            }
+                            labelTip={t('POSSIBLE_EXCHANGE_TIP')}
+                            className='l:items-center'
+                            label={width < 768 ? undefined : t('EXCHANGE')}
+                          />
+                          <AdvertFormField
+                            body={
+                              <div className='w-full s:w-4/12'>
+                                <Field
+                                  name='isBargainPossible'
+                                  component={FormikSwitch}
+                                  // eslint-disable-next-line react/jsx-props-no-spreading
+                                  {...(width < 768
+                                    ? {
+                                        label: t('BARGAIN'),
+                                      }
+                                    : {})}
+                                />
+                              </div>
+                            }
+                            className='l:items-center'
+                            label={width < 768 ? undefined : t('BARGAIN')}
+                          />
+                        </>
+                      )}
+                    </div>
+                  }
+                  getCountMeta={() => {
+                    let filledCount = 0
+                    let isRequiredFilled
 
+                    const price = get(values, 'price')
+                    if (price) {
+                      isRequiredFilled = true
+                      filledCount += 1
+                    }
+
+                    return {
+                      isRequiredFilled,
+                      filledCount,
+                      maxFilled: 1,
+                    }
+                  }}
+                  validate={() =>
+                    // @ts-ignore
+                    validatePrice(values.photos, category.data.allowFree, t)
+                  }
+                />
+              </div>
+              {hasArrayType
+                ? fieldsArray.map((fieldArray, index) => {
+                    const {name, arrayTypeFields} = fieldArray
+                    return (
+                      <FormGroup
+                        expandView={arrayMobileView}
+                        title={name}
+                        header={
+                          <AdvertFormHeading
+                            title={name}
+                            ref={(ref) => {
+                              headerRefs.current[3] = {
+                                ref,
+                                title: name,
+                              }
+                            }}
+                          />
+                        }
+                        body={
+                          <div className='space-y-4'>
+                            {category.data.allowUsed && index === 0 && (
+                              <AdvertFormField
+                                body={conditionComponent}
+                                className='l:items-center'
+                                isRequired
+                                labelClassName='mt-2'
+                                label={t('PROD_CONDITION')}
+                              />
+                            )}
+                            <FormikCreateFields fieldsArray={arrayTypeFields} />
+                          </div>
+                        }
+                        getCountMeta={() => {
+                          const hasCondition =
+                            index === 0 && category.data.allowUsed
+                          let filledCount = 0
+                          let isRequiredFilled = true
+
+                          arrayTypeFields.forEach(({id, isFillingRequired}) => {
+                            // @ts-ignore
+                            if (get(values, `fields.${id}`)) {
+                              filledCount += 1
+                            } else if (isFillingRequired) {
+                              isRequiredFilled = false
+                            }
+                          })
+
+                          const maxFilled = arrayTypeFields.filter(
+                            ({itemType}) => itemType === 'simple',
+                          )
+
+                          return {
+                            isRequiredFilled,
+                            filledCount,
+                            maxFilled: hasCondition
+                              ? maxFilled.length + 1
+                              : maxFilled.length,
+                          }
+                        }}
+                        validate={() => ({
+                          ...(index === 0
+                            ? validateCondition(
+                                // @ts-ignore
+                                values.condition,
+                                category.data.allowUsed,
+                                t,
+                              )
+                            : {}),
+                          ...validateFields(
+                            // @ts-ignore
+                            values,
+                            arrayTypeFields,
+                            t,
+                          ),
+                        })}
+                      />
+                    )
+                  })
+                : (category.data.allowUsed || !isEmpty(fieldsArray)) && (
+                    <div className='mb-96'>
+                      <AdvertFormHeading
+                        title={t('PRODUCT_FEATURES')}
+                        ref={(ref) => {
+                          headerRefs.current[3] = {
+                            ref,
+                            title: t('PARAMETERS'),
+                          }
+                        }}
+                      />
+                      <div className='space-y-4'>
+                        {category.data.allowUsed && (
+                          <AdvertFormField
+                            body={conditionComponent}
+                            className='l:items-center'
+                            isRequired
+                            labelClassName='mt-2'
+                            label={t('PROD_CONDITION')}
+                          />
+                        )}
+                        <FormikCreateFields fieldsArray={fieldsArray} />
+                      </div>
+                    </div>
+                  )}
               <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
                 <div className='w-full l:w-1208px flex justify-between'>
                   <OutlineButton

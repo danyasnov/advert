@@ -68,7 +68,7 @@ const Header: FC = observer(() => {
             {/*    label={t('FOR_BUSINESS')} */}
             {/*  /> */}
             <LinkWrapper
-              className='text-brand-b1 text-body-3 whitespace-nowrap'
+              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center'
               href='/merchant'
               title={t('SHOPS')}>
               {t('SHOPS')}
