@@ -31,7 +31,7 @@ const getFields = (fieldsById: Record<string, CACategoryDataFieldModel>) => {
       if (value.fieldType === 'array') {
         return [...acc, ...value.arrayTypeFields.map((f) => [f.id, f])]
       }
-      return acc
+      return [...acc, [value.id, value]]
     }, []),
   )
 }
