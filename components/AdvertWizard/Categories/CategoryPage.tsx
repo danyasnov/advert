@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useContext, useEffect, useState} from 'react'
 import {CACategoryModel} from 'front-api'
 import {useTranslation} from 'next-i18next'
 import {first, isEmpty, last, toNumber} from 'lodash'
@@ -8,7 +8,7 @@ import {useRouter} from 'next/router'
 import Button from '../../Buttons/Button'
 import PrimaryButton from '../../Buttons/PrimaryButton'
 import {useCategoriesStore} from '../../../providers/RootStoreProvider'
-import {AdvertPages, PageProps} from '../AdvertWizard'
+import {AdvertPages, WizardContext} from '../AdvertWizard'
 import OutlineButton from '../../Buttons/OutlineButton'
 import {makeRequest} from '../../../api'
 import SearchCategories from '../SearchCategories'
@@ -16,7 +16,9 @@ import CategoriesDesktop from './CategoriesDesktop'
 import CategoriesMobile from './CategoriesMobile'
 import MobileCategoriesHeader from './MobileCategoriesHeader'
 
-const CategoryPage: FC<PageProps> = observer(({state, dispatch}) => {
+const CategoryPage: FC = observer(() => {
+  const {state, dispatch} = useContext(WizardContext)
+
   const {t} = useTranslation()
   const router = useRouter()
   const {query} = router

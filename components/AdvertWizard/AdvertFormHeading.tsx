@@ -6,7 +6,7 @@ interface Props {
 const AdvertFormHeading = forwardRef<HTMLElement, Props>(({title}, ref) => {
   return (
     // @ts-ignore
-    <p ref={ref} className='text-nc-title text-h-2 font-medium mb-6'>
+    <p ref={ref} className='text-nc-title text-h-2 font-medium'>
       {title}
     </p>
   )

@@ -1,17 +1,17 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useContext, useEffect, useRef, useState} from 'react'
 import GoogleMapReact from 'google-map-react'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
-import {degradations} from 'front-api/src/models/index'
+import {degradations} from 'front-api/src/models'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
 import {first, get} from 'lodash'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import {SerializedCookiesState} from '../../types'
-import {AdvertPages, PageProps} from './AdvertWizard'
+import {AdvertPages, WizardContext} from './AdvertWizard'
 import Button from '../Buttons/Button'
 import {getPosition} from '../../utils'
 import MapRadiusSelector from '../MapRadiusSelector'
@@ -27,10 +27,11 @@ const zoomRadiusMap = {
   2: 13,
 }
 
-const MapPage: FC<PageProps> = ({dispatch, state}) => {
+const MapPage: FC = () => {
+  const {state, dispatch} = useContext(WizardContext)
+
   const {query, push} = useRouter()
   const hash = first(query.hash)
-
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
     if (state.draft.location) {
@@ -39,6 +40,7 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     }
     return null
   })
+
   const [degradation, setDegradation] = useState<string>(() => {
     if (state.draft.degradation) {
       return state.draft.degradation
@@ -131,6 +133,8 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
       }
       newDraft.currencies = currencies
       if (hash) newDraft.hash = hash
+      if (label) newDraft.addressDraft = label
+
       dispatch({
         type: 'setDraft',
         draft: newDraft,
@@ -230,7 +234,6 @@ const MapPage: FC<PageProps> = ({dispatch, state}) => {
     circle.current.setCenter(item.geometry.location)
     marker.current.setPosition(item.geometry.location)
   }
-  console.log('location', location)
 
   return (
     <div className='flex flex-col w-full'>

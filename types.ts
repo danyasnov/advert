@@ -125,3 +125,8 @@ export interface ThumbObject {
 
 export type PhotoFile = File & {url: string; hash: number}
 export type VideoFile = File & {loading: boolean; url: string; hash: number}
+export interface NavItem {
+  title: string
+  onClick: () => void
+  status: 'done' | 'pending'
+}

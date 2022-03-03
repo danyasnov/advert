@@ -1,4 +1,11 @@
-import React, {Dispatch, FC, useEffect, useReducer, useState} from 'react'
+import React, {
+  createContext,
+  Dispatch,
+  FC,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import {CAParamsModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {captureException} from '@sentry/nextjs'
@@ -8,24 +15,27 @@ import CategoryPage from './Categories/CategoryPage'
 import FormPage from './FormPage'
 import {makeRequest} from '../../api'
 
-export interface PageProps {
-  state: State
-  dispatch: Dispatch<any>
-  onClose: () => void
-}
-
 export const AdvertPages = {
   mapPage: MapPage,
   categoryPage: CategoryPage,
   formPage: FormPage,
 }
-interface State {
-  page: FC
-  draft: CAParamsModel
-}
 const initialState: State = {
   draft: null,
   page: AdvertPages.mapPage,
+  scroll: null,
+}
+export interface Reducer {
+  state: State
+  dispatch: Dispatch<any>
+}
+
+export const WizardContext = createContext<Reducer | null>(null)
+
+export interface State {
+  page: FC
+  draft: CAParamsModel
+  scroll: string
 }
 
 const reducer = (state, action) => {
@@ -56,7 +66,11 @@ const reducer = (state, action) => {
         },
       }
     case 'setPage':
-      return {...state, page: action.page}
+      return {
+        ...state,
+        page: action.page,
+        scroll: action.scroll ?? null,
+      }
 
     case 'setDraft':
       return {...state, draft: action.draft}
@@ -171,8 +185,11 @@ const AdvertWizard: FC = () => {
 
   const Component = state.page
   if (!isFetched) return null
-
-  return <Component state={state} dispatch={dispatch} />
+  return (
+    <WizardContext.Provider value={{state, dispatch}}>
+      <Component />
+    </WizardContext.Provider>
+  )
 }
 
 export default AdvertWizard

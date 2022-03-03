@@ -122,6 +122,7 @@ module.exports = {
         error: '#CC3237',
         'nc-error': '#FF4040',
         'nc-success': '#0EB85E',
+        'nc-additional': '#D6E3E8',
         'nc-title': '#172029',
         'nc-primary': '#FF8514',
         'nc-placeholder': '#89A3BE',

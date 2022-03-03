@@ -12,6 +12,7 @@ import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
 import IcCheck from 'icons/material/Check.svg'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
+import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -136,7 +137,7 @@ export const validateTitle = (content, mainLanguage, t, silently?) => {
   const mainContent = (content || []).find(
     (c) => c.langCode === mainLanguage.isoCode,
   )
-  if (!mainContent?.title) {
+  if (!mainContent?.title || size(mainContent?.title) < 3) {
     errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
     if (!silently) toast.error(errors.content)
   }
@@ -205,13 +206,23 @@ export const validateFields = (values, fields, t, silently?) => {
 export const FormGroup: FC<{
   header: ReactNode
   body: ReactNode
-  expandView: boolean
+  expandView?: boolean
+  webDefaultExpanded: boolean
   title: string
   getCountMeta: () => Record<string, unknown>
   validate: (silently: boolean) => Record<string, unknown>
-}> = ({header, body, expandView, title, validate, getCountMeta}) => {
+}> = ({
+  header,
+  body,
+  expandView,
+  title,
+  validate,
+  getCountMeta,
+  webDefaultExpanded,
+}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(webDefaultExpanded)
   const [submitCount, setSubmitCount] = useState(0)
   const [showSummaryErrors, setShowSummaryErrors] = useState(false)
   useDisableBodyScroll(isOpen)
@@ -300,9 +311,28 @@ export const FormGroup: FC<{
     )
   }
   return (
-    <div>
-      {header}
-      {body}
+    <div className='p-8 shadow-md rounded-lg'>
+      <div className='flex flex-col'>
+        <div className='flex justify-between'>
+          {header}
+          <Button onClick={() => setIsExpanded(!isExpanded)}>
+            <IcKeyboardArrowLeft
+              className={`fill-current text-black-c w-6 h-6 ${
+                isExpanded ? 'rotate-90' : '-rotate-90'
+              }`}
+            />
+          </Button>
+        </div>
+        <div className='text-body-2 text-nc-secondary-text mt-1'>
+          <span>
+            {t('NUMBER_FROM_NUMBER', {
+              from: countMeta.filledCount,
+              to: countMeta.maxFilled,
+            })}
+          </span>
+        </div>
+      </div>
+      {isExpanded && <div className='pt-6'>{body}</div>}
     </div>
   )
 }
