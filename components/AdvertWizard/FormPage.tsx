@@ -255,7 +255,7 @@ const FormPage: FC = observer(() => {
 
               state: validatePrice(
                 // @ts-ignore
-                values.photos,
+                values.price,
                 category.data.allowFree,
                 t,
                 true,
