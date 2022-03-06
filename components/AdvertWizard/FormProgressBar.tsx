@@ -1,29 +1,27 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import {CACategoryDataModel, LanguageModel} from 'front-api/src/models'
+import {CACategoryDataModel} from 'front-api/src/models'
 import {FormikValues} from 'formik'
 import {get, size} from 'lodash'
 
 interface Props {
   category: CACategoryDataModel
   values: FormikValues
-  mainLanguage: LanguageModel
 }
-const FormProgressBar: FC<Props> = ({category, values, mainLanguage}) => {
+const FormProgressBar: FC<Props> = ({category, values}) => {
   const {t} = useTranslation()
-  const {photos, content, condition, price, videos} = values
+  const {photos, condition, price, videos} = values
   const {minPhotos, allowVideo, allowUsed} = category
   let summary = 0
   let filled = 0
 
-  const mainContent = (content || []).find(
-    (c) => c.langCode === mainLanguage.isoCode,
-  )
+  const title = get(values, 'content[0].title')
+  const description = get(values, 'content[0].description')
   summary += 2
-  if (mainContent?.title) {
+  if (title?.length > 2) {
     filled += 1
   }
-  if (mainContent?.description) {
+  if (description?.length) {
     filled += 1
   }
 

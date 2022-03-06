@@ -6,7 +6,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {debounce, first, get, isEmpty, isEqual, size} from 'lodash'
+import {debounce, first, get, isEqual, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -186,8 +186,6 @@ const FormPage: FC = observer(() => {
       />
     </div>
   )
-  const arrayMobileView = hasArrayType && width < 768
-  console.log('arrayMobileView', arrayMobileView)
   if (!category || !user) return null
   return (
     <div className='max-w-screen w-full'>
@@ -217,7 +215,7 @@ const FormPage: FC = observer(() => {
           // @ts-ignore
           const {photos, content, condition, price} = values
           const categoryData = category.data
-          const titleError = validateTitle(content, user.mainLanguage, t)
+          const titleError = validateTitle(content, t)
           const photoError = validatePhoto(photos, categoryData.minPhotos, t)
           const priceError = validatePrice(price, categoryData.allowFree, t)
           const conditionError = validateCondition(
@@ -243,7 +241,6 @@ const FormPage: FC = observer(() => {
               state: validateTitle(
                 // @ts-ignore
                 values.content,
-                user.mainLanguage,
                 t,
                 true,
               ),
@@ -307,11 +304,7 @@ const FormPage: FC = observer(() => {
 
               <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
                 <div className='s:hidden'>
-                  <FormProgressBar
-                    category={category.data}
-                    values={values}
-                    mainLanguage={user.mainLanguage}
-                  />
+                  <FormProgressBar category={category.data} values={values} />
                 </div>
                 <div>
                   <FormGroup
@@ -320,7 +313,6 @@ const FormPage: FC = observer(() => {
                       validateTitle(
                         // @ts-ignore
                         values.content,
-                        user.mainLanguage,
                         t,
                         silently,
                       )
@@ -331,7 +323,7 @@ const FormPage: FC = observer(() => {
                       let isRequiredFilled
                       const title = get(values, 'content[0].title')
                       const description = get(values, 'content[0].description')
-                      if (title) {
+                      if (title?.length > 2) {
                         isRequiredFilled = true
                         filledCount += 1
                       }
@@ -467,9 +459,14 @@ const FormPage: FC = observer(() => {
                         maxFilled: category.data.allowVideo ? 2 : 1,
                       }
                     }}
-                    validate={() =>
-                      // @ts-ignore
-                      validatePhoto(values.photos, category.data.minPhotos, t)
+                    validate={(silently) =>
+                      validatePhoto(
+                        // @ts-ignore
+                        values.photos,
+                        category.data.minPhotos,
+                        t,
+                        silently,
+                      )
                     }
                   />
                 </div>
@@ -566,9 +563,14 @@ const FormPage: FC = observer(() => {
                         maxFilled: 1,
                       }
                     }}
-                    validate={() =>
-                      // @ts-ignore
-                      validatePrice(values.photos, category.data.allowFree, t)
+                    validate={(silently) =>
+                      validatePrice(
+                        // @ts-ignore
+                        values.price,
+                        category.data.allowFree,
+                        t,
+                        silently,
+                      )
                     }
                   />
                 </div>
@@ -630,13 +632,14 @@ const FormPage: FC = observer(() => {
                               : maxFilled.length,
                           }
                         }}
-                        validate={() => ({
+                        validate={(silently) => ({
                           ...(index === 0
                             ? validateCondition(
                                 // @ts-ignore
                                 values.condition,
                                 category.data.allowUsed,
                                 t,
+                                silently,
                               )
                             : {}),
                           ...validateFields(
@@ -644,6 +647,7 @@ const FormPage: FC = observer(() => {
                             values,
                             arrayTypeFields,
                             t,
+                            silently,
                           ),
                         })}
                         webDefaultExpanded={false}

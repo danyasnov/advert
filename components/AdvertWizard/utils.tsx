@@ -1,10 +1,10 @@
-import {get, isEmpty, parseInt, size, toNumber} from 'lodash'
+import {get, isEmpty, isEqual, parseInt, size, toNumber} from 'lodash'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
   FieldsModel,
 } from 'front-api/src/models'
-import {FC, ReactNode, useEffect, useState} from 'react'
+import {FC, ReactNode, useEffect, useRef, useState} from 'react'
 import {useFormikContext} from 'formik'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
@@ -133,12 +133,10 @@ export const CategoryUpdater: FC<{
   return null
 }
 
-export const validateTitle = (content, mainLanguage, t, silently?) => {
+export const validateTitle = (content, t, silently?) => {
   const errors: Record<string, unknown> = {}
-  const mainContent = (content || []).find(
-    (c) => c.langCode === mainLanguage.isoCode,
-  )
-  if (!mainContent?.title || size(mainContent?.title) < 3) {
+  const title = get(content, '[0].title')
+  if (title?.length < 3) {
     errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
     if (!silently) toast.error(errors.content)
   }
@@ -218,18 +216,21 @@ export const FormGroup: FC<{
   const [isExpanded, setIsExpanded] = useState(
     webDefaultExpanded && width >= 768,
   )
-  const [submitCount, setSubmitCount] = useState(0)
+  const prevValidationState = useRef({})
   const [showSummaryErrors, setShowSummaryErrors] = useState(false)
   useDisableBodyScroll(isOpen)
   const formik = useFormikContext()
   const countMeta = getCountMeta()
   useEffect(() => {
-    if (formik.submitCount !== submitCount) {
-      setSubmitCount(formik.submitCount)
-      const errors = validate(true)
-      setShowSummaryErrors(!isEmpty(errors))
+    if (formik.submitCount > 0) {
+      const validationState = validate(true)
+      const isNew = !isEqual(validationState, prevValidationState.current)
+      if (isNew) {
+        prevValidationState.current = validationState
+        setShowSummaryErrors(!isEmpty(validationState))
+      }
     }
-  }, [formik.submitCount])
+  }, [formik.values, formik.submitCount])
 
   return (
     <>
