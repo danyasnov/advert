@@ -13,6 +13,7 @@ import IcCheck from 'icons/material/Check.svg'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
+import {useWindowSize} from 'react-use'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -206,23 +207,17 @@ export const validateFields = (values, fields, t, silently?) => {
 export const FormGroup: FC<{
   header: ReactNode
   body: ReactNode
-  expandView?: boolean
   webDefaultExpanded: boolean
   title: string
   getCountMeta: () => Record<string, unknown>
   validate: (silently: boolean) => Record<string, unknown>
-}> = ({
-  header,
-  body,
-  expandView,
-  title,
-  validate,
-  getCountMeta,
-  webDefaultExpanded,
-}) => {
+}> = ({header, body, title, validate, getCountMeta, webDefaultExpanded}) => {
+  const {width} = useWindowSize()
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(webDefaultExpanded)
+  const [isExpanded, setIsExpanded] = useState(
+    webDefaultExpanded && width >= 768,
+  )
   const [submitCount, setSubmitCount] = useState(0)
   const [showSummaryErrors, setShowSummaryErrors] = useState(false)
   useDisableBodyScroll(isOpen)
@@ -235,104 +230,106 @@ export const FormGroup: FC<{
       setShowSummaryErrors(!isEmpty(errors))
     }
   }, [formik.submitCount])
-  if (expandView) {
-    if (isOpen) {
-      return (
-        <ReactModal
-          isOpen={isOpen}
-          preventScroll
-          onRequestClose={() => setIsOpen(false)}
-          shouldCloseOnOverlayClick={false}
-          ariaHideApp={false}
-          overlayClassName='z-30 fixed inset-0'
-          className='w-full h-full bg-white overflow-y-scroll'>
-          <div className='flex flex-col w-full'>
-            <div className='flex  border-b border-shadow-b items-center h-14 px-4'>
-              <Button
-                onClick={() => {
-                  formik.setErrors({})
-                  setIsOpen(false)
-                }}>
-                <IcClear className='fill-current text-nc-icon h-6 w-6' />
-              </Button>
-              <p className='pl-4 text-nc-title text-h-2 font-medium'>{title}</p>
-            </div>
-            <div className='px-4 pt-4 pb-20'>{body}</div>
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 py-2.5 z-10 justify-around'>
-              <PrimaryButton
-                onClick={() => {
-                  // @ts-ignore
-                  const errors = validate()
-                  formik.setErrors(errors)
-                  if (isEmpty(errors)) {
+
+  return (
+    <>
+      <div className='s:hidden'>
+        {isOpen ? (
+          <ReactModal
+            isOpen={isOpen}
+            preventScroll
+            onRequestClose={() => setIsOpen(false)}
+            shouldCloseOnOverlayClick={false}
+            ariaHideApp={false}
+            overlayClassName='z-30 fixed inset-0'
+            className='w-full h-full bg-white overflow-y-scroll'>
+            <div className='flex flex-col w-full'>
+              <div className='flex  border-b border-shadow-b items-center h-14 px-4'>
+                <Button
+                  onClick={() => {
+                    formik.setErrors({})
                     setIsOpen(false)
-                  }
-                }}
-                className='w-full s:w-auto'>
-                {t('CONTINUE')}
-              </PrimaryButton>
+                  }}>
+                  <IcClear className='fill-current text-nc-icon h-6 w-6' />
+                </Button>
+                <p className='pl-4 text-nc-title text-h-2 font-medium'>
+                  {title}
+                </p>
+              </div>
+              <div className='px-4 pt-4 pb-20'>{body}</div>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 py-2.5 z-10 justify-around'>
+                <PrimaryButton
+                  onClick={() => {
+                    // @ts-ignore
+                    const errors = validate()
+                    formik.setErrors(errors)
+                    if (isEmpty(errors)) {
+                      setIsOpen(false)
+                    }
+                  }}
+                  className='w-full s:w-auto'>
+                  {t('CONTINUE')}
+                </PrimaryButton>
+              </div>
             </div>
+          </ReactModal>
+        ) : (
+          <Button
+            className='w-full shadow-md	 rounded-lg '
+            onClick={() => {
+              setIsOpen(true)
+            }}>
+            <div className='flex w-full px-4 py-3'>
+              <div className='w-full flex flex-col items-start'>
+                <span className='text-nc-primary-text text-body-1 pb-1'>
+                  {title}
+                </span>
+                <span
+                  className={`text-body-3 ${
+                    showSummaryErrors ? 'text-nc-error' : 'text-nc-link'
+                  }`}>
+                  {t('NUMBER_FROM_NUMBER', {
+                    from: countMeta.filledCount,
+                    to: countMeta.maxFilled,
+                  })}
+                </span>
+              </div>
+              <div>
+                {countMeta.isRequiredFilled ? (
+                  <div className='w-6 h-6 rounded-full flex items-center justify-center bg-nc-success'>
+                    <IcCheck className='fill-current text-white w-3 h-3' />
+                  </div>
+                ) : (
+                  <IcKeyboardArrowRight className='fill-current text-nc-icon w-5 h-5' />
+                )}
+              </div>
+            </div>
+          </Button>
+        )}
+      </div>
+      <div className='p-8 shadow-md rounded-lg hidden s:block'>
+        <div className='flex flex-col'>
+          <div className='flex justify-between'>
+            {header}
+            <Button onClick={() => setIsExpanded(!isExpanded)}>
+              <IcKeyboardArrowLeft
+                className={`fill-current text-black-c w-6 h-6 ${
+                  isExpanded ? 'rotate-90' : '-rotate-90'
+                }`}
+              />
+            </Button>
           </div>
-        </ReactModal>
-      )
-    }
-    return (
-      <Button
-        className='w-full shadow-md	 rounded-lg '
-        onClick={() => {
-          setIsOpen(true)
-        }}>
-        <div className='flex w-full px-4 py-3'>
-          <div className='w-full flex flex-col items-start'>
-            <span className='text-nc-primary-text text-body-1 pb-1'>
-              {title}
-            </span>
-            <span
-              className={`text-body-3 ${
-                showSummaryErrors ? 'text-nc-error' : 'text-nc-link'
-              }`}>
+          <div className='text-body-2 text-nc-secondary-text mt-1'>
+            <span>
               {t('NUMBER_FROM_NUMBER', {
                 from: countMeta.filledCount,
                 to: countMeta.maxFilled,
               })}
             </span>
           </div>
-          <div>
-            {countMeta.isRequiredFilled ? (
-              <div className='w-6 h-6 rounded-full flex items-center justify-center bg-nc-success'>
-                <IcCheck className='fill-current text-white w-3 h-3' />
-              </div>
-            ) : (
-              <IcKeyboardArrowRight className='fill-current text-nc-icon w-5 h-5' />
-            )}
-          </div>
         </div>
-      </Button>
-    )
-  }
-  return (
-    <div className='p-8 shadow-md rounded-lg'>
-      <div className='flex flex-col'>
-        <div className='flex justify-between'>
-          {header}
-          <Button onClick={() => setIsExpanded(!isExpanded)}>
-            <IcKeyboardArrowLeft
-              className={`fill-current text-black-c w-6 h-6 ${
-                isExpanded ? 'rotate-90' : '-rotate-90'
-              }`}
-            />
-          </Button>
-        </div>
-        <div className='text-body-2 text-nc-secondary-text mt-1'>
-          <span>
-            {t('NUMBER_FROM_NUMBER', {
-              from: countMeta.filledCount,
-              to: countMeta.maxFilled,
-            })}
-          </span>
-        </div>
+        {isExpanded && <div className='pt-6'>{body}</div>}
       </div>
-      {isExpanded && <div className='pt-6'>{body}</div>}
-    </div>
+    </>
   )
 }

@@ -166,6 +166,14 @@ const FormPage: FC = observer(() => {
   if (category?.data?.fields) {
     fieldsArray = category.data.fields
     hasArrayType = fieldsArray.some((f) => f.fieldType === 'array')
+    if (!hasArrayType) {
+      fieldsArray = [
+        {
+          name: t('PARAMETERS'),
+          arrayTypeFields: fieldsArray,
+        },
+      ]
+    }
   }
 
   const conditionComponent = (
@@ -179,6 +187,7 @@ const FormPage: FC = observer(() => {
     </div>
   )
   const arrayMobileView = hasArrayType && width < 768
+  console.log('arrayMobileView', arrayMobileView)
   if (!category || !user) return null
   return (
     <div className='max-w-screen w-full'>
@@ -261,52 +270,30 @@ const FormPage: FC = observer(() => {
                 true,
               ),
             },
-            ...(hasArrayType
-              ? fieldsArray.map((fieldArray, index) => {
-                  const {name, arrayTypeFields} = fieldArray
-                  return {
-                    key: name,
-                    state: {
-                      ...(index === 0
-                        ? validateCondition(
-                            // @ts-ignore
-                            values.condition,
-                            category.data.allowUsed,
-                            t,
-                            true,
-                          )
-                        : {}),
-                      ...validateFields(
-                        // @ts-ignore
-                        values,
-                        arrayTypeFields,
-                        t,
-                        true,
-                      ),
-                    },
-                  }
-                })
-              : [
-                  {
-                    key: t('PARAMETERS'),
-                    state: {
-                      ...validateCondition(
+            ...fieldsArray.map((fieldArray, index) => {
+              const {name, arrayTypeFields} = fieldArray
+              return {
+                key: name,
+                state: {
+                  ...(index === 0
+                    ? validateCondition(
                         // @ts-ignore
                         values.condition,
                         category.data.allowUsed,
                         t,
                         true,
-                      ),
-                      ...validateFields(
-                        // @ts-ignore
-                        values,
-                        fieldsArray,
-                        t,
-                        true,
-                      ),
-                    },
-                  },
-                ]),
+                      )
+                    : {}),
+                  ...validateFields(
+                    // @ts-ignore
+                    values,
+                    arrayTypeFields,
+                    t,
+                    true,
+                  ),
+                },
+              }
+            }),
           ]
           return (
             <div className='flex px-4 s:px-0'>
@@ -318,21 +305,17 @@ const FormPage: FC = observer(() => {
                 />
               </div>
 
-              <Form
-                className={`flex flex-col ${
-                  arrayMobileView ? 'space-y-4' : 'space-y-6'
-                } s:space-y-12 mt-6 mb-24 w-full`}>
-                {arrayMobileView && (
+              <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
+                <div className='s:hidden'>
                   <FormProgressBar
                     category={category.data}
                     values={values}
                     mainLanguage={user.mainLanguage}
                   />
-                )}
+                </div>
                 <div>
                   <FormGroup
                     webDefaultExpanded
-                    expandView={arrayMobileView}
                     validate={(silently) =>
                       validateTitle(
                         // @ts-ignore
@@ -396,7 +379,6 @@ const FormPage: FC = observer(() => {
                 <div>
                   <FormGroup
                     webDefaultExpanded
-                    expandView={arrayMobileView}
                     title={t('PHOTOS_AND_VIDEOS')}
                     header={
                       <AdvertFormHeading
@@ -495,7 +477,6 @@ const FormPage: FC = observer(() => {
                 <div>
                   <FormGroup
                     webDefaultExpanded
-                    expandView={arrayMobileView}
                     title={t('PRICE')}
                     header={
                       <AdvertFormHeading
@@ -591,114 +572,86 @@ const FormPage: FC = observer(() => {
                     }
                   />
                 </div>
-                {hasArrayType
-                  ? fieldsArray.map((fieldArray, index) => {
-                      const {name, arrayTypeFields} = fieldArray
-                      return (
-                        <FormGroup
-                          expandView={arrayMobileView}
-                          title={name}
-                          header={
-                            <AdvertFormHeading
-                              title={name}
-                              ref={(ref) => {
-                                headerRefs.current[3] = {
-                                  ref,
-                                  title: name,
-                                }
-                              }}
-                            />
-                          }
-                          body={
-                            <div className='space-y-4'>
-                              {category.data.allowUsed && index === 0 && (
-                                <AdvertFormField
-                                  body={conditionComponent}
-                                  className='l:items-center'
-                                  isRequired
-                                  labelClassName='mt-2'
-                                  label={t('PROD_CONDITION')}
-                                />
-                              )}
-                              <FormikCreateFields
-                                fieldsArray={arrayTypeFields}
+                <>
+                  {fieldsArray.map((fieldArray, index) => {
+                    const {name, arrayTypeFields} = fieldArray
+                    return (
+                      <FormGroup
+                        title={name}
+                        header={
+                          <AdvertFormHeading
+                            title={name}
+                            ref={(ref) => {
+                              headerRefs.current[3 + index + 1] = {
+                                ref,
+                                title: name,
+                              }
+                            }}
+                          />
+                        }
+                        body={
+                          <div className='space-y-4'>
+                            {category.data.allowUsed && index === 0 && (
+                              <AdvertFormField
+                                body={conditionComponent}
+                                className='l:items-center'
+                                isRequired
+                                labelClassName='mt-2'
+                                label={t('PROD_CONDITION')}
                               />
-                            </div>
+                            )}
+                            <FormikCreateFields fieldsArray={arrayTypeFields} />
+                          </div>
+                        }
+                        getCountMeta={() => {
+                          const hasCondition =
+                            index === 0 && category.data.allowUsed
+                          let filledCount = 0
+                          let isRequiredFilled = true
+
+                          arrayTypeFields.forEach(({id, isFillingRequired}) => {
+                            // @ts-ignore
+                            if (get(values, `fields.${id}`)) {
+                              filledCount += 1
+                            } else if (isFillingRequired) {
+                              isRequiredFilled = false
+                            }
+                          })
+
+                          const maxFilled = arrayTypeFields.filter(
+                            ({itemType}) => itemType === 'simple',
+                          )
+
+                          return {
+                            isRequiredFilled,
+                            filledCount,
+                            maxFilled: hasCondition
+                              ? maxFilled.length + 1
+                              : maxFilled.length,
                           }
-                          getCountMeta={() => {
-                            const hasCondition =
-                              index === 0 && category.data.allowUsed
-                            let filledCount = 0
-                            let isRequiredFilled = true
-
-                            arrayTypeFields.forEach(
-                              ({id, isFillingRequired}) => {
+                        }}
+                        validate={() => ({
+                          ...(index === 0
+                            ? validateCondition(
                                 // @ts-ignore
-                                if (get(values, `fields.${id}`)) {
-                                  filledCount += 1
-                                } else if (isFillingRequired) {
-                                  isRequiredFilled = false
-                                }
-                              },
-                            )
+                                values.condition,
+                                category.data.allowUsed,
+                                t,
+                              )
+                            : {}),
+                          ...validateFields(
+                            // @ts-ignore
+                            values,
+                            arrayTypeFields,
+                            t,
+                          ),
+                        })}
+                        webDefaultExpanded={false}
+                      />
+                    )
+                  })}
+                </>
 
-                            const maxFilled = arrayTypeFields.filter(
-                              ({itemType}) => itemType === 'simple',
-                            )
-
-                            return {
-                              isRequiredFilled,
-                              filledCount,
-                              maxFilled: hasCondition
-                                ? maxFilled.length + 1
-                                : maxFilled.length,
-                            }
-                          }}
-                          validate={() => ({
-                            ...(index === 0
-                              ? validateCondition(
-                                  // @ts-ignore
-                                  values.condition,
-                                  category.data.allowUsed,
-                                  t,
-                                )
-                              : {}),
-                            ...validateFields(
-                              // @ts-ignore
-                              values,
-                              arrayTypeFields,
-                              t,
-                            ),
-                          })}
-                          webDefaultExpanded={false}
-                        />
-                      )
-                    })
-                  : (category.data.allowUsed || !isEmpty(fieldsArray)) && (
-                      <div className='mb-96'>
-                        <AdvertFormHeading
-                          title={t('PRODUCT_FEATURES')}
-                          ref={(ref) => {
-                            headerRefs.current[3] = {
-                              ref,
-                              title: t('PARAMETERS'),
-                            }
-                          }}
-                        />
-                        <div className='space-y-4'>
-                          {category.data.allowUsed && (
-                            <AdvertFormField
-                              body={conditionComponent}
-                              className='l:items-center'
-                              isRequired
-                              labelClassName='mt-2'
-                              label={t('PROD_CONDITION')}
-                            />
-                          )}
-                          <FormikCreateFields fieldsArray={fieldsArray} />
-                        </div>
-                      </div>
-                    )}
                 <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
                   <div className='w-full l:w-1208px flex justify-between'>
                     <OutlineButton
