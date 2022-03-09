@@ -26,6 +26,7 @@ const MobileSelect: FC<SelectProps> = ({
   const [open, setOpen] = useState(false)
   const [filtered, setFiltered] = useState(options)
   const [filter, setFilter] = useState('')
+  const [height, setHeight] = useState<number>()
 
   const onClose = () => {
     setFilter('')
@@ -60,7 +61,13 @@ const MobileSelect: FC<SelectProps> = ({
         onDismiss={() => {
           onClose()
         }}
-        snapPoints={({minHeight}) => minHeight}>
+        snapPoints={({minHeight}) => {
+          if (!height) {
+            setHeight(minHeight)
+            return minHeight
+          }
+          return height
+        }}>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='fixed top-5 bg-white w-full flex flex-col items-center'>
             <h3 className='text-h-3 font-medium text-nc-title mb-2 px-4'>
