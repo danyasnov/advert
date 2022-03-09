@@ -315,7 +315,7 @@ const FormPage: FC = observer(() => {
                 />
               </div>
 
-              <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-6 mb-24 w-full'>
+              <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-3 mb-24 w-full'>
                 <div className='s:hidden'>
                   <FormProgressBar category={category.data} values={values} />
                 </div>
@@ -684,7 +684,6 @@ const FormPage: FC = observer(() => {
                       } hidden s:block`}>
                       {t('BACK')}
                     </OutlineButton>
-                    {`isSubmitting${isSubmitting}`}
                     <PrimaryButton
                       onClick={!isSubmitting && submitForm}
                       className='w-full s:w-auto'>
