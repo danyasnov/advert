@@ -329,7 +329,9 @@ export const FormGroup: FC<{
             </span>
           </div>
         </div>
-        {isExpanded && <div className='pt-6'>{body}</div>}
+        <div className={`${isExpanded ? 'static' : 'absolute hidden'} pt-6`}>
+          {body}
+        </div>
       </div>
     </>
   )

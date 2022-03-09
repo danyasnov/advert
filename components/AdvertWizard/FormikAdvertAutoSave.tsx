@@ -1,9 +1,17 @@
 import {FC, useCallback, useEffect} from 'react'
-import {FormikValues, useFormikContext} from 'formik'
+import {FormikHelpers, FormikValues, useFormikContext} from 'formik'
 import {throttle} from 'lodash'
 
 interface Props {
-  onSubmit: (values: FormikValues, saveDraft: boolean) => void
+  onSubmit: ({
+    values,
+    saveDraft,
+    helpers,
+  }: {
+    values: FormikValues
+    helpers: FormikHelpers<any>
+    saveDraft: boolean
+  }) => void
 }
 const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
   const formik = useFormikContext()
@@ -12,7 +20,7 @@ const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
   const debouncedSubmitCaller = useCallback(
     throttle(
       (ctx: typeof formik) => {
-        onSubmit(ctx.values, true)
+        onSubmit({values: ctx.values, saveDraft: true, helpers: ctx})
       },
       15000,
       {leading: false},

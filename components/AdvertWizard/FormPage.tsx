@@ -1,7 +1,7 @@
 import {FC, useCallback, useContext, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {Formik, Form, Field, FormikValues} from 'formik'
+import {Formik, Form, Field, FormikValues, FormikHelpers} from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
@@ -100,7 +100,15 @@ const FormPage: FC = observer(() => {
     }
   }, [state.draft])
 
-  const onSubmit = (values: FormikValues, saveDraft) => {
+  const onSubmit = ({
+    values,
+    saveDraft,
+    helpers,
+  }: {
+    values: FormikValues
+    helpers: FormikHelpers<any>
+    saveDraft: boolean
+  }) => {
     const {fields, condition} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
@@ -122,6 +130,8 @@ const FormPage: FC = observer(() => {
           hash,
           draft: {...data, data: category.data},
         },
+      }).then(() => {
+        helpers.setSubmitting(false)
       })
     } else {
       makeRequest({
@@ -135,6 +145,7 @@ const FormPage: FC = observer(() => {
         if (res.data.status === 200) {
           push(`/user/${user.hash}?activeTab=1`)
         } else if (res.data.error) {
+          helpers.setSubmitting(false)
           toast.error(t(res.data.error))
         }
       })
@@ -233,8 +244,10 @@ const FormPage: FC = observer(() => {
         }}
         validateOnBlur={false}
         validateOnChange={false}
-        onSubmit={(val) => onSubmit(val, false)}>
-        {({submitForm, values}) => {
+        onSubmit={(values, helpers) =>
+          onSubmit({values, saveDraft: false, helpers})
+        }>
+        {({submitForm, values, isSubmitting}) => {
           const validationState = [
             {
               key: 'TITLE_AND_DESCRIPTION',
@@ -579,6 +592,7 @@ const FormPage: FC = observer(() => {
                     const {name, arrayTypeFields} = fieldArray
                     return (
                       <FormGroup
+                        key={name}
                         title={name}
                         header={
                           <AdvertFormHeading
@@ -670,8 +684,9 @@ const FormPage: FC = observer(() => {
                       } hidden s:block`}>
                       {t('BACK')}
                     </OutlineButton>
+                    {`isSubmitting${isSubmitting}`}
                     <PrimaryButton
-                      onClick={submitForm}
+                      onClick={!isSubmitting && submitForm}
                       className='w-full s:w-auto'>
                       {t('CONTINUE')}
                     </PrimaryButton>
