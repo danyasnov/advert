@@ -276,7 +276,7 @@ export const FormGroup: FC<{
           </ReactModal>
         ) : (
           <Button
-            className='w-full shadow-md	 rounded-lg '
+            className='w-full shadow rounded-lg '
             onClick={() => {
               setIsOpen(true)
             }}>
@@ -308,7 +308,7 @@ export const FormGroup: FC<{
           </Button>
         )}
       </div>
-      <div className='p-8 shadow-md rounded-lg hidden s:block'>
+      <div className='p-8 shadow rounded-lg hidden s:block'>
         <div className='flex flex-col'>
           <div className='flex justify-between'>
             {header}
