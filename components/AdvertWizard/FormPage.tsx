@@ -6,7 +6,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {debounce, first, get, isEqual, size} from 'lodash'
+import {debounce, first, get, isEmpty, isEqual, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -214,9 +214,6 @@ const FormPage: FC = observer(() => {
           {category.data.name}
         </h2>
       </div>
-      {/* <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:block'> */}
-      {/*  {category.data.name} */}
-      {/* </h3> */}
       <Formik
         enableReinitialize
         initialValues={initialValues}

@@ -1,5 +1,5 @@
 import {FC, useContext, useEffect, useState} from 'react'
-import {CACategoryModel} from 'front-api'
+import {CACategoryModel, CAParamsModel} from 'front-api'
 import {useTranslation} from 'next-i18next'
 import {first, isEmpty, last, toNumber} from 'lodash'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
@@ -42,7 +42,6 @@ const CategoryPage: FC = observer(() => {
 
   const onSubmit = (id) => {
     const {draft} = state
-
     if (draft.categoryId !== id) {
       makeRequest({
         url: '/api/category-data',
@@ -53,11 +52,16 @@ const CategoryPage: FC = observer(() => {
       })
         .then((res) => {
           const categoryData = res.data.result
-          const newDraft = {
-            ...draft,
+          const newDraft: Partial<CAParamsModel> = {
+            currencies: draft.currencies,
+            currency: draft.currency,
+            degradation: draft.degradation,
+            location: draft.location,
+            addressDraft: draft.addressDraft,
             categoryId: categoryData.id,
             data: categoryData,
           }
+          if (draft.userHash) newDraft.userHash = draft.userHash
           if (hash) newDraft.hash = hash
           dispatch({
             type: 'setDraft',
