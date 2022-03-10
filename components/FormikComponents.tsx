@@ -294,7 +294,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
   disableTrack,
 }) => {
   const {name, value} = field
-  const {setFieldValue, errors} = form
+  const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
   const isValid = !error
   const isAllowed = (p: NumberFormatProps) => {
@@ -308,6 +308,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         value={value}
         onValueChange={({value: inputValue}) => {
           setFieldValue(name, inputValue)
+          if (error) setFieldError(name, undefined)
         }}
         isAllowed={isAllowed}
         mask={mask}
@@ -346,7 +347,7 @@ export const FormikText: FC<
   disableTrack,
 }) => {
   const {name, value} = field
-  const {setFieldValue, errors} = form
+  const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
   const isValid = !error
   const props = {
@@ -362,6 +363,7 @@ export const FormikText: FC<
       } else {
         setFieldValue(name, str)
       }
+      if (error) setFieldError(name, undefined)
     },
     placeholder,
     className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
@@ -550,7 +552,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isMulti,
 }) => {
   const {name, value} = field
-  const {setFieldValue, errors} = form
+  const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
   const props = {
     id: name,
@@ -561,7 +563,10 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     isSearchable: isFilterable,
     isMulti,
     isInvalid: !!error,
-    onChange: (item) => setFieldValue(name, item),
+    onChange: (item) => {
+      setFieldValue(name, item)
+      if (error) setFieldError(name, undefined)
+    },
   }
 
   return (

@@ -1,11 +1,12 @@
-import {FC, useEffect, useState} from 'react'
-import {CAParamContent, OwnerModel} from 'front-api/src/models/index'
+import {FC, useState} from 'react'
+import {OwnerModel} from 'front-api/src/models'
 import useEmblaCarousel from 'embla-carousel-react'
 import {SettingsLanguageModel} from 'front-api'
 import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import IcExclamation from 'icons/material/Exclamation.svg'
+import {get} from 'lodash'
 import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
@@ -27,9 +28,9 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const {query} = useRouter()
   const {t} = useTranslation()
   const {name, value} = field
-  const {setFieldValue, errors} = form
+  const {setFieldValue, errors, setFieldError} = form
   const [language, setLanguage] = useState(user.mainLanguage.isoCode)
-
+  const error = get(errors, name)
   const [viewportRef, embla] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -76,7 +77,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                       : 'text-nc-placeholder'
                   }`}>
                   {languagesByIsoCode[l.isoCode]?.name}
-                  {errors[name] && index === 0 && (
+                  {error && index === 0 && (
                     <IcExclamation className='ml-2 w-4 h-4' />
                   )}
                 </Button>
@@ -109,7 +110,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           <input
             placeholder={t('ENTER_THE_TITLE')}
             className={`border text-body-2 py-3 pl-4 pr-15 w-full text-nc-primary-text ${
-              errors[name] ? 'border-error' : 'border-shadow-b'
+              error ? 'border-error' : 'border-shadow-b'
             }`}
             value={title}
             maxLength={150}
@@ -127,6 +128,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               }
 
               setFieldValue(name, updatedValue)
+              if (error) setFieldError(name, undefined)
             }}
           />
           <span className='absolute inset-y-0 right-0 text-nc-icon items-center flex text-body-4 mr-4'>
@@ -153,12 +155,13 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               )
             }
             setFieldValue(name, updatedValue)
+            if (error) setFieldError(name, undefined)
           }}
           className='text-body-1 px-4 pt-3 pb-6 rounded-b-lg text-nc-primary-text w-full pb-4 border border-t-0 border-shadow-b'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
-        <span className='text-body-3 text-error'>{errors[name]}</span>
+        <span className='text-body-3 text-error'>{error}</span>
         <span className='text-nc-icon flex text-body-4 justify-center'>
           {`${description.length}/${maxDescriptionLength}`}
         </span>
