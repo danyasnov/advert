@@ -283,7 +283,7 @@ const MapPage: FC = () => {
                 defaultZoom={zoomRadiusMap[radius]}
                 onGoogleApiLoaded={onGoogleApiLoaded}
               />
-              <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
+              <div className='fixed bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
                 <div className='flex items-center flex-col'>
                   <MapRadiusSelector
                     radius={radius}
