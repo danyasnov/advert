@@ -200,7 +200,7 @@ const FormPage: FC = observer(() => {
   if (!category || !user) return null
   return (
     <div className='max-w-screen w-full'>
-      <div className='flex items-center p-4 s:hidden'>
+      <div className='flex items-center p-4 s:hidden border border-b'>
         <Button
           onClick={() => {
             dispatch({

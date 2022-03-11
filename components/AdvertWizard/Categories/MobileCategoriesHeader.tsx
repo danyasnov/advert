@@ -17,7 +17,7 @@ const MobileCategoriesHeader: FC<Props> = ({
 }) => {
   const {t} = useTranslation()
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col border border-b'>
       <div className='flex items-center p-4'>
         <Button
           onClick={() => {
