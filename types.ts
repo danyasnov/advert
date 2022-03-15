@@ -1,5 +1,6 @@
 import {AdvertiseListItemModel, LocationModel} from 'front-api/src/index'
 import {CancelTokenSource} from 'axios'
+import {FormikErrors} from 'formik'
 
 export interface LocationIdFilter {
   cityId?: number
@@ -126,7 +127,9 @@ export interface ThumbObject {
 export type PhotoFile = File & {url: string; hash: number}
 export type VideoFile = File & {loading: boolean; url: string; hash: number}
 export interface NavItem {
-  title: string
-  onClick: () => void
-  status: 'done' | 'pending'
+  key: string
+  validate: (values: any, silently?: boolean) => FormikErrors<any>
+  status?: 'done' | 'pending'
+  visible?: boolean
+  state?: FormikErrors<any>
 }

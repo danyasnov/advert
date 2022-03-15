@@ -5,7 +5,7 @@ import {
   FieldsModel,
 } from 'front-api/src/models'
 import {FC, ReactNode, useEffect, useRef, useState} from 'react'
-import {useFormikContext} from 'formik'
+import {FormikErrors, useFormikContext} from 'formik'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
 import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
@@ -134,8 +134,8 @@ export const CategoryUpdater: FC<{
 }
 
 export const validateTitle = (content, t, silently?) => {
-  const errors: Record<string, unknown> = {}
-  const title = get(content, '[0].title')
+  const errors: FormikErrors<any> = {}
+  const title = get(content, '[0].title', '')
   if (title?.length < 3) {
     errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
     if (!silently) toast.error(errors.content)
@@ -144,7 +144,7 @@ export const validateTitle = (content, t, silently?) => {
 }
 
 export const validatePhoto = (photos, minPhotos, t, silently?) => {
-  const errors: Record<string, unknown> = {}
+  const errors: FormikErrors<any> = {}
   if (size(photos) < minPhotos) {
     const msg = t('PHOTO_ERROR', {minPhotos})
     errors.photos = msg
@@ -154,7 +154,7 @@ export const validatePhoto = (photos, minPhotos, t, silently?) => {
 }
 
 export const validatePrice = (price, allowFree, t, silently?) => {
-  const errors: Record<string, unknown> = {}
+  const errors: FormikErrors<any> = {}
   if (!price && !allowFree) {
     errors.price = t('PRICE_ERROR')
     if (!silently) toast.error(errors.price)
@@ -163,7 +163,7 @@ export const validatePrice = (price, allowFree, t, silently?) => {
 }
 
 export const validateCondition = (condition, allowUsed, t, silently?) => {
-  const errors: Record<string, unknown> = {}
+  const errors: FormikErrors<any> = {}
   if (!condition && allowUsed) {
     errors.condition = t('FIELD_REQUIRED_ERROR', {
       field: t('ADVERT_TYPE'),
@@ -174,7 +174,7 @@ export const validateCondition = (condition, allowUsed, t, silently?) => {
 }
 
 export const validateFields = (values, fields, t, silently?) => {
-  const errors: Record<string, unknown> = {}
+  const errors: FormikErrors<any> = {}
   fields.forEach(({isFillingRequired, minValue, maxValue, name, id}) => {
     let msg
     const value = get(values, `fields.${id}`)
@@ -205,17 +205,14 @@ export const validateFields = (values, fields, t, silently?) => {
 export const FormGroup: FC<{
   header: ReactNode
   body: ReactNode
-  webDefaultExpanded: boolean
   title: string
+  hide?: boolean
   getCountMeta: () => Record<string, unknown>
   validate: (silently: boolean) => Record<string, unknown>
-}> = ({header, body, title, validate, getCountMeta, webDefaultExpanded}) => {
-  const {width} = useWindowSize()
+}> = ({header, body, title, validate, getCountMeta, hide}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(
-    webDefaultExpanded && width >= 768,
-  )
+  const [isExpanded, setIsExpanded] = useState(true)
   const prevValidationState = useRef({})
   const [showSummaryErrors, setShowSummaryErrors] = useState(false)
   useDisableBodyScroll(isOpen)
@@ -231,6 +228,8 @@ export const FormGroup: FC<{
       }
     }
   }, [formik.values, formik.submitCount])
+
+  if (hide) return null
 
   return (
     <>
