@@ -277,7 +277,7 @@ const FormPage: FC = observer(() => {
       }
     }),
     {
-      key: 'PRICE',
+      key: 'COST_AND_TERMS',
       validate: (val, silently) =>
         validatePrice(
           // @ts-ignore
@@ -606,14 +606,14 @@ const FormPage: FC = observer(() => {
             })}
             <FormGroup
               hide={!formStateDict?.PRICE.visible}
-              title={t('PRICE')}
+              title={t('COST_AND_TERMS')}
               header={
                 <AdvertFormHeading
-                  title={t('ENTER_PRICE')}
+                  title={t('COST_AND_TERMS')}
                   ref={(ref) => {
                     headerRefs.current[2] = {
                       ref,
-                      title: t('PRICE'),
+                      title: t('COST_AND_TERMS'),
                     }
                   }}
                 />
