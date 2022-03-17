@@ -15,7 +15,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
   const items = [
     {
       title: t('LOCATION'),
-      description: addressDraft.split(',')[0],
+      description: addressDraft.split(',').slice(0, 3).join(', '),
       state: 'done',
     },
     {title: t('CATEGORY'), description: categoryName, state: 'done'},
