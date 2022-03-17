@@ -45,6 +45,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
         pass: '',
       }}
       validationSchema={schema}
+      validateOnChange={false}
       // eslint-disable-next-line consistent-return
       onSubmit={async (values) => {
         if (showPass) {

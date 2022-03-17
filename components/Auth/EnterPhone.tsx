@@ -35,6 +35,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
       initialValues={{
         phone: '',
       }}
+      validateOnChange={false}
       onSubmit={async (values) => {
         if (
           !token &&
