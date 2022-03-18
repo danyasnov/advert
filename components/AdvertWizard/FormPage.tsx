@@ -561,6 +561,12 @@ const FormPage: FC = observer(() => {
                     let filledCount = 0
                     let isRequiredFilled = true
 
+                    if (values.condition) {
+                      filledCount += 1
+                    } else {
+                      isRequiredFilled = false
+                    }
+
                     arrayTypeFields.forEach(({id, isFillingRequired}) => {
                       // @ts-ignore
                       if (get(values, `fields.${id}`)) {
