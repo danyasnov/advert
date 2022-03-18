@@ -605,7 +605,7 @@ const FormPage: FC = observer(() => {
               )
             })}
             <FormGroup
-              hide={!formStateDict?.PRICE.visible}
+              hide={!formStateDict?.COST_AND_TERMS.visible}
               title={t('COST_AND_TERMS')}
               header={
                 <AdvertFormHeading
