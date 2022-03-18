@@ -161,7 +161,6 @@ export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
               <FormikCreateField field={f} />
             </div>
           }
-          className='l:items-center'
           isRequired={f.isFillingRequired}
           label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
         />

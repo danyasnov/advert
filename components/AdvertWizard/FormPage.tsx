@@ -548,7 +548,6 @@ const FormPage: FC = observer(() => {
                       {category.data.allowUsed && index === 0 && (
                         <AdvertFormField
                           body={conditionComponent}
-                          className='l:items-center'
                           isRequired
                           labelClassName='mt-2'
                           label={t('PROD_CONDITION')}
@@ -622,7 +621,7 @@ const FormPage: FC = observer(() => {
                 <div className='space-y-4'>
                   <AdvertFormField
                     body={
-                      <div className='w-full s:w-1/3 l:w-4/12'>
+                      <div className='w-full s:w-1/3'>
                         <Field
                           name='price'
                           component={AdvertPrice}
@@ -654,7 +653,6 @@ const FormPage: FC = observer(() => {
                           </div>
                         }
                         labelTip={t('POSSIBLE_EXCHANGE_TIP')}
-                        className='l:items-center'
                         label={width < 768 ? undefined : t('EXCHANGE')}
                       />
                       <AdvertFormField
@@ -672,7 +670,6 @@ const FormPage: FC = observer(() => {
                             />
                           </div>
                         }
-                        className='l:items-center'
                         label={width < 768 ? undefined : t('BARGAIN')}
                       />
                     </>

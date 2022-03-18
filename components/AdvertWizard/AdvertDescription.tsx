@@ -57,7 +57,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const description = valueDict[language]?.description ?? ''
 
   return (
-    <div className='w-screen-offset-8 s:max-w-704px s:w-full'>
+    <div className='w-screen-offset-8 s:w-full'>
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex'>
@@ -166,7 +166,6 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           {`${description.length}/${maxDescriptionLength}`}
         </span>
       </div>
-
       <span className='text-body-3 text-nc-secondary-text'>
         {t('OTHER_LANGUAGES_REFERENCE')}
       </span>
