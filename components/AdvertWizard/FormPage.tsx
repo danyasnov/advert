@@ -754,6 +754,7 @@ const FormPage: FC = observer(() => {
                   {t('BACK')}
                 </OutlineButton>
                 <PrimaryButton
+                  disabled={!!currentStep}
                   onClick={!isSubmitting && submitForm}
                   className='w-full s:w-auto'>
                   {t('PUBLISH')}
