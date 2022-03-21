@@ -1066,6 +1066,7 @@
   "N_ADVERTS": "{{count}} advertisements",
   "NEW_AD": "New advertisement",
   "NIGHT": "Night",
+  "NO_CREATE_NEW": "No, create a new one",
   "NO_MESSAGES": "No messages ",
   "NO_PRODUCTS_FOR_MODERATION": "You have no products pending for moderation",
   "NO_PRODUCTS_FOR_SALE": "You have no products to sell",
@@ -1306,7 +1307,7 @@
   "THIS_USER_HAS_NO_FOLLOWERS_YET": "This user has no followers yet",
   "THIS_USER_HAS_NO_SUBSCRIPTIONS_YET": "This user has no subscriptions yet",
   "THOUSAND_SHORT": "{{amount}}K",
-  "TIP_DESCRIPTION_CREATE_ADV": "You can add a title and description in other languages. \n\nDo not include contact details and links in the description. \nThere are special fields for this.",
+  "TIP_DESCRIPTION_CREATE_ADV": "You can add a title and description in other languages. Do not include contact details and links in the description. There are special fields for this.",
   "TIP_FOR_ADDING_A_PHOTO": "The first photo will be displayed in the search results.  Choose the best one.\nYou can upload up to {{maxPhotos}} photos in JPG or PNG format.\n  The maximum photo size is 25 Mb.",
   "TIP_FOR_VIDEO": "According to statistics, an ad with a video is viewed 5 times more often",
   "TIP_MAP_CREATE_ADS": "Choose between the exact location\nor radius, switching modes\nusing buttons",
@@ -1360,9 +1361,12 @@
   "WRITE_MESSAGE": "Message",
   "WRITE_SUPPORT": "Contact support",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
+  "YES_RETURN": "Yes, come back",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "You can view other advertisements of the seller",
   "YOUR_ADV_ON_MODERATION": "Your ad is being reviewed ",
   "YOUR_ADV_ON_MODERATION_INFO": "As soon as the ad is moderated, it will immediately appear in the list of ads",
   "YOUR_NOTE": "Your note",
-  "YOUR_NOTE_WITHOUT_DATE": "Your notes:"
+  "YOUR_NOTE_WITHOUT_DATE": "Your notes:",
+  "YOUR_SAVE_DRAFT": "You have saved a draft",
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Want to go back to draft?"
 }

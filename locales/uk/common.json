@@ -1066,6 +1066,7 @@
   "N_ADVERTS": "{{count}} оголошень",
   "NEW_AD": "Нове оголошенння",
   "NIGHT": "Ніч",
+  "NO_CREATE_NEW": "No, create a new one",
   "NO_MESSAGES": "No messages ",
   "NO_PRODUCTS_FOR_MODERATION": "У вас немає товарів для модерації",
   "NO_PRODUCTS_FOR_SALE": "У вас немає прав для продажу",
@@ -1306,7 +1307,7 @@
   "THIS_USER_HAS_NO_FOLLOWERS_YET": "У даного користувача поки немає підписників",
   "THIS_USER_HAS_NO_SUBSCRIPTIONS_YET": "У даного користувача поки немає підписок",
   "THOUSAND_SHORT": "{{amount}}K",
-  "TIP_DESCRIPTION_CREATE_ADV": "Ви можете додати назву та опис на інших мовах.\n\nНе вказуйте в опису контактні дані або посилання. \nДля цього є спеціальні поля.",
+  "TIP_DESCRIPTION_CREATE_ADV": "Ви можете додати назву та опис на інших мовах. Не вказуйте в опису контактні дані або посилання. Для цього є спеціальні поля.",
   "TIP_FOR_ADDING_A_PHOTO": "Перше фото буде відображатися у результатах пошуку, оберіть найбільш вдале.\nВи можете завантажити до {{maxPhotos}} фотографій у форматі JPG або PNG.\n Максимальний размір фото — 25 Mb.",
   "TIP_FOR_VIDEO": "За статистикою оголошення з відео переглядається в 5 разів частіше",
   "TIP_MAP_CREATE_ADS": "Обирайте між точним місцем\nабо радіусом, перемикаючи режими\nза допомогою кнопок",
@@ -1360,9 +1361,12 @@
   "WRITE_MESSAGE": "Повідомленн",
   "WRITE_SUPPORT": "Написати у підтримку",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
+  "YES_RETURN": "Yes, come back",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "Ви можете переглянути інші оголошення продавця.",
   "YOUR_ADV_ON_MODERATION": "Ваше оголошення на модерації",
   "YOUR_ADV_ON_MODERATION_INFO": "Як тільки воно пройде модерацію - одразу ж з'явиться у списку оголошень",
   "YOUR_NOTE": "Ваш нотаток",
-  "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:"
+  "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:",
+  "YOUR_SAVE_DRAFT": "You have saved a draft",
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Want to go back to draft?"
 }

@@ -1066,6 +1066,7 @@
   "N_ADVERTS": "{{count}} αγγελίες",
   "NEW_AD": "Νέα αγγελία",
   "NIGHT": "Βράδυ",
+  "NO_CREATE_NEW": "No, create a new one",
   "NO_MESSAGES": "No messages ",
   "NO_PRODUCTS_FOR_MODERATION": "Δεν έχετε προϊόντα υπό έλεγχο",
   "NO_PRODUCTS_FOR_SALE": "Δεν έχετε προϊόντα προς πώληση",
@@ -1306,7 +1307,7 @@
   "THIS_USER_HAS_NO_FOLLOWERS_YET": "Αυτός ο χρήστης δεν έχει ακόμα ακόλουθους",
   "THIS_USER_HAS_NO_SUBSCRIPTIONS_YET": "Αυτός ο χρήστης δεν έχει ακόμη συνδρομές",
   "THOUSAND_SHORT": "{{amount}}K",
-  "TIP_DESCRIPTION_CREATE_ADV": "Μπορείτε να προσθέσετε τίτλο και περιγραφή σε άλλες γλώσσες.\n\nΜην συμπεριλάβετε στοιχεία επικοινωνίας και συνδέσμους στην περιγραφή.\nΥπάρχουν ειδικά πεδία για αυτό.",
+  "TIP_DESCRIPTION_CREATE_ADV": "Μπορείτε να προσθέσετε τίτλο και περιγραφή σε άλλες γλώσσες. Μην συμπεριλάβετε στοιχεία επικοινωνίας και συνδέσμους στην περιγραφή. Υπάρχουν ειδικά πεδία για αυτό.",
   "TIP_FOR_ADDING_A_PHOTO": "Η πρώτη φωτογραφία θα εμφανιστεί στα αποτελέσματα αναζήτησης, επιλέξτε την καλύτερη.\nΜπορείτε να ανεβάσετε έως και {{maxPhotos}} φωτογραφίες σε μορφή JPG ή PNG.\n  Το μέγιστο μέγεθος φωτογραφίας είναι 25 Mb.",
   "TIP_FOR_VIDEO": "Σύμφωνα με στατιστικά, μια διαφήμιση με βίντεο προβάλλεται 5 φορές πιο συχνά",
   "TIP_MAP_CREATE_ADS": "Επιλέξτε ανάμεσα στην ακριβή τοποθεσία\nή ακτίνα, τρόπους εναλλαγής\nχρησιμοποιώντας κουμπιά",
@@ -1360,9 +1361,12 @@
   "WRITE_MESSAGE": "Μήνυμα",
   "WRITE_SUPPORT": "Επικονωνήστε με την ομαδα υποστήριξης",
   "WRONG_SPECIFICATIONS": "Shown wrong specification of the product",
+  "YES_RETURN": "Yes, come back",
   "YOU_CAN_SEE_OTHER_ADS_OF_SELLER": "Μπορείτε να δείτε και άλλες αγγελίες από τον πωλητή",
   "YOUR_ADV_ON_MODERATION": "Η διαφήμισή σας ελέγχεται ",
   "YOUR_ADV_ON_MODERATION_INFO": "Μόλις εγκριθεί η διαφήμιση, θα εμφανιστεί αμέσως στη λίστα των διαφημίσεων",
   "YOUR_NOTE": "Η σημείωσή σας",
-  "YOUR_NOTE_WITHOUT_DATE": "Οι σημειώσεις σας:"
+  "YOUR_NOTE_WITHOUT_DATE": "Οι σημειώσεις σας:",
+  "YOUR_SAVE_DRAFT": "You have saved a draft",
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Want to go back to draft?"
 }
