@@ -708,40 +708,6 @@ const FormPage: FC = observer(() => {
                 )
               }
             />
-            {!!currentStep && (
-              <PrimaryButton
-                onClick={() => {
-                  let errors = {}
-                  formState.some((s) => {
-                    if (!formStateDict[s.key].visible) return true
-                    const validation = s.validate(values)
-                    const formatted: Record<string, unknown> = {}
-                    Object.entries(validation).forEach((val) => {
-                      if (isFinite(toNumber(val[0]))) {
-                        // eslint-disable-next-line prefer-destructuring
-                        if (isEmpty(formatted.fields)) {
-                          formatted.fields = {[val[0]]: val[1]}
-                        } else {
-                          // eslint-disable-next-line prefer-destructuring
-                          formatted.fields[val[0]] = val[1]
-                        }
-                      } else {
-                        // eslint-disable-next-line prefer-destructuring
-                        formatted[val[0]] = val[1]
-                      }
-                    })
-                    errors = {...errors, ...formatted}
-
-                    return s.key === currentStep.key
-                  })
-                  setErrors(errors)
-                  const newFormState = getFormStateDict(formState)
-                  setFormStateDict(newFormState)
-                }}
-                className='w-min'>
-                {t('CONTINUE')}
-              </PrimaryButton>
-            )}
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
                 <OutlineButton
@@ -757,10 +723,51 @@ const FormPage: FC = observer(() => {
                   {t('BACK')}
                 </OutlineButton>
                 <PrimaryButton
-                  disabled={!!currentStep}
-                  onClick={!isSubmitting && submitForm}
+                  onClick={() => {
+                    if (currentStep) {
+                      let errors = {}
+                      formState.some((s) => {
+                        if (!formStateDict[s.key].visible) return true
+                        const validation = s.validate(values)
+                        const formatted: Record<string, unknown> = {}
+                        Object.entries(validation).forEach((val) => {
+                          if (isFinite(toNumber(val[0]))) {
+                            // eslint-disable-next-line prefer-destructuring
+                            if (isEmpty(formatted.fields)) {
+                              formatted.fields = {[val[0]]: val[1]}
+                            } else {
+                              // eslint-disable-next-line prefer-destructuring
+                              formatted.fields[val[0]] = val[1]
+                            }
+                          } else {
+                            // eslint-disable-next-line prefer-destructuring
+                            formatted[val[0]] = val[1]
+                          }
+                        })
+                        errors = {...errors, ...formatted}
+
+                        return s.key === currentStep.key
+                      })
+                      setErrors(errors)
+                      const newFormState = getFormStateDict(formState)
+                      setFormStateDict(newFormState)
+                      if (width >= 768) {
+                        setTimeout(() => {
+                          const input = document.querySelector(`.border-error`)
+                          if (input) {
+                            input.scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'center',
+                            })
+                          }
+                        })
+                      }
+                    } else if (!isSubmitting) {
+                      submitForm()
+                    }
+                  }}
                   className='w-full s:w-auto'>
-                  {t('PUBLISH')}
+                  {t(currentStep ? 'CONTINUE' : 'PUBLISH')}
                 </PrimaryButton>
               </div>
             </div>
