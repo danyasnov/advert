@@ -337,6 +337,7 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
+  console.log(category.data)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -739,6 +740,9 @@ const FormPage: FC = observer(() => {
                         return s.key === currentStep.key
                       })
                       setErrors(errors)
+                      if (!isEmpty(errors)) {
+                        toast.error(t('ADVERT_CREATING_HELP_ALERT'))
+                      }
                       const newFormState = getFormStateDict(formState)
                       setFormStateDict(newFormState)
                       if (width >= 768) {
