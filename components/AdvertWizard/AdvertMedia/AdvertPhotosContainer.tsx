@@ -26,9 +26,10 @@ const AdvertPhotosContainer: ComponentClass<
   {
     maxPhotos: number
     photos: PhotoFile[]
+    error: boolean
     setPhotos: Dispatch<SetStateAction<PhotoFile[]>>
   } & SortableContainerProps
-> = SortableContainer(({maxPhotos, photos, setPhotos}) => {
+> = SortableContainer(({maxPhotos, photos, setPhotos, error}) => {
   const [isDragging, setIsDragging] = useState(false)
   const canAddMore = maxPhotos > photos.length
 
@@ -160,6 +161,7 @@ const AdvertPhotosContainer: ComponentClass<
             disabled={!canAddMore}
             maxFiles={maxPhotos}
             type='photo'
+            error={error}
           />
         )}
       </div>

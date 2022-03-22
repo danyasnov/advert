@@ -133,7 +133,7 @@
   "DELIVERY_TIME": "Delivery period",
   "DESCENDINGLY": "Descending",
   "DESCRIPTION_PLACEHOLDER": "Description {{language}}",
-  "DETAILED_SHOP_INFO": "Detailed information about the store",
+  "SHOP_INFO": "Information",
   "DEVICE_VERSION": "Device model",
   "DISABLE_INFORM_WHEN_PRICE_CHANGE": "Oprește notificările privind reducerea prețului",
   "DOCUMENTS_AND_RULES": "Acorduri și condiții",
@@ -829,6 +829,7 @@
   "CONFIRM_RECEIPT_GOODS_INFO": "Check the item and complete the transaction, or open a dispute within 14 days of purchase.",
   "CONGRATULATIONS": "Congratulations!",
   "CONNECTING_TO_THE_SERVER": "Connecting to server",
+  "CONTACT_DETAILS": "Contact details",
   "CONTACT_SELLER": "Contact",
   "CONTINUE": "Continue",
   "CONVENIENCE_SAFETY": "Convenience and safety",
@@ -1269,6 +1270,7 @@
   "SHOW_ORIGINAL_CHAT": "Show original",
   "SIGN_IN_BY_PHONE_NUMBER": "Sign in by phone number",
   "SIMILAR_ADS_TAB": "Similar advertisements",
+  "SINCE_REAL_ESTATE_AGENCY": "Real estate agency on Adverto from {{data}}",
   "SITE_MAIN_PAGE_META_TITLE": "ADVERTO - site-ul anunțurilor gratuite",
   "SITE_PAGE_DESCRIPTION_PART": "Anunțuri de vînzare",
   "SKIP": "Skip",
@@ -1340,8 +1342,8 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
-  "VIDEO": "Video",
   "Video": "Video",
+  "VIDEO": "Video",
   "VIDEO_AD": "Video ad",
   "VIDEO_CHAT": "Video",
   "VIDEO_LIMITATION_ERROR": "The maximum video size is 100MB. Try uploading a smaller video",
@@ -1368,5 +1370,5 @@
   "YOUR_NOTE": "Your note",
   "YOUR_NOTE_WITHOUT_DATE": "Your notes:",
   "YOUR_SAVE_DRAFT": "You have saved a draft",
-  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Want to go back to draft?"
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Do you want to go back to draft?"
 }

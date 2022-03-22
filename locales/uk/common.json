@@ -133,7 +133,7 @@
   "DELIVERY_TIME": "Delivery period",
   "DESCENDINGLY": "Descending",
   "DESCRIPTION_PLACEHOLDER": "Description {{language}}",
-  "DETAILED_SHOP_INFO": "Detailed information about the store",
+  "SHOP_INFO": "Information",
   "DEVICE_VERSION": "Device model",
   "DISABLE_INFORM_WHEN_PRICE_CHANGE": "Зупинити повідомлення про зміну ціни",
   "DOCUMENTS_AND_RULES": "Правила та угоди",
@@ -829,6 +829,7 @@
   "CONFIRM_RECEIPT_GOODS_INFO": "Перевірте товар та завершіть угоду або відкрийте суперечку протягом 14 днів з моменту покупки.",
   "CONGRATULATIONS": "Вітаємо!",
   "CONNECTING_TO_THE_SERVER": "З'єднуємося з сервером",
+  "CONTACT_DETAILS": "Contact details",
   "CONTACT_SELLER": "Зв'язатися",
   "CONTINUE": "Продовжити",
   "CONVENIENCE_SAFETY": "Зручність та безпека",
@@ -1269,6 +1270,7 @@
   "SHOW_ORIGINAL_CHAT": "Показати оригінал",
   "SIGN_IN_BY_PHONE_NUMBER": "Sign in by phone number",
   "SIMILAR_ADS_TAB": "Схожі оголошення",
+  "SINCE_REAL_ESTATE_AGENCY": "Real estate agency on Adverto from {{data}}",
   "SITE_MAIN_PAGE_META_TITLE": "ADVERTO - сайт безкоштовних оголошень",
   "SITE_PAGE_DESCRIPTION_PART": "Оголошення про продаж",
   "SKIP": "Пропустити",
@@ -1340,8 +1342,8 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
-  "VIDEO": "Відео",
   "Video": "Video",
+  "VIDEO": "Відео",
   "VIDEO_AD": "Video ad",
   "VIDEO_CHAT": "Відео",
   "VIDEO_LIMITATION_ERROR": "Максимальний розмір відео 100 мб. Спробуйте завантажити відео меншого розміру",
@@ -1368,5 +1370,5 @@
   "YOUR_NOTE": "Ваш нотаток",
   "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:",
   "YOUR_SAVE_DRAFT": "You have saved a draft",
-  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Want to go back to draft?"
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Do you want to go back to draft?"
 }

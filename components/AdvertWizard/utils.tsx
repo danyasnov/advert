@@ -133,47 +133,43 @@ export const CategoryUpdater: FC<{
   return null
 }
 
-export const validateTitle = (content, t, silently?) => {
+export const validateTitle = (content, t) => {
   const errors: FormikErrors<any> = {}
   const title = get(content, '[0].title', '')
   if (title?.length < 3) {
     errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
-    if (!silently) toast.error(errors.content)
   }
   return errors
 }
 
-export const validatePhoto = (photos, minPhotos, t, silently?) => {
+export const validatePhoto = (photos, minPhotos, t) => {
   const errors: FormikErrors<any> = {}
   if (size(photos) < minPhotos) {
     const msg = t('PHOTO_ERROR', {minPhotos})
     errors.photos = msg
-    if (!silently) toast.error(msg)
   }
   return errors
 }
 
-export const validatePrice = (price, allowFree, t, silently?) => {
+export const validatePrice = (price, allowFree, t) => {
   const errors: FormikErrors<any> = {}
   if (!price && !allowFree) {
     errors.price = t('PRICE_ERROR')
-    if (!silently) toast.error(errors.price)
   }
   return errors
 }
 
-export const validateCondition = (condition, allowUsed, t, silently?) => {
+export const validateCondition = (condition, allowUsed, t) => {
   const errors: FormikErrors<any> = {}
   if (!condition && allowUsed) {
     errors.condition = t('FIELD_REQUIRED_ERROR', {
       field: t('ADVERT_TYPE'),
     })
-    if (!silently) toast.error(errors.condition)
   }
   return errors
 }
 
-export const validateFields = (values, fields, t, silently?) => {
+export const validateFields = (values, fields, t) => {
   const errors: FormikErrors<any> = {}
   fields.forEach(({isFillingRequired, minValue, maxValue, name, id}) => {
     let msg
@@ -182,7 +178,6 @@ export const validateFields = (values, fields, t, silently?) => {
       msg = t('FIELD_REQUIRED_ERROR', {
         field: name,
       })
-      if (!silently) toast.error(msg)
     }
     if (minValue || maxValue) {
       const num = toNumber(value)
@@ -192,7 +187,6 @@ export const validateFields = (values, fields, t, silently?) => {
           min: minValue,
           max: maxValue,
         })
-        if (!silently) toast.error(msg)
         msg = error
       }
     }
@@ -208,7 +202,7 @@ export const FormGroup: FC<{
   title: string
   hide?: boolean
   getCountMeta: () => Record<string, unknown>
-  validate: (silently: boolean) => Record<string, unknown>
+  validate: () => Record<string, unknown>
 }> = ({header, body, title, validate, getCountMeta, hide}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
@@ -220,7 +214,7 @@ export const FormGroup: FC<{
   const countMeta = getCountMeta()
   useEffect(() => {
     if (formik.submitCount > 0) {
-      const validationState = validate(true)
+      const validationState = validate()
       const isNew = !isEqual(validationState, prevValidationState.current)
       if (isNew) {
         prevValidationState.current = validationState

@@ -233,37 +233,34 @@ const FormPage: FC = observer(() => {
   const formItems: NavItem[] = [
     {
       key: 'TITLE_AND_DESCRIPTION',
-      validate: (val, silently) =>
+      validate: (val) =>
         validateTitle(
           // @ts-ignore
           val.content,
           t,
-          silently,
         ),
     },
     {
       key: 'PHOTO_AND_VIDEO',
-      validate: (val, silently) =>
+      validate: (val) =>
         validatePhoto(
           // @ts-ignore
           val.photos,
           category.data.minPhotos,
           t,
-          silently,
         ),
     },
     ...fieldsArray.map((fieldArray, index) => {
       const {name, arrayTypeFields} = fieldArray
       return {
         key: name,
-        validate: (val, silently) => ({
+        validate: (val) => ({
           ...(index === 0
             ? validateCondition(
                 // @ts-ignore
                 val.condition,
                 category.data.allowUsed,
                 t,
-                silently,
               )
             : {}),
           ...validateFields(
@@ -271,20 +268,18 @@ const FormPage: FC = observer(() => {
             val,
             arrayTypeFields,
             t,
-            silently,
           ),
         }),
       }
     }),
     {
       key: 'COST_AND_TERMS',
-      validate: (val, silently) =>
+      validate: (val) =>
         validatePrice(
           // @ts-ignore
           val.price,
           category.data.allowFree,
           t,
-          silently,
         ),
     },
   ]
@@ -373,12 +368,11 @@ const FormPage: FC = observer(() => {
             </div>
             <FormGroup
               hide={!formStateDict?.TITLE_AND_DESCRIPTION.visible}
-              validate={(silently) =>
+              validate={() =>
                 validateTitle(
                   // @ts-ignore
                   values.content,
                   t,
-                  silently,
                 )
               }
               title={t('TITLE_AND_DESCRIPTION')}
@@ -515,13 +509,12 @@ const FormPage: FC = observer(() => {
                   maxFilled: category.data.allowVideo ? 2 : 1,
                 }
               }}
-              validate={(silently) =>
+              validate={() =>
                 validatePhoto(
                   // @ts-ignore
                   values.photos,
                   category.data.minPhotos,
                   t,
-                  silently,
                 )
               }
             />
@@ -588,14 +581,13 @@ const FormPage: FC = observer(() => {
                         : maxFilled.length,
                     }
                   }}
-                  validate={(silently) => ({
+                  validate={() => ({
                     ...(index === 0
                       ? validateCondition(
                           // @ts-ignore
                           values.condition,
                           category.data.allowUsed,
                           t,
-                          silently,
                         )
                       : {}),
                     ...validateFields(
@@ -603,7 +595,6 @@ const FormPage: FC = observer(() => {
                       values,
                       arrayTypeFields,
                       t,
-                      silently,
                     ),
                   })}
                 />
@@ -698,13 +689,12 @@ const FormPage: FC = observer(() => {
                   maxFilled: 1,
                 }
               }}
-              validate={(silently) =>
+              validate={() =>
                 validatePrice(
                   // @ts-ignore
                   values.price,
                   category.data.allowFree,
                   t,
-                  silently,
                 )
               }
             />
