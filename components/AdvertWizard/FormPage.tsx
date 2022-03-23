@@ -337,7 +337,6 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
-  console.log(category.data)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -564,14 +563,16 @@ const FormPage: FC = observer(() => {
                       isRequiredFilled = false
                     }
 
-                    arrayTypeFields.forEach(({id, isFillingRequired}) => {
-                      // @ts-ignore
-                      if (get(values, `fields.${id}`)) {
-                        filledCount += 1
-                      } else if (isFillingRequired) {
-                        isRequiredFilled = false
-                      }
-                    })
+                    arrayTypeFields.forEach(
+                      ({id: fieldId, isFillingRequired}) => {
+                        // @ts-ignore
+                        if (get(values, `fields.${fieldId}`)) {
+                          filledCount += 1
+                        } else if (isFillingRequired) {
+                          isRequiredFilled = false
+                        }
+                      },
+                    )
 
                     const maxFilled = arrayTypeFields.filter(
                       ({itemType}) => itemType === 'simple',
@@ -752,10 +753,18 @@ const FormPage: FC = observer(() => {
                         setTimeout(() => {
                           const input = document.querySelector(`.border-error`)
                           if (input) {
-                            input.scrollIntoView({
-                              behavior: 'smooth',
-                              block: 'center',
-                            })
+                            const formGroup = input.closest('.invalid-group')
+                            if (formGroup && input) {
+                              formGroup.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                              })
+                            } else if (input) {
+                              input.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                              })
+                            }
                           }
                         })
                       }

@@ -301,7 +301,10 @@ export const FormGroup: FC<{
           </Button>
         )}
       </div>
-      <div className='p-8 shadow rounded-lg hidden s:block'>
+      <div
+        className={`p-8 shadow rounded-lg hidden s:block ${
+          !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
+        }`}>
         <div className='flex flex-col'>
           <div className='flex justify-between'>
             {header}
@@ -314,7 +317,12 @@ export const FormGroup: FC<{
             </Button>
           </div>
           <div className='text-body-2 text-nc-secondary-text mt-1'>
-            <span>
+            <span
+              className={
+                !countMeta.isRequiredFilled && !isExpanded
+                  ? 'text-nc-error'
+                  : ''
+              }>
               {t('NUMBER_FROM_NUMBER', {
                 from: countMeta.filledCount,
                 to: countMeta.maxFilled,
@@ -322,7 +330,7 @@ export const FormGroup: FC<{
             </span>
           </div>
         </div>
-        <div className={`${isExpanded ? 'static' : 'absolute hidden'} pt-6`}>
+        <div className={`${isExpanded ? 'static' : 'absolute invisible'} pt-6`}>
           {body}
         </div>
       </div>

@@ -75,31 +75,38 @@ const Select: FC<SelectProps> = ({
   components,
 }) => {
   return (
-    <RS
-      inputId={id}
-      id={id}
-      value={value}
-      options={options}
-      placeholder={placeholder}
-      isSearchable={isSearchable}
-      isDisabled={isDisabled}
-      onChange={onChange}
-      isClearable={isClearable}
-      isMulti={isMulti}
-      closeMenuOnSelect={!isMulti}
-      menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-      styles={{
-        ...getDefaultStyles(isInvalid),
-        ...propsStyles,
-        menuPortal: (base) => ({...base, zIndex: 9999}),
-      }}
-      isOptionDisabled={(option) => option.disabled}
-      className='react-select'
-      components={{
-        MenuList,
-        ...(components || {}),
-      }}
-    />
+    <>
+      <RS
+        inputId={id}
+        id={id}
+        value={value}
+        options={options}
+        placeholder={placeholder}
+        isSearchable={isSearchable}
+        isDisabled={isDisabled}
+        onChange={onChange}
+        isClearable={isClearable}
+        isMulti={isMulti}
+        closeMenuOnSelect={!isMulti}
+        menuPortalTarget={
+          typeof document !== 'undefined' ? document.body : null
+        }
+        styles={{
+          ...getDefaultStyles(isInvalid),
+          ...propsStyles,
+          menuPortal: (base) => ({...base, zIndex: 9999}),
+        }}
+        isOptionDisabled={(option) => option.disabled}
+        className='react-select'
+        components={{
+          MenuList,
+          ...(components || {}),
+        }}
+      />
+      <input
+        className={`invisible ${isInvalid ? 'border-error' : ''} absolute`}
+      />
+    </>
   )
 }
 
