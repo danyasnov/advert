@@ -16,10 +16,7 @@ const MobileSelect: FC<SelectProps> = ({
   onChange,
   value,
   isSearchable,
-  isDisabled,
-  isClearable,
   isMulti,
-  id,
   isInvalid,
 }) => {
   const {t} = useTranslation()

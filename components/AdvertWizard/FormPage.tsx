@@ -46,6 +46,7 @@ import {
   mapCategoryData,
   mapFormikFields,
   mapOriginalFields,
+  scrollToFirstError,
   validateCondition,
   validateFields,
   validatePhoto,
@@ -196,13 +197,17 @@ const FormPage: FC = observer(() => {
       categoryData.allowUsed,
       t,
     )
-    return {
+    const result = {
       ...errors,
       ...titleError,
       ...photoError,
       ...priceError,
       ...conditionError,
     }
+    if (!isEmpty(result)) {
+      toast.error(t('ADVERT_CREATING_HELP_ALERT'))
+    }
+    return result
   }
 
   const formik = useFormik({
@@ -724,22 +729,7 @@ const FormPage: FC = observer(() => {
                       formState.some((s) => {
                         if (!formStateDict[s.key].visible) return true
                         const validation = s.validate(values)
-                        const formatted: Record<string, unknown> = {}
-                        Object.entries(validation).forEach((val) => {
-                          if (isFinite(toNumber(val[0]))) {
-                            // eslint-disable-next-line prefer-destructuring
-                            if (isEmpty(formatted.fields)) {
-                              formatted.fields = {[val[0]]: val[1]}
-                            } else {
-                              // eslint-disable-next-line prefer-destructuring
-                              formatted.fields[val[0]] = val[1]
-                            }
-                          } else {
-                            // eslint-disable-next-line prefer-destructuring
-                            formatted[val[0]] = val[1]
-                          }
-                        })
-                        errors = {...errors, ...formatted}
+                        errors = {...errors, ...validation}
 
                         return s.key === currentStep.key
                       })
@@ -750,23 +740,7 @@ const FormPage: FC = observer(() => {
                       const newFormState = getFormStateDict(formState)
                       setFormStateDict(newFormState)
                       if (width >= 768) {
-                        setTimeout(() => {
-                          const input = document.querySelector(`.border-error`)
-                          if (input) {
-                            const formGroup = input.closest('.invalid-group')
-                            if (formGroup && input) {
-                              formGroup.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center',
-                              })
-                            } else if (input) {
-                              input.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center',
-                              })
-                            }
-                          }
-                        })
+                        scrollToFirstError()
                       }
                     } else if (!isSubmitting) {
                       submitForm()

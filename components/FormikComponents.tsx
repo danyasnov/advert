@@ -319,7 +319,6 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       msg = t('FIELD_REQUIRED_ERROR', {
         field: name,
       })
-      toast.error(msg)
     }
     if (minValue || maxValue) {
       const num = toNumber(value)
@@ -329,7 +328,6 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
           min: minValue,
           max: maxValue,
         })
-        toast.error(msg)
         msg = error
       }
     }
@@ -641,6 +639,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isFilterable,
   isMulti,
 }) => {
+  const {width} = useWindowSize()
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
@@ -661,14 +660,13 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
 
   return (
     <>
-      <div className='hidden s:block'>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      {width >= 768 ? (
+        //  eslint-disable-next-line react/jsx-props-no-spreading
         <Select {...props} />
-      </div>
-      <div className='block s:hidden'>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      ) : (
+        // eslint-disable-next-line react/jsx-props-no-spreading
         <MobileSelect {...props} />
-      </div>
+      )}
       <span className='text-body-3 text-error'>{error}</span>
     </>
   )

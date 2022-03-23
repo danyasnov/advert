@@ -133,6 +133,30 @@ export const CategoryUpdater: FC<{
   return null
 }
 
+export const scrollToFirstError = (mobile?: boolean): void => {
+  setTimeout(() => {
+    const input = document.querySelector(
+      `${mobile ? '.ReactModalPortal ' : ''}.border-error`,
+    )
+    if (input) {
+      const formGroup = input.closest('.invalid-group')
+      console.log(input, formGroup)
+
+      if (formGroup && input) {
+        formGroup.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      } else if (input) {
+        input.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      }
+    }
+  })
+}
+
 export const validateTitle = (content, t) => {
   const errors: FormikErrors<any> = {}
   const title = get(content, '[0].title', '')
@@ -170,7 +194,7 @@ export const validateCondition = (condition, allowUsed, t) => {
 }
 
 export const validateFields = (values, fields, t) => {
-  const errors: FormikErrors<any> = {}
+  const errors: FormikErrors<any> = {fields: {}}
   fields.forEach(({isFillingRequired, minValue, maxValue, name, id}) => {
     let msg
     const value = get(values, `fields.${id}`)
@@ -190,7 +214,7 @@ export const validateFields = (values, fields, t) => {
         msg = error
       }
     }
-    if (msg) errors[id] = msg
+    if (msg) errors.fields[id] = msg
   })
 
   return errors
@@ -259,6 +283,9 @@ export const FormGroup: FC<{
                     formik.setErrors(errors)
                     if (isEmpty(errors)) {
                       setIsOpen(false)
+                    } else {
+                      toast.error(t('ADVERT_CREATING_HELP_ALERT'))
+                      scrollToFirstError(true)
                     }
                   }}
                   className='w-full s:w-auto'>
@@ -330,7 +357,7 @@ export const FormGroup: FC<{
             </span>
           </div>
         </div>
-        <div className={`${isExpanded ? 'static' : 'absolute invisible'} pt-6`}>
+        <div className={`${isExpanded ? 'static' : 'absolute hidden'} pt-6`}>
           {body}
         </div>
       </div>
