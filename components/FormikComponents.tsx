@@ -1,9 +1,9 @@
 import {FC, useState} from 'react'
-import {Field, FieldProps} from 'formik'
+import {Field, FieldProps, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
-import {CACategoryDataFieldModel} from 'front-api/src/models/index'
+import {CACategoryDataFieldModel} from 'front-api/src/models'
 import {get, isEmpty, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
@@ -142,10 +142,22 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 }
 
 // @ts-ignore
-export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
+export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
+  fieldsArray,
+  id,
+}) => {
+  let checkboxesGroup = null
+  let description = null
+  let fields = fieldsArray
+
+  if (id === 2058) {
+    checkboxesGroup = fieldsArray.filter((f) => f.fieldType === 'checkbox')
+    fields = fieldsArray.filter((f) => f.fieldType !== 'checkbox')
+    description = 'FACILITIES_TIP'
+  }
   const {width} = useWindowSize()
 
-  return fieldsArray.map((f) => {
+  const fieldsGroup = fields.map((f) => {
     if (f.fieldType === 'array') {
       return <FormikCreateFields fieldsArray={f.arrayTypeFields} />
     }
@@ -168,6 +180,85 @@ export const FormikCreateFields: FC<{fieldsArray: any[]}> = ({fieldsArray}) => {
     }
     return null
   })
+  return (
+    <>
+      {fieldsGroup}
+      {!!checkboxesGroup && (
+        <FormikCheckboxesGroup
+          description={description}
+          fields={checkboxesGroup}
+        />
+      )}
+    </>
+  )
+}
+
+export const FormikCheckboxesGroup: FC<{
+  fields: CACategoryDataFieldModel[]
+  description?: string
+}> = ({fields, description}) => {
+  const formik = useFormikContext()
+  const {t} = useTranslation()
+  const {values, setFieldValue} = formik
+  return (
+    <div>
+      {!!description && (
+        <div className='bg-nc-info rounded-lg py-3 px-4 mb-4'>
+          <span className='text-body-2'>{t(description)}</span>
+        </div>
+      )}
+      <div className='flex flex-wrap'>
+        {fields.map((f) => {
+          const name = `fields.${f.id}`
+          const value = get(values, name)
+          return (
+            <Button
+              onClick={() => setFieldValue(name, !value)}
+              key={f.id}
+              className={`text-body-1 text-nc-primary-text p-4 rounded-lg mr-3 mb-3 ${
+                value ? 'bg-nc-accent' : 'bg-nc-back'
+              }`}>
+              {f.name}
+            </Button>
+          )
+        })}
+      </div>
+    </div>
+  )
+
+  // const input = (
+  //   <Switch
+  //     offColor='#ACB9C3'
+  //     onColor='#FF8514'
+  //     uncheckedIcon={false}
+  //     checkedIcon={false}
+  //     height={16}
+  //     width={28}
+  //     handleDiameter={14}
+  //     onChange={(checked) => setFieldValue(name, checked)}
+  //     checked={!!value}
+  //   />
+  // )
+  // return (
+  //   <div>
+  //     {hideLabel ? (
+  //       input
+  //     ) : (
+  //       // eslint-disable-next-line jsx-a11y/label-has-associated-control
+  //       <label className='flex items-center justify-between'>
+  //         {label && (
+  //           <span
+  //             className={`text-nc-title text-body-1 whitespace-nowrap ${
+  //               labelPosition === 'left' ? 'mr-3' : 'order-last ml-3'
+  //             }`}>
+  //             {label}
+  //           </span>
+  //         )}
+  //         {input}
+  //       </label>
+  //     )}
+  //   </div>
+  // )
 }
 
 export const FormikCreateField: FC<IFormikField> = ({field}) => {

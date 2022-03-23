@@ -520,7 +520,7 @@ const FormPage: FC = observer(() => {
               }
             />
             {fieldsArray.map((fieldArray, index) => {
-              const {name, arrayTypeFields} = fieldArray
+              const {name, arrayTypeFields, id} = fieldArray
               return (
                 <FormGroup
                   hide={!formStateDict?.[name].visible}
@@ -547,7 +547,10 @@ const FormPage: FC = observer(() => {
                           label={t('PROD_CONDITION')}
                         />
                       )}
-                      <FormikCreateFields fieldsArray={arrayTypeFields} />
+                      <FormikCreateFields
+                        fieldsArray={arrayTypeFields}
+                        id={id}
+                      />
                     </div>
                   }
                   getCountMeta={() => {
