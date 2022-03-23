@@ -934,7 +934,7 @@
   "EXTRA_KM": "km",
   "EXTRA_OPTIONS": "Extra options",
   "FACILIITIES": "Facilities",
-  "FACILITIES_TIP": "По статистике объявления с дополнительными опциями просматриваются на 37% чаще.",
+  "FACILITIES_TIP": "According to statistics, ads with common options are viewed 37% more often.",
   "FAVORITE_SEARCHES": "aramalarınız",
   "FAVOURITE_EMPTY_TEXT": "Ürünleri daha sonra görüntülemek veya satın almak için favorilere ekleyin",
   "FAVOURITES_EMPTY": "Favoriniz yok",
@@ -1346,8 +1346,8 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
-  "Video": "Video",
   "VIDEO": "Video",
+  "Video": "Video",
   "VIDEO_AD": "Video ad",
   "VIDEO_CHAT": "Video",
   "VIDEO_LIMITATION_ERROR": "The maximum video size is 100MB. Try uploading a smaller video",
@@ -1374,5 +1374,5 @@
   "YOUR_NOTE": "Notunuz",
   "YOUR_NOTE_WITHOUT_DATE": "Notunuz:",
   "YOUR_SAVE_DRAFT": "You have saved a draft",
-  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{categoryName}} category. Do you want to go back to draft?"
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{\"categoryName\"}} category. Do you want to go back to draft?"
 }

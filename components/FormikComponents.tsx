@@ -8,7 +8,6 @@ import {get, isEmpty, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
-import {toast} from 'react-toastify'
 import {useWindowSize} from 'react-use'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
@@ -164,7 +163,8 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
     const isEmptyOptions =
       isEmpty(getSelectOptions(f.multiselects)) &&
       ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
-    if (!isEmptyOptions) {
+
+    if (!isEmptyOptions && f.itemType !== 'title') {
       return (
         <AdvertFormField
           key={f.id}
@@ -178,6 +178,9 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
         />
       )
     }
+    if (f.itemType === 'title') {
+      return <FormikTitle label={f.name} />
+    }
     return null
   })
   return (
@@ -190,6 +193,12 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
         />
       )}
     </>
+  )
+}
+
+export const FormikTitle: FC<{label: string}> = ({label}) => {
+  return (
+    <div className='text-nc-primary-text text-h-3 font-medium'>{label}</div>
   )
 }
 
@@ -225,40 +234,6 @@ export const FormikCheckboxesGroup: FC<{
       </div>
     </div>
   )
-
-  // const input = (
-  //   <Switch
-  //     offColor='#ACB9C3'
-  //     onColor='#FF8514'
-  //     uncheckedIcon={false}
-  //     checkedIcon={false}
-  //     height={16}
-  //     width={28}
-  //     handleDiameter={14}
-  //     onChange={(checked) => setFieldValue(name, checked)}
-  //     checked={!!value}
-  //   />
-  // )
-  // return (
-  //   <div>
-  //     {hideLabel ? (
-  //       input
-  //     ) : (
-  //       // eslint-disable-next-line jsx-a11y/label-has-associated-control
-  //       <label className='flex items-center justify-between'>
-  //         {label && (
-  //           <span
-  //             className={`text-nc-title text-body-1 whitespace-nowrap ${
-  //               labelPosition === 'left' ? 'mr-3' : 'order-last ml-3'
-  //             }`}>
-  //             {label}
-  //           </span>
-  //         )}
-  //         {input}
-  //       </label>
-  //     )}
-  //   </div>
-  // )
 }
 
 export const FormikCreateField: FC<IFormikField> = ({field}) => {
@@ -273,6 +248,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     minValue,
     maxLength,
     isFillingRequired,
+    multiselects,
   } = field
   let component
   const props: FieldOptions = {}
@@ -281,7 +257,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
-      props.options = getSelectOptions(field.multiselects)
+      props.options = getSelectOptions(multiselects)
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'

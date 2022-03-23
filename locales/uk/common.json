@@ -934,7 +934,7 @@
   "EXTRA_KM": "км",
   "EXTRA_OPTIONS": "Додаткові параметри",
   "FACILIITIES": "Зручності",
-  "FACILITIES_TIP": "По статистике объявления с дополнительными опциями просматриваются на 37% чаще.",
+  "FACILITIES_TIP": "According to statistics, ads with common options are viewed 37% more often.",
   "FAVORITE_SEARCHES": " Ваші пошуки",
   "FAVOURITE_EMPTY_TEXT": "Додавайте товари в Обране, щоб подивитися або купити пізніше",
   "FAVOURITES_EMPTY": "У вас немає обраних товарів",
@@ -1346,8 +1346,8 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
-  "Video": "Video",
   "VIDEO": "Відео",
+  "Video": "Video",
   "VIDEO_AD": "Video ad",
   "VIDEO_CHAT": "Відео",
   "VIDEO_LIMITATION_ERROR": "Максимальний розмір відео 100 мб. Спробуйте завантажити відео меншого розміру",
@@ -1374,5 +1374,5 @@
   "YOUR_NOTE": "Ваш нотаток",
   "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:",
   "YOUR_SAVE_DRAFT": "У вас збережена чернетка",
-  "YOUR_SAVE_DRAFT_TEXT": "Ви вже почали створювати оголошення в категорії {{categoryName}}. Бажаєте повернутися до чернетки?"
+  "YOUR_SAVE_DRAFT_TEXT": "Ви вже почали створювати оголошення в категорії {{\"categoryName\"}}. Бажаєте повернутися до чернетки?"
 }

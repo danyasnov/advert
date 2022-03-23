@@ -1,8 +1,8 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import {isEmpty} from 'lodash'
 import IcCheck from 'icons/material/Check.svg'
 import {CAParamsModel} from 'front-api/src/index'
+import {hasErrors} from './utils'
 
 interface Props {
   validationState: Record<string, any>
@@ -22,7 +22,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
     ...validationState.map(({key, state}) => {
       return {
         title: t(key),
-        state: isEmpty(state) ? 'done' : 'pending',
+        state: !hasErrors(state) ? 'done' : 'pending',
       }
     }),
   ]

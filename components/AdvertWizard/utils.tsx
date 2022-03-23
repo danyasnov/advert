@@ -1,4 +1,4 @@
-import {get, isEmpty, isEqual, parseInt, size, toNumber} from 'lodash'
+import {get, isEmpty, isEqual, omit, parseInt, size, toNumber} from 'lodash'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
@@ -13,7 +13,6 @@ import IcCheck from 'icons/material/Check.svg'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
-import {useWindowSize} from 'react-use'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -133,6 +132,10 @@ export const CategoryUpdater: FC<{
   return null
 }
 
+export const hasErrors = (errors: FormikErrors<any>) => {
+  return !isEmpty(omit(errors, ['fields'])) || !isEmpty(errors?.fields)
+}
+
 export const scrollToFirstError = (mobile?: boolean): void => {
   setTimeout(() => {
     const input = document.querySelector(
@@ -226,7 +229,7 @@ export const FormGroup: FC<{
   title: string
   hide?: boolean
   getCountMeta: () => Record<string, unknown>
-  validate: () => Record<string, unknown>
+  validate: () => FormikErrors<any>
 }> = ({header, body, title, validate, getCountMeta, hide}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
@@ -242,7 +245,7 @@ export const FormGroup: FC<{
       const isNew = !isEqual(validationState, prevValidationState.current)
       if (isNew) {
         prevValidationState.current = validationState
-        setShowSummaryErrors(!isEmpty(validationState))
+        setShowSummaryErrors(hasErrors(validationState))
       }
     }
   }, [formik.values, formik.submitCount])
@@ -281,7 +284,7 @@ export const FormGroup: FC<{
                     // @ts-ignore
                     const errors = validate()
                     formik.setErrors(errors)
-                    if (isEmpty(errors)) {
+                    if (!hasErrors(errors)) {
                       setIsOpen(false)
                     } else {
                       toast.error(t('ADVERT_CREATING_HELP_ALERT'))

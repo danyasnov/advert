@@ -8,21 +8,13 @@ import {
   FormikHelpers,
   useFormik,
   FormikProvider,
+  FormikErrors,
 } from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {
-  debounce,
-  first,
-  get,
-  isEmpty,
-  isEqual,
-  isFinite,
-  size,
-  toNumber,
-} from 'lodash'
+import {debounce, first, get, isEqual, size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -43,6 +35,7 @@ import FormikAdvertAutoSave from './FormikAdvertAutoSave'
 import {
   CategoryUpdater,
   FormGroup,
+  hasErrors,
   mapCategoryData,
   mapFormikFields,
   mapOriginalFields,
@@ -204,7 +197,7 @@ const FormPage: FC = observer(() => {
       ...priceError,
       ...conditionError,
     }
-    if (!isEmpty(result)) {
+    if (hasErrors(result)) {
       toast.error(t('ADVERT_CREATING_HELP_ALERT'))
     }
     return result
@@ -293,7 +286,7 @@ const FormPage: FC = observer(() => {
     return formItems.map((s) => {
       const validation = s.validate(values, true)
       const validationState = validation
-      const status = isEmpty(validation) ? 'done' : 'pending'
+      const status = hasErrors(validation) ? 'pending' : 'done'
 
       let visible
 
@@ -301,7 +294,7 @@ const FormPage: FC = observer(() => {
         visible = true
       } else if (hasPending) {
         visible = formStateDict?.[s.key]?.visible || false
-      } else if (!isEmpty(validationState)) {
+      } else if (hasErrors(validationState)) {
         hasPending = true
         visible = true
       } else {
@@ -342,6 +335,7 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
+  // console.log(category.data)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -725,7 +719,7 @@ const FormPage: FC = observer(() => {
                 <PrimaryButton
                   onClick={() => {
                     if (currentStep) {
-                      let errors = {}
+                      let errors: FormikErrors<any> = {}
                       formState.some((s) => {
                         if (!formStateDict[s.key].visible) return true
                         const validation = s.validate(values)
@@ -734,7 +728,7 @@ const FormPage: FC = observer(() => {
                         return s.key === currentStep.key
                       })
                       setErrors(errors)
-                      if (!isEmpty(errors)) {
+                      if (hasErrors(errors)) {
                         toast.error(t('ADVERT_CREATING_HELP_ALERT'))
                       }
                       const newFormState = getFormStateDict(formState)

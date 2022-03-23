@@ -103,7 +103,9 @@ const Select: FC<SelectProps> = ({
           ...(components || {}),
         }}
       />
-      <input className={`hidden ${isInvalid ? 'border-error' : ''}`} />
+      <input
+        className={`invisible absolute ${isInvalid ? 'border-error' : ''}`}
+      />
     </>
   )
 }

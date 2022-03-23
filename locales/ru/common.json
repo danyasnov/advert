@@ -842,7 +842,7 @@
   "COST_AD_15": "На 15 дн.",
   "COST_AD_30": "На 30 дн.",
   "COST_AD_7": "На 7 дн.",
-  "COST_AND_TERMS": "Cost and conditions",
+  "COST_AND_TERMS": "Стоимость и условия",
   "COST_FIELD": "Стоимость, {{symbol}}",
   "COST_GOODS": "Стоимость товара",
   "COST_PAYMENT_AD_1": "3 days for {{costAdThreeDays}} {{currency}}",
@@ -1346,8 +1346,8 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
-  "Video": "Video",
   "VIDEO": "Видео",
+  "Video": "Video",
   "VIDEO_AD": "Video ad",
   "VIDEO_CHAT": "Видео",
   "VIDEO_LIMITATION_ERROR": "Максимальный размер видео 100 мб. Попробуйте загрузить видео меньшего размера",
@@ -1374,5 +1374,5 @@
   "YOUR_NOTE": "Ваша заметка",
   "YOUR_NOTE_WITHOUT_DATE": "Ваша заметка:",
   "YOUR_SAVE_DRAFT": "У вас сохранен черновик",
-  "YOUR_SAVE_DRAFT_TEXT": "Вы уже начиначинали создавать объявление в категории {{categoryName}}. Хотите вернуться к черновику?"
+  "YOUR_SAVE_DRAFT_TEXT": "Вы уже начинали создавать объявление в категории {{\"categoryName\"}}. Хотите вернуться к черновику?"
 }
