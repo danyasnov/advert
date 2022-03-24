@@ -8,9 +8,8 @@ import {Field, FormikProvider, useFormik} from 'formik'
 import {noop} from 'lodash'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
-import Head from 'next/head'
+import ReCAPTCHA from 'react-google-recaptcha'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import ImageWrapper from '../ImageWrapper'
 import {FormikNumber, FormikSelect, FormikText} from '../FormikComponents'
 import Select, {SelectItem} from '../Selects/Select'
 import {Country} from '../Auth/LoginWizard'
@@ -30,6 +29,8 @@ const MerchantLayout: FC = observer(() => {
   const {reload} = useRouter()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const formRef = useRef()
+  const [token, setToken] = useState()
+
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
@@ -41,6 +42,7 @@ const MerchantLayout: FC = observer(() => {
       phone: '',
     },
     onSubmit: (values) => {
+      if (!token) return
       setIsSubmitted(true)
       makeRequest({
         method: 'post',
@@ -296,11 +298,19 @@ const MerchantLayout: FC = observer(() => {
                 {isSubmitted && <span>{t('LANDING_MESSAGE')}</span>}
                 <PrimaryButton
                   disabled={isSubmitted}
-                  className='w-full mt-4'
+                  className='w-full my-4'
                   type='submit'
                   onClick={noop}>
                   {t('LANDING_SEND_APPLICATION')}
                 </PrimaryButton>
+                {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+                  <ReCAPTCHA
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                    onChange={(val) => {
+                      setToken(val)
+                    }}
+                  />
+                )}
               </form>
             </div>
           </div>
