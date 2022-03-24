@@ -8,6 +8,7 @@ import {
 } from 'react'
 import {SortableContainer, SortableContainerProps} from 'react-sortable-hoc'
 import {random} from 'lodash'
+import {AxiosRequestConfig} from 'axios'
 import useDropListener from '../../../hooks/useDropListener'
 import {rotate} from '../../../utils'
 import AdvertUploadButton from './AdvertUploadButton'
@@ -72,11 +73,16 @@ const AdvertPhotosContainer: ComponentClass<
             loading: true,
           }),
         ])
-        makeRequest({
+
+        const config: AxiosRequestConfig = {
           headers: {'Content-Type': 'multipart/form-data'},
           method: 'post',
           data: formData,
           url: '/api/upload/image',
+        }
+        makeRequest(config, {
+          retries: 2,
+          retryDelay: () => 2000,
         }).then((res) => {
           setPhotos((prevPhotos) =>
             prevPhotos.map((p) => {

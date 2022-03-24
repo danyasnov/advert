@@ -162,14 +162,20 @@ const FormPage: FC = observer(() => {
       const mappedFields = mapFormikFields(newFields, category.fieldsById)
       if (!isEqual(mappedFields, fieldsRef.current)) {
         fieldsRef.current = mappedFields
-        makeRequest({
-          url: '/api/category-data',
-          method: 'post',
-          data: {
-            id: categoryId,
-            editFields: mappedFields,
+        makeRequest(
+          {
+            url: '/api/category-data',
+            method: 'post',
+            data: {
+              id: categoryId,
+              editFields: mappedFields,
+            },
           },
-        }).then((res) => {
+          {
+            retries: 2,
+            retryDelay: () => 2000,
+          },
+        ).then((res) => {
           setCategoryData(mapCategoryData(res.data.result))
         })
       }

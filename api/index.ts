@@ -2,11 +2,12 @@ import RestApi, {AppStorage, LocationModel} from 'front-api'
 import axios, {AxiosPromise, AxiosRequestConfig} from 'axios'
 import {NextApiRequest} from 'next'
 import {RestResponse} from 'front-api/src/api/request'
-import {GeoPositionModel} from 'front-api/src/models/index'
+import {GeoPositionModel} from 'front-api/src/models'
 import {IncomingMessage} from 'http'
 import curlirize from 'axios-curlirize'
 import isIp from 'is-ip'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
+import axiosRetry, {IAxiosRetryConfig} from 'axios-retry'
 import {DummyAnalytics} from '../helpers'
 import Storage from '../stores/Storage'
 
@@ -26,8 +27,14 @@ export const getRest = (storage: AppStorage): RestApi =>
     endpoint: API_URL,
   })
 
-export const makeRequest = (config: AxiosRequestConfig): AxiosPromise =>
-  axios(config)
+export const makeRequest = (
+  config: AxiosRequestConfig,
+  retryConfig?: IAxiosRetryConfig,
+): AxiosPromise => {
+  const client = axios.create()
+  axiosRetry(client, retryConfig)
+  return client(config)
+}
 
 export const parseIp = (
   req: NextApiRequest | (IncomingMessage & {cookies: NextApiRequestCookies}),

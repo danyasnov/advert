@@ -17,6 +17,7 @@
     "accept-language-parser": "^1.5.0",
     "axios": "^0.24.0",
     "axios-curlirize": "^1.4.0",
+    "axios-retry": "^3.2.4",
     "downshift": "^6.1.7",
     "embla-carousel-react": "^5.0.1",
     "emoji-regex": "^9.2.2",

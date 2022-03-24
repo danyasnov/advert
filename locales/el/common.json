@@ -1198,7 +1198,7 @@
   "RATE": "Rate",
   "REALTOR'S_HELP": "Realtor's help",
   "REASON": "Λόγος",
-  "RECEIVING_AUTHORIZATION_CODE_ON_CALL": "We already called you! Look at the missed calls and write 5 last digits.",
+  "RECEIVING_AUTHORIZATION_CODE_ON_CALL": "We have called you! Please look at your missed calls and write the last 5 digits.",
   "RECENTLY_ADDED": "Προστέθηκε πρόσφατα",
   "RECOMMENDATIONS_FOR_YOU": "Προτάσεις για σένα",
   "REFINE_SEARCH": "Βελτιώστε την αναζήτηση σας",
@@ -1374,5 +1374,5 @@
   "YOUR_NOTE": "Η σημείωσή σας",
   "YOUR_NOTE_WITHOUT_DATE": "Οι σημειώσεις σας:",
   "YOUR_SAVE_DRAFT": "Έχετε αποθηκεύσει ένα πρόχειρο",
-  "YOUR_SAVE_DRAFT_TEXT": "Έχετε ήδη αρχίσει να δημιουργείτε μια διαφήμιση στην κατηγορία {{categoryName}}. Θέλετε να επιστρέψετε στο προσχέδιο;"
+  "YOUR_SAVE_DRAFT_TEXT": "Έχετε ήδη αρχίσει να δημιουργείτε μια διαφήμιση στην κατηγορία {{\"categoryName\"}}. Θέλετε να επιστρέψετε στο προσχέδιο;"
 }
