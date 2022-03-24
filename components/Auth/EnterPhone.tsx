@@ -40,8 +40,9 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
           !token &&
           process.env.NEXT_PUBLIC_RECAPTCHA_KEY &&
           !cookies.disableCaptcha
-        )
+        ) {
           return
+        }
 
         const incoming = `${country.phonePrefix}${values.phone}`
         const result = await makeRequest({
