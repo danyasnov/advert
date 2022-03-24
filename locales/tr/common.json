@@ -786,6 +786,7 @@
   "CHAT_SHARE": "Share",
   "CHAT_USER_LOCKED": "User is blocked",
   "CHECK_CONNECTION": "Lütfen internet bağlantınızı kontrol edin",
+  "CHECK_CONNECTION_ERROR": "No internet connection.\nPlease try again later.",
   "CHECK_VEHICLE_STATUS": "CHECK_VEHICLE_STATUS",
   "CHECK_VEHICLE_STATUS_TEXT": "CHECK_VEHICLE_STATUS_TEXT",
   "CHOOSE": "Lütfen seçin",

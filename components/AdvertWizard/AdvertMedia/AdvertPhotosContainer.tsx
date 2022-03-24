@@ -9,6 +9,8 @@ import {
 import {SortableContainer, SortableContainerProps} from 'react-sortable-hoc'
 import {random} from 'lodash'
 import {AxiosRequestConfig} from 'axios'
+import {toast} from 'react-toastify'
+import {useTranslation} from 'next-i18next'
 import useDropListener from '../../../hooks/useDropListener'
 import {rotate} from '../../../utils'
 import AdvertUploadButton from './AdvertUploadButton'
@@ -33,6 +35,7 @@ const AdvertPhotosContainer: ComponentClass<
 > = SortableContainer(({maxPhotos, photos, setPhotos, error}) => {
   const [isDragging, setIsDragging] = useState(false)
   const canAddMore = maxPhotos > photos.length
+  const {t} = useTranslation()
 
   const originalPhotos = useRef({})
   useDropListener({
@@ -83,16 +86,22 @@ const AdvertPhotosContainer: ComponentClass<
         makeRequest(config, {
           retries: 2,
           retryDelay: () => 2000,
-        }).then((res) => {
-          setPhotos((prevPhotos) =>
-            prevPhotos.map((p) => {
-              if (p.hash === id) {
-                return {...res.data.items[0], id}
-              }
-              return p
-            }),
-          )
         })
+          .then((res) => {
+            setPhotos((prevPhotos) =>
+              prevPhotos.map((p) => {
+                if (p.hash === id) {
+                  return {...res.data.items[0], id}
+                }
+                return p
+              }),
+            )
+          })
+          .catch((e) => {
+            if (!e.response) {
+              toast.error('CHECK_CONNECTION_ERROR')
+            }
+          })
       })
     },
     [photos],

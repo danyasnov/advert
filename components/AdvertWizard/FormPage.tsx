@@ -175,9 +175,15 @@ const FormPage: FC = observer(() => {
             retries: 2,
             retryDelay: () => 2000,
           },
-        ).then((res) => {
-          setCategoryData(mapCategoryData(res.data.result))
-        })
+        )
+          .then((res) => {
+            setCategoryData(mapCategoryData(res.data.result))
+          })
+          .catch((e) => {
+            if (!e.response) {
+              toast.error('CHECK_CONNECTION_ERROR')
+            }
+          })
       }
     }, 1000),
     [category, fieldsRef],

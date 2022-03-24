@@ -786,6 +786,7 @@
   "CHAT_SHARE": "Поделиться",
   "CHAT_USER_LOCKED": "Пользователь заблокирован",
   "CHECK_CONNECTION": "Пожалуйста, проверьте ваше соединение с интернетом",
+  "CHECK_CONNECTION_ERROR": "Нет соединения с интернетом.\nПожалуйста, повторите позже.",
   "CHECK_VEHICLE_STATUS": "CHECK_VEHICLE_STATUS",
   "CHECK_VEHICLE_STATUS_TEXT": "CHECK_VEHICLE_STATUS_TEXT",
   "CHOOSE": "Выберите",
