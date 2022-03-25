@@ -320,7 +320,7 @@ const FormPage: FC = observer(() => {
   const getFormStateDict = (items) => {
     return items.reduce((acc, val) => ({...acc, [val.key]: val}), {})
   }
-  const showWholeForm = width < 768 || !hasArrayType || query.action === 'edit'
+  const showWholeForm = !hasArrayType || query.action === 'edit'
 
   const [formStateDict, setFormStateDict] = useState<Record<string, NavItem>>(
     () => {
