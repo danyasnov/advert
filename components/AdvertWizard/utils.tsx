@@ -143,7 +143,6 @@ export const scrollToFirstError = (mobile?: boolean): void => {
     )
     if (input) {
       const formGroup = input.closest('.invalid-group')
-      console.log(input, formGroup)
 
       if (formGroup && input) {
         formGroup.scrollIntoView({
@@ -228,9 +227,10 @@ export const FormGroup: FC<{
   body: ReactNode
   title: string
   hide?: boolean
+  showWholeForm: boolean
   getCountMeta: () => Record<string, unknown>
   validate: () => FormikErrors<any>
-}> = ({header, body, title, validate, getCountMeta, hide}) => {
+}> = ({header, body, title, validate, getCountMeta, hide, showWholeForm}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -298,37 +298,46 @@ export const FormGroup: FC<{
             </div>
           </ReactModal>
         ) : (
-          <Button
-            className='w-full shadow rounded-lg '
-            onClick={() => {
-              setIsOpen(true)
-            }}>
-            <div className='flex w-full px-4 py-3'>
-              <div className='w-full flex flex-col items-start'>
-                <span className='text-nc-primary-text text-body-1 pb-1'>
-                  {title}
-                </span>
-                <span
-                  className={`text-body-3 ${
-                    showSummaryErrors ? 'text-nc-error' : 'text-nc-link'
-                  }`}>
-                  {t('NUMBER_FROM_NUMBER', {
-                    from: countMeta.filledCount,
-                    to: countMeta.maxFilled,
-                  })}
-                </span>
+          <>
+            {showWholeForm ? (
+              <div className='mb-6'>
+                {header}
+                {body}
               </div>
-              <div>
-                {countMeta.isRequiredFilled ? (
-                  <div className='w-6 h-6 rounded-full flex items-center justify-center bg-nc-success'>
-                    <IcCheck className='fill-current text-white w-3 h-3' />
+            ) : (
+              <Button
+                className='w-full shadow rounded-lg '
+                onClick={() => {
+                  setIsOpen(true)
+                }}>
+                <div className='flex w-full px-4 py-3'>
+                  <div className='w-full flex flex-col items-start'>
+                    <span className='text-nc-primary-text text-body-1 pb-1'>
+                      {title}
+                    </span>
+                    <span
+                      className={`text-body-3 ${
+                        showSummaryErrors ? 'text-nc-error' : 'text-nc-link'
+                      }`}>
+                      {t('NUMBER_FROM_NUMBER', {
+                        from: countMeta.filledCount,
+                        to: countMeta.maxFilled,
+                      })}
+                    </span>
                   </div>
-                ) : (
-                  <IcKeyboardArrowRight className='fill-current text-nc-icon w-5 h-5' />
-                )}
-              </div>
-            </div>
-          </Button>
+                  <div>
+                    {countMeta.isRequiredFilled ? (
+                      <div className='w-6 h-6 rounded-full flex items-center justify-center bg-nc-success'>
+                        <IcCheck className='fill-current text-white w-3 h-3' />
+                      </div>
+                    ) : (
+                      <IcKeyboardArrowRight className='fill-current text-nc-icon w-5 h-5' />
+                    )}
+                  </div>
+                </div>
+              </Button>
+            )}
+          </>
         )}
       </div>
       <div

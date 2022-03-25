@@ -10,7 +10,7 @@ const AdvertPhotos: FC<
   } & FieldProps
 > = ({maxPhotos, field, form}) => {
   const {name, value} = field
-  const {setFieldValue, errors} = form
+  const {setFieldValue, errors, setFieldError} = form
   const [photos, setPhotos] = useState<PhotoFile[]>(value || [])
   const onSortEnd = useCallback(
     ({oldIndex, newIndex}) => {
@@ -20,6 +20,7 @@ const AdvertPhotos: FC<
   )
   useEffect(() => {
     if (!photos.some((p) => p instanceof File)) {
+      setFieldError(name, undefined)
       setFieldValue(name, photos)
     }
   }, [photos])

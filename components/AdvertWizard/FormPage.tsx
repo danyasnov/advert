@@ -302,7 +302,7 @@ const FormPage: FC = observer(() => {
 
       let visible
 
-      if (showAll) {
+      if (showAll || width < 768) {
         visible = true
       } else if (hasPending) {
         visible = formStateDict?.[s.key]?.visible || false
@@ -374,7 +374,7 @@ const FormPage: FC = observer(() => {
             />
           </div>
           <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-3 mb-24 w-full'>
-            <div className='s:hidden'>
+            <div className={`${showWholeForm ? 'hidden' : 's:hidden'}`}>
               <FormProgressBar category={category.data} values={values} />
             </div>
             <FormGroup
@@ -386,6 +386,7 @@ const FormPage: FC = observer(() => {
                   t,
                 )
               }
+              showWholeForm={showWholeForm}
               title={t('TITLE_AND_DESCRIPTION')}
               getCountMeta={() => {
                 let filledCount = 0
@@ -437,6 +438,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               hide={!formStateDict?.PHOTO_AND_VIDEO.visible}
               title={t('PHOTO_AND_VIDEO')}
+              showWholeForm={showWholeForm}
               header={
                 <AdvertFormHeading
                   title={t('UPLOAD_PHOTO_AND_VIDEO')}
@@ -536,6 +538,7 @@ const FormPage: FC = observer(() => {
                   hide={!formStateDict?.[name].visible}
                   key={name}
                   title={name}
+                  showWholeForm={showWholeForm}
                   header={
                     <AdvertFormHeading
                       title={name}
@@ -619,6 +622,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               hide={!formStateDict?.COST_AND_TERMS.visible}
               title={t('COST_AND_TERMS')}
+              showWholeForm={showWholeForm}
               header={
                 <AdvertFormHeading
                   title={t('COST_AND_TERMS')}
@@ -745,12 +749,10 @@ const FormPage: FC = observer(() => {
                       }
                       const newFormState = getFormStateDict(formState)
                       setFormStateDict(newFormState)
-                      if (width >= 768) {
-                        scrollToFirstError()
-                      }
                     } else if (!isSubmitting) {
                       submitForm()
                     }
+                    scrollToFirstError()
                   }}
                   className='w-full s:w-auto'>
                   {t(currentStep ? 'CONTINUE' : 'PUBLISH')}
