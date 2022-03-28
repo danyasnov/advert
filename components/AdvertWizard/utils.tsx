@@ -136,11 +136,13 @@ export const hasErrors = (errors: FormikErrors<any>) => {
   return !isEmpty(omit(errors, ['fields'])) || !isEmpty(errors?.fields)
 }
 
-export const scrollToFirstError = (mobile?: boolean): void => {
+export const scrollToFirstError = (): void => {
   setTimeout(() => {
-    const input = document.querySelector(
-      `${mobile ? '.ReactModalPortal ' : ''}.border-error`,
-    )
+    const inputs = document.querySelectorAll(`.border-error`)
+    const input = Array.from(inputs).find((i: HTMLElement) => {
+      return i?.offsetParent
+    })
+
     if (input) {
       const formGroup = input.closest('.invalid-group')
 
@@ -288,7 +290,7 @@ export const FormGroup: FC<{
                       setIsOpen(false)
                     } else {
                       toast.error(t('ADVERT_CREATING_HELP_ALERT'))
-                      scrollToFirstError(true)
+                      scrollToFirstError()
                     }
                   }}
                   className='w-full s:w-auto'>
