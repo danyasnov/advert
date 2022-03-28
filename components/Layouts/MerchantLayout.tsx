@@ -7,26 +7,22 @@ import IcSales from 'icons/landing/Sales.svg'
 import {Field, FormikProvider, useFormik} from 'formik'
 import {noop} from 'lodash'
 import {parseCookies} from 'nookies'
-import {useRouter} from 'next/router'
 import ReCAPTCHA from 'react-google-recaptcha'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {FormikNumber, FormikSelect, FormikText} from '../FormikComponents'
-import Select, {SelectItem} from '../Selects/Select'
+import Select from '../Selects/Select'
 import {Country} from '../Auth/LoginWizard'
 import {
   useCategoriesStore,
   useCountriesStore,
 } from '../../providers/RootStoreProvider'
-import {languageOptions, withLangIcons} from '../Header'
-import LinkSelect from '../Selects/LinkSelect'
-import {setCookiesObject} from '../../helpers'
 import {makeRequest} from '../../api'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
+import LanguageSelect from '../LanguageSelect'
 
 const MerchantLayout: FC = observer(() => {
   const {t} = useTranslation()
-  const {reload} = useRouter()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const formRef = useRef()
   const [token, setToken] = useState()
@@ -58,7 +54,6 @@ const MerchantLayout: FC = observer(() => {
   })
   useEffect(() => {
     const cookies = parseCookies()
-    setLang(cookies.language)
 
     const country = countriesOptions.find(
       (c) => c.value === (cookies.userCountryId || '196'),
@@ -70,8 +65,6 @@ const MerchantLayout: FC = observer(() => {
       )
     }
   }, [])
-  const languages = useRef(withLangIcons(languageOptions))
-  const [lang, setLang] = useState<string>()
 
   const {countries} = useCountriesStore()
   const {categoriesWithoutAll} = useCategoriesStore()
@@ -114,19 +107,7 @@ const MerchantLayout: FC = observer(() => {
               {t('LANDING_HEAD_TEXT')}
             </span>
           </div>
-          <div className='h-4 w-32'>
-            <LinkSelect
-              id='language-select'
-              onChange={({value}) => {
-                setCookiesObject({language: value as string})
-                reload()
-              }}
-              value={languages.current.find(({value}) => value === lang)}
-              options={languages.current as SelectItem[]}
-              isSearchable={false}
-              placeholder={t('LANGUAGES')}
-            />
-          </div>
+          <LanguageSelect />
         </div>
         <div className='bg-landing-head bg-center flex justify-center pt-20 w-full'>
           <div className='max-w-960px l:max-w-[1124px] flex w-full justify-between relative s:items-center'>

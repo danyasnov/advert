@@ -1,61 +1,22 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {useTranslation} from 'next-i18next'
-import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {observer} from 'mobx-react-lite'
-import Button from './Buttons/Button'
 import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector/index'
-import {setCookiesObject} from '../helpers'
-import LinkSelect from './Selects/LinkSelect'
-import ImageWrapper from './ImageWrapper'
-import {SelectItem} from './Selects/Select'
-import {SerializedCookiesState} from '../types'
 import LinkWrapper from './Buttons/LinkWrapper'
 import LoginModal from './Auth/LoginModal'
 import Auth from './Auth'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import PrimaryButton from './Buttons/PrimaryButton'
-import {makeRequest} from '../api'
-import LinkButton from './Buttons/LinkButton'
-
-export const languageOptions = [
-  {
-    value: 'el',
-    label: 'Eλληνική',
-  },
-  {value: 'en', label: 'English'},
-  {value: 'uk', label: 'Українська'},
-  {value: 'ru', label: 'Русский'},
-  {value: 'tr', label: 'Türk'},
-  {value: 'ro', label: 'Română'},
-]
-
-export const withLangIcons = (opts) =>
-  opts.map((o) => ({
-    ...o,
-    icon: (
-      <ImageWrapper
-        type={`/img/flags/${o.value}.png`}
-        alt={o.value}
-        width={16}
-        height={16}
-      />
-    ),
-  }))
+import LanguageSelect from './LanguageSelect'
 
 const Header: FC = observer(() => {
-  const {reload, push} = useRouter()
+  const {push} = useRouter()
   const {t} = useTranslation()
-  const [lang, setLang] = useState<string>()
-  const languages = useRef(withLangIcons(languageOptions))
   const {showLogin, setShowLogin, user} = useGeneralStore()
-  useEffect(() => {
-    const state: SerializedCookiesState = parseCookies()
-    setLang(state.language)
-  }, [])
   useDisableBodyScroll(showLogin)
 
   return (
@@ -85,19 +46,7 @@ const Header: FC = observer(() => {
             {/*  className='mr-auto s:ml-4'> */}
             {/*  <IcWallet className='fill-current text-brand-b1 mr-2 h-4 w-4' /> */}
             {/* </LinkButton> */}
-            <div className='h-4 w-32'>
-              <LinkSelect
-                id='language-select'
-                onChange={({value}) => {
-                  setCookiesObject({language: value as string})
-                  reload()
-                }}
-                value={languages.current.find(({value}) => value === lang)}
-                options={languages.current as SelectItem[]}
-                isSearchable={false}
-                placeholder={t('LANGUAGES')}
-              />
-            </div>
+            <LanguageSelect />
             <Auth onLogin={() => setShowLogin(true)} />
           </div>
         </div>
