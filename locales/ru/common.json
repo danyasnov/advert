@@ -1192,7 +1192,7 @@
   "PERSON": "Person",
   "PHONE_NUMBER_SHOW_LIMIT_REGISTERED": "Вы превысили лимит показов номеров телефонов на заданный период времени. Пожалуйста, попробуйте позже.",
   "PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED": "Вы превысили лимит показов номеров телефонов для незарегистрированных пользователей.",
-  "PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT": "Для показа номера телефона пожалуйста зарегистрируйтесь.",
+  "PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT": "Для показа номера телефона пожалуйста войдите или зарегистрируйтесь.",
   "PHOTO": "Фотография",
   "PHOTO_AND_VIDEO": "Фотографии и видео",
   "PHOTO_DOES_NOT_MATCH_WITH PRODUCT": "The photo does not match the product",
