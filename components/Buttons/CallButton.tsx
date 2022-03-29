@@ -14,16 +14,17 @@ import Button from './Button'
 import {makeRequest} from '../../api'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import OutlineButton from './OutlineButton'
 
 interface Props {
   product: AdvertiseDetail
 }
-const CallButton: FC<Props> = observer(({product}) => {
+const CallButton: FC<Props> = ({product}) => {
   const {owner, advert} = product
   const {phoneNum} = owner
-  const {setShowLogin} = useGeneralStore()
 
   const [showPhone, setShowPhone] = useState(false)
+  const [displayAllow, setDisplayAllow] = useState(true)
   const {t} = useTranslation()
   if (!phoneNum) return null
   return (
@@ -33,7 +34,6 @@ const CallButton: FC<Props> = observer(({product}) => {
           id='call'
           onClick={() => {
             const state: SerializedCookiesState = parseCookies()
-            console.log(state)
             makeRequest({
               method: 'post',
               url: '/api/check-phone-permissions',
@@ -41,13 +41,11 @@ const CallButton: FC<Props> = observer(({product}) => {
                 hash: advert.hash,
               },
             }).then((res) => {
-              if (res.data.displayAllowed) {
+              if (res.data.displayAllowed || !state.hash) {
                 setShowPhone(true)
+                setDisplayAllow(res.data.displayAllowed)
               } else if (state.hash) {
                 toast.error(t('PHONE_NUMBER_SHOW_LIMIT_REGISTERED'))
-              } else {
-                toast.error(t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED'))
-                setShowLogin(true)
               }
             })
           }}
@@ -60,67 +58,95 @@ const CallButton: FC<Props> = observer(({product}) => {
       {showPhone && (
         <PhoneModal
           product={product}
+          displayAllow={displayAllow}
           isOpen={showPhone}
           onClose={() => setShowPhone(false)}
         />
       )}
     </div>
   )
-})
+}
 
 interface ModalProps {
   isOpen: boolean
+  displayAllow: boolean
   onClose: () => void
   product: AdvertiseDetail
 }
 
-const PhoneModal: FC<ModalProps> = ({isOpen, onClose, product}) => {
-  const {t} = useTranslation()
-  useLockBodyScroll()
-  const linkRef = useRef(null)
+const PhoneModal: FC<ModalProps> = observer(
+  ({isOpen, onClose, product, displayAllow}) => {
+    const {t} = useTranslation()
+    useLockBodyScroll()
+    const {setShowLogin} = useGeneralStore()
 
-  const {owner} = product
-  const {phoneNum} = owner
+    const linkRef = useRef(null)
 
-  const phone = `+${phoneNum}`
-  return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      shouldCloseOnOverlayClick
-      ariaHideApp={false}
-      className='absolute rounded-6 overflow-hidden w-320px bg-white-a inset-x-0 mx-auto top-24 flex outline-none'
-      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
-      <div className='flex flex-col w-full'>
-        <div className='px-3 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-          <span className='text-h-2 text-black-b font-bold'>{owner.name}</span>
-          <Button onClick={onClose}>
-            <IcClear className='fill-current text-black-d h-6 w-6' />
-          </Button>
-        </div>
-        <div className='py-6 px-3 flex items-center flex-col'>
-          <div className='py-2 flex justify-between w-full'>
-            <input
-              type='text'
-              readOnly
-              ref={linkRef}
-              value={phone}
-              className='text-h-2 text-black-c w-full font-bold'
-            />
-            <Button
-              onClick={() => {
-                navigator.clipboard.writeText(phone)
-                linkRef.current.select()
-              }}>
-              <IcCopy className='fill-current text-black-c h-6 w-6 ml-1' />
+    const {owner} = product
+    const {phoneNum} = owner
+
+    const phone = `+${phoneNum}`
+    return (
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={onClose}
+        shouldCloseOnOverlayClick
+        ariaHideApp={false}
+        className='absolute rounded-6 overflow-hidden w-320px bg-white-a inset-x-0 mx-auto top-24 flex outline-none'
+        overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
+        <div className='flex flex-col w-full'>
+          <div className='px-3 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
+            <span className='text-h-2 text-black-b font-bold'>
+              {displayAllow ? owner.name : t('LOG_IN')}
+            </span>
+            <Button onClick={onClose}>
+              <IcClear className='fill-current text-black-d h-6 w-6' />
             </Button>
           </div>
-          <div className='text-body-2 text-black-b mt-4'>
-            {t('TELL_YOU_FOUND_AD_ON_ADVERTO')}
+          <div className='py-6 px-3 flex items-center flex-col'>
+            {displayAllow ? (
+              <>
+                <div className='py-2 flex justify-between w-full'>
+                  <input
+                    type='text'
+                    readOnly
+                    ref={linkRef}
+                    value={phone}
+                    className='text-h-2 text-black-c w-full font-bold'
+                  />
+                  <Button
+                    onClick={() => {
+                      navigator.clipboard.writeText(phone)
+                      linkRef.current.select()
+                    }}>
+                    <IcCopy className='fill-current text-black-c h-6 w-6 ml-1' />
+                  </Button>
+                </div>
+                <div className='text-body-2 text-black-b mt-4'>
+                  {t('TELL_YOU_FOUND_AD_ON_ADVERTO')}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className='text-body-2 text-black-b'>
+                  {t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED')}
+                </div>
+                <div className='text-body-2 text-black-b mt-2 mb-4'>
+                  {t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT')}
+                </div>
+                <OutlineButton
+                  className='flex'
+                  onClick={() => {
+                    setShowLogin(true)
+                  }}>
+                  {t('LOG_IN')}
+                </OutlineButton>
+              </>
+            )}
           </div>
         </div>
-      </div>
-    </ReactModal>
-  )
-}
+      </ReactModal>
+    )
+  },
+)
 export default CallButton
