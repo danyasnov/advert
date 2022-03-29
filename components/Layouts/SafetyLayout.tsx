@@ -2,6 +2,8 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import IcPeople from 'icons/safety-landing/People.svg'
+import IcLanguage from 'icons/safety-landing/Language.svg'
+import IcVerified from 'icons/safety-landing/Verified.svg'
 import Logo from '../Logo'
 import LanguageSelect from '../LanguageSelect'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -25,10 +27,29 @@ const SafetyLayout: FC = observer(() => {
           {t('REPORT_FRAUD')}
         </PrimaryButton>
       </div>
-      <div className='flex flex-col'>
-        <h1 className='text-h-1 font-medium'>
+      <div className='flex flex-col pt-15 mx-4'>
+        <h1 className='text-h-1 font-medium mb-9'>
           {t('LANDING_GENERAL_SAFETY_RULES')}
         </h1>
+        <IcLanguage className='w-8 h-8 mb-4' />
+        <span className='text-headline-5 font-medium mb-2'>
+          {t('LANDING_CHECK_SITE')}
+        </span>
+        <span
+          className='text-body-1 mb-15'
+          dangerouslySetInnerHTML={{__html: t('LANDING_CHECK_SITE_TEXT')}}
+        />
+        <IcVerified className='w-8 h-8 mb-4' />
+        <span className='text-headline-5 font-medium mb-2'>
+          {t('LANDING_KEEP_SECRET_PERSONAL_DATA')}
+        </span>
+        <span
+          className='text-body-1 mb-15'
+          dangerouslySetInnerHTML={{
+            __html: t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES'),
+          }}
+        />
+        <div className=''>123</div>
       </div>
     </div>
   )

@@ -30,6 +30,7 @@ module.exports = {
       'h-3': ['18px', '20px'],
       'h-4': ['16px', '20px'],
       'h-5': ['14px', '16px'],
+      'headline-5': ['24px', '32px'],
       'headline-6': ['28px', '34px'],
       'headline-8': ['20px', '28px'],
     },
