@@ -23,7 +23,7 @@ interface CurrentProfile {
   userLocation: LocationModel | null
   searchRadius?: number
 }
-interface StorageOptions {
+export interface StorageOptions {
   language?: string
   location?: LocationModel
   userLocation?: LocationModel

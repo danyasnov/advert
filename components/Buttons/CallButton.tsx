@@ -6,15 +6,23 @@ import IcClear from 'icons/material/Clear.svg'
 import ReactModal from 'react-modal'
 import {AdvertiseDetail} from 'front-api'
 import IcCopy from 'icons/material/Copy.svg'
+import {parseCookies} from 'nookies'
+import {observer} from 'mobx-react-lite'
+import {toast} from 'react-toastify'
 import PrimaryButton from './PrimaryButton'
 import Button from './Button'
+import {makeRequest} from '../../api'
+import {SerializedCookiesState} from '../../types'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 interface Props {
   product: AdvertiseDetail
 }
-const CallButton: FC<Props> = ({product}) => {
-  const {owner} = product
+const CallButton: FC<Props> = observer(({product}) => {
+  const {owner, advert} = product
   const {phoneNum} = owner
+  const {setShowLogin} = useGeneralStore()
+
   const [showPhone, setShowPhone] = useState(false)
   const {t} = useTranslation()
   if (!phoneNum) return null
@@ -23,7 +31,26 @@ const CallButton: FC<Props> = ({product}) => {
       {phoneNum && (
         <PrimaryButton
           id='call'
-          onClick={() => setShowPhone(true)}
+          onClick={() => {
+            const state: SerializedCookiesState = parseCookies()
+            console.log(state)
+            makeRequest({
+              method: 'post',
+              url: '/api/check-phone-permissions',
+              data: {
+                hash: advert.hash,
+              },
+            }).then((res) => {
+              if (res.data.displayAllowed) {
+                setShowPhone(true)
+              } else if (state.hash) {
+                toast.error(t('PHONE_NUMBER_SHOW_LIMIT_REGISTERED'))
+              } else {
+                toast.error(t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED'))
+                setShowLogin(true)
+              }
+            })
+          }}
           className='w-full text-body-2 text-black-b order-0 '>
           <IcPhone className='fill-current h-4 w-4 mr-2' />
           {t('MAKE_A_CALL')}
@@ -39,7 +66,7 @@ const CallButton: FC<Props> = ({product}) => {
       )}
     </div>
   )
-}
+})
 
 interface ModalProps {
   isOpen: boolean
