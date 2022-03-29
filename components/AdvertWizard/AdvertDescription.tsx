@@ -57,7 +57,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const description = valueDict[language]?.description ?? ''
 
   return (
-    <div className='w-screen-offset-8 s:w-full'>
+    <div className='w-screen-offset-8 s:max-w-[656px] s:w-full'>
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex'>
