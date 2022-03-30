@@ -85,6 +85,7 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
           onBlur={() => setFocused(false)}
           placeholder={t('SEARCH')}
           className='pr-4.5 py-3.5 pl-11 text-black-b text-body-1 rounded-2 w-full h-full -my-1px'
+          data-test-id='location-search'
           id='search-autocomplete'
         />
       </div>

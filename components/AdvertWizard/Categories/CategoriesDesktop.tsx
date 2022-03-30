@@ -12,10 +12,13 @@ interface Props {
 const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
   if (isEmpty(selected)) {
     return (
-      <div className='flex flex-wrap gap-x-4 gap-y-8 justify-between m:justify-start'>
+      <div
+        className='flex flex-wrap gap-x-4 gap-y-8 justify-between m:justify-start'
+        data-test-id='category-list'>
         {categories.map((c) => (
           <Button
             key={c.id}
+            id={`category-item-${c.id}`}
             className='flex flex-col'
             onClick={() => {
               setSelected([c])
@@ -39,10 +42,14 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
       <div className='flex mb-15'>
         <div className='grid grid-cols-3 w-full gap-x-4'>
           {selected.map((parentCategory, index) => (
-            <div className='flex flex-col' key={parentCategory.id}>
+            <div
+              className='flex flex-col'
+              data-test-id={`parent-category-${parentCategory.id}`}
+              key={parentCategory.id}>
               {parentCategory.items.map((c) => (
                 <Button
                   key={c.id}
+                  id={`parent-category-item-${c.id}`}
                   className={`min-h-10 hover:bg-nc-accent rounded-lg py-2 px-4 ${
                     selected[index + 1]?.id === c.id ? 'bg-nc-accent' : ''
                   }`}

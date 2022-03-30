@@ -11,6 +11,7 @@ interface Props {
   labelDescription?: string
   isRequired?: boolean
   hide?: boolean
+  id?: string
 }
 const AdvertFormField: FC<Props> = ({
   body,
@@ -22,10 +23,12 @@ const AdvertFormField: FC<Props> = ({
   labelDescription,
   labelTip,
   orientation = 'vertical',
+  id,
 }) => {
   if (hide) return null
   return (
     <div
+      data-test-id={id}
       className={`flex w-full ${
         orientation === 'vertical' ? 'flex-col' : 'flex-row'
       }  ${className || ''}`}>

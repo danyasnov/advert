@@ -227,12 +227,22 @@ export const validateFields = (values, fields, t) => {
 export const FormGroup: FC<{
   header: ReactNode
   body: ReactNode
+  id?: string
   title: string
   hide?: boolean
   showWholeForm: boolean
   getCountMeta: () => Record<string, unknown>
   validate: () => FormikErrors<any>
-}> = ({header, body, title, validate, getCountMeta, hide, showWholeForm}) => {
+}> = ({
+  header,
+  body,
+  id,
+  title,
+  validate,
+  getCountMeta,
+  hide,
+  showWholeForm,
+}) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -352,6 +362,7 @@ export const FormGroup: FC<{
           </div>
         ) : (
           <div
+            data-test-id={id}
             className={`p-8 shadow rounded-lg hidden s:block ${
               !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
             }`}>

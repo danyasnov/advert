@@ -66,7 +66,11 @@ const Header: FC = observer(() => {
               }
               return push(`/advert/create`)
             }}>
-            <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
+            <span
+              className='capitalize-first text-white'
+              data-test-id='header-new-ad'>
+              {t('NEW_AD')}
+            </span>
           </PrimaryButton>
         </div>
       </div>
