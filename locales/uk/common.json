@@ -1048,7 +1048,7 @@
   "LANDING_MAKE_THE_WORLD_PLEASER": "Make the world a nicer place - help punish scammers",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT": "Report any suspicious profile to us. If you have already transferred your card or bank account details to someone, then:",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_1": "Notify your bank immediately to block any possible charges.",
-  "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2": "Submit information to the Cyber Crime Centre https://cyberalert.cy/contactus/",
+  "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2": "Submit information to the Cyber Crime Centre <a href=\"https://cyberalert.cy/contactus/\"><font color=\"#FF8514\">https://cyberalert.cy/contactus</font></a>",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_3": "Do not delete the correspondence, keep the history. This may help you get your money back.",
   "LANDING_MANAGE_SALES": "Управління знижками та акціями",
   "LANDING_MEET_PERSONALLY": "Meet in person",
