@@ -13,9 +13,11 @@ import IcPin from 'icons/safety-landing/Pin.svg'
 import IcSms from 'icons/safety-landing/Sms.svg'
 import IcYes from 'icons/safety-landing/Yes.svg'
 import IcNo from 'icons/safety-landing/No.svg'
+import IcFooter from 'icons/safety-landing/Footer.svg'
 import Logo from '../Logo'
 import LanguageSelect from '../LanguageSelect'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import ImageWrapper from '../ImageWrapper'
 
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
@@ -180,6 +182,101 @@ const SafetyLayout: FC = observer(() => {
             }}
           />
         </div>
+      </div>
+      <div className='flex flex-col bg-[#FFF6EE] py-15'>
+        <div className='mx-4 flex flex-col items-center'>
+          <h1 className='text-h-1 font-medium text-center mb-15'>
+            {t('LENDING_FRAUDERS_CAN_BE_SELLERS_AND_BUYERS')}
+          </h1>
+          <div className='flex flex-col bg-nc-salmon py-4 mb-7'>
+            <span className='text-headline-5 font-medium text-center'>
+              {t('LENDING_SELLER_CAN_DECEIVE')}
+            </span>
+          </div>
+          <div className='w-[328px] h-[481px] relative mb-7'>
+            <ImageWrapper
+              layout='fill'
+              type='/img/safety-landing/seller-fraud-1.png'
+              alt='seller fraud'
+            />
+          </div>
+          <div className='w-[328px] h-[231px] relative mb-7'>
+            <ImageWrapper
+              layout='fill'
+              type='/img/safety-landing/seller-fraud-2.png'
+              alt='seller fraud'
+            />
+          </div>
+          <h1 className='text-h-1 font-medium text-center mb-15'>
+            {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER')}
+          </h1>
+          <span
+            className='text-body-2 mb-3 whitespace-pre-line text-justify leading-7'
+            dangerouslySetInnerHTML={{
+              __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER_TEXT'),
+            }}
+          />
+          <div className='flex flex-col bg-nc-salmon py-4 my-15'>
+            <span className='text-headline-5 font-medium text-center'>
+              {t('LENDING_BUYER_CAN_DECEIVE')}
+            </span>
+          </div>
+          <div className='w-[328px] h-[481px] relative mb-7'>
+            <ImageWrapper
+              layout='fill'
+              type='/img/safety-landing/seller-fraud-1.png'
+              alt='seller fraud'
+            />
+          </div>
+          <div className='w-[328px] h-[721px] relative mb-7'>
+            <ImageWrapper
+              layout='fill'
+              type='/img/safety-landing/buyer-fraud-1.png'
+              alt='seller fraud'
+            />
+          </div>
+          <div className='w-[328px] h-[115px] relative'>
+            <ImageWrapper
+              layout='fill'
+              type='/img/safety-landing/buyer-fraud-2.png'
+              alt='seller fraud'
+            />
+          </div>
+          <h1 className='text-h-1 font-medium text-center my-15'>
+            {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER')}
+          </h1>
+          <span
+            className='text-body-2 whitespace-pre-line text-justify leading-7'
+            dangerouslySetInnerHTML={{
+              __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER_TEXT'),
+            }}
+          />
+        </div>
+      </div>
+      <div className='flex flex-col py-15 mx-4'>
+        <h1 className='text-h-1 font-medium mb-10'>
+          {t('LANDING_MAKE_THE_WORLD_PLEASER')}
+        </h1>
+        <div className='flex'>
+          <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
+          <span className='text-body-1 mb-15'>
+            {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_1')}
+          </span>
+        </div>
+        <div className='flex'>
+          <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
+          <span className='text-body-1 mb-15'>
+            {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2')}
+          </span>
+        </div>
+        <div className='flex'>
+          <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
+          <span className='text-body-1 mb-15'>
+            {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_3')}
+          </span>
+        </div>
+        {/* <PrimaryButton>{t('REPORT_FRAUD')}</PrimaryButton> */}
+        <IcFooter className='w-[173px] h-[148px] mt-11 self-center' />
       </div>
     </div>
   )

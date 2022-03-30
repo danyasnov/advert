@@ -1048,7 +1048,7 @@
   "LANDING_MAKE_THE_WORLD_PLEASER": "Сделай мир приятнее - помоги наказать мошенников",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT": "О любом подозрительном профиле сообщите нам. Если вы уже кому-то передали данные своей карты или банковского счета, то:",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_1": "Незамедлительно сообщите в ваш банк, чтобы они заблокировали любые возможные списания.",
-  "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2": "Передайте информацию в центр борьбы с кибер преступлениями https://cyberalert.cy/contactus/",
+  "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2": "Передайте информацию в центр борьбы с кибер преступлениями <a href=\"https://cyberalert.cy/contactus/\"><font color=\"#FF8514\">https://cyberalert.cy/contactus</font></a>",
   "LANDING_MAKE_THE_WORLD_PLEASER_TEXT_3": "Не удаляйте переписку, сохраняйте историю. Это может помочь вам вернуть деньги.",
   "LANDING_MANAGE_SALES": "Управление скидками и акциями",
   "LANDING_MEET_PERSONALLY": "Встречайтесь лично",
