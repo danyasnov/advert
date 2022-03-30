@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import React, {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import IcPeople from 'icons/safety-landing/People.svg'
@@ -18,11 +18,13 @@ import Logo from '../Logo'
 import LanguageSelect from '../LanguageSelect'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import ImageWrapper from '../ImageWrapper'
+import MetaTags from '../MetaTags'
 
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   return (
     <div>
+      <MetaTags title={t('SECURITY_ON_ADVERTO')} />
       <div className='flex justify-between items-center my-2.5 mx-4'>
         <Logo />
         <LanguageSelect />
