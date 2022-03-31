@@ -40,27 +40,37 @@ const SafetyLayout: FC = observer(() => {
   return (
     <div>
       <MetaTags title={t('SECURITY_ON_ADVERTO')} />
-      <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 s:my-7'>
-        <Logo />
+      <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
+        <Logo size={width >= 768 ? 70 : 30} />
         <LanguageSelect />
       </div>
-      <div className='flex flex-col bg-[#FFF6EE] pt-8 pb-18'>
-        <IcPeople className='w-[240px] s:w-[309px] h-[291px] s:h-[375px] mb-15 s:mb-18 self-center m:hidden' />
-        <div className='mx-4 s:mx-15 flex flex-col space-y-4'>
+      <div className='flex flex-col l:flex-row bg-[#FFF6EE] pt-8 pb-18 l:pt-[133px] relative'>
+        <IcPeople
+          className='w-[240px] s:w-[309px] m:w-[280px] h-[291px] s:h-[375px] m:h-[340px]
+         mb-15 s:mb-18 self-center m:mb-0 m:order-last m:scale-x-[-1] m:self-end m:-mt-10 m:mr-10
+         l:order-first l:scale-x-[1] l:self-start l:w-[400px] l:h-[481px] l:ml-[125px] l:mt-[100px]
+         xl:w-[535px] xl:h-[651px] xl:ml-[151px] xl:mr-16'
+        />
+        <div className='mx-4 s:mx-15 l:mx-30 xl:mx-0 flex flex-col space-y-4 m:w-[722px]'>
           <h1 className='text-h-1 s:text-headline-2 font-medium'>
             {t('SECURITY_ON_ADVERTO')}
           </h1>
-          <span className='text-h-3 s:py-10'>
+          <span className='text-h-3 s:text-headline-5  s:py-10'>
             {t('SECURITY_ON_ADVERTO_TEXT')}
           </span>
-          <span className='text-h-3 '>{t('SECURITY_ON_ADVERTO_TEXT_BR')}</span>
+          <span className='text-h-3 s:text-headline-5 font-medium'>
+            {t('SECURITY_ON_ADVERTO_TEXT_BR')}
+          </span>
         </div>
         {/* <PrimaryButton className='mx-4 mt-15 s:mt-18'> */}
         {/*  {t('REPORT_FRAUD')} */}
         {/* </PrimaryButton> */}
-        <IcFooter className='w-[250px] h-[200px] mt-11 self-end mx-4 s:mx-15 m:-mt-16' />
+        <IcFooter
+          className='w-[250px] h-[200px] xl:w-[302px] xl:h-[257px] mt-11 self-end mx-4 s:mx-15 l:mx-30 xl:mx-80 m:-mt-16 hidden l:flex l:absolute
+        l:bottom-10 l:right-0'
+        />
       </div>
-      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15'>
+      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80'>
         <h1 className='text-h-1 s:text-headline-2 font-medium mb-9'>
           {t('LANDING_GENERAL_SAFETY_RULES')}
         </h1>
@@ -140,7 +150,7 @@ const SafetyLayout: FC = observer(() => {
         />
       </div>
       <div className='flex flex-col bg-[#FFF6EE] pt-12 pb-15 s:pb-18'>
-        <div className='mx-4 s:mx-15 flex flex-col items-center'>
+        <div className='mx-4 s:mx-15 l:mx-30 xl:mx-80 flex flex-col items-center'>
           <h1 className='text-h-1 s:text-headline-2 font-medium text-center mb-15 s:mb-18'>
             {t('LANDSCAPE_DO NOT_DECEIVE_YOUSELF')}
           </h1>
@@ -177,7 +187,7 @@ const SafetyLayout: FC = observer(() => {
           </div>
         </div>
       </div>
-      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15'>
+      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80'>
         <h1 className='text-headline-5 font-medium mb-2'>
           {t('LENDING_FRAUDERS_CAN_BE_SELLERS_AND_BUYERS')}
         </h1>
@@ -218,7 +228,7 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
       <div className='flex flex-col bg-[#FFF6EE] py-15 s:py-18'>
-        <div className='mx-4 s:mx-15 flex flex-col items-center'>
+        <div className='mx-4 s:mx-15 l:mx-30 xl:mx-80 flex flex-col items-center'>
           <h1 className='text-h-1 font-medium text-center mb-15 s:mb-18 m:mb-30'>
             {t('LENDING_FRAUDERS_CAN_BE_SELLERS_AND_BUYERS')}
           </h1>
@@ -318,7 +328,7 @@ const SafetyLayout: FC = observer(() => {
           )}
         </div>
       </div>
-      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15'>
+      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80'>
         <h1 className='text-h-1 font-medium mb-10'>
           {t('LANDING_MAKE_THE_WORLD_PLEASER')}
         </h1>
@@ -328,11 +338,15 @@ const SafetyLayout: FC = observer(() => {
             {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_1')}
           </span>
         </div>
+
         <div className='flex'>
           <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
-          <span className='text-body-1 mb-8'>
-            {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2')}
-          </span>
+          <span
+            className='text-body-1 mb-8'
+            dangerouslySetInnerHTML={{
+              __html: t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2'),
+            }}
+          />
         </div>
         <div className='flex'>
           <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
@@ -341,7 +355,7 @@ const SafetyLayout: FC = observer(() => {
           </span>
         </div>
         {/* <PrimaryButton>{t('REPORT_FRAUD')}</PrimaryButton> */}
-        <IcFooter className='w-[173px] h-[148px] mt-11 self-center' />
+        <IcFooter className='w-[173px] h-[148px] mt-11 self-center hidden m:flex' />
       </div>
     </div>
   )
