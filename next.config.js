@@ -43,13 +43,13 @@ const nextConfig = {
       },
       {
         source: '/api/upload/:type',
-        destination: 'https://backend.advretoapi.com/files/:type/upload',
-        // destination: 'https://api.adverto.sale/files/:type/upload',
+        // destination: 'https://backend.advretoapi.com/files/:type/upload',
+        destination: 'https://api.adverto.sale/files/:type/upload',
       },
       {
         source: '/api/chat',
-        destination: 'https://backend.advretoapi.com:3001',
-        // destination: 'https://chat.adverto.sale',
+        // destination: 'https://backend.advretoapi.com:3001',
+        destination: 'https://chat.adverto.sale',
       },
     ]
   },
