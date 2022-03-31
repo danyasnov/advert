@@ -21,6 +21,7 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 import ImageWrapper from '../ImageWrapper'
 import MetaTags from '../MetaTags'
 import Button from '../Buttons/Button'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 const tabs = [
   {
@@ -38,7 +39,7 @@ const SafetyLayout: FC = observer(() => {
   const [tab, setTab] = useState(0)
   const {width} = useWindowSize()
   return (
-    <div>
+    <div className='overflow-hidden'>
       <MetaTags title={t('SECURITY_ON_ADVERTO')} />
       <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
         <Logo size={width >= 768 ? 70 : 30} />
@@ -61,10 +62,15 @@ const SafetyLayout: FC = observer(() => {
           <span className='text-h-3 s:text-headline-5 font-medium'>
             {t('SECURITY_ON_ADVERTO_TEXT_BR')}
           </span>
+          <div className='self-center m:self-start'>
+            <LinkWrapper
+              href='/support'
+              title='Support'
+              className='mt-15 s:mt-18 max-w-[420px]'>
+              <PrimaryButton>{t('REPORT_FRAUD')}</PrimaryButton>
+            </LinkWrapper>
+          </div>
         </div>
-        {/* <PrimaryButton className='mx-4 mt-15 s:mt-18'> */}
-        {/*  {t('REPORT_FRAUD')} */}
-        {/* </PrimaryButton> */}
         <IcFooter
           className='w-[250px] h-[200px] xl:w-[302px] xl:h-[257px] mt-11 self-end mx-4 s:mx-15 l:mx-30 xl:mx-80 m:-mt-16 hidden l:flex l:absolute
         l:bottom-10 l:right-0'
@@ -354,7 +360,13 @@ const SafetyLayout: FC = observer(() => {
             {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_3')}
           </span>
         </div>
-        {/* <PrimaryButton>{t('REPORT_FRAUD')}</PrimaryButton> */}
+        <LinkWrapper
+          href='/support'
+          title='Support'
+          className='mt-15 s:mt-18 max-w-[420px] self-center'>
+          <PrimaryButton>{t('REPORT_FRAUD')}</PrimaryButton>
+        </LinkWrapper>
+
         <IcFooter className='w-[173px] h-[148px] mt-11 self-center hidden m:flex' />
       </div>
     </div>
