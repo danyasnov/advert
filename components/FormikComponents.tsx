@@ -530,7 +530,9 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   hideLabel,
 }) => {
   const {name, value} = field
-  const {setFieldValue} = form
+  const {setFieldValue, errors} = form
+  const error = get(errors, name)
+
   const input = (
     <>
       <input
@@ -549,7 +551,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
     </>
   )
   return (
-    <div className=''>
+    <div>
       {hideLabel ? (
         input
       ) : (
@@ -559,6 +561,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
           {label}
         </label>
       )}
+      <span className='text-body-3 text-error'>{error}</span>
     </div>
   )
 }

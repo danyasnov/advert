@@ -34,10 +34,12 @@ const Header: FC = observer(() => {
               title={t('SHOPS')}>
               {t('SHOPS')}
             </LinkWrapper>
-            {/*  <LinkButton */}
-            {/*    onClick={notImplementedAlert} */}
-            {/*    label={t('APPLICATION_HELP')} */}
-            {/*  /> */}
+            <LinkWrapper
+              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center'
+              href='/safety'
+              title={t('SAFETY')}>
+              {t('SAFETY')}
+            </LinkWrapper>
           </div>
           <div className='flex justify-end w-full s:w-auto space-x-4 items-center'>
             {/* <LinkButton */}
