@@ -830,7 +830,7 @@
   "CONFIRM_RECEIPT_GOODS_INFO": "Проверьте товар и завершите сделку или откройте спор в течение 14 дней с момента покупки. ",
   "CONGRATULATIONS": "Поздравляем!",
   "CONNECTING_TO_THE_SERVER": "Соединяемся с сервером",
-  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "Я даю согласие на сбор, использование и обработку моих персональных данных и подтверждаю, что мне исполнилось 18 лет, вы соглашаетесь с [условиями пользования]<a href=\\\"https://adverto.sale/p/terms-and-conditions/\\\" </a>, [политикой конфиденциальности.](adverto.sale/p/privacy-policy)",
+  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "Я даю согласие на сбор, использование и обработку моих персональных данных и подтверждаю, что мне исполнилось 18 лет, вы соглашаетесь с <a href=\\\"https://adverto.sale/p/terms-and-conditions/\\\">условиями, правилами публикации</a> и <a href=\\\"https://adverto.sale/p/privacy-policy/\\\">политикой конфиденциальности</a>",
   "CONTACT_DETAILS": "Контактные данные",
   "CONTACT_SELLER": "Связаться",
   "CONTINUE": "Продолжить",

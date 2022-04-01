@@ -830,7 +830,7 @@
   "CONFIRM_RECEIPT_GOODS_INFO": "Ελέγξτε το αντικείμενο και ολοκληρώστε τη συναλλαγή σας εντός 14 ημερών από την ημερα αγοράς.",
   "CONGRATULATIONS": "Συγχαρητήρια!",
   "CONNECTING_TO_THE_SERVER": "Σύνδεση με διακομιστή",
-  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "I consent to the collection, use and processing of my personal data and confirm that I am over 18 years old, you agree to the [terms of use](adverto.sale/p/terms-and-conditions), [privacy policy.](adverto. sale/p/privacy-policy)",
+  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "I consent to the collection, use and processing of my personal data and confirm that I am over 18 years old, you agree to the <a href=\\\"https://adverto.sale/p/terms-and-conditions/\\\">terms and conditions , publishing rules</a> and <a href=\\\"https://adverto.sale/p/privacy-policy/\\\">privacy policy</a>",
   "CONTACT_DETAILS": "Στοιχεία επικοινωνίας",
   "CONTACT_SELLER": "Επικοινωνία",
   "CONTINUE": "Συνέχεια",

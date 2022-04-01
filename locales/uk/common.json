@@ -830,7 +830,7 @@
   "CONFIRM_RECEIPT_GOODS_INFO": "Перевірте товар та завершіть угоду або відкрийте суперечку протягом 14 днів з моменту покупки.",
   "CONGRATULATIONS": "Вітаємо!",
   "CONNECTING_TO_THE_SERVER": "З'єднуємося з сервером",
-  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "I consent to the collection, use and processing of my personal data and confirm that I am over 18 years old, you agree to the [terms of use](adverto.sale/p/terms-and-conditions), [privacy policy.](adverto. sale/p/privacy-policy)",
+  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "I consent to the collection, use and processing of my personal data and confirm that I am over 18 years old, you agree to the <a href=\\\"https://adverto.sale/p/terms-and-conditions/\\\">terms and conditions , publishing rules</a> and <a href=\\\"https://adverto.sale/p/privacy-policy/\\\">privacy policy</a>",
   "CONTACT_DETAILS": "Контактні дані",
   "CONTACT_SELLER": "Зв'язатися",
   "CONTINUE": "Продовжити",
