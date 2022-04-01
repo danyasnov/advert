@@ -35,15 +35,12 @@ const SupportLayout: FC = observer(() => {
     },
     onSubmit: (values) => {
       makeRequest({
-        url: '/api/contact-support',
         method: 'post',
-        data: {
-          message: JSON.stringify(omit(values, ['privacy', 'token']), null, 2),
-        },
-      }).then((res) => {
-        toast.success(t('LANDING_MESSAGE'))
-        push('/')
+        url: '/api/feedback-submit',
+        data: omit(values, ['privacy', 'token']),
       })
+      toast.success(t('LANDING_MESSAGE'))
+      push('/')
     },
   })
 
