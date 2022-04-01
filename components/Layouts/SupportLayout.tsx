@@ -23,17 +23,23 @@ const SupportLayout: FC = observer(() => {
       email: '',
       message: '',
       privacy: false,
+      token: '',
     },
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => {
+    validate: () => {
       if (!token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) {
-        return
+        return {token: t('EMPTY_FIELD')}
       }
+      return {}
+    },
+    onSubmit: (values) => {
       makeRequest({
         url: '/api/contact-support',
         method: 'post',
-        data: {message: JSON.stringify(omit(values, ['privacy']), null, 2)},
+        data: {
+          message: JSON.stringify(omit(values, ['privacy', 'token']), null, 2),
+        },
       }).then((res) => {
         toast.success(t('LANDING_MESSAGE'))
         push('/')
@@ -109,25 +115,35 @@ const SupportLayout: FC = observer(() => {
                   disableTrack
                   placeholder={t('WRITE_A_MESSAGE')}
                 />
+
                 <div className='my-7'>
-                  <Field
-                    name='privacy'
-                    component={FormikCheckbox}
-                    validate={validate}
-                    label={t('CONSENT_TO_PROCESSING_OF_PERSONAL_DATA')}
-                  />
+                  {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+                    <ReCAPTCHA
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                      onChange={(val) => {
+                        formik.setFieldValue('token', val)
+                      }}
+                    />
+                  )}
+                  <span className='text-body-3 text-error'>
+                    {formik.errors.token}
+                  </span>
                 </div>
-                {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
-                  <ReCAPTCHA
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-                    onChange={(val) => {
-                      setToken(val)
-                    }}
-                  />
-                )}
+
+                <Field
+                  labelClassname='text-body-3'
+                  name='privacy'
+                  component={FormikCheckbox}
+                  validate={validate}
+                  label={t('CONSENT_TO_PROCESSING_OF_PERSONAL_DATA')}
+                />
+
                 <PrimaryButton
                   disabled={formik.isSubmitting}
-                  type='submit'
+                  type='button'
+                  onClick={() => {
+                    formik.handleSubmit()
+                  }}
                   className='mt-10'>
                   {t('SEND')}
                 </PrimaryButton>

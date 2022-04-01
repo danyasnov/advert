@@ -19,6 +19,7 @@ interface IFormikSegmented {
 }
 interface IFormikCheckbox {
   label: string
+  labelClassname: string
   hideLabel?: boolean
   labelPosition?: 'left' | 'right'
 }
@@ -528,6 +529,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   form,
   label,
   hideLabel,
+  labelClassname,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
@@ -544,8 +546,10 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
         className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
       />
       <div
-        className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex
-       shrink-0 justify-center items-center mr-2'>
+        className={`bg-white border-2 rounded h-4.5 w-4.5 flex
+       shrink-0 justify-center items-center mr-2 ${
+         error ? 'border-nc-error' : 'border-black-d'
+       }`}>
         <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
       </div>
     </>
@@ -556,7 +560,8 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
         input
       ) : (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
-        <label className='select-none text-black-b cursor-pointer flex items-center'>
+        <label
+          className={`select-none text-black-b cursor-pointer flex items-center ${labelClassname}`}>
           {input}
           {label}
         </label>
