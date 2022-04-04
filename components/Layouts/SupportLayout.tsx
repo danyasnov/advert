@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -27,8 +27,8 @@ const SupportLayout: FC = observer(() => {
     },
     validateOnBlur: false,
     validateOnChange: false,
-    validate: () => {
-      if (!token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) {
+    validate: (values) => {
+      if (!values.token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) {
         return {token: t('EMPTY_FIELD')}
       }
       return {}
@@ -44,7 +44,6 @@ const SupportLayout: FC = observer(() => {
     },
   })
 
-  const [token, setToken] = useState()
   const validate = (value) => {
     if (!value) return t('EMPTY_FIELD')
     return ''
@@ -119,6 +118,7 @@ const SupportLayout: FC = observer(() => {
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
                       onChange={(val) => {
                         formik.setFieldValue('token', val)
+                        formik.setFieldError('token', val)
                       }}
                     />
                   )}
