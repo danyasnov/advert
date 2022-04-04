@@ -118,7 +118,7 @@ const SupportLayout: FC = observer(() => {
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
                       onChange={(val) => {
                         formik.setFieldValue('token', val)
-                        formik.setFieldError('token', val)
+                        formik.setFieldError('token', undefined)
                       }}
                     />
                   )}
