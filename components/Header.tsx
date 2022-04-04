@@ -35,7 +35,7 @@ const Header: FC = observer(() => {
               {t('SHOPS')}
             </LinkWrapper>
             <LinkWrapper
-              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center'
+              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center hidden s:block'
               href='/safety'
               title={t('SAFETY')}>
               {t('SAFETY')}

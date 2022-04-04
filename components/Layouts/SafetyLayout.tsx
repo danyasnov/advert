@@ -417,7 +417,7 @@ const SafetyLayout: FC = observer(() => {
           )}
         </div>
       </div>
-      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 items-center'>
+      <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:items-center'>
         <div className='l:w-[1200px] xl:w-[1280px]'>
           <div className='mb-8'>
             <h1 className='text-h-1 font-medium mb-10 text-center'>
