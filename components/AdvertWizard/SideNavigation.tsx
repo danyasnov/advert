@@ -52,7 +52,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
               <span className='text-body-2 text-nc-primary-text w-40'>
                 {title}
               </span>
-              <span className='text-body-3 text-nc-secondary-text mt-1'>
+              <span className='text-body-3 text-nc-secondary-text mt-1 line-clamp-2 w-[200px]'>
                 {description}
               </span>
             </div>
@@ -67,7 +67,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
                   val,
                   <div
                     className={`rounded border-t w-0.5 border border-nc-border my-1 ${
-                      index === 0 || index === 1 ? 'h-10' : 'h-5'
+                      index === 0 ? 'h-10' : 'h-5'
                     }`}
                   />,
                 ],
