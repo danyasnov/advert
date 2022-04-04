@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import React, {FC, useState} from 'react'
 import {Field, FieldProps, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
@@ -563,7 +563,11 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
         <label
           className={`select-none text-black-b cursor-pointer flex items-center ${labelClassname}`}>
           {input}
-          {label}
+          <span
+            dangerouslySetInnerHTML={{
+              __html: label,
+            }}
+          />
         </label>
       )}
       <span className='text-body-3 text-error'>{error}</span>
