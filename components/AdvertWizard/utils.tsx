@@ -342,38 +342,48 @@ export const FormGroup: FC<{
           </>
         )}
       </div>
-      <div
-        className={`p-8 shadow rounded-lg hidden s:block ${
-          !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
-        }`}>
-        <div className='flex flex-col'>
-          <div className='flex justify-between'>
+      <div className='hidden s:block'>
+        {showWholeForm ? (
+          <div className='mb-6 flex flex-col l:flex-row'>
             {header}
-            <Button onClick={() => setIsExpanded(!isExpanded)}>
-              <IcKeyboardArrowLeft
-                className={`fill-current text-black-c w-6 h-6 ${
-                  isExpanded ? 'rotate-90' : '-rotate-90'
-                }`}
-              />
-            </Button>
+            {body}
           </div>
-          <div className='text-body-2 text-nc-secondary-text mt-1'>
-            <span
-              className={
-                !countMeta.isRequiredFilled && !isExpanded
-                  ? 'text-nc-error'
-                  : ''
-              }>
-              {t('NUMBER_FROM_NUMBER', {
-                from: countMeta.filledCount,
-                to: countMeta.maxFilled,
-              })}
-            </span>
+        ) : (
+          <div
+            className={`p-8 shadow rounded-lg hidden s:block ${
+              !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
+            }`}>
+            <div className='flex flex-col'>
+              <div className='flex justify-between'>
+                {header}
+                <Button onClick={() => setIsExpanded(!isExpanded)}>
+                  <IcKeyboardArrowLeft
+                    className={`fill-current text-black-c w-6 h-6 ${
+                      isExpanded ? 'rotate-90' : '-rotate-90'
+                    }`}
+                  />
+                </Button>
+              </div>
+              <div className='text-body-2 text-nc-secondary-text mt-1'>
+                <span
+                  className={
+                    !countMeta.isRequiredFilled && !isExpanded
+                      ? 'text-nc-error'
+                      : ''
+                  }>
+                  {t('NUMBER_FROM_NUMBER', {
+                    from: countMeta.filledCount,
+                    to: countMeta.maxFilled,
+                  })}
+                </span>
+              </div>
+            </div>
+            <div
+              className={`${isExpanded ? 'static' : 'absolute hidden'} pt-6`}>
+              {body}
+            </div>
           </div>
-        </div>
-        <div className={`${isExpanded ? 'static' : 'absolute hidden'} pt-6`}>
-          {body}
-        </div>
+        )}
       </div>
     </>
   )

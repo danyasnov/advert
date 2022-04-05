@@ -61,7 +61,6 @@ const FormPage: FC = observer(() => {
   const hash = first(query.hash)
 
   const {width} = useWindowSize()
-  const headerRefs = useRef([])
 
   const {languagesByIsoCode, user} = useGeneralStore()
   const fieldsRef = useRef({})
@@ -320,7 +319,8 @@ const FormPage: FC = observer(() => {
   const getFormStateDict = (items) => {
     return items.reduce((acc, val) => ({...acc, [val.key]: val}), {})
   }
-  const showWholeForm = !hasArrayType || query.action === 'edit'
+  // const showWholeForm = !hasArrayType || query.action === 'edit'
+  const showWholeForm = !hasArrayType
 
   const [formStateDict, setFormStateDict] = useState<Record<string, NavItem>>(
     () => {
@@ -409,12 +409,10 @@ const FormPage: FC = observer(() => {
               header={
                 <AdvertFormHeading
                   title={t('ENTER_TITLE_AND_DESCRIPTION')}
-                  ref={(ref) => {
-                    headerRefs.current[0] = {
-                      ref,
-                      title: t('TITLE_AND_DESCRIPTION'),
-                    }
-                  }}
+                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
+                  label={t('TITLE_AND_DESCRIPTION')}
+                  labelClassName='mt-2'
+                  isRequired
                 />
               }
               body={
@@ -428,10 +426,6 @@ const FormPage: FC = observer(() => {
                       languagesByIsoCode={languagesByIsoCode}
                     />
                   }
-                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
-                  label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2'
-                  isRequired
                 />
               }
             />
@@ -442,12 +436,9 @@ const FormPage: FC = observer(() => {
               header={
                 <AdvertFormHeading
                   title={t('UPLOAD_PHOTO_AND_VIDEO')}
-                  ref={(ref) => {
-                    headerRefs.current[1] = {
-                      ref,
-                      title: t('PHOTO_AND_VIDEO'),
-                    }
-                  }}
+                  label={t('PRODUCT_PHOTOS')}
+                  labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
+                  isRequired={category.data.minPhotos > 0}
                 />
               }
               body={
@@ -474,9 +465,6 @@ const FormPage: FC = observer(() => {
                         </p>
                       </div>
                     }
-                    label={t('PRODUCT_PHOTOS')}
-                    labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
-                    isRequired={category.data.minPhotos > 0}
                   />
                   <AdvertFormField
                     body={
@@ -541,24 +529,16 @@ const FormPage: FC = observer(() => {
                   showWholeForm={showWholeForm}
                   header={
                     <AdvertFormHeading
+                      isRequired
+                      labelClassName='mt-2'
+                      label={t('PROD_CONDITION')}
                       title={name}
-                      ref={(ref) => {
-                        headerRefs.current[3 + index + 1] = {
-                          ref,
-                          title: name,
-                        }
-                      }}
                     />
                   }
                   body={
                     <div className='space-y-4'>
                       {category.data.allowUsed && index === 0 && (
-                        <AdvertFormField
-                          body={conditionComponent}
-                          isRequired
-                          labelClassName='mt-2'
-                          label={t('PROD_CONDITION')}
-                        />
+                        <AdvertFormField body={conditionComponent} />
                       )}
                       <FormikCreateFields
                         fieldsArray={arrayTypeFields}
@@ -625,13 +605,11 @@ const FormPage: FC = observer(() => {
               showWholeForm={showWholeForm}
               header={
                 <AdvertFormHeading
+                  isRequired={!category.data.allowFree}
+                  label={t('PRICE')}
+                  labelTip={t('PRICE_TIP')}
+                  labelClassName='mt-2'
                   title={t('COST_AND_TERMS')}
-                  ref={(ref) => {
-                    headerRefs.current[2] = {
-                      ref,
-                      title: t('COST_AND_TERMS'),
-                    }
-                  }}
                 />
               }
               body={
@@ -647,10 +625,6 @@ const FormPage: FC = observer(() => {
                         />
                       </div>
                     }
-                    isRequired={!category.data.allowFree}
-                    label={t('PRICE')}
-                    labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2'
                   />
                   {!!category.data.isProduct && (
                     <>
