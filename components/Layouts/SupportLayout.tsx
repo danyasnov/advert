@@ -59,7 +59,7 @@ const SupportLayout: FC = observer(() => {
             <FormikProvider value={formik}>
               <form
                 onSubmit={formik.handleSubmit}
-                className='flex flex-col w-[392px] pb-10'>
+                className='flex flex-col w-[392px] pb-10 px-4'>
                 <span className='text-headline-3 font-medium mb-10'>
                   {t('WRITE_SUPPORT')}
                 </span>
