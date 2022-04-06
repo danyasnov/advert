@@ -174,6 +174,7 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
               <FormikCreateField field={f} />
             </div>
           }
+          orientation={width >= 768 ? 'horizontal' : 'vertical'}
           isRequired={f.isFillingRequired}
           label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
         />

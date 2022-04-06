@@ -12,6 +12,7 @@ import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
 import {FormikSwitch} from '../FormikComponents'
 import Tip from './Tip'
+import ImageWrapper from '../ImageWrapper'
 
 interface Props {
   user: OwnerModel
@@ -60,22 +61,27 @@ const AdvertDescription: FC<Props & FieldProps> = ({
     <div className='w-screen-offset-8 s:max-w-[656px] s:w-full'>
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
-          <div className='flex'>
+          <div className='flex mb-4 space-x-2'>
             {userLanguages.map((l, index) => {
-              const current = valueDict[l.isoCode]
-              const isFilled = current?.title || current?.description
               return (
                 <Button
                   key={l.isoCode}
                   onClick={() => setLanguage(l.isoCode)}
-                  className={`px-4 py-3 text-body-2 border-b whitespace-nowrap hover:bg-nc-accent hover:text-nc-link ${
+                  className={`px-3.5 py-2.5 text-body-1 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent  flex items-center ${
                     // eslint-disable-next-line no-nested-ternary
                     language === l.isoCode
-                      ? 'text-nc-title font-medium border-brand-a1'
-                      : isFilled
-                      ? 'text-nc-link border-nc-link'
-                      : 'text-nc-placeholder'
+                      ? 'text-nc-title bg-nc-accent'
+                      : 'text-nc-link'
                   }`}>
+                  <div className='shrink-0 mr-2 w-5 h-5'>
+                    <ImageWrapper
+                      type={`/img/flags/${l.isoCode}.png`}
+                      alt={l.isoCode}
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+
                   {languagesByIsoCode[l.isoCode]?.name}
                   {error && index === 0 && (
                     <IcExclamation className='ml-2 w-4 h-4' />
@@ -105,36 +111,56 @@ const AdvertDescription: FC<Props & FieldProps> = ({
           </>
         </div>
       </div>
-      <div className='flex flex-col w-full rounded-b-lg overflow-hidden'>
-        <div className='relative'>
-          <input
-            placeholder={t('ENTER_THE_TITLE')}
-            className={`border text-body-2 py-3 pl-4 pr-15 w-full text-nc-primary-text ${
-              error ? 'border-error' : 'border-shadow-b'
-            }`}
-            value={title}
-            maxLength={150}
-            onChange={(e) => {
-              let updatedValue
-              if (!value.find((v) => v.langCode === language)) {
-                updatedValue = [
-                  ...value,
-                  {langCode: language, title: e.target.value, description: ''},
-                ]
-              } else {
-                updatedValue = value.map((v) =>
-                  v.langCode === language ? {...v, title: e.target.value} : v,
-                )
-              }
-
-              setFieldValue(name, updatedValue)
-              if (error) setFieldError(name, undefined)
-            }}
-          />
-          <span className='absolute inset-y-0 right-0 text-nc-icon items-center flex text-body-4 mr-4'>
+      <div className='flex flex-col w-full rounded-b-lg'>
+        <div className='flex items-center mb-1'>
+          <div className='w-full'>
+            <span className='text-body-1 text-nc-secondary-text mr-1'>
+              {t('TITLE')}
+            </span>
+            <span className='text-body-1 text-nc-primary'>*</span>
+          </div>
+          <span className='text-nc-icon text-body-4'>
             {`${title.length}/150`}
           </span>
         </div>
+
+        <input
+          placeholder={t('ENTER_THE_TITLE')}
+          className={`border text-body-1 rounded-lg py-3.5 px-3 mb-4 w-full text-nc-primary-text ${
+            error ? 'border-error' : 'border-shadow-b'
+          }`}
+          value={title}
+          maxLength={150}
+          onChange={(e) => {
+            let updatedValue
+            if (!value.find((v) => v.langCode === language)) {
+              updatedValue = [
+                ...value,
+                {langCode: language, title: e.target.value, description: ''},
+              ]
+            } else {
+              updatedValue = value.map((v) =>
+                v.langCode === language ? {...v, title: e.target.value} : v,
+              )
+            }
+
+            setFieldValue(name, updatedValue)
+            if (error) setFieldError(name, undefined)
+          }}
+        />
+
+        <div className='flex items-center mb-1'>
+          <div className='w-full'>
+            <span className='text-body-1 text-nc-secondary-text mr-1'>
+              {t('DESCRIPTION')}
+            </span>
+            <span className='text-body-1 text-nc-primary'>*</span>
+          </div>
+          <span className='text-nc-icon text-body-4'>
+            {`${description.length}/${maxDescriptionLength}`}
+          </span>
+        </div>
+
         <textarea
           placeholder={t('ENTER_DESCRIPTION')}
           rows={5}
@@ -157,14 +183,11 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
           }}
-          className='text-body-1 px-4 pt-3 pb-6 rounded-b-lg text-nc-primary-text w-full pb-4 border border-t-0 border-shadow-b'
+          className='rounded-lg text-body-1 py-3.5 px-3 text-nc-primary-text w-full border border-shadow-b'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
         <span className='text-body-3 text-error'>{error}</span>
-        <span className='text-nc-icon flex text-body-4 justify-center'>
-          {`${description.length}/${maxDescriptionLength}`}
-        </span>
       </div>
       <span className='text-body-3 text-nc-secondary-text'>
         {t('OTHER_LANGUAGES_REFERENCE')}

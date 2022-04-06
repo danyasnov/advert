@@ -256,7 +256,7 @@ export const FormGroup: FC<{
 
   return (
     <>
-      <div className='s:hidden'>
+      <div className='m:hidden'>
         {isOpen ? (
           <ReactModal
             isOpen={isOpen}
@@ -312,14 +312,16 @@ export const FormGroup: FC<{
                 onClick={() => {
                   setIsOpen(true)
                 }}>
-                <div className='flex w-full px-4 py-3'>
+                <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
                     <span className='text-nc-primary-text text-body-1 pb-1'>
                       {title}
                     </span>
                     <span
-                      className={`text-body-3 ${
-                        showSummaryErrors ? 'text-nc-error' : 'text-nc-link'
+                      className={`text-body-3 s:text-body-1 ${
+                        showSummaryErrors
+                          ? 'text-nc-error'
+                          : 'text-nc-secondary-text'
                       }`}>
                       {t('NUMBER_FROM_NUMBER', {
                         from: countMeta.filledCount,
@@ -342,9 +344,9 @@ export const FormGroup: FC<{
           </>
         )}
       </div>
-      <div className='hidden s:block'>
+      <div className='hidden m:block'>
         {showWholeForm ? (
-          <div className='mb-6 flex flex-col l:flex-row'>
+          <div className='mb-6 flex flex-col space-y-4'>
             {header}
             {body}
           </div>

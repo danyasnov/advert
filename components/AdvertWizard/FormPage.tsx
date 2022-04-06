@@ -301,7 +301,7 @@ const FormPage: FC = observer(() => {
 
       let visible
 
-      if (showAll || width < 768) {
+      if (showAll || width < 1024) {
         visible = true
       } else if (hasPending) {
         visible = formStateDict?.[s.key]?.visible || false
@@ -366,14 +366,17 @@ const FormPage: FC = observer(() => {
       </div>
       <FormikProvider value={formik}>
         <div className='flex px-4 s:px-0'>
-          <div className='mr-12 hidden m:flex w-full max-w-288px '>
+          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0'>
             <SideNavigation
               categoryName={category.data.name}
               draft={state.draft}
               validationState={formState}
             />
           </div>
-          <Form className='flex flex-col space-y-4 s:space-y-6 s:space-y-12 mt-3 mb-24 w-full'>
+          <Form
+            className={`flex flex-col space-y-4 mt-3 mb-24 w-full ${
+              showWholeForm ? 's:space-y-8' : 's:space-y-6'
+            }`}>
             <div className={`${showWholeForm ? 'hidden' : 's:hidden'}`}>
               <FormProgressBar category={category.data} values={values} />
             </div>
@@ -407,13 +410,7 @@ const FormPage: FC = observer(() => {
                 }
               }}
               header={
-                <AdvertFormHeading
-                  title={t('ENTER_TITLE_AND_DESCRIPTION')}
-                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
-                  label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2'
-                  isRequired
-                />
+                <AdvertFormHeading title={t('ENTER_TITLE_AND_DESCRIPTION')} />
               }
               body={
                 <AdvertFormField
@@ -426,6 +423,10 @@ const FormPage: FC = observer(() => {
                       languagesByIsoCode={languagesByIsoCode}
                     />
                   }
+                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
+                  label={t('TITLE_AND_DESCRIPTION')}
+                  labelClassName='mt-2'
+                  isRequired
                 />
               }
             />
@@ -433,16 +434,9 @@ const FormPage: FC = observer(() => {
               hide={!formStateDict?.PHOTO_AND_VIDEO.visible}
               title={t('PHOTO_AND_VIDEO')}
               showWholeForm={showWholeForm}
-              header={
-                <AdvertFormHeading
-                  title={t('UPLOAD_PHOTO_AND_VIDEO')}
-                  label={t('PRODUCT_PHOTOS')}
-                  labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
-                  isRequired={category.data.minPhotos > 0}
-                />
-              }
+              header={<AdvertFormHeading title={t('UPLOAD_PHOTO_AND_VIDEO')} />}
               body={
-                <>
+                <div>
                   <AdvertFormField
                     body={
                       <div className='w-full'>
@@ -465,6 +459,9 @@ const FormPage: FC = observer(() => {
                         </p>
                       </div>
                     }
+                    label={t('PRODUCT_PHOTOS')}
+                    labelDescription={t('PHOTOS_AND_VIDEOS_PROPERTY_TEXT')}
+                    isRequired={category.data.minPhotos > 0}
                   />
                   <AdvertFormField
                     body={
@@ -488,7 +485,7 @@ const FormPage: FC = observer(() => {
                     labelDescription={t('TIP_FOR_VIDEO')}
                     hide={!category.data.allowVideo}
                   />
-                </>
+                </div>
               }
               getCountMeta={() => {
                 let filledCount = 0
@@ -527,18 +524,17 @@ const FormPage: FC = observer(() => {
                   key={name}
                   title={name}
                   showWholeForm={showWholeForm}
-                  header={
-                    <AdvertFormHeading
-                      isRequired
-                      labelClassName='mt-2'
-                      label={t('PROD_CONDITION')}
-                      title={name}
-                    />
-                  }
+                  header={<AdvertFormHeading title={name} />}
                   body={
                     <div className='space-y-4'>
                       {category.data.allowUsed && index === 0 && (
-                        <AdvertFormField body={conditionComponent} />
+                        <AdvertFormField
+                          orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                          body={conditionComponent}
+                          isRequired
+                          labelClassName='mt-2'
+                          label={t('PROD_CONDITION')}
+                        />
                       )}
                       <FormikCreateFields
                         fieldsArray={arrayTypeFields}
@@ -603,18 +599,11 @@ const FormPage: FC = observer(() => {
               hide={!formStateDict?.COST_AND_TERMS.visible}
               title={t('COST_AND_TERMS')}
               showWholeForm={showWholeForm}
-              header={
-                <AdvertFormHeading
-                  isRequired={!category.data.allowFree}
-                  label={t('PRICE')}
-                  labelTip={t('PRICE_TIP')}
-                  labelClassName='mt-2'
-                  title={t('COST_AND_TERMS')}
-                />
-              }
+              header={<AdvertFormHeading title={t('COST_AND_TERMS')} />}
               body={
                 <div className='space-y-4'>
                   <AdvertFormField
+                    orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     body={
                       <div className='w-full s:w-1/3'>
                         <Field
@@ -625,10 +614,15 @@ const FormPage: FC = observer(() => {
                         />
                       </div>
                     }
+                    isRequired={!category.data.allowFree}
+                    label={t('PRICE')}
+                    labelTip={t('PRICE_TIP')}
+                    labelClassName='mt-2'
                   />
                   {!!category.data.isProduct && (
                     <>
                       <AdvertFormField
+                        orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -647,6 +641,7 @@ const FormPage: FC = observer(() => {
                         label={width < 768 ? undefined : t('EXCHANGE')}
                       />
                       <AdvertFormField
+                        orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
