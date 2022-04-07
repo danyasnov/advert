@@ -56,23 +56,10 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       })
     }
   }
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (embla)
-  //
-  //   }, 3000)
-  // }, [embla])
+
   const title = valueDict[language]?.title ?? ''
   const description = valueDict[language]?.description ?? ''
 
-  if (embla) {
-    console.log(
-      'embla.canScrollNext(), embla.canScrollPrev()',
-      embla.canScrollNext(),
-      embla.canScrollPrev(),
-      embla.slidesNotInView(),
-    )
-  }
   return (
     <div className={`w-screen-offset-8 s:w-full ${className}`}>
       <div className='flex'>
