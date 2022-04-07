@@ -111,7 +111,7 @@ const AdvertPhotosContainer: ComponentClass<
 
   return (
     <div className='mb-4 w-full relative'>
-      <div className='text-body-2 text-nc-title mb-3 hidden s:flex'>
+      <div className='text-body-2 text-nc-title mb-3 hidden s:flex l:mb-5'>
         <span className='mr-1'>{t('ADD_PHOTO_HINT')}</span>
         <LinkButton
           onClick={() => {
