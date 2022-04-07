@@ -1,6 +1,7 @@
 import {FC} from 'react'
-import RS from 'react-select'
+import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
+import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
 import {getDefaultStyles} from './styles'
 
 export interface SelectProps {
@@ -60,6 +61,15 @@ const MenuList = ({options, children, getValue}) => {
   )
 }
 
+const DropdownIndicator = (props) => {
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <RSComponents.DropdownIndicator {...props}>
+      <IcArrowDropDown className='scale-[2.4] w-2.5 h-2.5 fill-current text-nc-icon' />
+    </RSComponents.DropdownIndicator>
+  )
+}
+
 const Select: FC<SelectProps> = ({
   options,
   placeholder,
@@ -100,6 +110,7 @@ const Select: FC<SelectProps> = ({
         className='react-select'
         components={{
           MenuList,
+          DropdownIndicator,
           ...(components || {}),
         }}
       />

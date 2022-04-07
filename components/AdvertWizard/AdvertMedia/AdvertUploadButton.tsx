@@ -43,7 +43,7 @@ const AdvertUploadButton: FC<{
         className={`text-nc-icon rounded-lg border flex hover:text-nc-primary
          hover:border-nc-primary cursor-pointer text-nc-placeholder px-2 ${
            type === 'photo' ? 'h-34 w-34' : 'h-40 w-72'
-         } ${error ? 'border-error' : 'border-nc-icon'}`}>
+         } ${error ? 'border-error' : 'border-nc-border'}`}>
         <div className='flex flex-col justify-center items-center flex-1'>
           <input {...getInputProps()} />
           {type === 'photo' && (

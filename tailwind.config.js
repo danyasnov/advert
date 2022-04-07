@@ -247,5 +247,8 @@ module.exports = {
     forms({
       strategy: 'class',
     }),
+    plugin(({addVariant}) => {
+      addVariant('not-last', '&:not(:last-child)')
+    }),
   ],
 }

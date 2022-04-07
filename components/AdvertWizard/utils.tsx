@@ -356,7 +356,7 @@ export const FormGroup: FC<{
       </div>
       <div className='hidden m:block'>
         {showWholeForm ? (
-          <div className='mb-6 flex flex-col space-y-4'>
+          <div className='not-last:mb-6 flex flex-col space-y-4'>
             {header}
             {body}
           </div>

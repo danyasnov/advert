@@ -100,7 +100,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             (prevBtnEnabled || nextBtnEnabled) &&
             !isEmpty(embla.slidesNotInView())
               ? ''
-              : 'invisible'
+              : 'hidden'
           }`}>
           <>
             <SliderButton
@@ -134,7 +134,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
         <input
           placeholder={t('ENTER_THE_TITLE')}
           className={`border text-body-1 rounded-lg py-3.5 px-3 mb-4 w-full text-nc-primary-text ${
-            error ? 'border-error' : 'border-shadow-b'
+            error ? 'border-error' : 'border-nc-border'
           }`}
           value={title}
           maxLength={150}
@@ -189,7 +189,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
           }}
-          className='rounded-lg text-body-1 py-3.5 px-3 text-nc-primary-text w-full border border-shadow-b'
+          className='rounded-lg text-body-1 py-3.5 px-3 text-nc-primary-text w-full border border-nc-border'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>

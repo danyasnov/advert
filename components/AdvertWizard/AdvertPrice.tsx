@@ -36,7 +36,9 @@ const AdvertPrice: FC<FieldProps & Props> = ({
     <div>
       <div
         className={`px-3.5 py-2 border rounded-lg flex flex-col ${
-          error ? 'border-error' : 'focus-within:border-nc-primary'
+          error
+            ? 'border-error'
+            : 'focus-within:border-nc-primary border-nc-border'
         }`}>
         <NumberFormat
           name={name}

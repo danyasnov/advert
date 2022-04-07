@@ -386,7 +386,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         placeholder={placeholder}
         className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
           disableTrack ? 'ym-disable-keys' : ''
-        } ${isValid ? '' : 'border-error'}`}
+        } ${isValid ? 'border-nc-border' : 'border-error'}`}
       />
       <span className='text-body-3 text-error'>{error}</span>
     </div>
@@ -436,7 +436,7 @@ export const FormikText: FC<
     placeholder,
     className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
       disableTrack ? 'ym-disable-keys' : ''
-    } ${isValid ? 'border-shadow-b' : 'border-error'}`,
+    } ${isValid ? 'border-nc-border' : 'border-error'}`,
   }
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Component = isTextarea ? <textarea {...props} /> : <input {...props} />

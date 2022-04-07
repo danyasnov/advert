@@ -374,10 +374,10 @@ const FormPage: FC = observer(() => {
             />
           </div>
           <Form
-            className={`flex flex-col space-y-4 mt-3 mb-24 w-full ${
+            className={`flex flex-col space-y-4 w-full ${
               showWholeForm ? 's:space-y-8' : 's:space-y-6'
             }`}>
-            <div className={`${showWholeForm ? 'hidden' : 's:hidden'}`}>
+            <div className={`${showWholeForm ? 'hidden' : 's:hidden'} mt-8`}>
               <FormProgressBar category={category.data} values={values} />
             </div>
             <FormGroup

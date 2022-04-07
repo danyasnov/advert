@@ -4,15 +4,15 @@ export const getDefaultStyles = (isInvalid) => ({
     ...provided,
     borderRadius: 8,
     boxShadow: 'none',
-    borderColor: isInvalid ? '#CC3237' : 'rgba(12, 13, 13, 0,1)',
+    borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
     '&:hover': {
-      borderColor: isInvalid ? '#CC3237' : 'hsl(0, 0%, 70%)',
+      borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
     },
     ...(state.isFocused
       ? {
-          borderColor: isInvalid ? '#CC3237' : '#1E4592',
+          borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
           '&:hover': {
-            borderColor: isInvalid ? '#CC3237' : '#1E4592',
+            borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
           },
         }
       : {}),
@@ -50,6 +50,10 @@ export const getDefaultStyles = (isInvalid) => ({
   valueContainer: (provided) => ({
     ...provided,
     paddingLeft: '12px',
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    width: 0,
   }),
 })
 
