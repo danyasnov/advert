@@ -347,7 +347,7 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
-  // console.log(category.data)
+  console.log(category.data)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -366,7 +366,7 @@ const FormPage: FC = observer(() => {
       </div>
       <FormikProvider value={formik}>
         <div className='flex px-4 s:px-0'>
-          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8'>
+          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full'>
             <SideNavigation
               categoryName={category.data.name}
               draft={state.draft}
