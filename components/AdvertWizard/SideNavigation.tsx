@@ -30,7 +30,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
   const nextItem = items.find((i) => i.state !== 'done') || null
 
   return (
-    <div className='flex flex-col items-center fixed mt-8'>
+    <div className='flex flex-col items-center'>
       {items
         .map(({title, description, state}) => (
           <div className='flex space-x-3 relative' key={title}>

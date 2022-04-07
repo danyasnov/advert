@@ -366,7 +366,7 @@ const FormPage: FC = observer(() => {
       </div>
       <FormikProvider value={formik}>
         <div className='flex px-4 s:px-0'>
-          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0'>
+          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8'>
             <SideNavigation
               categoryName={category.data.name}
               draft={state.draft}
