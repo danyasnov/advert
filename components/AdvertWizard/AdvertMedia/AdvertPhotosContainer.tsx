@@ -18,6 +18,7 @@ import DropZone from './DropZone'
 import AdvertPhoto from './AdvertPhoto'
 import {PhotoFile} from '../../../types'
 import {makeRequest} from '../../../api'
+import LinkButton from '../../Buttons/LinkButton'
 
 const getNextDegree = (current) => {
   const next = current + 90
@@ -36,6 +37,7 @@ const AdvertPhotosContainer: ComponentClass<
   const [isDragging, setIsDragging] = useState(false)
   const canAddMore = maxPhotos > photos.length
   const {t} = useTranslation()
+  const [uploadCounter, setUploadCounter] = useState(0)
 
   const originalPhotos = useRef({})
   useDropListener({
@@ -109,11 +111,24 @@ const AdvertPhotosContainer: ComponentClass<
 
   return (
     <div className='mb-4 w-full relative'>
+      <div className='text-body-2 text-nc-title mb-3 hidden s:flex'>
+        <span className='mr-1'>{t('ADD_PHOTO_HINT')}</span>
+        <LinkButton
+          onClick={() => {
+            setUploadCounter(uploadCounter + 1)
+          }}>
+          <span className='text-body-2'>{t('ADD_PHOTO_HINT_1')}</span>
+        </LinkButton>
+      </div>
+      <p className='text-body-2 text-nc-title mb-3 s:hidden'>
+        {t('SELECT_PHOTO_FROM_PHONE')}
+      </p>
       <div
         className={`${
           isDragging && canAddMore ? 'absolute inset-0 min-h-full' : 'hidden'
         }`}>
         <DropZone
+          uploadCounter={uploadCounter}
           onDrop={onDrop}
           disabled={!canAddMore}
           maxFiles={maxPhotos}

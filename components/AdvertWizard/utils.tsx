@@ -363,7 +363,7 @@ export const FormGroup: FC<{
         ) : (
           <div
             data-test-id={id}
-            className={`p-8 shadow rounded-lg hidden s:block ${
+            className={`p-8 shadow rounded-lg hidden s:block max-w-[656px] ${
               !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
             }`}>
             <div className='flex flex-col'>

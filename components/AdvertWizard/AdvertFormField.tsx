@@ -37,11 +37,11 @@ const AdvertFormField: FC<Props> = ({
           orientation === 'vertical' ? '' : 'w-288px shrink-0 mr-4'
         }`}>
         <div
-          className={`flex items-center mb-2 s:mb-4 space-x-2 ${
+          className={`flex items-center text-nc-title mb-2 s:mb-4 space-x-2 ${
             labelClassName || ''
           }`}>
           {!!label && (
-            <span className='text-body-1 text-nc-title'>
+            <span className='text-body-1'>
               {label}
               {isRequired && (
                 <span className='text-body-1 text-nc-primary ml-1'>*</span>
@@ -51,7 +51,7 @@ const AdvertFormField: FC<Props> = ({
           {!!labelTip && <Tip message={labelTip} placement='right' />}
         </div>
         {labelDescription && (
-          <span className='flex text-nc-primary-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-line mb-6'>
+          <span className='flex text-nc-primary-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-wrap mb-6'>
             {labelDescription}
           </span>
         )}

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDropzone} from 'react-dropzone'
 import IcAddPhoto from 'icons/material/AddPhoto.svg'
@@ -7,11 +7,12 @@ import IcAddVideo from 'icons/material/AddVideo.svg'
 
 const DropZone: FC<{
   onDrop: (acceptedFiles: any, rejectedFiles: any) => void
+  uploadCounter?: number
   disabled: boolean
   type: 'photo' | 'video'
   maxFiles?: number
   maxSize?: number
-}> = ({onDrop, disabled, maxFiles = 1, type, maxSize}) => {
+}> = ({onDrop, disabled, maxFiles = 1, type, maxSize, uploadCounter}) => {
   const {t} = useTranslation()
   let accept
   if (type === 'photo') {
@@ -21,7 +22,7 @@ const DropZone: FC<{
     accept = 'video/mp4'
   }
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+  const {getRootProps, getInputProps, isDragActive, open} = useDropzone({
     accept,
     maxSize: type === 'photo' ? 26214400 : maxSize || 31457280,
     onDrop,
@@ -34,6 +35,10 @@ const DropZone: FC<{
   const titleClassname = `text-body-3 ${
     isDragActive ? 'text-nc-title' : 'text-nc-placeholder'
   }`
+
+  useEffect(() => {
+    if (uploadCounter) open()
+  }, [uploadCounter])
   return (
     <div {...getRootProps()} className='h-full'>
       <div

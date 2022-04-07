@@ -18,6 +18,7 @@ interface Props {
   user: OwnerModel
   languagesByIsoCode: Record<string, SettingsLanguageModel>
   maxDescriptionLength: number
+  className: string
 }
 const AdvertDescription: FC<Props & FieldProps> = ({
   field,
@@ -25,6 +26,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   user,
   languagesByIsoCode,
   maxDescriptionLength,
+  className,
 }) => {
   const {query} = useRouter()
   const {t} = useTranslation()
@@ -58,7 +60,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const description = valueDict[language]?.description ?? ''
 
   return (
-    <div className='w-screen-offset-8 s:max-w-[656px] s:w-full'>
+    <div className={`w-screen-offset-8 s:w-full ${className}`}>
       <div className='flex'>
         <div className='overflow-hidden relative' ref={viewportRef}>
           <div className='flex mb-4 space-x-2'>
@@ -68,7 +70,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                   id={`ad-language-select-${l.isoCode}`}
                   key={l.isoCode}
                   onClick={() => setLanguage(l.isoCode)}
-                  className={`px-3.5 py-2.5 text-body-1 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent  flex items-center ${
+                  className={`px-3.5 py-2.5 text-body-1 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${
                     // eslint-disable-next-line no-nested-ternary
                     language === l.isoCode
                       ? 'text-nc-title bg-nc-accent'
@@ -190,9 +192,6 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
         <span className='text-body-3 text-error'>{error}</span>
       </div>
-      <span className='text-body-3 text-nc-secondary-text'>
-        {t('OTHER_LANGUAGES_REFERENCE')}
-      </span>
       {query.action === 'create' && (
         <div className='flex space-x-2 items-center mt-4'>
           <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '>

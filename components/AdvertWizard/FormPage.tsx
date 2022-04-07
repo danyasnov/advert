@@ -233,7 +233,7 @@ const FormPage: FC = observer(() => {
     if (!hasArrayType) {
       fieldsArray = [
         {
-          name: t('PARAMETERS'),
+          name: t('PRODUCT_FEATURES'),
           arrayTypeFields: fieldsArray,
         },
       ]
@@ -416,8 +416,16 @@ const FormPage: FC = observer(() => {
               body={
                 <AdvertFormField
                   id='form-field-content'
+                  orientation={
+                    width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
+                  }
                   body={
                     <Field
+                      className={
+                        hasArrayType
+                          ? 's:max-w-full m:max-w-[582px] l:max-w-[592px]'
+                          : 's:max-w-[656px]'
+                      }
                       name='content'
                       maxDescriptionLength={category.data.descriptionLengthMax}
                       component={AdvertDescription}
@@ -442,15 +450,11 @@ const FormPage: FC = observer(() => {
                 <div>
                   <AdvertFormField
                     id='form-field-photos'
+                    orientation={
+                      width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
+                    }
                     body={
                       <div className='w-full'>
-                        <p className='text-body-2 text-nc-title mb-3 hidden s:block'>
-                          {t('ADD_PHOTO_HINT')}
-                        </p>
-                        <p className='text-body-2 text-nc-title mb-3 s:hidden'>
-                          {t('SELECT_PHOTO_FROM_PHONE')}
-                        </p>
-
                         <Field
                           component={AdvertPhotos}
                           name='photos'
@@ -468,6 +472,9 @@ const FormPage: FC = observer(() => {
                     isRequired={category.data.minPhotos > 0}
                   />
                   <AdvertFormField
+                    orientation={
+                      width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
+                    }
                     id='form-field-videos'
                     body={
                       <div className='w-8/12'>
@@ -477,7 +484,7 @@ const FormPage: FC = observer(() => {
                           categoryId={category.data.id}
                           maxVideoDuration={category.data.maxVideoDuration}
                         />
-                        <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                        <p className='text-body-3 text-nc-secondary-text mb-6 mt-2 whitespace-pre-wrap'>
                           {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
                             descriptionLengthMax: `${
                               category.data.maxVideoDuration || 30
@@ -539,7 +546,7 @@ const FormPage: FC = observer(() => {
                           id='form-field-condition'
                           body={conditionComponent}
                           isRequired
-                          labelClassName='mt-2'
+                          labelClassName='mt-2 text-nc-secondary-text'
                           label={t('PROD_CONDITION')}
                         />
                       )}
@@ -626,24 +633,20 @@ const FormPage: FC = observer(() => {
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
                     labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2'
+                    labelClassName='mt-2 text-nc-secondary-text'
                   />
                   {!!category.data.isProduct && (
                     <>
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-swap-possible'
+                        labelClassName='text-nc-secondary-text'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
                               name='isSwapPossible'
                               component={FormikSwitch}
-                              // eslint-disable-next-line react/jsx-props-no-spreading
-                              {...(width < 768
-                                ? {
-                                    label: t('EXCHANGE'),
-                                  }
-                                : {})}
+                              label={width < 768 ? t('EXCHANGE') : undefined}
                             />
                           </div>
                         }
@@ -653,17 +656,13 @@ const FormPage: FC = observer(() => {
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-bargain-possible'
+                        labelClassName='text-nc-secondary-text'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
                               name='isBargainPossible'
                               component={FormikSwitch}
-                              // eslint-disable-next-line react/jsx-props-no-spreading
-                              {...(width < 768
-                                ? {
-                                    label: t('BARGAIN'),
-                                  }
-                                : {})}
+                              label={width < 768 ? t('BARGAIN') : undefined}
                             />
                           </div>
                         }
