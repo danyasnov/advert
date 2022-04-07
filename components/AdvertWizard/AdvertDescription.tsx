@@ -34,13 +34,12 @@ const AdvertDescription: FC<Props & FieldProps> = ({
   const {setFieldValue, errors, setFieldError} = form
   const [language, setLanguage] = useState(user.mainLanguage.isoCode)
   const error = get(errors, name)
-  const [viewportRef, embla] = useEmblaCarousel({
+  const [viewportRef] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
     slidesToScroll: 1,
   })
-  const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
-    useSliderButtons(embla)
+
   const userLanguages = [user.mainLanguage, ...user.additionalLanguages]
   let valueDict = {}
   // hotfix for jumping caret
@@ -94,28 +93,6 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               )
             })}
           </div>
-        </div>
-        <div
-          className={`w-18 hidden s:flex items-center space-x-1 h-10 ${
-            (prevBtnEnabled || nextBtnEnabled) &&
-            !isEmpty(embla.slidesNotInView())
-              ? ''
-              : 'hidden'
-          }`}>
-          <>
-            <SliderButton
-              onClick={scrollPrev}
-              disabled={!prevBtnEnabled}
-              direction='left'
-              className={`${prevBtnEnabled ? 'bg-nc-accent' : ''}`}
-            />
-            <SliderButton
-              onClick={scrollNext}
-              disabled={!nextBtnEnabled}
-              direction='right'
-              className={`${nextBtnEnabled ? 'bg-nc-accent' : ''}`}
-            />
-          </>
         </div>
       </div>
       <div className='flex flex-col w-full rounded-b-lg'>
