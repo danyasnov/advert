@@ -65,6 +65,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             {userLanguages.map((l, index) => {
               return (
                 <Button
+                  id={`ad-language-select-${l.isoCode}`}
                   key={l.isoCode}
                   onClick={() => setLanguage(l.isoCode)}
                   className={`px-3.5 py-2.5 text-body-1 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent  flex items-center ${

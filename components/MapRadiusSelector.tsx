@@ -116,6 +116,7 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
               return (
                 <Button
                   key={o.key}
+                  id={`location-radius-selector-${o.key}`}
                   onClick={() => {
                     setRadius(o.value, o.key)
                     if (width < 768) {

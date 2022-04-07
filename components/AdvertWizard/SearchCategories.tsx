@@ -78,6 +78,7 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
               }
             },
           })}
+          data-test-id='category-search'
           placeholder={t('SEARCH_BY_CATEGORIES')}
           className='pl-12 px-3.5 py-3 text-black-b text-body-2 rounded-2 w-full h-10 border border-nc-border'
           id='search-autocomplete'

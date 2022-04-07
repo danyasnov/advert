@@ -169,6 +169,7 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
       return (
         <AdvertFormField
           key={f.id}
+          id={`form-field-${f.fieldType}-${f.slug}`}
           body={
             <div className='w-full s:w-1/2 l:w-5/12'>
               <FormikCreateField field={f} />

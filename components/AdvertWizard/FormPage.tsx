@@ -381,6 +381,7 @@ const FormPage: FC = observer(() => {
               <FormProgressBar category={category.data} values={values} />
             </div>
             <FormGroup
+              id='form-group-title-and-description'
               hide={!formStateDict?.TITLE_AND_DESCRIPTION.visible}
               validate={() =>
                 validateTitle(
@@ -414,6 +415,7 @@ const FormPage: FC = observer(() => {
               }
               body={
                 <AdvertFormField
+                  id='form-field-content'
                   body={
                     <Field
                       name='content'
@@ -431,6 +433,7 @@ const FormPage: FC = observer(() => {
               }
             />
             <FormGroup
+              id='form-group-photo-and-video'
               hide={!formStateDict?.PHOTO_AND_VIDEO.visible}
               title={t('PHOTO_AND_VIDEO')}
               showWholeForm={showWholeForm}
@@ -438,6 +441,7 @@ const FormPage: FC = observer(() => {
               body={
                 <div>
                   <AdvertFormField
+                    id='form-field-photos'
                     body={
                       <div className='w-full'>
                         <p className='text-body-2 text-nc-title mb-3 hidden s:block'>
@@ -464,6 +468,7 @@ const FormPage: FC = observer(() => {
                     isRequired={category.data.minPhotos > 0}
                   />
                   <AdvertFormField
+                    id='form-field-videos'
                     body={
                       <div className='w-8/12'>
                         <Field
@@ -520,6 +525,7 @@ const FormPage: FC = observer(() => {
               const {name, arrayTypeFields, id} = fieldArray
               return (
                 <FormGroup
+                  id='form-group-fields'
                   hide={!formStateDict?.[name].visible}
                   key={name}
                   title={name}
@@ -530,6 +536,7 @@ const FormPage: FC = observer(() => {
                       {category.data.allowUsed && index === 0 && (
                         <AdvertFormField
                           orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                          id='form-field-condition'
                           body={conditionComponent}
                           isRequired
                           labelClassName='mt-2'
@@ -596,6 +603,7 @@ const FormPage: FC = observer(() => {
               )
             })}
             <FormGroup
+              id='form-group-cost-and-terms'
               hide={!formStateDict?.COST_AND_TERMS.visible}
               title={t('COST_AND_TERMS')}
               showWholeForm={showWholeForm}
@@ -604,6 +612,7 @@ const FormPage: FC = observer(() => {
                 <div className='space-y-4'>
                   <AdvertFormField
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                    id='form-field-price'
                     body={
                       <div className='w-full s:w-1/3'>
                         <Field
@@ -623,6 +632,7 @@ const FormPage: FC = observer(() => {
                     <>
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                        id='form-field-is-swap-possible'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -642,6 +652,7 @@ const FormPage: FC = observer(() => {
                       />
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                        id='form-field-is-bargain-possible'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -690,6 +701,7 @@ const FormPage: FC = observer(() => {
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
                 <OutlineButton
+                  id='ad-back-button'
                   onClick={() => {
                     dispatch({
                       type: 'setPage',
@@ -702,6 +714,7 @@ const FormPage: FC = observer(() => {
                   {t('BACK')}
                 </OutlineButton>
                 <PrimaryButton
+                  id='ad-publish-button'
                   onClick={() => {
                     if (currentStep) {
                       let errors: FormikErrors<any> = {}

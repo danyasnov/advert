@@ -29,6 +29,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
   if (value && allowSecureDeal) {
     safeDealPrice = value * 0.9
   }
+
   const error = get(errors, name)
 
   return (
@@ -38,6 +39,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           error ? 'border-error' : 'focus-within:border-nc-primary'
         }`}>
         <NumberFormat
+          name={name}
           value={value}
           suffix={` ${currency?.code}`}
           onValueChange={({value: newValue}) => {
