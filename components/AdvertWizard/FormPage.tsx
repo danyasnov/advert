@@ -421,11 +421,11 @@ const FormPage: FC = observer(() => {
                   }
                   body={
                     <Field
-                      className={
+                      className={`${
                         hasArrayType
                           ? 's:max-w-full m:max-w-[582px] l:max-w-[592px]'
-                          : 's:max-w-[656px]'
-                      }
+                          : 's:max-w-[656px] l:mt-11'
+                      }`}
                       name='content'
                       maxDescriptionLength={category.data.descriptionLengthMax}
                       component={AdvertDescription}
@@ -479,7 +479,7 @@ const FormPage: FC = observer(() => {
                     id='form-field-videos'
                     labelClassName='text-nc-title'
                     body={
-                      <div className='w-8/12'>
+                      <div className='w-8/12 l:mt-9'>
                         <Field
                           component={AdvertVideos}
                           name='videos'
