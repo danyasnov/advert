@@ -435,7 +435,7 @@ const FormPage: FC = observer(() => {
                   }
                   labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
                   label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2'
+                  labelClassName='mt-2 text-nc-title'
                   isRequired
                 />
               }
@@ -450,6 +450,7 @@ const FormPage: FC = observer(() => {
                 <div>
                   <AdvertFormField
                     id='form-field-photos'
+                    labelClassName='text-nc-title'
                     orientation={
                       width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
                     }
@@ -476,6 +477,7 @@ const FormPage: FC = observer(() => {
                       width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
                     }
                     id='form-field-videos'
+                    labelClassName='text-nc-title'
                     body={
                       <div className='w-8/12'>
                         <Field

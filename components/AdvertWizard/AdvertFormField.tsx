@@ -37,7 +37,7 @@ const AdvertFormField: FC<Props> = ({
           orientation === 'vertical' ? '' : 'w-288px shrink-0 mr-4'
         }`}>
         <div
-          className={`flex items-center text-nc-title mb-2 s:mb-4 space-x-2 ${
+          className={`flex items-center mb-2 s:mb-4 space-x-2 ${
             labelClassName || ''
           }`}>
           {!!label && (
