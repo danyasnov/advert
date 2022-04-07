@@ -157,7 +157,6 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             <span className='text-body-1 text-nc-secondary-text mr-1'>
               {t('DESCRIPTION')}
             </span>
-            <span className='text-body-1 text-nc-primary'>*</span>
           </div>
           <span className='text-nc-icon text-body-4'>
             {`${description.length}/${maxDescriptionLength}`}
