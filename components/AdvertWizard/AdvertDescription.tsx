@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {OwnerModel} from 'front-api/src/models'
 import useEmblaCarousel from 'embla-carousel-react'
 import {SettingsLanguageModel} from 'front-api'
@@ -6,7 +6,7 @@ import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import IcExclamation from 'icons/material/Exclamation.svg'
-import {get} from 'lodash'
+import {get, isEmpty} from 'lodash'
 import Button from '../Buttons/Button'
 import useSliderButtons from '../../hooks/useSliderButtons'
 import SliderButton from '../Buttons/SliderButton'
@@ -56,9 +56,23 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       })
     }
   }
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (embla)
+  //
+  //   }, 3000)
+  // }, [embla])
   const title = valueDict[language]?.title ?? ''
   const description = valueDict[language]?.description ?? ''
 
+  if (embla) {
+    console.log(
+      'embla.canScrollNext(), embla.canScrollPrev()',
+      embla.canScrollNext(),
+      embla.canScrollPrev(),
+      embla.slidesNotInView(),
+    )
+  }
   return (
     <div className={`w-screen-offset-8 s:w-full ${className}`}>
       <div className='flex'>
@@ -96,7 +110,10 @@ const AdvertDescription: FC<Props & FieldProps> = ({
         </div>
         <div
           className={`w-18 hidden s:flex items-center space-x-1 h-10 ${
-            prevBtnEnabled || nextBtnEnabled ? '' : 'invisible'
+            (prevBtnEnabled || nextBtnEnabled) &&
+            !isEmpty(embla.slidesNotInView())
+              ? ''
+              : 'invisible'
           }`}>
           <>
             <SliderButton
