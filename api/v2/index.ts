@@ -1,10 +1,12 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListResponse,
+  CheckPhonePermissions,
   FieldsModel,
+  OwnerModel,
   RemoveFromSaleType,
   RestFetchUserProductsPayload,
-} from 'front-api/src/models/index'
+} from 'front-api/src/models'
 import {
   AdvertiseDetail,
   AdvertiseListItemModel,
@@ -13,9 +15,18 @@ import {
   CAParamsModel,
   Unknown,
 } from 'front-api'
-import {isObject, isNil, size} from 'lodash'
+import {isObject, isNil} from 'lodash'
 import {AxiosPromise} from 'axios'
 import NodeCache from 'node-cache'
+import {
+  AuthExistsResponse,
+  AuthTokensResponse,
+  ChangeContactRequestResolution,
+  ChangeContactResponse,
+  Credentials,
+  Incoming,
+  VerifyMode,
+} from 'front-api/src/models/auth'
 import {getSearchByFilter} from '../../helpers'
 import {API_URL, getRest, makeRequest} from '../index'
 import {CookiesState, FetchAdvertisesPayload} from '../../types'
@@ -27,19 +38,9 @@ const categoriesCache = new NodeCache({stdTTL: 60 * 60 * 24})
 export const fetchProducts = (
   state: CookiesState,
   payload: FetchAdvertisesPayload = {},
+  storage: Storage,
 ): Promise<RestResponse<AdvertiseListResponse>> => {
   const {limit = PAGE_LIMIT, page = 1, filter = {}, advHash, cacheId} = payload
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-    userHash: state.hash,
-  })
   const rest = getRest(storage)
 
   const payloadFilter = {
@@ -71,16 +72,14 @@ export const fetchProducts = (
 }
 
 export const fetchCategories = async (
-  language: string,
+  storage: Storage,
 ): Promise<RestResponse<CACategoryModel[]>> => {
-  const key = `categories-${language}`
+  const key = `categories-${storage.language}`
 
   const cached: RestResponse<CACategoryModel[]> = categoriesCache.get(key)
 
   if (cached) return cached
-  const storage = new Storage({
-    language,
-  })
+
   const rest = getRest(storage)
   const result = await rest.categories.fetchTree(false)
   if (result.status === 200) categoriesCache.set(key, result)
@@ -89,60 +88,26 @@ export const fetchCategories = async (
 }
 
 export const fetchCategoryData = (
-  state: CookiesState,
+  storage: Storage,
   id: number,
   editFields?: FieldsModel,
 ): Promise<RestResponse<CACategoryDataModel>> => {
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-  })
   const rest = getRest(storage)
   return rest.categories.fetchCategoryData({id, editFields})
 }
 
 export const fetchProductDetails = (
-  state: CookiesState,
+  storage: Storage,
   hash: string,
 ): Promise<RestResponse<AdvertiseDetail>> => {
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-    userHash: state.hash,
-    token: state.token,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchDetail(hash)
 }
 
 export const fetchEditAdvertise = (
-  state: CookiesState,
+  storage: Storage,
   hash: string,
 ): Promise<RestResponse<CAParamsModel>> => {
-  const storage = new Storage({
-    language: state.language,
-    location: state.searchLocation,
-    userLocation: state.userLocation,
-    searchRadius: state.searchRadius,
-    countryId: state.countryId,
-    regionId: state.regionId,
-    cityId: state.cityId,
-    searchBy: state.searchBy,
-    userHash: state.hash,
-    token: state.token,
-  })
   const rest = getRest(storage)
   return rest.createAdvertise.fetchEditAdvertise(hash)
 }
@@ -168,126 +133,68 @@ export const fetchProductByUrl = (
 
 export const fetchUserSale = (
   payload: RestFetchUserProductsPayload,
-  language: string,
+  storage: Storage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const storage = new Storage({
-    language,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchUserSaleProducts(payload)
 }
 
 export const fetchUserSold = (
   payload: RestFetchUserProductsPayload,
-  language: string,
+  storage: Storage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const storage = new Storage({
-    language,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchUserSoldProducts(payload)
 }
 
 export const fetchUserFavorites = (
   payload: RestFetchUserProductsPayload,
-  language: string,
-  token: string,
-  userHash: string,
+  storage: Storage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchUserFavorites(payload)
 }
 
 export const fetchUserOnModeration = (
   payload: RestFetchUserProductsPayload,
-  language: string,
-  token: string,
-  userHash: string,
+  storage: Storage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchUserOnModerationProducts(payload)
 }
 
 export const fetchUserArchive = (
   payload: RestFetchUserProductsPayload,
-  language: string,
-  token: string,
-  userHash: string,
+  storage: Storage,
 ): Promise<RestResponse<Array<AdvertiseListItemModel>>> => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
   const rest = getRest(storage)
   return rest.advertises.fetchUserArchiveProducts(payload)
 }
 
-export const deleteAdv = (
-  hash: string,
-  language: string,
-  token: string,
-  userHash: string,
-) => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
+export const deleteAdv = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.advertises.delete(hash)
 }
 
-export const publishAdv = (
-  hash: string,
-  language: string,
-  token: string,
-  userHash: string,
-) => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
+export const publishAdv = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.advertises.activate(hash)
 }
 export const deactivateAdv = (
   hash: string,
   soldMode: RemoveFromSaleType,
-  language: string,
-  token: string,
-  userHash: string,
+  storage: Storage,
 ) => {
-  const storage = new Storage({
-    language,
-    token,
-    userHash,
-  })
   const rest = getRest(storage)
   return rest.advertises.deactivate(hash, soldMode)
 }
 
 export const submitDraft = (
-  state: CookiesState,
+  storage: Storage,
   params: CAParamsModel,
   shouldUpdate: boolean,
   dependenceSequenceId: number | Unknown,
 ) => {
-  const storage = new Storage({
-    token: state.token,
-    userHash: state.hash,
-  })
   const rest = getRest(storage)
   return rest.createAdvertise.submitAdvertise(
     params,
@@ -296,31 +203,106 @@ export const submitDraft = (
   )
 }
 export const saveDraft = (
-  state: CookiesState,
+  storage: Storage,
   draft: CAParamsModel,
   hash?: string,
 ) => {
-  const storage = new Storage({
-    token: state.token,
-    userHash: state.hash,
-  })
   const rest = getRest(storage)
   return rest.createAdvertise.saveDraft({draft, hash})
 }
-export const fetchDraft = (state: CookiesState, hash: string) => {
-  const storage = new Storage({
-    token: state.token,
-    userHash: state.hash,
-  })
+export const fetchDraft = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.createAdvertise.fetchDraft(hash)
 }
 
-export const fetchDrafts = (state: CookiesState) => {
-  const storage = new Storage({
-    token: state.token,
-    userHash: state.hash,
-  })
+export const fetchDrafts = (storage: Storage) => {
   const rest = getRest(storage)
-  return rest.createAdvertise.fetchListDrafts()
+  return rest.createAdvertise.fetchListDrafts({limit: 50, page: 1})
+}
+
+export const checkExisting = async (
+  data: {
+    email: string
+    phone: string
+  },
+  storage: Storage,
+): Promise<RestResponse<AuthExistsResponse>> => {
+  const rest = getRest(storage)
+  return rest.user.checkExisting(data)
+}
+export const authEmail = async (
+  email: string,
+  password: string,
+  storage: Storage,
+): Promise<RestResponse<AuthTokensResponse>> => {
+  const rest = getRest(storage)
+  return rest.auth.authEmail(email, password)
+}
+
+export const register = async (
+  credentials: Credentials,
+  params: {
+    name: string
+    surname: string
+    imageId?: string
+    recaptchaToken?: string
+  },
+  storage: Storage,
+): Promise<RestResponse<AuthTokensResponse>> => {
+  const rest = getRest(storage)
+  return rest.user.register(credentials, params)
+}
+
+export const sendCode = async (
+  incoming: Incoming,
+  verifyMode: VerifyMode,
+  storage: Storage,
+): Promise<RestResponse<AuthTokensResponse>> => {
+  const rest = getRest(storage)
+  return rest.auth.sendCode(incoming, verifyMode)
+}
+export const checkCode = async (
+  incoming: Incoming,
+  verifyMode: VerifyMode,
+  code: string,
+  storage: Storage,
+): Promise<RestResponse<AuthTokensResponse>> => {
+  const rest = getRest(storage)
+  return rest.auth.checkCode(incoming, verifyMode, code)
+}
+
+export const changeContact = async (
+  verifyMode: VerifyMode,
+  code: string,
+  incoming: Incoming,
+  storage: Storage,
+  conflictsResolving?: {
+    manualResolving: boolean
+    resolution?: ChangeContactRequestResolution[]
+  },
+): Promise<RestResponse<ChangeContactResponse>> => {
+  const rest = getRest(storage)
+  return rest.user.changeContact(verifyMode, code, incoming, conflictsResolving)
+}
+
+export const fetchUser = async (
+  id: string,
+  storage: Storage,
+): Promise<RestResponse<OwnerModel>> => {
+  const rest = getRest(storage)
+  const userData = await rest.user.userInfo(id)
+  if (userData.result && userData.result.settings) {
+    if (userData.result.settings.personal === undefined) {
+      userData.result.settings.personal = null
+    }
+  }
+  return userData
+}
+export const checkPhonePermissions = (
+  id: string,
+  ip: string,
+  storage: Storage,
+): Promise<RestResponse<CheckPhonePermissions>> => {
+  const rest = getRest(storage)
+  return rest.advertises.checkPhonePermissions(id, ip)
 }

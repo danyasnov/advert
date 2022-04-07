@@ -38,7 +38,6 @@ const getProtocol = (host) => {
 
 app.prepare().then(() => {
   const server = express()
-
   server.all('*', (req, res) => {
     const {host} = req.headers
     const cookies = parseCookies({req})
@@ -47,7 +46,7 @@ app.prepare().then(() => {
     const {pathname} = parsedUrl
 
     // if deeplink - no need to redirect or set cookies
-    if (pathname.includes('/b/')) {
+    if (pathname.startsWith('/b/') || pathname.startsWith('/_next')) {
       return handle(req, res)
     }
     // first visit

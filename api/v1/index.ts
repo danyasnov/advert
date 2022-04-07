@@ -2,14 +2,13 @@ import {RestResponse} from 'front-api/src/api/request'
 import {
   CountryModel,
   GeoPositionItemModel,
-  OwnerModel,
   ReviewModel,
   CoverLinkType,
   RegistrationType,
   AuthType,
   AuthUserResponse,
   CurrencyModel,
-} from 'front-api/src/models/index'
+} from 'front-api/src/models'
 import {SettingsLanguageModel, LocationModel} from 'front-api'
 import NodeCache from 'node-cache'
 import {size} from 'lodash'
@@ -111,23 +110,6 @@ export const fetchLanguages = (
   return rest.oldRest.fetchLanguages(language)
 }
 
-export const fetchUser = async (
-  id: string,
-  language: string,
-): Promise<RestResponse<OwnerModel>> => {
-  const storage = new Storage({
-    language,
-  })
-  const rest = getRest(storage)
-  const userData = await rest.oldRest.userInfo(id)
-  if (userData.result && userData.result.settings) {
-    if (userData.result.settings.personal === undefined) {
-      userData.result.settings.personal = null
-    }
-  }
-  return userData
-}
-
 export const fetchUserRatings = async (
   id: string,
   language: string,
@@ -190,7 +172,7 @@ export const remindPassword = async (
 ): Promise<RestResponse<unknown>> => {
   const storage = new Storage({})
   const rest = getRest(storage)
-  return rest.oldRest.remindPassword(email)
+  return rest.auth.remindPassword(email)
 }
 
 export const createUser = async (payload: {
@@ -241,7 +223,7 @@ export const createUser = async (payload: {
 
 export const toggleFavorite = async (
   hash: string,
-  operation: 1 | 2,
+  operation: 'add' | 'delete',
   token: string,
   userHash: string,
 ): Promise<RestResponse<number>> => {

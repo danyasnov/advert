@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 import {OwnerModel} from 'front-api/src/models'
 import useEmblaCarousel from 'embla-carousel-react'
 import {SettingsLanguageModel} from 'front-api'
@@ -6,10 +6,8 @@ import {FieldProps, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import IcExclamation from 'icons/material/Exclamation.svg'
-import {get, isEmpty} from 'lodash'
+import {get, toArray} from 'lodash'
 import Button from '../Buttons/Button'
-import useSliderButtons from '../../hooks/useSliderButtons'
-import SliderButton from '../Buttons/SliderButton'
 import {FormikSwitch} from '../FormikComponents'
 import Tip from './Tip'
 import ImageWrapper from '../ImageWrapper'
@@ -40,7 +38,10 @@ const AdvertDescription: FC<Props & FieldProps> = ({
     slidesToScroll: 1,
   })
 
-  const userLanguages = [user.mainLanguage, ...user.additionalLanguages]
+  const userLanguages = [
+    user.mainLanguage,
+    ...toArray(user.additionalLanguages),
+  ]
   let valueDict = {}
   // hotfix for jumping caret
   if (Array.isArray(value)) {

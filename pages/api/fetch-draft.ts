@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {processCookies} from '../../helpers'
+import {getStorageFromCookies} from '../../helpers'
 import {fetchDraft} from '../../api/v2'
 
 export default async (
@@ -8,9 +8,9 @@ export default async (
 ): Promise<void> => {
   const {body} = req
   const {hash} = body
-  const state = await processCookies({req})
+  const storage = getStorageFromCookies({req, res})
 
-  return fetchDraft(state, hash).then((result) => {
+  return fetchDraft(hash, storage).then((result) => {
     return res.json(result)
   })
 }

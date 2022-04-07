@@ -1,10 +1,7 @@
-import {ComponentClass, FC, useRef} from 'react'
-import {SortableElement, SortableElementProps} from 'react-sortable-hoc'
+import {FC} from 'react'
 import IcClose from 'icons/material/Close.svg'
-import IcRotate from 'icons/material/Rotate.svg'
 import CircularProgress from 'react-cssfx-loading/lib/CircularProgress'
 import Button from '../../Buttons/Button'
-import ImageWrapper from '../../ImageWrapper'
 
 const AdvertVideo: FC<{
   url: string

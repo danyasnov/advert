@@ -2,7 +2,11 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import {head, isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import {getQueryValue, processCookies} from '../../helpers'
+import {
+  getQueryValue,
+  getStorageFromCookies,
+  processCookies,
+} from '../../helpers'
 import {fetchCountries} from '../../api/v1'
 import {fetchCategories} from '../../api/v2'
 import LocationContents from '../../components/Layouts/LocationContents'
@@ -18,13 +22,23 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
   const {query} = ctx
+  const storage = getStorageFromCookies(ctx)
+
   const countryCode = getQueryValue(query, 'countryCode')
   const countries = await fetchCountries(state.language)
-  const promises = [fetchCategories(state.language)]
+  const promises = [fetchCategories(storage)]
   const cities = await fetchCitiesByCountryCode(countryCode, state.language)
   const [categoriesData] = await Promise.allSettled(promises).then((response) =>
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
+  if (categoriesData.status === 401) {
+    return {
+      redirect: {
+        destination: `/login?from=${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    }
+  }
   const categories = categoriesData?.result ?? null
   const citiesByAlphabet = cities.reduce((acc, value) => {
     if (value.has_adverts === '0') return acc

@@ -11,7 +11,14 @@ export interface LocationIdFilter {
 export interface LocationFilter {
   location: LocationModel
 }
-
+export interface Country {
+  label: string
+  value: string
+  phonePrefix: string
+  phoneMask: string
+  phoneLength: number
+  isoCode?: string
+}
 export interface CookiesState {
   userLocation?: LocationModel
   searchLocation?: LocationModel
@@ -33,6 +40,8 @@ export interface CookiesState {
   authType?: number
   phone?: string
   token?: string
+  authNewToken?: string
+  authNewRefreshToken?: string
   aup?: string
   showCreateAdvMapHint?: boolean
   showBottomSheet?: boolean
@@ -61,6 +70,8 @@ export interface SerializedCookiesState {
   authType?: string
   phone?: string
   token?: string
+  authNewToken?: string
+  authNewRefreshToken?: string
   aup?: string
   showCreateAdvMapHint?: string
   showBottomSheet?: string

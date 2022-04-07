@@ -8,22 +8,24 @@ import curlirize from 'axios-curlirize'
 import isIp from 'is-ip'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import axiosRetry, {IAxiosRetryConfig} from 'axios-retry'
-import {DummyAnalytics} from '../helpers'
 import Storage from '../stores/Storage'
 
 if (!process.env.PRODUCTION) curlirize(axios)
 
-// export const API_URL = 'https://api.adverto.sale'
 export const {API_URL} = process.env
 
 export const getRest = (storage: AppStorage): RestApi =>
   new RestApi({
+    newAuth: {
+      onLogin() {
+        console.log('LOGIN REQUEST')
+      },
+    },
     isDev: true,
     storage,
     isLogRequest: true,
     isLogResponse: false,
     sendLog: (msg) => msg.includes('curl ') && console.log(`\n${msg}\n`),
-    analyticsService: new DummyAnalytics(),
     endpoint: API_URL,
   })
 

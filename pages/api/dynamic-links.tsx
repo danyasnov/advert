@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {CoverLinkType} from 'front-api/src/models/index'
+import {CoverLinkType} from 'front-api/src/models'
 import {processCookies} from '../../helpers'
 import {restCoverLink} from '../../api/v1'
 import {getRest} from '../../api'

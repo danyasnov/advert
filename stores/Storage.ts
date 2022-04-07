@@ -1,5 +1,9 @@
 import {AppStorage, AuthType, LocationModel, emptyLocation} from 'front-api'
-import {BASIC_RADIUS} from 'front-api/src/models/index'
+import {BASIC_RADIUS} from 'front-api/src/models'
+import {GetServerSidePropsContext} from 'next'
+import {IncomingMessage} from 'http'
+import {NextApiRequestCookies} from 'next/dist/server/api-utils'
+import {ParsedUrlQuery} from 'querystring'
 
 interface CurrentProfile {
   authType?: AuthType
@@ -22,6 +26,8 @@ interface CurrentProfile {
   location: LocationModel | null
   userLocation: LocationModel | null
   searchRadius?: number
+  authNewRefreshToken?: string
+  authNewToken?: string
 }
 export interface StorageOptions {
   language?: string
@@ -40,10 +46,14 @@ export interface StorageOptions {
   promo?: string
   socialId?: string
   token?: string
+  authNewRefreshToken?: string
+  authNewToken?: string
 }
 
 export default class Storage implements AppStorage {
-  constructor(data: StorageOptions) {
+  private saveTokenToCookies: any
+
+  constructor(data: StorageOptions, saveTokenToCookies?) {
     const {
       language,
       location,
@@ -61,7 +71,11 @@ export default class Storage implements AppStorage {
       promo,
       socialId,
       token,
+      authNewToken,
+      authNewRefreshToken,
     } = data
+    this.saveTokenToCookies = saveTokenToCookies
+
     this.memoryState = {
       withPhoto: false,
       language,
@@ -80,10 +94,31 @@ export default class Storage implements AppStorage {
       promo,
       socialId,
       token,
+      authNewToken,
+      authNewRefreshToken,
     }
   }
 
+  get authNewRefreshToken(): string {
+    return this.memoryState.authNewRefreshToken
+  }
+
+  get authNewToken(): string {
+    return this.memoryState.authNewToken
+  }
+
   memoryState: CurrentProfile | undefined
+
+  saveNewTokens: (params: {
+    id: string
+    accessToken: string
+    refreshToken: string
+  }) => void = ({accessToken, refreshToken}) => {
+    console.log('saveNewTokens', accessToken, refreshToken)
+    this.memoryState.authNewRefreshToken = refreshToken
+    this.memoryState.authNewToken = accessToken
+    this.saveTokenToCookies({refreshToken, accessToken})
+  }
 
   get language(): string {
     let lang = this.memoryState?.language
@@ -167,21 +202,13 @@ export default class Storage implements AppStorage {
 
   appVersion: number
 
-  saveAppVersion = (version: any) => {
-    throw new Error('Method not implemented.')
-  }
-
-  setUserLocation = (location: LocationModel) => {
-    throw new Error('Method not implemented.')
-  }
-
-  setLocation = (location: LocationModel) => {
-    throw new Error('Method not implemented.')
-  }
-
-  saveAddressText = (address: string) => {
-    throw new Error('Method not implemented.')
-  }
-
   platform: 'ios' | 'android' | 'web' = 'web'
+
+  saveAddressText(address: string): void {}
+
+  saveAppVersion(version: number): void {}
+
+  setLocation(location: LocationModel | null): void {}
+
+  setUserLocation(location: LocationModel | null): void {}
 }

@@ -37,7 +37,6 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
       </div>
     )
   }
-  console.log(`/img/categories/${selected[0].slug}.png`)
   return (
     <>
       <div className='flex mb-15'>

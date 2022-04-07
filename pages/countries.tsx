@@ -4,7 +4,7 @@ import {head, isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
 import {CountryModel} from 'front-api'
 import LocationContents from '../components/Layouts/LocationContents'
-import {processCookies} from '../helpers'
+import {getStorageFromCookies, processCookies} from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
 
@@ -16,14 +16,21 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
-  const promises = [
-    fetchCategories(state.language),
-    fetchCountries(state.language),
-  ]
+
+  const storage = getStorageFromCookies(ctx)
+  const promises = [fetchCategories(storage), fetchCountries(state.language)]
   const [categoriesData, countries] = await Promise.allSettled(promises).then(
     (response) =>
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
+  if (categoriesData.status === 401) {
+    return {
+      redirect: {
+        destination: `/login?from=${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    }
+  }
   const categories = categoriesData?.result ?? null
   let countriesByAlphabet = null
   countriesByAlphabet = countries.reduce((acc, value) => {

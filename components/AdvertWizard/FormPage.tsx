@@ -54,6 +54,9 @@ import {
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
+import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
+import Auth from '../Auth'
+import LoginModal from '../Auth/Login/LoginModal'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -63,6 +66,8 @@ const FormPage: FC = observer(() => {
   const {width} = useWindowSize()
 
   const {languagesByIsoCode, user} = useGeneralStore()
+  const [showAddNumber, setShowAddNumber] = useState(false)
+
   const fieldsRef = useRef({})
   const {t} = useTranslation()
   const conditionOptions = useRef([
@@ -260,6 +265,16 @@ const FormPage: FC = observer(() => {
           category.data.minPhotos,
           t,
         ),
+    },
+    {
+      key: 'WAYS_COMMUNICATION',
+      validate: (val) =>
+        validatePhoto(
+          // @ts-ignore
+          val.photos,
+          category.data.minPhotos,
+          t,
+        ),
       required: category.data.minPhotos > 0,
       filled: !!values.photos.length,
     },
@@ -366,6 +381,7 @@ const FormPage: FC = observer(() => {
         .reverse()
         .find((i) => i.status === 'pending' && i.visible)
 
+  const phoneNumber = user?.settings.personal.phoneNum
   if (!category || !user) return null
   return (
     <div className='max-w-screen w-full'>
@@ -725,6 +741,50 @@ const FormPage: FC = observer(() => {
                 )
               }
             />
+            <FormGroup
+              id='form-group-ways-communication'
+              hide={!formStateDict?.WAYS_COMMUNICATION.visible}
+              title={t('WAYS_COMMUNICATION')}
+              showWholeForm={showWholeForm}
+              header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
+              body={
+                <div className='space-y-4'>
+                  <AdvertFormField
+                    orientation={width >= 768 ? 'horizontal' : 'vertical'}
+                    id='form-field-phone-number'
+                    body={
+                      <div
+                        className={`w-full s:w-1/3 ${
+                          hasArrayType ? 'l:w-full' : ''
+                        }`}>
+                        <Button
+                          onClick={() => {
+                            setShowAddNumber(true)
+                          }}
+                          disabled={!!phoneNumber}
+                          className={`w-full text-body-1 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
+                            phoneNumber
+                              ? 'text-nc-disabled bg-nc-back'
+                              : 'text-nc-primary-text'
+                          }`}>
+                          <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
+                        </Button>
+                      </div>
+                    }
+                    isRequired={!category.data.allowFree}
+                    label={t('PHONE_NUM')}
+                    // labelTip={t('PRICE_TIP')}
+                    labelClassName='mt-2 text-nc-secondary-text'
+                  />
+                </div>
+              }
+              getCountMeta={() => ({
+                isRequiredFilled: false,
+                filledCount: 0,
+                maxFilled: 1,
+              })}
+              validate={() => ({})}
+            />
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
                 <OutlineButton
@@ -772,6 +832,11 @@ const FormPage: FC = observer(() => {
             {query.action === 'create' && (
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
+            <AddNumberModal
+              onFinish={() => {}}
+              isOpen={showAddNumber}
+              onClose={() => setShowAddNumber(false)}
+            />
           </Form>
         </div>
       </FormikProvider>

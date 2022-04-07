@@ -1,5 +1,5 @@
+/* eslint-disable global-require */
 import {
-  AnalyticsService,
   CACategoryModel,
   LocationModel,
   CACategoryDataModel,
@@ -17,6 +17,7 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
+import {AnalyticsService} from 'front-api/src/analytics/analytics'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -28,6 +29,7 @@ import {
 import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
 import {clearFalsyValues} from '../utils'
 import PublicKey from '../PublicKey'
+import Storage, {StorageOptions} from '../stores/Storage'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -36,27 +38,6 @@ export const notImplementedAlert = () => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (): void => {}
-
-export class DummyAnalytics implements AnalyticsService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  init = (apiKey: string): Promise<boolean> => {
-    return Promise.resolve(false)
-  }
-
-  logEvent = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    eventType: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    eventProps?: Record<string, any>,
-  ): Promise<boolean> => {
-    return Promise.resolve(false)
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  trackingSessionEvents = (isTrack: boolean): Promise<boolean> => {
-    return Promise.resolve(false)
-  }
-}
 
 export const objectFlip = (obj: any): any => {
   return Object.entries(obj).reduce((acc, entry: [string, string]) => {
@@ -232,6 +213,9 @@ export const processCookies = async (
   }
   if (cookies.hash) state.hash = cookies.hash
   if (cookies.token) state.token = cookies.token
+  if (cookies.authNewRefreshToken)
+    state.authNewRefreshToken = cookies.authNewRefreshToken
+  if (cookies.authNewToken) state.authNewToken = cookies.authNewToken
   if (cookies.authType) state.authType = toNumber(cookies.authType)
   if (!cookies.aup && state.hash && state.token && state.authType) {
     const data = Buffer.from(
@@ -709,4 +693,62 @@ export const startTracking = ({url}) => {
 
   ReactPixel.init(pixelId)
   ReactPixel.pageView()
+}
+
+export const getStorageFromCookies = (
+  ctx: Partial<GetServerSidePropsContext> & {
+    req: IncomingMessage & {cookies: NextApiRequestCookies; locale?: string}
+  },
+) => {
+  const state = parseCookies(ctx)
+  const deserializedState = deserializeCookies(state)
+
+  const storage = new Storage(
+    {
+      ...deserializedState,
+      location: deserializedState.searchLocation,
+      userHash: deserializedState.hash,
+    },
+    ({accessToken, refreshToken}) => {
+      setCookiesObject(
+        {authNewRefreshToken: refreshToken, authNewToken: accessToken},
+        ctx,
+      )
+    },
+  )
+
+  return storage
+}
+
+export const deserializeCookies = (
+  state: SerializedCookiesState,
+): CookiesState => {
+  let userLocation: LocationModel = null
+  if (state.userLocation) {
+    try {
+      userLocation = JSON.parse(state.userLocation)
+    } catch (e) {
+      userLocation = null
+    }
+  }
+  const searchLocation: LocationModel = null
+  if (state.searchLocation) {
+    try {
+      userLocation = JSON.parse(state.searchLocation)
+    } catch (e) {
+      userLocation = null
+    }
+  }
+  return {
+    ...state,
+    userLocation,
+    searchLocation,
+    searchRadius: state.searchRadius ? toNumber(state.searchRadius) : null,
+    showDevBanner: state.showDevBanner !== 'false',
+    cookieAccepted: state.cookieAccepted !== 'false',
+    showLocationPopup: state.showLocationPopup !== 'false',
+    showCreateAdvMapHint: state.showCreateAdvMapHint !== 'false',
+    showBottomSheet: state.showBottomSheet !== 'false',
+    authType: state.authType ? toNumber(state.authType) : null,
+  }
 }

@@ -2,7 +2,7 @@ import {FC, ReactNode} from 'react'
 import Button from './Button'
 
 interface Props {
-  onClick: () => void
+  onClick?: () => void
   label?: string
   children?: ReactNode
   className?: string

@@ -1,4 +1,4 @@
-import {ComponentClass, useRef} from 'react'
+import {ComponentClass} from 'react'
 import {SortableElement, SortableElementProps} from 'react-sortable-hoc'
 import IcClose from 'icons/material/Close.svg'
 import IcRotate from 'icons/material/Rotate.svg'

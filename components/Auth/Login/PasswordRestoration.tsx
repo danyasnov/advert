@@ -4,9 +4,9 @@ import {Field, Form, Formik} from 'formik'
 import {string, object} from 'yup'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
-import {FormikText} from '../FormikComponents'
+import {FormikText} from '../../FormikComponents'
 import {AuthPages, Controls, PageProps} from './LoginWizard'
-import {makeRequest} from '../../api'
+import {makeRequest} from '../../../api'
 
 const schema = object().shape({
   email: string().email().required(),

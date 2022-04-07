@@ -1,26 +1,21 @@
 import React, {Dispatch, FC, SetStateAction, useEffect, useReducer} from 'react'
 import {useTranslation} from 'next-i18next'
-import SecondaryButton from '../Buttons/SecondaryButton'
-import PrimaryButton from '../Buttons/PrimaryButton'
+import {AuthType} from 'front-api/src/models'
+import SecondaryButton from '../../Buttons/SecondaryButton'
+import PrimaryButton from '../../Buttons/PrimaryButton'
 import EnterCode from './EnterCode'
 import InitialPage from './InitialPage'
 import EnterPhone from './EnterPhone'
 import EnterPersonalData from './EnterPersonalData'
 import EnterEmail from './EnterEmail'
-import EnterEmailPersonalData from './EnterEmailPersonalData'
 import PasswordRestoration from './PasswordRestoration'
+import Success from './Success'
 
 export interface PageProps {
   state: State
-  dispatch: Dispatch<Partial<State & {type: string}>>
+  dispatch: Dispatch<Partial<State & {type: string; title: string}>>
   onClose: () => void
-}
-export interface Country {
-  label: string
-  value: string
-  phonePrefix: string
-  phoneMask: string
-  phoneLength: number
+  onFinish: () => void
 }
 
 export const Controls: FC<{
@@ -31,11 +26,15 @@ export const Controls: FC<{
 }> = ({onNext, onBack, nextLabel, nextDisabled}) => {
   const {t} = useTranslation()
   return (
-    <div className='p-4 flex border-t border-shadow-b justify-end space-x-2'>
-      <SecondaryButton id='login-back' onClick={onBack}>
+    <div className='pb-6 flex justify-between space-x-3 w-full'>
+      <SecondaryButton id='login-back' className='w-1/2' onClick={onBack}>
         {t('BACK')}
       </SecondaryButton>
-      <PrimaryButton id='login-next' onClick={onNext} disabled={nextDisabled}>
+      <PrimaryButton
+        id='login-next'
+        className='w-1/2'
+        onClick={onNext}
+        disabled={nextDisabled}>
         {nextLabel || t('NEXT')}
       </PrimaryButton>
     </div>
@@ -52,7 +51,7 @@ export const AuthPages = {
     component: EnterPhone,
   },
   enterEmail: {
-    title: 'LOGIN_WITH_EMAIL',
+    title: 'LOG_IN',
     component: EnterEmail,
   },
   enterCode: {
@@ -63,18 +62,18 @@ export const AuthPages = {
     title: 'PERSONAL_DATA',
     component: EnterPersonalData,
   },
-  enterEmailPersonalData: {
-    title: 'PERSONAL_DATA',
-    component: EnterEmailPersonalData,
-  },
   passwordRestoration: {
     title: 'PASSWORD_RESTORATION',
     component: PasswordRestoration,
   },
+  success: {
+    title: 'CONGRATULATIONS',
+    component: Success,
+  },
 }
 interface State {
   incoming: string | null
-  authType: number | null
+  authType: AuthType | null
   userId: number | null
   password: string | null
   page: {title: string; component: FC}
@@ -99,6 +98,8 @@ const reducer = (state, action) => {
       return {...state, page: action.page}
     case 'setPassword':
       return {...state, password: action.password}
+    case 'setTitle':
+      return {...state, page: {...state.page, title: action.title}}
     default:
       throw new Error()
   }
@@ -106,7 +107,8 @@ const reducer = (state, action) => {
 const LoginWizard: FC<{
   setTitle: Dispatch<SetStateAction<() => never>>
   onClose: () => void
-}> = ({setTitle, onClose}) => {
+  onFinish: () => void
+}> = ({setTitle, onClose, onFinish}) => {
   const {t} = useTranslation()
   const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -115,7 +117,14 @@ const LoginWizard: FC<{
   }, [state.page.title, setTitle, t])
   const Component = state.page.component
 
-  return <Component state={state} dispatch={dispatch} onClose={onClose} />
+  return (
+    <Component
+      state={state}
+      dispatch={dispatch}
+      onClose={onClose}
+      onFinish={onFinish}
+    />
+  )
 }
 
 export default LoginWizard

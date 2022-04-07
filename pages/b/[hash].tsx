@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     redirect: {
       destination: link[0]?.firebase_link || '/countries',
-      statusCode: 301,
+      permanent: true,
     },
   }
 }

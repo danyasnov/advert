@@ -1,18 +1,19 @@
 import React, {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import {AuthType} from 'front-api/src/models/index'
+import {AuthType} from 'front-api/src/models'
 import IcPhone from 'icons/material/Phone.svg'
 import IcEmail from 'icons/material/Email.svg'
-import SecondaryButton from '../Buttons/SecondaryButton'
+import SecondaryButton from '../../Buttons/SecondaryButton'
 import {AuthPages, PageProps} from './LoginWizard'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col p-4 space-y-4 pb-8'>
+    <div className='flex flex-col px-6 pb-6 space-y-4'>
       <SecondaryButton
         id='login-by-phone'
+        className='h-14'
         onClick={() => {
           dispatch({
             type: 'setPage',
@@ -28,6 +29,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
       </SecondaryButton>
       <SecondaryButton
         id='login-by-email'
+        className='h-14'
         onClick={() => {
           dispatch({
             type: 'setPage',

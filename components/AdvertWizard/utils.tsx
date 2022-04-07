@@ -178,6 +178,15 @@ export const validatePhoto = (photos, minPhotos, t) => {
   }
   return errors
 }
+export const validateCommunication = (phone, t) => {
+  const errors: FormikErrors<any> = {}
+  if (!phone) {
+    errors.phone = t('FIELD_REQUIRED_ERROR', {
+      field: t('FORM_PHONE'),
+    })
+  }
+  return errors
+}
 
 export const validatePrice = (price, allowFree, t) => {
   const errors: FormikErrors<any> = {}

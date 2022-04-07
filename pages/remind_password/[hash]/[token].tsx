@@ -17,14 +17,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         destination: '/?success=MESSAGE_WAS_SENT',
-        statusCode: 301,
+        permanent: true,
       },
     }
   }
   return {
     redirect: {
       destination: '/',
-      statusCode: 301,
+      permanent: true,
     },
   }
 }

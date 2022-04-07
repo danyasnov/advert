@@ -59,6 +59,8 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
         destroyCookiesWrapper('promo')
         destroyCookiesWrapper('authType')
         destroyCookiesWrapper('aup')
+        destroyCookiesWrapper('authNewRefreshToken')
+        destroyCookiesWrapper('authNewToken')
         localforage.clear()
         router.reload()
       },

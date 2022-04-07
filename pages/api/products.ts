@@ -1,5 +1,10 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {getQueryValue, processCookies, withLocationQuery} from '../../helpers'
+import {
+  getQueryValue,
+  getStorageFromCookies,
+  processCookies,
+  withLocationQuery,
+} from '../../helpers'
 import {fetchProducts} from '../../api/v2'
 import {fetchCountries} from '../../api/v1'
 import {fetchCityOrRegionsBySlug} from '../../api/db'
@@ -24,7 +29,9 @@ export default async (
     state = await withLocationQuery(state, query, {countries, locations})
   }
 
-  return fetchProducts(state, {filter, page, advHash, limit, cacheId})
+  const storage = getStorageFromCookies({res, req})
+
+  return fetchProducts(state, {filter, page, advHash, limit, cacheId}, storage)
     .then((response) => {
       res.json(response)
     })

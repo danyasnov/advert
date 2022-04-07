@@ -1,7 +1,14 @@
 const withPlugins = require('next-compose-plugins')
-const withTM = require('next-transpile-modules')(['front-api'], {
-  resolveSymlinks: false,
-})
+const withTM = require('next-transpile-modules')(
+  [
+    'front-api',
+    'front-api/node_modules/axios-curlirize',
+    'react-cssfx-loading',
+  ],
+  {
+    resolveSymlinks: false,
+  },
+)
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -43,8 +50,8 @@ const nextConfig = {
       },
       {
         source: '/api/upload/:type',
-        // destination: 'https://backend.advretoapi.com/files/:type/upload',
-        destination: 'https://api.adverto.sale/files/:type/upload',
+        destination: 'https://backend.advretoapi.com/files/:type/upload',
+        // destination: 'https://api.adverto.sale/files/:type/upload',
       },
       {
         source: '/api/chat',

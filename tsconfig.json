@@ -20,7 +20,8 @@
     "isolatedModules": true,
     "downlevelIteration": true,
     "jsx": "preserve",
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

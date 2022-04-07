@@ -7,12 +7,10 @@ import IcSales from 'icons/landing/Sales.svg'
 import {Field, FormikProvider, useFormik} from 'formik'
 import {noop} from 'lodash'
 import {parseCookies} from 'nookies'
-import {useRouter} from 'next/router'
 import ReCAPTCHA from 'react-google-recaptcha'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {FormikNumber, FormikSelect, FormikText} from '../FormikComponents'
 import Select from '../Selects/Select'
-import {Country} from '../Auth/LoginWizard'
 import {
   useCategoriesStore,
   useCountriesStore,
@@ -21,6 +19,7 @@ import {makeRequest} from '../../api'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import LanguageSelect from '../LanguageSelect'
+import {Country} from '../../types'
 
 const MerchantLayout: FC = observer(() => {
   const {t} = useTranslation()

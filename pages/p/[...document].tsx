@@ -1,6 +1,10 @@
 import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {getLocationCodes, processCookies} from '../../helpers'
+import {
+  getLocationCodes,
+  getStorageFromCookies,
+  processCookies,
+} from '../../helpers'
 import {fetchCategories} from '../../api/v2'
 import {fetchDocuments} from '../../api/db'
 import {fetchCountries} from '../../api/v1'
@@ -14,10 +18,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query} = ctx
   const state = await processCookies(ctx)
   const param = (query.document as string[]).join('/')
+  const storage = getStorageFromCookies(ctx)
 
   const promises = [
     fetchCountries(state.language),
-    fetchCategories(state.language),
+    fetchCategories(storage),
     fetchDocuments(param, state.language),
   ]
   const [countriesData, categoriesData, doc] = await Promise.allSettled(
@@ -25,6 +30,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((response) =>
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
+  if (categoriesData.status === 401) {
+    return {
+      redirect: {
+        destination: `/login?from=${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    }
+  }
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
 
@@ -33,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         destination: '/countries',
-        statusCode: 301,
+        permanent: true,
       },
     }
   }

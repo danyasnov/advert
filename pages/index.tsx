@@ -1,8 +1,15 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import {getLocationCodes, processCookies} from '../helpers'
-import {activateWithCode, fetchCountries} from '../api/v1'
-import {fetchCategories} from '../api/v2'
+import {AuthType} from 'front-api/src/models'
+import {VerifyMode} from 'front-api/src/models/auth'
+import {
+  getLocationCodes,
+  getStorageFromCookies,
+  processCookies,
+  setCookiesObject,
+} from '../helpers'
+import {fetchCountries} from '../api/v1'
+import {checkCode, fetchCategories} from '../api/v2'
 import MainLayout from '../components/Layouts/MainLayout'
 
 export default function Home() {
@@ -11,14 +18,26 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
+  const storage = getStorageFromCookies(ctx)
+
   const {query} = ctx
   const {action, id, email, code, success} = query
   let showSuccessAlert = ''
   let showErrorAlert = ''
   if (action && id && email && code) {
-    const result = await activateWithCode(code as string, id as string)
-    const {promo, hash} = result?.result || {}
-    if (promo && hash) {
+    const response =
+      (await checkCode(
+        {type: AuthType.email, email: email as string},
+        VerifyMode.Email,
+        code as string,
+        storage,
+      )) || {}
+    // @ts-ignore
+    const {access, hash, refresh} = response?.result?.newAuth || {}
+    // @ts-ignore
+    const {promo} = response?.result?.oldAuth || {}
+    // setCookiesObject({access, hash, refresh, promo}, ctx)
+    if (access && hash && refresh && promo) {
       showSuccessAlert = 'ACCOUNT_ACTIVATED'
     } else {
       showErrorAlert = 'CODE_NOT_CORRECT'
@@ -28,16 +47,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     showSuccessAlert = success as string
   }
 
-  const promises = [
-    fetchCountries(state.language),
-    fetchCategories(state.language),
-  ]
+  const promises = [fetchCountries(state.language), fetchCategories(storage)]
 
   const [countriesData, categoriesData] = await Promise.allSettled(
     promises,
   ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
+
+  if (categoriesData.status === 401) {
+    return {
+      redirect: {
+        destination: `/login?from=${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    }
+  }
+
   const categories = categoriesData?.result ?? null
 
   const countries = countriesData ?? null

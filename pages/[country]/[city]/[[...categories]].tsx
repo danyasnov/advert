@@ -6,6 +6,7 @@ import {
   findCategoryByQuery,
   getFilterFromQuery,
   getQueryValue,
+  getStorageFromCookies,
   processCookies,
   withLocationQuery,
 } from '../../../helpers'
@@ -29,6 +30,7 @@ export default function Home({isProduct}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query, resolvedUrl, res} = ctx
   let state = await processCookies(ctx)
+  const storage = getStorageFromCookies(ctx)
   const countryCode = getQueryValue(query, 'country')
   const sortBy = getQueryValue(query, 'sortBy') ?? null
   const cityCode = getQueryValue(query, 'city')
@@ -43,7 +45,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let categories
   try {
-    const response = await fetchCategories(state.language)
+    const response = await fetchCategories(storage)
+    if (response.status === 401) {
+      return {
+        redirect: {
+          destination: `/login?from=${ctx.resolvedUrl}`,
+          permanent: false,
+        },
+      }
+    }
     categories = response?.result
   } catch (e) {
     console.error(e)
@@ -56,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     let productRes
 
     if (splited.length > 1) {
-      productRes = await fetchProductDetails(state, last(splited))
+      productRes = await fetchProductDetails(storage, last(splited))
       product = productRes.result
     } else {
       // inconsistent url when go back in browser
@@ -72,16 +82,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let currentCategory
   let categoryData = null
   if (product) {
-    similarProductsPromise = fetchProducts(state, {
-      limit: 4,
-      advHash: product.advert.hash,
-      filter: defaultFilter,
-    })
+    similarProductsPromise = fetchProducts(
+      state,
+      {
+        limit: 4,
+        advHash: product.advert.hash,
+        filter: defaultFilter,
+      },
+      storage,
+    )
   } else {
     currentCategory = findCategoryByQuery(query.categories, categories)
     if (currentCategory) {
       categoryData =
-        (await fetchCategoryData(state, currentCategory?.id))?.result ?? null
+        (await fetchCategoryData(storage, currentCategory?.id))?.result ?? null
     } else if (
       (countryCode !== 'all' && !isValidCountry) ||
       (!currentCategory && query.categories)
@@ -89,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       return {
         redirect: {
           destination: '/countries',
-          statusCode: 301,
+          permanent: true,
         },
       }
     }
@@ -112,7 +126,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       const [key, direction] = sortBy.split('-')
       filter.sort = {key, direction}
     }
-    promises.push(fetchProducts(state, {filter}))
+    promises.push(fetchProducts(state, {filter}, storage))
   }
 
   const response = await Promise.allSettled(promises).then((promiseRes) =>

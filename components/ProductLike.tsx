@@ -38,7 +38,7 @@ const ProductLike: FC<Props> = ({
           method: 'post',
           data: {
             hash,
-            operation: like ? 2 : 1,
+            operation: like ? 'add' : 'delete',
           },
         }).then(() => {
           setLike(!like)
