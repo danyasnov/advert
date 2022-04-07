@@ -164,7 +164,9 @@ const MapForm: FC<Props> = observer(({onClose}) => {
   }
 
   return (
-    <div className='flex flex-col justify-between h-full'>
+    <div
+      className='flex flex-col justify-between h-full'
+      data-test-id='location-modal-map'>
       <div className='pt-4 px-4 s:px-6'>
         <div style={{height: '288px'}} className='my-4 -mx-4 s:-mx-0 relative'>
           {location && (
@@ -208,6 +210,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
           )}
         </div>
         <Slider
+          className='data-test-id-location-modal-map-slider'
           trackStyle={{backgroundColor: '#FF9514', height: 4}}
           railStyle={{backgroundColor: 'rgba(12, 13, 13, 0.1)', height: 4}}
           marks={marks}
@@ -232,6 +235,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
       </div>
       <div className='flex justify-between px-4 s:px-6 w-full border-t border-shadow-b mt-6 s:mt-0 mb-6 pt-4 s:justify-end'>
         <SecondaryButton
+          id='location-modal-map-clean'
           onClick={() => {
             setLocation(initialLocation.current)
             onChangeRadius(42)
@@ -241,7 +245,10 @@ const MapForm: FC<Props> = observer(({onClose}) => {
           }}>
           {t('CLEAN')}
         </SecondaryButton>
-        <PrimaryButton onClick={onSubmit} className='ml-4'>
+        <PrimaryButton
+          id='location-modal-map-apply'
+          onClick={onSubmit}
+          className='ml-4'>
           {t('APPLY')}
         </PrimaryButton>
       </div>
