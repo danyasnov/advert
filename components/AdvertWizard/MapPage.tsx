@@ -256,7 +256,7 @@ const MapPage: FC = () => {
           {t('INSPECTION_PLACE_TIP')}
         </span>
 
-        <div className='relative min-h-full w-full'>
+        <div className='relative min-h-full w-full mb-24'>
           {location && (
             <>
               <div className='absolute top-3 left-3 w-608px z-10 hidden s:flex'>
