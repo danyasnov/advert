@@ -1412,7 +1412,7 @@
   "VALUE_MUST_BE_BETWEEN": "{{fieldName}} значення повинне бути між {{min}} та {{max}}",
   "VALUE_RANGE_ERROR": "The \"From\" value cannot be greater than the \"up to\" value.",
   "VERIFICATION_CODE": "Verification code",
-  "VERIFICATION_CODE_SENT BY SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
+  "VERIFICATION_CODE_SENT_BY_SMS": "We have sent an SMS with a verification code to the phone number {{phone}}. You can repeat the code request after {{count}} sec.",
   "VIBER": "Viber",
   "Video": "Video",
   "VIDEO": "Відео",
