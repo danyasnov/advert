@@ -142,10 +142,11 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 }
 
 // @ts-ignore
-export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
-  fieldsArray,
-  id,
-}) => {
+export const FormikCreateFields: FC<{
+  fieldsArray: any[]
+  id?: number
+  hasArrayType?: boolean
+}> = ({fieldsArray, id, hasArrayType}) => {
   let checkboxesGroup = null
   let description = null
   let fields = fieldsArray
@@ -159,7 +160,7 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
 
   const fieldsGroup = fields.map((f) => {
     if (f.fieldType === 'array') {
-      return <FormikCreateFields fieldsArray={f.arrayTypeFields} />
+      return <FormikCreateFields fieldsArray={f.arrayTypeFields} hasArrayType />
     }
     const isEmptyOptions =
       isEmpty(getSelectOptions(f.multiselects)) &&
@@ -171,7 +172,10 @@ export const FormikCreateFields: FC<{fieldsArray: any[]; id?: number}> = ({
           key={f.id}
           id={`form-field-${f.fieldType}-${f.slug}`}
           body={
-            <div className='w-full s:w-1/2 l:w-5/12'>
+            <div
+              className={`w-full s:w-1/2 ${
+                hasArrayType ? 'l:w-full' : 'l:w-5/12'
+              }`}>
               <FormikCreateField field={f} />
             </div>
           }

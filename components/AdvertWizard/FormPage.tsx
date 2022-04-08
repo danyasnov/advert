@@ -329,7 +329,8 @@ const FormPage: FC = observer(() => {
   )
 
   const conditionComponent = (
-    <div className='w-full s:w-1/2 l:w-5/12'>
+    <div
+      className={`w-full s:w-1/2  ${hasArrayType ? 'l:w-full' : 'l:w-5/12'}`}>
       <Field
         component={FormikSelect}
         name='condition'
@@ -347,7 +348,6 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
-  console.log(category.data)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -424,7 +424,7 @@ const FormPage: FC = observer(() => {
                       className={`${
                         hasArrayType
                           ? 's:max-w-full m:max-w-[582px] l:max-w-[592px]'
-                          : 's:max-w-[656px] l:mt-11'
+                          : 's:max-w-[656px] l:mt-9'
                       }`}
                       name='content'
                       maxDescriptionLength={category.data.descriptionLengthMax}
@@ -450,7 +450,7 @@ const FormPage: FC = observer(() => {
                 <div>
                   <AdvertFormField
                     id='form-field-photos'
-                    labelClassName='text-nc-title'
+                    labelClassName='text-nc-title mt-2 l:mt-0'
                     orientation={
                       width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
                     }
@@ -479,7 +479,7 @@ const FormPage: FC = observer(() => {
                     id='form-field-videos'
                     labelClassName='text-nc-title'
                     body={
-                      <div className='w-8/12 l:mt-9'>
+                      <div className='w-8/12 l:mt-7'>
                         <Field
                           component={AdvertVideos}
                           name='videos'
@@ -531,7 +531,7 @@ const FormPage: FC = observer(() => {
               }
             />
             {fieldsArray.map((fieldArray, index) => {
-              const {name, arrayTypeFields, id} = fieldArray
+              const {name, arrayTypeFields, id, fieldType} = fieldArray
               return (
                 <FormGroup
                   id='form-group-fields'
@@ -555,6 +555,7 @@ const FormPage: FC = observer(() => {
                       <FormikCreateFields
                         fieldsArray={arrayTypeFields}
                         id={id}
+                        hasArrayType={fieldType === 'array'}
                       />
                     </div>
                   }
@@ -623,7 +624,10 @@ const FormPage: FC = observer(() => {
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     id='form-field-price'
                     body={
-                      <div className='w-full s:w-1/3'>
+                      <div
+                        className={`w-full s:w-1/3 ${
+                          hasArrayType ? 'l:w-full' : ''
+                        }`}>
                         <Field
                           name='price'
                           component={AdvertPrice}

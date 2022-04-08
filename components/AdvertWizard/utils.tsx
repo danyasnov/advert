@@ -366,7 +366,7 @@ export const FormGroup: FC<{
             className={`p-8 shadow rounded-lg hidden s:block max-w-[656px] ${
               !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
             }`}>
-            <div className='flex flex-col'>
+            <div className='flex flex-col border-b pb-3 border-nc-back'>
               <div className='flex justify-between'>
                 {header}
                 <Button onClick={() => setIsExpanded(!isExpanded)}>
