@@ -67,7 +67,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
                   val,
                   <div
                     className={`rounded border-t w-0.5 border border-nc-border my-1 ${
-                      index === 0 ? 'h-10' : 'h-5'
+                      index === 0 || index === 1 ? 'h-10' : 'h-5'
                     }`}
                   />,
                 ],
