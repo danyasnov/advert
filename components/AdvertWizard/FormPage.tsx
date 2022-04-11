@@ -14,7 +14,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {debounce, first, get, isEqual, size} from 'lodash'
+import {debounce, first, get, isEqual, size, isEmpty} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
@@ -262,30 +262,32 @@ const FormPage: FC = observer(() => {
       required: category.data.minPhotos > 0,
       filled: !!values.photos.length,
     },
-    ...fieldsArray.map((fieldArray, index) => {
-      const {name, arrayTypeFields} = fieldArray
-      return {
-        key: name,
-        validate: (val) => ({
-          ...(index === 0
-            ? validateCondition(
+    ...(isEmpty(fieldsArray[0]?.arrayTypeFields)
+      ? []
+      : fieldsArray.map((fieldArray, index) => {
+          const {name, arrayTypeFields} = fieldArray
+          return {
+            key: name,
+            validate: (val) => ({
+              ...(index === 0
+                ? validateCondition(
+                    // @ts-ignore
+                    val.condition,
+                    category.data.allowUsed,
+                    t,
+                  )
+                : {}),
+              ...validateFields(
                 // @ts-ignore
-                val.condition,
-                category.data.allowUsed,
+                val,
+                arrayTypeFields,
                 t,
-              )
-            : {}),
-          ...validateFields(
-            // @ts-ignore
-            val,
-            arrayTypeFields,
-            t,
-          ),
-        }),
-        required: arrayTypeFields.some((f) => f.isFillingRequired),
-        filled: arrayTypeFields.some((f) => values.fields[f.id]),
-      }
-    }),
+              ),
+            }),
+            required: arrayTypeFields.some((f) => f.isFillingRequired),
+            filled: arrayTypeFields.some((f) => values.fields[f.id]),
+          }
+        })),
     {
       key: 'COST_AND_TERMS',
       validate: (val) =>
@@ -299,6 +301,7 @@ const FormPage: FC = observer(() => {
       filled: !!values.price,
     },
   ]
+  console.log('formItems', formItems, fieldsArray)
   const getFormState = (showAll?) => {
     let hasPending = false
     return formItems.map((s) => {
@@ -544,6 +547,7 @@ const FormPage: FC = observer(() => {
             />
             {fieldsArray.map((fieldArray, index) => {
               const {name, arrayTypeFields, id, fieldType} = fieldArray
+              if (isEmpty(arrayTypeFields)) return null
               return (
                 <FormGroup
                   id='form-group-fields'

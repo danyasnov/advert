@@ -175,7 +175,7 @@
   "ENTER_PASSWORD_FOR_CHANHING_EMAIL": "Enter a new password to log in via email",
   "ENTER_PHONE_NUM": "Enter phone number",
   "ENTER_PROMOCODE": "Enter a promo code",
-  "ERROR_CHANGE_CONTACT": "This phone number is already in use",
+  "ERROR_CHANGE_CONTACT": "Belirtilen telefon numarası kullanımda",
   "ERROR_COMPANY_NAME": "Enter a company name",
   "ERROR_FORM_DATA": "Bir hata oluştu. Lütfen destekle iletişime geçin",
   "ERROR_MONEY_PAYMENT": "Insufficient funds",
