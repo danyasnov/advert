@@ -2,7 +2,6 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import IcCheck from 'icons/material/Check.svg'
 import {CAParamsModel} from 'front-api/src/index'
-import {hasErrors} from './utils'
 
 interface Props {
   validationState: Record<string, any>
@@ -12,6 +11,7 @@ interface Props {
 const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
   const {t} = useTranslation()
   const addressDraft = draft.addressDraft || ''
+  // console.log(validationState)
   const items = [
     {
       title: t('LOCATION'),
@@ -19,10 +19,10 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
       state: 'done',
     },
     {title: t('CATEGORY'), description: categoryName, state: 'done'},
-    ...validationState.map(({key, state}) => {
+    ...validationState.map(({key, status}) => {
       return {
         title: t(key),
-        state: !hasErrors(state) ? 'done' : 'pending',
+        state: status,
       }
     }),
   ]

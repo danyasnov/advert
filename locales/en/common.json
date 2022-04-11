@@ -1443,5 +1443,5 @@
   "YOUR_NOTE": "Your note",
   "YOUR_NOTE_WITHOUT_DATE": "Your notes:",
   "YOUR_SAVE_DRAFT": "You have saved a draft",
-  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the {{\"categoryName\"}} category. Do you want to go back to the draft?"
+  "YOUR_SAVE_DRAFT_TEXT": "You have already started to create an ad in the \"{{categoryName}}\" category. Do you want to go back to the draft?"
 }

@@ -248,6 +248,7 @@ const FormPage: FC = observer(() => {
           val.content,
           t,
         ),
+      required: true,
     },
     {
       key: 'PHOTO_AND_VIDEO',
@@ -258,6 +259,8 @@ const FormPage: FC = observer(() => {
           category.data.minPhotos,
           t,
         ),
+      required: category.data.minPhotos > 0,
+      filled: !!values.photos.length,
     },
     ...fieldsArray.map((fieldArray, index) => {
       const {name, arrayTypeFields} = fieldArray
@@ -279,6 +282,8 @@ const FormPage: FC = observer(() => {
             t,
           ),
         }),
+        required: arrayTypeFields.some((f) => f.isFillingRequired),
+        filled: arrayTypeFields.some((f) => values.fields[f.id]),
       }
     }),
     {
@@ -290,6 +295,8 @@ const FormPage: FC = observer(() => {
           category.data.allowFree,
           t,
         ),
+      required: !category.data.allowFree,
+      filled: !!values.price,
     },
   ]
   const getFormState = (showAll?) => {
@@ -297,7 +304,12 @@ const FormPage: FC = observer(() => {
     return formItems.map((s) => {
       const validation = s.validate(values, true)
       const validationState = validation
-      const status = hasErrors(validation) ? 'pending' : 'done'
+      let status
+      if (s.required) {
+        status = hasErrors(validation) ? 'pending' : 'done'
+      } else {
+        status = s.filled ? 'done' : 'pending'
+      }
 
       let visible
 

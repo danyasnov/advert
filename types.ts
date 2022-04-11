@@ -131,5 +131,7 @@ export interface NavItem {
   validate: (values: any, silently?: boolean) => FormikErrors<any>
   status?: 'done' | 'pending'
   visible?: boolean
+  required?: boolean
+  filled?: boolean
   state?: FormikErrors<any>
 }
