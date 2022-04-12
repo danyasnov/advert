@@ -10,6 +10,7 @@ import {toast} from 'react-toastify'
 import {first, get} from 'lodash'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
+import localforage from 'localforage'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -29,7 +30,6 @@ const zoomRadiusMap = {
 
 const MapPage: FC = () => {
   const {state, dispatch} = useContext(WizardContext)
-
   const {query, push} = useRouter()
   const hash = first(query.hash)
   const {width} = useWindowSize()
@@ -54,23 +54,31 @@ const MapPage: FC = () => {
   const {t} = useTranslation()
   const initialLocation = useRef(null)
   useEffect(() => {
-    let locationValue
-    if (state.draft.location) {
-      const {latitude: lat, longitude: lng} = state.draft.location
-      locationValue = {lat, lng}
-    } else {
-      const cookies: SerializedCookiesState = parseCookies()
-      const {searchLocation, userLocation} = cookies
-      let loc
-      if (userLocation) {
-        loc = JSON.parse(userLocation)
+    const init = async () => {
+      let locationValue
+      if (state.draft.location) {
+        const {latitude: lat, longitude: lng} = state.draft.location
+        locationValue = {lat, lng}
       } else {
-        loc = JSON.parse(searchLocation)
+        const lastMapPosition = await localforage.getItem(`last_map_position`)
+        if (lastMapPosition) {
+          locationValue = lastMapPosition
+        } else {
+          const cookies: SerializedCookiesState = parseCookies()
+          const {searchLocation, userLocation} = cookies
+          let loc
+          if (userLocation) {
+            loc = JSON.parse(userLocation)
+          } else {
+            loc = JSON.parse(searchLocation)
+          }
+          locationValue = {lat: loc.latitude, lng: loc.longitude}
+        }
       }
-      locationValue = {lat: loc.latitude, lng: loc.longitude}
+      initialLocation.current = locationValue
+      setLocation(locationValue)
     }
-    initialLocation.current = locationValue
-    setLocation(locationValue)
+    init()
   }, [])
 
   useEffect(() => {
@@ -110,6 +118,7 @@ const MapPage: FC = () => {
 
   const onSubmit = () => {
     const {lat: latitude, lng: longitude} = location
+    localforage.setItem(`last_map_position`, location)
     const {draft} = state
     const newDraft = {
       ...draft,
