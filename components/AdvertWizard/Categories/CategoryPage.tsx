@@ -60,6 +60,8 @@ const CategoryPage: FC = observer(() => {
             addressDraft: draft.addressDraft,
             categoryId: categoryData.id,
             data: categoryData,
+            // @ts-ignore
+            breadcrumbs: selected.map((s) => s.name).join(' - '),
           }
           if (draft.userHash) newDraft.userHash = draft.userHash
           if (hash) newDraft.hash = hash

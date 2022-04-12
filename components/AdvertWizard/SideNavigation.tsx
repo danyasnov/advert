@@ -31,50 +31,37 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
 
   return (
     <div className='flex flex-col items-center'>
-      {
-        items.map(({title, description, state}, index, arr) => (
-          <div className='flex space-x-3 relative' key={title}>
-            <div className='flex flex-col items-center '>
-              {title === nextItem?.title ? (
-                <div className='w-4 h-4 rounded-full bg-[#3EA5FF] flex justify-center items-center shrink-0'>
-                  <div className='w-3 h-3 bg-[#3EA5FF] border border-white rounded-full' />
-                </div>
-              ) : (
-                <div
-                  className={`w-4 h-4 rounded-full ${
-                    state === 'done' ? 'bg-nc-success' : 'bg-nc-additional'
-                  } flex justify-center items-center shrink-0`}>
-                  <IcCheck className='fill-current text-white h-2 w-2' />
-                </div>
-              )}
+      {items.map(({title, description, state}, index, arr) => (
+        <div className='flex space-x-3 relative' key={title}>
+          <div className='flex flex-col items-center '>
+            {title === nextItem?.title ? (
+              <div className='w-4 h-4 rounded-full bg-[#3EA5FF] flex justify-center items-center shrink-0'>
+                <div className='w-3 h-3 bg-[#3EA5FF] border border-white rounded-full' />
+              </div>
+            ) : (
               <div
-                className={`rounded border-t w-0.5 border border-nc-border my-1 min-h-[16px] h-full ${
-                  arr.length === index + 1 ? 'hidden' : ''
-                }`}
-              />
-            </div>
-            <div className='flex flex-col '>
-              <span className='text-body-2 text-nc-primary-text w-40'>
-                {title}
-              </span>
-              <span className='text-body-3 text-nc-secondary-text mt-1 mb-2 line-clamp-2 w-[200px]'>
-                {description}
-              </span>
-            </div>
+                className={`w-4 h-4 rounded-full ${
+                  state === 'done' ? 'bg-nc-success' : 'bg-nc-additional'
+                } flex justify-center items-center shrink-0`}>
+                <IcCheck className='fill-current text-white h-2 w-2' />
+              </div>
+            )}
+            <div
+              className={`rounded border-t w-0.5 border border-nc-border my-1 min-h-[16px] h-full ${
+                arr.length === index + 1 ? 'hidden' : ''
+              }`}
+            />
           </div>
-        ))
-        // .reduce(
-        //   (acc, val, index, arr) =>
-        //     arr.length === index + 1
-        //       ? [...acc, val]
-        //       : [
-        //           ...acc,
-        //           val,
-        //           ,
-        //         ],
-        //   [],
-        // )
-      }
+          <div className='flex flex-col '>
+            <span className='text-body-2 text-nc-primary-text w-40'>
+              {title}
+            </span>
+            <span className='text-body-3 text-nc-secondary-text mt-1 mb-2 w-[200px]'>
+              {description}
+            </span>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

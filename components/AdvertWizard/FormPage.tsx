@@ -80,7 +80,8 @@ const FormPage: FC = observer(() => {
     fieldsById: Record<string, CACategoryDataFieldModel>
   } | null>(() => mapCategoryData(state.draft.data))
 
-  const {categoryId} = state.draft
+  // @ts-ignore
+  const {categoryId, breadcrumbs} = state.draft
   const [initialValues] = useState(() => {
     const {draft} = state
     const mappedFields = mapOriginalFields(draft.fields, category.fieldsById)
@@ -301,7 +302,6 @@ const FormPage: FC = observer(() => {
       filled: !!values.price,
     },
   ]
-  console.log('formItems', formItems, fieldsArray)
   const getFormState = (showAll?) => {
     let hasPending = false
     return formItems.map((s) => {
@@ -383,7 +383,7 @@ const FormPage: FC = observer(() => {
         <div className='flex px-4 s:px-0'>
           <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full'>
             <SideNavigation
-              categoryName={category.data.name}
+              categoryName={breadcrumbs || category.data.name}
               draft={state.draft}
               validationState={formState}
             />
