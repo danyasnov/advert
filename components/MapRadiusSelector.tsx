@@ -70,9 +70,9 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
     setCookiesObject({showCreateAdvMapHint: false})
   }
   return (
-    <div className='relative w-full '>
+    <div className='relative min-h-[40px]'>
       {!showPanel && (
-        <div className='s:hidden absolute bottom-1 right-2 '>
+        <div className='s:hidden absolute bottom-1 right-0'>
           <Button
             className='h-10 w-10 rounded-full bg-white'
             onClick={() => {
@@ -108,8 +108,8 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
         </div>
       )}
       {showPanel && (
-        <div className='flex justify-center'>
-          <div className='flex rounded-xl p-1 bg-white space-x-0.5 w-81 s:w-auto '>
+        <div className='flex justify-end s:ml-2'>
+          <div className='flex rounded-full p-1 bg-white space-x-0.5 w-81 s:w-auto '>
             {options.map((o) => {
               const isCurrent = radius === o.value
               const Icon = isCurrent ? o.iconActive : o.icon
@@ -123,7 +123,7 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
                       setShowPanel(false)
                     }
                   }}
-                  className={`flex px-1 s:px-4 py-2 s:py-3 justify-center items-center hover:bg-nc-accent rounded-lg h-10 ${
+                  className={`flex px-4 py-2 s:py-3 justify-center items-center hover:bg-nc-accent rounded-full h-8 s:h-10 ${
                     isCurrent ? 'bg-nc-accent' : ''
                   }`}>
                   <Icon className='h-5 w-5 mr-1' />

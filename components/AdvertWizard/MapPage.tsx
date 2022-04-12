@@ -2,8 +2,7 @@ import {FC, useContext, useEffect, useRef, useState} from 'react'
 import GoogleMapReact from 'google-map-react'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
-import IcAim from 'icons/material/Aim.svg'
-import ReactDOM from 'react-dom'
+import IcMyLocation from 'icons/material/MyLocation.svg'
 import {degradations} from 'front-api/src/models'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
@@ -170,29 +169,6 @@ const MapPage: FC = () => {
     })
   }
 
-  const handleOnLoad = (map, maps) => {
-    const controlButtonDiv = document.createElement('div')
-    ReactDOM.render(
-      <Button
-        className={`bg-white w-10 h-10 absolute right-2.5 ${
-          width < 768 ? 'top-2.5' : 'top-20'
-        } rounded`}
-        onClick={async () => {
-          try {
-            const center = await getPosition()
-            onChangeMap({center})
-            setLocation(center)
-          } catch (e) {
-            console.error(e)
-          }
-        }}>
-        <IcAim className='fill-current text-black-c w-6 h-6' />
-      </Button>,
-      controlButtonDiv,
-    )
-    map.controls[maps.ControlPosition.TOP_RIGHT].push(controlButtonDiv)
-  }
-
   const onGoogleApiLoaded = ({map, maps}) => {
     mapRef.current = map
     mapsRef.current = maps
@@ -234,7 +210,6 @@ const MapPage: FC = () => {
       icon: svgMarker,
       map,
     })
-    handleOnLoad(map, maps)
   }
 
   const handleSelectLocation = (item) => {
@@ -286,19 +261,39 @@ const MapPage: FC = () => {
                         fullscreenControl: false,
                         gestureHandling: 'greedy',
                       }
-                    : {}),
+                    : {
+                        zoomControlOptions: {
+                          position: 8,
+                        },
+                        fullscreenControl: false,
+                      }),
                 }}
                 margin={[1, 2, 3, 4]}
                 defaultZoom={zoomRadiusMap[radius]}
                 onGoogleApiLoaded={onGoogleApiLoaded}
               />
-              <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-3 s:inset-x-auto'>
-                <div className='flex items-center flex-col'>
-                  <MapRadiusSelector
-                    radius={radius}
-                    setRadius={onChangeRadius}
-                  />
-                  <div className='s:hidden mt-2 mx-2'>
+              <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-0 s:inset-x-auto s:w-full'>
+                <div className='flex items-center flex-col mx-2 s:w-full'>
+                  <div className='w-full flex flex-col mr-4 s:flex-row s:justify-between s:items-center'>
+                    <Button
+                      className='bg-white w-10 h-10 s:w-12 s:h-12 rounded-full self-end mb-4 s:mb-0 s:order-last s:mr-2'
+                      onClick={async () => {
+                        try {
+                          const center = await getPosition()
+                          onChangeMap({center})
+                          setLocation(center)
+                        } catch (e) {
+                          console.error(e)
+                        }
+                      }}>
+                      <IcMyLocation className='fill-current text-nc-icon w-6 h-6' />
+                    </Button>
+                    <MapRadiusSelector
+                      radius={radius}
+                      setRadius={onChangeRadius}
+                    />
+                  </div>
+                  <div className='s:hidden mt-2'>
                     <MobileMapSearch
                       label={label}
                       onSubmit={onSubmit}
