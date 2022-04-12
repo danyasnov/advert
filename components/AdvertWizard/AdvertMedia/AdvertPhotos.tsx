@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect, useState} from 'react'
 import {FieldProps} from 'formik'
-import {swap} from '../../../utils'
+import move from 'lodash-move'
 import AdvertPhotosContainer from './AdvertPhotosContainer'
 import {PhotoFile} from '../../../types'
 
@@ -14,7 +14,7 @@ const AdvertPhotos: FC<
   const [photos, setPhotos] = useState<PhotoFile[]>(value || [])
   const onSortEnd = useCallback(
     ({oldIndex, newIndex}) => {
-      setPhotos(swap(photos, oldIndex, newIndex))
+      setPhotos(move(photos, oldIndex, newIndex))
     },
     [photos],
   )
