@@ -285,7 +285,11 @@ const FormPage: FC = observer(() => {
                 t,
               ),
             }),
-            required: arrayTypeFields.some((f) => f.isFillingRequired),
+            required: arrayTypeFields.some((f) =>
+              f.isFillingRequired || index === 0
+                ? category.data.allowUsed
+                : false,
+            ),
             filled: arrayTypeFields.some((f) => values.fields[f.id]),
           }
         })),
