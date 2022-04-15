@@ -204,10 +204,13 @@ const TextForm: FC<Props> = observer(({onClose}) => {
   }
 
   return (
-    <div className='flex flex-col justify-between h-full'>
+    <div
+      className='flex flex-col justify-between h-full'
+      data-test-id='location-modal-text'>
       <div className='pt-3 px-4 s:px-6'>
         <div className='space-y-3'>
           <Select
+            id='location-modal-text-country'
             value={country}
             options={countryOptions}
             placeholder={t('COUNTRY')}
@@ -216,6 +219,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
             onChange={onChangeCountry}
           />
           <Select
+            id='location-modal-text-region'
             value={region}
             options={regionOptions}
             placeholder={t('REGION')}
@@ -224,6 +228,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
             isClearable
           />
           <Select
+            id='location-modal-text-city'
             value={city}
             options={cityOptions}
             placeholder={t('CITY')}
@@ -246,6 +251,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
             if (!value) return null
             return (
               <Button
+                id={`location-modal-text-country-${id}`}
                 key={id}
                 onClick={() =>
                   onChangeCountry({
@@ -266,6 +272,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
       </div>
       <div className='flex w-full border-t border-shadow-b mb-6 pt-4 justify-between s:justify-end px-4 s:px-6'>
         <SecondaryButton
+          id='location-modal-text-clean'
           onClick={() => {
             setCountry(null)
             setRegion(null)
@@ -276,6 +283,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           {t('CLEAN')}
         </SecondaryButton>
         <PrimaryButton
+          id='location-modal-text-apply'
           onClick={country && onSubmit}
           className='ml-4'
           disabled={!country}>
