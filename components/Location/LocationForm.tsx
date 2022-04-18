@@ -20,7 +20,9 @@ const LocationForm: FC<Props> = ({onClose}) => {
   })
 
   return (
-    <div className='flex flex-col w-full bg-white z-10 left-0 h-full'>
+    <div
+      className='flex flex-col w-full bg-white z-10 left-0 h-full'
+      data-test-id='location-modal-form'>
       <div className='h-full flex flex-col'>
         <div className='px-4 s:px-0'>
           <Tabs
