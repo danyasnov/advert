@@ -56,7 +56,7 @@ const socials = {
   en: [
     {
       ...fb,
-      url: 'https://www.facebook.com/Adverto_official-233833728555124',
+      url: 'https://www.facebook.com/adverto.el',
     },
     {
       ...ig,
