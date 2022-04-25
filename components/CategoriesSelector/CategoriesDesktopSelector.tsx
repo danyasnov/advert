@@ -116,7 +116,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           <div className='pl-12 pt-6 l:pl-6'>
             <ImageWrapper
               key={activeCategory?.slug}
-              type={`/img/categories/${activeCategory?.slug}.jpg`}
+              type={`/img/categories/${activeCategory?.slug}.png`}
               alt={activeCategory?.slug}
               width={288}
               height={288}
