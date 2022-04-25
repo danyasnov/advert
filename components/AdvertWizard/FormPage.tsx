@@ -263,7 +263,7 @@ const FormPage: FC = observer(() => {
       required: category.data.minPhotos > 0,
       filled: !!values.photos.length,
     },
-    ...(isEmpty(fieldsArray[0]?.arrayTypeFields)
+    ...(isEmpty(fieldsArray[0]?.arrayTypeFields) && !category.data.allowUsed
       ? []
       : fieldsArray.map((fieldArray, index) => {
           const {name, arrayTypeFields} = fieldArray
@@ -551,7 +551,9 @@ const FormPage: FC = observer(() => {
             />
             {fieldsArray.map((fieldArray, index) => {
               const {name, arrayTypeFields, id, fieldType} = fieldArray
-              if (isEmpty(arrayTypeFields)) return null
+              if (isEmpty(arrayTypeFields) && !category.data.allowUsed) {
+                return null
+              }
               return (
                 <FormGroup
                   id='form-group-fields'

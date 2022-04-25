@@ -47,7 +47,7 @@ const CategoriesSlider: FC = observer(() => {
                 href={`/${locationCodes}/${c.slug}`}
                 className='relative cursor-pointer mr-4'>
                 <ImageWrapper
-                  type={`/img/categories/${c.slug}.jpg`}
+                  type={`/img/categories/${c.slug}.png`}
                   width={136}
                   height={136}
                   alt={c.name}
