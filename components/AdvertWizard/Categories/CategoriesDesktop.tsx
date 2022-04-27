@@ -37,6 +37,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
       </div>
     )
   }
+  console.log(`/img/categories/${selected[0].slug}.png`)
   return (
     <>
       <div className='flex mb-15'>
@@ -70,7 +71,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
         </div>
         <div className='ml-4 hidden l:block'>
           <ImageWrapper
-            type={`/img/categories/${selected[0].slug}.jpg`}
+            type={`/img/categories/${selected[0].slug}.png`}
             width={290}
             height={290}
             alt={selected[0].name}

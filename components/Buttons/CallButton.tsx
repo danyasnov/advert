@@ -15,6 +15,7 @@ import {makeRequest} from '../../api'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import OutlineButton from './OutlineButton'
+import {trackSingle} from '../../helpers'
 
 interface Props {
   product: AdvertiseDetail
@@ -33,6 +34,11 @@ const CallButton: FC<Props> = ({product}) => {
         <PrimaryButton
           id='call'
           onClick={() => {
+            trackSingle({
+              categoryId: advert.rootCategoryId,
+              event: 'Contact',
+            })
+
             const state: SerializedCookiesState = parseCookies()
             makeRequest({
               method: 'post',

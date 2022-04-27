@@ -17,7 +17,6 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import {captureException} from '@sentry/nextjs'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -676,4 +675,38 @@ export const getCategoriesSlugsPathFromIds = (
   })
 
   return slugs
+}
+
+export const trackSingle = ({categoryId, event}) => {
+  if (typeof window === 'undefined') return
+  const ReactPixel = require('react-facebook-pixel').default
+  let pixelId
+  if (categoryId === 20) {
+    pixelId = '677980023408638'
+  }
+  if (categoryId === 1) {
+    pixelId = '494552645683424'
+  }
+  if (!pixelId) return
+
+  ReactPixel.init(pixelId)
+  ReactPixel.trackSingle(pixelId, event)
+}
+
+export const startTracking = ({url}) => {
+  if (typeof window === 'undefined') return
+  const propertyRegex = /CY\/\w+\/property/g
+  const vehicleRegex = /CY\/\w+\/vehicles/g
+  const ReactPixel = require('react-facebook-pixel').default
+  let pixelId
+  if (propertyRegex.test(url)) {
+    pixelId = '677980023408638'
+  }
+  if (vehicleRegex.test(url)) {
+    pixelId = '494552645683424'
+  }
+  if (!pixelId) return
+
+  ReactPixel.init(pixelId)
+  ReactPixel.pageView()
 }
