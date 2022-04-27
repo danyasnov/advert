@@ -24,7 +24,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
               setSelected([c])
             }}>
             <ImageWrapper
-              type={`/img/categories/${c.slug}.jpg`}
+              type={`/img/categories/${c.slug}.png`}
               width={188}
               height={188}
               alt={c.name}
