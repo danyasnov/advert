@@ -20,6 +20,7 @@ import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
 import CardExtraFields from './CardExtraFields'
+import {trackSingle} from '../../helpers'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -104,6 +105,9 @@ const Card: FC<Props> = ({
   const isFree = price === '0'
   return (
     <div
+      onClick={() =>
+        trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
+      }
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col relative ${
         variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
       }`}

@@ -17,6 +17,7 @@ import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
 import WithYandexMetrika from '../components/WithYandexMetrika'
+import {startTracking} from '../helpers'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
@@ -24,6 +25,7 @@ function MyApp({Component, pageProps}: AppProps) {
     const handleStart = (url) => {
       console.log(`Loading: ${url}`)
       NProgress.start()
+      startTracking({url})
     }
     const handleStop = () => {
       NProgress.done()
