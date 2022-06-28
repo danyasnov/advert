@@ -4,11 +4,7 @@ import {AuthType} from 'front-api/src/models'
 import SecondaryButton from '../../Buttons/SecondaryButton'
 import PrimaryButton from '../../Buttons/PrimaryButton'
 import EnterCode from './EnterCode'
-// import InitialPage from '../AddNumber/InitialPage'
 import EnterPhone from './EnterPhone'
-// import EnterPersonalData from '../Login/EnterPersonalData'
-// import EnterEmail from '../Login/EnterEmail'
-// import PasswordRestoration from '../Login/PasswordRestoration'
 import Success from './Success'
 
 export interface PageProps {
@@ -42,30 +38,14 @@ export const Controls: FC<{
 }
 
 export const AuthPages = {
-  // initialPage: {
-  //   title: 'LOG_IN',
-  //   component: InitialPage,
-  // },
   enterPhone: {
     title: 'LOGIN_WITH_PHONE',
     component: EnterPhone,
   },
-  // enterEmail: {
-  //   title: 'LOG_IN',
-  //   component: EnterEmail,
-  // },
   enterCode: {
     title: 'CODE',
     component: EnterCode,
   },
-  // enterPersonalData: {
-  //   title: 'PERSONAL_DATA',
-  //   component: EnterPersonalData,
-  // },
-  // passwordRestoration: {
-  //   title: 'PASSWORD_RESTORATION',
-  //   component: PasswordRestoration,
-  // },
   success: {
     title: 'CONGRATULATIONS',
     component: Success,

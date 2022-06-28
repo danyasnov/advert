@@ -40,6 +40,7 @@ import {
   mapFormikFields,
   mapOriginalFields,
   scrollToFirstError,
+  validateCommunication,
   validateCondition,
   validateFields,
   validatePhoto,
@@ -55,8 +56,6 @@ import {
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
-import Auth from '../Auth'
-import LoginModal from '../Auth/Login/LoginModal'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -67,6 +66,7 @@ const FormPage: FC = observer(() => {
 
   const {languagesByIsoCode, user} = useGeneralStore()
   const [showAddNumber, setShowAddNumber] = useState(false)
+  const phoneNumber = user?.settings.personal.phoneNum
 
   const fieldsRef = useRef({})
   const {t} = useTranslation()
@@ -207,12 +207,14 @@ const FormPage: FC = observer(() => {
       categoryData.allowUsed,
       t,
     )
+    const communicationError = validateCommunication(phoneNumber, t)
     const result = {
       ...errors,
       ...titleError,
       ...photoError,
       ...priceError,
       ...conditionError,
+      ...communicationError,
     }
     if (hasErrors(result)) {
       toast.error(t('ADVERT_CREATING_HELP_ALERT'))
@@ -268,15 +270,9 @@ const FormPage: FC = observer(() => {
     },
     {
       key: 'WAYS_COMMUNICATION',
-      validate: (val) =>
-        validatePhoto(
-          // @ts-ignore
-          val.photos,
-          category.data.minPhotos,
-          t,
-        ),
-      required: category.data.minPhotos > 0,
-      filled: !!values.photos.length,
+      validate: () => validateCommunication(phoneNumber, t),
+      required: true,
+      filled: !!phoneNumber,
     },
     ...(isEmpty(fieldsArray[0]?.arrayTypeFields) && !category.data.allowUsed
       ? []
@@ -381,7 +377,6 @@ const FormPage: FC = observer(() => {
         .reverse()
         .find((i) => i.status === 'pending' && i.visible)
 
-  const phoneNumber = user?.settings.personal.phoneNum
   if (!category || !user) return null
   return (
     <div className='max-w-screen w-full'>
@@ -783,7 +778,7 @@ const FormPage: FC = observer(() => {
                 filledCount: 0,
                 maxFilled: 1,
               })}
-              validate={() => ({})}
+              validate={() => validateCommunication(phoneNumber, t)}
             />
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
