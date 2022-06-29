@@ -2,7 +2,7 @@ import React, {Dispatch, FC, SetStateAction, useEffect, useReducer} from 'react'
 import {useTranslation} from 'next-i18next'
 import EnterCode from './EnterCode'
 import EnterPhone from './EnterPhone'
-import Success from './Success'
+import Success from '../Success'
 import {reducer, State} from '../utils'
 
 export const AuthPages = {

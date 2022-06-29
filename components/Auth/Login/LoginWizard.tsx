@@ -6,7 +6,7 @@ import EnterPhone from './EnterPhone'
 import EnterPersonalData from './EnterPersonalData'
 import EnterEmail from './EnterEmail'
 import PasswordRestoration from './PasswordRestoration'
-import Success from './Success'
+import Success from '../Success'
 import {reducer, State} from '../utils'
 
 export const AuthPages = {
