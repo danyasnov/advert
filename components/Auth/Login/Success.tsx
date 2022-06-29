@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import Lottie from 'react-lottie'
 import {useRouter} from 'next/router'
-import {PageProps} from './LoginWizard'
+import {PageProps} from '../utils'
 import SuccessAnimation from '../../../lottie/success_animation.json'
 import PrimaryButton from '../../Buttons/PrimaryButton'
 

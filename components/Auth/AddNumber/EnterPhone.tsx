@@ -4,10 +4,10 @@ import {parseCookies} from 'nookies'
 import {Form, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {object, string} from 'yup'
-import {toast} from 'react-toastify'
-import {makeRequest} from '../../../api'
 import {useCountriesStore} from '../../../providers/RootStoreProvider'
-import {AuthPages, Controls, PageProps} from './AddNumberWizard'
+import {AuthPages} from './AddNumberWizard'
+import {Controls, PageProps} from '../utils'
+
 import PhoneInput from '../../PhoneInput'
 import {Country} from '../../../types'
 

@@ -4,7 +4,8 @@ import {AuthType} from 'front-api/src/models'
 import IcPhone from 'icons/material/Phone.svg'
 import IcEmail from 'icons/material/Email.svg'
 import SecondaryButton from '../../Buttons/SecondaryButton'
-import {AuthPages, PageProps} from './LoginWizard'
+import {AuthPages} from './LoginWizard'
+import {PageProps} from '../utils'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()

@@ -5,7 +5,9 @@ import {string, object} from 'yup'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
 import {FormikText} from '../../FormikComponents'
-import {AuthPages, Controls, PageProps} from './LoginWizard'
+import {AuthPages} from './LoginWizard'
+import {Controls, PageProps} from '../utils'
+
 import {makeRequest} from '../../../api'
 
 const schema = object().shape({
