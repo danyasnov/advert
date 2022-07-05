@@ -701,9 +701,13 @@ export const getStorageFromCookies = (
   },
 ) => {
   const state = parseCookies(ctx)
+  return mapCookies(state, ctx)
+}
+
+export const mapCookies = (state: SerializedCookiesState, ctx?) => {
   const deserializedState = deserializeCookies(state)
 
-  const storage = new Storage(
+  return new Storage(
     {
       ...deserializedState,
       location: deserializedState.searchLocation,
@@ -711,13 +715,14 @@ export const getStorageFromCookies = (
     },
     ({accessToken, refreshToken}) => {
       setCookiesObject(
-        {authNewRefreshToken: refreshToken, authNewToken: accessToken},
+        {
+          authNewRefreshToken: refreshToken,
+          authNewToken: accessToken,
+        },
         ctx,
       )
     },
   )
-
-  return storage
 }
 
 export const deserializeCookies = (

@@ -1,5 +1,5 @@
 import {useState, useEffect, useCallback, useRef} from 'react'
-import {EmblaCarouselType} from 'embla-carousel'
+import {EmblaCarouselType} from 'embla-carousel-react'
 
 const noop = () => undefined
 
