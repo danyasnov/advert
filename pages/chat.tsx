@@ -13,7 +13,6 @@ export default function Home() {
   return <ChatLayout />
 }
 
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
   const {query} = ctx

@@ -54,7 +54,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-
   if (categoriesData.status === 401) {
     return {
       redirect: {

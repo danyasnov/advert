@@ -20,7 +20,7 @@ const Button: FC<Props> = ({
     <button
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={`flex items-center justify-center ${className || ''}`}
+      className={` ${className || ''}`}
       disabled={disabled}
       data-test-id={id}
       onClick={onClick}>

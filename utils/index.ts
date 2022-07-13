@@ -11,6 +11,14 @@ export const unixToDateTime = (unix: number): string => {
   const date = DateTime.fromSeconds(unix)
   return date.toFormat(`${dateFormat} ${timeFormat}`)
 }
+export const unixMlToDateTime = (unix: number): string => {
+  const date = DateTime.fromMillis(unix)
+  return date.toFormat(`${dateFormat} ${timeFormat}`)
+}
+export const unixMlToDate = (unix: number): string => {
+  const date = DateTime.fromMillis(unix)
+  return date.toFormat(`${dateFormat}`)
+}
 
 export const getFirstNonEmptyArray = <T>(...items: T[]): T | null => {
   // eslint-disable-next-line no-restricted-syntax
