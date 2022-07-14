@@ -29,7 +29,7 @@ const ChatLayout: FC = observer(() => {
   const {user} = useGeneralStore()
   const {query, replace} = useRouter()
   const {chats} = globalChatsStore
-  const chatsRef = useRef({})
+  const chatsRef = useRef<Record<string, ChatStore>>({})
   const messagesRef = useRef()
   const [selectedChatId, setSelectedChatId] = useState('')
 
@@ -284,6 +284,15 @@ const ChatLayout: FC = observer(() => {
                       />
                     </Form>
                   </FormikProvider>
+                  <SecondaryButton
+                    onClick={() => {
+                      // chatsRef.current[selectedChatId].sendLocationMessage({
+                      //   latitude: 0,
+                      //   longitude: 0,
+                      // })
+                    }}>
+                    send location
+                  </SecondaryButton>
                 </div>
               )}
             </div>

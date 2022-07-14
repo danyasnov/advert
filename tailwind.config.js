@@ -18,7 +18,7 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      sans: ['Fira Sans', 'sans-serif'],
+      sans: ['Urbanist', 'sans-serif'],
     },
     fontSize: {
       'body-1': ['16px', '20px'],
