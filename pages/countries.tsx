@@ -4,7 +4,11 @@ import {head, isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
 import {CountryModel} from 'front-api'
 import LocationContents from '../components/Layouts/LocationContents'
-import {getStorageFromCookies, processCookies} from '../helpers'
+import {
+  getStorageFromCookies,
+  processCookies,
+  redirectToLogin,
+} from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
 
@@ -24,12 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
   if (categoriesData.status === 401) {
-    return {
-      redirect: {
-        destination: `/login?from=${ctx.resolvedUrl}`,
-        permanent: false,
-      },
-    }
+    return redirectToLogin(ctx.resolvedUrl)
   }
   const categories = categoriesData?.result ?? null
   let countriesByAlphabet = null

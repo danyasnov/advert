@@ -1,7 +1,11 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import AdvertWizardLayout from '../../../components/Layouts/AdvertWizardLayout'
-import {getStorageFromCookies, processCookies} from '../../../helpers'
+import {
+  getStorageFromCookies,
+  processCookies,
+  redirectToLogin,
+} from '../../../helpers'
 import {fetchCategories} from '../../../api/v2'
 import {fetchCountries, fetchLanguages} from '../../../api/v1'
 
@@ -25,12 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     )
 
   if (categoriesData.status === 401) {
-    return {
-      redirect: {
-        destination: `/login?from=${ctx.resolvedUrl}`,
-        permanent: false,
-      },
-    }
+    return redirectToLogin(ctx.resolvedUrl)
   }
   const categories = categoriesData?.result ?? null
   const languages = languagesData?.result ?? null

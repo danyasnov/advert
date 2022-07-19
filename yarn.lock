@@ -5060,6 +5060,11 @@ react-i18next@^11.8.13:
     "@babel/runtime" "^7.14.5"
     html-parse-stringify "^3.0.1"
 
+react-iconly@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-iconly/-/react-iconly-2.2.5.tgz#32b9a1d66815ae6a421026694e7d16027248d87f"
+  integrity sha512-c9WO/2TJltmyCVGj+/mdJZFoldfzYA8uUPmcml03D6YlBVWsCN5gq5Vb2k95qmeg+vSqMRvC69yghZvM0T4lKQ==
+
 react-infinite-scroll-component@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-6.1.0.tgz#7e511e7aa0f728ac3e51f64a38a6079ac522407f"

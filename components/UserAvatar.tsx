@@ -19,7 +19,14 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
       />
     )
   } else if (name) {
-    const fontSize = size >= 16 ? 'text-h-1' : 'text-h-2'
+    let fontSize
+    if (size >= 16) {
+      fontSize = 'text-h-1'
+    } else if (size < 6) {
+      fontSize = 'text-h-5'
+    } else {
+      fontSize = 'text-h-2'
+    }
     content = (
       <span className={`${fontSize} text-white w-full text-center `}>
         {name

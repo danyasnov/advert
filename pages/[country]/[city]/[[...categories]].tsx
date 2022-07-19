@@ -8,6 +8,7 @@ import {
   getQueryValue,
   getStorageFromCookies,
   processCookies,
+  redirectToLogin,
   withLocationQuery,
 } from '../../../helpers'
 import {
@@ -47,12 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const response = await fetchCategories(storage)
     if (response.status === 401) {
-      return {
-        redirect: {
-          destination: `/login?from=${ctx.resolvedUrl}`,
-          permanent: false,
-        },
-      }
+      return redirectToLogin(ctx.resolvedUrl)
     }
     categories = response?.result
   } catch (e) {
