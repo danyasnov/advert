@@ -1,7 +1,9 @@
 import {FC} from 'react'
 import {ChatMessage} from 'chats/src/models/internal'
-import {toJS} from 'mobx'
 import {OwnerModel} from 'front-api/src/models'
+import IcChatDelivered from 'icons/material/ChatDelivered.svg'
+import IcChatRead from 'icons/material/ChatRead.svg'
+import {unixMlToTime} from '../../utils'
 
 interface Props {
   message: ChatMessage
@@ -9,17 +11,36 @@ interface Props {
 }
 
 const Message: FC<Props> = ({message, user}) => {
-  console.log(toJS(message), toJS(user))
+  // console.log(toJS(message), toJS(user))
   const isMyMessage = message.userId === user.hash
   return (
     <div
-      className={`${
-        isMyMessage
-          ? 'self-end bg-primary-500 rounded-l-2xl text-white'
-          : 'self-start bg-greyscale-100 rounded-r-2xl text-greyscale-900'
-      } mb-5 rounded-b-2xl`}>
-      <div className='p-3 text-body-2'>
-        <span>{message.originalText}</span>
+      className={`mb-5 flex flex-col ${
+        isMyMessage ? 'self-end' : 'self-start'
+      }`}>
+      <div className={`mb-2 flex ${isMyMessage ? 'self-end' : 'self-start'}`}>
+        <span className='text-body-3 font-normal text-gray-500'>
+          {unixMlToTime(message.date)}
+        </span>
+        {isMyMessage && (
+          <div className='ml-2'>
+            {message.isRead && <IcChatRead className='h-4 w-4' />}
+            {message.isDelivered && !message.isRead && (
+              <IcChatDelivered className='h-4 w-4' />
+            )}
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`${
+          isMyMessage
+            ? 'bg-primary-500 rounded-l-2xl text-white'
+            : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900'
+        } rounded-b-2xl`}>
+        <div className='p-3 text-body-2'>
+          <span>{message.originalText}</span>
+        </div>
       </div>
     </div>
   )

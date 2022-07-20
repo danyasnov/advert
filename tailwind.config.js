@@ -154,6 +154,7 @@ module.exports = {
         'greyscale-300': '#E0E0E0',
         'greyscale-500': '#E0E0E0',
         'greyscale-900': '#212121',
+        'gray-500': '#667085',
       },
       zIndex: {
         9: 9,

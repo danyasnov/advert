@@ -4,6 +4,7 @@ import {ChatStore, globalChatsStore} from 'chats'
 import {useTranslation} from 'next-i18next'
 import {OwnerModel} from 'front-api/src/models'
 import {object, string} from 'yup'
+import {toJS} from 'mobx'
 import ChatHeader from './ChatHeader'
 import Message from './Message'
 import {FormikText} from '../FormikComponents'
@@ -19,13 +20,10 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
   const messagesRef = useRef()
 
   useEffect(() => {
-    // console.log(
-    //   'chatsRef.current[selectedChatId]',
-    //   toJS(chatsRef.current[selectedChatId]),
-    // )
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight
     }
+    console.log('chatStore.messages', toJS(chatStore.messages))
   }, [chatStore.messages])
   const formik = useFormik({
     enableReinitialize: true,
@@ -56,11 +54,11 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values, actions) => {
-      const response = await chatStore.sendMessage(values.message)
-      if (!response) {
-        const error = await globalChatsStore.startConnection()
-        await chatStore.sendMessage(values.message)
-      }
+      await chatStore.sendMessage(values.message)
+      // if (!response) {
+      //   const error = await globalChatsStore.startConnection()
+      //   await chatStore.sendMessage(values.message)
+      // }
       // console.log('response', response)
       actions.resetForm()
     },

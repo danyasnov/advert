@@ -15,6 +15,10 @@ export const unixMlToDateTime = (unix: number): string => {
   const date = DateTime.fromMillis(unix)
   return date.toFormat(`${dateFormat} ${timeFormat}`)
 }
+export const unixMlToTime = (unix: number): string => {
+  const date = DateTime.fromMillis(unix)
+  return date.toFormat(timeFormat)
+}
 export const unixMlToDate = (unix: number): string => {
   const date = DateTime.fromMillis(unix)
   return date.toFormat(`${dateFormat}`)
