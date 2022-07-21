@@ -1,4 +1,4 @@
 include:
-  - project: 'adverto/cicd'
+  - project: 'vooxee/cicd'
     ref: master
     file: '.gitlab-ci-react-front.yml'
