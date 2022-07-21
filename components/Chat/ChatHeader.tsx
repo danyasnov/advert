@@ -3,6 +3,7 @@ import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {ArrowLeft, MoreCircle} from 'react-iconly'
 import {ChatData} from 'chats'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
 import Button from '../Buttons/Button'
 import ImageWrapper from '../ImageWrapper'
 import UserAvatar from '../UserAvatar'
@@ -14,7 +15,7 @@ interface Props {
 const ChatHeader: FC<Props> = ({onBack, chat}) => {
   const {product, interlocutor} = chat
   const {t} = useTranslation()
-  console.log('product.image', product.image)
+  console.log('chat', toJS(chat))
   return (
     <div className='flex flex-col'>
       <div className='flex mb-5'>

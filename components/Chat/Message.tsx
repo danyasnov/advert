@@ -15,7 +15,7 @@ const Message: FC<Props> = ({message, user}) => {
   const isMyMessage = message.userId === user.hash
   return (
     <div
-      className={`mb-5 flex flex-col ${
+      className={`mb-5 flex flex-col max-w-[75%] ${
         isMyMessage ? 'self-end' : 'self-start'
       }`}>
       <div className={`mb-2 flex ${isMyMessage ? 'self-end' : 'self-start'}`}>
@@ -28,6 +28,9 @@ const Message: FC<Props> = ({message, user}) => {
             {message.isDelivered && !message.isRead && (
               <IcChatDelivered className='h-4 w-4' />
             )}
+            {!message.isDelivered && !message.isRead && (
+              <IcChatDelivered className='h-4 w-4 fill-current text-greyscale-400' />
+            )}
           </div>
         )}
       </div>
@@ -39,7 +42,7 @@ const Message: FC<Props> = ({message, user}) => {
             : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900'
         } rounded-b-2xl`}>
         <div className='p-3 text-body-2'>
-          <span>{message.originalText}</span>
+          <span className='break-words'>{message.originalText}</span>
         </div>
       </div>
     </div>

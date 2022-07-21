@@ -29,7 +29,7 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "lodash-move": "^1.1.1",
-    "luxon": "^2.0.2",
+    "luxon": "^3.0.1",
     "mobx": "^6.3.10",
     "mobx-react-lite": "^3.2.2",
     "mysql2": "^2.3.2",
