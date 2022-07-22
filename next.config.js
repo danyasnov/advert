@@ -20,7 +20,12 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['cache.adverto.sale', 'adverto.sale', 'cache.advretoapi.com'],
+    domains: [
+      'cache.adverto.sale',
+      'adverto.sale',
+      'cache.advretoapi.com',
+      'cache.venera.city',
+    ],
   },
   publicRuntimeConfig: {
     domain: process.env.DOMAIN,

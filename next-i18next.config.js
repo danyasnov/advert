@@ -22,7 +22,13 @@ module.exports = {
     locales,
     serializeConfig: false,
     fallbackLng: 'en',
-    domains: [...getDomains(['adverto.sale', 'fpreprod.adverto.sale'])],
+    domains: [
+      ...getDomains([
+        'adverto.sale',
+        'fpreprod.adverto.sale',
+        'vooxee.venera.city',
+      ]),
+    ],
   },
   localePath: path.resolve('./locales'),
 }

@@ -12,8 +12,8 @@ const handle = app.getRequestHandler()
 const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
 const domains = {
   dev: 'localhost:3000',
-  prod: 'adverto.sale',
-  stage: 'fpreprod.adverto.sale',
+  prod: 'vooxee.venera.city',
+  stage: 'vooxee.venera.city',
 }
 
 const getDomain = (host) => {
@@ -98,7 +98,8 @@ app.prepare().then(() => {
       cookies.language === 'en' &&
       !host.startsWith('localhost') &&
       !host.startsWith('fpreprod') &&
-      !host.startsWith('adverto')
+      !host.startsWith('adverto') &&
+      !host.startsWith('vooxee')
     ) {
       res.redirect(`${getProtocol(host)}://${getDomain(host)}${pathname}`)
       return res.end()
