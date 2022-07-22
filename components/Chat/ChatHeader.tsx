@@ -37,7 +37,7 @@ const ChatHeader: FC<Props> = ({onBack, chat}) => {
         {/*    alt={product.image} */}
         {/*  /> */}
         {/* </div> */}
-        <div className='flex flex-col overflow-hidden mr-5'>
+        <div className='flex flex-col overflow-hidden mr-5 w-full'>
           <p className='text-body-1 font-semibold truncate'>
             {interlocutor.name} {interlocutor.surname}
           </p>

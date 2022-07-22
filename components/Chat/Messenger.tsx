@@ -6,10 +6,13 @@ import {OwnerModel} from 'front-api/src/models'
 import {object, string} from 'yup'
 import {toJS} from 'mobx'
 import {groupBy} from 'lodash'
+import IcLightCamera from 'icons/material/LightCamera.svg'
+import IcBoldClip from 'icons/material/BoldClip.svg'
 import ChatHeader from './ChatHeader'
 import Message from './Message'
 import {FormikText} from '../FormikComponents'
 import {unixMlToDate, unixToDate} from '../../utils'
+import Button from '../Buttons/Button'
 
 interface Props {
   chatStore: ChatStore
@@ -77,6 +80,7 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
       actions.resetForm()
     },
   })
+  const {values, setFieldValue, handleSubmit} = formik
   return (
     <div className='flex flex-col w-full pt-5'>
       <ChatHeader chat={chatStore.chat} onBack={onBack} />
@@ -102,15 +106,42 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
       </div>
       <FormikProvider value={formik}>
         <Form>
-          <div>123</div>
-          <Field
-            name='message'
-            component={FormikText}
-            isTextarea
-            submitOnEnter
-            rows={3}
-            placeholder={t('SEND_A_MESSAGE')}
-          />
+          <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex items-center'>
+            <Button>
+              <IcBoldClip className='w-6 h-6' />
+            </Button>
+            <textarea
+              maxLength={90}
+              className='bg-greyscale-50 w-full manual-outline'
+              value={values.message}
+              onChange={({target}) => {
+                setFieldValue('message', target.value)
+              }}
+              onKeyDown={(e) => {
+                e.target.style.height = 'inherit'
+                e.target.style.height = `${Math.min(
+                  e.target.scrollHeight,
+                  162,
+                )}px`
+                if (e.key === 'Enter' && e.shiftKey === false) {
+                  e.preventDefault()
+                  handleSubmit()
+                }
+              }}
+              placeholder={t('SEND_A_MESSAGE')}
+            />
+            <Button>
+              <IcLightCamera className='w-6 h-6' />
+            </Button>
+          </div>
+          {/* <Field */}
+          {/*  name='message' */}
+          {/*  component={FormikText} */}
+          {/*  isTextarea */}
+          {/*  submitOnEnter */}
+          {/*  rows={3} */}
+          {/*  placeholder={t('SEND_A_MESSAGE')} */}
+          {/* /> */}
         </Form>
       </FormikProvider>
       {/* <SecondaryButton */}
