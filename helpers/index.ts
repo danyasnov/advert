@@ -757,3 +757,13 @@ export const deserializeCookies = (
     authType: state.authType ? toNumber(state.authType) : null,
   }
 }
+
+export const redirectToLogin = (fallbackUrl) => {
+  const param = fallbackUrl === '/' ? '' : `?from=${fallbackUrl}`
+  return {
+    redirect: {
+      destination: `/login${param}`,
+      permanent: false,
+    },
+  }
+}

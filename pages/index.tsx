@@ -6,6 +6,7 @@ import {
   getLocationCodes,
   getStorageFromCookies,
   processCookies,
+  redirectToLogin,
   setCookiesObject,
 } from '../helpers'
 import {fetchCountries} from '../api/v1'
@@ -54,14 +55,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-
   if (categoriesData.status === 401) {
-    return {
-      redirect: {
-        destination: `/login?from=${ctx.resolvedUrl}`,
-        permanent: false,
-      },
-    }
+    return redirectToLogin(ctx.resolvedUrl)
   }
 
   const categories = categoriesData?.result ?? null

@@ -18,7 +18,7 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      sans: ['Fira Sans', 'sans-serif'],
+      sans: ['Urbanist', 'sans-serif'],
     },
     fontSize: {
       'body-1': ['16px', '20px'],
@@ -146,6 +146,17 @@ module.exports = {
         'nc-info': '#F2F6FA',
         'nc-border': '#CCDBEB',
         'sold-background': 'rgba(255,64,64, 0.2)',
+        green: '#4AAF57',
+        'primary-100': '#F1E7FF',
+        'primary-500': '#7210FF',
+        'greyscale-50': '#FAFAFA',
+        'greyscale-100': '#F5F5F5',
+        'greyscale-300': '#E0E0E0',
+        'greyscale-400': '#BDBDBD',
+        'greyscale-500': '#E0E0E0',
+        'greyscale-900': '#212121',
+        'gray-200': '#EAECF0',
+        'gray-500': '#667085',
       },
       zIndex: {
         9: 9,

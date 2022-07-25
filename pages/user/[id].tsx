@@ -6,6 +6,7 @@ import {
   getQueryValue,
   getStorageFromCookies,
   processCookies,
+  redirectToLogin,
 } from '../../helpers'
 import {fetchCategories, fetchUser, fetchUserSale} from '../../api/v2'
 import UserLayout from '../../components/Layouts/UserLayout'
@@ -33,12 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     )
 
   if (categoriesData.status === 401) {
-    return {
-      redirect: {
-        destination: `/login?from=${ctx.resolvedUrl}`,
-        permanent: false,
-      },
-    }
+    return redirectToLogin(ctx.resolvedUrl)
   }
 
   const categories = categoriesData?.result ?? null

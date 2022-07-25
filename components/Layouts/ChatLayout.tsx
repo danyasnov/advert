@@ -1,16 +1,35 @@
-import {FC, useEffect} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import {useRouter} from 'next/router'
+import {toJS} from 'mobx'
+import {Chats, ChatStore, globalChatsStore} from 'chats'
+import {Form, useFormik, FormikProvider, Field} from 'formik'
+import {object, string} from 'yup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {SerializedCookiesState} from '../../types'
 import {getRest} from '../../api'
 import {mapCookies} from '../../helpers'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {FormikText} from '../FormikComponents'
+import SecondaryButton from '../Buttons/SecondaryButton'
+import ChatItem from '../Chat/ChatItem'
+import ChatHeader from '../Chat/ChatHeader'
+import Message from '../Chat/Message'
+import Auth from '../Auth'
+import Messenger from '../Chat/Messenger'
 
 const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {user} = useGeneralStore()
+  const {query, replace} = useRouter()
+  const {chats} = globalChatsStore
+  const chatsRef = useRef<Record<string, ChatStore>>({})
+  const [selectedChatId, setSelectedChatId] = useState('')
+
+  const openChat = () => {}
+  const startChat = () => {}
 
   useEffect(() => {
     if (!user) return
@@ -19,7 +38,6 @@ const ChatLayout: FC = observer(() => {
       const state: SerializedCookiesState = parseCookies()
       const storage = mapCookies(state)
       const restApi = getRest(storage)
-      const {Chats, globalChatsStore} = await import('chats')
       Chats.init({
         deps: {
           restApi,
@@ -71,18 +89,80 @@ const ChatLayout: FC = observer(() => {
       })
 
       const error = await globalChatsStore.startConnection()
+
+      // console.log('error', error)
+
+      await globalChatsStore.fetchMoreChats()
+      // console.log('globalChatsStore', toJS(globalChatsStore))
+
+      if (query.hash) {
+        let chatData = globalChatsStore.chats.find(
+          (chat) => chat.product.id === query.hash,
+        )
+        if (!chatData) {
+          chatData = await globalChatsStore.createChat(query.hash as string)
+        }
+
+        chatsRef.current[chatData.id] = new ChatStore(chatData, user.hash)
+
+        if (chatData) {
+          await chatsRef.current[chatData.id].fetchBefore()
+          setSelectedChatId(chatData.id)
+        }
+      }
     }
     init()
   }, [user])
 
   return (
-    <HeaderFooterWrapper>
-      <div className=' py-8 m:flex min-h-1/2'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='m:w-944px l:w-896px space-y-12'>123</main>
+    <div className='flex mx-4 h-screen'>
+      {!selectedChatId && (
+        <div>
+          {chats.map((chat) => (
+            <ChatItem
+              key={chat.id}
+              chat={chat}
+              onClick={async () => {
+                replace(
+                  {
+                    query: {
+                      hash: chat.product.id,
+                    },
+                  },
+                  undefined,
+                  {shallow: true},
+                )
+                if (!chatsRef.current[chat.id]) {
+                  chatsRef.current[chat.id] = new ChatStore(chat, user.hash)
+                }
+
+                chatsRef.current[chat.id].fetchBefore()
+                setSelectedChatId(chat.id)
+              }}
+            />
+          ))}
         </div>
-      </div>
-    </HeaderFooterWrapper>
+      )}
+      {selectedChatId && (
+        <Messenger
+          user={user}
+          chatStore={chatsRef.current[selectedChatId]}
+          onBack={() => {
+            setSelectedChatId(null)
+            replace(
+              {
+                query: {
+                  hash: undefined,
+                },
+              },
+              undefined,
+              {shallow: true},
+            )
+          }}
+        />
+      )}
+      <Auth hide />
+    </div>
   )
 })
 

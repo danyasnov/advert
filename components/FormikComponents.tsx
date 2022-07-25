@@ -406,6 +406,7 @@ export const FormikText: FC<
     disabled: boolean
     isTextarea?: boolean
     disableTrack?: boolean
+    submitOnEnter?: boolean
   } & FieldProps
 > = ({
   field,
@@ -417,6 +418,7 @@ export const FormikText: FC<
   isTextarea,
   maxLength,
   disableTrack,
+  submitOnEnter,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
@@ -441,6 +443,12 @@ export const FormikText: FC<
     className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
       disableTrack ? 'ym-disable-keys' : ''
     } ${isValid ? 'border-nc-border' : 'border-error'}`,
+    onKeyDown: (e) => {
+      if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
+        e.preventDefault()
+        form.handleSubmit()
+      }
+    },
   }
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
