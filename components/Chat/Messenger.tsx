@@ -118,8 +118,11 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
                 setFieldValue('message', target.value)
               }}
               onKeyDown={(e) => {
+                // @ts-ignore
                 e.target.style.height = 'inherit'
+                // @ts-ignore
                 e.target.style.height = `${Math.min(
+                  // @ts-ignore
                   e.target.scrollHeight,
                   162,
                 )}px`
