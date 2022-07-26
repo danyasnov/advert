@@ -33,7 +33,7 @@ build-master:
   script:
     - cp ${PROD_CONFIG_JSON} config.json
     - docker pull registry.venera.city/vooxee/react-frontend:cache
-    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.venera.city: --cache-from registry.venera.city/vooxee/react-frontend:cache -t registry.venera.city/vooxee/react-frontend:master .
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --cache-from registry.venera.city/vooxee/react-frontend:cache -t registry.venera.city/vooxee/react-frontend:master .
     - docker push registry.venera.city/vooxee/react-frontend:master
   tags: 
     - build-react
