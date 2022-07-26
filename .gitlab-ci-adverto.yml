@@ -1,4 +1,54 @@
-include:
-  - project: 'vooxee/cicd'
-    ref: master
-    file: '.gitlab-ci-react-front.yml'
+stages:
+  - build
+  - deploy
+
+variables:
+  GIT_SSL_NO_VERIFY: "true"
+  DOCKER_TLS_CERTDIR: ""
+
+default:
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - git config --global url.ssh://git@gitlab.com.insteadOf https://gitlab.com
+
+build develop:
+  stage: build
+  variables:
+  script:
+    - cp ${DEV_CONFIG_JSON} config.json
+    - docker pull registry.venera.city/vooxee/react-frontend:cache
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" -t registry.venera.city/vooxee/react-frontend:develop .
+    - docker push registry.venera.city/vooxee/react-frontend:develop
+#    - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=main "https://gitlab.venera.city/api/v4/projects/21/trigger/pipeline"
+  tags: 
+    - build-react-develop
+  only:
+    refs: 
+      - develop
+
+build-master:
+  stage: build
+  variables:
+  script:
+    - cp ${PROD_CONFIG_JSON} config.json
+    - docker pull registry.venera.city/vooxee/react-frontend:cache
+    - docker build --build-arg SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" --add-host gitlab.venera.city: --cache-from registry.venera.city/vooxee/react-frontend:cache -t registry.venera.city/vooxee/react-frontend:master .
+    - docker push registry.venera.city/vooxee/react-frontend:master
+  tags: 
+    - build-react
+  only:
+    refs: 
+      - master
+
+#deploy-prod:
+#  stage: deploy
+#  script:
+#    - cd /opt/react-frontend
+#    - docker-compose pull
+#    - docker-compose up -d
+#  tags: 
+#    - deploy-react
+#  only:
+#    refs: 
+#      - master
