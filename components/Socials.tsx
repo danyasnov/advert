@@ -25,78 +25,78 @@ const tt = {
   title: 'TikTok',
 }
 const socials = {
-  el: [
-    {
-      ...fb,
-      url: 'https://www.facebook.com/adverto.el',
-    },
-    {
-      ...ig,
-      url: 'https://www.instagram.com/adverto_el/',
-    },
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-    {
-      ...tt,
-      url: 'https://www.tiktok.com/@adverto_sale',
-    },
-  ],
-  ru: [
-    {
-      ...fb,
-      url: 'https://www.facebook.com/Adverto_official-233833728555124',
-    },
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-  ],
-  en: [
-    {
-      ...fb,
-      url: 'https://www.facebook.com/adverto.el',
-    },
-    {
-      ...ig,
-      url: 'https://www.instagram.com/adverto_sale/',
-    },
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-    {
-      ...tt,
-      url: 'https://www.tiktok.com/@adverto_sale',
-    },
-  ],
-  uk: [
-    {
-      ...fb,
-      url: 'https://www.facebook.com/Adverto_Ukraine-106412321776569',
-    },
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-  ],
-  ro: [
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-  ],
-  tr: [
-    {
-      ...fb,
-      url: 'https://www.facebook.com/Adverto_TR-102236565533884',
-    },
-    {
-      ...yt,
-      url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-    },
-  ],
+  // el: [
+  //   {
+  //     ...fb,
+  //     url: 'https://www.facebook.com/adverto.el',
+  //   },
+  //   {
+  //     ...ig,
+  //     url: 'https://www.instagram.com/adverto_el/',
+  //   },
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  //   {
+  //     ...tt,
+  //     url: 'https://www.tiktok.com/@adverto_sale',
+  //   },
+  // ],
+  // ru: [
+  //   {
+  //     ...fb,
+  //     url: 'https://www.facebook.com/Adverto_official-233833728555124',
+  //   },
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  // ],
+  // en: [
+  //   {
+  //     ...fb,
+  //     url: 'https://www.facebook.com/adverto.el',
+  //   },
+  //   {
+  //     ...ig,
+  //     url: 'https://www.instagram.com/adverto_sale/',
+  //   },
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  //   {
+  //     ...tt,
+  //     url: 'https://www.tiktok.com/@adverto_sale',
+  //   },
+  // ],
+  // uk: [
+  //   {
+  //     ...fb,
+  //     url: 'https://www.facebook.com/Adverto_Ukraine-106412321776569',
+  //   },
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  // ],
+  // ro: [
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  // ],
+  // tr: [
+  //   {
+  //     ...fb,
+  //     url: 'https://www.facebook.com/Adverto_TR-102236565533884',
+  //   },
+  //   {
+  //     ...yt,
+  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
+  //   },
+  // ],
 }
 
 const Socials: FC = observer(() => {

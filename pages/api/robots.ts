@@ -16,7 +16,7 @@ const getRobotTxt = (subdomain) => {
 Allow: /
 sitemap: https://${
     subdomain ? `${subdomain}.` : ''
-  }adverto.sale/sitemaps/sitemap-${subdomain || 'main'}.xml
+  }vooxee.com/sitemaps/sitemap-${subdomain || 'main'}.xml
 Disallow: /web-api/
 Disallow: /scripts/`
 }

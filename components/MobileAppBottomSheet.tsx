@@ -40,7 +40,7 @@ const MobileAppBottomSheet: FC = observer(() => {
         snapPoints={({minHeight}) => minHeight}>
         <div className='flex flex-col items-center justify-center w-full p-4 pt-0'>
           <h3 className='text-h-3 font-medium text-nc-title mb-6'>
-            {t('OPEN_ADVERTO_IN')}
+            {t('OPEN_VOOXEE_IN')}
           </h3>
           <div className='flex justify-between w-full mb-7 items-center h-8'>
             <div className='flex items-center'>
@@ -52,7 +52,7 @@ const MobileAppBottomSheet: FC = observer(() => {
                 layout='fixed'
               />
               <span className='ml-3 text-body-1 text-nc-title'>
-                {t('OPEN_IN_ADVERTO_APP')}
+                {t('OPEN_IN_VOOXEE_APP')}
               </span>
             </div>
             <Button

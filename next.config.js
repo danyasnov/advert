@@ -21,9 +21,9 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'cache.adverto.sale',
-      'adverto.sale',
-      'cache.advretoapi.com',
+      // 'cache.adverto.sale',
+      // 'adverto.sale',
+      // 'cache.advretoapi.com',
       'cache.venera.city',
     ],
   },

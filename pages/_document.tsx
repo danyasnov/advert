@@ -46,10 +46,10 @@ class MyDocument extends Document {
           <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#FF9514' />
           <meta name='theme-color' content='#FF9514' />
           <link
-            href='https://adverto.sale/inc/opensearch.xml'
+            href='https://vooxee.com/inc/opensearch.xml'
             rel='search'
             type='application/opensearchdescription+xml'
-            title='Adverto Search'
+            title='Vooxee Search'
           />
 
           <noscript>

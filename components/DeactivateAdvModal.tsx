@@ -56,7 +56,7 @@ const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
             <PrimaryButton
               className='w-full'
               onClick={() => onSelect('soldAdverto')}>
-              {t('SOLD_IN_ADVERTO')}
+              {t('SOLD_IN_VOOXEE')}
             </PrimaryButton>
             <SecondaryButton
               className='w-full'

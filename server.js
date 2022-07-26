@@ -12,7 +12,7 @@ const handle = app.getRequestHandler()
 const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
 const domains = {
   dev: 'localhost:3000',
-  prod: 'vooxee.venera.city',
+  prod: 'vooxee.com',
   stage: 'vooxee.venera.city',
 }
 
@@ -20,10 +20,10 @@ const getDomain = (host) => {
   if (host.includes('localhost')) {
     return domains.dev
   }
-  if (host.includes('fpreprod')) {
+  if (host.includes('vooxee.venera.city')) {
     return domains.stage
   }
-  if (host.includes('adverto')) {
+  if (host.includes('vooxee.com')) {
     return domains.prod
   }
   return host
@@ -97,8 +97,6 @@ app.prepare().then(() => {
     } else if (
       cookies.language === 'en' &&
       !host.startsWith('localhost') &&
-      !host.startsWith('fpreprod') &&
-      !host.startsWith('adverto') &&
       !host.startsWith('vooxee')
     ) {
       res.redirect(`${getProtocol(host)}://${getDomain(host)}${pathname}`)

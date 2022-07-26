@@ -76,11 +76,11 @@ const SafetyLayout: FC = observer(() => {
           <span
             className='text-h-3 s:text-headline-5 s:py-10 whitespace-pre-wrap'
             dangerouslySetInnerHTML={{
-              __html: t('SECURITY_ON_ADVERTO_TEXT'),
+              __html: t('SECURITY_TEXT'),
             }}
           />
           <span className='text-h-3 s:text-headline-5 font-medium '>
-            {t('SECURITY_ON_ADVERTO_TEXT_BR')}
+            {t('SECURITY_TEXT_BR')}
           </span>
           <div className='w-full m:self-start pt-11 m:pt-10 l:pb-40'>
             {supportButton}
@@ -262,12 +262,12 @@ const SafetyLayout: FC = observer(() => {
             {t('LANDING_DO_NOT_SEND_NUMBER_AND_MAIL_TEXT')}
           </span>
           <h1 className='text-headline-5 font-medium mb-2'>
-            {t('LANDING_MAKE_SURE_YOU_ON_ADVERTO')}
+            {t('LANDING_MAKE_SURE_YOU_ON_VOOXEE')}
           </h1>
           <span
             className='text-body-1 mb-15 s:mb-18'
             dangerouslySetInnerHTML={{
-              __html: t('LANDING_MAKE_SURE_YOU_ON_ADVERTO_TEXT'),
+              __html: t('LANDING_MAKE_SURE_YOU_ON_VOOXEE_TEXT'),
             }}
           />
           <div className='flex flex-col m:flex-row w-full'>

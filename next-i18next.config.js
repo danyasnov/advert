@@ -24,8 +24,8 @@ module.exports = {
     fallbackLng: 'en',
     domains: [
       ...getDomains([
-        'adverto.sale',
-        'fpreprod.adverto.sale',
+        // 'adverto.sale',
+        // 'fpreprod.adverto.sale',
         'vooxee.venera.city',
       ]),
     ],

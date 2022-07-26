@@ -129,7 +129,7 @@ const PhoneModal: FC<ModalProps> = observer(
                   </Button>
                 </div>
                 <div className='text-body-2 text-black-b mt-4'>
-                  {t('TELL_YOU_FOUND_AD_ON_ADVERTO')}
+                  {t('TELL_YOU_FOUND_AD_ON_VOOXEE')}
                 </div>
               </>
             ) : (

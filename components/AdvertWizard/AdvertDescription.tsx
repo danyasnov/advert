@@ -179,7 +179,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             <Field
               component={FormikSwitch}
               name='isExclusive'
-              label={t('ONLY_ON_ADVERTO')}
+              label={t('ONLY_ON_VOOXEE')}
               labelPosition='right'
             />
           </div>
