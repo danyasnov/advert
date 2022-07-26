@@ -2,7 +2,7 @@
   "relation" : ["delegate_permission/common.handle_all_urls"],
   "target" : {
     "namespace" : "android_app",
-    "package_name" : "adverto.sale",
+    "package_name" : "vooxee.com",
     "sha256_cert_fingerprints" : [
       "B6:D2:77:B5:06:BC:BE:D8:56:06:A7:E0:73:4A:A2:6A:A6:82:D7:D1:C7:86:9F:49:B4:50:2B:00:E0:0E:A5:1B",
       "39:0F:58:E2:F4:59:00:52:04:4F:CF:F7:BE:46:70:B0:BA:1D:42:EE:FB:04:02:A6:8E:7D:29:86:9A:8A:9E:48",

@@ -66,18 +66,16 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
         <meta
           property='og:url'
           content={
-            advert
-              ? `https://adverto.sale${advert.url}`
-              : 'https://adverto.sale'
+            advert ? `https://vooxee.com${advert.url}` : 'https://vooxee.com'
           }
         />
         <meta
           property='og:image'
-          content={imageUrl || 'https://adverto.sale/img/logo_playmarket.jpg'}
+          content={imageUrl || 'https://vooxee.com/img/logo_playmarket.jpg'}
         />
         <meta
           property='og:image:secure_url'
-          content={imageUrl || 'https://adverto.sale/img/logo_playmarket.jpg'}
+          content={imageUrl || 'https://vooxee.com/img/logo_playmarket.jpg'}
         />
         <meta property='og:image:type' content='image/jpeg' />
         <meta property='og:image:width' content='512' />
@@ -114,14 +112,14 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
                     .plus({months: 1})
                     .toISODate(),
                   availability: 'https://schema.org/InStock',
-                  url: `https://adverto.sale${advert.url}`,
+                  url: `https://vooxee.com${advert.url}`,
                   sku: owner.hash,
                   description: advert.description,
                   image: advert.images,
                 },
                 potentialAction: {
                   '@type': 'SearchAction',
-                  target: 'https://adverto.sale/all/all?q={search_query}',
+                  target: 'https://vooxee.com/all/all?q={search_query}',
                   'query-input': 'required name=search_query',
                 },
 
@@ -190,11 +188,11 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
               __html: JSON.stringify({
                 '@context': 'http://schema.org',
                 '@type': 'WebSite',
-                url: 'https://adverto.sale',
+                url: 'https://vooxee.com',
                 name: title,
                 potentialAction: {
                   '@type': 'SearchAction',
-                  target: 'https://adverto.sale/all/all?q={search_query}',
+                  target: 'https://vooxee.com/all/all?q={search_query}',
                   'query-input': 'required name=search_query',
                 },
               }),

@@ -20,12 +20,12 @@ export default async (
       campaign_id: 'postman_inline_both_example',
       recipients: [
         {
-          address: 'marketing@adverto.sale',
+          address: 'marketing@vooxee.com',
         },
       ],
       content: {
         from: {
-          email: 'feedback@adverto.sale',
+          email: 'feedback@vooxee.com',
           name: 'Web Support',
         },
 

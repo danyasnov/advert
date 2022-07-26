@@ -106,6 +106,7 @@ const Socials: FC = observer(() => {
     const {language} = state
     setCurrent(socials[language || 'en'])
   }, [])
+  if (!current) return null
   return (
     <div className='flex space-x-2'>
       {current.map((s) => (

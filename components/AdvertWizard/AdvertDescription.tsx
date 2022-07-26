@@ -183,7 +183,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
               labelPosition='right'
             />
           </div>
-          <Tip message={t('EXCLUSIVE_ON_ADVERTO_TIP')} placement='left' />
+          <Tip message={t('EXCLUSIVE_VOOXEE_TEXT')} placement='left' />
         </div>
       )}
     </div>
