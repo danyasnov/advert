@@ -2247,9 +2247,9 @@ charenc@0.0.2:
   resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
   integrity sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
 
-"chats@ssh://git@gitlab.venera.city/vooxee/chat-lib#2.6.5":
-  version "2.6.5"
-  resolved "ssh://git@gitlab.venera.city/vooxee/chat-lib#ff3015a211dee7b1c2ec3b28e81d14af32bc761b"
+"chats@ssh://git@gitlab.venera.city/vooxee/chat-lib#2.6.8":
+  version "2.6.8"
+  resolved "ssh://git@gitlab.venera.city/vooxee/chat-lib#323d6fb018847162f390619ebb367b92cf0d42fb"
 
 chokidar@^3.5.3:
   version "3.5.3"
@@ -3361,9 +3361,9 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.3.5":
-  version "5.3.4"
-  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#7ddec714841d40fae1730787d5d5e592fbd6aa6b"
+"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.3.12":
+  version "5.3.12"
+  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#11f05879eb6f4d45eadf4c5e45203125ee48dfdb"
   dependencies:
     axios "^0.22.0"
     axios-curlirize lexgorbunov/axios-curlirize#1.4.5

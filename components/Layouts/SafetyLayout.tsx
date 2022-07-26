@@ -52,7 +52,7 @@ const SafetyLayout: FC = observer(() => {
   )
   return (
     <div>
-      <MetaTags title={t('SECURITY_ON_ADVERTO')} />
+      <MetaTags title={t('SECURITY_TITLE')} />
       <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
         <div className='flex items-center'>
           <Logo size={width >= 768 ? 70 : 30} />
@@ -71,7 +71,7 @@ const SafetyLayout: FC = observer(() => {
         />
         <div className='mx-4 s:mx-15 l:mx-30 xl:mx-0 flex flex-col space-y-4 m:w-[722px] xl:w-[849px]'>
           <h1 className='text-h-1 s:text-headline-2 font-medium'>
-            {t('SECURITY_ON_ADVERTO')}
+            {t('SECURITY_TITLE')}
           </h1>
           <span
             className='text-h-3 s:text-headline-5 s:py-10 whitespace-pre-wrap'

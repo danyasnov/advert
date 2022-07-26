@@ -208,7 +208,7 @@ const MerchantLayout: FC = observer(() => {
         <div className='bg-landing-footer bg-no-repeat bg-bottom py-24 flex flex-col items-center w-full'>
           <div className='w-96 flex flex-col items-center'>
             <span className='px-6 s:px-16 m:px-24 text-headline-6  m:text-h-1 text-brand-a1 font-bold text-center mb-5'>
-              {t('LANDING_JOIN_ADVERTO')}
+              {t('LANDING_JOIN')}
             </span>
             <div className='py-6 px-6 bg-white rounded-3xl w-full drop-shadow-2xl text-center'>
               <span className='text-h-3 font-medium'>
