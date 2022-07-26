@@ -196,7 +196,7 @@ module.exports = {
         'brand-a1': ['2px solid #FF9514', '1px'],
       },
       backgroundImage: () => ({
-        'adverto-background': "url('/img/adverto-background.png')",
+        'advert-background': "url('/img/advert-background.png')",
         'landing-head': "url('/img/landing/head-bg.png')",
         'landing-footer': "url('/img/landing/footer-bg.png')",
         'man-with-laptop': "url('/img/landing/man-with-laptop.png')",

@@ -44,13 +44,13 @@ const MobileAppBottomSheet: FC = observer(() => {
           </h3>
           <div className='flex justify-between w-full mb-7 items-center h-8'>
             <div className='flex items-center'>
-              <ImageWrapper
-                type='/img/logo/AdvertoLogoSquare.png'
-                alt='Logo'
-                width={32}
-                height={32}
-                layout='fixed'
-              />
+              {/* <ImageWrapper */}
+              {/*  type='/img/logo/AdvertoLogoSquare.png' */}
+              {/*  alt='Logo' */}
+              {/*  width={32} */}
+              {/*  height={32} */}
+              {/*  layout='fixed' */}
+              {/* /> */}
               <span className='ml-3 text-body-1 text-nc-title'>
                 {t('OPEN_IN_VOOXEE_APP')}
               </span>
@@ -64,12 +64,12 @@ const MobileAppBottomSheet: FC = observer(() => {
                 setCookiesObject({showBottomSheet: false})
               }}
               className='rounded-lg py-1.5 text-body-1 text-white-a nc-gradient-brand w-26'>
-              <LinkWrapper
-                target='_blank'
-                href='https://adverto.drru.agconnect.link/kmarket'
-                title='app link'>
-                {t('OPEN')}
-              </LinkWrapper>
+              {/* <LinkWrapper */}
+              {/*  target='_blank' */}
+              {/*  href='https://adverto.drru.agconnect.link/kmarket' */}
+              {/*  title='app link'> */}
+              {/*  {t('OPEN')} */}
+              {/* </LinkWrapper> */}
             </Button>
           </div>
           <div className='flex justify-between w-full items-center'>

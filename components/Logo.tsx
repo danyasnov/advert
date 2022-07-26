@@ -9,13 +9,13 @@ const Logo: FC<{size?: number}> = ({size = 40}) => {
       href='/'
       className='flex flex-col justify-center items-center cursor-pointer'>
       <div className='flex'>
-        <ImageWrapper
-          type='/img/logo/AdvertoLogoSquare.png'
-          alt='Logo'
-          width={size}
-          height={size}
-          layout='fixed'
-        />
+        {/* <ImageWrapper */}
+        {/*  type='/img/logo/AdvertoLogoSquare.png' */}
+        {/*  alt='Logo' */}
+        {/*  width={size} */}
+        {/*  height={size} */}
+        {/*  layout='fixed' */}
+        {/* /> */}
       </div>
     </LinkWrapper>
   )

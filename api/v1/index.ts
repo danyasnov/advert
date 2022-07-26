@@ -17,8 +17,6 @@ import Storage from '../../stores/Storage'
 
 const cache = new NodeCache({stdTTL: 60 * 60 * 24})
 
-// const API_V1_URL = 'https://api.adverto.sale'
-
 export const fetchCountries = async (
   language: string,
 ): Promise<Array<CountryModel>> => {

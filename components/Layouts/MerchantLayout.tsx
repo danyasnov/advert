@@ -100,7 +100,7 @@ const MerchantLayout: FC = observer(() => {
           <div className='flex items-center space-x-5'>
             <LinkWrapper href='/' title='main'>
               <div className='w-6 h-6 s:w-9 s:h-9 m:w-12 m:h-12 l:w-18 l:h-18'>
-                <img src='/img/logo/AdvertoLogoSquare.png' alt='Logo' />
+                {/* <img src='/img/logo/AdvertoLogoSquare.png' alt='Logo' /> */}
               </div>
             </LinkWrapper>
             <span className='text-body-4 s:text-body-3 m:text-h-2 max-w-xs'>

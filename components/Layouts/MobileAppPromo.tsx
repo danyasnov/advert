@@ -5,15 +5,15 @@ import ImageWrapper from '../ImageWrapper'
 const MobileAppPromo: FC = () => {
   const {t} = useTranslation()
   return (
-    <div className='flex justify-center items-center h-screen bg-adverto-background bg-repeat'>
+    <div className='flex justify-center items-center h-screen bg-advert-background bg-repeat'>
       <main className='flex flex-col justify-center items-center'>
-        <ImageWrapper
-          type='/img/logo/AdvertoLogoSquare.png'
-          alt='Logo'
-          width={136}
-          height={136}
-          layout='fixed'
-        />
+        {/* <ImageWrapper */}
+        {/*  type='/img/logo/AdvertoLogoSquare.png' */}
+        {/*  alt='Logo' */}
+        {/*  width={136} */}
+        {/*  height={136} */}
+        {/*  layout='fixed' */}
+        {/* /> */}
         <span className='mt-20 mb-12 text-h-2 text-black-b font-bold text-center'>
           {t('MOBILE_APP_PROMO')}
         </span>
