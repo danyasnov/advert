@@ -8,9 +8,9 @@ COPY package.json yarn.lock ./
 RUN mkdir ~/.ssh \
     && eval $(ssh-agent -s) \
     && echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - \
-    && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> ~/.ssh/config
-RUN yarn install --check-files --cache-folder .ycache
-RUN rm -rf .ycache
+    && echo ${SSH_PRIVATE_KEY}
+    && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> ~/.ssh/config \
+    && yarn install --check-files --cache-folder .ycache && rm -rf .ycache
 
 # Rebuild the source code only when needed
 FROM node:14-alpine AS builder
