@@ -2,6 +2,7 @@ import {FC} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api'
+import {useRouter} from 'next/router'
 import Card from './Card'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import LinkWrapper from '../Buttons/LinkWrapper'
@@ -30,6 +31,7 @@ const ScrollableCardGroup: FC<Props> = ({
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
 }) => {
+  const router = useRouter()
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
     return <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
@@ -41,6 +43,7 @@ const ScrollableCardGroup: FC<Props> = ({
       <AdvertNotFoundWithDescription />
     )
   }
+  if (window.location.hostname.includes('vooxee.com')) return null
   return (
     <div className='flex flex-col m:items-start relative'>
       <InfiniteScroll
