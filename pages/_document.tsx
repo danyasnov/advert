@@ -16,13 +16,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel='preconnect' href='https://fonts.googleapis.com' />
-          {/* @ts-ignore */}
-          <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap'
-            rel='stylesheet'
-          />
           <meta name='format-detection' content='telephone=no' />
           <meta name='apple-itunes-app' content='app-id=1287862488' />
           <link

@@ -23,25 +23,7 @@ const Header: FC = observer(() => {
     <header className='flex s:justify-center relative shadow-lg z-10'>
       <div className='header-width'>
         <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
-          <div className='flex space-x-4'>
-            {/*  <LinkButton */}
-            {/*    onClick={notImplementedAlert} */}
-            {/*    label={t('FOR_BUSINESS')} */}
-            {/*  /> */}
-            <LinkWrapper
-              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center'
-              href='/merchant'
-              title={t('SHOPS')}>
-              {t('SHOPS')}
-            </LinkWrapper>
-            <LinkWrapper
-              className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center hidden s:block'
-              href='/safety'
-              title={t('SAFETY')}>
-              {t('SAFETY')}
-            </LinkWrapper>
-          </div>
-          <div className='flex justify-end w-full s:w-auto space-x-4 items-center'>
+          <div className='flex  w-full s:w-auto space-x-4 items-center'>
             {/* <LinkButton */}
             {/*  onClick={notImplementedAlert} */}
             {/*  label={t('WALLET')} */}
@@ -49,12 +31,30 @@ const Header: FC = observer(() => {
             {/*  <IcWallet className='fill-current text-brand-b1 mr-2 h-4 w-4' /> */}
             {/* </LinkButton> */}
             <LanguageSelect />
+          </div>
+          <div className='flex space-x-4'>
+            {/*  <LinkButton */}
+            {/*    onClick={notImplementedAlert} */}
+            {/*    label={t('FOR_BUSINESS')} */}
+            {/*  /> */}
+            {/* <LinkWrapper */}
+            {/*  className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center' */}
+            {/*  href='/merchant' */}
+            {/*  title={t('SHOPS')}> */}
+            {/*  {t('SHOPS')} */}
+            {/* </LinkWrapper> */}
+            {/* <LinkWrapper */}
+            {/*  className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center hidden s:block' */}
+            {/*  href='/safety' */}
+            {/*  title={t('SAFETY')}> */}
+            {/*  {t('SAFETY')} */}
+            {/* </LinkWrapper> */}
             <Auth onLogin={() => setShowLogin(true)} />
           </div>
         </div>
         <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-8'>
           <Logo />
-          <div className='flex space-x-4 w-full'>
+          <div className='flex space-x-6 w-full'>
             <CategoriesSelector />
             <Search />
           </div>
