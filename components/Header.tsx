@@ -2,6 +2,8 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {observer} from 'mobx-react-lite'
+import {Plus} from 'react-iconly'
+import IcCurvedPlus from 'icons/material/CurvedPlus.svg'
 import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector/index'
@@ -12,6 +14,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import PrimaryButton from './Buttons/PrimaryButton'
 import LanguageSelect from './LanguageSelect'
+import Button from './Buttons/Button'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()
@@ -52,26 +55,24 @@ const Header: FC = observer(() => {
             <Auth onLogin={() => setShowLogin(true)} />
           </div>
         </div>
-        <div className='flex py-2 mx-4 space-x-4 s:py-4 s:mx-0 s:space-x-6 m:space-x-8'>
+        <div className='flex py-2 mx-4 space-x-4 s:space-x-6 m:space-x-8'>
           <Logo />
-          <div className='flex space-x-6 w-full'>
-            <CategoriesSelector />
+          <div className='flex w-full'>
+            <div className='-mr-3 z-10'>
+              <CategoriesSelector />
+            </div>
             <Search />
           </div>
-          <PrimaryButton
-            className='hidden s:flex h-10 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
+          <Button
+            className='h-10 w-10 min-w-[40px] rounded-full bg-primary-500 text-white'
             onClick={async () => {
               if (!user) {
                 return setShowLogin(true)
               }
               return push(`/advert/create`)
             }}>
-            <span
-              className='capitalize-first text-white'
-              data-test-id='header-new-ad'>
-              {t('NEW_AD')}
-            </span>
-          </PrimaryButton>
+            <IcCurvedPlus />
+          </Button>
         </div>
       </div>
       {showLogin && (

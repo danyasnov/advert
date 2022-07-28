@@ -4,6 +4,7 @@ import IcMyLocation from 'icons/material/MyLocation.svg'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
+import {Send} from 'react-iconly'
 import Button from './Buttons/Button'
 import {getLocationCodes, getQueryValue} from '../helpers'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
@@ -30,7 +31,7 @@ const Search: FC = () => {
 
   return (
     <>
-      <div className='flex w-full border rounded-2 border-shadow-b divide-x divide-shadow-b'>
+      <div className='flex w-full border rounded-2 border-greyscale-200'>
         <SearchAutocomplete
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
@@ -68,8 +69,8 @@ const Search: FC = () => {
               },
             })
           }}
-          className='text-body-2 capitalize text-black-b py-2.5 px-3.5'>
-          {t('FIND')}
+          className='text-primary-500 px-5'>
+          <Send size={15} />
         </Button>
       </div>
       {width >= 768 && (
