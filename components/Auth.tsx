@@ -6,6 +6,7 @@ import IcLogin from 'icons/material/Login.svg'
 import {useRouter} from 'next/router'
 import {useClickAway} from 'react-use'
 import localforage from 'localforage'
+import IcProfile from 'icons/material/Profile.svg'
 import {SerializedCookiesState} from '../types'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
@@ -74,10 +75,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
           <Button
             onClick={() => setShowPopup(!showPopup)}
             id='user-menu-button'>
-            <UserAvatar url={user.imageUrl} size={4} name={user.name} />
-            <span className='ml-2 text-brand-b1 text-body-3 truncate max-w-100px inline-block'>
-              {user.name}
-            </span>
+            <UserAvatar url={user.imageUrl} size={10} name={user.name} />
           </Button>
           {showPopup && (
             <div
@@ -99,9 +97,8 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
       ) : (
         <>
           {showLogin && (
-            <Button className='flex' onClick={onLogin}>
-              <IcLogin className='fill-current text-brand-b1 mr-2 h-4 w-4' />
-              <span className='text-body-3 text-brand-b1'>{t('LOG_IN')}</span>
+            <Button className='h-10 w-10 min-w-[40px] ' onClick={onLogin}>
+              <IcProfile className='h-6 w-6' />
             </Button>
           )}
         </>

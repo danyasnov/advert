@@ -55,7 +55,7 @@ const SafetyLayout: FC = observer(() => {
       <MetaTags title={t('SECURITY_TITLE')} />
       <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
         <div className='flex items-center'>
-          <Logo size={width >= 768 ? 70 : 30} />
+          <Logo />
           <span className='ml-5 font-medium text-h-2 w-[350px] hidden m:block'>
             {t('LANDING_HEAD_TEXT')}
           </span>

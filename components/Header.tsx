@@ -25,7 +25,7 @@ const Header: FC = observer(() => {
   return (
     <header className='flex s:justify-center relative shadow-lg z-10'>
       <div className='header-width'>
-        <div className='flex s:justify-between px-4 py-2 border-b border-shadow-b s:px-0'>
+        <div className='flex s:justify-between px-4 py-2 s:px-0 mb-2'>
           <div className='flex  w-full s:w-auto space-x-4 items-center'>
             {/* <LinkButton */}
             {/*  onClick={notImplementedAlert} */}
@@ -52,7 +52,6 @@ const Header: FC = observer(() => {
             {/*  title={t('SAFETY')}> */}
             {/*  {t('SAFETY')} */}
             {/* </LinkWrapper> */}
-            <Auth onLogin={() => setShowLogin(true)} />
           </div>
         </div>
         <div className='flex py-2 mx-4 space-x-4 s:space-x-6 m:space-x-8'>
@@ -73,6 +72,7 @@ const Header: FC = observer(() => {
             }}>
             <IcCurvedPlus />
           </Button>
+          <Auth onLogin={() => setShowLogin(true)} />
         </div>
       </div>
       {showLogin && (
