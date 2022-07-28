@@ -22,11 +22,13 @@ const SliderButton: FC<Props> = ({
     <Button
       disabled={disabled}
       onClick={onClick}
-      className={`w-8 h-8 bg-white rounded-full shadow-xl ${className || ''}`}>
+      className={`w-8 h-8 bg-primary-500 rounded-full shadow-xl ${
+        className || ''
+      }`}>
       {direction === 'left' ? (
-        <IcKeyboardArrowLeft className='fill-current text-black-c w-4 h-4' />
+        <IcKeyboardArrowLeft className='fill-current text-white w-4 h-4' />
       ) : (
-        <IcKeyboardArrowRight className='fill-current text-black-c w-4 h-4' />
+        <IcKeyboardArrowRight className='fill-current text-white w-4 h-4' />
       )}
     </Button>
   )

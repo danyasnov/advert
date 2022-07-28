@@ -124,7 +124,7 @@ const MainLayout: FC = observer(() => {
                 rightContent={
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-3 text-brand-b1'
+                    className='text-body-1 text-primary-500 font-bold'
                     href={p.url}>
                     {t('SEE_ALL')}
                   </LinkWrapper>
@@ -138,7 +138,7 @@ const MainLayout: FC = observer(() => {
                   rightContent={
                     <LinkWrapper
                       title={t('SEE_ALL')}
-                      className='text-body-3 text-brand-b1'
+                      className='text-body-1 text-primary-500 font-bold'
                       href={locationCodes}>
                       {t('SEE_ALL')}
                     </LinkWrapper>
@@ -163,7 +163,7 @@ const MainLayout: FC = observer(() => {
                 {!isEmpty(products) && (
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-3 text-brand-b1'
+                    className='text-body-1 text-primary-500 font-bold'
                     href={locationCodes}>
                     <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
                   </LinkWrapper>
