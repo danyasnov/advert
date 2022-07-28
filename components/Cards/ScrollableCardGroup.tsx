@@ -43,7 +43,11 @@ const ScrollableCardGroup: FC<Props> = ({
       <AdvertNotFoundWithDescription />
     )
   }
-  if (window.location.hostname.includes('vooxee.com')) return null
+  if (
+    typeof window !== 'undefined' &&
+    window.location.hostname.includes('vooxee.com')
+  )
+    return null
   return (
     <div className='flex flex-col m:items-start relative'>
       <InfiniteScroll
