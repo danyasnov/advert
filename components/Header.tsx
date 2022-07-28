@@ -63,14 +63,21 @@ const Header: FC = observer(() => {
             <Search />
           </div>
           <Button
-            className='h-10 w-10 min-w-[40px] rounded-full bg-primary-500 text-white'
+            className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
             onClick={async () => {
               if (!user) {
                 return setShowLogin(true)
               }
               return push(`/advert/create`)
             }}>
-            <IcCurvedPlus />
+            <div className='block m:hidden'>
+              <IcCurvedPlus />
+            </div>
+            <div className='hidden m:block'>
+              <span className='text-body-2 px-4' data-test-id='header-new-ad'>
+                {t('NEW_AD')}
+              </span>
+            </div>
           </Button>
           <Auth onLogin={() => setShowLogin(true)} />
         </div>
