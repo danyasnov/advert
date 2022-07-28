@@ -25,6 +25,7 @@ const nextConfig = {
       'adverto.sale',
       'cache.advretoapi.com',
       'cache.venera.city',
+      'vooxee.com',
     ],
   },
   publicRuntimeConfig: {

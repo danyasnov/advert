@@ -35,28 +35,28 @@ const Search: FC = () => {
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
         />
-        <div className='flex'>
-          <Button
-            id='location'
-            onClick={() => setLocationModalShow(true)}
-            className='flex min-w-10 shrink-0'>
-            <div className='flex flex-row items-center px-3.5'>
-              <IcMyLocation
-                width={24}
-                height={23}
-                className='fill-current text-black-c'
-              />
-              {!!address && (
-                <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'>
-                  {address}
-                </span>
-              )}
-            </div>
-          </Button>
-          <div className='hidden m:block absolute top-28'>
-            <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
-          </div>
-        </div>
+        {/* <div className='flex'> */}
+        {/*  <Button */}
+        {/*    id='location' */}
+        {/*    onClick={() => setLocationModalShow(true)} */}
+        {/*    className='flex min-w-10 shrink-0'> */}
+        {/*    <div className='flex flex-row items-center px-3.5'> */}
+        {/*      <IcMyLocation */}
+        {/*        width={24} */}
+        {/*        height={23} */}
+        {/*        className='fill-current text-black-c' */}
+        {/*      /> */}
+        {/*      {!!address && ( */}
+        {/*        <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'> */}
+        {/*          {address} */}
+        {/*        </span> */}
+        {/*      )} */}
+        {/*    </div> */}
+        {/*  </Button> */}
+        {/*  <div className='hidden m:block absolute top-28'> */}
+        {/*    <LocationPopup onOpenLocation={() => setLocationModalShow(true)} /> */}
+        {/*  </div> */}
+        {/* </div> */}
 
         <Button
           type='submit'
