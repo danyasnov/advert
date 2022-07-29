@@ -101,28 +101,13 @@ const CategoriesDesktopSelector: FC = observer(() => {
         />
       </div>
       {!isEmpty(fourthLevelItems) && (
-        <div className='pb-4 hidden m:block'>
+        <div className='pb-4'>
           <Col
             items={fourthLevelItems}
             urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
             activeId={fourthColumnActiveCategory?.id}
             onMouseEnter={handleHoverFourthCol}
           />
-        </div>
-      )}
-
-      {isEmpty(fourthLevelItems) && (
-        <div className='hidden m:block'>
-          <div className='pl-12 pt-6 l:pl-6'>
-            <ImageWrapper
-              key={activeCategory?.slug}
-              type={`/img/categories/${activeCategory?.slug}.png`}
-              alt={activeCategory?.slug}
-              width={288}
-              height={288}
-              className='rounded-12'
-            />
-          </div>
         </div>
       )}
     </div>

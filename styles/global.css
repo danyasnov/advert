@@ -33,7 +33,7 @@
 }
 
 .categories-selector-item {
-    @apply flex w-full px-4 py-2 items-center justify-start text-body-2 h-10 hover:bg-nc-accent text-left whitespace-normal
+    @apply flex w-full px-4 py-2 items-center justify-start text-body-2 h-10 text-left whitespace-normal
 }
 
 .segmented-option-border-fix:last-child {

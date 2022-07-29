@@ -61,14 +61,8 @@ const Search: FC = () => {
 
         <Button
           type='submit'
-          onClick={() => {
-            router.push({
-              pathname: `/${getLocationCodes()}`,
-              query: {
-                q: selectedItem,
-              },
-            })
-          }}
+          id='location'
+          onClick={() => setLocationModalShow(true)}
           className='text-primary-500 px-5'>
           <Send size={15} />
         </Button>

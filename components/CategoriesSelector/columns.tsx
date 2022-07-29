@@ -60,7 +60,7 @@ class ColItem extends PureComponent<ColItemProps> {
         preventDefault={isMobile && !isActive && category.id !== 0}
         title={name}
         className={`${
-          isActive ? 'bg-nc-accent' : ''
+          isActive ? 'font-bold text-primary-500' : ''
         } categories-selector-item text-black-b first:text-brand-b1 first:border-b`}
         href={href}>
         {name}
