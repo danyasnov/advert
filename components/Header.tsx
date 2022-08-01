@@ -54,7 +54,7 @@ const Header: FC = observer(() => {
             {/* </LinkWrapper> */}
           </div>
         </div>
-        <div className='flex py-2 mx-4 space-x-4 s:space-x-6 m:space-x-8'>
+        <div className='flex pt-2 pb-5 space-x-4 s:space-x-6 m:space-x-8'>
           <Logo />
           <div className='flex w-full'>
             <div className='-mr-3 z-10'>
@@ -70,8 +70,8 @@ const Header: FC = observer(() => {
               }
               return push(`/advert/create`)
             }}>
-            <div className='block m:hidden'>
-              <IcCurvedPlus />
+            <div className='block m:hidden text-white'>
+              <IcCurvedPlus className='text-white fill-current w-7 h-7' />
             </div>
             <div className='hidden m:block'>
               <span className='text-body-2 px-4' data-test-id='header-new-ad'>

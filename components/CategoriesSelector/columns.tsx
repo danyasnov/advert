@@ -61,7 +61,7 @@ class ColItem extends PureComponent<ColItemProps> {
         title={name}
         className={`${
           isActive ? 'font-bold text-primary-500' : ''
-        } categories-selector-item text-black-b first:text-brand-b1 first:border-b`}
+        } categories-selector-item text-black-b`}
         href={href}>
         {name}
       </LinkWrapper>
