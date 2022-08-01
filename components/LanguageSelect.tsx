@@ -17,8 +17,6 @@ const languageOptions = [
   {value: 'en', label: 'English'},
   {value: 'uk', label: 'Українська'},
   {value: 'ru', label: 'Русский'},
-  {value: 'tr', label: 'Türk'},
-  {value: 'ro', label: 'Română'},
 ]
 const withLangIcons = (opts) =>
   opts.map((o) => ({

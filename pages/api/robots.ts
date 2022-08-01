@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 
-const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
+const locales = ['en', 'el', 'ru', 'uk']
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   const {headers} = req

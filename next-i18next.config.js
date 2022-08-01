@@ -1,6 +1,6 @@
 const path = require('path')
 
-const locales = ['en', 'el', 'ro', 'ru', 'tr', 'uk']
+const locales = ['en', 'el', 'ru', 'uk']
 const getDomains = (domains = []) => {
   const result = []
   domains.forEach((domain) => {

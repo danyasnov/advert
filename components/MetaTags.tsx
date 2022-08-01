@@ -32,12 +32,6 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
     case 'el':
       yandexMetrikaId = '631377a5229beaf4'
       break
-    case 'tr':
-      yandexMetrikaId = '08426b2eedf287ce'
-      break
-    case 'ro':
-      yandexMetrikaId = '3deab17f0179bbf6'
-      break
     case 'uk':
       yandexMetrikaId = '2c9bed981a52783d'
       break

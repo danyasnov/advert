@@ -81,22 +81,6 @@ const socials = {
   //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
   //   },
   // ],
-  // ro: [
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  // ],
-  // tr: [
-  //   {
-  //     ...fb,
-  //     url: 'https://www.facebook.com/Adverto_TR-102236565533884',
-  //   },
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  // ],
 }
 
 const Socials: FC = observer(() => {

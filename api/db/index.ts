@@ -16,10 +16,8 @@ const sequelize = new Sequelize(
 const langs = {
   en: 2,
   ru: 1,
-  ro: 57,
   el: 25,
   uk: 67,
-  tr: 38,
 }
 const cache = new Map()
 
