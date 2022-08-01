@@ -1,21 +1,24 @@
 const fs = require('fs')
 const axios = require('axios')
 
-const token = 'proj_pub_InQLPlQ9dTs6LjID1IbA8Q'
+const token = 'proj_pub_57QWstid1FDB-Z9-pwExRw'
 const getUrl = ({id, locale}) => {
   return `https://webtranslateit.com/api/projects/${token}/files/${id}/locales/${locale}`
 }
 const locales = [
-  // {id: 848359, locale: 'en'},
-  {id: 848364, locale: 'el'},
-  {id: 848366, locale: 'ro'},
-  {id: 848360, locale: 'ru'},
-  {id: 848365, locale: 'tr'},
-  {id: 848367, locale: 'uk'},
+  {id: 923219, locale: 'el'},
+  {id: 923220, locale: 'ru'},
+  {id: 923221, locale: 'uk'},
 ]
 
 const fetchTranslations = async () => {
-  const enRes = await axios.get(getUrl({id: 848359, locale: 'en'}))
+  let enRes
+  try {
+    enRes = await axios.get(getUrl({id: 923218, locale: 'en'}))
+  } catch (e) {
+    console.error(e.message)
+    throw e.message
+  }
   const en = Object.fromEntries(
     Object.entries(enRes.data).map(([key, val]) =>
       val === null ? [key, key] : [key, val],
