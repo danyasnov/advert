@@ -3,6 +3,7 @@ const lineClamp = require('@tailwindcss/line-clamp')
 const typography = require('@tailwindcss/typography')
 const tooltipArrow = require('tailwindcss-tooltip-arrow-after')
 const forms = require('@tailwindcss/forms')
+const scrollbar = require('tailwind-scrollbar')
 
 const capitalizeFirst = plugin(({addUtilities}) => {
   const newUtilities = {
@@ -103,7 +104,7 @@ module.exports = {
         'screen-offset-8': 'calc(100vw - 32px)',
       },
       gridTemplateColumns: {
-        'category-selector-m': '202px 202px 202px 336px',
+        'category-selector-m': '28% 22% 22% 28%',
         'category-selector-l': '298px 299px 299px 312px',
       },
       colors: {
@@ -264,5 +265,6 @@ module.exports = {
     plugin(({addVariant}) => {
       addVariant('not-last', '&:not(:last-child)')
     }),
+    scrollbar,
   ],
 }

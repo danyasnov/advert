@@ -71,9 +71,9 @@ const CategoriesDesktopSelector: FC = observer(() => {
   return (
     <div
       className='absolute top-[108px] inset-x-0 z-10 bg-white
-       s:px-8 m:px-10 l:px-18 shadow-xl category-selector-width m-auto
-       grid grid-cols-4 m:grid-cols-category-selector-m l:grid-cols-category-selector-l'>
-      <div className='pb-4 bg-greyscale-50'>
+       shadow-xl category-selector-width m-auto
+       grid grid-cols-4 m:grid-cols-category-selector-m  h-[450px]'>
+      <div className='bg-greyscale-50 s:pl-8 m:pl-10 l:pl-18 overflow-y-scroll'>
         {categoriesWithoutAll.map((c) => (
           <FirstColItem
             category={c}
@@ -84,7 +84,9 @@ const CategoriesDesktopSelector: FC = observer(() => {
           />
         ))}
       </div>
-      <div className='pb-4'>
+      <div
+        className='border-r border-greyscale-100 overflow-y-scroll h-[450px]'
+        style={{scrollbarColor: '#7210FF'}}>
         <Col
           urlPath={activeCategory?.slug}
           activeId={secondColumnActiveCategory?.id}
@@ -92,7 +94,12 @@ const CategoriesDesktopSelector: FC = observer(() => {
           onMouseEnter={handleHoverSecondCol}
         />
       </div>
-      <div className='pb-4'>
+      <div
+        className={
+          thirdLevelItems.length
+            ? 'border-r border-greyscale-100 overflow-y-scroll'
+            : ''
+        }>
         <Col
           items={thirdLevelItems}
           urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}`}
@@ -100,16 +107,14 @@ const CategoriesDesktopSelector: FC = observer(() => {
           onMouseEnter={handleHoverThirdCol}
         />
       </div>
-      {!isEmpty(fourthLevelItems) && (
-        <div className='pb-4'>
-          <Col
-            items={fourthLevelItems}
-            urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
-            activeId={fourthColumnActiveCategory?.id}
-            onMouseEnter={handleHoverFourthCol}
-          />
-        </div>
-      )}
+      <div className='s:pr-8 m:pr-10 l:pr-18 overflow-y-scroll'>
+        <Col
+          items={fourthLevelItems}
+          urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
+          activeId={fourthColumnActiveCategory?.id}
+          onMouseEnter={handleHoverFourthCol}
+        />
+      </div>
     </div>
   )
 })
