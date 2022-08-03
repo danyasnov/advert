@@ -14,7 +14,6 @@ import LocationDesktop from './Location/LocationDesktop'
 import LocationPopup from './Location/LocationPopup'
 
 const Search: FC = () => {
-  const cookies = parseCookies()
   const router = useRouter()
   const {width} = useWindowSize()
 
@@ -24,10 +23,6 @@ const Search: FC = () => {
   const {t} = useTranslation()
   const [locationModalShow, setLocationModalShow] = useState(false)
   useDisableBodyScroll(locationModalShow)
-  const [address, setAddress] = useState(null)
-  useEffect(() => {
-    setAddress(cookies.address ? cookies.address : null)
-  }, [cookies])
 
   return (
     <>

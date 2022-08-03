@@ -19,7 +19,12 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
 
     setShow(state.showLocationPopup !== 'false')
   }, [])
+  const cookies = parseCookies()
 
+  const [address, setAddress] = useState(null)
+  useEffect(() => {
+    setAddress(cookies.address ? cookies.address : null)
+  }, [cookies])
   const onClick = () => {
     setCookiesObject({showLocationPopup: false})
     setShow(false)
@@ -28,6 +33,7 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
   if (!show) return null
   return (
     <div className='flex flex-col w-40 rounded-2xl p-4 text-body-14 shadow-2xl bg-white break-words location-popup-arrow-top items-center'>
+      <span className='text-black-b mb-4'>{address}</span>
       <span className='text-black-b mb-4'>
         {t('LOCATION_MESSAGE_QUESTION')}
       </span>

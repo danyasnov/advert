@@ -25,7 +25,7 @@
 }
 
 .category-selector-width {
-    @apply s:w-768px m:w-1024px l:w-1440px
+    @apply s:w-768px m:w-1024px l:w-screen
 }
 
 .slider-button {
