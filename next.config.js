@@ -27,6 +27,7 @@ const nextConfig = {
       'cache.venera.city',
       'vooxee.com',
       'cache.vooxee.com',
+      'vooxee.venera.city',
     ],
   },
   publicRuntimeConfig: {
