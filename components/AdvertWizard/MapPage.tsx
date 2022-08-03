@@ -310,7 +310,8 @@ const MapPage: FC = () => {
             <PrimaryButton
               onClick={onSubmit}
               id='ad-apply-button'
-              disabled={!label}>
+              // disabled={!label}
+            >
               {t('APPLY')}
             </PrimaryButton>
           </div>
