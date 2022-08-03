@@ -41,10 +41,10 @@ const AdvertFormField: FC<Props> = ({
             labelClassName || ''
           }`}>
           {!!label && (
-            <span className='text-body-1'>
+            <span className='text-body-16'>
               {label}
               {isRequired && (
-                <span className='text-body-1 text-nc-primary ml-1'>*</span>
+                <span className='text-body-16 text-nc-primary ml-1'>*</span>
               )}
             </span>
           )}

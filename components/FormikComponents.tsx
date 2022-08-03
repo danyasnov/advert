@@ -206,7 +206,7 @@ export const FormikCreateFields: FC<{
 
 export const FormikTitle: FC<{label: string}> = ({label}) => {
   return (
-    <div className='text-nc-primary-text text-h-3 font-medium'>{label}</div>
+    <div className='text-nc-primary-text text-h-6 font-medium'>{label}</div>
   )
 }
 
@@ -221,7 +221,7 @@ export const FormikCheckboxesGroup: FC<{
     <div>
       {!!description && (
         <div className='bg-nc-info rounded-lg py-3 px-4 mb-4'>
-          <span className='text-body-2'>{t(description)}</span>
+          <span className='text-body-14'>{t(description)}</span>
         </div>
       )}
       <div className='flex flex-wrap'>
@@ -232,7 +232,7 @@ export const FormikCheckboxesGroup: FC<{
             <Button
               onClick={() => setFieldValue(name, !value)}
               key={f.id}
-              className={`text-body-1 text-nc-primary-text p-4 rounded-lg mr-3 mb-3 ${
+              className={`text-body-16 text-nc-primary-text p-4 rounded-lg mr-3 mb-3 ${
                 value ? 'bg-nc-accent' : 'bg-nc-back'
               }`}>
               {f.name}
@@ -342,7 +342,7 @@ export const FormikSegmented: FC<IFormikSegmented & FieldProps> = ({
         <Button
           key={o.label + o.value}
           onClick={() => setFieldValue(name, o)}
-          className={`h-7 text-body-2 text-black-c flex-1 border-t border-b
+          className={`h-7 text-body-14 text-black-c flex-1 border-t border-b
            border-shadow-b first:rounded-l-2xl last:rounded-r-2xl first:border-l
             last:border-r segmented-option-border-fix ${
               o?.value === value?.value ? 'bg-brand-a2' : ''
@@ -388,11 +388,11 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         format={format}
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
-        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-14 ${
           disableTrack ? 'ym-disable-keys' : ''
         } ${isValid ? 'border-nc-border' : 'border-error'}`}
       />
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
     </div>
   )
 }
@@ -440,7 +440,7 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
-    className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-2 ${
+    className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-14 ${
       disableTrack ? 'ym-disable-keys' : ''
     } ${isValid ? 'border-nc-border' : 'border-error'}`,
     onKeyDown: (e) => {
@@ -455,7 +455,7 @@ export const FormikText: FC<
   return (
     <div className='flex flex-col'>
       {Component}
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
     </div>
   )
 }
@@ -479,7 +479,7 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b ym-disable-keys text-body-2 ${
+          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b ym-disable-keys text-body-14 ${
             isValid ? 'border-shadow-b' : 'border-error'
           }`}
         />
@@ -496,7 +496,7 @@ export const FormikPassword: FC<
           )}
         </div>
       </div>
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
     </div>
   )
 }
@@ -511,12 +511,12 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   const {t} = useTranslation()
   const error = get(errors, name)
   const isValid = !error
-  const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-2 ${
+  const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-14 ${
     isValid ? '' : 'border-error'
   }`
   const mappedValue = Array.isArray(value) ? value : ['', '']
   return (
-    <div className='flex text-black-b text-body-2'>
+    <div className='flex text-black-b text-body-14'>
       <NumberFormat
         value={mappedValue[0]}
         onValueChange={({value: min}) => {
@@ -585,7 +585,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
           />
         </label>
       )}
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
     </div>
   )
 }
@@ -621,7 +621,7 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
         <label className='flex items-center justify-between'>
           {label && (
             <span
-              className={`text-nc-title text-body-1 whitespace-nowrap ${
+              className={`text-nc-title text-body-16 whitespace-nowrap ${
                 labelPosition === 'left' ? 'mr-3' : 'order-last ml-3'
               }`}>
               {label}
@@ -670,7 +670,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
         // eslint-disable-next-line react/jsx-props-no-spreading
         <MobileSelect {...props} />
       )}
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
     </>
   )
 }

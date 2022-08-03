@@ -31,7 +31,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
               className='rounded-xl'
               layout='fixed'
             />
-            <span className='text-nc-title text-body-1 mt-2'>{c.name}</span>
+            <span className='text-nc-title text-body-16 mt-2'>{c.name}</span>
           </Button>
         ))}
       </div>
@@ -60,7 +60,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
                       setSelected([...selected.slice(0, index + 1), c])
                     }
                   }}>
-                  <span className='text-nc-title text-body-1 font-normal w-full text-left'>
+                  <span className='text-nc-title text-body-16 font-normal w-full text-left'>
                     {c.name}
                   </span>
                 </Button>

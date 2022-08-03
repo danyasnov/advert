@@ -49,17 +49,17 @@ const ProductDescription: FC = observer(() => {
             {!isUserAdv && userHash && <ProductNotes hash={hash} />}
           </div>
           <div className='ml-0 s:ml-4 flex space-x-4'>
-            <div className='text-black-b text-body-3 flex items-center '>
+            <div className='text-black-b text-body-12 flex items-center '>
               <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
               {favoriteCounter}
             </div>
-            <div className='text-black-b text-body-3 flex items-center'>
+            <div className='text-black-b text-body-12 flex items-center'>
               <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
               {views}
             </div>
             <span
               suppressHydrationWarning
-              className='text-black-b text-body-3 whitespace-nowrap flex items-center'>
+              className='text-black-b text-body-12 whitespace-nowrap flex items-center'>
               {unixToDateTime(dateUpdated)}
             </span>
           </div>
@@ -95,7 +95,7 @@ const ProductDescription: FC = observer(() => {
           productHash={product.advert.hash}
         />
 
-        <div className='flex justify-end mt-4 text-body-2 flex-col s:flex-row s:space-x-4'>
+        <div className='flex justify-end mt-4 text-body-14 flex-col s:flex-row s:space-x-4'>
           {/* <SecondaryButton */}
           {/*  onClick={notImplementedAlert} */}
           {/*  className='mb-2 s:mb-0'> */}
@@ -117,7 +117,7 @@ const DescriptionTab: FC = observer(() => {
 
   if (!product.advert.description) return null
   return (
-    <div className='bg-white p-4 text-black-b text-body-1 break-words whitespace-pre-wrap'>
+    <div className='bg-white p-4 text-black-b text-body-16 break-words whitespace-pre-wrap'>
       {product.advert.description}
     </div>
   )
@@ -127,7 +127,7 @@ const CharacteristicsTab: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
   return (
-    <div className='bg-white p-4 text-black-c text-body-3 space-y-2'>
+    <div className='bg-white p-4 text-black-c text-body-12 space-y-2'>
       {product.advert.fields.map((field) => {
         return (
           <div className='flex justify-between' key={field.fieldNameText}>

@@ -41,13 +41,15 @@ const Card: FC<Props> = ({product}) => {
       <div className='p-4 flex flex-col justify-between h-48 s:h-49 l:h-10 bg-brand-a2'>
         <div className='flex flex-col h-full'>
           <div className='flex items-start mb-1'>
-            <span className='text-body-2 text-black-b line-clamp-3 flex-1 break-words'>
+            <span className='text-body-14 text-black-b line-clamp-3 flex-1 break-words'>
               {title}
             </span>
             <IcMoreVert className='fill-current text-black-c h-4 w-4' />
           </div>
-          <span className='text-h-2 text-black-b font-bold mb-1'>{price}</span>
-          <span className='text-body-3 text-black-c line-through'>
+          <span className='text-body-14 text-black-b font-bold mb-1'>
+            {price}
+          </span>
+          <span className='text-body-12 text-black-c line-through'>
             {oldPrice}
           </span>
           <Button
@@ -57,7 +59,7 @@ const Card: FC<Props> = ({product}) => {
             {t('CONTACT_SELLER')}
           </Button>
         </div>
-        <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
+        <div className='text-body-10 text-black-c flex justify-between border-t border-shadow-b pt-1'>
           <span suppressHydrationWarning>{unixToDate(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>

@@ -34,10 +34,10 @@ const AdvertNotFoundWithDescription: FC = () => {
         <Placeholder />
         <Placeholder />
       </div>
-      <h2 className='text-h-2 text-black-b font-bold flex justify-center mb-4'>
+      <h2 className='text-body-14 text-black-b font-bold flex justify-center mb-4'>
         {t('NOTHING_FIND')}
       </h2>
-      <span className='text-body-1 text-black-b text-center'>
+      <span className='text-body-16 text-black-b text-center'>
         {t('NOTHING_FIND_TEXT')}
       </span>
     </div>

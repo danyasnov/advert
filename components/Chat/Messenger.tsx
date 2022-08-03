@@ -92,7 +92,7 @@ const Messenger: FC<Props> = ({chatStore, onBack, user}) => {
             <>
               <div className='flex items-center mb-5'>
                 <div className='w-full h-px bg-gray-200' />
-                <span className='px-2 text-body-2 text-gray-500'>
+                <span className='px-2 text-body-14 text-gray-500'>
                   {title === today ? t('TODAY') : title}
                 </span>
                 <div className='w-full h-px bg-gray-200' />

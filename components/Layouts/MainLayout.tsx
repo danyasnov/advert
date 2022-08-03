@@ -101,7 +101,7 @@ const MainLayout: FC = observer(() => {
           className={`s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
           <div className='mb-2'>
             <Button
-              className='flex h-10 bg-brand-a1 text-body-2 px-3.5 py-3 rounded-2 whitespace-nowrap'
+              className='flex h-10 bg-brand-a1 text-body-14 px-3.5 py-3 rounded-2 whitespace-nowrap'
               onClick={() => {
                 if (!user) {
                   return setShowLogin(true)
@@ -124,7 +124,7 @@ const MainLayout: FC = observer(() => {
                 rightContent={
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-1 text-primary-500 font-bold'
+                    className='text-body-16 text-primary-500 font-bold'
                     href={p.url}>
                     {t('SEE_ALL')}
                   </LinkWrapper>
@@ -138,7 +138,7 @@ const MainLayout: FC = observer(() => {
                   rightContent={
                     <LinkWrapper
                       title={t('SEE_ALL')}
-                      className='text-body-1 text-primary-500 font-bold'
+                      className='text-body-16 text-primary-500 font-bold'
                       href={locationCodes}>
                       {t('SEE_ALL')}
                     </LinkWrapper>
@@ -163,7 +163,7 @@ const MainLayout: FC = observer(() => {
                 {!isEmpty(products) && (
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-1 text-primary-500 font-bold'
+                    className='text-body-16 text-primary-500 font-bold'
                     href={locationCodes}>
                     <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
                   </LinkWrapper>

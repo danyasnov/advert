@@ -111,16 +111,16 @@ const AdvertPhotosContainer: ComponentClass<
 
   return (
     <div className='mb-4 w-full relative'>
-      <div className='text-body-2 text-nc-title mb-3 hidden s:flex l:mb-3'>
+      <div className='text-body-14 text-nc-title mb-3 hidden s:flex l:mb-3'>
         <span className='mr-1'>{t('ADD_PHOTO_HINT')}</span>
         <LinkButton
           onClick={() => {
             setUploadCounter(uploadCounter + 1)
           }}>
-          <span className='text-body-2'>{t('ADD_PHOTO_HINT_1')}</span>
+          <span className='text-body-14'>{t('ADD_PHOTO_HINT_1')}</span>
         </LinkButton>
       </div>
-      <p className='text-body-2 text-nc-title mb-3 s:hidden'>
+      <p className='text-body-14 text-nc-title mb-3 s:hidden'>
         {t('SELECT_PHOTO_FROM_PHONE')}
       </p>
       <div

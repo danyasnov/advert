@@ -55,15 +55,15 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={currency?.code}
-          className='w-full text-nc-primary-text text-body-1 outline-none manual-outline'
+          className='w-full text-nc-primary-text text-body-16 outline-none manual-outline'
         />
         {!!safeDealPrice && (
-          <span className='text-body-4 text-nc-secondary-text mt-1'>
+          <span className='text-body-10 text-nc-secondary-text mt-1'>
             {t('SAFE_DEAL_TIP', {price: safeDealPrice})}
           </span>
         )}
       </div>
-      <span className='text-body-3 text-error'>{error}</span>
+      <span className='text-body-12 text-error'>{error}</span>
       {size(currencies) > 1 && (
         <div className='mt-2'>
           <RadioButtons

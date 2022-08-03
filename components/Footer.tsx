@@ -49,7 +49,7 @@ const Footer: FC = observer(() => {
           {mainCountriesIds.map((id) => (
             <LinkWrapper
               key={id}
-              className='text-brand-b1 text-body-3'
+              className='text-brand-b1 text-body-12'
               href={`/${countriesById[id]?.isoCode}/all`}
               title={countriesById[id]?.title}>
               {countriesById[id]?.title}
@@ -83,7 +83,7 @@ const Footer: FC = observer(() => {
             className='s:col-span-2 m:col-span-3 l:col-span-4'
             body={
               <>
-                <div className='text-body-3 text-black-b capitalize-first mb-2 l:mb-4'>
+                <div className='text-body-12 text-black-b capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
                 <div className='flex flex-wrap items-center justify-around s:justify-start'>
@@ -135,7 +135,7 @@ const Footer: FC = observer(() => {
                 {ids.map((id) => (
                   <LinkWrapper
                     title={categoriesById[id]?.name}
-                    className='text-body-3 text-brand-b1 whitespace-nowrap'
+                    className='text-body-12 text-brand-b1 whitespace-nowrap'
                     href={`/all/all/${categoriesById[id]?.slug}`}
                     key={id}>
                     {categoriesById[id]?.name}
@@ -161,48 +161,48 @@ const Footer: FC = observer(() => {
             <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/p/terms-and-conditions'>
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('RULES')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/p/rooles/general-requirements-for-adverts'>
                 {t('RULES')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('COOKIES_POLICY')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/p/cookies-policy'>
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('SAFETY')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/safety'>
                 {t('SAFETY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('SUPPORT')}
-                className='text-brand-b1 text-body-3'
+                className='text-brand-b1 text-body-12'
                 href='/support'>
                 {t('SUPPORT')}
               </LinkWrapper>
               {/* <LinkWrapper */}
               {/*  href='https://old.adverto.sale' */}
               {/*  title='old.adverto.sale' */}
-              {/*  className='text-brand-b1 text-body-3'> */}
+              {/*  className='text-brand-b1 text-body-12'> */}
               {/*  old.adverto.sale */}
               {/* </LinkWrapper> */}
             </div>
-            <div className='text-body-3 my-2 s:my-4 text-black-b'>
+            <div className='text-body-12 my-2 s:my-4 text-black-b'>
               © 2022—{new Date().getFullYear()} Vooxee
             </div>
           </div>
@@ -224,7 +224,7 @@ const Section: FC<Props> = ({title, body, headerLink, className}) => {
     <div className={`flex flex-col ${className || ''}`}>
       <div className='flex justify-between pb-2 border-b mb-2 border-shadow-b'>
         {title && (
-          <div className='text-body-2 text-black-b font-bold capitalize-first '>
+          <div className='text-body-14 text-black-b font-bold capitalize-first '>
             {title}
           </div>
         )}

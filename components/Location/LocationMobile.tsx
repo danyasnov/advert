@@ -26,7 +26,7 @@ const LocationMobile: FC<Props> = ({isOpen, onClose}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
       <div className='flex flex-col w-full absolute bg-white z-10 left-0'>
         <div className='px-4 s:px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-          <span className='text-h-2 text-black-b font-bold'>
+          <span className='text-body-14 text-black-b font-bold'>
             {t('LOCATION')}
           </span>
           <Button onClick={onClose}>

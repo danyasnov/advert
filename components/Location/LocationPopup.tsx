@@ -27,7 +27,7 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
 
   if (!show) return null
   return (
-    <div className='flex flex-col w-40 rounded-2xl p-4 text-body-2 shadow-2xl bg-white break-words location-popup-arrow-top items-center'>
+    <div className='flex flex-col w-40 rounded-2xl p-4 text-body-14 shadow-2xl bg-white break-words location-popup-arrow-top items-center'>
       <span className='text-black-b mb-4'>
         {t('LOCATION_MESSAGE_QUESTION')}
       </span>

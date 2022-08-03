@@ -390,7 +390,7 @@ const FormPage: FC = observer(() => {
           }}>
           <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
         </Button>
-        <h2 className='text-nc-title font-medium text-h-2'>
+        <h2 className='text-nc-title font-medium text-body-14'>
           {category.data.name}
         </h2>
       </div>
@@ -491,7 +491,7 @@ const FormPage: FC = observer(() => {
                           name='photos'
                           maxPhotos={category.data.maxPhotos}
                         />
-                        <p className='text-body-3 text-nc-secondary-text mb-6 mt-2'>
+                        <p className='text-body-12 text-nc-secondary-text mb-6 mt-2'>
                           {t('TIP_FOR_ADDING_A_PHOTO', {
                             maxPhotos: category.data.maxPhotos,
                           })}
@@ -516,7 +516,7 @@ const FormPage: FC = observer(() => {
                           categoryId={category.data.id}
                           maxVideoDuration={category.data.maxVideoDuration}
                         />
-                        <p className='text-body-3 text-nc-secondary-text mb-6 mt-2 whitespace-pre-wrap'>
+                        <p className='text-body-12 text-nc-secondary-text mb-6 mt-2 whitespace-pre-wrap'>
                           {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
                             descriptionLengthMax: `${
                               category.data.maxVideoDuration || 30
@@ -757,7 +757,7 @@ const FormPage: FC = observer(() => {
                             setShowAddNumber(true)
                           }}
                           disabled={!!phoneNumber}
-                          className={`w-full text-body-1 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
+                          className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
                             phoneNumber
                               ? 'text-nc-disabled bg-nc-back'
                               : 'text-nc-primary-text'

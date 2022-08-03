@@ -18,9 +18,11 @@ const DevBanner: FC = () => {
   if (!show) return null
   return (
     <div className='fixed inset-x-0 bottom-0 bg-shadow-overlay text-white flex flex-col s:flex-row justify-between px-4 s:px-8 m:px-10 items-center py-2 z-10'>
-      <h5 className='text-h-5 font-bold mb-2 s:mb-0'>{t('COOKIES_WARNING')}</h5>
+      <h5 className='text-body-14 font-bold mb-2 s:mb-0'>
+        {t('COOKIES_WARNING')}
+      </h5>
       <Button
-        className='text-body-3 p-2 bg-brand-a1 rounded'
+        className='text-body-12 p-2 bg-brand-a1 rounded'
         onClick={() => {
           toggleCookiesWarnVisibility()
           setCookiesObject({cookieAccepted: true})

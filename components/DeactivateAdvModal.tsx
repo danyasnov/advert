@@ -32,7 +32,7 @@ const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full'>
         <div className='px-3 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-          <span className='text-h-2 text-black-b font-bold'>
+          <span className='text-body-14 text-black-b font-bold'>
             {t('REMOVE_FROM_SALE')}
           </span>
           <Button onClick={onClose}>
@@ -48,7 +48,7 @@ const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
               width={163}
               height={105}
             />
-            <span className='text-black-b text-body-3 font-bold'>
+            <span className='text-black-b text-body-12 font-bold'>
               {advert.title}
             </span>
           </div>

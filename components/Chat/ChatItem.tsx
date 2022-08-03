@@ -38,15 +38,15 @@ const ChatItem: FC<Props> = ({chat, onClick}) => {
         </div>
         <div className='flex flex-col w-[228px] ml-4 justify-evenly '>
           <div className='flex'>
-            <p className='truncate text-body-2'>
+            <p className='truncate text-body-14'>
               {interlocutor.name}
               {interlocutor.surname}
             </p>
             {lastMessage && (
-              <p className='text-body-3'>{unixMlToDate(lastMessage.date)}</p>
+              <p className='text-body-12'>{unixMlToDate(lastMessage.date)}</p>
             )}
           </div>
-          <p className='text-body-1'>{product.title}</p>
+          <p className='text-body-16'>{product.title}</p>
         </div>
       </div>
       {lastMessage && (
@@ -56,7 +56,7 @@ const ChatItem: FC<Props> = ({chat, onClick}) => {
           )}
           {!!newMessagesCount && (
             <div className='w-6 h-6 bg-primary-100 rounded-full flex justify-center items-center'>
-              <p className='text-body-3 text-primary-500 font-semibold'>
+              <p className='text-body-12 text-primary-500 font-semibold'>
                 {newMessagesCount}
               </p>
             </div>

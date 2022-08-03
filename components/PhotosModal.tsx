@@ -127,7 +127,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       </div>
       {items.length > 1 && (
         <div className='block  absolute right-1/2 left-1/2 bottom-5 l:bottom-24'>
-          <span className='text-white bg-shadow-overlay rounded p-1 text-body-2 whitespace-nowrap'>
+          <span className='text-white bg-shadow-overlay rounded p-1 text-body-14 whitespace-nowrap'>
             {activePhotoIndex + 1} / {items.length}
           </span>
         </div>

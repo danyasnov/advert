@@ -14,7 +14,7 @@ const Header: FC = observer(() => {
       <div className='w-full l:w-1208px flex items-center justify-between'>
         <div className='flex items-center'>
           <Logo />
-          <h1 className='ml-8 nc-title font-semibold text-headline-8 s:text-headline-6'>
+          <h1 className='ml-8 nc-title font-semibold text-h-5 s:text-h-3'>
             {t('NEW_AD')}
           </h1>
         </div>

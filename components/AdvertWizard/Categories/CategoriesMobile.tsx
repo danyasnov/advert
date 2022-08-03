@@ -23,7 +23,7 @@ const CategoryButton: FC<{
               <ImageWrapper type={url} width={24} height={24} alt='slug' />
             </div>
           )}
-          <span className='text-body-1 text-nc-primary-text'>
+          <span className='text-body-16 text-nc-primary-text'>
             {category.name}
           </span>
         </div>

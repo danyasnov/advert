@@ -229,14 +229,16 @@ const MapPage: FC = () => {
             }}>
             <IcClose className='w-5 h-5 fill-current text-nc-icon mr-4' />
           </Button>
-          <h2 className='text-nc-title font-medium text-h-2'>{t('NEW_AD')}</h2>
+          <h2 className='text-nc-title font-medium text-body-14'>
+            {t('NEW_AD')}
+          </h2>
         </div>
       </div>
       <div className='flex flex-col w-full h-full'>
-        <h3 className='text-headline-8 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
+        <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
-        <span className='text-nc-primary-text text-body-1 mb-6 hidden s:flex'>
+        <span className='text-nc-primary-text text-body-16 mb-6 hidden s:flex'>
           {t('INSPECTION_PLACE_TIP')}
         </span>
 

@@ -238,10 +238,10 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           />
         </div>
         <div className='pt-6 pb-4'>
-          <p className='text-body-2 text-black-b'>
+          <p className='text-body-14 text-black-b'>
             {t('SELECT_SEARCH_OPTIONS')}
           </p>
-          <p className='text-body-2 text-black-b'>
+          <p className='text-body-14 text-black-b'>
             {t('PERHAPS_YOU_WANT_TO_CHANGE_COUNTRY')}
           </p>
         </div>
@@ -262,7 +262,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
                 }
                 className={`px-4 py-3 hover:bg-brand-a2 rounded-lg justify-start
               ${id === country?.value ? 'bg-brand-a2' : ''}`}>
-                <span className='text-body-2 text-black-b truncate max-w-44 whitespace-nowrap'>
+                <span className='text-body-14 text-black-b truncate max-w-44 whitespace-nowrap'>
                   {value.title}
                 </span>
               </Button>

@@ -33,7 +33,7 @@ const AdvertUploadButton: FC<{
     maxFiles,
   })
   const iconsClassname = 'w-6 h-6 fill-current mb-3'
-  const titleClassname = `text-body-3 text-center ${
+  const titleClassname = `text-body-12 text-center ${
     isHovering ? 'text-nc-title' : 'text-nc-placeholder'
   }`
   return (

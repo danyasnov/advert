@@ -229,7 +229,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
             boxShadow: 'none',
           }}
         />
-        <p className='mt-8 text-body-2 text-black-b'>
+        <p className='mt-8 text-body-14 text-black-b'>
           {t('LOCATION_BY_MAP_TIP')}
         </p>
       </div>

@@ -39,7 +39,7 @@ const CardBadge: FC<Props> = ({state}) => {
 
   return (
     <div className={`absolute top-4 px-1 h-4 z-10 flex items-center ${color}`}>
-      <span className='uppercase text-body-3 text-white'>{t(message)}</span>
+      <span className='uppercase text-body-12 text-white'>{t(message)}</span>
     </div>
   )
 }

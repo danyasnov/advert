@@ -14,7 +14,7 @@ const MobileAppPromo: FC = () => {
         {/*  height={136} */}
         {/*  layout='fixed' */}
         {/* /> */}
-        <span className='mt-20 mb-12 text-h-2 text-black-b font-bold text-center'>
+        <span className='mt-20 mb-12 text-body-14 text-black-b font-bold text-center'>
           {t('MOBILE_APP_PROMO')}
         </span>
         <div className='flex items-center justify-center'>

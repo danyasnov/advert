@@ -60,11 +60,11 @@ const SupportLayout: FC = observer(() => {
               <form
                 onSubmit={formik.handleSubmit}
                 className='flex flex-col w-[392px] pb-10 px-4'>
-                <span className='text-headline-3 font-medium mb-10'>
+                <span className='text-h-2 font-medium mb-10'>
                   {t('WRITE_SUPPORT')}
                 </span>
                 <div className='flex mb-2'>
-                  <span className='text-body-1'>{t('NAME')}</span>
+                  <span className='text-body-16'>{t('NAME')}</span>
                   <span className='text-nc-primary ml-1'>*</span>
                 </div>
                 <Field
@@ -75,7 +75,7 @@ const SupportLayout: FC = observer(() => {
                   placeholder={t('NAME')}
                 />
                 <div className='flex mb-2 mt-5'>
-                  <span className='text-body-1'>{t('PHONE')}</span>
+                  <span className='text-body-16'>{t('PHONE')}</span>
                   <span className='text-nc-primary ml-1'>*</span>
                 </div>
                 <Field
@@ -87,7 +87,7 @@ const SupportLayout: FC = observer(() => {
                   placeholder={t('PHONE')}
                 />
                 <div className='flex mb-2 mt-5'>
-                  <span className='text-body-1'>{t('FORM_EMAIL')}</span>
+                  <span className='text-body-16'>{t('FORM_EMAIL')}</span>
                   <span className='text-nc-primary ml-1'>*</span>
                 </div>
                 <Field
@@ -99,7 +99,7 @@ const SupportLayout: FC = observer(() => {
                   placeholder={t('FORM_EMAIL')}
                 />
                 <div className='flex mb-2 mt-5'>
-                  <span className='text-body-1'>{t('WRITE_A_MESSAGE')}</span>
+                  <span className='text-body-16'>{t('WRITE_A_MESSAGE')}</span>
                   <span className='text-nc-primary ml-1'>*</span>
                 </div>
                 <Field
@@ -122,13 +122,13 @@ const SupportLayout: FC = observer(() => {
                       }}
                     />
                   )}
-                  <span className='text-body-3 text-error'>
+                  <span className='text-body-12 text-error'>
                     {formik.errors.token}
                   </span>
                 </div>
 
                 <Field
-                  labelClassname='text-body-3'
+                  labelClassname='text-body-12'
                   name='privacy'
                   component={FormikCheckbox}
                   validate={validate}

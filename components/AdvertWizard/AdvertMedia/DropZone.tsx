@@ -32,7 +32,7 @@ const DropZone: FC<{
   const iconsClassname = `w-6 h-6 fill-current mb-1 ${
     isDragActive ? 'text-nc-primary' : 'text-nc-icon'
   }`
-  const titleClassname = `text-body-3 ${
+  const titleClassname = `text-body-12 ${
     isDragActive ? 'text-nc-title' : 'text-nc-placeholder'
   }`
 

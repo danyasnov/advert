@@ -294,7 +294,7 @@ export const FormGroup: FC<{
                   }}>
                   <IcClear className='fill-current text-nc-icon h-6 w-6' />
                 </Button>
-                <p className='pl-4 text-nc-title text-h-2 font-medium'>
+                <p className='pl-4 text-nc-title text-body-14 font-medium'>
                   {title}
                 </p>
               </div>
@@ -333,11 +333,11 @@ export const FormGroup: FC<{
                 }}>
                 <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
-                    <span className='text-nc-primary-text text-body-1 pb-1'>
+                    <span className='text-nc-primary-text text-body-16 pb-1'>
                       {title}
                     </span>
                     <span
-                      className={`text-body-3 s:text-body-1 ${
+                      className={`text-body-12 s:text-body-16 ${
                         showSummaryErrors
                           ? 'text-nc-error'
                           : 'text-nc-secondary-text'
@@ -386,7 +386,7 @@ export const FormGroup: FC<{
                   />
                 </Button>
               </div>
-              <div className='text-body-2 text-nc-secondary-text mt-1'>
+              <div className='text-body-14 text-nc-secondary-text mt-1'>
                 <span
                   className={
                     !countMeta.isRequiredFilled && !isExpanded

@@ -12,10 +12,10 @@ const Rating: FC<Props> = ({rating, ratingCount}) => {
 
   return (
     <div className='flex items-center'>
-      <span className='text-brand-a1 text-body-2 mr-1'>
+      <span className='text-brand-a1 text-body-14 mr-1'>
         {Math.round(calculated * 10) / 10}
       </span>
-      <span className='text-brand-a1 text-body-2 mr-2'>({ratingCount})</span>
+      <span className='text-brand-a1 text-body-14 mr-2'>({ratingCount})</span>
       <RatingStars rating={calculated} size={4} />
     </div>
   )

@@ -39,7 +39,7 @@ const MobileAppBottomSheet: FC = observer(() => {
         }}
         snapPoints={({minHeight}) => minHeight}>
         <div className='flex flex-col items-center justify-center w-full p-4 pt-0'>
-          <h3 className='text-h-3 font-medium text-nc-title mb-6'>
+          <h3 className='text-h-6 font-medium text-nc-title mb-6'>
             {t('OPEN_VOOXEE_IN')}
           </h3>
           <div className='flex justify-between w-full mb-7 items-center h-8'>
@@ -51,7 +51,7 @@ const MobileAppBottomSheet: FC = observer(() => {
               {/*  height={32} */}
               {/*  layout='fixed' */}
               {/* /> */}
-              <span className='ml-3 text-body-1 text-nc-title'>
+              <span className='ml-3 text-body-16 text-nc-title'>
                 {t('OPEN_IN_VOOXEE_APP')}
               </span>
             </div>
@@ -63,7 +63,7 @@ const MobileAppBottomSheet: FC = observer(() => {
                 setOpen(false)
                 setCookiesObject({showBottomSheet: false})
               }}
-              className='rounded-lg py-1.5 text-body-1 text-white-a nc-gradient-brand w-26'>
+              className='rounded-lg py-1.5 text-body-16 text-white-a nc-gradient-brand w-26'>
               {/* <LinkWrapper */}
               {/*  target='_blank' */}
               {/*  href='https://adverto.drru.agconnect.link/kmarket' */}
@@ -75,7 +75,7 @@ const MobileAppBottomSheet: FC = observer(() => {
           <div className='flex justify-between w-full items-center'>
             <div className='flex items-center'>
               <BrowserIcon />
-              <span className='ml-3 text-body-1 text-nc-title'>
+              <span className='ml-3 text-body-16 text-nc-title'>
                 {t('OPEN_IN_BROWSER')}
               </span>
             </div>
@@ -84,7 +84,7 @@ const MobileAppBottomSheet: FC = observer(() => {
                 setOpen(false)
                 setCookiesObject({showBottomSheet: false})
               }}
-              className='py-1.5 border border-shadow-b rounded-lg text-nc-secondary-text text-body-1 w-26'>
+              className='py-1.5 border border-shadow-b rounded-lg text-nc-secondary-text text-body-16 w-26'>
               {t('CONTINUE')}
             </Button>
           </div>

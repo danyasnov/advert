@@ -61,7 +61,7 @@ const ProductNotes: FC<Props> = ({hash}) => {
     <div className='w-full mb-2 s:mb-0'>
       {note ? (
         <div className='flex w-full items-center '>
-          <span className='text-black-b w-full text-body-1 rounded-lg bg-brand-a2 py-2.5 px-4 whitespace-nowrap s:max-w-sm m:max-w-xs l:max-w-md truncate block'>
+          <span className='text-black-b w-full text-body-16 rounded-lg bg-brand-a2 py-2.5 px-4 whitespace-nowrap s:max-w-sm m:max-w-xs l:max-w-md truncate block'>
             {note?.note}
           </span>
           <Button className='ml-2' onClick={() => setShowModal(true)}>
@@ -126,7 +126,7 @@ const NoteModal: FC<ModalProps> = ({isOpen, onClose, onSave, note}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full'>
         <div className='px-3 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-          <span className='text-h-2 text-black-b font-bold'>
+          <span className='text-body-14 text-black-b font-bold'>
             {t('ADD_NOTE')}
           </span>
           <Button onClick={onClose}>

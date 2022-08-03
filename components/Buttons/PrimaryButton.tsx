@@ -22,7 +22,7 @@ const PrimaryButton: FC<Props> = ({
   return (
     <Button
       id={id}
-      className={`rounded-lg py-3 px-6 text-body-2 text-white-a ${
+      className={`rounded-lg py-3 px-6 text-body-14 text-white-a ${
         disabled ? disabledClass : 'nc-gradient-brand'
       } ${className || ''}`}
       type={type}

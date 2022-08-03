@@ -71,7 +71,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                   id={`ad-language-select-${l.isoCode}`}
                   key={l.isoCode}
                   onClick={() => setLanguage(l.isoCode)}
-                  className={`px-3.5 py-2.5 text-body-1 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${
+                  className={`px-3.5 py-2.5 text-body-16 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${
                     // eslint-disable-next-line no-nested-ternary
                     language === l.isoCode
                       ? 'text-nc-title bg-nc-accent'
@@ -99,19 +99,19 @@ const AdvertDescription: FC<Props & FieldProps> = ({
       <div className='flex flex-col w-full rounded-b-lg'>
         <div className='flex items-center mb-1'>
           <div className='w-full'>
-            <span className='text-body-1 text-nc-secondary-text mr-1'>
+            <span className='text-body-16 text-nc-secondary-text mr-1'>
               {t('TITLE')}
             </span>
-            <span className='text-body-1 text-nc-primary'>*</span>
+            <span className='text-body-16 text-nc-primary'>*</span>
           </div>
-          <span className='text-nc-icon text-body-4'>
+          <span className='text-nc-icon text-body-10'>
             {`${title.length}/150`}
           </span>
         </div>
 
         <input
           placeholder={t('ENTER_THE_TITLE')}
-          className={`border text-body-1 rounded-lg py-3.5 px-3 mb-4 w-full text-nc-primary-text ${
+          className={`border text-body-16 rounded-lg py-3.5 px-3 mb-4 w-full text-nc-primary-text ${
             error ? 'border-error' : 'border-nc-border'
           }`}
           value={title}
@@ -136,11 +136,11 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
         <div className='flex items-center mb-1'>
           <div className='w-full'>
-            <span className='text-body-1 text-nc-secondary-text mr-1'>
+            <span className='text-body-16 text-nc-secondary-text mr-1'>
               {t('DESCRIPTION')}
             </span>
           </div>
-          <span className='text-nc-icon text-body-4'>
+          <span className='text-nc-icon text-body-10'>
             {`${description.length}/${maxDescriptionLength}`}
           </span>
         </div>
@@ -167,11 +167,11 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
           }}
-          className='rounded-lg text-body-1 py-3.5 px-3 text-nc-primary-text w-full border border-nc-border'
+          className='rounded-lg text-body-16 py-3.5 px-3 text-nc-primary-text w-full border border-nc-border'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
-        <span className='text-body-3 text-error'>{error}</span>
+        <span className='text-body-12 text-error'>{error}</span>
       </div>
       {query.action === 'create' && (
         <div className='flex space-x-2 items-center mt-4'>

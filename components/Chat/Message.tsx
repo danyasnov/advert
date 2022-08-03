@@ -19,7 +19,7 @@ const Message: FC<Props> = ({message, user}) => {
         isMyMessage ? 'self-end' : 'self-start'
       }`}>
       <div className={`mb-2 flex ${isMyMessage ? 'self-end' : 'self-start'}`}>
-        <span className='text-body-3 font-normal text-gray-500'>
+        <span className='text-body-12 font-normal text-gray-500'>
           {unixMlToTime(message.date)}
         </span>
         {isMyMessage && (
@@ -41,7 +41,7 @@ const Message: FC<Props> = ({message, user}) => {
             ? 'bg-primary-500 rounded-l-2xl text-white'
             : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900'
         } rounded-b-2xl`}>
-        <div className='p-3 text-body-2'>
+        <div className='p-3 text-body-14'>
           <span className='break-words'>{message.originalText}</span>
         </div>
       </div>

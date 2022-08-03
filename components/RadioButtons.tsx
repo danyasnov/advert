@@ -30,7 +30,7 @@ const RadioButtons: FC<Props> = ({options, value, onChange, name}) => {
             />
             <label
               htmlFor={id}
-              className='flex items-center cursor-pointer text-body-2 text-nc-primary-text'>
+              className='flex items-center cursor-pointer text-body-14 text-nc-primary-text'>
               <div className='w-5 h-5 flex items-center justify-center mr-2 rounded-full border-2 border-grey'>
                 <span className='block rounded-full w-2.5	h-2.5' />
               </div>

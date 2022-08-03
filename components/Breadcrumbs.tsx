@@ -44,7 +44,7 @@ const Breadcrumbs: FC = observer(() => {
   ]
 
   return (
-    <div className='text-body-2 space-x-1'>
+    <div className='text-body-14 space-x-1'>
       {breadcrumbs.flatMap((b, index, arr) => {
         const isLast = arr.length - 1 === index
         const link = isLast ? (
@@ -56,7 +56,7 @@ const Breadcrumbs: FC = observer(() => {
             title={b.title}
             href={b.href}
             key={b.title}
-            className='text-body-2 text-brand-b1'>
+            className='text-body-14 text-brand-b1'>
             {b.title}
           </LinkWrapper>
         )

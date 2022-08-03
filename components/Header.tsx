@@ -41,13 +41,13 @@ const Header: FC = observer(() => {
             {/*    label={t('FOR_BUSINESS')} */}
             {/*  /> */}
             {/* <LinkWrapper */}
-            {/*  className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center' */}
+            {/*  className='text-brand-b1 text-body-12 whitespace-nowrap flex items-center' */}
             {/*  href='/merchant' */}
             {/*  title={t('SHOPS')}> */}
             {/*  {t('SHOPS')} */}
             {/* </LinkWrapper> */}
             {/* <LinkWrapper */}
-            {/*  className='text-brand-b1 text-body-3 whitespace-nowrap flex items-center hidden s:block' */}
+            {/*  className='text-brand-b1 text-body-12 whitespace-nowrap flex items-center hidden s:block' */}
             {/*  href='/safety' */}
             {/*  title={t('SAFETY')}> */}
             {/*  {t('SAFETY')} */}
@@ -74,7 +74,7 @@ const Header: FC = observer(() => {
               <IcCurvedPlus className='text-white fill-current w-7 h-7' />
             </div>
             <div className='hidden m:block'>
-              <span className='text-body-2 px-4' data-test-id='header-new-ad'>
+              <span className='text-body-14 px-4' data-test-id='header-new-ad'>
                 {t('NEW_AD')}
               </span>
             </div>

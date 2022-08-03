@@ -64,7 +64,7 @@ const UserMenuList: FC<Props> = observer(({collapsed, onSelect = noop}) => {
               }`}>
               <div className={collapsed ? '' : 'mr-1'}>{i.icon}</div>
               {!collapsed && (
-                <span className='text-body-2 ml-2 flex items-center h-full text-black-b'>
+                <span className='text-body-14 ml-2 flex items-center h-full text-black-b'>
                   {i.title}
                 </span>
               )}

@@ -83,7 +83,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
               data-test-id='user-menu-body'>
               {options.map(({title, onClick}) => (
                 <Button
-                  className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-2'
+                  className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-14'
                   onClick={() => {
                     onClick()
                     setShowPopup(false)

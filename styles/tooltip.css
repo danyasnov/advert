@@ -1,7 +1,7 @@
 .tooltip-container {
     --tooltipBackground: #0058A6;
     --tooltipBorder: #0058A6;
-    @apply w-56 s:w-96 whitespace-normal text-body-1 whitespace-pre p-2 s:p-4;
+    @apply w-56 s:w-96 whitespace-normal text-body-16 whitespace-pre p-2 s:p-4;
     background-color: var(--tooltipBackground);
     border-radius: 16px;
     border: 1px solid var(--tooltipBorder);

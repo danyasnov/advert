@@ -169,7 +169,7 @@ const Card: FC<Props> = ({
             )}
             <div className='absolute inset-x-0 bottom-0 pb-2 px-2 flex justify-between'>
               {location?.distance && (
-                <span className='text-body-4 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
+                <span className='text-body-10 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
                   {location.distance}
                 </span>
               )}
@@ -186,21 +186,21 @@ const Card: FC<Props> = ({
         }`}>
         <div className='flex flex-col'>
           <div className='flex items-start mb-1'>
-            <span className='text-body-3 text-black-b line-clamp-2 flex-1 break-words'>
+            <span className='text-body-12 text-black-b line-clamp-2 flex-1 break-words'>
               {title}
             </span>
             {/* <IcMoreVert className='fill-current text-black-c h-4 w-4' /> */}
           </div>
-          <span className='text-body-1 text-black-b font-bold'>
+          <span className='text-body-16 text-black-b font-bold'>
             {isFree ? t('FREE') : price}
           </span>
-          <span className='text-body-3 text-black-c line-through'>
+          <span className='text-body-12 text-black-c line-through'>
             {oldPrice}
           </span>
         </div>
         <CardExtraFields extraFields={extraFields} />
         {isNumber(dateUpdated) && isNumber(views) && (
-          <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
+          <div className='text-body-10 text-black-c flex justify-between border-t border-shadow-b pt-1'>
             <span suppressHydrationWarning className='inline-flex items-center'>
               {dateUpdated && unixToDate(dateUpdated)}
             </span>

@@ -31,17 +31,17 @@ const Card: FC<Props> = ({product}) => {
       <div className='p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 bg-white'>
         <div className='flex flex-col'>
           <div className='flex items-start mb-1'>
-            <span className='text-body-3 text-black-b line-clamp-3 flex-1 break-words'>
+            <span className='text-body-12 text-black-b line-clamp-3 flex-1 break-words'>
               {title}
             </span>
             <IcMoreVert className='fill-current text-black-c h-4 w-4' />
           </div>
-          <span className='text-body-1 text-black-b font-bold'>{price}</span>
-          <span className='text-body-3 text-black-c line-through'>
+          <span className='text-body-16 text-black-b font-bold'>{price}</span>
+          <span className='text-body-12 text-black-c line-through'>
             {oldPrice}
           </span>
         </div>
-        <div className='text-body-4 text-black-c flex justify-between border-t border-shadow-b pt-1'>
+        <div className='text-body-10 text-black-c flex justify-between border-t border-shadow-b pt-1'>
           <span suppressHydrationWarning>{unixToDate(dateUpdated)}</span>
           <div className='flex items-center'>
             <div>

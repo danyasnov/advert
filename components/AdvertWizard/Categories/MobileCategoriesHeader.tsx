@@ -29,7 +29,7 @@ const MobileCategoriesHeader: FC<Props> = ({
           }}>
           <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
         </Button>
-        <h2 className='text-nc-title font-medium text-h-2'>
+        <h2 className='text-nc-title font-medium text-body-14'>
           {isEmpty(selected) ? t('NEW_AD') : last(selected).name}
         </h2>
       </div>

@@ -31,16 +31,18 @@ const LocationSelector: FC<Props> = ({
       <div className='flex items-center justify-between'>
         <div className='flex flex-col mt-2 pt-4'>
           {title && (
-            <h1 className='text-h-2 text-black-a mb-2 font-bold'>{title}</h1>
+            <h1 className='text-body-14 text-black-a mb-2 font-bold'>
+              {title}
+            </h1>
           )}
           {subTitle && (
-            <span className='text-h-4 text-black-b mb-4'>{subTitle}</span>
+            <span className='text-body-16 text-black-b mb-4'>{subTitle}</span>
           )}
         </div>
         <div className='flex'>
           <LinkWrapper
             title={t('SHOW_ALL_ADVERTS')}
-            className='text-body-2 text-brand-b1'
+            className='text-body-14 text-brand-b1'
             href={showAllLink}>
             {t('SHOW_ALL_ADVERTS')}
           </LinkWrapper>
@@ -56,7 +58,7 @@ const LocationSelector: FC<Props> = ({
               {values.map((c) => (
                 <LinkWrapper
                   title={c.title || c.value || c.word}
-                  className='text-body-2 text-brand-b1'
+                  className='text-body-14 text-brand-b1'
                   href={c.href}
                   key={c.id}>
                   <Button onClick={() => onSelect(c)} className='text-left'>

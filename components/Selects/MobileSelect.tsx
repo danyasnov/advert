@@ -41,11 +41,11 @@ const MobileSelect: FC<SelectProps> = ({
         <div className='flex justify-between items-center w-full px-3.5'>
           {isEmpty(value) ? (
             <>
-              <span className='text-body-2 text-black-f'>{placeholder}</span>
+              <span className='text-body-14 text-black-f'>{placeholder}</span>
               <IcArrowDropDown className='w-6 h-6 fill-current text-black-c -mr-2' />
             </>
           ) : (
-            <span className='text-body-2 text-nc-title truncate '>
+            <span className='text-body-14 text-nc-title truncate '>
               {isArray(value)
                 ? value.map((v) => v.label).join(', ')
                 : value.label}
@@ -67,7 +67,7 @@ const MobileSelect: FC<SelectProps> = ({
         }}>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='fixed top-5 bg-white w-full flex flex-col items-center'>
-            <h3 className='text-h-3 font-medium text-nc-title mb-2 px-4'>
+            <h3 className='text-h-6 font-medium text-nc-title mb-2 px-4'>
               {placeholder}
             </h3>
             {isSearchable && (
@@ -123,7 +123,7 @@ const MobileSelect: FC<SelectProps> = ({
                     }
                   }}>
                   <div className='w-full flex items-center justify-between'>
-                    <span className='text-body-1 text-nc-text-primary'>
+                    <span className='text-body-16 text-nc-text-primary'>
                       {f.label}
                     </span>
                     {isMulti && !f.disabled && (

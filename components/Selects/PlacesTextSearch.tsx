@@ -84,7 +84,7 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={t('SEARCH')}
-          className='pr-4.5 py-3.5 pl-11 text-black-b text-body-1 rounded-2 w-full h-full -my-1px'
+          className='pr-4.5 py-3.5 pl-11 text-black-b text-body-16 rounded-2 w-full h-full -my-1px'
           data-test-id='location-search'
           id='search-autocomplete'
         />
@@ -106,7 +106,7 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
                 highlightedIndex === index ? 'bg-nc-accent' : ''
               }`}
               key={newItem.value}>
-              <span className='text-body-2 text-black-b truncate'>
+              <span className='text-body-14 text-black-b truncate'>
                 {newItem.label}
               </span>
             </li>

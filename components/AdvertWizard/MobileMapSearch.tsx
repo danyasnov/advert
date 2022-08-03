@@ -57,10 +57,10 @@ const MobileMapSearch: FC<Props> = ({
   }
   return (
     <div className='bg-white rounded-2xl w-full flex flex-col items-center px-2'>
-      <h3 className='text-headline-8 text-h-3 font-medium	mb-2 mt-4'>
+      <h3 className='text-h-5 text-h-6 font-medium	mb-2 mt-4'>
         {t('INSPECTION_PLACE')}
       </h3>
-      <span className='text-nc-primary-text text-body-3 mb-3'>
+      <span className='text-nc-primary-text text-body-12 mb-3'>
         {t('INSPECTION_PLACE_TIP')}
       </span>
       <input
@@ -75,7 +75,7 @@ const MobileMapSearch: FC<Props> = ({
         }}
         snapPoints={({maxHeight}) => maxHeight - 40}>
         <div className='flex flex-col items-center justify-center w-full px-4'>
-          <h3 className='text-h-3 font-medium text-nc-title mb-6'>
+          <h3 className='text-h-6 font-medium text-nc-title mb-6'>
             {t('INSPECTION_PLACE')}
           </h3>
           <div className='relative w-full'>
@@ -105,7 +105,7 @@ const MobileMapSearch: FC<Props> = ({
               }}>
               <div className='flex w-full items-center'>
                 <IcSearch className='w-5 h-5 fill-current text-nc-icon mr-2' />
-                <span className='truncate w-full text-left text-body-1 text-nc-title'>
+                <span className='truncate w-full text-left text-body-16 text-nc-title'>
                   {r.label}
                 </span>
               </div>

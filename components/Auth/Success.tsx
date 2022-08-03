@@ -19,7 +19,7 @@ const Success: FC<PageProps> = observer(({dispatch, onClose, onFinish}) => {
           width={188}
         />
       </div>
-      <span className='text-nc-primary-text font-medium text-body-1 mx-12 text-center'>
+      <span className='text-nc-primary-text font-medium text-body-16 mx-12 text-center'>
         {t('SUCCESSFUL_REGISTRATION')}
       </span>
       <div className='px-6 w-full mt-8 mb-6 '>

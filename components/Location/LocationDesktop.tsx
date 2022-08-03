@@ -27,7 +27,7 @@ const LocationDesktop: FC<Props> = ({isOpen, onClose}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full' data-test-id='location-modal'>
         <div className='px-6 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-          <span className='text-h-2 text-black-b font-bold'>
+          <span className='text-body-14 text-black-b font-bold'>
             {t('LOCATION')}
           </span>
           <Button onClick={onClose} id='location-modal-close'>

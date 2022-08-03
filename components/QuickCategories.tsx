@@ -45,7 +45,7 @@ const QuickCategories: FC = observer(() => {
               key={c.id}
               title={c.name}
               href={`${clearUrlFromQuery(asPath)}/${c.slug}`}
-              className='relative max-w-full whitespace-nowrap flex-initial text-body-2 text-black-b rounded-sm p-2 border border-shadow-b '>
+              className='relative max-w-full whitespace-nowrap flex-initial text-body-14 text-black-b rounded-sm p-2 border border-shadow-b '>
               {c.name}
             </LinkWrapper>
           )

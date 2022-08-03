@@ -25,7 +25,7 @@ const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
       overlayClassName='fixed inset-0 bg-advert-background bg-repeat max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex mb-3 justify-between'>
-          <span className='text-h-2 text-black-b font-bold'>{title}</span>
+          <span className='text-body-14 text-black-b font-bold'>{title}</span>
           <Button onClick={onClose}>
             <IcClear className='fill-current text-nc-icon h-6 w-6' />
           </Button>

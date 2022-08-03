@@ -24,7 +24,7 @@ const CategoriesButton: FC<Props> = ({show, onClick}) => {
         onClick={onClick}
         id='categories'
         className='bg-greyscale-200 rounded-2 h-10 space-x-2 px-2 s:px-5 py-2.5'>
-        <span className='hidden s:block text-body-2 text-greyscale-800 capitalize-first whitespace-nowrap'>
+        <span className='hidden s:block text-body-14 text-greyscale-800 capitalize-first whitespace-nowrap'>
           {t('ALL_CATEGORIES')}
         </span>
         <div className='flex justify-end items-center'>

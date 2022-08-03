@@ -93,14 +93,14 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
                   : 's:map-hint-arrow-bottom'
               }`}>
               <div className='flex text-white items-start mb-4'>
-                <div className='text-body-1'>{t('TIP_MAP_CREATE_ADS')}</div>
+                <div className='text-body-16'>{t('TIP_MAP_CREATE_ADS')}</div>
                 <Button onClick={hideHint}>
                   <IcClear className='fill-current h-4 w-4' />
                 </Button>
               </div>
               <Button
                 onClick={hideHint}
-                className='text-nc-link rounded-lg bg-white px-3 py-1.5 text-body-1'>
+                className='text-nc-link rounded-lg bg-white px-3 py-1.5 text-body-16'>
                 {t('CLEAR')}
               </Button>
             </div>
@@ -127,7 +127,7 @@ const MapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
                     isCurrent ? 'bg-nc-accent' : ''
                   }`}>
                   <Icon className='h-5 w-5 mr-1' />
-                  <span className='text-body-4 s:text-body-1 font-normal'>
+                  <span className='text-body-10 s:text-body-16 font-normal'>
                     {t(o.title, {n: o.value})}
                   </span>
                 </Button>

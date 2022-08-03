@@ -56,7 +56,7 @@ const SafetyLayout: FC = observer(() => {
       <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
         <div className='flex items-center'>
           <Logo />
-          <span className='ml-5 font-medium text-h-2 w-[350px] hidden m:block'>
+          <span className='ml-5 font-medium text-body-14 w-[350px] hidden m:block'>
             {t('LANDING_HEAD_TEXT')}
           </span>
         </div>
@@ -70,16 +70,16 @@ const SafetyLayout: FC = observer(() => {
          xl:w-[535px] xl:h-[651px] xl:ml-[151px] xl:mr-16'
         />
         <div className='mx-4 s:mx-15 l:mx-30 xl:mx-0 flex flex-col space-y-4 m:w-[722px] xl:w-[849px]'>
-          <h1 className='text-h-1 s:text-headline-2 font-medium'>
+          <h1 className='text-body-14 s:text-h-1 font-medium'>
             {t('SECURITY_TITLE')}
           </h1>
           <span
-            className='text-h-3 s:text-headline-5 s:py-10 whitespace-pre-wrap'
+            className='text-h-6 s:text-h-4 s:py-10 whitespace-pre-wrap'
             dangerouslySetInnerHTML={{
               __html: t('SECURITY_TEXT'),
             }}
           />
-          <span className='text-h-3 s:text-headline-5 font-medium '>
+          <span className='text-h-6 s:text-h-4 font-medium '>
             {t('SECURITY_TEXT_BR')}
           </span>
           <div className='w-full m:self-start pt-11 m:pt-10 l:pb-40'>
@@ -94,17 +94,17 @@ const SafetyLayout: FC = observer(() => {
 
       <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
         <div className='flex flex-col l:w-[1200px] xl:w-[1280px]'>
-          <h1 className='text-h-1 s:text-headline-2 font-medium mb-9 text-center'>
+          <h1 className='text-body-14 s:text-h-1 font-medium mb-9 text-center'>
             {t('LANDING_GENERAL_SAFETY_RULES')}
           </h1>
           <div className='flex flex-col s:flex-row'>
             <IcLanguage className='w-8 h-8 shrink-0 mb-4 s:mr-5' />
             <div className='flex flex-col'>
-              <span className='text-headline-5 font-medium mb-2'>
+              <span className='text-h-4 font-medium mb-2'>
                 {t('LANDING_CHECK_SITE')}
               </span>
               <span
-                className='text-body-1 mb-6 s:mb-10'
+                className='text-body-16 mb-6 s:mb-10'
                 dangerouslySetInnerHTML={{__html: t('LANDING_CHECK_SITE_TEXT')}}
               />
             </div>
@@ -112,11 +112,11 @@ const SafetyLayout: FC = observer(() => {
           <div className='flex flex-col s:flex-row'>
             <IcVerified className='w-8 h-8 shrink-0 mb-4 s:mr-5' />
             <div className='flex flex-col'>
-              <span className='text-headline-5 font-medium mb-2'>
+              <span className='text-h-4 font-medium mb-2'>
                 {t('LANDING_KEEP_SECRET_PERSONAL_DATA')}
               </span>
               <span
-                className='text-body-1 mb-9'
+                className='text-body-16 mb-9'
                 dangerouslySetInnerHTML={{
                   __html: t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES'),
                 }}
@@ -125,7 +125,7 @@ const SafetyLayout: FC = observer(() => {
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
                   <span
-                    className='text-body-1'
+                    className='text-body-16'
                     dangerouslySetInnerHTML={{
                       __html: t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_1'),
                     }}
@@ -133,37 +133,37 @@ const SafetyLayout: FC = observer(() => {
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_1_1')}
                   </span>
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_1_2')}
                   </span>
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_2')}
                   </span>
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_3')}
                   </span>
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_4')}
                   </span>
                 </div>
                 <div className='flex'>
                   <IcImportant className='min-w-[16px] h-4 mr-2' />
-                  <span className='text-body-1'>
+                  <span className='text-body-16'>
                     {t('LANDING_KEEP_SECRET_PERSONAL_DATA_RULES_5')}
                   </span>
                 </div>
@@ -173,11 +173,11 @@ const SafetyLayout: FC = observer(() => {
           <div className='flex flex-col s:flex-row'>
             <IcDeliveryFast className='w-8 h-8 shrink-0 mb-4 s:mr-5' />
             <div className='flex flex-col'>
-              <span className='text-headline-5 font-medium mb-2'>
+              <span className='text-h-4 font-medium mb-2'>
                 {t('LANDING_DELIVERY')}
               </span>
               <span
-                className='text-body-1 mb-6 s:mb-10'
+                className='text-body-16 mb-6 s:mb-10'
                 dangerouslySetInnerHTML={{__html: t('LANDING_DELIVERY_TEXT')}}
               />
             </div>
@@ -185,11 +185,11 @@ const SafetyLayout: FC = observer(() => {
           <div className='flex flex-col s:flex-row'>
             <IcHand className='w-8 h-8 shrink-0 mb-4 s:mr-5' />
             <div className='flex flex-col'>
-              <span className='text-headline-5 font-medium mb-2'>
+              <span className='text-h-4 font-medium mb-2'>
                 {t('LANDING_MEET_PERSONALLY')}
               </span>
               <span
-                className='text-body-1 mb-6 s:mb-10'
+                className='text-body-16 mb-6 s:mb-10'
                 dangerouslySetInnerHTML={{
                   __html: t('LANDING_MEET_PERSONALLY_TEXT'),
                 }}
@@ -199,11 +199,11 @@ const SafetyLayout: FC = observer(() => {
           <div className='flex flex-col s:flex-row'>
             <IcFraud className='w-8 h-8 shrink-0 mb-4 s:mr-5' />
             <div className='flex flex-col'>
-              <span className='text-headline-5 font-medium mb-2'>
+              <span className='text-h-4 font-medium mb-2'>
                 {t('LANDING_AVOID_STRANGERS')}
               </span>
               <span
-                className='text-body-1'
+                className='text-body-16'
                 dangerouslySetInnerHTML={{
                   __html: t('LANDING_AVOID_STRANGERS_TEXT'),
                 }}
@@ -216,36 +216,36 @@ const SafetyLayout: FC = observer(() => {
       <div className='flex flex-col bg-[#FFF6EE] pt-12 pb-15 s:pb-18'>
         <div className='mx-4 s:mx-15 l:mx-30 xl:mx-80 flex flex-col items-center'>
           <div className='flex flex-col items-center l:w-[1200px] xl:w-[1280px]'>
-            <h1 className='text-h-1 s:text-headline-2 font-medium text-center mb-15 s:mb-18'>
+            <h1 className='text-body-14 s:text-h-1 font-medium text-center mb-15 s:mb-18'>
               {t('LANDSCAPE_DO NOT_DECEIVE_YOUSELF')}
             </h1>
             <div className='flex flex-col m:flex-row m:space-x-7 s:w-80 m:w-auto'>
               <div className='flex flex-col items-center w-full m:items-start'>
                 <IcLink className='w-25 h-25 mb-6 m:mb-10' />
-                <span className='text-h-2 font-medium text-center m:text-left mb-2 m:pb-3'>
+                <span className='text-body-14 font-medium text-center m:text-left mb-2 m:pb-3'>
                   {t('LANDING_CHECK_LINK')}
                 </span>
-                <span className='text-body-1 text-center mb-15 s:mb-18 m:text-left'>
+                <span className='text-body-16 text-center mb-15 s:mb-18 m:text-left'>
                   {t('LANDING_CHECK_LINK_TEXT')}
                 </span>
               </div>
 
               <div className='flex flex-col items-center w-full m:items-start'>
                 <IcPin className='w-25 h-25 mb-6 m:mb-10' />
-                <span className='text-h-2 font-medium text-center m:text-left mb-2 m:pb-3'>
+                <span className='text-body-14 font-medium text-center m:text-left mb-2 m:pb-3'>
                   {t('LANDING_DO NOT_ENTER_PIN')}
                 </span>
-                <span className='text-body-1 text-center mb-15 s:mb-18 m:text-left'>
+                <span className='text-body-16 text-center mb-15 s:mb-18 m:text-left'>
                   {t('LANDING_DO NOT_ENTER_PIN_TEXT')}
                 </span>
               </div>
 
               <div className='flex flex-col items-center w-full m:items-start'>
                 <IcSms className='w-25 h-25 mb-6 m:mb-10' />
-                <span className='text-h-2 font-medium text-center m:text-left mb-2 m:pb-3'>
+                <span className='text-body-14 font-medium text-center m:text-left mb-2 m:pb-3'>
                   {t('LANDING_SMS_WITH_CODE')}
                 </span>
-                <span className='text-body-1 text-center m:text-left'>
+                <span className='text-body-16 text-center m:text-left'>
                   {t('LANDING_SMS_WITH_CODE_TEXT')}
                 </span>
               </div>
@@ -255,17 +255,17 @@ const SafetyLayout: FC = observer(() => {
       </div>
       <div className='flex flex-col py-15 l:pb-[140px] s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 items-center'>
         <div className='flex flex-col items-center l:w-[1200px] xl:w-[1280px]'>
-          <h1 className='text-headline-5 font-medium mb-2'>
+          <h1 className='text-h-4 font-medium mb-2'>
             {t('LANDING_DO_NOT_SEND_NUMBER_AND_MAIL')}
           </h1>
-          <span className='text-body-1 mb-15 s:mb-18'>
+          <span className='text-body-16 mb-15 s:mb-18'>
             {t('LANDING_DO_NOT_SEND_NUMBER_AND_MAIL_TEXT')}
           </span>
-          <h1 className='text-headline-5 font-medium mb-2'>
+          <h1 className='text-h-4 font-medium mb-2'>
             {t('LANDING_MAKE_SURE_YOU_ON_VOOXEE')}
           </h1>
           <span
-            className='text-body-1 mb-15 s:mb-18'
+            className='text-body-16 mb-15 s:mb-18'
             dangerouslySetInnerHTML={{
               __html: t('LANDING_MAKE_SURE_YOU_ON_VOOXEE_TEXT'),
             }}
@@ -273,11 +273,11 @@ const SafetyLayout: FC = observer(() => {
           <div className='flex flex-col m:flex-row w-full'>
             <div className='nc-gradient-brand w-full rounded-lg py-7 mb-7 m:mb-0 m:mr-5 xl:mr-25 m:px-5 flex flex-col items-center '>
               <IcYes className='w-13 h-13 s:w-25 s:h-25 mb-5' />
-              <span className='text-h-3 m:text-headline-5 s:text-h-1 l:text-h-1 s:mb-10 text-white mb-3 font-medium m:text-center'>
+              <span className='text-h-6 m:text-h-4 s:text-body-14 l:text-body-14 s:mb-10 text-white mb-3 font-medium m:text-center'>
                 {t('LANDING_CORRECT_SITES')}
               </span>
               <span
-                className='text-body-2 m:text-h-2 s:text-headline-6 text-white l:text-[28px] mb-3 whitespace-pre text-center'
+                className='text-body-14 m:text-body-14 s:text-h-3 text-white l:text-[28px] mb-3 whitespace-pre text-center'
                 dangerouslySetInnerHTML={{
                   __html: t('LANDING_CORRECT_SITES_TEXT'),
                 }}
@@ -285,11 +285,11 @@ const SafetyLayout: FC = observer(() => {
             </div>
             <div className='bg-nc-salmon w-full rounded-lg py-7 flex flex-col items-center m:px-5 '>
               <IcNo className='w-13 h-13 s:w-25 s:h-25 mb-5' />
-              <span className='text-h-3 m:text-headline-5 s:text-h-1 l:text-h-1 mb-3 s:mb-10 font-medium text-center'>
+              <span className='text-h-6 m:text-h-4 s:text-body-14 l:text-body-14 mb-3 s:mb-10 font-medium text-center'>
                 {t('LANDING_FAKE_SITES')}
               </span>
               <span
-                className='text-body-2 m:text-h-2 s:text-headline-6 mb-3 l:text-[28px] whitespace-pre  m:text-center'
+                className='text-body-14 m:text-body-14 s:text-h-3 mb-3 l:text-[28px] whitespace-pre  m:text-center'
                 dangerouslySetInnerHTML={{
                   __html: t('LANDING_FAKE_SITES_TEXT'),
                 }}
@@ -300,7 +300,7 @@ const SafetyLayout: FC = observer(() => {
       </div>
       <div className='flex flex-col bg-[#FFF6EE] py-15 s:py-18 items-center'>
         <div className='mx-4 s:mx-15 l:mx-30 xl:mx-80 flex flex-col items-center l:w-[1200px] xl:w-[1280px]'>
-          <h1 className='text-h-1 font-medium text-center mb-15 s:mb-18 m:mb-30'>
+          <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18 m:mb-30'>
             {t('LENDING_FRAUDERS_CAN_BE_SELLERS_AND_BUYERS')}
           </h1>
           <div className='hidden m:flex w-full bg-white h-16 mb-20'>
@@ -312,7 +312,7 @@ const SafetyLayout: FC = observer(() => {
                   currentTab.id === tab ? 'nc-gradient-brand' : ''
                 }`}>
                 <span
-                  className={`text-headline-5 ${
+                  className={`text-h-4 ${
                     currentTab.id === tab
                       ? 'text-white'
                       : 'text-nc-secondary-text'
@@ -325,7 +325,7 @@ const SafetyLayout: FC = observer(() => {
           {(width < 1024 || tab === 0) && (
             <>
               <div className='flex flex-col bg-nc-salmon py-4 mb-7 w-screen m:hidden'>
-                <span className='text-headline-5 s:text-headline-6 font-medium text-center'>
+                <span className='text-h-4 s:text-h-3 font-medium text-center'>
                   {t('LENDING_SELLER_CAN_DECEIVE')}
                 </span>
               </div>
@@ -349,13 +349,13 @@ const SafetyLayout: FC = observer(() => {
                 </div>
               </div>
               <div className='flex flex-col'>
-                <h1 className='text-h-1 font-medium text-center mb-15 s:mb-18'>
+                <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
                   {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER')}
                 </h1>
                 <div className='flex'>
                   <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
                   <span
-                    className='text-body-2 s:text-h-3 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
+                    className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
                     dangerouslySetInnerHTML={{
                       __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER_TEXT'),
                     }}
@@ -367,7 +367,7 @@ const SafetyLayout: FC = observer(() => {
           {(width < 1024 || tab === 1) && (
             <>
               <div className='flex flex-col bg-nc-salmon py-4 my-15 s:my-18 s:w-screen m:hidden'>
-                <span className='text-headline-5 font-medium text-center'>
+                <span className='text-h-4 font-medium text-center'>
                   {t('LENDING_BUYER_CAN_DECEIVE')}
                 </span>
               </div>
@@ -400,13 +400,13 @@ const SafetyLayout: FC = observer(() => {
                 </div>
               </div>
               <div className='flex flex-col'>
-                <h1 className='text-h-1 font-medium text-center mb-15 s:mb-18'>
+                <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
                   {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER')}
                 </h1>
                 <div className='flex '>
                   <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
                   <span
-                    className='text-body-2 s:text-h-3 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
+                    className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
                     dangerouslySetInnerHTML={{
                       __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER_TEXT'),
                     }}
@@ -420,10 +420,10 @@ const SafetyLayout: FC = observer(() => {
       <div className='flex flex-col py-15 s:py-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:items-center'>
         <div className='l:w-[1200px] xl:w-[1280px]'>
           <div className='mb-8'>
-            <h1 className='text-h-1 font-medium mb-10 text-center'>
+            <h1 className='text-body-14 font-medium mb-10 text-center'>
               {t('LANDING_MAKE_THE_WORLD_PLEASER')}
             </h1>
-            <span className='text-headline-5 text-left '>
+            <span className='text-h-4 text-left '>
               {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT')}
             </span>
           </div>
@@ -431,14 +431,14 @@ const SafetyLayout: FC = observer(() => {
             <div>
               <div className='flex'>
                 <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
-                <span className='text-h-2 mb-8'>
+                <span className='text-body-14 mb-8'>
                   {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_1')}
                 </span>
               </div>
               <div className='flex'>
                 <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
                 <span
-                  className='text-h-2 mb-8'
+                  className='text-body-14 mb-8'
                   dangerouslySetInnerHTML={{
                     __html: t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_2'),
                   }}
@@ -446,7 +446,7 @@ const SafetyLayout: FC = observer(() => {
               </div>
               <div className='flex'>
                 <span className='w-4 h-4 rounded-full bg-nc-primary flex-shrink-0 mr-4' />
-                <span className='text-h-2 mb-8'>
+                <span className='text-body-14 mb-8'>
                   {t('LANDING_MAKE_THE_WORLD_PLEASER_TEXT_3')}
                 </span>
               </div>

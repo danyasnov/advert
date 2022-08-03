@@ -16,7 +16,7 @@ const UserCard: FC = observer(() => {
   const {t} = useTranslation()
 
   const langs = (
-    <div className='flex text-black-c text-body-2 items-center'>
+    <div className='flex text-black-c text-body-14 items-center'>
       <span className='mr-2'>{t('I_SPEAK')}</span>
       <div className='flex flex-wrap'>
         {product.owner.languages.map((l) => (
@@ -44,7 +44,7 @@ const UserCard: FC = observer(() => {
           <LinkWrapper
             href={`/user/${product.owner.hash}`}
             title={product.owner.name}>
-            <h3 className='text-brand-b1 text-h-3 font-bold mb-2 truncate w-44'>
+            <h3 className='text-brand-b1 text-h-6 font-bold mb-2 truncate w-44'>
               {product.owner.name}
             </h3>
           </LinkWrapper>
@@ -56,14 +56,14 @@ const UserCard: FC = observer(() => {
 
             <div className='flex items-center mb-2'>
               <IcAdvert className='fill-current text-black-c h-6 w-6 mr-2' />
-              <span className='text-black-c text-body-2'>
+              <span className='text-black-c text-body-14'>
                 {t('N_ADVERTS', {count: product.owner.advertsActiveCount})}
               </span>
             </div>
           </div>
           <div className='flex justify-between'>
             <div className='hidden s:block m:hidden'>{langs}</div>
-            <span className='text-black-c text-body-2'>
+            <span className='text-black-c text-body-14'>
               {t('SINCE', {date: unixToDate(product.owner.dateRegistered)})}
             </span>
           </div>

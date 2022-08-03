@@ -13,7 +13,7 @@ const ProductInfoIcons: FC = observer(() => {
   if (!product) return null
 
   return (
-    <div className='text-body-2 text-black-b flex space-x-2 flex'>
+    <div className='text-body-14 text-black-b flex space-x-2 flex'>
       {product.advert.bargainPossible && (
         <span className='flex items-center'>
           <IcDiscount className='fill-current text-black-c h-6 w-6 mr-1' />

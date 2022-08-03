@@ -80,7 +80,7 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
           })}
           data-test-id='category-search'
           placeholder={t('SEARCH_BY_CATEGORIES')}
-          className='pl-12 px-3.5 py-3 text-black-b text-body-2 rounded-2 w-full h-10 border border-nc-border'
+          className='pl-12 px-3.5 py-3 text-black-b text-body-14 rounded-2 w-full h-10 border border-nc-border'
           id='search-autocomplete'
         />
       </div>
@@ -100,10 +100,10 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
                 highlightedIndex === index ? 'bg-brand-a2' : ''
               }`}
               key={item.id}>
-              <span className='text-body-2 text-black-b truncate'>
+              <span className='text-body-14 text-black-b truncate'>
                 {item.title}
               </span>
-              <span className='text-body-3 text-black-c truncate'>
+              <span className='text-body-12 text-black-c truncate'>
                 {item.secondary}
               </span>
             </li>

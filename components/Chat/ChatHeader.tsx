@@ -38,7 +38,7 @@ const ChatHeader: FC<Props> = ({onBack, chat}) => {
         {/*  /> */}
         {/* </div> */}
         <div className='flex flex-col overflow-hidden mr-5 w-full'>
-          <p className='text-body-1 font-semibold truncate'>
+          <p className='text-body-16 font-semibold truncate'>
             {interlocutor.name} {interlocutor.surname}
           </p>
           {/*  {interlocutor.online ? ( */}
@@ -60,7 +60,7 @@ const ChatHeader: FC<Props> = ({onBack, chat}) => {
             height={56}
           />
         </div>
-        <p className='text-body-2 text-greyscale-900 font-normal ml-4 line-clamp-2 leading-5	'>
+        <p className='text-body-14 text-greyscale-900 font-normal ml-4 line-clamp-2 leading-5	'>
           {product.title}
         </p>
       </div>

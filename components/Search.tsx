@@ -48,7 +48,7 @@ const Search: FC = () => {
         {/*        className='fill-current text-black-c' */}
         {/*      /> */}
         {/*      {!!address && ( */}
-        {/*        <span className='text-black-b text-body-2 whitespace-nowrap hidden m:block ml-2'> */}
+        {/*        <span className='text-black-b text-body-14 whitespace-nowrap hidden m:block ml-2'> */}
         {/*          {address} */}
         {/*        </span> */}
         {/*      )} */}
