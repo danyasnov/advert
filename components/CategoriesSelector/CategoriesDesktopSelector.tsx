@@ -70,9 +70,10 @@ const CategoriesDesktopSelector: FC = observer(() => {
 
   return (
     <div
-      className='absolute top-[108px] inset-x-0 z-10 bg-white
-       shadow-xl category-selector-width m-auto
-       grid grid-cols-4 m:grid-cols-category-selector-m'>
+      className='absolute top-[108px] inset-x-0 z-10 shadow-xl
+       category-selector-width m-auto grid grid-cols-4
+       m:grid-cols-category-selector-m l:grid-cols-category-selector-l
+       l:justify-center categories-bg'>
       <div className='bg-greyscale-50 s:pl-8 m:pl-10 l:pl-18 overflow-y-scroll h-[450px]'>
         {categoriesWithoutAll.map((c) => (
           <FirstColItem
