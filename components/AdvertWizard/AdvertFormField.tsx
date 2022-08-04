@@ -44,14 +44,14 @@ const AdvertFormField: FC<Props> = ({
             <span className='text-body-16'>
               {label}
               {isRequired && (
-                <span className='text-body-16 text-nc-primary ml-1'>*</span>
+                <span className='text-body-16 text-primary-500 ml-1'>*</span>
               )}
             </span>
           )}
           {!!labelTip && <Tip message={labelTip} placement='right' />}
         </div>
         {labelDescription && (
-          <span className='flex text-nc-primary-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-wrap mb-6'>
+          <span className='flex text-primary-500-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-wrap mb-6'>
             {labelDescription}
           </span>
         )}

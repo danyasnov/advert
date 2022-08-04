@@ -206,7 +206,7 @@ export const FormikCreateFields: FC<{
 
 export const FormikTitle: FC<{label: string}> = ({label}) => {
   return (
-    <div className='text-nc-primary-text text-h-6 font-medium'>{label}</div>
+    <div className='text-primary-500-text text-h-6 font-medium'>{label}</div>
   )
 }
 
@@ -232,7 +232,7 @@ export const FormikCheckboxesGroup: FC<{
             <Button
               onClick={() => setFieldValue(name, !value)}
               key={f.id}
-              className={`text-body-16 text-nc-primary-text p-4 rounded-lg mr-3 mb-3 ${
+              className={`text-body-16 text-primary-500-text p-4 rounded-lg mr-3 mb-3 ${
                 value ? 'bg-nc-accent' : 'bg-nc-back'
               }`}>
               {f.name}
@@ -602,7 +602,7 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
   const input = (
     <Switch
       offColor='#ACB9C3'
-      onColor='#FF8514'
+      onColor='#7210FF'
       uncheckedIcon={false}
       checkedIcon={false}
       height={16}

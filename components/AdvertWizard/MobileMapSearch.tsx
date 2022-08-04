@@ -60,7 +60,7 @@ const MobileMapSearch: FC<Props> = ({
       <h3 className='text-h-5 text-h-6 font-medium	mb-2 mt-4'>
         {t('INSPECTION_PLACE')}
       </h3>
-      <span className='text-nc-primary-text text-body-12 mb-3'>
+      <span className='text-primary-500-text text-body-12 mb-3'>
         {t('INSPECTION_PLACE_TIP')}
       </span>
       <input

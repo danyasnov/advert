@@ -263,7 +263,6 @@ export const FormGroup: FC<{
   useEffect(() => {
     if (formik.submitCount > 0) {
       const validationState = validate()
-      console.log('validationState', validationState)
 
       const isNew = !isEqual(validationState, prevValidationState.current)
       if (isNew) {
@@ -335,7 +334,7 @@ export const FormGroup: FC<{
                 }}>
                 <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
-                    <span className='text-nc-primary-text text-body-16 pb-1'>
+                    <span className='text-primary-500-text text-body-16 pb-1'>
                       {title}
                     </span>
                     <span

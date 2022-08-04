@@ -36,8 +36,8 @@ class MyDocument extends Document {
             href='/favicon-16x16.png'
           />
           <link rel='manifest' href='/manifest.json' />
-          <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#FF9514' />
-          <meta name='theme-color' content='#FF9514' />
+          <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#7210FF' />
+          <meta name='theme-color' content='#7210FF' />
           <link
             href='https://vooxee.com/inc/opensearch.xml'
             rel='search'

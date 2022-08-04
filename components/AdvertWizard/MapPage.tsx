@@ -189,9 +189,9 @@ const MapPage: FC = () => {
     })
 
     circle.current = new maps.Circle({
-      strokeColor: '#FF9514',
+      strokeColor: '#7210FF',
       strokeWeight: 2,
-      fillColor: '#FF9514',
+      fillColor: '#7210FF',
       fillOpacity: 0.2,
       map,
       center: location,
@@ -199,7 +199,7 @@ const MapPage: FC = () => {
     })
     const svgMarker = {
       path: SvgMapMarker,
-      fillColor: '#FF9514',
+      fillColor: '#7210FF',
       fillOpacity: 1,
       strokeColor: '#FFFFFF',
       strokeOpacity: 1,
@@ -238,7 +238,7 @@ const MapPage: FC = () => {
         <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
-        <span className='text-nc-primary-text text-body-16 mb-6 hidden s:flex'>
+        <span className='text-primary-500-text text-body-16 mb-6 hidden s:flex'>
           {t('INSPECTION_PLACE_TIP')}
         </span>
 

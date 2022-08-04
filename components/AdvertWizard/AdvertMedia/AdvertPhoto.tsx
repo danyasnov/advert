@@ -26,7 +26,7 @@ const AdvertPhoto: ComponentClass<
       {loading && (
         <div className='absolute z-10 inset-0 flex justify-center items-center  '>
           <CircularProgress
-            color='#FF8514'
+            color='#7210FF'
             width='20px'
             height='20px'
             duration='3s'

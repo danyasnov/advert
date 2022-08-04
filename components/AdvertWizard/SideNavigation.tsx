@@ -53,7 +53,7 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
             />
           </div>
           <div className='flex flex-col '>
-            <span className='text-body-14 text-nc-primary-text w-40'>
+            <span className='text-body-14 text-primary-500-text w-40'>
               {title}
             </span>
             <span className='text-body-12 text-nc-secondary-text mt-1 mb-2 w-[200px]'>

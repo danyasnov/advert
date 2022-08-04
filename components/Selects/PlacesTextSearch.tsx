@@ -66,7 +66,7 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
       <div className='flex items-center relative' {...getComboboxProps()}>
         <IcMyLocation
           className={`absolute w-6 h-6 fill-current ml-3 ${
-            focused ? 'text-nc-primary' : 'text-nc-icon'
+            focused ? 'text-primary-500' : 'text-nc-icon'
           }`}
         />
         <input

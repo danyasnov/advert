@@ -102,7 +102,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             <span className='text-body-16 text-nc-secondary-text mr-1'>
               {t('TITLE')}
             </span>
-            <span className='text-body-16 text-nc-primary'>*</span>
+            <span className='text-body-16 text-primary-500'>*</span>
           </div>
           <span className='text-nc-icon text-body-10'>
             {`${title.length}/150`}
@@ -111,7 +111,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
         <input
           placeholder={t('ENTER_THE_TITLE')}
-          className={`border text-body-16 rounded-lg py-3.5 px-3 mb-4 w-full text-nc-primary-text ${
+          className={`border text-body-16 rounded-lg py-3.5 px-3 mb-4 w-full text-primary-500-text ${
             error ? 'border-error' : 'border-nc-border'
           }`}
           value={title}
@@ -167,7 +167,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
           }}
-          className='rounded-lg text-body-16 py-3.5 px-3 text-nc-primary-text w-full border border-nc-border'
+          className='rounded-lg text-body-16 py-3.5 px-3 text-primary-500-text w-full border border-nc-border'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>

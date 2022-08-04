@@ -65,7 +65,7 @@ const SupportLayout: FC = observer(() => {
                 </span>
                 <div className='flex mb-2'>
                   <span className='text-body-16'>{t('NAME')}</span>
-                  <span className='text-nc-primary ml-1'>*</span>
+                  <span className='text-primary-500 ml-1'>*</span>
                 </div>
                 <Field
                   name='name'
@@ -76,7 +76,7 @@ const SupportLayout: FC = observer(() => {
                 />
                 <div className='flex mb-2 mt-5'>
                   <span className='text-body-16'>{t('PHONE')}</span>
-                  <span className='text-nc-primary ml-1'>*</span>
+                  <span className='text-primary-500 ml-1'>*</span>
                 </div>
                 <Field
                   name='phone'
@@ -88,7 +88,7 @@ const SupportLayout: FC = observer(() => {
                 />
                 <div className='flex mb-2 mt-5'>
                   <span className='text-body-16'>{t('FORM_EMAIL')}</span>
-                  <span className='text-nc-primary ml-1'>*</span>
+                  <span className='text-primary-500 ml-1'>*</span>
                 </div>
                 <Field
                   name='email'
@@ -100,7 +100,7 @@ const SupportLayout: FC = observer(() => {
                 />
                 <div className='flex mb-2 mt-5'>
                   <span className='text-body-16'>{t('WRITE_A_MESSAGE')}</span>
-                  <span className='text-nc-primary ml-1'>*</span>
+                  <span className='text-primary-500 ml-1'>*</span>
                 </div>
                 <Field
                   name='message'

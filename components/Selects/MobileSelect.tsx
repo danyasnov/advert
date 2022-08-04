@@ -143,7 +143,7 @@ const MobileSelect: FC<SelectProps> = ({
                       </>
                     )}
                     {f.value === value?.value && !isMulti && (
-                      <IcCheck className='fill-current text-nc-primary h-4 w-4' />
+                      <IcCheck className='fill-current text-primary-500 h-4 w-4' />
                     )}
                   </div>
                 </Button>

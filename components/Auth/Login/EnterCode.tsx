@@ -166,7 +166,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
       <span className='text-body-12 text-nc-error mt-2 w-[304px] text-center'>
         {errors.code}
       </span>
-      <span className='text-nc-primary-text text-body-16 font-medium mt-6 mb-4 mx-6 text-center w-[304px]'>
+      <span className='text-primary-500-text text-body-16 font-medium mt-6 mb-4 mx-6 text-center w-[304px]'>
         {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
         {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
         {verifyMode === 2 && t('SENT_EMAIL_WITH_ACTIVATION_CODE')}
@@ -203,7 +203,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
 
       {verifyMode !== 0 && (
         <span
-          className={`text-body-12 text-nc-primary-text mb-6 ${
+          className={`text-body-12 text-primary-500-text mb-6 ${
             counter ? 'visible' : 'invisible'
           }`}>
           {t('SEND_AFTER', {time: counter})}

@@ -40,7 +40,7 @@ const AdvertUploadButton: FC<{
     <div {...getRootProps()}>
       <div
         ref={ref}
-        className={`text-nc-icon rounded-lg border flex hover:text-nc-primary
+        className={`text-nc-icon rounded-lg border flex hover:text-primary-500
          hover:border-nc-primary cursor-pointer text-nc-placeholder px-2 ${
            type === 'photo' ? 'h-34 w-34' : 'h-40 w-72'
          } ${error ? 'border-error' : 'border-nc-border'}`}>

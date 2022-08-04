@@ -19,6 +19,7 @@ import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {useWindowSize} from 'react-use'
+import {last} from 'rxjs'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import AdvertDescription from './AdvertDescription'
@@ -257,6 +258,7 @@ const FormPage: FC = observer(() => {
           t,
         ),
       required: true,
+      filled: size(get(values.content, '[0].title', '')) > 2,
     },
     {
       key: 'PHOTO_AND_VIDEO',
@@ -303,7 +305,7 @@ const FormPage: FC = observer(() => {
                 ? category.data.allowUsed
                 : false,
             ),
-            filled: arrayTypeFields.some((f) => values.fields[f.id]),
+            filled: arrayTypeFields.some((f) => !isEmpty(values.fields[f.id])),
           }
         })),
     {
@@ -380,7 +382,10 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
-  console.log('formState', formState)
+  const isAllFormVisible = !formState.find((f) => !f.visible)
+  const canPublish =
+    isAllFormVisible && !formState.find((f) => f.required && !f.filled)
+
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>
@@ -763,7 +768,7 @@ const FormPage: FC = observer(() => {
                           className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
                             phoneNumber
                               ? 'text-nc-disabled bg-nc-back'
-                              : 'text-nc-primary-text'
+                              : 'text-primary-500-text'
                           }`}>
                           <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
                         </Button>
@@ -801,7 +806,7 @@ const FormPage: FC = observer(() => {
                 <PrimaryButton
                   id='ad-publish-button'
                   onClick={() => {
-                    if (currentStep) {
+                    if (!showWholeForm && !canPublish) {
                       let errors: FormikErrors<any> = {}
                       formState.some((s) => {
                         if (!formStateDict[s.key].visible) return true
@@ -822,7 +827,7 @@ const FormPage: FC = observer(() => {
                     scrollToFirstError()
                   }}
                   className='w-full s:w-auto'>
-                  {t(currentStep ? 'CONTINUE' : 'PUBLISH')}
+                  {t(!showWholeForm && !canPublish ? 'CONTINUE' : 'PUBLISH')}
                 </PrimaryButton>
               </div>
             </div>

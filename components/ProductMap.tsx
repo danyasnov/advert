@@ -54,9 +54,9 @@ const ProductMap: FC = observer(() => {
               if (radius) {
                 // eslint-disable-next-line no-new
                 new maps.Circle({
-                  strokeColor: '#FF9514',
+                  strokeColor: '#7210FF',
                   strokeWeight: 2,
-                  fillColor: '#FF9514',
+                  fillColor: '#7210FF',
                   fillOpacity: 0.2,
                   map,
                   center: location,
@@ -65,7 +65,7 @@ const ProductMap: FC = observer(() => {
               } else {
                 const svgMarker = {
                   path: SvgMapMarker,
-                  fillColor: '#FF9514',
+                  fillColor: '#7210FF',
                   fillOpacity: 1,
                   strokeColor: '#FFFFFF',
                   strokeOpacity: 1,

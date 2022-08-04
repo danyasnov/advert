@@ -182,9 +182,9 @@ const MapForm: FC<Props> = observer(({onClose}) => {
                   mapRef.current = map
                   mapsRef.current = maps
                   circle.current = new maps.Circle({
-                    strokeColor: '#FF9514',
+                    strokeColor: '#7210FF',
                     strokeWeight: 2,
-                    fillColor: '#FF9514',
+                    fillColor: '#7210FF',
                     fillOpacity: 0.2,
                     map,
                     center: location,
@@ -192,7 +192,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
                   })
                   const svgMarker = {
                     path: SvgMapMarker,
-                    fillColor: '#FF9514',
+                    fillColor: '#7210FF',
                     fillOpacity: 1,
                     strokeColor: '#FFFFFF',
                     strokeOpacity: 1,
@@ -211,7 +211,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
         </div>
         <Slider
           className='data-test-id-location-modal-map-slider'
-          trackStyle={{backgroundColor: '#FF9514', height: 4}}
+          trackStyle={{backgroundColor: '#7210FF', height: 4}}
           railStyle={{backgroundColor: 'rgba(12, 13, 13, 0.1)', height: 4}}
           marks={marks}
           value={radius}
@@ -224,7 +224,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
             height: 20,
             width: 20,
             marginTop: -8,
-            backgroundColor: '#FF9514',
+            backgroundColor: '#7210FF',
             border: '1px solid #CE7A13',
             boxShadow: 'none',
           }}

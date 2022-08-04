@@ -36,7 +36,7 @@ const CardExtraFields: React.FC<Props> = ({extraFields}) => {
           <ImageWrapper width={16} height={16} type={i.icon} alt={i.icon} />
         )
       })}
-      <span className='text-body-12 text-nc-primary-text'>{textFields}</span>
+      <span className='text-body-12 text-primary-500-text'>{textFields}</span>
     </div>
   )
 }

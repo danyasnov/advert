@@ -30,7 +30,7 @@ const DropZone: FC<{
     maxFiles,
   })
   const iconsClassname = `w-6 h-6 fill-current mb-1 ${
-    isDragActive ? 'text-nc-primary' : 'text-nc-icon'
+    isDragActive ? 'text-primary-500' : 'text-nc-icon'
   }`
   const titleClassname = `text-body-12 ${
     isDragActive ? 'text-nc-title' : 'text-nc-placeholder'

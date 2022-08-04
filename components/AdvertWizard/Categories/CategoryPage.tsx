@@ -106,7 +106,7 @@ const CategoryPage: FC = observer(() => {
                 onClick={() => {
                   setSelected([])
                 }}>
-                <IcKeyboardArrowLeft className='fill-current text-nc-primary w-7 h-7' />
+                <IcKeyboardArrowLeft className='fill-current text-primary-500 w-7 h-7' />
               </Button>
               {rootCategory.name}
             </div>

@@ -134,7 +134,7 @@ const FormatSelect: FC<FormatSelectorProps> = ({
                     {item.label}
                   </span>
                   {item.value === value.value && (
-                    <IcCheck className='fill-current text-nc-primary w-3 h-3' />
+                    <IcCheck className='fill-current text-primary-500 w-3 h-3' />
                   )}
                 </li>
               )

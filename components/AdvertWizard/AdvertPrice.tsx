@@ -55,7 +55,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={currency?.code}
-          className='w-full text-nc-primary-text text-body-16 outline-none manual-outline'
+          className='w-full text-primary-500-text text-body-16 outline-none manual-outline'
         />
         {!!safeDealPrice && (
           <span className='text-body-10 text-nc-secondary-text mt-1'>
