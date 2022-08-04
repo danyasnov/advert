@@ -267,6 +267,8 @@ const FormPage: FC = observer(() => {
           category.data.minPhotos,
           t,
         ),
+      filled: !isEmpty(values.photos),
+      required: !!category.data.minPhotos,
     },
     {
       key: 'WAYS_COMMUNICATION',
@@ -378,6 +380,7 @@ const FormPage: FC = observer(() => {
         .find((i) => i.status === 'pending' && i.visible)
 
   if (!category || !user) return null
+  console.log('formState', formState)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 s:hidden border border-b'>

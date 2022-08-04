@@ -58,7 +58,7 @@ const nextConfig = {
         destination: '/api/robots',
       },
       {
-        source: '/api/upload/:type',
+        source: '/upload/:type',
         destination: 'https://backend.venera.city/files/:type/upload',
         // destination: 'https://backend.advretoapi.com/files/:type/upload',
         // destination: 'https://api.adverto.sale/files/:type/upload',

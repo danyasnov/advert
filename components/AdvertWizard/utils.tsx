@@ -263,6 +263,8 @@ export const FormGroup: FC<{
   useEffect(() => {
     if (formik.submitCount > 0) {
       const validationState = validate()
+      console.log('validationState', validationState)
+
       const isNew = !isEqual(validationState, prevValidationState.current)
       if (isNew) {
         prevValidationState.current = validationState

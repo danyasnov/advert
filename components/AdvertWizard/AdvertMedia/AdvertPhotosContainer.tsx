@@ -83,7 +83,7 @@ const AdvertPhotosContainer: ComponentClass<
           headers: {'Content-Type': 'multipart/form-data'},
           method: 'post',
           data: formData,
-          url: '/api/upload/image',
+          url: '/upload/image',
         }
         makeRequest(config, {
           retries: 2,
@@ -169,7 +169,7 @@ const AdvertPhotosContainer: ComponentClass<
                   headers: {'Content-Type': 'multipart/form-data'},
                   method: 'post',
                   data: formData,
-                  url: '/api/upload/image',
+                  url: '/upload/image',
                 }).then((res) => {
                   dict[p.id].degree = nextDegrees
                   setPhotos(

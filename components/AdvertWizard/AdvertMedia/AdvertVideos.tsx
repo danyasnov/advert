@@ -78,7 +78,7 @@ const AdvertVideos: FC<FieldProps & Props> = ({
         },
         method: 'post',
         data: formData,
-        url: '/api/upload/video',
+        url: '/upload/video',
       })
         .then((res) => {
           const result = res.data.items[0]
