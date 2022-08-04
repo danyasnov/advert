@@ -31,36 +31,18 @@ const Search: FC = () => {
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
         />
-        {/* <div className='flex'> */}
-        {/*  <Button */}
-        {/*    id='location' */}
-        {/*    onClick={() => setLocationModalShow(true)} */}
-        {/*    className='flex min-w-10 shrink-0'> */}
-        {/*    <div className='flex flex-row items-center px-3.5'> */}
-        {/*      <IcMyLocation */}
-        {/*        width={24} */}
-        {/*        height={23} */}
-        {/*        className='fill-current text-black-c' */}
-        {/*      /> */}
-        {/*      {!!address && ( */}
-        {/*        <span className='text-black-b text-body-14 whitespace-nowrap hidden m:block ml-2'> */}
-        {/*          {address} */}
-        {/*        </span> */}
-        {/*      )} */}
-        {/*    </div> */}
-        {/*  </Button> */}
-        {/*  <div className='hidden m:block absolute top-28'> */}
-        {/*    <LocationPopup onOpenLocation={() => setLocationModalShow(true)} /> */}
-        {/*  </div> */}
-        {/* </div> */}
-
-        <Button
-          type='submit'
-          id='location'
-          onClick={() => setLocationModalShow(true)}
-          className='text-primary-500 px-5'>
-          <Send size={15} />
-        </Button>
+        <div className='flex relative'>
+          <Button
+            type='submit'
+            id='location'
+            onClick={() => setLocationModalShow(true)}
+            className='text-primary-500 px-5'>
+            <Send size={15} />
+          </Button>
+          <div className='hidden m:block absolute top-14 -right-13'>
+            <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
+          </div>
+        </div>
       </div>
       {width >= 768 && (
         <LocationDesktop
