@@ -109,7 +109,7 @@ const Card: FC<Props> = ({
         trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
       }
       className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col relative ${
-        variant === 'default' ? 'border-shadow-b' : 'border-brand-a1'
+        variant === 'default' ? 'border-shadow-b' : 'border-primary-500'
       }`}
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}

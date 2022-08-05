@@ -207,8 +207,8 @@ const TextForm: FC<Props> = observer(({onClose}) => {
     <div
       className='flex flex-col justify-between h-full'
       data-test-id='location-modal-text'>
-      <div className='pt-3 px-4 s:px-6'>
-        <div className='space-y-3'>
+      <div className='pt-7 px-4 s:px-6'>
+        <div className='space-y-4'>
           <Select
             id='location-modal-text-country'
             value={country}
@@ -237,15 +237,12 @@ const TextForm: FC<Props> = observer(({onClose}) => {
             isClearable
           />
         </div>
-        <div className='pt-6 pb-4'>
-          <p className='text-body-14 text-black-b'>
-            {t('SELECT_SEARCH_OPTIONS')}
-          </p>
-          <p className='text-body-14 text-black-b'>
+        <div className='pt-8 pb-2'>
+          <p className='text-body-16 font-semibold text-dark-1'>
             {t('PERHAPS_YOU_WANT_TO_CHANGE_COUNTRY')}
           </p>
         </div>
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-3'>
           {popularCountriesIds.map((id) => {
             const value = countriesById[id]
             if (!value) return null
@@ -260,9 +257,9 @@ const TextForm: FC<Props> = observer(({onClose}) => {
                     isoCode: value.isoCode,
                   })
                 }
-                className={`px-4 py-3 hover:bg-brand-a2 rounded-lg justify-start
-              ${id === country?.value ? 'bg-brand-a2' : ''}`}>
-                <span className='text-body-14 text-black-b truncate max-w-44 whitespace-nowrap'>
+                className={`px-4 py-4 hover:text-primary-500 hover:font-bold rounded-lg justify-start
+              ${id === country?.value ? 'text-primary-500 font-bold' : ''}`}>
+                <span className='text-body-12 truncate max-w-44 whitespace-nowrap w-full text-left'>
                   {value.title}
                 </span>
               </Button>
@@ -270,9 +267,10 @@ const TextForm: FC<Props> = observer(({onClose}) => {
           })}
         </div>
       </div>
-      <div className='flex w-full border-t border-shadow-b mb-6 pt-4 justify-between s:justify-end px-4 s:px-6'>
+      <div className='flex px-4 s:px-6 w-full mt-8 s:mt-0 mb-6 pt-4'>
         <SecondaryButton
           id='location-modal-text-clean'
+          className='w-full'
           onClick={() => {
             setCountry(null)
             setRegion(null)
@@ -285,7 +283,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
         <PrimaryButton
           id='location-modal-text-apply'
           onClick={country && onSubmit}
-          className='ml-4'
+          className='ml-2 w-full'
           disabled={!country}>
           {t('APPLY')}
         </PrimaryButton>

@@ -43,8 +43,8 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
             id={`location-modal-${i.id}`}
             className={`text-body-14 pt-6 pb-2 border-b border-shadow-b ${
               value === i.id
-                ? 'border-b-2 border-brand-a1 pb-7px text-black-b'
-                : 'text-black-c'
+                ? 'border-b-2 border-primary-500 pb-7px text-primary-500 font-semibold'
+                : 'text-greyscale-500'
             } ${widthClass}`}
             onClick={() => onChange(i.id)}>
             {t(i.title)}

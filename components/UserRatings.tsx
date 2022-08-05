@@ -31,7 +31,7 @@ const UserRatings: FC = observer(() => {
                 {unixToDate(r.adCreatedAt)}
               </span>
             </div>
-            <div className='flex flex-col border border-brand-a1 rounded-lg px-3 py-2'>
+            <div className='flex flex-col border border-primary-500 rounded-lg px-3 py-2'>
               <div className='flex justify-between'>
                 <LinkWrapper
                   className='text-brand-b1 text-body-14 font-bold flex-col flex justify-center'

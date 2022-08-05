@@ -167,10 +167,13 @@ const MapForm: FC<Props> = observer(({onClose}) => {
     <div
       className='flex flex-col justify-between h-full'
       data-test-id='location-modal-map'>
-      <div className='pt-4 px-4 s:px-6'>
-        <div style={{height: '288px'}} className='my-4 -mx-4 s:-mx-0 relative'>
+      <div className=' px-4 s:px-6'>
+        <p className='mt-6 mb-4.5 text-body-14 text-greyscale-800'>
+          {t('LOCATION_BY_MAP_TIP')}
+        </p>
+        <div className='my-4 -mx-4 s:-mx-0 relative h-[359px] overflow-hidden rounded-3xl'>
           {location && (
-            <>
+            <div className='h-[275px]'>
               <GoogleMapReact
                 bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
                 center={location}
@@ -182,7 +185,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
                   mapRef.current = map
                   mapsRef.current = maps
                   circle.current = new maps.Circle({
-                    strokeColor: '#7210FF',
+                    strokeColor: '#ffffff',
                     strokeWeight: 2,
                     fillColor: '#7210FF',
                     fillOpacity: 0.2,
@@ -206,36 +209,36 @@ const MapForm: FC<Props> = observer(({onClose}) => {
                   handleOnLoad(map, maps)
                 }}
               />
-            </>
+            </div>
           )}
+          <div className='h-[84px] bg-greyscale-50 pt-7 px-5'>
+            <Slider
+              className='data-test-id-location-modal-map-slider'
+              trackStyle={{backgroundColor: '#7210FF', height: 4}}
+              railStyle={{backgroundColor: 'rgba(12, 13, 13, 0.1)', height: 4}}
+              marks={marks}
+              value={radius}
+              defaultValue={radius}
+              onChange={onChangeRadius}
+              dotStyle={{border: 'none', backgroundColor: 'transparent'}}
+              activeDotStyle={{border: 'none', backgroundColor: 'transparent'}}
+              step={null}
+              handleStyle={{
+                height: 20,
+                width: 20,
+                marginTop: -8,
+                backgroundColor: '#7210FF',
+                border: '1px solid #7210FF',
+                boxShadow: 'none',
+              }}
+            />
+          </div>
         </div>
-        <Slider
-          className='data-test-id-location-modal-map-slider'
-          trackStyle={{backgroundColor: '#7210FF', height: 4}}
-          railStyle={{backgroundColor: 'rgba(12, 13, 13, 0.1)', height: 4}}
-          marks={marks}
-          value={radius}
-          defaultValue={radius}
-          onChange={onChangeRadius}
-          dotStyle={{border: 'none', backgroundColor: 'transparent'}}
-          activeDotStyle={{border: 'none', backgroundColor: 'transparent'}}
-          step={null}
-          handleStyle={{
-            height: 20,
-            width: 20,
-            marginTop: -8,
-            backgroundColor: '#7210FF',
-            border: '1px solid #CE7A13',
-            boxShadow: 'none',
-          }}
-        />
-        <p className='mt-8 text-body-14 text-black-b'>
-          {t('LOCATION_BY_MAP_TIP')}
-        </p>
       </div>
-      <div className='flex justify-between px-4 s:px-6 w-full border-t border-shadow-b mt-6 s:mt-0 mb-6 pt-4 s:justify-end'>
+      <div className='flex px-4 s:px-6 w-full mt-8 s:mt-0 mb-6 pt-4'>
         <SecondaryButton
           id='location-modal-map-clean'
+          className='w-full'
           onClick={() => {
             setLocation(initialLocation.current)
             onChangeRadius(42)
@@ -246,9 +249,9 @@ const MapForm: FC<Props> = observer(({onClose}) => {
           {t('CLEAN')}
         </SecondaryButton>
         <PrimaryButton
+          className='ml-2 w-full'
           id='location-modal-map-apply'
-          onClick={onSubmit}
-          className='ml-4'>
+          onClick={onSubmit}>
           {t('APPLY')}
         </PrimaryButton>
       </div>

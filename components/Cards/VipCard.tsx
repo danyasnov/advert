@@ -22,7 +22,7 @@ const Card: FC<Props> = ({product}) => {
     draggable: images.length > 1,
   })
   return (
-    <div className='w-82 s:w-86 m:w-74 l:w-110 border border-brand-a1 rounded-lg overflow-hidden'>
+    <div className='w-82 s:w-86 m:w-74 l:w-110 border border-primary-500 rounded-lg overflow-hidden'>
       <div className='overflow-hidden' ref={viewportRef}>
         <div className='flex h-54 s:h-58 m:h-50 l:h-73 bg-image-placeholder'>
           {images.map((i) => (
