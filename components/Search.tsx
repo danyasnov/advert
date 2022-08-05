@@ -39,7 +39,7 @@ const Search: FC = () => {
             className='text-primary-500 px-5'>
             <Send size={15} />
           </Button>
-          <div className='hidden m:block absolute top-14 -right-13'>
+          <div className='hidden s:block absolute top-14 -right-20'>
             <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
           </div>
         </div>
