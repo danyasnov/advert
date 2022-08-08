@@ -215,7 +215,7 @@ module.exports = {
         borderWidth: 1,
         backgroundColor: theme('colors.white'),
         size: 10,
-        offset: 70,
+        offset: 110,
       },
       'map-hint-arrow': {
         borderColor: theme('colors.nc-link'),
