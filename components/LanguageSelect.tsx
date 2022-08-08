@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
 import {useTranslation} from 'next-i18next'
-import ImageWrapper from './ImageWrapper'
+import IcWorld from 'icons/material/World.svg'
 import {setCookiesObject} from '../helpers'
 import LinkSelect from './Selects/LinkSelect'
 import {SelectItem} from './Selects/Select'
@@ -21,14 +21,7 @@ const languageOptions = [
 const withLangIcons = (opts) =>
   opts.map((o) => ({
     ...o,
-    icon: (
-      <ImageWrapper
-        type={`/img/flags/${o.value}.png`}
-        alt={o.value}
-        width={16}
-        height={16}
-      />
-    ),
+    icon: <IcWorld className='w-5 h-5' />,
   }))
 const LanguageSelect: FC = observer(() => {
   const {reload} = useRouter()

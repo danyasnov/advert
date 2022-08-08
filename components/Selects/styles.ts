@@ -24,9 +24,9 @@ export const getDefaultStyles = (isInvalid) => ({
       fontSize: '14px',
       lineHeight: '16px',
       color: '#3D3F43',
-      backgroundColor: state.isFocused ? '#FFEEDD' : '#FFFFFF',
+      backgroundColor: state.isFocused ? '#F4ECFF' : '#FFFFFF',
       '&:hover': {
-        backgroundColor: '#FFEEDD',
+        backgroundColor: '#F4ECFF',
       },
       display: 'flex',
       alignItems: 'center',
