@@ -79,11 +79,28 @@ const Footer: FC = observer(() => {
       <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
         <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
           <Section
+            title={t('CATEGORIES')}
+            className='m:col-span-4 l:col-span-6'
+            body={
+              <div className='grid s:grid-cols-1 m:grid-cols-2 l:grid-cols-3 gap-y-2'>
+                {ids.map((id) => (
+                  <LinkWrapper
+                    title={categoriesById[id]?.name}
+                    className='text-body-16 text-greyscale-800 whitespace-nowrap truncate'
+                    href={`/all/all/${categoriesById[id]?.slug}`}
+                    key={id}>
+                    {categoriesById[id]?.name}
+                  </LinkWrapper>
+                ))}
+              </div>
+            }
+          />
+          <Section
             title={t('MOBILE_APP')}
-            className='s:col-span-2 m:col-span-3 l:col-span-4'
+            className='m:col-span-4 l:col-span-3'
             body={
               <>
-                <div className='text-body-12 text-black-b capitalize-first mb-2 l:mb-4'>
+                <div className='text-body-14 text-greyscale-800 capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
                 <div className='flex flex-wrap items-center justify-around s:justify-start'>
@@ -127,23 +144,7 @@ const Footer: FC = observer(() => {
             className='m:col-span-3 l:col-span-2'
             body={<Socials />}
           />
-          <Section
-            title={t('CATEGORIES')}
-            className='s:col-span-2 m:col-span-4 l:col-span-4'
-            body={
-              <div className='grid grid-cols-2 grid-rows-6 grid-flow-col place-items-start gap-y-2'>
-                {ids.map((id) => (
-                  <LinkWrapper
-                    title={categoriesById[id]?.name}
-                    className='text-body-12 text-brand-b1 whitespace-nowrap'
-                    href={`/all/all/${categoriesById[id]?.slug}`}
-                    key={id}>
-                    {categoriesById[id]?.name}
-                  </LinkWrapper>
-                ))}
-              </div>
-            }
-          />
+
           {/* <div className='flex flex-col items-start space-y-2 s:pt-33px s:justify-end m:col-span-2 l:col-span-2'> */}
           {/*  <LinkButton */}
           {/*    onClick={notImplementedAlert} */}
@@ -222,9 +223,9 @@ interface Props {
 const Section: FC<Props> = ({title, body, headerLink, className}) => {
   return (
     <div className={`flex flex-col ${className || ''}`}>
-      <div className='flex justify-between pb-2 border-b mb-2 border-shadow-b'>
+      <div className='flex justify-between mb-5'>
         {title && (
-          <div className='text-body-14 text-black-b font-bold capitalize-first '>
+          <div className='text-body-18 text-greyscale-800 font-bold capitalize-first '>
             {title}
           </div>
         )}
