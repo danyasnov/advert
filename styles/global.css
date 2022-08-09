@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-    button {
-        @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
-    }
+    /*button {*/
+    /*    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1*/
+    /*}*/
 
-    input:not(.manual-outline), textarea {
-        @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1
-    }
+    /*input:not(.manual-outline), textarea {*/
+    /*    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1*/
+    /*}*/
 
-    .react-select input {
-        @apply focus-visible:ring-0
-    }
+    /*.react-select input {*/
+    /*    @apply focus-visible:ring-0*/
+    /*}*/
 }
 
 .fixed-breakpoints-width {

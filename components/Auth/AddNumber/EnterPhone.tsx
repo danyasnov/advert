@@ -107,7 +107,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch, onClose}) => {
                 setCountry(c)
               }}
             />
-            <span className='text-body-12 text-nc-error mt-1 absolute top-12'>
+            <span className='text-body-12 text-error mt-1 absolute top-12'>
               {errors.phone}
             </span>
           </div>

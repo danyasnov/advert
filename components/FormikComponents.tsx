@@ -28,6 +28,7 @@ interface IFormikSelect {
   options: SelectItem[]
   placeholder: string
   isFilterable: boolean
+  isClearable: boolean
   isMulti: boolean
 }
 interface IFormikRange {
@@ -388,9 +389,9 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         format={format}
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
-        className={`border rounded-lg py-3 px-3.5 w-full text-black-b text-body-14 ${
+        className={`rounded-2xl bg-greyscale-50 py-4 px-5 w-full text-greyscale-900 text-body-14 ${
           disableTrack ? 'ym-disable-keys' : ''
-        } ${isValid ? 'border-nc-border' : 'border-error'}`}
+        } ${isValid ? '' : 'border border-error text-error'}`}
       />
       <span className='text-body-12 text-error'>{error}</span>
     </div>
@@ -563,7 +564,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
       <div
         className={`bg-white border-2 rounded h-4.5 w-4.5 flex
        shrink-0 justify-center items-center mr-2 ${
-         error ? 'border-nc-error' : 'border-black-d'
+         error ? 'border-error' : 'border-black-d'
        }`}>
         <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
       </div>
@@ -641,6 +642,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   placeholder,
   isFilterable,
   isMulti,
+  isClearable,
 }) => {
   const {width} = useWindowSize()
   const {name, value} = field
@@ -650,7 +652,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     id: name,
     value: value || [],
     options,
-    isClearable: true,
+    isClearable,
     placeholder,
     isSearchable: isFilterable,
     isMulti,

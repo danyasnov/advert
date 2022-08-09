@@ -2,7 +2,9 @@
 export const getDefaultStyles = (isInvalid) => ({
   control: (provided, state) => ({
     ...provided,
-    borderRadius: 8,
+    borderRadius: 12,
+    border: 0,
+    backgroundColor: '#FAFAFA',
     boxShadow: 'none',
     borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
     '&:hover': {
@@ -17,16 +19,29 @@ export const getDefaultStyles = (isInvalid) => ({
         }
       : {}),
   }),
+  input: (provided) => ({
+    ...provided,
+    lineHeight: '22px',
+    margin: 0,
+    padding: 0,
+  }),
   option: (provided, state) => {
     const isDisabled = !!state.data.disabled
     return {
       ...provided,
       fontSize: '14px',
-      lineHeight: '16px',
-      color: '#3D3F43',
-      backgroundColor: state.isFocused ? '#F4ECFF' : '#FFFFFF',
-      '&:hover': {
-        backgroundColor: '#F4ECFF',
+      lineHeight: '20px',
+      paddingTop: '16px',
+      paddingBottom: '16px',
+      color: '#212121',
+      ...(state.isFocused
+        ? {backgroundColor: '#fff', fontWeight: 'bold', color: '#7210FF'}
+        : {}),
+      backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
+      '&:hover ': {
+        backgroundColor: '#fff',
+        fontWeight: 'bold',
+        color: '#7210FF',
       },
       display: 'flex',
       alignItems: 'center',
@@ -37,9 +52,14 @@ export const getDefaultStyles = (isInvalid) => ({
   },
   singleValue: (provided) => ({
     ...provided,
-    fontSize: '14px',
-    lineHeight: '16px',
+    fontSize: '16px',
+    lineHeight: '22px',
     color: '#3D3F43',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    borderRadius: 16,
+    overflow: 'hidden',
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -49,7 +69,10 @@ export const getDefaultStyles = (isInvalid) => ({
   }),
   valueContainer: (provided) => ({
     ...provided,
-    paddingLeft: '12px',
+    paddingLeft: '20px',
+    paddingTop: '16px',
+    paddingBottom: '16px',
+    height: '56px',
   }),
   indicatorSeparator: (provided) => ({
     ...provided,

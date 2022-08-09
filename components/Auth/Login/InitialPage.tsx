@@ -3,16 +3,18 @@ import {useTranslation} from 'next-i18next'
 import {AuthType} from 'front-api/src/models'
 import IcPhone from 'icons/material/Phone.svg'
 import IcEmail from 'icons/material/Email.svg'
+import {Call, Message} from 'react-iconly'
 import SecondaryButton from '../../Buttons/SecondaryButton'
 import {AuthPages} from './LoginWizard'
 import {PageProps} from '../utils'
+import OutlineButton from '../../Buttons/OutlineButton'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
 
   return (
     <div className='flex flex-col px-6 pb-6 space-y-4'>
-      <SecondaryButton
+      <OutlineButton
         id='login-by-phone'
         className='h-14'
         onClick={() => {
@@ -25,10 +27,12 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             authType: AuthType.phone,
           })
         }}>
-        <IcPhone className='fill-current text-black-c h-6 w-6 mr-2' />
+        <div className='fill-current text-greyscale-900 mr-3'>
+          <Call size={24} />
+        </div>
         {t('BY_PHONE_NUMBER')}
-      </SecondaryButton>
-      <SecondaryButton
+      </OutlineButton>
+      <OutlineButton
         id='login-by-email'
         className='h-14'
         onClick={() => {
@@ -41,9 +45,11 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             authType: AuthType.email,
           })
         }}>
-        <IcEmail className='fill-current text-black-c h-6 w-6 mr-2 ' />
+        <div className='fill-current text-greyscale-900 mr-3'>
+          <Message />
+        </div>
         {t('LOGIN_WITH_EMAIL')}
-      </SecondaryButton>
+      </OutlineButton>
     </div>
   )
 }

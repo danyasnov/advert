@@ -340,7 +340,7 @@ export const FormGroup: FC<{
                     <span
                       className={`text-body-12 s:text-body-16 ${
                         showSummaryErrors
-                          ? 'text-nc-error'
+                          ? 'text-error'
                           : 'text-nc-secondary-text'
                       }`}>
                       {t('NUMBER_FROM_NUMBER', {
@@ -391,7 +391,7 @@ export const FormGroup: FC<{
                 <span
                   className={
                     !countMeta.isRequiredFilled && !isExpanded
-                      ? 'text-nc-error'
+                      ? 'text-error'
                       : ''
                   }>
                   {t('NUMBER_FROM_NUMBER', {

@@ -161,7 +161,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
           errors.code ? 'border-error' : 'border-nc-border'
         }`}
       />
-      <span className='text-body-12 text-nc-error mt-2 w-[304px] text-center'>
+      <span className='text-body-12 text-error mt-2 w-[304px] text-center'>
         {errors.code}
       </span>
       <span className='text-primary-500-text text-body-16 font-medium mt-6 mb-4 mx-6 text-center w-[304px]'>
