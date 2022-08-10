@@ -48,7 +48,7 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
               placeholder={t('FORM_EMAIL')}
             />
             {showHint && (
-              <span className='text-body-14 text-black-b self-center pt-4'>
+              <span className='text-body-14 text-greyscale-900 self-center pt-4'>
                 {t('MESSAGE_WAS_SENT')}
               </span>
             )}

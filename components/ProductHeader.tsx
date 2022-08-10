@@ -29,7 +29,7 @@ const ProductHeader: FC = observer(() => {
         </div>
       )}
       <div className='flex justify-between w-full items-center mb-2'>
-        <h1 className='text-body-16 font-bold m:text-body-14 text-black-b'>
+        <h1 className='text-body-16 font-bold m:text-body-14 text-greyscale-900'>
           {advert.title}
         </h1>
         <div className='flex ml-4 space-x-2'>
@@ -43,7 +43,7 @@ const ProductHeader: FC = observer(() => {
         </div>
       </div>
       <div className='flex flex-col m:hidden'>
-        <span className='text-body-14 text-black-b font-bold'>
+        <span className='text-body-14 text-greyscale-900 font-bold'>
           {isFree ? t('FREE') : advert.price}
         </span>
         <div className='flex flex-col s:flex-row s:items-center s:mb-4 s:mt-2 justify-between'>

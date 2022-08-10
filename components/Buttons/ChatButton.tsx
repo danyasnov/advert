@@ -23,7 +23,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
         <LinkWrapper
           id='chat'
           href={`/chat?hash=${hash}`}
-          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-14 text-black-b flex justify-center'
+          className='rounded-lg py-3 px-3.5 border border-shadow-b h-10 text-body-14 text-greyscale-900 flex justify-center'
           title={t('SEND_A_MESSAGE')}>
           {t('SEND_A_MESSAGE')}
         </LinkWrapper>

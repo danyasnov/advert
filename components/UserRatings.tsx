@@ -24,10 +24,10 @@ const UserRatings: FC = observer(() => {
           </div>
           <div className='flex flex-col w-full'>
             <div className='flex justify-between mb-1'>
-              <h5 className='text-body-14 font-bold text-black-b'>
+              <h5 className='text-body-14 font-bold text-greyscale-900'>
                 {r.userName}
               </h5>
-              <span className='text-body-12 text-black-b '>
+              <span className='text-body-12 text-greyscale-900 '>
                 {unixToDate(r.adCreatedAt)}
               </span>
             </div>
@@ -43,7 +43,7 @@ const UserRatings: FC = observer(() => {
                 <RatingStars rating={r.userRating} size={6} />
               </div>
               {r.comment && (
-                <span className='mt-2 text-body-14 text-black-b'>
+                <span className='mt-2 text-body-14 text-greyscale-900'>
                   {r.comment}
                 </span>
               )}

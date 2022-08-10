@@ -10,6 +10,7 @@ interface Props {
   layout?: 'fixed' | 'intrinsic' | 'responsive' | 'fill'
   width?: number
   height?: number
+  quality?: number
   priority?: boolean
   fallbackUrl?: string | string[]
   onLoadingComplete?: (size: {
@@ -30,6 +31,7 @@ const ImageWrapper: FC<Props> = ({
   fallbackUrl,
   id,
   onLoadingComplete,
+  quality,
 }) => {
   const [hide, setHide] = useState(false)
   const [imgSrc, setImgSrc] = useState(type)
@@ -38,6 +40,7 @@ const ImageWrapper: FC<Props> = ({
   return (
     // @ts-ignore
     <Image
+      quality={quality}
       src={imgSrc}
       width={width}
       height={height}

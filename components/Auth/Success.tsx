@@ -1,31 +1,29 @@
 import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import Lottie from 'react-lottie'
 import {useRouter} from 'next/router'
+import IcLoginSuccess from 'icons/LoginSuccess.svg'
 import {PageProps} from './utils'
-import SuccessAnimation from '../../lottie/success_animation.json'
 import PrimaryButton from '../Buttons/PrimaryButton'
 
-const Success: FC<PageProps> = observer(({dispatch, onClose, onFinish}) => {
+const Success: FC<PageProps> = observer(({onClose, onFinish}) => {
   const {t} = useTranslation()
   const {reload} = useRouter()
   return (
     <div className='flex flex-col'>
-      <div className='mt-12 mb-4'>
-        <Lottie
-          options={{animationData: SuccessAnimation}}
-          height={200}
-          width={188}
-        />
+      <div className='mb-6 flex justify-center'>
+        <IcLoginSuccess className='w-[124px] h-[124px]' />
       </div>
-      <span className='text-primary-500-text font-medium text-body-16 mx-12 text-center'>
+      <span className='text-primary-500 text-h-4 font-bold mx-12 text-center mb-6'>
+        {t('CONGRATULATIONS')}
+      </span>
+      <span className='text-greyscale-900 text-body-16 mx-12 mb-10 text-center'>
         {t('SUCCESSFUL_REGISTRATION')}
       </span>
-      <div className='px-6 w-full mt-8 mb-6 '>
+      <div className='px-6 w-full mb-6 flex justify-center'>
         <PrimaryButton
           id='add-number-next'
-          className='w-full'
+          className='w-[212px]'
           onClick={() => {
             if (onFinish) {
               onFinish()

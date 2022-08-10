@@ -49,17 +49,17 @@ const ProductDescription: FC = observer(() => {
             {!isUserAdv && userHash && <ProductNotes hash={hash} />}
           </div>
           <div className='ml-0 s:ml-4 flex space-x-4'>
-            <div className='text-black-b text-body-12 flex items-center '>
+            <div className='text-greyscale-900 text-body-12 flex items-center '>
               <IcLike className='fill-current text-black-c w-4 h-4 mr-2' />
               {favoriteCounter}
             </div>
-            <div className='text-black-b text-body-12 flex items-center'>
+            <div className='text-greyscale-900 text-body-12 flex items-center'>
               <IcVisibility className='fill-current text-black-c w-5 h-5 mr-2' />
               {views}
             </div>
             <span
               suppressHydrationWarning
-              className='text-black-b text-body-12 whitespace-nowrap flex items-center'>
+              className='text-greyscale-900 text-body-12 whitespace-nowrap flex items-center'>
               {unixToDateTime(dateUpdated)}
             </span>
           </div>
@@ -117,7 +117,7 @@ const DescriptionTab: FC = observer(() => {
 
   if (!product.advert.description) return null
   return (
-    <div className='bg-white p-4 text-black-b text-body-16 break-words whitespace-pre-wrap'>
+    <div className='bg-white p-4 text-greyscale-900 text-body-16 break-words whitespace-pre-wrap'>
       {product.advert.description}
     </div>
   )

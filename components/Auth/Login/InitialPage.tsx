@@ -13,7 +13,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col px-6 pb-6 space-y-4'>
+    <div className='flex flex-col px-6 pb-6 pt-4 space-y-4'>
       <OutlineButton
         id='login-by-phone'
         className='h-14'

@@ -61,7 +61,7 @@ class ColItem extends PureComponent<ColItemProps> {
         title={name}
         className={`${
           isActive ? 'font-bold text-primary-500' : ''
-        } categories-selector-item text-black-b first:font-bold`}
+        } categories-selector-item text-greyscale-900 first:font-bold`}
         href={href}>
         {name}
       </LinkWrapper>
@@ -83,7 +83,7 @@ class ButtonColItem extends PureComponent<ColItemProps> {
       <Button
         className={`${
           isActive ? 'bg-nc-accent' : ''
-        } categories-selector-item text-black-b`}
+        } categories-selector-item text-greyscale-900`}
         onClick={onClick}>
         {name}
       </Button>

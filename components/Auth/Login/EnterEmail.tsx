@@ -107,7 +107,7 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
   const {submitForm, errors, setFieldValue, values} = formik
   return (
     <FormikProvider value={formik}>
-      <div className='px-4 flex flex-col justify-between h-full'>
+      <div className='px-4 flex flex-col justify-between h-full pt-4'>
         <Form className='pb-8 space-y-2'>
           <Field
             name='email'

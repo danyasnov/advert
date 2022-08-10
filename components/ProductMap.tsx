@@ -31,7 +31,7 @@ const ProductMap: FC = observer(() => {
     degradations.find((d) => d.key === advert.degradation)?.radius ?? 0
 
   return (
-    <div className='bg-white s:rounded-lg text-body-14 text-black-b'>
+    <div className='bg-white s:rounded-lg text-body-14 text-greyscale-900'>
       <div className='flex justify-between px-6 py-5'>
         <div className='flex items-center'>
           <IcPinDrop className='w-6 h-6 fill-current text-black-c mr-2' />

@@ -62,10 +62,15 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
+  const {isFocused} = props
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <RSComponents.DropdownIndicator {...props}>
-      <IcArrowDown className='w-5 h-5 fill-current text-greyscale-900 mr-3' />
+      <IcArrowDown
+        className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
+          isFocused ? 'rotate-180' : ''
+        }`}
+      />
     </RSComponents.DropdownIndicator>
   )
 }

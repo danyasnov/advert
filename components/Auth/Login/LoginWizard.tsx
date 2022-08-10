@@ -35,7 +35,7 @@ export const AuthPages = {
     component: PasswordRestoration,
   },
   success: {
-    title: 'CONGRATULATIONS',
+    title: '',
     component: Success,
   },
 }

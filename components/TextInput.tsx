@@ -17,7 +17,7 @@ const TextInput: FC<Props> = ({value, onChange, placeholder, className}) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`h-10 w-full border border-shadow-b rounded-lg pl-3.5 pr-8 py-3 text-body-14 text-black-b ${
+        className={`h-10 w-full border border-shadow-b rounded-lg pl-3.5 pr-8 py-3 text-body-14 text-greyscale-900 ${
           className || ''
         }`}
       />

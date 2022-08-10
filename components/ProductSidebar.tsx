@@ -20,7 +20,7 @@ const ProductSidebar: FC = observer(() => {
   return (
     <div className='flex flex-col space-y-4'>
       <span
-        className='text-black-b text-body-14 font-bold'
+        className='text-greyscale-900 text-body-14 font-bold'
         data-test-id='price'>
         {isFree ? t('FREE') : advert.price}
       </span>

@@ -176,7 +176,7 @@ const UserLayout: FC = observer(() => {
                 )}
                 {activeUserPage === 'reviews' && (
                   <div className='mt-8'>
-                    <h1 className='text-body-14 text-black-b font-bold mb-6'>
+                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
                       {t('REVIEWS')}
                     </h1>
                     <UserRatings />
@@ -184,7 +184,7 @@ const UserLayout: FC = observer(() => {
                 )}
                 {activeUserPage === 'favorites' && (
                   <div className='mt-8'>
-                    <h1 className='text-body-14 text-black-b font-bold mb-6'>
+                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
                       {t('FAVORITE')}
                     </h1>
                     <ScrollableCardGroup
@@ -205,7 +205,7 @@ const UserLayout: FC = observer(() => {
                 )}
                 {activeUserPage === 'drafts' && (
                   <div className='mt-8'>
-                    <h1 className='text-body-14 text-black-b font-bold mb-6'>
+                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
                       {t('DRAFTS')}
                     </h1>
                     <div className='flex flex-col m:items-start relative'>

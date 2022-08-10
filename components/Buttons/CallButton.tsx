@@ -55,7 +55,7 @@ const CallButton: FC<Props> = ({product}) => {
               }
             })
           }}
-          className='w-full text-body-14 text-black-b order-0 '>
+          className='w-full text-body-14 text-greyscale-900 order-0 '>
           <IcPhone className='fill-current h-4 w-4 mr-2' />
           {t('MAKE_A_CALL')}
         </PrimaryButton>
@@ -102,7 +102,7 @@ const PhoneModal: FC<ModalProps> = observer(
         overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
         <div className='flex flex-col w-full'>
           <div className='px-3 mt-6 pb-4 flex justify-between border-b border-shadow-b'>
-            <span className='text-body-14 text-black-b font-bold'>
+            <span className='text-body-14 text-greyscale-900 font-bold'>
               {displayAllow ? owner.name : t('LOG_IN')}
             </span>
             <Button onClick={onClose}>
@@ -128,16 +128,16 @@ const PhoneModal: FC<ModalProps> = observer(
                     <IcCopy className='fill-current text-black-c h-6 w-6 ml-1' />
                   </Button>
                 </div>
-                <div className='text-body-14 text-black-b mt-4'>
+                <div className='text-body-14 text-greyscale-900 mt-4'>
                   {t('TELL_YOU_FOUND_AD_ON_VOOXEE')}
                 </div>
               </>
             ) : (
               <>
-                <div className='text-body-14 text-black-b'>
+                <div className='text-body-14 text-greyscale-900'>
                   {t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED')}
                 </div>
-                <div className='text-body-14 text-black-b mt-2 mb-4'>
+                <div className='text-body-14 text-greyscale-900 mt-2 mb-4'>
                   {t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT')}
                 </div>
                 <OutlineButton

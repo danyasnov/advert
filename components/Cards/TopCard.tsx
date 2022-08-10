@@ -31,12 +31,14 @@ const Card: FC<Props> = ({product}) => {
       <div className='p-2 flex flex-col justify-between h-34 s:h-31 m:h-35 l:h-31 bg-white'>
         <div className='flex flex-col'>
           <div className='flex items-start mb-1'>
-            <span className='text-body-12 text-black-b line-clamp-3 flex-1 break-words'>
+            <span className='text-body-12 text-greyscale-900 line-clamp-3 flex-1 break-words'>
               {title}
             </span>
             <IcMoreVert className='fill-current text-black-c h-4 w-4' />
           </div>
-          <span className='text-body-16 text-black-b font-bold'>{price}</span>
+          <span className='text-body-16 text-greyscale-900 font-bold'>
+            {price}
+          </span>
           <span className='text-body-12 text-black-c line-through'>
             {oldPrice}
           </span>

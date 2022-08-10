@@ -186,12 +186,12 @@ const Card: FC<Props> = ({
         }`}>
         <div className='flex flex-col'>
           <div className='flex items-start mb-1'>
-            <span className='text-body-12 text-black-b line-clamp-2 flex-1 break-words'>
+            <span className='text-body-12 text-greyscale-900 line-clamp-2 flex-1 break-words'>
               {title}
             </span>
             {/* <IcMoreVert className='fill-current text-black-c h-4 w-4' /> */}
           </div>
-          <span className='text-body-16 text-black-b font-bold'>
+          <span className='text-body-16 text-greyscale-900 font-bold'>
             {isFree ? t('FREE') : price}
           </span>
           <span className='text-body-12 text-black-c line-through'>

@@ -36,7 +36,9 @@ const LocationSelector: FC<Props> = ({
             </h1>
           )}
           {subTitle && (
-            <span className='text-body-16 text-black-b mb-4'>{subTitle}</span>
+            <span className='text-body-16 text-greyscale-900 mb-4'>
+              {subTitle}
+            </span>
           )}
         </div>
         <div className='flex'>
@@ -51,7 +53,7 @@ const LocationSelector: FC<Props> = ({
       <div className='flex flex-wrap'>
         {Object.entries(items).map(([key, values]) => (
           <div className='flex flex-col w-1/3 s:w-1/6 mb-4' key={key}>
-            <div className='text-black-b h-10 bg-black-e flex items-center mb-2 pl-4'>
+            <div className='text-greyscale-900 h-10 bg-black-e flex items-center mb-2 pl-4'>
               {key}
             </div>
             <div className='pl-4'>

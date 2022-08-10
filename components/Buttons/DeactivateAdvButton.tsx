@@ -19,7 +19,7 @@ const DeactivateAdvButton: FC<Props> = ({product}) => {
     <div className='w-full'>
       <OutlineButton
         onClick={() => setShowDeactivateModal(true)}
-        className='w-full text-body-14 text-black-b order-0 '>
+        className='w-full text-body-14 text-greyscale-900 order-0 '>
         {t('REMOVE_FROM_SALE')}
       </OutlineButton>
 

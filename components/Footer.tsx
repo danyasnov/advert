@@ -203,7 +203,7 @@ const Footer: FC = observer(() => {
               {/*  old.adverto.sale */}
               {/* </LinkWrapper> */}
             </div>
-            <div className='text-body-12 my-2 s:my-4 text-black-b'>
+            <div className='text-body-12 my-2 s:my-4 text-greyscale-900'>
               © 2022—{new Date().getFullYear()} Vooxee
             </div>
           </div>

@@ -52,7 +52,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
         value={value}
         mask='_'
         format={format}
-        className='rounded-lg py-3 w-full text-black-b text-body-16 outline-none manual-outline'
+        className='rounded-lg py-3 w-full text-greyscale-900 text-body-16 outline-none manual-outline'
       />
     </div>
   )
@@ -97,7 +97,9 @@ const FormatSelect: FC<FormatSelectorProps> = ({
         type='button'>
         <IcArrowDropDown className='w-6 h-6 fill-current text-black-c mr-2' />
 
-        <span className='text-body-16 text-black-b'>+{value.phonePrefix}</span>
+        <span className='text-body-16 text-greyscale-900'>
+          +{value.phonePrefix}
+        </span>
       </button>
       {isOpen && (
         <ul
@@ -107,7 +109,7 @@ const FormatSelect: FC<FormatSelectorProps> = ({
             <div className='flex mx-2 pt-4 mb-2 pb-3 border-b border-nc-border sticky top-0 bg-white'>
               <IcSearch className='w-5 h-5 mr-2' />
               <input
-                className='w-full text-body-16 text-black-b manual-outline outline-none'
+                className='w-full text-body-16 text-greyscale-900 manual-outline outline-none'
                 placeholder={t('SEARCH')}
                 value={filter}
                 onChange={({target}) => setFilter(target.value)}
@@ -130,7 +132,7 @@ const FormatSelect: FC<FormatSelectorProps> = ({
                   } `}
                   key={item.isoCode}
                   {...getItemProps({item, index})}>
-                  <span className='text-body-16 text-black-b'>
+                  <span className='text-body-16 text-greyscale-900'>
                     {item.label}
                   </span>
                   {item.value === value.value && (

@@ -71,7 +71,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       <Button
         onClick={onClose}
         className='absolute top-5 right-5 cursor-pointer z-10'>
-        <IcClear className='fill-current text-black-b h-10 w-10' />
+        <IcClear className='fill-current text-greyscale-900 h-10 w-10' />
       </Button>
       <div className='flex flex-col w-full h-full bg-image-placeholder overflow-hidden'>
         <div className='overflow-hidden relative h-full' ref={viewportRef}>

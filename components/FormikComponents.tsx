@@ -389,7 +389,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         format={format}
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
-        className={`rounded-2xl bg-greyscale-50 py-4 px-5 w-full text-greyscale-900 text-body-14 ${
+        className={`rounded-2xl bg-greyscale-50 py-4 px-5 w-full text-greyscale-900 text-body-16 ${
           disableTrack ? 'ym-disable-keys' : ''
         } ${isValid ? '' : 'border border-error text-error'}`}
       />
@@ -441,9 +441,9 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
-    className: `border rounded-lg py-3 px-3.5 w-full text-black-b text-body-14 ${
+    className: `border bg-greyscale-50 rounded-lg py-4 px-5 w-full text-greyscale-900 text-body-16 ${
       disableTrack ? 'ym-disable-keys' : ''
-    } ${isValid ? 'border-nc-border' : 'border-error'}`,
+    } ${isValid ? 'border-greyscale-50' : 'border-error'}`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -451,12 +451,13 @@ export const FormikText: FC<
       }
     },
   }
+
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
   return (
     <div className='flex flex-col'>
       {Component}
-      <span className='text-body-12 text-error'>{error}</span>
+      <span className='text-body-12 text-error pt-3'>{error}</span>
     </div>
   )
 }
@@ -480,11 +481,11 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border rounded-lg py-3 pl-3.5 pr-10 w-full text-black-b ym-disable-keys text-body-14 ${
-            isValid ? 'border-shadow-b' : 'border-error'
+          className={`border bg-greyscale-50 rounded-lg py-4 px-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
+            isValid ? 'border-greyscale-50' : 'border-error'
           }`}
         />
-        <div className='absolute top-2 right-2'>
+        <div className='absolute top-4 right-5'>
           {type === 'password' && (
             <Button onClick={() => setType('text')}>
               <IcVisibility className='fill-current text-black-c h-6 w-6' />
@@ -497,7 +498,7 @@ export const FormikPassword: FC<
           )}
         </div>
       </div>
-      <span className='text-body-12 text-error'>{error}</span>
+      <span className='text-body-12 text-error pt-3'>{error}</span>
     </div>
   )
 }
@@ -512,12 +513,12 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   const {t} = useTranslation()
   const error = get(errors, name)
   const isValid = !error
-  const commonClass = `w-1/2 py-3 px-3.5 text-black-b text-body-14 ${
+  const commonClass = `w-1/2 py-3 px-3.5 text-greyscale-900 text-body-14 ${
     isValid ? '' : 'border-error'
   }`
   const mappedValue = Array.isArray(value) ? value : ['', '']
   return (
-    <div className='flex text-black-b text-body-14'>
+    <div className='flex text-greyscale-900 text-body-14'>
       <NumberFormat
         value={mappedValue[0]}
         onValueChange={({value: min}) => {
@@ -577,7 +578,7 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
       ) : (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
         <label
-          className={`select-none text-black-b cursor-pointer flex items-center ${labelClassname}`}>
+          className={`select-none text-greyscale-900 cursor-pointer flex items-center ${labelClassname}`}>
           {input}
           <span
             dangerouslySetInnerHTML={{

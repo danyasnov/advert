@@ -121,31 +121,35 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
     formik
 
   return (
-    <div className='flex flex-col items-center pt-2 px-4'>
-      <div className='mb-8'>
-        {verifyMode === 2 && (
-          <Lottie
-            options={{animationData: MailAnimation}}
-            height={68}
-            width={68}
-          />
-        )}
-        {verifyMode === 0 && (
-          <Lottie
-            options={{animationData: CallAnimation}}
-            height={68}
-            width={68}
-          />
-        )}
-        {verifyMode === 1 && (
-          <Lottie
-            options={{animationData: SmsAnimation}}
-            height={68}
-            width={68}
-          />
-        )}
-      </div>
-
+    <div className='flex flex-col items-center px-4'>
+      {/* <div className='mb-8'> */}
+      {/*  {verifyMode === 2 && ( */}
+      {/*    <Lottie */}
+      {/*      options={{animationData: MailAnimation}} */}
+      {/*      height={68} */}
+      {/*      width={68} */}
+      {/*    /> */}
+      {/*  )} */}
+      {/*  {verifyMode === 0 && ( */}
+      {/*    <Lottie */}
+      {/*      options={{animationData: CallAnimation}} */}
+      {/*      height={68} */}
+      {/*      width={68} */}
+      {/*    /> */}
+      {/*  )} */}
+      {/*  {verifyMode === 1 && ( */}
+      {/*    <Lottie */}
+      {/*      options={{animationData: SmsAnimation}} */}
+      {/*      height={68} */}
+      {/*      width={68} */}
+      {/*    /> */}
+      {/*  )} */}
+      {/* </div> */}
+      <span className='text-primary-500-text text-body-16 font-medium mt-8 mb-6 mx-6 text-center w-[304px]'>
+        {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
+        {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
+        {verifyMode === 2 && t('SENT_EMAIL_WITH_ACTIVATION_CODE')}
+      </span>
       <AuthCode
         key={characters}
         ref={AuthInputRef}
@@ -159,20 +163,16 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
           })
         }}
         containerClassName='space-x-2'
-        inputClassName={`w-14 h-18 p-4 text-body-14 text-black-b font-bold border rounded-lg ${
-          errors.code ? 'border-error' : 'border-nc-border'
+        inputClassName={`w-12 h-15 p-4 text-h-4 text-greyscale-900 font-bold border rounded-xl bg-greyscale-50 ${
+          errors.code ? 'border-error' : 'border-greyscale-200'
         }`}
       />
-      <span className='text-body-12 text-error mt-2 w-[304px] text-center'>
+      <span className='text-body-12 text-error my-3 w-[304px] text-center'>
         {errors.code}
       </span>
-      <span className='text-primary-500-text text-body-16 font-medium mt-6 mb-4 mx-6 text-center w-[304px]'>
-        {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
-        {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
-        {verifyMode === 2 && t('SENT_EMAIL_WITH_ACTIVATION_CODE')}
-      </span>
+
       <LinkButton
-        className='mb-2'
+        className='mb-4'
         onClick={() => {
           dispatch(
             state.authType === AuthType.phone
@@ -188,7 +188,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
       />
       {verifyMode === 0 && (
         <LinkButton
-          className='mb-6'
+          className='mb-10'
           onClick={() => {
             setVerifyMode(1)
             dispatch({type: 'setTitle', title: 'ENTER_CODE_FROM_SMS'})

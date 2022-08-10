@@ -105,7 +105,7 @@ const ProductMenu: FC<Props> = ({product}) => {
                 <Button
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-14'
+                  className='px-4 py-3 text-greyscale-900 hover:bg-brand-a2 w-full text-body-14'
                   onClick={() => {
                     onClick()
                     setShowPopup(false)

@@ -108,7 +108,7 @@ const SearchAutocomplete: FC<Props> = observer(
               },
             })}
             placeholder={t('SEARCH')}
-            className='pl-6 px-3.5 py-2.5 text-black-b text-body-14 rounded-2 w-full h-full -my-1px'
+            className='pl-6 px-3.5 py-2.5 text-greyscale-900 text-body-14 rounded-2 w-full h-full -my-1px'
             id='search-autocomplete'
           />
         </div>
@@ -129,7 +129,7 @@ const SearchAutocomplete: FC<Props> = observer(
                 }`}
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${item.secondary}${index}`}>
-                <span className='text-body-14 text-black-b truncate'>
+                <span className='text-body-14 text-greyscale-900 truncate'>
                   {item.primary}
                 </span>
                 <span className='text-body-12 text-black-c truncate'>

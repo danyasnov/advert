@@ -87,7 +87,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   return (
     <FormikProvider value={formik}>
       <div className='px-4 pt-4 flex flex-col justify-between h-full'>
-        <Form className='pb-8 space-y-2'>
+        <Form className='pb-8 space-y-4'>
           <Field
             name='name'
             disableTrack

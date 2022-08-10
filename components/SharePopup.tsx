@@ -59,7 +59,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
         <div
           className='z-10 flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3 arrow-top'
           data-test-id='share-popup'>
-          <h2 className='text-body-14 text-black-b font-bold mb-4'>
+          <h2 className='text-body-14 text-greyscale-900 font-bold mb-4'>
             {t('SHARE')}
           </h2>
           <SocialShareButtons link={link} />
@@ -69,7 +69,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
               readOnly
               ref={linkRef}
               value={link}
-              className='text-body-14 text-black-b w-full bg-black-e'
+              className='text-body-14 text-greyscale-900 w-full bg-black-e'
             />
             <Button
               onClick={() => {

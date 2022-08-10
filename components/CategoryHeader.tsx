@@ -35,7 +35,9 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
     <div className='flex pb-4 mt-4 items-center'>
       <div className='flex-1'>
         <Breadcrumbs />
-        <h1 className='text-body-14 font-bold text-black-b pt-2'>{header}</h1>
+        <h1 className='text-body-14 font-bold text-greyscale-900 pt-2'>
+          {header}
+        </h1>
       </div>
 
       {!showFilter && (

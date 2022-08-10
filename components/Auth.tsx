@@ -93,7 +93,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
               <div className='location-popup-arrow-top'>
                 {options.map(({title, onClick}) => (
                   <Button
-                    className='px-4 py-3 text-black-b hover:bg-brand-a2 w-full text-body-14 rounded-lg'
+                    className='px-4 py-3 text-greyscale-900 hover:bg-brand-a2 w-full text-body-14 rounded-lg'
                     onClick={() => {
                       onClick()
                       setShowPopup(false)
@@ -108,7 +108,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
       ) : (
         <>
           {showLogin && (
-            <Button className='flex flex-col' onClick={onLogin}>
+            <Button className='flex flex-col h-10' onClick={onLogin}>
               <IcProfile className='h-6 w-6 mb-1' />
               <span className='text-body-12 text-greyscale-900 hidden l:block'>
                 {t('LOG_IN_ICON')}
