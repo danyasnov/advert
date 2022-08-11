@@ -110,7 +110,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
           {showLogin && (
             <Button className='flex flex-col h-10' onClick={onLogin}>
               <IcProfile className='h-6 w-6 mb-1' />
-              <span className='text-body-12 text-greyscale-900 hidden l:block'>
+              <span className='text-body-12 text-greyscale-900 hidden l:block whitespace-nowrap'>
                 {t('LOG_IN_ICON')}
               </span>
             </Button>

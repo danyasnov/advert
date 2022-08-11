@@ -14,13 +14,13 @@ const getImageUrl = (url, screenWidth): string => {
     return url.replace('original', '160_160')
   }
   if (screenWidth >= 768 && screenWidth < 1024) {
-    return url.replace('original', '224_224')
+    return url.replace('original', '224_200')
   }
   if (screenWidth >= 1024 && screenWidth < 1440) {
-    return url.replace('original', '192_192')
+    return url.replace('original', '194_200')
   }
   if (screenWidth >= 1440) {
-    return url.replace('original', '212_212')
+    return url.replace('original', '212_200')
   }
   return url
 }

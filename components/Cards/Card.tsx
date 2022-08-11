@@ -9,17 +9,15 @@ import {
 } from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
-import IcVisibility from 'icons/material/Visibility.svg'
+import IcArrowRight from 'icons/material/ArrowRight.svg'
 import {useMouseHovered} from 'react-use'
-import {isEmpty, isNumber} from 'lodash'
+import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
-import {unixToDate} from '../../utils'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
-import CardExtraFields from './CardExtraFields'
 import {trackSingle} from '../../helpers'
 
 interface Props {
@@ -37,11 +35,7 @@ const Card: FC<Props> = ({
     title,
     images,
     price,
-    oldPrice,
-    dateUpdated,
-    views,
     location,
-    extraFields,
     hasVideo,
     state,
     owner,
@@ -108,18 +102,15 @@ const Card: FC<Props> = ({
       onClick={() =>
         trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
       }
-      className={`w-full min-w-40 text-left s:w-56 m:w-48 l:w-53 border rounded-lg overflow-hidden h-full flex flex-col relative ${
-        variant === 'default' ? 'border-shadow-b' : 'border-primary-500'
-      }`}
+      className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative'
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
       <CardBadge state={state} />
       {owner?.hash && (
-        <div className='absolute top-1 right-1 w-6 h-6 z-20'>
+        <div className='absolute top-4 right-4 w-8 h-8 z-20'>
           <ProductLike
             userHash={owner.hash}
-            color='white'
             hash={hash}
             isFavorite={isFavorite}
             state={state}
@@ -127,21 +118,21 @@ const Card: FC<Props> = ({
         </div>
       )}
 
-      <div className='overflow-hidden relative' ref={viewportRef}>
-        <div className='flex h-40 s:h-56 m:h-48 l:h-53 bg-image-placeholder'>
+      <div className='overflow-hidden relative bg-white' ref={viewportRef}>
+        <div className='flex h-50 l:h-50 bg-image-placeholder overflow-hidden rounded-xl'>
           {inView && (
             <>
               {isEmpty(images) ? (
                 <div className='relative min-w-full'>
-                  <CardImage
-                    url={`/img/subcategories/${categoryId}.jpg`}
-                    fallbackUrl={[
-                      // @ts-ignore
-                      `/img/subcategories/${rootCategoryId}.jpg`,
-                      `/img/CommonPlaceholder.jpg`,
-                    ]}
-                    alt={title}
-                  />
+                  {/* <CardImage */}
+                  {/*  url={`/img/subcategories/${categoryId}.jpg`} */}
+                  {/*  fallbackUrl={[ */}
+                  {/*    // @ts-ignore */}
+                  {/*    `/img/subcategories/${rootCategoryId}.jpg`, */}
+                  {/*    `/img/CommonPlaceholder.jpg`, */}
+                  {/*  ]} */}
+                  {/*  alt={title} */}
+                  {/* /> */}
                 </div>
               ) : (
                 images.map((i) => (
@@ -160,58 +151,38 @@ const Card: FC<Props> = ({
                 {images.map((i, index) => (
                   <div
                     key={i}
-                    className={`w-4 h-0.5 ${
-                      currentIndex === index ? 'bg-brand-a1' : 'bg-black-d'
+                    className={`w-2 h-2 rounded-full ${
+                      currentIndex === index
+                        ? 'bg-primary-500'
+                        : 'bg-greyscale-100'
                     }`}
                   />
                 ))}
               </div>
             )}
-            <div className='absolute inset-x-0 bottom-0 pb-2 px-2 flex justify-between'>
-              {location?.distance && (
-                <span className='text-body-10 text-white-a py-0.5 px-1 bg-shadow-overlay rounded'>
-                  {location.distance}
-                </span>
-              )}
-              {hasVideo && (
-                <IcPlayCircle className='fill-current text-white h-4 w-4' />
-              )}
-            </div>
           </>
         )}
       </div>
       <div
-        className={`p-2 flex flex-col justify-between flex-1 ${
+        className={`px-4 py-3 flex flex-col ${
           variant === 'default' ? 'bg-white' : 'bg-brand-a2'
         }`}>
-        <div className='flex flex-col'>
-          <div className='flex items-start mb-1'>
-            <span className='text-body-12 text-greyscale-900 line-clamp-2 flex-1 break-words'>
-              {title}
-            </span>
-            {/* <IcMoreVert className='fill-current text-black-c h-4 w-4' /> */}
-          </div>
-          <span className='text-body-16 text-greyscale-900 font-bold'>
+        <div className='flex flex-col pb-3'>
+          <span className='text-body-16 text-greyscale-900 font-semibold'>
             {isFree ? t('FREE') : price}
           </span>
-          <span className='text-body-12 text-black-c line-through'>
-            {oldPrice}
-          </span>
-        </div>
-        <CardExtraFields extraFields={extraFields} />
-        {isNumber(dateUpdated) && isNumber(views) && (
-          <div className='text-body-10 text-black-c flex justify-between border-t border-shadow-b pt-1'>
-            <span suppressHydrationWarning className='inline-flex items-center'>
-              {dateUpdated && unixToDate(dateUpdated)}
+          <div className='flex items-start'>
+            <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
+              {title}
             </span>
-            <div className='flex items-center'>
-              <div>
-                <IcVisibility className='fill-current text-black-d h-4 w-4' />
-              </div>
-              <span className='ml-1'>{views}</span>
-            </div>
           </div>
-        )}
+        </div>
+        <div className='flex justify-between w-full'>
+          <span className='text-body-14 text-greyscale-600'>
+            {location?.distance && location.distance}
+          </span>
+          <IcArrowRight className='w-5 h-5 self-end' />
+        </div>
       </div>
     </div>
   )
