@@ -108,13 +108,13 @@ const SearchAutocomplete: FC<Props> = observer(
               },
             })}
             placeholder={t('SEARCH')}
-            className='pl-6 px-3.5 py-2.5 text-greyscale-900 text-body-14 rounded-2 w-full h-full -my-1px'
+            className='pl-6 pl-3.5 pr-12 py-2.5 text-greyscale-900 text-body-14 rounded-2 w-full h-full -my-1px'
             id='search-autocomplete'
           />
         </div>
         <ul
           {...getMenuProps()}
-          className='z-10 bg-white shadow-xl absolute top-81px left-8 right-8 s:left-24 s:right-24 s:top-89px m:left-48 m:right-48 l:left-80 l:right-80'>
+          className='z-10 bg-white shadow-xl absolute top-10 left-8 right-8 s:left-24 s:right-24 m:left-48 m:right-48 l:left-80 l:right-80'>
           {isOpen &&
             inputItems.map((item, index) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions

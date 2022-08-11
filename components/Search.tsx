@@ -1,12 +1,10 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
-import IcMyLocation from 'icons/material/MyLocation.svg'
-import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
 import {Send} from 'react-iconly'
 import Button from './Buttons/Button'
-import {getLocationCodes, getQueryValue} from '../helpers'
+import {getQueryValue} from '../helpers'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import SearchAutocomplete from './Selects/SearchAutocomplete'
 import LocationMobile from './Location/LocationMobile'
@@ -26,12 +24,12 @@ const Search: FC = () => {
 
   return (
     <>
-      <div className='flex w-full border rounded-2 border-greyscale-200'>
+      <div className='flex w-full border rounded-2 border-greyscale-200 relative'>
         <SearchAutocomplete
           selectedItem={selectedItem}
           handleSelectedItemChange={setSelectedItem}
         />
-        <div className='flex relative'>
+        <div className='flex absolute right-0 inset-y-0'>
           <Button
             type='submit'
             id='location'
