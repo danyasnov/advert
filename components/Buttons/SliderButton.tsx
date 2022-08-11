@@ -26,9 +26,9 @@ const SliderButton: FC<Props> = ({
         className || ''
       }`}>
       {direction === 'left' ? (
-        <IcKeyboardArrowLeft className='fill-current text-white w-4 h-4' />
+        <IcKeyboardArrowLeft className='fill-current text-white w-6 h-6' />
       ) : (
-        <IcKeyboardArrowRight className='fill-current text-white w-4 h-4' />
+        <IcKeyboardArrowRight className='fill-current text-white w-6 h-6' />
       )}
     </Button>
   )
