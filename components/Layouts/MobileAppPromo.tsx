@@ -5,7 +5,7 @@ import ImageWrapper from '../ImageWrapper'
 const MobileAppPromo: FC = () => {
   const {t} = useTranslation()
   return (
-    <div className='flex justify-center items-center h-screen bg-advert-background bg-repeat'>
+    <div className='flex justify-center items-center h-screen'>
       <main className='flex flex-col justify-center items-center'>
         {/* <ImageWrapper */}
         {/*  type='/img/logo/AdvertoLogoSquare.png' */}

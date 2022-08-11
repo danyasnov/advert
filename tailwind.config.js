@@ -157,6 +157,8 @@ module.exports = {
         'gray-200': '#EAECF0',
         'gray-500': '#667085',
         'dark-1': '#181A20',
+        'dark-2': '#1F222A',
+        'modal-background': 'rgba(31, 34, 42, 0.7)',
       },
       zIndex: {
         9: 9,
@@ -196,7 +198,6 @@ module.exports = {
         'brand-a1': ['2px solid #FF9514', '1px'],
       },
       backgroundImage: () => ({
-        'advert-background': "url('/img/advert-background.png')",
         'landing-head': "url('/img/landing/head-bg.png')",
         'landing-footer': "url('/img/landing/footer-bg.png')",
         'man-with-laptop': "url('/img/landing/man-with-laptop.png')",
