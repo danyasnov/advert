@@ -13,7 +13,6 @@ import IcArrowRight from 'icons/material/ArrowRight.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
-import IcPlayCircle from 'icons/material/PlayCircle.svg'
 import {useTranslation} from 'next-i18next'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
@@ -23,25 +22,18 @@ import {trackSingle} from '../../helpers'
 interface Props {
   product: AdvertiseListItemModel
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
-  variant?: 'default' | 'top'
 }
-const Card: FC<Props> = ({
-  product,
-  setLockParentScroll,
-  variant = 'default',
-}) => {
+const Card: FC<Props> = ({product, setLockParentScroll}) => {
   const {t} = useTranslation()
   const {
     title,
     images,
     price,
     location,
-    hasVideo,
     state,
     owner,
     hash,
     isFavorite,
-    categoryId,
     rootCategoryId,
   } = product
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -102,7 +94,7 @@ const Card: FC<Props> = ({
       onClick={() =>
         trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
       }
-      className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative'
+      className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative h-full'
       // @ts-ignore safari fix border radius
       style={{'-webkit-mask-image': '-webkit-radial-gradient(white, black)'}}
       ref={setRefs}>
@@ -163,10 +155,7 @@ const Card: FC<Props> = ({
           </>
         )}
       </div>
-      <div
-        className={`px-4 py-3 flex flex-col ${
-          variant === 'default' ? 'bg-white' : 'bg-brand-a2'
-        }`}>
+      <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
         <div className='flex flex-col pb-3'>
           <span className='text-body-16 text-greyscale-900 font-semibold'>
             {isFree ? t('FREE') : price}
