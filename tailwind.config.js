@@ -19,7 +19,7 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      sans: ['Euclid', 'Gill Sans', 'sans-serif'],
+      sans: ['Euclid'],
     },
     fontSize: {
       'body-10': ['10px', '12px'],

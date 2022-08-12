@@ -1,64 +1,64 @@
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-Bold-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-Bold-WebXL.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
 }
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-BoldItalic-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-BoldItalic-WebXL.woff2") format("woff2");
     font-weight: 700;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-Light-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-Light-WebXL.woff2") format("woff2");
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-LightItalic-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-LightItalic-WebXL.woff2") format("woff2");
     font-weight: 300;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-Medium-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-Medium-WebXL.woff2") format("woff2");
     font-weight: 500;
     font-style: normal;
 }
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-MediumItalic-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-MediumItalic-WebXL.woff2") format("woff2");
     font-weight: 500;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-Regular-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-Regular-WebXL.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-RegularItalic-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-RegularItalic-WebXL.woff2") format("woff2");
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-Semibold-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-Semibold-WebXL.woff2") format("woff2");
     font-weight: 600;
     font-style: normal;
 }
 @font-face {
     font-family: "Euclid";
-    src: url("../public/fonts/EuclidCircularB-SemiboldItalic-WebXL.woff2") format("truetype");
+    src: url("../public/fonts/EuclidCircularB-SemiboldItalic-WebXL.woff2") format("woff2");
     font-weight: 600;
     font-style: italic;
 }
