@@ -99,7 +99,6 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
                       setShowPopup(false)
                     }}>
                     <span className='w-full text-left text-body-12'>
-                      {' '}
                       {title}
                     </span>
                   </Button>
