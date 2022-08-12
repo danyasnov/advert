@@ -12,7 +12,7 @@ $options = getopt("d:");
 
 if (empty($options['d'])) {
     if ($_SERVER === null || !array_key_exists('SERVER_NAME', $_SERVER)) {
-        $domain = 'adverto.sale';
+        $domain = 'vooxee.com';
     } else {
         $domain = $_SERVER['SERVER_NAME'];
     }
@@ -430,7 +430,7 @@ foreach ($countries as $country) {
 
 //////// USERS /////////
 $users_count = $db->query('
-    SELECT 
+    SELECT
       count(u.id)
     FROM adv_users u
     LEFT JOIN adv_adverts a ON a.id_user = u.id

@@ -1,16 +1,16 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-<ShortName>Adverto</ShortName>
-<Description>Adverto Search</Description>
+<ShortName>Vooxee</ShortName>
+<Description>Vooxee Search</Description>
 <Tags>
 classified ads property cars vehicles personal goods electronics services animals
 </Tags>
 <Attribution>
-Search data from Adverto, https://adverto.sale/
+Search data from Vooxee, https://vooxee.com/
 </Attribution>
-<Contact>support@adverto.sale</Contact>
-<Image width="16" height="16" type="image/x-icon">https://adverto.sale/favicon.ico</Image>
-<Developer>ADVERTO SOLUTIONS</Developer>
-<Url type="text/html" method="get" template="https://adverto.sale/?q={searchTerms}"/>
+<Contact>support@vooxee.com</Contact>
+<Image width="16" height="16" type="image/x-icon">https://vooxee.com/favicon.ico</Image>
+<Developer>VOOXEE SOLUTIONS</Developer>
+<Url type="text/html" method="get" template="https://vooxee.com/?q={searchTerms}"/>
 <AdultContent>false</AdultContent>
 <OutputEncoding>UTF-8</OutputEncoding>
 <InputEncoding>UTF-8</InputEncoding>
