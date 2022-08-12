@@ -88,17 +88,20 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
           </Button>
           {showPopup && (
             <div
-              className='absolute right-0 top-14 bg-white shadow-2xl rounded-lg w-40  '
+              className='absolute right-0 top-14 bg-white shadow-2xl rounded-lg w-[186px]'
               data-test-id='user-menu-body'>
-              <div className='location-popup-arrow-top'>
+              <div className='auth-popup-arrow-top space-y-5 py-4'>
                 {options.map(({title, onClick}) => (
                   <Button
-                    className='px-4 py-3 text-greyscale-900 hover:bg-brand-a2 w-full text-body-14 rounded-lg'
+                    className='px-5 text-greyscale-900 hover:text-primary-500 hover:font-bold w-full rounded-lg'
                     onClick={() => {
                       onClick()
                       setShowPopup(false)
                     }}>
-                    {title}
+                    <span className='w-full text-left text-body-12'>
+                      {' '}
+                      {title}
+                    </span>
                   </Button>
                 ))}
               </div>
