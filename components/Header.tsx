@@ -20,7 +20,7 @@ const Header: FC = observer(() => {
   useDisableBodyScroll(showLogin)
 
   return (
-    <header className='flex s:justify-center relative shadow-lg z-10'>
+    <header className='flex s:justify-center relative z-10'>
       <div className='header-width'>
         <div className='flex s:justify-between px-4 py-2 s:px-0 mb-2'>
           <div className='flex  w-full s:w-auto space-x-4 items-center'>

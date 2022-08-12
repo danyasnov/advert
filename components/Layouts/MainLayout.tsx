@@ -113,7 +113,7 @@ const MainLayout: FC = observer(() => {
           </div>
         </Button>
       )}
-      <div className='bg-black-e py-8 m:flex min-h-1/2'>
+      <div className='py-8 m:flex min-h-1/2'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
           <main className='m:w-944px l:w-[1208px] space-y-12'>
             <CategoriesSlider />

@@ -90,7 +90,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
             <div
               className='absolute right-0 top-14 bg-white shadow-2xl rounded-lg w-[186px]'
               data-test-id='user-menu-body'>
-              <div className='auth-popup-arrow-top space-y-5 py-4'>
+              <div className='space-y-5 py-4'>
                 {options.map(({title, onClick}) => (
                   <Button
                     className='px-5 text-greyscale-900 hover:text-primary-500 hover:font-bold w-full rounded-lg'
