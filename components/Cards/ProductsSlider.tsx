@@ -32,10 +32,10 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
     return null
 
   return (
-    <div className=''>
+    <div>
       <TitleWithSeparator title={title} rightContent={rightContent} />
       <div className='relative'>
-        <div className='overflow-hidden p-24 -m-24' ref={viewportRef}>
+        <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
             {products.map((p) => (
               <Card product={p} setLockParentScroll={setLockParentScroll} />

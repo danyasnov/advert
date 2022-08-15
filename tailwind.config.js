@@ -102,6 +102,8 @@ module.exports = {
       gridTemplateColumns: {
         'category-selector-m': '28% 22% 22% 28%',
         'category-selector-l': '403px 316px 316px 403px',
+        'main-m': '616px 280px',
+        'main-l': '896px 280px',
       },
       colors: {
         current: 'currentColor',

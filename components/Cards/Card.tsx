@@ -92,98 +92,96 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
   }, [inView])
   const isFree = price === '0'
   return (
-    <div className='drop-shadow-card '>
-      <LinkWrapper title={title} href={url} key={hash} target='_blank'>
-        <div
-          onClick={() =>
-            trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
-          }
-          className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative h-full'
-          style={{
-            // @ts-ignore safari fix border radius
-            '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-          }}
-          ref={setRefs}>
-          <CardBadge state={state} />
-          {owner?.hash && (
-            <div className='absolute top-4 right-4 w-8 h-8 z-20'>
-              <ProductLike
-                userHash={owner.hash}
-                hash={hash}
-                isFavorite={isFavorite}
-                state={state}
-              />
-            </div>
-          )}
+    <LinkWrapper title={title} href={url} key={hash} target='_blank'>
+      <div
+        onClick={() =>
+          trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
+        }
+        className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative h-full'
+        style={{
+          // @ts-ignore safari fix border radius
+          '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
+        }}
+        ref={setRefs}>
+        <CardBadge state={state} />
+        {owner?.hash && (
+          <div className='absolute top-4 right-4 w-8 h-8 z-20'>
+            <ProductLike
+              userHash={owner.hash}
+              hash={hash}
+              isFavorite={isFavorite}
+              state={state}
+            />
+          </div>
+        )}
 
-          <div
-            className='overflow-hidden relative bg-white rounded-t-xl'
-            ref={viewportRef}>
-            <div className='flex h-50 l:h-50 bg-image-placeholder '>
-              {inView && (
-                <>
-                  {isEmpty(images) ? (
-                    <div className='relative min-w-full'>
-                      {/* <CardImage */}
-                      {/*  url={`/img/subcategories/${categoryId}.jpg`} */}
-                      {/*  fallbackUrl={[ */}
-                      {/*    // @ts-ignore */}
-                      {/*    `/img/subcategories/${rootCategoryId}.jpg`, */}
-                      {/*    `/img/CommonPlaceholder.jpg`, */}
-                      {/*  ]} */}
-                      {/*  alt={title} */}
-                      {/* /> */}
-                    </div>
-                  ) : (
-                    images.map((i) => (
-                      <div key={i} className='relative min-w-full'>
-                        <CardImage url={i} alt={title} />
-                      </div>
-                    ))
-                  )}
-                </>
-              )}
-            </div>
+        <div
+          className='overflow-hidden relative bg-white rounded-t-xl'
+          ref={viewportRef}>
+          <div className='flex h-50 l:h-50 bg-image-placeholder '>
             {inView && (
               <>
-                {images.length > 1 && (
-                  <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
-                    {images.map((i, index) => (
-                      <div
-                        key={i}
-                        className={`w-2 h-2 rounded-full ${
-                          currentIndex === index
-                            ? 'bg-primary-500'
-                            : 'bg-greyscale-100'
-                        }`}
-                      />
-                    ))}
+                {isEmpty(images) ? (
+                  <div className='relative min-w-full'>
+                    {/* <CardImage */}
+                    {/*  url={`/img/subcategories/${categoryId}.jpg`} */}
+                    {/*  fallbackUrl={[ */}
+                    {/*    // @ts-ignore */}
+                    {/*    `/img/subcategories/${rootCategoryId}.jpg`, */}
+                    {/*    `/img/CommonPlaceholder.jpg`, */}
+                    {/*  ]} */}
+                    {/*  alt={title} */}
+                    {/* /> */}
                   </div>
+                ) : (
+                  images.map((i) => (
+                    <div key={i} className='relative min-w-full'>
+                      <CardImage url={i} alt={title} />
+                    </div>
+                  ))
                 )}
               </>
             )}
           </div>
-          <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
-            <div className='flex flex-col pb-3'>
-              <span className='text-body-16 text-greyscale-900 font-semibold'>
-                {isFree ? t('FREE') : price}
+          {inView && (
+            <>
+              {images.length > 1 && (
+                <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
+                  {images.map((i, index) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full ${
+                        currentIndex === index
+                          ? 'bg-primary-500'
+                          : 'bg-greyscale-100'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
+          <div className='flex flex-col pb-3'>
+            <span className='text-body-16 text-greyscale-900 font-semibold'>
+              {isFree ? t('FREE') : price}
+            </span>
+            <div className='flex items-start'>
+              <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
+                {title}
               </span>
-              <div className='flex items-start'>
-                <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
-                  {title}
-                </span>
-              </div>
-            </div>
-            <div className='flex justify-between w-full'>
-              <span className='text-body-14 text-greyscale-600'>
-                {location?.distance && location.distance}
-              </span>
-              <IcArrowRight className='w-5 h-5 self-end' />
             </div>
           </div>
+          <div className='flex justify-between w-full'>
+            <span className='text-body-14 text-greyscale-600'>
+              {location?.distance && location.distance}
+            </span>
+            <IcArrowRight className='w-5 h-5 self-end' />
+          </div>
         </div>
-      </LinkWrapper>
-    </div>
+      </div>
+    </LinkWrapper>
   )
 }
 export default Card

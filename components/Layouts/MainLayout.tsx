@@ -116,60 +116,74 @@ const MainLayout: FC = observer(() => {
         </Button>
       )}
       <div className='py-8 m:flex min-h-1/2'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='m:w-944px l:w-[1208px] space-y-12'>
+        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-12 m:justify-center m:w-full'>
+          <main className='m:w-944px l:w-[1208px] drop-shadow-card'>
             <CategoriesSlider />
-            {productsArr.map((p) => (
-              <ProductsSlider
-                products={otherProducts[p.slug] || []}
-                title={p.name}
-                rightContent={
-                  <LinkWrapper
-                    title={t('SEE_ALL')}
-                    className='text-body-16 text-primary-500 font-bold'
-                    href={p.url}>
-                    {t('SEE_ALL')}
-                  </LinkWrapper>
-                }
-              />
-            ))}
-            <div>
-              {!isEmpty(products) && (
-                <TitleWithSeparator
-                  title={t('RECOMMENDATIONS_FOR_YOU')}
-                  rightContent={
-                    <LinkWrapper
-                      title={t('SEE_ALL')}
-                      className='text-body-16 text-primary-500 font-bold'
-                      href={locationCodes}>
-                      {t('SEE_ALL')}
-                    </LinkWrapper>
-                  }
+            <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l  m:gap-x-8'>
+              <div className='space-y-12'>
+                {productsArr.map((p) => (
+                  <ProductsSlider
+                    products={otherProducts[p.slug] || []}
+                    title={p.name}
+                    rightContent={
+                      <LinkWrapper
+                        title={t('SEE_ALL')}
+                        className='text-body-16 text-primary-500 font-bold'
+                        href={p.url}>
+                        {t('SEE_ALL')}
+                      </LinkWrapper>
+                    }
+                  />
+                ))}
+                <div>
+                  {!isEmpty(products) && (
+                    <TitleWithSeparator
+                      title={t('RECOMMENDATIONS_FOR_YOU')}
+                      rightContent={
+                        <LinkWrapper
+                          title={t('SEE_ALL')}
+                          className='text-body-16 text-primary-500 font-bold'
+                          href={locationCodes}>
+                          {t('SEE_ALL')}
+                        </LinkWrapper>
+                      }
+                    />
+                  )}
+                  <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
+                    <ScrollableCardGroup
+                      products={products}
+                      count={count}
+                      enableFourthColumnForM
+                      page={page}
+                      state={state}
+                      disableScroll
+                      hideNotFoundDescription
+                      fetchProducts={() =>
+                        fetchProducts({
+                          page: page + 1,
+                          isScroll: true,
+                          query,
+                        }).then(() => applyFilter())
+                      }
+                    />
+                    {!isEmpty(products) && (
+                      <LinkWrapper
+                        title={t('SEE_ALL')}
+                        className='text-body-16 text-primary-500 font-bold relative z-10'
+                        href={locationCodes}>
+                        <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
+                      </LinkWrapper>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className='hidden m:block w-[280px] h-[380px]'>
+                <ImageWrapper
+                  type='/img/promo.png'
+                  alt='promo'
+                  width={280}
+                  height={380}
                 />
-              )}
-              <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
-                <ScrollableCardGroup
-                  products={products}
-                  count={count}
-                  enableFourthColumnForM
-                  page={page}
-                  state={state}
-                  disableScroll
-                  hideNotFoundDescription
-                  fetchProducts={() =>
-                    fetchProducts({page: page + 1, isScroll: true, query}).then(
-                      () => applyFilter(),
-                    )
-                  }
-                />
-                {!isEmpty(products) && (
-                  <LinkWrapper
-                    title={t('SEE_ALL')}
-                    className='text-body-16 text-primary-500 font-bold relative z-10'
-                    href={locationCodes}>
-                    <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
-                  </LinkWrapper>
-                )}
               </div>
             </div>
           </main>
