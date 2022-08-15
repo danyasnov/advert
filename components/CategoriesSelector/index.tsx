@@ -32,7 +32,7 @@ const CategoriesSelector: FC = observer(() => {
           <div className='s:hidden'>
             <CategoriesMobileSelector />
           </div>
-          <div className='hidden s:block'>
+          <div className='hidden s:block '>
             <CategoriesDesktopSelector />
           </div>
         </>
