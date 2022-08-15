@@ -24,20 +24,20 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
   const {advert, owner} = product
   const {language} = useGeneralStore()
 
-  let yandexMetrikaId
-  switch (language) {
-    case 'ru':
-      yandexMetrikaId = 'db8a14e599462c4c'
-      break
-    case 'el':
-      yandexMetrikaId = '631377a5229beaf4'
-      break
-    case 'uk':
-      yandexMetrikaId = '2c9bed981a52783d'
-      break
-    default:
-      yandexMetrikaId = 'ce08de680afab7c9'
-  }
+  // let yandexMetrikaId
+  // switch (language) {
+  //   case 'ru':
+  //     yandexMetrikaId = 'db8a14e599462c4c'
+  //     break
+  //   case 'el':
+  //     yandexMetrikaId = '631377a5229beaf4'
+  //     break
+  //   case 'uk':
+  //     yandexMetrikaId = '2c9bed981a52783d'
+  //     break
+  //   default:
+  //     yandexMetrikaId = 'ce08de680afab7c9'
+  // }
   const imageUrl = first(advert?.images) || user?.imageUrl
   let brand
   if (advert) {
@@ -56,7 +56,7 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
         <meta name='twitter:card' content={title} />
         <meta property='og:title' content={title} />
         <meta property='og:type' content='website' />
-        <meta name='yandex-verification' content={yandexMetrikaId} />
+        {/* <meta name='yandex-verification' content={yandexMetrikaId} /> */}
         <meta
           property='og:url'
           content={
@@ -79,10 +79,10 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           content={advert ? advert.description : description}
         />
         <meta name='apple-mobile-web-app-title' content={title} />
-        <meta
-          name='facebook-domain-verification'
-          content='pnu04x7hblq42v4wo1993abj3wkon6'
-        />
+        {/* <meta */}
+        {/*  name='facebook-domain-verification' */}
+        {/*  content='pnu04x7hblq42v4wo1993abj3wkon6' */}
+        {/* /> */}
       </Head>
       {advert ? (
         <>
@@ -128,53 +128,53 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
               }),
             }}
           />
-          <Script
-            id='fb'
-            type='application/ld+json'
-            dangerouslySetInnerHTML={{
-              __html: `!function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '501894937955088');
-  fbq('track', 'PageView');
-  fbq('track', 'ViewContent', {
-  content_name: '${advert.title}',
-  content_ids: ['${advert.hash}'],
-  content_type: 'product',
-  value: ${
-    // @ts-ignore
-    advert.priceFloat || 0
-  },
-  currency: '${
-    // @ts-ignore
-    advert.currencyCode
-  }'
-});`,
-            }}
-          />
+          {/*          <Script */}
+          {/*            id='fb' */}
+          {/*            type='application/ld+json' */}
+          {/*            dangerouslySetInnerHTML={{ */}
+          {/*              __html: `!function(f,b,e,v,n,t,s) */}
+          {/*  {if(f.fbq)return;n=f.fbq=function(){n.callMethod? */}
+          {/*    n.callMethod.apply(n,arguments):n.queue.push(arguments)}; */}
+          {/*    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; */}
+          {/*    n.queue=[];t=b.createElement(e);t.async=!0; */}
+          {/*    t.src=v;s=b.getElementsByTagName(e)[0]; */}
+          {/*    s.parentNode.insertBefore(t,s)}(window, document,'script', */}
+          {/*  'https://connect.facebook.net/en_US/fbevents.js'); */}
+          {/*  fbq('init', '501894937955088'); */}
+          {/*  fbq('track', 'PageView'); */}
+          {/*  fbq('track', 'ViewContent', { */}
+          {/*  content_name: '${advert.title}', */}
+          {/*  content_ids: ['${advert.hash}'], */}
+          {/*  content_type: 'product', */}
+          {/*  value: ${ */}
+          {/*    // @ts-ignore */}
+          {/*    advert.priceFloat || 0 */}
+          {/*  }, */}
+          {/*  currency: '${ */}
+          {/*    // @ts-ignore */}
+          {/*    advert.currencyCode */}
+          {/*  }' */}
+          {/* });`, */}
+          {/*            }} */}
+          {/*          /> */}
         </>
       ) : (
         <>
-          <Script
-            id='fbevents'
-            dangerouslySetInnerHTML={{
-              __html: `!function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '501894937955088');
-              fbq('track', 'PageView');`,
-            }}
-          />
+          {/* <Script */}
+          {/*  id='fbevents' */}
+          {/*  dangerouslySetInnerHTML={{ */}
+          {/*    __html: `!function(f,b,e,v,n,t,s) */}
+          {/*    {if(f.fbq)return;n=f.fbq=function(){n.callMethod? */}
+          {/*    n.callMethod.apply(n,arguments):n.queue.push(arguments)}; */}
+          {/*    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; */}
+          {/*    n.queue=[];t=b.createElement(e);t.async=!0; */}
+          {/*    t.src=v;s=b.getElementsByTagName(e)[0]; */}
+          {/*    s.parentNode.insertBefore(t,s)}(window, document,'script', */}
+          {/*    'https://connect.facebook.net/en_US/fbevents.js'); */}
+          {/*    fbq('init', '501894937955088'); */}
+          {/*    fbq('track', 'PageView');`, */}
+          {/*  }} */}
+          {/* /> */}
           <Script
             id='schema-site'
             type='application/ld+json'
@@ -194,29 +194,29 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           />
         </>
       )}
-      <Script
-        id='gtag'
-        src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1'
-      />
-      <Script
-        id='gtag-config'
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          
-            gtag('config', 'UA-211806856-1');`,
-        }}
-      />
+      {/* <Script */}
+      {/*  id='gtag' */}
+      {/*  src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1' */}
+      {/* /> */}
+      {/* <Script */}
+      {/*  id='gtag-config' */}
+      {/*  // eslint-disable-next-line react/no-danger */}
+      {/*  dangerouslySetInnerHTML={{ */}
+      {/*    __html: `window.dataLayer = window.dataLayer || []; */}
+      {/*      function gtag(){dataLayer.push(arguments);} */}
+      {/*      gtag('js', new Date()); */}
+      {/*    */}
+      {/*      gtag('config', 'UA-211806856-1');`, */}
+      {/*  }} */}
+      {/* /> */}
       <noscript>
         {/* eslint-disable-next-line jsx-a11y/alt-text */}
-        <img
-          height='1'
-          width='1'
-          style={{display: 'none'}}
-          src='https://www.facebook.com/tr?id=501894937955088&ev=PageView&noscript=1'
-        />
+        {/* <img */}
+        {/*  height='1' */}
+        {/*  width='1' */}
+        {/*  style={{display: 'none'}} */}
+        {/*  src='https://www.facebook.com/tr?id=501894937955088&ev=PageView&noscript=1' */}
+        {/* /> */}
       </noscript>
     </>
   )
