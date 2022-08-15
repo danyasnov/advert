@@ -163,7 +163,7 @@ const MainLayout: FC = observer(() => {
                 {!isEmpty(products) && (
                   <LinkWrapper
                     title={t('SEE_ALL')}
-                    className='text-body-16 text-primary-500 font-bold'
+                    className='text-body-16 text-primary-500 font-bold relative z-10'
                     href={locationCodes}>
                     <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
                   </LinkWrapper>

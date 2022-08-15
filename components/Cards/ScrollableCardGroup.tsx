@@ -31,7 +31,6 @@ const ScrollableCardGroup: FC<Props> = ({
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
 }) => {
-  const router = useRouter()
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
     return <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
@@ -49,8 +48,9 @@ const ScrollableCardGroup: FC<Props> = ({
   )
     return null
   return (
-    <div className='flex flex-col m:items-start relative'>
+    <div className='flex flex-col m:items-start relative p-24 -m-24'>
       <InfiniteScroll
+        style={{overflow: 'visible'}}
         dataLength={products?.length}
         next={fetchProducts}
         hasMore={hasMore && !disableScroll}
@@ -61,15 +61,9 @@ const ScrollableCardGroup: FC<Props> = ({
         <div
           className={`grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4 ${
             enableFourthColumnForM ? 'm:grid-cols-4 m:gap-x-15 m:gap-y-6' : ''
-          }`}>
+          } p-24 -m-24`}>
           {products.map((p) => (
-            <LinkWrapper
-              title={p.title}
-              href={p.url}
-              key={p.hash}
-              target='_blank'>
-              <Card product={p} />
-            </LinkWrapper>
+            <Card product={p} />
           ))}
         </div>
       </InfiniteScroll>

@@ -163,6 +163,9 @@ module.exports = {
       zIndex: {
         9: 9,
       },
+      dropShadow: {
+        card: '0 5px 80px rgba(4, 6, 15, 0.08)',
+      },
       inset: {
         '89px': '89px',
         '105px': '105px',

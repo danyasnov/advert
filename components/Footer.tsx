@@ -43,9 +43,10 @@ const Footer: FC = observer(() => {
     return acc
   }, {})
   return (
-    <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
+    <footer
+      className={`mx-auto relative z-10 ${showFooter ? '' : 'hidden m:block'}`}>
       <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
-        <div className='flex justify-center space-x-4 l:mb-0 l:pr-6'>
+        <div className='flex justify-center items-center space-x-4 l:mb-0 l:pr-6'>
           {mainCountriesIds.map((id) => (
             <LinkWrapper
               key={id}

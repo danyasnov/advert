@@ -25,14 +25,7 @@ const RecommendedProducts: FC = observer(() => {
       <div className='flex mx-4 s:mx-8 m:mx-0'>
         <div className='flex flex-wrap -mx-1 s:-mx-2'>
           {products.map((p) => (
-            <LinkWrapper
-              title={p.title}
-              href={p.url}
-              key={p.hash}
-              target='_blank'
-              className='px-1 pb-2 s:px-2 s:pb-4 text-brand-b1'>
-              <Card product={p} />
-            </LinkWrapper>
+            <Card product={p} />
           ))}
         </div>
       </div>

@@ -6,7 +6,6 @@ import TitleWithSeparator from '../TitleWithSeparator'
 import useNestedEmblaCarousel from '../../hooks/useNestedEmblaCarousel'
 import SliderButton from '../Buttons/SliderButton'
 import useSliderButtons from '../../hooks/useSliderButtons'
-import LinkWrapper from '../Buttons/LinkWrapper'
 
 interface Props {
   products: AdvertiseListItemModel[]
@@ -33,20 +32,13 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
     return null
 
   return (
-    // здесь div нужен для корректных отступов между секциями
-    <div>
+    <div className=''>
       <TitleWithSeparator title={title} rightContent={rightContent} />
       <div className='relative'>
-        <div className='overflow-hidden' ref={viewportRef}>
+        <div className='overflow-hidden p-24 -m-24' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
             {products.map((p) => (
-              <LinkWrapper
-                title={p.title}
-                href={p.url}
-                key={p.hash}
-                target='_blank'>
-                <Card product={p} setLockParentScroll={setLockParentScroll} />
-              </LinkWrapper>
+              <Card product={p} setLockParentScroll={setLockParentScroll} />
             ))}
           </div>
         </div>
