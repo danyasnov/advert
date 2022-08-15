@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
 import {isEmpty} from 'lodash'
+import {toJS} from 'mobx'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -20,6 +21,7 @@ import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
+import ImageWrapper from '../ImageWrapper'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
