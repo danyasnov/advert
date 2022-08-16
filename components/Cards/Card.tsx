@@ -96,10 +96,10 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
   const isFree = price === '0'
-  const widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
-  // if (isVip) {
-  //   widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
-  // }
+  let widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
+  if (isVip) {
+    widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
+  }
   return (
     <LinkWrapper title={title} href={url} key={hash} target='_blank'>
       <div
@@ -160,7 +160,7 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
                 ) : (
                   images.map((i) => (
                     <div key={i} className='relative min-w-full'>
-                      <CardImage url={i} alt={title} />
+                      <CardImage url={i} alt={title} isVip={isVip} />
                     </div>
                   ))
                 )}

@@ -120,7 +120,7 @@ const MainLayout: FC = observer(() => {
           <main className='m:w-944px l:w-[1208px] drop-shadow-card'>
             <CategoriesSlider />
             <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8'>
-              <div className='space-y-12 overflow-hidden'>
+              <div className='space-y-12 overflow-hidden m:overflow-visible'>
                 {productsArr.map((p) => (
                   <ProductsSlider
                     products={otherProducts[p.slug] || []}
@@ -153,7 +153,6 @@ const MainLayout: FC = observer(() => {
                     <ScrollableCardGroup
                       products={products}
                       count={count}
-                      enableFourthColumnForM
                       page={page}
                       state={state}
                       disableScroll
