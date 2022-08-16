@@ -14,6 +14,8 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
+import {Star} from 'react-iconly'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
@@ -37,7 +39,10 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
     isFavorite,
     rootCategoryId,
     url,
+    isTop,
+    isVip,
   } = product
+  console.log(toJS(product))
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -97,7 +102,8 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
         onClick={() =>
           trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
         }
-        className='w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative h-full'
+        className={`w-full min-w-40 text-left s:w-56 m:w-[194px] l:w-53 rounded-xl overflow-hidden flex flex-col relative h-full
+        ${isTop || isVip ? 'border-2 border-primary-500 -m-0.5' : ''}`}
         style={{
           // @ts-ignore safari fix border radius
           '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
@@ -112,6 +118,18 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
               isFavorite={isFavorite}
               state={state}
             />
+          </div>
+        )}
+        {(isTop || isVip) && (
+          <div className='absolute top-4 left-4 z-20 bg-primary-500 rounded-2xl px-4 py-1 flex items-center'>
+            {isVip && (
+              <div className='text-white mr-1'>
+                <Star size={16} filled primaryColor='currentColor' />
+              </div>
+            )}
+            <span className='text-body-16 text-white font-bold'>
+              {t(isTop ? 'TOP' : 'VIP')}
+            </span>
           </div>
         )}
 

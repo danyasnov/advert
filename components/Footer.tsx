@@ -43,41 +43,40 @@ const Footer: FC = observer(() => {
     return acc
   }, {})
   return (
-    <footer
-      className={`mx-auto relative z-10 ${showFooter ? '' : 'hidden m:block'}`}>
-      <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'>
-        <div className='flex justify-center items-center space-x-4 l:mb-0 l:pr-6'>
-          {mainCountriesIds.map((id) => (
-            <LinkWrapper
-              key={id}
-              className='text-brand-b1 text-body-12'
-              href={`/${countriesById[id]?.isoCode}/all`}
-              title={countriesById[id]?.title}>
-              {countriesById[id]?.title}
-            </LinkWrapper>
-          ))}
-          <LinkButton
-            onClick={() => setShowCountries(!showCountries)}
-            label={t('ALL_COUNTRIES')}
-            className='font-bold'
-          />
-        </div>
-      </div>
-      <div
-        className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${
-          showCountries ? 'flex' : 'hidden'
-        }`}>
-        <LocationSelector
-          items={countriesByAlphabet}
-          title={t('COUNTRY_SELECTION')}
-          showAllLink='/all/all'
-          onSelect={(item) => {
-            push(`/cities/${item.isoCode}`)
-          }}
-        />
-      </div>
+    <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
+      {/* <div className='hidden py-2 s:flex s:flex-col items-center l:flex-row l:justify-start l:px-20 fixed-breakpoints-width mx-auto'> */}
+      {/*  <div className='flex justify-center items-center space-x-4 l:mb-0 l:pr-6'> */}
+      {/*    {mainCountriesIds.map((id) => ( */}
+      {/*      <LinkWrapper */}
+      {/*        key={id} */}
+      {/*        className='text-brand-b1 text-body-12' */}
+      {/*        href={`/${countriesById[id]?.isoCode}/all`} */}
+      {/*        title={countriesById[id]?.title}> */}
+      {/*        {countriesById[id]?.title} */}
+      {/*      </LinkWrapper> */}
+      {/*    ))} */}
+      {/*    <LinkButton */}
+      {/*      onClick={() => setShowCountries(!showCountries)} */}
+      {/*      label={t('ALL_COUNTRIES')} */}
+      {/*      className='font-bold' */}
+      {/*    /> */}
+      {/*  </div> */}
+      {/* </div> */}
+      {/* <div */}
+      {/*  className={`fixed-breakpoints-width mx-auto px-4 s:px-8 m:px-10 l:px-20 ${ */}
+      {/*    showCountries ? 'flex' : 'hidden' */}
+      {/*  }`}> */}
+      {/*  <LocationSelector */}
+      {/*    items={countriesByAlphabet} */}
+      {/*    title={t('COUNTRY_SELECTION')} */}
+      {/*    showAllLink='/all/all' */}
+      {/*    onSelect={(item) => { */}
+      {/*      push(`/cities/${item.isoCode}`) */}
+      {/*    }} */}
+      {/*  /> */}
+      {/* </div> */}
 
-      <div className='pt-6 space-y-6 s:border-t border-shadow-b'>
+      <div className='pt-7 space-y-6 s:border-t border-greyscale-200'>
         <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
           <Section
             title={t('CATEGORIES')}
@@ -101,7 +100,7 @@ const Footer: FC = observer(() => {
             className='m:col-span-4 l:col-span-3'
             body={
               <>
-                <div className='text-body-14 text-greyscale-800 capitalize-first mb-2 l:mb-4'>
+                <div className='text-body-16 text-greyscale-800 capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
                 <div className='flex flex-wrap items-center justify-around s:justify-start'>
@@ -160,52 +159,52 @@ const Footer: FC = observer(() => {
         </div>
         <div className='border-t border-shadow-b pt-2'>
           <div className='flex flex-col m:flex-row m:justify-between items-center  m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
-            <div className='flex flex-col space-y-2 s:flex-row s:space-x-4 s:space-y-0'>
+            <div className='flex flex-col space-y-2 s:flex-row s:space-x-7 s:space-y-0'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
-                className='text-brand-b1 text-body-12'
+                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/p/terms-and-conditions'>
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
-                className='text-brand-b1 text-body-12'
+                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('RULES')}
-                className='text-brand-b1 text-body-12'
+                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/p/rooles/general-requirements-for-adverts'>
                 {t('RULES')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('COOKIES_POLICY')}
-                className='text-brand-b1 text-body-12'
+                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/p/cookies-policy'>
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
-              <LinkWrapper
-                title={t('SAFETY')}
-                className='text-brand-b1 text-body-12'
-                href='/safety'>
-                {t('SAFETY')}
-              </LinkWrapper>
+              {/* <LinkWrapper */}
+              {/*  title={t('SAFETY')} */}
+              {/*  className='text-greyscale-900 text-body-14 font-semibold' */}
+              {/*  href='/safety'> */}
+              {/*  {t('SAFETY')} */}
+              {/* </LinkWrapper> */}
               <LinkWrapper
                 title={t('SUPPORT')}
-                className='text-brand-b1 text-body-12'
+                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/support'>
                 {t('SUPPORT')}
               </LinkWrapper>
               {/* <LinkWrapper */}
               {/*  href='https://old.adverto.sale' */}
               {/*  title='old.adverto.sale' */}
-              {/*  className='text-brand-b1 text-body-12'> */}
+              {/*  className='text-greyscale-900 text-body-14 font-semibold'> */}
               {/*  old.adverto.sale */}
               {/* </LinkWrapper> */}
             </div>
-            <div className='text-body-12 my-2 s:my-4 text-greyscale-900'>
-              © 2022—{new Date().getFullYear()} Vooxee
+            <div className='text-body-14 font-normal my-2 s:my-7 px-4 s:px-8 m:px-10 l:px-20 text-greyscale-900 self-start'>
+              © {new Date().getFullYear()} VooXee
             </div>
           </div>
         </div>
