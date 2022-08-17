@@ -21,6 +21,7 @@ export const AuthPages = {
 }
 const initialState: State = {
   incoming: null,
+  isNew: null,
   authType: 1,
   userId: null,
   password: null,
