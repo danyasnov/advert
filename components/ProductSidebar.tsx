@@ -34,7 +34,7 @@ const ProductSidebar: FC = observer(() => {
       <ProductInfoIcons />
       {!isUserAdv && advert.state !== 'sold' && (
         <>
-          <CallButton product={product} />
+          {/* <CallButton product={product} /> */}
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </>
       )}

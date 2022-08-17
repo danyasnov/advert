@@ -14,13 +14,13 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {toJS} from 'mobx'
-import {Star} from 'react-iconly'
+import {Call, Star} from 'react-iconly'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
 import {trackSingle} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
+import CallButton from '../Buttons/CallButton'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -41,8 +41,8 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
     url,
     isTop,
     isVip,
+    showCallButton,
   } = product
-  console.log(toJS(product))
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -201,7 +201,15 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
             <span className='text-body-14 text-greyscale-600'>
               {location?.distance && location.distance}
             </span>
-            <IcArrowRight className='w-5 h-5 self-end' />
+            {isVip && showCallButton ? (
+              <CallButton
+                hash={hash}
+                ownerHash={owner.hash}
+                rootCategoryId={rootCategoryId}
+              />
+            ) : (
+              <IcArrowRight className='w-5 h-5 self-end' />
+            )}
           </div>
         </div>
       </div>

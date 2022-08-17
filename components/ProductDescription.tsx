@@ -67,7 +67,7 @@ const ProductDescription: FC = observer(() => {
       </div>
       {!isUserAdv && state !== 'sold' && (
         <div className='m:hidden my-4 space-y-4'>
-          <CallButton product={product} />
+          {/* <CallButton product={product} /> */}
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
         </div>
       )}
