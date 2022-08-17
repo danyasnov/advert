@@ -42,6 +42,7 @@ export const AuthPages = {
 
 const initialState: State = {
   incoming: null,
+  isNew: null,
   authType: null,
   userId: null,
   password: null,

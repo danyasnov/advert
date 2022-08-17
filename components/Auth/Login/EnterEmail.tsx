@@ -40,6 +40,10 @@ const EnterEmail: FC<PageProps> = observer(({dispatch, onClose, state}) => {
     })
     if (!result?.data.result.exists) {
       dispatch({
+        type: 'setIsNew',
+        isNew: true,
+      })
+      dispatch({
         type: 'setPage',
         page: AuthPages.enterPersonalData,
       })

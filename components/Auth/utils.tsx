@@ -18,6 +18,8 @@ export const reducer = (state, action) => {
       return {...state, password: action.password}
     case 'setTitle':
       return {...state, page: {...state.page, title: action.title}}
+    case 'setIsNew':
+      return {...state, isNew: action.isNew}
     default:
       throw new Error()
   }
@@ -34,6 +36,7 @@ export interface State {
   incoming: string | null
   authType: AuthType | null
   userId: number | null
+  isNew: boolean | null
   password: string | null
   page: {title: string; component: FC}
 }

@@ -47,7 +47,6 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
           errors[path] = message
         })
       }
-      console.log(errors)
 
       return errors
     },
@@ -72,20 +71,22 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
         incoming,
       })
       if (!result?.data.result.exists) {
+        dispatch({
+          type: 'setIsNew',
+          isNew: true,
+        })
         return dispatch({
           type: 'setPage',
           page: AuthPages.enterPersonalData,
         })
       }
-      // if (!result?.data.result.verified) {
       return dispatch({
         type: 'setPage',
         page: AuthPages.enterCode,
       })
-      // }
     },
   })
-  const {values, errors, submitForm} = formik
+  const {values, submitForm} = formik
   const {country} = values
   const format = country.phoneMask.replaceAll('X', '#').replaceAll('-', ' ')
 
