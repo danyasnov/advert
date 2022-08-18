@@ -57,7 +57,7 @@ const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
         }}
         className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'>
         <Call size={20} filled />
-        <span className='text-body-16'>{t('CONTACT')}</span>
+        <span className='text-body-16'>{t('CONTACT_SELLER')}</span>
       </Button>
 
       {showModal && (
