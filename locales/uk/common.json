@@ -1109,7 +1109,7 @@
   "MAIN_PHOTO": "Головне",
   "MAP_GET_LOCATION_POINT_SCREEN": "Місцезнаходження",
   "MAYBE_TAXES": "Можуть додатково стягуватися податки чи збори",
-  "MESSAGE_TO_SUPPORT_HAS_BEEN_SENT": "Thank you, your support message has been sent successfully",
+  "MESSAGE_TO_SUPPORT_HAS_BEEN_SENT": "Your message has been sent. We will contact you as soon as possible",
   "MESSAGES_TEXT": "Домовляйтеся про покупку або продаж товарів у повідомленнях",
   "MESSENGERS_DESCRIPTION": "Ви можете показати покупцям, які месенджери підключені до вашого номера телефону.\n\nБудьте обережні. Через сторонні месенджери вам можуть писати шахраї. Спілкуйтеся тільки на Vooxee – це безпечно.",
   "MIGHT_BE_INTERESTED_IN": "You might be interested in",
@@ -1516,7 +1516,9 @@
   "SPECIAL_OFFERS": "Special Offers",
   "STAY_IN_TOUCH": "Stay in Touch!",
   "SUGGESTED": "SUGGESTED",
+  "SUPPORT_CONTACT_INFO": "To contact us, please fill out this form and describe your problem. We will contact you as soon as possible!",
   "TOP": "TOP",
+  "UNBLOCK_USER": "Unblock user",
   "VIP": "VIP",
   "YES": "Yes",
   "YOUR_COMMENT": "Your comment"
