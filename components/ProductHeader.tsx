@@ -19,7 +19,7 @@ const ProductHeader: FC = observer(() => {
     <div>
       {advert.state === 'sold' && (
         <div className='bg-sold-background rounded-lg	px-4 py-5 mb-4'>
-          <span className='text-body-16 font-bold'>{t('ITEM_SOLD')}</span>{' '}
+          <span className='text-body-16 font-bold'>{t('ITEM_SOLD')}</span>
           <LinkWrapper
             className='text-body-16 text-brand-b1'
             href={`/user/${owner.hash}`}

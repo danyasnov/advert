@@ -18,29 +18,29 @@ const ProductSidebar: FC = observer(() => {
   const isUserAdv = userHash === owner.hash
 
   return (
-    <div className='flex flex-col space-y-4'>
+    <div className='flex flex-col'>
+      <span className='text-h-3 font-bold text-greyscale-900 mb-2'>
+        {advert.title}
+      </span>
       <span
-        className='text-greyscale-900 text-body-14 font-bold'
+        className='text-primary-500 text-h-3 font-bold mb-10'
         data-test-id='price'>
         {isFree ? t('FREE') : advert.price}
       </span>
-      {!!advert.oldPrice && (
-        <span
-          data-test-id='old-price'
-          className='text-body-16 text-error line-through'>
-          {advert.oldPrice}
-        </span>
-      )}
-      <ProductInfoIcons />
       {!isUserAdv && advert.state !== 'sold' && (
-        <>
-          {/* <CallButton product={product} /> */}
+        <div className='my-10'>
+          <CallButton
+            className='text-white space-x-2 bg-primary-500 rounded-2xl w-[224px] h-[60px] mb-4'
+            hash={advert.hash}
+            ownerHash={owner.hash}
+            rootCategoryId={advert.rootCategoryId}
+          />
           <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
-        </>
+        </div>
       )}
-      {isUserAdv && advert.state === 'active' && (
-        <DeactivateAdvButton product={product} />
-      )}
+      {/* {isUserAdv && advert.state === 'active' && ( */}
+      {/*  <DeactivateAdvButton product={product} /> */}
+      {/* )} */}
       <UserCard />
     </div>
   )

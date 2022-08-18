@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import {FC, ReactNode, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useLockBodyScroll} from 'react-use'
 import IcClear from 'icons/material/Clear.svg'
@@ -17,15 +17,22 @@ import PrimaryButton from './PrimaryButton'
 interface Props {
   hash: string
   ownerHash: string
+  className: string
   rootCategoryId: number
+  icon?: ReactNode
 }
-const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
+const CallButton: FC<Props> = ({
+  hash,
+  rootCategoryId,
+  ownerHash,
+  icon,
+  className,
+}) => {
   const [phone, setPhone] = useState()
   const [user, setUser] = useState<OwnerModel>()
   const [showModal, setShowModal] = useState(false)
   const [displayAllowed, setDisplayAllowed] = useState()
   const {t} = useTranslation()
-  console.log('displayAllowed', displayAllowed)
   return (
     <div>
       <Button
@@ -56,8 +63,8 @@ const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
           setUser(userData.result)
           setShowModal(true)
         }}
-        className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'>
-        <Call size={20} filled />
+        className={className}>
+        {!!icon && icon}
         <span className='text-body-16'>{t('CONTACT_SELLER')}</span>
       </Button>
 

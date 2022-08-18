@@ -34,20 +34,20 @@ const UserCard: FC = observer(() => {
   )
 
   return (
-    <div className='flex flex-col bg-white px-4 py-6 rounded-lg'>
-      <div className='flex mb-2 s:mb-0 m:mb-2 w-full'>
+    <div className='flex flex-col bg-white p-4 rounded-2xl drop-shadow-card'>
+      <div className='flex flex-col mb-2 s:mb-0 m:mb-2 w-full'>
         <div className='flex flex-col items-center mr-5'>
-          <UserAvatar url={product.owner.image} name={product.owner.name} />
+          <UserAvatar
+            url={product.owner.image}
+            name={product.owner.name}
+            size={16}
+          />
           {/* <IcPersonAdd className='fill-current text-black-c h-6 w-6 ' /> */}
         </div>
         <div className='w-full'>
-          <LinkWrapper
-            href={`/user/${product.owner.hash}`}
-            title={product.owner.name}>
-            <h3 className='text-brand-b1 text-h-6 font-bold mb-2 truncate w-44'>
-              {product.owner.name}
-            </h3>
-          </LinkWrapper>
+          <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40'>
+            {product.owner.name}
+          </h3>
           <div className='flex flex-col s:flex-row m:flex-col justify-between'>
             <UserRatingMinified
               ratingMark={product.owner.ratingMark}

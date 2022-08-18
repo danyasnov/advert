@@ -203,6 +203,8 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
             </span>
             {isVip && showCallButton ? (
               <CallButton
+                className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'
+                icon={<Call size={20} filled />}
                 hash={hash}
                 ownerHash={owner.hash}
                 rootCategoryId={rootCategoryId}

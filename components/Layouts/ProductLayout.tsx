@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import ProductHeader from '../ProductHeader'
 import ProductDescription from '../ProductDescription'
@@ -19,13 +20,14 @@ const ProductLayout: FC = observer(() => {
   } - ${t('SITE_PAGE_DESCRIPTION_PART')}, ${t('PRICE')} ${
     product.advert.price
   }, ${t('HOSTED')}: ${unixToDate(product.advert.dateUpdated)}`
+  console.log('product', toJS(product))
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />
-      <div className='bg-black-e py-4 m:flex px-4 s:px-8 m:py-8 min-h-1/2'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='m:w-608px l:w-896px'>
-            <ProductHeader />
+      <div className='py-4 m:flex px-4 s:px-8 m:py-8 min-h-1/2'>
+        <div className='s:flex s:space-x-4 m:space-x-12 l:space-x-6 m:mx-auto'>
+          <main className='s:w-[464px] m:w-608px l:w-896px'>
+            {/* <ProductHeader /> */}
             <ProductPhotos />
             <ProductDescription />
             <ProductsSlider
@@ -33,7 +35,7 @@ const ProductLayout: FC = observer(() => {
               title={t('SIMILAR_ADS_TAB')}
             />
           </main>
-          <aside className='hidden m:block w-288px'>
+          <aside className='hidden s:block s:w-[224px]'>
             <ProductSidebar />
           </aside>
         </div>

@@ -30,7 +30,7 @@ const ChatButton: FC<Props> = ({setShowLogin, hash}) => {
       ) : (
         <SecondaryButton
           id='chat'
-          className='w-full'
+          className='w-full h-15'
           onClick={() => {
             setShowLogin(true)
           }}>
