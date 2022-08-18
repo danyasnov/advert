@@ -22,36 +22,12 @@ const Header: FC = observer(() => {
   return (
     <header className='flex s:justify-center relative z-10'>
       <div className='header-width'>
-        <div className='flex s:justify-between px-4 py-2 s:px-0 mb-2'>
+        <div className='flex s:justify-between px-4 s:px-0 py-2 mb-2'>
           <div className='flex  w-full s:w-auto space-x-4 items-center'>
-            {/* <LinkButton */}
-            {/*  onClick={notImplementedAlert} */}
-            {/*  label={t('WALLET')} */}
-            {/*  className='mr-auto s:ml-4'> */}
-            {/*  <IcWallet className='fill-current text-brand-b1 mr-2 h-4 w-4' /> */}
-            {/* </LinkButton> */}
             <LanguageSelect />
           </div>
-          <div className='flex space-x-4'>
-            {/*  <LinkButton */}
-            {/*    onClick={notImplementedAlert} */}
-            {/*    label={t('FOR_BUSINESS')} */}
-            {/*  /> */}
-            {/* <LinkWrapper */}
-            {/*  className='text-brand-b1 text-body-12 whitespace-nowrap flex items-center' */}
-            {/*  href='/merchant' */}
-            {/*  title={t('SHOPS')}> */}
-            {/*  {t('SHOPS')} */}
-            {/* </LinkWrapper> */}
-            {/* <LinkWrapper */}
-            {/*  className='text-brand-b1 text-body-12 whitespace-nowrap flex items-center hidden s:block' */}
-            {/*  href='/safety' */}
-            {/*  title={t('SAFETY')}> */}
-            {/*  {t('SAFETY')} */}
-            {/* </LinkWrapper> */}
-          </div>
         </div>
-        <div className='flex pt-2 pb-5 space-x-4 s:space-x-6 m:space-x-8'>
+        <div className='flex pt-2 pb-5 px-4 s:px-0 space-x-4 s:space-x-6 m:space-x-8'>
           <Logo />
           <div className='flex w-full'>
             <div className='-mr-3 z-10'>

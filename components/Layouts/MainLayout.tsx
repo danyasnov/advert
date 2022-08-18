@@ -98,23 +98,6 @@ const MainLayout: FC = observer(() => {
         title={t('SITE_MAIN_PAGE_META_TITLE')}
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
-      {cookies.cookieAccepted && (
-        <Button
-          className={`s:hidden fixed left-1/2 -translate-x-1/2 w-40 z-10 bottom-0 `}>
-          <div className='mb-2'>
-            <Button
-              className='flex h-10 bg-brand-a1 text-body-14 px-3.5 py-3 rounded-2 whitespace-nowrap'
-              onClick={() => {
-                if (!user) {
-                  return setShowLogin(true)
-                }
-                return push(`/advert/create`)
-              }}>
-              <span className='capitalize-first text-white'>{t('NEW_AD')}</span>
-            </Button>
-          </div>
-        </Button>
-      )}
       <div className='py-8 m:flex min-h-1/2'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] drop-shadow-card'>

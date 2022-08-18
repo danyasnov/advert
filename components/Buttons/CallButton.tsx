@@ -25,6 +25,7 @@ const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
   const [showModal, setShowModal] = useState(false)
   const [displayAllowed, setDisplayAllowed] = useState()
   const {t} = useTranslation()
+  console.log('displayAllowed', displayAllowed)
   return (
     <div>
       <Button
@@ -35,7 +36,7 @@ const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
             categoryId: rootCategoryId,
             event: 'Contact',
           })
-          const permissionData = await makeRequest({
+          const {data: permissionData} = await makeRequest({
             method: 'post',
             url: '/api/check-phone-permissions',
             data: {
@@ -43,16 +44,16 @@ const CallButton: FC<Props> = ({hash, rootCategoryId, ownerHash}) => {
             },
           })
 
-          setDisplayAllowed(permissionData.data.displayAllowed)
-          setPhone(permissionData.data.num)
-          const userData = await makeRequest({
+          setDisplayAllowed(permissionData.result.displayAllowed)
+          setPhone(permissionData.result.num)
+          const {data: userData} = await makeRequest({
             method: 'post',
             url: '/api/user-info',
             data: {
               hash: ownerHash,
             },
           })
-          setUser(userData.data.result)
+          setUser(userData.result)
           setShowModal(true)
         }}
         className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'>
