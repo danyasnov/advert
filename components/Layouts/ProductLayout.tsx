@@ -20,26 +20,22 @@ const ProductLayout: FC = observer(() => {
   } - ${t('SITE_PAGE_DESCRIPTION_PART')}, ${t('PRICE')} ${
     product.advert.price
   }, ${t('HOSTED')}: ${unixToDate(product.advert.dateUpdated)}`
-  console.log('product', toJS(product))
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />
       <div className='py-4 m:flex px-4 s:px-8 m:py-8 min-h-1/2'>
         <div className='s:flex s:space-x-4 m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='s:w-[464px] m:w-608px l:w-896px'>
+          <main className='s:w-[464px] m:w-608px l:w-896px drop-shadow-card'>
             {/* <ProductHeader /> */}
             <ProductPhotos />
             <ProductDescription />
-            <ProductsSlider
-              products={similarProducts}
-              title={t('SIMILAR_ADS_TAB')}
-            />
           </main>
-          <aside className='hidden s:block s:w-[224px]'>
+          <aside className='hidden s:block s:w-[224px] drop-shadow-card'>
             <ProductSidebar />
           </aside>
         </div>
       </div>
+      <ProductsSlider products={similarProducts} title={t('SIMILAR_ADS_TAB')} />
     </HeaderFooterWrapper>
   )
 })

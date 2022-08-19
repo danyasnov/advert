@@ -25,7 +25,7 @@ export const Thumb: FC<ThumbProps> = ({
   }, [index, isHovering, onHover])
   return (
     <div
-      className={`mx-1 mb-2 w-12 h-12 s:w-26 relative ${
+      className={`mx-1 mb-2 w-12 h-12 s:w-[104px] s:h-15 relative rounded-xl overflow-hidden ${
         isHovering || activePhotoIndex === index
           ? 'border border-primary-500'
           : 'border border-transparent'
@@ -59,7 +59,7 @@ export const VideoThumb: FC<ThumbProps> = ({
   return (
     <div
       ref={ref}
-      className={`bg-black mx-1 mb-2 w-12 h-12 s:w-26 relative flex justify-center items-center ${
+      className={`bg-black mx-1 mb-2 w-12 h-12 s:w-[104px] s:h-15 relative flex justify-center items-center rounded-xl overflow-hidden ${
         isHovering || activePhotoIndex === index
           ? 'border border-primary-500'
           : 'border border-transparent'

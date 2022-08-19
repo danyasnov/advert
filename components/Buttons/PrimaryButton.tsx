@@ -9,6 +9,7 @@ interface Props {
   onClick?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
   id?: string
+  isSmall?: boolean
 }
 
 const PrimaryButton: FC<Props> = ({
@@ -18,13 +19,14 @@ const PrimaryButton: FC<Props> = ({
   id,
   type,
   disabled = false,
+  isSmall,
 }) => {
   return (
     <Button
       id={id}
-      className={`rounded-2xl py-3.5 px-6 text-body-14 text-white-a font-bold ${
-        disabled ? disabledClass : 'bg-primary-500'
-      } ${className || ''}`}
+      className={`rounded-2xl text-body-14 text-white-a  ${
+        isSmall ? 'py-[11px] px-4 font-semibold' : 'py-3.5 px-6 font-bold'
+      } ${disabled ? disabledClass : 'bg-primary-500'} ${className || ''}`}
       type={type}
       disabled={disabled}
       onClick={(e) => !disabled && onClick && onClick(e)}>

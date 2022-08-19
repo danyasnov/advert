@@ -106,9 +106,9 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
         onClick={() =>
           trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
         }
-        className={`text-left rounded-xl overflow-hidden flex flex-col relative h-full
+        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2
         ${
-          isTop || isVip ? 'border-2 border-primary-500 -m-0.5' : ''
+          isTop || isVip ? 'border-primary-500' : 'border-transparent'
         } ${widthClassname}`}
         style={{
           // @ts-ignore safari fix border radius

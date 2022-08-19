@@ -28,7 +28,7 @@ const ProductSidebar: FC = observer(() => {
         {isFree ? t('FREE') : advert.price}
       </span>
       {!isUserAdv && advert.state !== 'sold' && (
-        <div className='my-10'>
+        <div className='mb-10'>
           <CallButton
             className='text-white space-x-2 bg-primary-500 rounded-2xl w-[224px] h-[60px] mb-4'
             hash={advert.hash}

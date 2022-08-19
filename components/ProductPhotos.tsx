@@ -99,7 +99,7 @@ const ProductPhotos: FC = observer(() => {
               <Button
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${item.src}-${index}`}
-                className='relative min-w-full bg-image-placeholder'
+                className='relative min-w-full bg-image-placeholder rounded-xl'
                 onClick={() => {
                   setShowModal(true)
                   setCurrentIndex(index)

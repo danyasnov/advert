@@ -106,7 +106,8 @@ const MainLayout: FC = observer(() => {
               <div className='space-y-12 overflow-hidden m:overflow-visible'>
                 {productsArr.map((p) => (
                   <ProductsSlider
-                    products={otherProducts[p.slug] || []}
+                    // products={otherProducts[p.slug] || []}
+                    products={products}
                     title={p.name}
                     rightContent={
                       <LinkWrapper

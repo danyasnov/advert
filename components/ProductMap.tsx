@@ -5,6 +5,8 @@ import IcPinDrop from 'icons/material/PinDrop.svg'
 import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
 import GoogleMapReact from 'google-map-react'
 import {degradations} from 'front-api/src/models'
+import {ArrowDown, Location} from 'react-iconly'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import SvgMapMarker from '../assets/icons/SvgMapMarker'
@@ -31,15 +33,16 @@ const ProductMap: FC = observer(() => {
     degradations.find((d) => d.key === advert.degradation)?.radius ?? 0
 
   return (
-    <div className='bg-white s:rounded-lg text-body-14 text-greyscale-900'>
+    <div className='bg-white s:rounded-2xl text-body-14 text-greyscale-900'>
       <div className='flex justify-between px-6 py-5'>
         <div className='flex items-center'>
-          <IcPinDrop className='w-6 h-6 fill-current text-black-c mr-2' />
+          <div className='w-6 h-6 fill-current text-primary-500 mr-2'>
+            <Location size={20} filled />
+          </div>
           <span>{advert.location.description}</span>
         </div>
         <Button onClick={() => setMapVisible(!mapVisible)} id='map'>
-          <span className='hidden s:block'>{t('LOCATION_OF_GOODS')}</span>
-          <IcArrowDropDown className='w-6 h-6 fill-current text-black-c ml-2' />
+          <IcArrowDown className='w-5 h-5 fill-current text-greyscale-900' />
         </Button>
       </div>
       {mapVisible && (
