@@ -22,7 +22,7 @@ const Footer: FC = observer(() => {
             title={t('CATEGORIES')}
             className='m:col-span-4 l:col-span-6'
             body={
-              <div className='grid s:grid-cols-1 m:grid-cols-2 l:grid-cols-3 gap-y-2'>
+              <div className='grid s:grid-cols-1 m:grid-cols-2 l:grid-cols-3 gap-y-4 s:gap-y-2'>
                 {ids.map((id) => (
                   <LinkWrapper
                     title={categoriesById[id]?.name}
@@ -53,41 +53,40 @@ const Footer: FC = observer(() => {
           />
         </div>
         <div className='border-t border-shadow-b pt-2'>
-          <div className='flex flex-col m:flex-row m:justify-between items-center mx-auto'>
-            <div className='flex flex-col space-y-2 s:flex-row s:space-x-7 s:space-y-0'>
+          <div className='flex flex-col m:flex-row   mx-4 s:mx-auto'>
+            <div className='flex flex-col space-y-10 my-8 s:my-0 s:flex-row s:space-y-0 text-greyscale-900 text-body-14 font-semibold'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
-                className='text-greyscale-900 text-body-14 font-semibold'
+                className='flex justify-center items-center w-full text-center'
                 href='/p/terms-and-conditions'>
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
-                className='text-greyscale-900 text-body-14 font-semibold'
+                className='flex justify-center items-center w-full text-center'
                 href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('RULES')}
-                className='text-greyscale-900 text-body-14 font-semibold'
+                className='flex justify-center items-center w-full text-center'
                 href='/p/rooles/general-requirements-for-adverts'>
                 {t('RULES')}
               </LinkWrapper>
               <LinkWrapper
+                className='flex justify-center items-center w-full text-center'
                 title={t('COOKIES_POLICY')}
-                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/p/cookies-policy'>
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
-
               <LinkWrapper
+                className='flex justify-center items-center w-full text-center'
                 title={t('SUPPORT')}
-                className='text-greyscale-900 text-body-14 font-semibold'
                 href='/support'>
                 {t('SUPPORT')}
               </LinkWrapper>
             </div>
-            <div className='text-body-14 font-normal my-2 s:my-7 text-greyscale-900 self-start'>
+            <div className='text-body-14 font-normal mb-8 s:my-7 text-greyscale-900 self-start'>
               © {new Date().getFullYear()} VooXee
             </div>
           </div>
