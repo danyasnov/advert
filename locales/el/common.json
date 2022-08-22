@@ -1221,7 +1221,7 @@
   "PHOTO_DOES_NOT_MATCH_WITH PRODUCT": "The photo does not match the product",
   "PHOTO_ERROR": "Πρέπει να ανεβάσετε τουλάχιστον {{minPhotos}} φωτογραφίες",
   "PHOTO_TAB": "Φωτογραφία",
-  "PHOTO_UPLOAD_ERROR": "Download Error,\ntry again",
+  "PHOTO_UPLOAD_ERROR": "Upload Error,\ntry again",
   "PHOTOS": "Φωτογραφίες",
   "PHOTOS_AND_VIDEOS": "Φωτογραφίες/Βίντεο",
   "PHOTOS_AND_VIDEOS_PROPERTY_TEXT": "Προσπαθήστε να παρουσιάσετε όλα τα σημαντικά χαρακτηριστικά και λεπτομέρειες. ",

@@ -1221,7 +1221,7 @@
   "PHOTO_DOES_NOT_MATCH_WITH PRODUCT": "The photo does not match the product",
   "PHOTO_ERROR": "Повинно бути не меньш {{minPhotos}} фотографій",
   "PHOTO_TAB": "Фото",
-  "PHOTO_UPLOAD_ERROR": "Download Error,\ntry again",
+  "PHOTO_UPLOAD_ERROR": "Upload Error,\ntry again",
   "PHOTOS": "Фотографії",
   "PHOTOS_AND_VIDEOS": "Фотографії/Відео",
   "PHOTOS_AND_VIDEOS_PROPERTY_TEXT": "Намагайтеся показати всі важливі особливості та деталі.",
