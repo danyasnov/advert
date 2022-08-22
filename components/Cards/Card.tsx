@@ -169,7 +169,7 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
           </div>
           {inView && (
             <>
-              {images.length > 1 && (
+              {!!images.length && (
                 <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
                   {images.map((i, index) => (
                     <div

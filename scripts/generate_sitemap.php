@@ -61,7 +61,7 @@ $sitePages = $db->query("
 ")->fetch_assoc_array();
 
 foreach ($sitePages as $sitePage) {
-    $others[] = '/p/' . $sitePage['url'];
+    $others[] = '/p' . $sitePage['url'];
 }
 
 $others[] = '/countries/';

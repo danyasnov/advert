@@ -25,7 +25,7 @@ export const Thumb: FC<ThumbProps> = ({
   }, [index, isHovering, onHover])
   return (
     <div
-      className={`mx-1 mb-2 w-12 h-12 s:w-[104px] s:h-15 relative rounded-xl overflow-hidden ${
+      className={`mx-1 mb-2 w-[104px] h-15 relative rounded-xl overflow-hidden ${
         isHovering || activePhotoIndex === index
           ? 'border border-primary-500'
           : 'border border-transparent'

@@ -37,41 +37,45 @@ const UserCard: FC = observer(() => {
   )
 
   return (
-    <div className='flex flex-col bg-white px-5 py-7 rounded-2xl'>
-      <div className='flex flex-col mb-2 s:mb-0 m:mb-2 w-full '>
-        <div className='flex flex-col items-center mb-4'>
+    <div className='flex s:flex-col mb-2 s:mb-0 m:mb-2 w-full rounded-2xl p-6 bg-white'>
+      <div className='flex flex-col mr-6 s:mr-0'>
+        <div className='mb-4 self-center'>
           <UserAvatar
             url={product.owner.image}
             name={product.owner.name}
             size={16}
           />
-          {/* <IcPersonAdd className='fill-current text-black-c h-6 w-6 ' /> */}
         </div>
-        <div className='w-full flex flex-col items-center'>
-          {product.owner.isOnline && (
-            <span className='mb-2 text-body-12 text-green'>{t('ONLINE')}</span>
-          )}
-          <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40 text-center'>
-            {product.owner.name}
-          </h3>
-          <Button className='text-primary-500 space-x-1.5'>
-            <AddUser size={16} filled />
-            <span className='text-body-16 font-normal'>{t('SUBSCRIBE')}</span>
-          </Button>
-          <div className='flex justify-between my-6'>
-            <div>{langs}</div>
-          </div>
-        </div>
+        {product.owner.isOnline && (
+          <span className='mb-2 text-body-12 text-green text-center'>
+            {t('ONLINE')}
+          </span>
+        )}
       </div>
-      <LinkWrapper
-        href={`/user/${product.owner.hash}`}
-        title='user page'
-        target='_blank'>
-        <PrimaryButton className='self-center' isSmall>
-          <IcAds className='w-5 h-5 fill-current' />
-          <span className='text-body-14 m:text-body-16'>{t('SHOW_ADS')}</span>
-        </PrimaryButton>
-      </LinkWrapper>
+
+      <div className='w-full flex flex-col items-start s:items-center'>
+        <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40 text-left s:text-center'>
+          {product.owner.name}
+        </h3>
+        <Button className='text-primary-500 space-x-1.5 mb-2'>
+          <AddUser size={16} filled />
+          <span className='text-body-16 font-normal'>{t('SUBSCRIBE')}</span>
+        </Button>
+        <div className='flex justify-between mb-4'>
+          <div>{langs}</div>
+        </div>
+        <LinkWrapper
+          href={`/user/${product.owner.hash}`}
+          title='user page'
+          target='_blank'>
+          <PrimaryButton
+            className='self-center font-medium space-x-1.5'
+            isSmall>
+            <IcAds className='w-5 h-5 fill-current' />
+            <span className='text-body-12 m:text-body-16'>{t('SHOW_ADS')}</span>
+          </PrimaryButton>
+        </LinkWrapper>
+      </div>
     </div>
   )
 })

@@ -7,6 +7,7 @@ import ProductInfoIcons from './ProductInfoIcons'
 import CallButton from './Buttons/CallButton'
 import ChatButton from './Buttons/ChatButton'
 import DeactivateAdvButton from './Buttons/DeactivateAdvButton'
+import ProductPrice from './ProductPrice'
 
 const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
@@ -18,26 +19,9 @@ const ProductSidebar: FC = observer(() => {
   const isUserAdv = userHash === owner.hash
 
   return (
-    <div className='flex flex-col'>
-      <span className='text-h-3 font-bold text-greyscale-900 mb-2'>
-        {advert.title}
-      </span>
-      <span
-        className='text-primary-500 text-h-3 font-bold mb-10'
-        data-test-id='price'>
-        {isFree ? t('FREE') : advert.price}
-      </span>
-      {!isUserAdv && advert.state !== 'sold' && (
-        <div className='mb-10'>
-          <CallButton
-            className='text-white space-x-2 bg-primary-500 rounded-2xl w-[224px] h-[60px] mb-4'
-            hash={advert.hash}
-            ownerHash={owner.hash}
-            rootCategoryId={advert.rootCategoryId}
-          />
-          <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
-        </div>
-      )}
+    <div className='flex flex-col space-y-10'>
+      <ProductPrice />
+
       {/* {isUserAdv && advert.state === 'active' && ( */}
       {/*  <DeactivateAdvButton product={product} /> */}
       {/* )} */}

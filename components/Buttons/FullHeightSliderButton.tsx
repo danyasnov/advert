@@ -1,6 +1,7 @@
 import {FC, ReactNode} from 'react'
 import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
+import {ArrowLeft, ChevronLeft, ChevronRight} from 'react-iconly'
 import Button from './Button'
 
 interface Props {
@@ -20,11 +21,13 @@ const FullHeightSliderButton: FC<Props> = ({
   return (
     <Button
       onClick={onClick}
-      className={`w-16 h-full hover:bg-shadow-a ${className || ''}`}>
+      className={`w-16 h-full text-primary-500 overflow-hidden ${
+        direction === 'left' ? 'rounded-l-xl' : 'rounded-r-xl'
+      } ${className || ''}`}>
       {direction === 'left' ? (
-        <IcKeyboardArrowLeft className='fill-current text-white w-10 h-10' />
+        <ChevronLeft size={40} />
       ) : (
-        <IcKeyboardArrowRight className='fill-current text-white w-10 h-10' />
+        <ChevronRight size={40} />
       )}
     </Button>
   )

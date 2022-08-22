@@ -14,9 +14,10 @@ const Footer: FC = observer(() => {
   const {showFooter} = useGeneralStore()
 
   return (
-    <footer className={`mx-auto ${showFooter ? '' : 'hidden m:block'}`}>
+    <footer
+      className={`mx-auto header-width ${showFooter ? '' : 'hidden m:block'}`}>
       <div className='pt-7 space-y-6 s:border-t border-greyscale-200'>
-        <div className='space-y-6 px-4 s:px-8 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
+        <div className='space-y-6 px-4 s:px-0 s:grid s:grid-cols-3 s:space-y-0 s:gap-x-4 s:gap-y-6 m:grid-cols-12 mx-auto'>
           <Section
             title={t('CATEGORIES')}
             className='m:col-span-4 l:col-span-6'
@@ -52,7 +53,7 @@ const Footer: FC = observer(() => {
           />
         </div>
         <div className='border-t border-shadow-b pt-2'>
-          <div className='flex flex-col m:flex-row m:justify-between items-center  m:px-10 l:px-20 fixed-breakpoints-width mx-auto'>
+          <div className='flex flex-col m:flex-row m:justify-between items-center mx-auto'>
             <div className='flex flex-col space-y-2 s:flex-row s:space-x-7 s:space-y-0'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
@@ -86,7 +87,7 @@ const Footer: FC = observer(() => {
                 {t('SUPPORT')}
               </LinkWrapper>
             </div>
-            <div className='text-body-14 font-normal my-2 s:my-7 px-4 s:px-8 m:px-10 l:px-20 text-greyscale-900 self-start'>
+            <div className='text-body-14 font-normal my-2 s:my-7 text-greyscale-900 self-start'>
               © {new Date().getFullYear()} VooXee
             </div>
           </div>

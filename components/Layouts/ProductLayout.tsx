@@ -23,19 +23,34 @@ const ProductLayout: FC = observer(() => {
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />
-      <div className='py-4 m:flex px-4 s:px-8 m:py-8 min-h-1/2'>
-        <div className='s:flex s:space-x-4 m:space-x-12 l:space-x-6 m:mx-auto'>
-          <main className='s:w-[464px] m:w-608px l:w-896px drop-shadow-card'>
-            {/* <ProductHeader /> */}
-            <ProductPhotos />
-            <ProductDescription />
-          </main>
-          <aside className='hidden s:block s:w-[224px] drop-shadow-card'>
-            <ProductSidebar />
-          </aside>
+      <div className='py-8 m:flex min-h-1/2'>
+        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
+          <div className='m:w-944px l:w-[1208px] mx-4 s:mx-8 m:mx-0'>
+            <div className='s:flex s:space-x-4 m:space-x-8'>
+              <main className='s:w-[464px] m:w-608px l:w-896px drop-shadow-card'>
+                <ProductHeader />
+                <ProductPhotos />
+                <ProductDescription />
+                <div className='-mx-4 s:hidden'>
+                  <ProductsSlider
+                    products={similarProducts}
+                    title={t('SIMILAR_ADS_TAB')}
+                  />
+                </div>
+              </main>
+              <aside className='hidden s:block s:w-[224px] m:w-[280px] drop-shadow-card'>
+                <ProductSidebar />
+              </aside>
+            </div>
+            <div className='-mx-8 m:-mx-0 hidden s:block'>
+              <ProductsSlider
+                products={similarProducts}
+                title={t('SIMILAR_ADS_TAB')}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <ProductsSlider products={similarProducts} title={t('SIMILAR_ADS_TAB')} />
     </HeaderFooterWrapper>
   )
 })

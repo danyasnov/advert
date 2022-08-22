@@ -99,7 +99,7 @@ const MainLayout: FC = observer(() => {
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
       <div className='py-8 m:flex min-h-1/2'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-12 m:justify-center m:w-full'>
+        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] drop-shadow-card'>
             <CategoriesSlider />
             <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8'>

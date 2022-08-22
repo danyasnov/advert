@@ -62,6 +62,7 @@ const ProductPhotos: FC = observer(() => {
           }
           return newIndex
         })
+        setCurrentIndex(newIndex)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [embla])
@@ -115,6 +116,18 @@ const ProductPhotos: FC = observer(() => {
             )
           })}
         </div>
+        {!!items.length && (
+          <div className='absolute bottom-4 w-full flex justify-center space-x-2'>
+            {items.map((i, index) => (
+              <div
+                key={i.src}
+                className={`w-2 h-2 rounded-full ${
+                  currentIndex === index ? 'bg-primary-500' : 'bg-greyscale-100'
+                }`}
+              />
+            ))}
+          </div>
+        )}
         <FullHeightSliderButton
           onClick={scrollPrev}
           enabled={prevBtnEnabled}
@@ -128,7 +141,8 @@ const ProductPhotos: FC = observer(() => {
           className='absolute inset-y-0 right-0'
         />
       </div>
-      <div className='flex mt-4 flex-row -mx-1 flex-wrap'>
+
+      <div className='flex mt-3 flex-row -mx-1 flex-wrap'>
         {items.map((item, index) =>
           item.type === 'video' ? (
             <VideoThumb
