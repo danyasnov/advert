@@ -9,6 +9,9 @@ interface ThumbProps {
   index: number
   activePhotoIndex: number
 }
+const className =
+  'mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4 w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden'
+
 export const Thumb: FC<ThumbProps> = ({
   url,
   onHover,
@@ -25,7 +28,7 @@ export const Thumb: FC<ThumbProps> = ({
   }, [index, isHovering, onHover])
   return (
     <div
-      className={`mx-1 mb-2 w-[104px] h-15 relative rounded-xl overflow-hidden ${
+      className={`${className} ${
         isHovering || activePhotoIndex === index
           ? 'border border-primary-500'
           : 'border border-transparent'
@@ -59,7 +62,7 @@ export const VideoThumb: FC<ThumbProps> = ({
   return (
     <div
       ref={ref}
-      className={`bg-black mx-1 mb-2 w-12 h-12 s:w-[104px] s:h-15 relative flex justify-center items-center rounded-xl overflow-hidden ${
+      className={`${className} bg-black flex justify-center items-center ${
         isHovering || activePhotoIndex === index
           ? 'border border-primary-500'
           : 'border border-transparent'

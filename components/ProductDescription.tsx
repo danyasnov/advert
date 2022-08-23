@@ -101,19 +101,25 @@ const DescriptionTab: FC = observer(() => {
 const CharacteristicsTab: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
+  const titleClassName = 'text-h-5 font-bold text-greyscale-900 block'
   if (isEmpty(product.advert.fields)) return null
   return (
     <div>
-      <span className='text-h-5 font-bold text-greyscale-900 mb-10'>
-        {t('ABOUT_PRODUCT')}
-      </span>
-      <div className='space-y-4 mt-6'>
+      <span className={`${titleClassName} mb-6`}>{t('ABOUT_PRODUCT')}</span>
+      <div className='space-y-4'>
         {product.advert.fields.map((field) => {
           return (
             <div
               className='flex justify-between font-normal text-body-16'
               key={field.fieldNameText}>
-              <span className='text-greyscale-600'>{field.fieldNameText}</span>
+              <span
+                className={`${
+                  field.fieldType === 'title'
+                    ? `${titleClassName} my-4`
+                    : 'text-greyscale-600'
+                }`}>
+                {field.fieldNameText}
+              </span>
               <div>
                 {field.fieldValueText.map((fieldValue, index, array) => (
                   <span key={fieldValue} className='text-greyscale-900'>

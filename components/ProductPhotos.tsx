@@ -69,18 +69,11 @@ const ProductPhotos: FC = observer(() => {
 
   return (
     <div className='relative'>
-      {product.advert.isExclusive && (
-        <div className='absolute left-4 top-5 z-9'>
-          <ExclusiveMark />
-        </div>
-      )}
-      <div className='overflow-hidden relative' ref={viewportRef}>
-        <div className='flex w-full h-250px s:h-100'>
-          {/* @ts-ignore */}
+      <div className='overflow-hidden relative rounded-xl' ref={viewportRef}>
+        <div className='flex w-full h-[180px] s:h-[257px] m:h-[340px] l:h-[504px]'>
           {items.map((item, index) => {
             if (item.type === 'video') {
               return (
-                // eslint-disable-next-line jsx-a11y/media-has-caption
                 <video
                   ref={(node) => {
                     videosRef.current[index] = node
@@ -100,7 +93,7 @@ const ProductPhotos: FC = observer(() => {
               <Button
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${item.src}-${index}`}
-                className='relative min-w-full bg-image-placeholder rounded-xl'
+                className='relative min-w-full bg-image-placeholder '
                 onClick={() => {
                   setShowModal(true)
                   setCurrentIndex(index)
@@ -142,7 +135,7 @@ const ProductPhotos: FC = observer(() => {
         />
       </div>
 
-      <div className='flex mt-3 flex-row -mx-1 flex-wrap'>
+      <div className='flex mt-3 s:mt-4 flex-row -mx-1 s:-mx-2 m:-mx-3 l:-mx-2 flex-wrap'>
         {items.map((item, index) =>
           item.type === 'video' ? (
             <VideoThumb

@@ -5,6 +5,7 @@ import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
   findCategoryByQuery,
   getFilterFromQuery,
+  getLocationCodes,
   getQueryValue,
   getStorageFromCookies,
   processCookies,
@@ -179,6 +180,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           isProduct: !!product,
           userHash: state.hash ?? '',
           language: state.language,
+          locationCodes: getLocationCodes(ctx),
         },
       },
       ...(await serverSideTranslations(state.language)),

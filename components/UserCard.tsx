@@ -57,10 +57,10 @@ const UserCard: FC = observer(() => {
         <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40 text-left s:text-center'>
           {product.owner.name}
         </h3>
-        <Button className='text-primary-500 space-x-1.5 mb-2'>
-          <AddUser size={16} filled />
-          <span className='text-body-16 font-normal'>{t('SUBSCRIBE')}</span>
-        </Button>
+        {/* <Button className='text-primary-500 space-x-1.5 mb-2'> */}
+        {/*  <AddUser size={16} filled /> */}
+        {/*  <span className='text-body-16 font-normal'>{t('SUBSCRIBE')}</span> */}
+        {/* </Button> */}
         <div className='flex justify-between mb-4'>
           <div>{langs}</div>
         </div>

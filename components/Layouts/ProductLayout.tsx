@@ -27,7 +27,7 @@ const ProductLayout: FC = observer(() => {
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <div className='m:w-944px l:w-[1208px] mx-4 s:mx-8 m:mx-0'>
             <div className='s:flex s:space-x-4 m:space-x-8'>
-              <main className='s:w-[464px] m:w-608px l:w-896px drop-shadow-card'>
+              <main className='s:w-[464px] m:w-[614px] l:w-896px drop-shadow-card'>
                 <ProductHeader />
                 <ProductPhotos />
                 <ProductDescription />

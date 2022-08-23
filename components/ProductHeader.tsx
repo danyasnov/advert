@@ -1,6 +1,8 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
+import {useRouter} from 'next/router'
 import {
   useCategoriesStore,
   useGeneralStore,
@@ -10,11 +12,13 @@ import ProductInfoIcons from './ProductInfoIcons'
 import ProductLike from './ProductLike'
 import ProductMenu from './ProductMenu'
 import LinkWrapper from './Buttons/LinkWrapper'
+import Button from './Buttons/Button'
 
 const ProductHeader: FC = observer(() => {
+  const {push} = useRouter()
   const {product} = useProductsStore()
   const {categories} = useCategoriesStore()
-  const {userHash} = useGeneralStore()
+  const {userHash, locationCodes} = useGeneralStore()
   const {t} = useTranslation()
   const path = getPath(
     categories,
@@ -22,7 +26,11 @@ const ProductHeader: FC = observer(() => {
     product.advert.rootCategoryId,
     t,
   )
-  console.log('path', path)
+  console.log(
+    'path',
+    path.map((p) => toJS(p)),
+    locationCodes,
+  )
   if (!product) return null
   const {advert, owner} = product
   const isUserAdv = userHash === owner.hash
@@ -41,15 +49,27 @@ const ProductHeader: FC = observer(() => {
         </div>
       )}
       <div className='flex justify-between w-full items-center'>
-        <div className=''>
-          {path.map((p, index) => (
-            <span
-              key={p.id}
-              className='text-body-14 font-normal text-greyscale-900 last:font-bold last:text-primary-500'>
-              {p.name}
-              {index + 1 !== path.length ? ' / ' : ''}
-            </span>
-          ))}
+        <div className='flex'>
+          {path.map((p, index) => {
+            const itemClassName =
+              'text-body-14 font-normal text-greyscale-900 last:font-bold last:text-primary-500 whitespace-nowrap mr-1 last:mr-0'
+
+            return (
+              <LinkWrapper
+                key={p.id}
+                className={itemClassName}
+                href={`/${locationCodes}/${path
+                  .slice(0, index + 1)
+                  .map((c) => c.slug)
+                  .join('/')}`}
+                title={p.name}>
+                <span>
+                  {p.name}
+                  {index + 1 !== path.length ? ' /' : ''}
+                </span>
+              </LinkWrapper>
+            )
+          })}
         </div>
         <div className='flex ml-4 space-x-2'>
           {isUserAdv && <ProductMenu product={product} />}
