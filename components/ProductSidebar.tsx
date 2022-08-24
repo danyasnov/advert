@@ -10,6 +10,7 @@ import DeactivateAdvButton from './Buttons/DeactivateAdvButton'
 import ProductPrice from './ProductPrice'
 import SharePopup from './SharePopup'
 import ProductLike from './ProductLike'
+import ProductCommunication from './ProductCommunication'
 
 const ProductSidebar: FC = observer(() => {
   const {product} = useProductsStore()
@@ -20,6 +21,7 @@ const ProductSidebar: FC = observer(() => {
   return (
     <div className='flex flex-col space-y-10'>
       <ProductPrice />
+      <ProductCommunication />
       <UserCard />
       <div className='flex flex-col items-center space-y-5'>
         <ProductLike

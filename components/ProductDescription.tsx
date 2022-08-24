@@ -1,49 +1,22 @@
-import {FC, useState} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import IcVisibility from 'icons/material/Visibility.svg'
-import IcLike from 'icons/material/Like.svg'
-import {isEmpty, size} from 'lodash'
-import {FieldDTO} from 'front-api/src/models/index'
+import {isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import {toJS} from 'mobx'
 import {Calendar, Heart} from 'react-iconly'
-import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
+import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
-import Tabs from './Tabs'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-import SharePopup from './SharePopup'
-import CallButton from './Buttons/CallButton'
-import ChatButton from './Buttons/ChatButton'
-import ProductNotes from './ProductNotes'
+
 import ProductPrice from './ProductPrice'
 import ProductCommunication from './ProductCommunication'
 
-const getTabs = (description: string, fields: FieldDTO[]) => {
-  const tabs = []
-  if (description) tabs.push({id: 0, title: 'DESCRIPTION_TAB'})
-  if (size(fields)) tabs.push({id: 1, title: 'CHARACTERISTICS_TAB'})
-  return tabs
-}
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   if (!product) return null
-  const {advert, owner} = product
-  const {phoneNum} = owner
-  const {
-    favoriteCounter,
-    views,
-    dateUpdated,
-    fields,
-    description,
-    state,
-    hash,
-  } = advert
-  const [activeTab, setActiveTab] = useState(description ? 0 : 1)
-  const {setShowLogin, userHash} = useGeneralStore()
-  const {t} = useTranslation()
-
-  const isUserAdv = userHash === owner.hash
+  const {advert} = product
+  const {favoriteCounter, views, dateUpdated} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
       <div className='flex space-x-7 font-normal mb-6'>
@@ -78,8 +51,9 @@ const ProductDescription: FC = observer(() => {
       <div className='mb-10'>
         <ProductMap />
       </div>
-      <CharacteristicsTab />
-
+      <div className='mb-10 s:mb-25'>
+        <CharacteristicsTab />
+      </div>
       <div className='s:hidden'>
         <UserCard />
       </div>
@@ -105,7 +79,6 @@ const CharacteristicsTab: FC = observer(() => {
   if (isEmpty(product.advert.fields)) return null
   return (
     <div>
-      <span className={`${titleClassName} mb-6`}>{t('ABOUT_PRODUCT')}</span>
       <div className='space-y-4'>
         {product.advert.fields.map((field) => {
           return (

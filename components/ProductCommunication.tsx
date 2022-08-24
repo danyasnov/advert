@@ -22,7 +22,7 @@ const ProductCommunication: FC = observer(() => {
         ownerHash={owner.hash}
         rootCategoryId={advert.rootCategoryId}
       />
-      <ChatButton setShowLogin={setShowLogin} hash={advert.hash} />
+      {/* <ChatButton setShowLogin={setShowLogin} hash={advert.hash} /> */}
     </div>
   )
 })

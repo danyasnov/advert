@@ -101,7 +101,7 @@ const PhoneModal: FC<ModalProps> = observer(
         onRequestClose={onClose}
         shouldCloseOnOverlayClick
         ariaHideApp={false}
-        className='absolute rounded-3xl overflow-hidden w-[480px] bg-white inset-x-0 mx-auto top-24 flex outline-none'
+        className='absolute rounded-3xl overflow-hidden w-full s:w-[480px] bg-white inset-x-0 mx-auto top-24 flex outline-none'
         overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
         <div className='flex flex-col w-full p-6'>
           <div className='pb-4 mb-4 flex justify-between'>
