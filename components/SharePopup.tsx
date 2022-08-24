@@ -13,8 +13,9 @@ import Button from './Buttons/Button'
 interface Props {
   userHash: string
   productHash?: string
+  size?: number
 }
-const SharePopup: FC<Props> = ({userHash, productHash}) => {
+const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
   const {t} = useTranslation()
   const [link, setLink] = useState()
   const [show, setShow] = useState(false)
@@ -25,7 +26,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
     setShow(false)
   })
   return (
-    <>
+    <div className='relative'>
       <Button
         id='share'
         onClick={async () => {
@@ -53,15 +54,15 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
           }
         }}
         className='text-greyscale-500 space-x-2'>
-        <Upload size={16} filled />
+        <Upload size={size} filled />
         <span className='text-body-14'>
           {t(loading ? 'LOADING_LO' : 'SHARE')}
         </span>
       </Button>
-      <div className='absolute' ref={ref}>
+      <div className='absolute -right-25 bottom-0 w-[280px]' ref={ref}>
         {show && link && (
           <div
-            className='z-10 flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3 arrow-top'
+            className='z-10 flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3'
             data-test-id='share-popup'>
             <h2 className='text-body-14 text-greyscale-900 font-bold'>
               {t('SHARE')}
@@ -86,7 +87,7 @@ const SharePopup: FC<Props> = ({userHash, productHash}) => {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

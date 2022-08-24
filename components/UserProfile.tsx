@@ -42,9 +42,9 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
-      {/* <div className=''> */}
-      {/*  <SharePopup userHash={user.hash} /> */}
-      {/* </div> */}
+      <div className=''>
+        <SharePopup userHash={user.hash} />
+      </div>
     </div>
   )
 })
