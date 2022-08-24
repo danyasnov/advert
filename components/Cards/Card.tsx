@@ -24,9 +24,10 @@ import CallButton from '../Buttons/CallButton'
 
 interface Props {
   product: AdvertiseListItemModel
+  href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
 }
-const Card: FC<Props> = ({product, setLockParentScroll}) => {
+const Card: FC<Props> = ({product, setLockParentScroll, href}) => {
   const {t} = useTranslation()
   const {
     title,
@@ -101,7 +102,7 @@ const Card: FC<Props> = ({product, setLockParentScroll}) => {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
   return (
-    <LinkWrapper title={title} href={url} key={hash} target='_blank'>
+    <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
         onClick={() =>
           trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})

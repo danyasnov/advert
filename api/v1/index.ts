@@ -222,13 +222,8 @@ export const createUser = async (payload: {
 export const toggleFavorite = async (
   hash: string,
   operation: 'add' | 'delete',
-  token: string,
-  userHash: string,
+  storage: Storage,
 ): Promise<RestResponse<number>> => {
-  const storage = new Storage({
-    token,
-    userHash,
-  })
   const rest = getRest(storage)
   return rest.advertises.toggleFavorite(hash, operation)
 }

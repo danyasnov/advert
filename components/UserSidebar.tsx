@@ -1,54 +1,62 @@
-import {FC, useRef, useState} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import IcShare from 'icons/material/Share.svg'
-import IcClear from 'icons/material/Clear.svg'
-import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
-import {useClickAway} from 'react-use'
+import {Heart2} from 'react-iconly'
+import {useTranslation} from 'next-i18next'
+import IcAds from 'icons/material/Ads.svg'
+import IcCreate from 'icons/material/Create.svg'
+import {useWindowSize} from 'react-use'
 import UserProfile from './UserProfile'
-import {useUserStore} from '../providers/RootStoreProvider'
-import UserAvatar from './UserAvatar'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
-import UserMenuList from './UserMenuList'
+import {PagesType} from '../stores/GeneralStore'
 
 const UserSidebar: FC = observer(() => {
-  const {user} = useUserStore()
-  const ref = useRef(null)
-  const [collapsed, setCollapsed] = useState(true)
-  useClickAway(ref, () => {
-    setCollapsed(true)
-  })
-  const collapsedClassname = 'w-14 p-2'
-  const expandedClassname = 'w-80 px-4 py-6'
+  const {t} = useTranslation()
+  const {width} = useWindowSize()
+
+  const {setActiveUserPage, activeUserPage} = useGeneralStore()
   return (
-    <div
-      ref={ref}
-      className={`bg-white shadow-xl relative ${
-        collapsed ? collapsedClassname : expandedClassname
-      }`}>
-      {!collapsed && (
-        <div className=''>
-          <Button
-            className='absolute top-4 -right-4 w-8 h-8 z-10 bg-white rounded-r-full shadow-2xl'
-            onClick={() => setCollapsed(true)}>
-            <IcClear className='fill-current text-black-c h-7 w-7' />
-          </Button>
-          <UserProfile />
-        </div>
-      )}
-      {collapsed && (
-        <>
-          <Button
-            className='absolute top-3 -right-4 w-8 h-8 bg-white rounded-r-full'
-            onClick={() => setCollapsed(false)}>
-            <IcKeyboardArrowRight className='fill-current text-black-c h-8 w-8' />
-          </Button>
-          <div className='flex flex-col items-center space-y-4'>
-            <UserAvatar url={user.imageUrl} size={10} name={user.name} />
-            <UserMenuList collapsed />
-            {/* <IcShare className='fill-current text-black-c h-6 w-6' /> */}
-          </div>
-        </>
-      )}
+    <div>
+      <UserProfile />
+      <div className='space-y-5 my-10'>
+        <Button
+          className={`${
+            activeUserPage === 'adverts' ||
+            (width >= 768 && activeUserPage === null)
+              ? 'text-primary-500'
+              : 'text-greyscale-900'
+          } space-x-4`}
+          onClick={() => {
+            setActiveUserPage('adverts' as PagesType)
+          }}>
+          <IcAds className='w-7 h-7 fill-current' />
+          <span className='text-body-16'>{t('MY_ADVERTISIMENT')}</span>
+        </Button>
+        <Button
+          onClick={() => {
+            setActiveUserPage('drafts' as PagesType)
+          }}
+          className={`${
+            activeUserPage === 'drafts'
+              ? 'text-primary-500'
+              : 'text-greyscale-900'
+          } space-x-4`}>
+          <IcCreate className='fill-current h-7 w-7' />
+          <span className='text-body-16'>{t('DRAFTS')}</span>
+        </Button>
+        <Button
+          onClick={() => {
+            setActiveUserPage('favorites' as PagesType)
+          }}
+          className={`${
+            activeUserPage === 'favorites'
+              ? 'text-primary-500'
+              : 'text-greyscale-900'
+          } space-x-4`}>
+          <Heart2 filled size={28} />
+          <span className='text-body-16'>{t('FAVORITE')}</span>
+        </Button>
+      </div>
     </div>
   )
 })

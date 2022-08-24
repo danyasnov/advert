@@ -35,13 +35,13 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
   }
   if (isEmpty(items)) return null
   return (
-    <div className='flex min-h-[48px]'>
+    <div className='flex'>
       {items.map((i) => {
         return (
           <Button
             key={i.id}
             id={`location-modal-${i.id}`}
-            className={`text-body-14 pt-6 pb-2 border-b border-shadow-b ${
+            className={`text-body-14 pb-2 border-b border-greyscale-200 ${
               value === i.id
                 ? 'border-b-2 border-primary-500 pb-7px text-primary-500 font-semibold'
                 : 'text-greyscale-500'

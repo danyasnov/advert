@@ -30,7 +30,7 @@ const ProductLike: FC<Props> = ({hash, isFavorite, userHash, state}) => {
           method: 'post',
           data: {
             hash,
-            operation: like ? 'add' : 'delete',
+            operation: like ? 'delete' : 'add',
           },
         }).then(() => {
           setLike(!like)

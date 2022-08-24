@@ -59,7 +59,7 @@ export class GeneralStore implements IGeneralStore {
 
   user
 
-  activeUserPage = 'adverts' as PagesType
+  activeUserPage = null
 
   setActiveUserPage = (page: PagesType): void => {
     this.activeUserPage = page

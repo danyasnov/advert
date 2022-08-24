@@ -2,20 +2,17 @@ import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {isNumber, toNumber} from 'lodash'
-import IcUser from 'icons/material/User.svg'
-import IcClear from 'icons/material/Clear.svg'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
+import {ArrowLeft} from 'react-iconly'
+import {useWindowSize} from 'react-use'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
-import UserProfile from '../UserProfile'
 import Tabs from '../Tabs'
-import UserRatings from '../UserRatings'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import LinkWrapper from '../Buttons/LinkWrapper'
 import Card from '../Cards/Card'
 
 const getTabs = (t: TFunction, sizes) => [
@@ -31,6 +28,7 @@ const UserLayout: FC = observer(() => {
   const [activeTab, setActiveTab] = useState(
     query.activeTab ? toNumber(query.activeTab) : 2,
   )
+  const {width} = useWindowSize()
   const {
     userSale,
     userSold,
@@ -43,10 +41,8 @@ const UserLayout: FC = observer(() => {
     fetchDrafts,
     drafts,
   } = useUserStore()
-  const {setFooterVisibility, userHash, activeUserPage, setActiveUserPage} =
-    useGeneralStore()
+  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
-  const [showProfile, setShowProfile] = useState(false)
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
@@ -71,166 +67,148 @@ const UserLayout: FC = observer(() => {
         description={t('USER_PAGE_DESCRIPTION', {hash: user.hash})}
         user={user}
       />
-      <div className='hidden s:block m:hidden sticky top-0 z-20 mt-px'>
-        <div className='absolute'>
-          <UserSidebar />
-        </div>
-      </div>
-      <div className='bg-white px-4 s:pl-16 m:pl-8 s:px-8 flex relative min-h-2/3'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
-          <aside className='w-72 mt-8 hidden m:block'>
-            <UserProfile />
-          </aside>
-          <main className='m:w-608px l:w-896px relative '>
-            <div className='flex justify-end mt-2 s:hidden'>
-              <Button
-                onClick={() => {
-                  setShowProfile(!showProfile)
-                  setFooterVisibility(showProfile)
-                }}
-                className='w-10 h-10 rounded-full bg-white shadow-xl'>
-                {showProfile ? (
-                  <IcClear className='fill-current text-black-c w-6 h-6' />
-                ) : (
-                  <IcUser className='fill-current text-black-c w-6 h-6' />
-                )}
-              </Button>
-            </div>
-            {showProfile ? (
-              <UserProfile onSelect={() => setShowProfile(false)} />
-            ) : (
-              <>
-                {activeUserPage === 'adverts' && (
-                  <>
+      <div className='py-8 m:flex min-h-1/2'>
+        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
+          <div className='m:w-944px l:w-[1208px] mx-4 s:mx-8 m:mx-0 flex justify-between'>
+            <aside className='hidden s:block s:w-[224px] m:w-[280px] drop-shadow-card'>
+              <UserSidebar />
+            </aside>
+            <main className='w-full s:w-[464px] m:w-[614px] l:w-896px relative drop-shadow-card'>
+              <div className='s:hidden'>
+                {!activeUserPage && <UserSidebar />}
+              </div>
+              {((width >= 768 && activeUserPage === null) ||
+                activeUserPage === 'adverts') && (
+                <div>
+                  <SectionTitle title={t('MY_ADVERTISIMENT')} />
+
+                  <div className='z-10 relative mb-8'>
                     <Tabs
                       items={isCurrentUser ? tabs : tabs.slice(1, 3)}
                       onChange={(id) => setActiveTab(id)}
                       value={activeTab}
                     />
-                    <div className='block h-4 m:h-6' />
-                    {isCurrentUser && activeTab === 1 && (
-                      <ScrollableCardGroup
-                        products={userOnModeration.items}
-                        page={userOnModeration.page}
-                        count={userOnModeration.count}
-                        state={userOnModeration.state}
-                        limit={userOnModeration.limit}
-                        hideNotFoundDescription
-                        fetchProducts={() => {
-                          fetchProducts({
-                            page: userOnModeration.page + 1,
-                            path: 'userOnModeration',
-                          })
-                        }}
-                      />
-                    )}
-                    {activeTab === 2 && (
-                      <ScrollableCardGroup
-                        products={userSale.items}
-                        page={userSale.page}
-                        count={userSale.count}
-                        state={userSale.state}
-                        limit={userSale.limit}
-                        hideNotFoundDescription
-                        fetchProducts={() => {
-                          fetchProducts({
-                            page: userSale.page + 1,
-                            path: 'userSale',
-                          })
-                        }}
-                      />
-                    )}
-                    {activeTab === 3 && (
-                      <ScrollableCardGroup
-                        products={userSold.items}
-                        page={userSold.page}
-                        count={userSold.count}
-                        state={userSold.state}
-                        hideNotFoundDescription
-                        limit={userSold.limit}
-                        fetchProducts={() => {
-                          fetchProducts({
-                            page: userSold.page + 1,
-                            path: 'userSold',
-                          })
-                        }}
-                      />
-                    )}
-                    {isCurrentUser && activeTab === 4 && (
-                      <ScrollableCardGroup
-                        products={userArchive.items}
-                        page={userArchive.page}
-                        count={userArchive.count}
-                        state={userArchive.state}
-                        hideNotFoundDescription
-                        limit={userArchive.limit}
-                        fetchProducts={() => {
-                          fetchProducts({
-                            page: userArchive.page + 1,
-                            path: 'userArchive',
-                          })
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-                {activeUserPage === 'reviews' && (
-                  <div className='mt-8'>
-                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
-                      {t('REVIEWS')}
-                    </h1>
-                    <UserRatings />
                   </div>
-                )}
-                {activeUserPage === 'favorites' && (
-                  <div className='mt-8'>
-                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
-                      {t('FAVORITE')}
-                    </h1>
+                  {isCurrentUser && activeTab === 1 && (
                     <ScrollableCardGroup
-                      products={userFavorite.items}
-                      page={userFavorite.page}
-                      count={userFavorite.count}
-                      state={userFavorite.state}
+                      products={userOnModeration.items}
+                      page={userOnModeration.page}
+                      count={userOnModeration.count}
+                      state={userOnModeration.state}
+                      limit={userOnModeration.limit}
                       hideNotFoundDescription
-                      limit={userFavorite.limit}
                       fetchProducts={() => {
                         fetchProducts({
-                          page: userFavorite.page + 1,
-                          path: 'userFavorite',
+                          page: userOnModeration.page + 1,
+                          path: 'userOnModeration',
                         })
                       }}
                     />
-                  </div>
-                )}
-                {activeUserPage === 'drafts' && (
-                  <div className='mt-8'>
-                    <h1 className='text-body-14 text-greyscale-900 font-bold mb-6'>
-                      {t('DRAFTS')}
-                    </h1>
-                    <div className='flex flex-col m:items-start relative'>
-                      <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
-                        {drafts.map((d) => (
-                          <LinkWrapper
-                            title={d.hash}
-                            href={`/advert/create/${d.hash}`}
-                            key={d.hash}
-                            target='_blank'>
-                            <Card
-                              product={d as unknown as AdvertiseListItemModel}
-                            />
-                          </LinkWrapper>
-                        ))}
-                      </div>
+                  )}
+                  {activeTab === 2 && (
+                    <ScrollableCardGroup
+                      products={userSale.items}
+                      page={userSale.page}
+                      count={userSale.count}
+                      state={userSale.state}
+                      limit={userSale.limit}
+                      hideNotFoundDescription
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSale.page + 1,
+                          path: 'userSale',
+                        })
+                      }}
+                    />
+                  )}
+                  {activeTab === 3 && (
+                    <ScrollableCardGroup
+                      products={userSold.items}
+                      page={userSold.page}
+                      count={userSold.count}
+                      state={userSold.state}
+                      hideNotFoundDescription
+                      limit={userSold.limit}
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSold.page + 1,
+                          path: 'userSold',
+                        })
+                      }}
+                    />
+                  )}
+                  {isCurrentUser && activeTab === 4 && (
+                    <ScrollableCardGroup
+                      products={userArchive.items}
+                      page={userArchive.page}
+                      count={userArchive.count}
+                      state={userArchive.state}
+                      hideNotFoundDescription
+                      limit={userArchive.limit}
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userArchive.page + 1,
+                          path: 'userArchive',
+                        })
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+              {activeUserPage === 'drafts' && (
+                <div>
+                  <SectionTitle title={t('DRAFTS')} />
+
+                  <div className='flex flex-col m:items-start relative'>
+                    <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
+                      {drafts.map((d) => (
+                        <Card
+                          product={d as unknown as AdvertiseListItemModel}
+                          href={`/advert/create/${d.hash}`}
+                        />
+                      ))}
                     </div>
                   </div>
-                )}
-              </>
-            )}
-          </main>
+                </div>
+              )}
+              {activeUserPage === 'favorites' && (
+                <div>
+                  <SectionTitle title={t('FAVORITE')} />
+                  <ScrollableCardGroup
+                    products={userFavorite.items}
+                    page={userFavorite.page}
+                    count={userFavorite.count}
+                    state={userFavorite.state}
+                    hideNotFoundDescription
+                    limit={userFavorite.limit}
+                    fetchProducts={() => {
+                      fetchProducts({
+                        page: userFavorite.page + 1,
+                        path: 'userFavorite',
+                      })
+                    }}
+                  />
+                </div>
+              )}
+            </main>
+          </div>
         </div>
       </div>
     </HeaderFooterWrapper>
+  )
+})
+
+const SectionTitle: FC<{title: string}> = observer(({title}) => {
+  const {setActiveUserPage} = useGeneralStore()
+  const className = 'text-h-5 font-bold text-greyscale-900'
+  return (
+    <div className='mb-8 z-10 relative'>
+      <Button onClick={() => setActiveUserPage(null)} className='s:hidden'>
+        <ArrowLeft size={24} />
+        <span className={`${className} ml-2`}>{title}</span>
+      </Button>
+      <span className={`${className} hidden s:block`}>{title}</span>
+    </div>
   )
 })
 
