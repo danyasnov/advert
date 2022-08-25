@@ -17,6 +17,7 @@ interface Props {
   disableScroll?: boolean
   enableFourthColumnForM?: boolean
   enableTwoColumnsForS?: boolean
+  disableVipWidth?: boolean
   fetchProducts: () => void
 }
 const ScrollableCardGroup: FC<Props> = ({
@@ -28,6 +29,7 @@ const ScrollableCardGroup: FC<Props> = ({
   disableScroll,
   enableFourthColumnForM,
   enableTwoColumnsForS,
+  disableVipWidth,
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
 }) => {
@@ -63,8 +65,8 @@ const ScrollableCardGroup: FC<Props> = ({
             enableTwoColumnsForS ? 's:grid-cols-2' : ''
           } ${enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'}`}>
           {products.map((p) => (
-            <div className={p.isVip ? 'col-span-2' : ''}>
-              <Card product={p} />
+            <div className={p.isVip && !disableVipWidth ? 'col-span-2' : ''}>
+              <Card product={p} disableVipWidth={disableVipWidth} />
             </div>
           ))}
         </div>
