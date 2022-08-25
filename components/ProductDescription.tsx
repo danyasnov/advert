@@ -17,7 +17,7 @@ import SharePopup from './SharePopup'
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
   const {userHash} = useGeneralStore()
-
+  const {t} = useTranslation()
   if (!product) return null
   const {advert, owner} = product
   const {favoriteCounter, views, dateUpdated} = advert
@@ -34,12 +34,14 @@ const ProductDescription: FC = observer(() => {
         </div>
         <div className='flex items-center space-x-3'>
           <IcVisibility className='fill-current text-greyscale-500 w-6 h-6' />
-          <span className='text-body-12 text-greyscale-900'>{views}</span>
+          <span className='text-body-12 text-greyscale-900'>
+            {t('VIEWED', {count: views})}
+          </span>
         </div>
         <div className='flex items-center space-x-3 text-greyscale-500'>
           <Heart size={16} filled />
           <span className='text-greyscale-900 text-body-12'>
-            {favoriteCounter}
+            {t('FAVORITED', {count: favoriteCounter})}
           </span>
         </div>
       </div>
