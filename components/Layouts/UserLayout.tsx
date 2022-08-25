@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber, toNumber} from 'lodash'
+import {toNumber} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
@@ -15,11 +15,11 @@ import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
 
-const getTabs = (t: TFunction, sizes) => [
-  {title: `${t('MODERATION')} ${sizes[1]}`, id: 1},
-  {title: `${t('SALE')} ${sizes[2]}`, id: 2},
-  {title: `${t('SOLD')} ${sizes[3]}`, id: 3},
-  {title: `${t('ARCHIVE')} ${sizes[4]}`, id: 4},
+const getTabs = (t: TFunction) => [
+  {title: `${t('MODERATION')}`, id: 1},
+  {title: `${t('SALE')}`, id: 2},
+  {title: `${t('SOLD')}`, id: 3},
+  {title: `${t('ARCHIVE')}`, id: 4},
 ]
 
 const UserLayout: FC = observer(() => {
@@ -54,12 +54,7 @@ const UserLayout: FC = observer(() => {
     }
     return () => setActiveUserPage('adverts')
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
-  const tabs = getTabs(t, {
-    1: isNumber(userOnModeration.count) ? userOnModeration.count : '',
-    2: userSale.count,
-    3: isNumber(userSold.count) ? userSold.count : '',
-    4: isNumber(userArchive.count) ? userArchive.count : '',
-  })
+  const tabs = getTabs(t)
   return (
     <HeaderFooterWrapper>
       <MetaTags
