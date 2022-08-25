@@ -90,6 +90,7 @@ const UserLayout: FC = observer(() => {
                       page={userOnModeration.page}
                       count={userOnModeration.count}
                       state={userOnModeration.state}
+                      enableTwoColumnsForS
                       limit={userOnModeration.limit}
                       hideNotFoundDescription
                       fetchProducts={() => {
@@ -107,6 +108,7 @@ const UserLayout: FC = observer(() => {
                       count={userSale.count}
                       state={userSale.state}
                       limit={userSale.limit}
+                      enableTwoColumnsForS
                       hideNotFoundDescription
                       fetchProducts={() => {
                         fetchProducts({
@@ -123,6 +125,7 @@ const UserLayout: FC = observer(() => {
                       count={userSold.count}
                       state={userSold.state}
                       hideNotFoundDescription
+                      enableTwoColumnsForS
                       limit={userSold.limit}
                       fetchProducts={() => {
                         fetchProducts({
@@ -139,6 +142,7 @@ const UserLayout: FC = observer(() => {
                       count={userArchive.count}
                       state={userArchive.state}
                       hideNotFoundDescription
+                      enableTwoColumnsForS
                       limit={userArchive.limit}
                       fetchProducts={() => {
                         fetchProducts({
@@ -175,6 +179,7 @@ const UserLayout: FC = observer(() => {
                     count={userFavorite.count}
                     state={userFavorite.state}
                     hideNotFoundDescription
+                    enableTwoColumnsForS
                     limit={userFavorite.limit}
                     fetchProducts={() => {
                       fetchProducts({
