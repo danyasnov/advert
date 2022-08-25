@@ -23,8 +23,8 @@ const ProductDescription: FC = observer(() => {
   const {favoriteCounter, views, dateUpdated} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
-      <div className='flex space-x-7 font-normal mb-6'>
-        <div className='text-greyscale-500 flex space-x-3'>
+      <div className='flex space-x-1 s:space-x-7 font-normal mb-6 text-center'>
+        <div className='text-greyscale-500 flex space-x-1 s:space-x-3'>
           <Calendar filled />
           <span
             suppressHydrationWarning
@@ -32,13 +32,13 @@ const ProductDescription: FC = observer(() => {
             {unixToDateTime(dateUpdated)}
           </span>
         </div>
-        <div className='flex items-center space-x-3'>
+        <div className='flex items-center space-x-1 s:space-x-3'>
           <IcVisibility className='fill-current text-greyscale-500 w-6 h-6' />
           <span className='text-body-12 text-greyscale-900'>
             {t('VIEWED', {count: views})}
           </span>
         </div>
-        <div className='flex items-center space-x-3 text-greyscale-500'>
+        <div className='flex items-center space-x-1 s:space-x-3 text-greyscale-500'>
           <Heart size={16} filled />
           <span className='text-greyscale-900 text-body-12'>
             {t('FAVORITED', {count: favoriteCounter})}

@@ -26,15 +26,9 @@ const ProductHeader: FC = observer(() => {
     product.advert.rootCategoryId,
     t,
   )
-  console.log(
-    'path',
-    path.map((p) => toJS(p)),
-    locationCodes,
-  )
   if (!product) return null
   const {advert, owner} = product
   const isUserAdv = userHash === owner.hash
-  const isFree = advert.price === '0'
   return (
     <div className='mb-6'>
       {advert.state === 'sold' && (
@@ -49,10 +43,10 @@ const ProductHeader: FC = observer(() => {
         </div>
       )}
       <div className='flex justify-between w-full items-center'>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           {path.map((p, index) => {
             const itemClassName =
-              'text-body-14 font-normal text-greyscale-900 last:font-bold last:text-primary-500 whitespace-nowrap mr-1 last:mr-0'
+              'text-body-14 font-normal text-greyscale-900 last:font-bold last:text-primary-500 whitespace-nowrap mr-1 last:mr-0 '
 
             return (
               <LinkWrapper
