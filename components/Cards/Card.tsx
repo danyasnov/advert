@@ -15,19 +15,21 @@ import {isEmpty} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
 import {Call, Star} from 'react-iconly'
+import {observer} from 'mobx-react-lite'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
 import {trackSingle} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 interface Props {
   product: AdvertiseListItemModel
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
 }
-const Card: FC<Props> = ({product, setLockParentScroll, href}) => {
+const Card: FC<Props> = observer(({product, setLockParentScroll, href}) => {
   const {t} = useTranslation()
   const {
     title,
@@ -44,6 +46,7 @@ const Card: FC<Props> = ({product, setLockParentScroll, href}) => {
     isVip,
     showCallButton,
   } = product
+  const {userHash} = useGeneralStore()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
     loop: true,
@@ -202,7 +205,7 @@ const Card: FC<Props> = ({product, setLockParentScroll, href}) => {
             <span className='text-body-14 text-greyscale-600'>
               {location?.distance && location.distance}
             </span>
-            {isVip && showCallButton ? (
+            {isVip && showCallButton && userHash !== owner.hash ? (
               <CallButton
                 className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'
                 icon={<Call size={20} filled />}
@@ -218,5 +221,5 @@ const Card: FC<Props> = ({product, setLockParentScroll, href}) => {
       </div>
     </LinkWrapper>
   )
-}
+})
 export default Card
