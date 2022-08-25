@@ -28,12 +28,7 @@ const ProductLike: FC<Props> = ({
   const [show, setShow] = useState(false)
   useEffect(() => {
     const cookies: SerializedCookiesState = parseCookies()
-    console.log(
-      "cookies.hash && cookies.hash !== userHash && state !== 'sold'",
-      cookies.hash,
-      userHash,
-      state !== 'sold',
-    )
+
     setShow(cookies.hash && cookies.hash !== userHash && state !== 'sold')
   }, [state, userHash])
   if (!show) return null

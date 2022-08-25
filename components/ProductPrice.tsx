@@ -11,7 +11,7 @@ const ProductPrice: FC = observer(() => {
 
   return (
     <div className='flex flex-col'>
-      <span className='text-h-3 font-bold text-greyscale-900 mb-2'>
+      <span className='text-body-18 font-bold text-greyscale-900 mb-2'>
         {advert.title}
       </span>
       <span
