@@ -4,18 +4,22 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import {isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
 import {Calendar, Heart} from 'react-iconly'
-import {useProductsStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
 
 import ProductPrice from './ProductPrice'
 import ProductCommunication from './ProductCommunication'
+import ProductLike from './ProductLike'
+import SharePopup from './SharePopup'
 
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
+  const {userHash} = useGeneralStore()
+
   if (!product) return null
-  const {advert} = product
+  const {advert, owner} = product
   const {favoriteCounter, views, dateUpdated} = advert
   return (
     <div className='mt-4 mb-4 flex flex-col'>
@@ -56,6 +60,16 @@ const ProductDescription: FC = observer(() => {
       </div>
       <div className='s:hidden'>
         <UserCard />
+        <div className='flex flex-col items-center space-y-5 mt-6 '>
+          <ProductLike
+            userHash={owner.hash}
+            isFavorite={advert.isFavorite}
+            hash={advert.hash}
+            state={advert.state}
+            type='page'
+          />
+          <SharePopup userHash={userHash} productHash={advert.hash} size={24} />
+        </div>
       </div>
     </div>
   )
