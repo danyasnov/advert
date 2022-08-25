@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Heart2} from 'react-iconly'
+import {Heart2, Logout} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import IcAds from 'icons/material/Ads.svg'
 import IcCreate from 'icons/material/Create.svg'
@@ -9,12 +9,12 @@ import UserProfile from './UserProfile'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {PagesType} from '../stores/GeneralStore'
+import LogoutButton from './Auth/LogoutButton'
 
 const UserSidebar: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
-
-  const {setActiveUserPage, activeUserPage} = useGeneralStore()
+  const {setActiveUserPage, activeUserPage, user} = useGeneralStore()
   return (
     <div>
       <UserProfile />
@@ -56,6 +56,14 @@ const UserSidebar: FC = observer(() => {
           <Heart2 filled size={28} />
           <span className='text-body-16'>{t('FAVORITE')}</span>
         </Button>
+        {user && (
+          <LogoutButton className='text-greyscale-500 space-x-4'>
+            <>
+              <Logout filled size={28} />
+              <span className='text-body-16'>{t('EXIT')}</span>
+            </>
+          </LogoutButton>
+        )}
       </div>
     </div>
   )

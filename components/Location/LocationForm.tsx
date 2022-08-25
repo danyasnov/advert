@@ -24,7 +24,7 @@ const LocationForm: FC<Props> = ({onClose}) => {
       className='flex flex-col w-full bg-white z-10 left-0 h-full'
       data-test-id='location-modal-form'>
       <div className='h-full flex flex-col'>
-        <div className='px-4'>
+        <div className='px-4 pt-4'>
           <Tabs
             items={tabs}
             value={activeTab}

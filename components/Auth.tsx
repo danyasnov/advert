@@ -2,17 +2,15 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {useTranslation} from 'next-i18next'
-import IcLogin from 'icons/material/Login.svg'
 import {useRouter} from 'next/router'
 import {useClickAway, useWindowSize} from 'react-use'
-import localforage from 'localforage'
 import IcProfile from 'icons/material/Profile.svg'
 import {SerializedCookiesState} from '../types'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
 import Button from './Buttons/Button'
 import UserAvatar from './UserAvatar'
-import {destroyCookiesWrapper} from '../helpers'
+import LogoutButton from './Auth/LogoutButton'
 
 interface Props {
   onLogin?: () => void
@@ -27,8 +25,9 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
   const [showPopup, setShowPopup] = useState(false)
   const ref = useRef(null)
   useClickAway(ref, () => {
-    setShowPopup(false)
+    if (!showLogout) setShowPopup(false)
   })
+  const [showLogout, setShowLogout] = useState(false)
   const {width} = useWindowSize()
   const processUser = async (hash) => {
     const userData = await makeRequest({
@@ -54,20 +53,9 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
         router.push(`/user/${user.hash}`)
       },
     },
-    {
-      title: t('EXIT'),
-      onClick: () => {
-        destroyCookiesWrapper('hash')
-        destroyCookiesWrapper('promo')
-        destroyCookiesWrapper('authType')
-        destroyCookiesWrapper('aup')
-        destroyCookiesWrapper('authNewRefreshToken')
-        destroyCookiesWrapper('authNewToken')
-        localforage.clear()
-        router.reload()
-      },
-    },
   ]
+  const buttonClassName =
+    'px-5 text-greyscale-900 hover:text-primary-500 hover:font-bold w-full rounded-lg'
   if (hide) return null
   return (
     <div ref={ref}>
@@ -93,7 +81,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
               <div className='space-y-5 py-4'>
                 {options.map(({title, onClick}) => (
                   <Button
-                    className='px-5 text-greyscale-900 hover:text-primary-500 hover:font-bold w-full rounded-lg'
+                    className={buttonClassName}
                     onClick={() => {
                       onClick()
                       setShowPopup(false)
@@ -103,6 +91,20 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
                     </span>
                   </Button>
                 ))}
+
+                <LogoutButton
+                  className={buttonClassName}
+                  onClose={() => {
+                    setShowPopup(false)
+                    setShowLogout(false)
+                  }}
+                  onOpen={() => {
+                    setShowLogout(true)
+                  }}>
+                  <span className='w-full text-left text-body-12'>
+                    {t('EXIT')}
+                  </span>
+                </LogoutButton>
               </div>
             </div>
           )}
