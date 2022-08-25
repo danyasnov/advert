@@ -93,7 +93,37 @@ const PhoneModal: FC<ModalProps> = observer(
   ({isOpen, onClose, user, displayAllowed, phone}) => {
     const {t} = useTranslation()
     useLockBodyScroll()
-    const {setShowLogin} = useGeneralStore()
+    const {setShowLogin, user: currentUser} = useGeneralStore()
+
+    let body
+    if (displayAllowed) {
+      body = (
+        <div className='flex items-center space-x-6'>
+          <UserAvatar url={user.imageUrl} size={22} name={user.name} />
+          <div className='flex flex-col space-y-2'>
+            <span className='text-h-5 font-bold text-greyscale-900'>
+              {user.name}
+            </span>
+            <span className='text-h-5 font-bold text-primary-500'>
+              {`+${phone}`}
+            </span>
+          </div>
+        </div>
+      )
+    } else if (currentUser) {
+      body = (
+        <div className='text-body-14 text=greyscale-900 space-y-2 font-normal flex flex-col'>
+          <span>{t('PHONE_NUMBER_SHOW_LIMIT_REGISTERED')}</span>
+        </div>
+      )
+    } else {
+      body = (
+        <div className='text-body-14 text=greyscale-900 space-y-2 font-normal flex flex-col'>
+          <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED')}</span>
+          <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT')}</span>
+        </div>
+      )
+    }
 
     return (
       <ReactModal
@@ -112,40 +142,25 @@ const PhoneModal: FC<ModalProps> = observer(
               <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
             </Button>
           </div>
-          {displayAllowed ? (
-            <div className='flex items-center space-x-6'>
-              <UserAvatar url={user.imageUrl} size={22} name={user.name} />
-              <div className='flex flex-col space-y-2'>
-                <span className='text-h-5 font-bold text-greyscale-900'>
-                  {user.name}
-                </span>
-                <span className='text-h-5 font-bold text-primary-500'>
-                  {`+${phone}`}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className='text-body-14 text=greyscale-900 space-y-2 font-normal flex flex-col'>
-              <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED')}</span>
-              <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT')}</span>
-            </div>
-          )}
+          {body}
           <div className='flex mt-8 w-full space-x-2'>
             <SecondaryButton onClick={onClose} className='w-full'>
               {t('CLOSE')}
             </SecondaryButton>
-            <PrimaryButton
-              onClick={() => {
-                if (displayAllowed) {
-                  navigator.clipboard.writeText(`+${phone}`)
-                } else {
-                  setShowLogin(true)
-                  onClose()
-                }
-              }}
-              className='w-full'>
-              {t(displayAllowed ? 'COPY_PHONE_NUMBER' : 'LOG_IN')}
-            </PrimaryButton>
+            {(displayAllowed || (!displayAllowed && !currentUser)) && (
+              <PrimaryButton
+                onClick={() => {
+                  if (displayAllowed) {
+                    navigator.clipboard.writeText(`+${phone}`)
+                  } else {
+                    setShowLogin(true)
+                    onClose()
+                  }
+                }}
+                className='w-full'>
+                {t(displayAllowed ? 'COPY_PHONE_NUMBER' : 'LOG_IN')}
+              </PrimaryButton>
+            )}
           </div>
         </div>
       </ReactModal>
