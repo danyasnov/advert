@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {AdvertiseDetail} from 'front-api'
 import {RemoveFromSaleType} from 'front-api/src/models'
-import {Delete, Edit} from 'react-iconly'
+import {ArrowLeftSquare, Delete, Edit, TickSquare} from 'react-iconly'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import DeactivateAdvModal from './DeactivateAdvModal'
@@ -43,6 +43,7 @@ const ProductMenu: FC<Props> = ({product}) => {
     }
     const publish = {
       title: t('PUBLISH'),
+      icon: <TickSquare size={16} filled />,
       onClick: () => {
         makeRequest({
           url: `/api/publish-adv`,
@@ -57,6 +58,7 @@ const ProductMenu: FC<Props> = ({product}) => {
     }
     const deactivate = {
       title: t('REMOVE_FROM_SALE'),
+      icon: <ArrowLeftSquare size={16} filled />,
       onClick: () => {
         setShowDeactivateModal(true)
       },
