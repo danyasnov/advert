@@ -1496,6 +1496,7 @@
   "LOAD_MORE": "Загрузить больше",
   "LOG_IN_ICON": "Вход",
   "MANY_PHOTOS": "{{count}} фото",
+  "MORE_PHOTOS": "ещё {{count}} фото",
   "MOST_POPULAR": "Самые популярные",
   "MY_ADVERTISIMENT": "Мои объявления",
   "NOT_MORE_2000_SYMBOLS": "Не более 2000 символов",

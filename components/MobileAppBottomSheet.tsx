@@ -29,6 +29,7 @@ const MobileAppBottomSheet: FC = observer(() => {
     }
     // @ts-ignore
   }, [])
+  return null
   return (
     <MobileView className='fixed inset-x-0 bottom-0 w-94'>
       <BottomSheet
