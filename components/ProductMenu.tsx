@@ -5,8 +5,8 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {AdvertiseDetail} from 'front-api'
-import {RemoveFromSaleType} from 'front-api/src/models/index'
-import {toJS} from 'mobx'
+import {RemoveFromSaleType} from 'front-api/src/models'
+import {Delete, Edit} from 'react-iconly'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import DeactivateAdvModal from './DeactivateAdvModal'
@@ -28,6 +28,7 @@ const ProductMenu: FC<Props> = ({product}) => {
   const getOptions = () => {
     const remove = {
       title: t('REMOVE'),
+      icon: <Delete size={16} filled />,
       onClick: () => {
         makeRequest({
           url: `/api/delete-adv`,
@@ -62,6 +63,7 @@ const ProductMenu: FC<Props> = ({product}) => {
     }
     const edit = {
       title: t('EDIT_AD'),
+      icon: <Edit size={16} filled />,
       onClick: () => {
         router.push(`/advert/edit/${advert.hash}`)
       },
@@ -88,7 +90,6 @@ const ProductMenu: FC<Props> = ({product}) => {
   }
 
   const options = getOptions()
-  console.log(toJS(advert))
   if (isEmpty(options)) return null
   return (
     <>
@@ -101,16 +102,19 @@ const ProductMenu: FC<Props> = ({product}) => {
           />
           {showPopup && (
             <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
-              {options.map(({title, onClick}, index) => (
+              {options.map(({title, onClick, icon}, index) => (
                 <Button
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  className='px-4 py-3 text-greyscale-900 hover:bg-brand-a2 w-full text-body-14'
+                  className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
                   onClick={() => {
                     onClick()
                     setShowPopup(false)
                   }}>
-                  {title}
+                  <div className='flex items-center justify-start w-full'>
+                    <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
+                    <span className='truncate'>{title}</span>
+                  </div>
                 </Button>
               ))}
             </div>
