@@ -11,7 +11,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
 import IcArrowRight from 'icons/material/ArrowRight.svg'
 import {useMouseHovered} from 'react-use'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
 import {Call, Star} from 'react-iconly'
@@ -39,7 +39,6 @@ const Card: FC<Props> = ({
   const {t} = useTranslation()
   const {
     title,
-    images,
     price,
     location,
     state,
@@ -52,6 +51,12 @@ const Card: FC<Props> = ({
     isVip,
     showCallButton,
   } = product
+  const imagesCount = size(product.images)
+
+  const [images] = useState(
+    imagesCount > 4 ? product.images.slice(0, 4) : product.images,
+  )
+
   const [hideConnect, setHideConnect] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
@@ -173,9 +178,11 @@ const Card: FC<Props> = ({
                     {/* /> */}
                   </div>
                 ) : (
-                  images.map((i) => (
+                  images.map((i, index) => (
                     <div key={i} className='relative min-w-full'>
                       <CardImage
+                        isLast={index === images.length - 1}
+                        morePhotosCount={imagesCount > 4 ? imagesCount - 4 : 0}
                         url={i}
                         alt={title}
                         isVip={isVip && !disableVipWidth}
