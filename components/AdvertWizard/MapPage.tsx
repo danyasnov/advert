@@ -221,25 +221,12 @@ const MapPage: FC = () => {
 
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex flex-col s:hidden'>
-        <div className='flex items-center p-4'>
-          <Button
-            onClick={() => {
-              push('/')
-            }}>
-            <IcClose className='w-5 h-5 fill-current text-nc-icon mr-4' />
-          </Button>
-          <h2 className='text-nc-title font-medium text-body-14'>
-            {t('NEW_AD')}
-          </h2>
-        </div>
-      </div>
       <div className='flex flex-col w-full h-full'>
         <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
         <span className='text-primary-500-text text-body-16 mb-6 hidden s:flex'>
-          {t('INSPECTION_PLACE_TIP')}
+          {t('INSPECTION_PLACE_INFO')}
         </span>
 
         <div className='relative min-h-full w-full mb-24'>
@@ -274,11 +261,25 @@ const MapPage: FC = () => {
                 defaultZoom={zoomRadiusMap[radius]}
                 onGoogleApiLoaded={onGoogleApiLoaded}
               />
-              <div className='absolute bottom-0 s:bottom-6 inset-x-0 s:left-0 s:inset-x-auto s:w-full'>
+              <div className='s:hidden absolute top-10 inset-x-0 w-full px-4'>
+                <MobileMapSearch
+                  label={label}
+                  handleSelectLocation={handleSelectLocation}
+                  radius={radius}
+                  setRadius={onChangeRadius}
+                />
+              </div>
+              <div className='absolute bottom-6 inset-x-0 s:left-0 s:inset-x-auto s:w-full'>
                 <div className='flex items-center flex-col mx-2 s:w-full'>
                   <div className='w-full flex flex-col mr-4 s:flex-row s:justify-between s:items-center'>
+                    {/* <MapRadiusSelector */}
+                    {/*  radius={radius} */}
+                    {/*  setRadius={onChangeRadius} */}
+                    {/* /> */}
+                  </div>
+                  <div className='mx-auto w-full flex flex-col'>
                     <Button
-                      className='bg-white w-10 h-10 s:w-12 s:h-12 rounded-full self-end mb-4 s:mb-0 s:order-last s:mr-2'
+                      className='bg-white w-11 h-11 s:w-12 s:h-12 rounded-full self-end mb-4 s:mb-0 s:order-last s:mr-2'
                       onClick={async () => {
                         try {
                           const center = await getPosition()
@@ -288,19 +289,13 @@ const MapPage: FC = () => {
                           console.error(e)
                         }
                       }}>
-                      <IcMyLocation className='fill-current text-nc-icon w-6 h-6' />
+                      <IcMyLocation className='fill-current text-primary-500 w-6 h-6' />
                     </Button>
-                    <MapRadiusSelector
-                      radius={radius}
-                      setRadius={onChangeRadius}
-                    />
-                  </div>
-                  <div className='s:hidden mt-2'>
-                    <MobileMapSearch
-                      label={label}
-                      onSubmit={onSubmit}
-                      handleSelectLocation={handleSelectLocation}
-                    />
+                    <Button
+                      className='w-full bg-primary-500 rounded-full text-body-16 py-4 text-white font-bold s:hidden'
+                      onClick={onSubmit}>
+                      {t('CONTINUE')}
+                    </Button>
                   </div>
                 </div>
               </div>

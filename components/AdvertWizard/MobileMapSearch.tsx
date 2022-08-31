@@ -1,12 +1,11 @@
-import {FC, useCallback, useState} from 'react'
-import {useTranslation} from 'next-i18next'
-import {BottomSheet} from 'react-spring-bottom-sheet'
-import {debounce} from 'lodash'
-import IcSearch from 'icons/material/Search2.svg'
-import IcClear from 'icons/material/Clear.svg'
-import PrimaryButton from '../Buttons/PrimaryButton'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {debounce, isEmpty} from 'lodash'
+import {useRouter} from 'next/router'
+import {ArrowLeft, Search} from 'react-iconly'
+import {TypeOfDegradation} from 'front-api/src/models'
 import {makeRequest} from '../../api'
 import Button from '../Buttons/Button'
+import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
 
 interface Props {
   handleSelectLocation: (item: {
@@ -14,108 +13,94 @@ interface Props {
     geometry: {location: {lat: number; lng: number}}
   }) => void
   label: string
-  onSubmit: () => void
+  radius: number
+  setRadius: (radius: number, key: TypeOfDegradation) => void
 }
 
 const MobileMapSearch: FC<Props> = ({
   label,
   handleSelectLocation,
-  onSubmit,
+  radius,
+  setRadius,
 }) => {
-  const [open, setOpen] = useState(false)
+  const {push} = useRouter()
   const [searchResults, setSearchResults] = useState([])
   const [search, setSearch] = useState(label)
-  const {t} = useTranslation()
-  const onInputValueChange = useCallback(
-    debounce(({target}) => {
-      if (!target.value) {
-        setSearchResults([])
-      } else {
-        makeRequest({
-          method: 'get',
-          url: '/api/location-text-search',
-          params: {query: target.value},
-        }).then((res) => {
-          setSearchResults(
-            res.data.results
-              .map((l) => ({
-                label: l.formatted_address,
-                value: l.place_id,
-                geometry: l.geometry,
-              }))
-              .slice(0, 10),
-          )
-        })
-      }
-    }, 2000),
-    [],
-  )
 
-  const onClose = () => {
-    setOpen(false)
+  useEffect(() => {
     setSearch(label)
-  }
+  }, [label])
+  const onSearch = useCallback((text) => {
+    if (!text) {
+      setSearchResults([])
+    } else {
+      makeRequest({
+        method: 'get',
+        url: '/api/location-text-search',
+        params: {query: text},
+      }).then((res) => {
+        setSearchResults(
+          res.data.results
+            .map((l) => ({
+              label: l.formatted_address,
+              value: l.place_id,
+              geometry: l.geometry,
+            }))
+            .slice(0, 10),
+        )
+      })
+    }
+  }, [])
+  const divider = <div className='border-greyscale-200 border-b w-full' />
   return (
-    <div className='bg-white rounded-2xl w-full flex flex-col items-center px-2'>
-      <h3 className='text-h-5 text-h-6 font-medium	mb-2 mt-4'>
-        {t('INSPECTION_PLACE')}
-      </h3>
-      <span className='text-primary-500-text text-body-12 mb-3'>
-        {t('INSPECTION_PLACE_TIP')}
-      </span>
-      <input
-        value={label}
-        onClick={() => setOpen(true)}
-        className='h-12 rounded-xl border border-nc-border py-3 px-4 w-full mb-2'
-      />
-      <BottomSheet
-        open={open}
-        onDismiss={() => {
-          onClose()
-        }}
-        snapPoints={({maxHeight}) => maxHeight - 40}>
-        <div className='flex flex-col items-center justify-center w-full px-4'>
-          <h3 className='text-h-6 font-medium text-nc-title mb-6'>
-            {t('INSPECTION_PLACE')}
-          </h3>
-          <div className='relative w-full'>
-            <input
-              value={search}
-              onChange={(e) => {
-                onInputValueChange(e)
-                setSearch(e.target.value)
-              }}
-              className='h-12 rounded-xl border border-nc-border py-3 pl-4 pr-8 w-full mb-2'
-            />
-            {!!search && (
-              <Button
-                className='absolute right-2 bottom-5'
-                onClick={() => setSearch('')}>
-                <IcClear className='fill-current text-black-c w-6 h-6 ' />
-              </Button>
-            )}
-          </div>
-          {searchResults.map((r) => (
+    <div className='bg-white rounded-xl w-full flex flex-col items-center pt-4'>
+      <div className='flex justify-center pb-3 px-4  w-full space-x-3'>
+        <Button
+          onClick={() => {
+            push('/')
+          }}>
+          <ArrowLeft size={20} />
+        </Button>
+        <input
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value)
+          }}
+          className='font-normal text-greyscale-800 text-body-16 outline-none w-full'
+        />
+        <Button
+          onClick={() => {
+            onSearch(search)
+          }}>
+          <Search size={20} />
+        </Button>
+      </div>
+      <div className='w-full px-4'>{divider}</div>
+      <div className='w-full'>
+        {searchResults.map((r, index) => (
+          <div className='px-4'>
             <Button
-              className='h-12 w-full'
+              className='w-full py-4'
               onClick={() => {
                 handleSelectLocation(r)
-                onClose()
+                setSearch(label)
                 setSearchResults([])
               }}>
-              <div className='flex w-full items-center'>
-                <IcSearch className='w-5 h-5 fill-current text-nc-icon mr-2' />
-                <span className='truncate w-full text-left text-body-16 text-nc-title'>
+              <div className='flex w-full items-center justify-start'>
+                <span className='truncate w-full text-left text-body-14 text-greyscale-900'>
                   {r.label}
                 </span>
               </div>
             </Button>
-          ))}
-        </div>
-      </BottomSheet>
-      <PrimaryButton className='w-full mb-5' onClick={onSubmit}>
-        {t('CONTINUE')}
-      </PrimaryButton>
+            {index + 1 !== searchResults.length && divider}
+          </div>
+        ))}
+        {isEmpty(searchResults) && (
+          <div className='flex justify-center pt-3 pb-4'>
+            <InlineMapRadiusSelector radius={radius} setRadius={setRadius} />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
