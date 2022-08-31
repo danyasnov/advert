@@ -3,8 +3,10 @@ import {FC, useCallback, useEffect, useState} from 'react'
 import {useCombobox} from 'downshift'
 import {debounce} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import IcMyLocation from 'icons/material/MyLocation.svg'
+import {Send} from 'react-iconly'
+import {TypeOfDegradation} from 'front-api/src/models'
 import {makeRequest} from '../../api'
+import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
 
 interface Props {
   handleSelectLocation: (item: {
@@ -12,9 +14,16 @@ interface Props {
     geometry: {location: {lat: number; lng: number}}
   }) => void
   label: string
+  radius: number
+  setRadius: (radius: number, key: TypeOfDegradation) => void
 }
 
-const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
+const PlacesTextSearch: FC<Props> = ({
+  handleSelectLocation,
+  label,
+  radius,
+  setRadius,
+}) => {
   const {t} = useTranslation()
   const [focused, setFocused] = useState(false)
   const [item, setItem] = useState({label: ''})
@@ -63,12 +72,15 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
 
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex items-center relative' {...getComboboxProps()}>
-        <IcMyLocation
-          className={`absolute w-6 h-6 fill-current ml-3 ${
-            focused ? 'text-primary-500' : 'text-nc-icon'
-          }`}
-        />
+      <div
+        className='flex items-center relative bg-white rounded-3xl px-2'
+        {...getComboboxProps()}>
+        <div
+          className={`absolute ml-2 ${
+            focused ? 'text-primary-500' : 'text-greyscale-500'
+          }`}>
+          <Send size={20} filled />
+        </div>
         <input
           {...getInputProps({
             onKeyDown: (e) => {
@@ -84,14 +96,17 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={t('SEARCH')}
-          className='pr-4.5 py-3.5 pl-11 text-greyscale-900 text-body-16 rounded-2 w-full h-full -my-1px'
+          className='pr-4 py-3 pl-10 text-greyscale-900 text-body-16 w-full h-full outline-none'
           data-test-id='location-search'
           id='search-autocomplete'
         />
+        <div className='hidden m:block'>
+          <InlineMapRadiusSelector radius={radius} setRadius={setRadius} />
+        </div>
       </div>
       <ul
         {...getMenuProps()}
-        className='z-10 w-full bg-white shadow-xl absolute top-14 rounded-lg overflow-hidden'>
+        className='z-10 w-full bg-white shadow-xl absolute top-14 rounded-lg overflow-hidden w-96'>
         {isOpen &&
           inputItems.map((newItem, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
@@ -102,8 +117,8 @@ const PlacesTextSearch: FC<Props> = ({handleSelectLocation, label}) => {
                 handleSelectLocation(newItem)
                 setItem(newItem)
               }}
-              className={`flex flex-col h-14 px-4 py-3 justify-center  ${
-                highlightedIndex === index ? 'bg-nc-accent' : ''
+              className={`flex flex-col h-14 px-4 py-3 justify-center cursor-pointer  ${
+                highlightedIndex === index ? 'bg-greyscale-100' : ''
               }`}
               key={newItem.value}>
               <span className='text-body-14 text-greyscale-900 truncate'>

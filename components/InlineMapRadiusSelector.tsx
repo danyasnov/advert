@@ -60,7 +60,7 @@ const InlineMapRadiusSelector: FC<Props> = ({radius, setRadius}) => {
             onClick={() => {
               setRadius(o.value, o.key)
             }}
-            className={`p-2 -m-px s:py-3 rounded-full border border-primary-500 space-x-0.5 ${
+            className={`p-2 -m-px rounded-full border border-primary-500 space-x-0.5 s:space-x-2 ${
               isCurrent ? 'bg-primary-500 text-white' : 'text-primary-500'
             }`}>
             <div className='hidden s:block'>

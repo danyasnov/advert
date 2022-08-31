@@ -20,6 +20,8 @@ import PlacesTextSearch from '../Selects/PlacesTextSearch'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
 import MobileMapSearch from './MobileMapSearch'
+import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
+import {setCookiesObject} from '../../helpers'
 
 const zoomRadiusMap = {
   0: 15,
@@ -39,6 +41,7 @@ const MapPage: FC = () => {
     }
     return null
   })
+  const [showHint, setShowHint] = useState(false)
 
   const [degradation, setDegradation] = useState<string>(() => {
     if (state.draft.degradation) {
@@ -79,7 +82,16 @@ const MapPage: FC = () => {
     }
     init()
   }, [])
+  useEffect(() => {
+    const cookies: SerializedCookiesState = parseCookies()
+    const {showCreateAdvMapHint} = cookies
+    setShowHint(showCreateAdvMapHint !== 'false')
+  }, [])
 
+  const hideHint = () => {
+    setShowHint(false)
+    setCookiesObject({showCreateAdvMapHint: false})
+  }
   useEffect(() => {
     if (marker.current) {
       marker.current.visible = radius === 0
@@ -219,6 +231,21 @@ const MapPage: FC = () => {
     marker.current.setPosition(item.geometry.location)
   }
 
+  const locationButton = (
+    <Button
+      className='bg-white w-11 h-11 rounded-full'
+      onClick={async () => {
+        try {
+          const center = await getPosition()
+          onChangeMap({center})
+          setLocation(center)
+        } catch (e) {
+          console.error(e)
+        }
+      }}>
+      <IcMyLocation className='fill-current text-primary-500 w-6 h-6' />
+    </Button>
+  )
   return (
     <div className='flex flex-col w-full'>
       <div className='flex flex-col w-full h-full'>
@@ -229,14 +256,37 @@ const MapPage: FC = () => {
           {t('INSPECTION_PLACE_INFO')}
         </span>
 
-        <div className='relative min-h-full w-full mb-24'>
+        <div className='relative min-h-full w-full mb-24 s:rounded-3xl s:overflow-hidden'>
           {location && (
             <>
-              <div className='absolute top-3 left-3 w-608px z-10 hidden s:flex'>
-                <PlacesTextSearch
-                  handleSelectLocation={handleSelectLocation}
-                  label={label}
-                />
+              <div className='absolute top-8 z-10 hidden s:flex justify-between w-full space-x-8 inset-x-0 px-8'>
+                <div className='flex flex-col w-full space-y-3'>
+                  <div className='flex'>
+                    <PlacesTextSearch
+                      handleSelectLocation={handleSelectLocation}
+                      label={label}
+                      radius={radius}
+                      setRadius={onChangeRadius}
+                    />
+                  </div>
+                  <div className='m:hidden flex py-1.5 px-2 bg-white rounded-full w-min'>
+                    <InlineMapRadiusSelector
+                      radius={radius}
+                      setRadius={onChangeRadius}
+                    />
+                  </div>
+                  {showHint && (
+                    <div className='w-[280px] flex flex-col p-6 bg-white flex flex-col rounded-3xl m:absolute m:right-44 m:top-12'>
+                      <span className='font-normal text-greyscale-900 text-body-16 mb-6 text-center'>
+                        {t('TIP_MAP_CREATE_ADS')}
+                      </span>
+                      <PrimaryButton onClick={hideHint}>
+                        {t('CLEAR')}
+                      </PrimaryButton>
+                    </div>
+                  )}
+                </div>
+                <div>{locationButton}</div>
               </div>
               <GoogleMapReact
                 bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
@@ -269,35 +319,13 @@ const MapPage: FC = () => {
                   setRadius={onChangeRadius}
                 />
               </div>
-              <div className='absolute bottom-6 inset-x-0 s:left-0 s:inset-x-auto s:w-full'>
-                <div className='flex items-center flex-col mx-2 s:w-full'>
-                  <div className='w-full flex flex-col mr-4 s:flex-row s:justify-between s:items-center'>
-                    {/* <MapRadiusSelector */}
-                    {/*  radius={radius} */}
-                    {/*  setRadius={onChangeRadius} */}
-                    {/* /> */}
-                  </div>
-                  <div className='mx-auto w-full flex flex-col'>
-                    <Button
-                      className='bg-white w-11 h-11 s:w-12 s:h-12 rounded-full self-end mb-4 s:mb-0 s:order-last s:mr-2'
-                      onClick={async () => {
-                        try {
-                          const center = await getPosition()
-                          onChangeMap({center})
-                          setLocation(center)
-                        } catch (e) {
-                          console.error(e)
-                        }
-                      }}>
-                      <IcMyLocation className='fill-current text-primary-500 w-6 h-6' />
-                    </Button>
-                    <Button
-                      className='w-full bg-primary-500 rounded-full text-body-16 py-4 text-white font-bold s:hidden'
-                      onClick={onSubmit}>
-                      {t('CONTINUE')}
-                    </Button>
-                  </div>
-                </div>
+              <div className='s:hidden absolute bottom-6 inset-x-0 w-full px-4 flex flex-col'>
+                <div className='self-end mb-4'>{locationButton}</div>
+                <Button
+                  className='w-full bg-primary-500 rounded-full text-body-16 py-4 text-white font-bold s:hidden'
+                  onClick={onSubmit}>
+                  {t('CONTINUE')}
+                </Button>
               </div>
             </>
           )}
