@@ -2,7 +2,7 @@ import {Dispatch, FC, SetStateAction} from 'react'
 import {isEmpty, last} from 'lodash'
 import {CACategoryModel} from 'front-api'
 import {useTranslation} from 'next-i18next'
-import IcArrowBack from 'icons/material/ArrowBack.svg'
+import {ArrowLeft} from 'react-iconly'
 import Button from '../../Buttons/Button'
 
 interface Props {
@@ -17,8 +17,8 @@ const MobileCategoriesHeader: FC<Props> = ({
 }) => {
   const {t} = useTranslation()
   return (
-    <div className='flex flex-col border border-b'>
-      <div className='flex items-center p-4'>
+    <div className='flex flex-col'>
+      <div className='flex items-center p-4 text-greyscale-900 space-x-4'>
         <Button
           onClick={() => {
             if (isEmpty(selected)) {
@@ -27,9 +27,9 @@ const MobileCategoriesHeader: FC<Props> = ({
               setSelected(selected.slice(0, -1))
             }
           }}>
-          <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
+          <ArrowLeft size={28} />
         </Button>
-        <h2 className='text-nc-title font-medium text-body-14'>
+        <h2 className='text-h-4 font-bold'>
           {isEmpty(selected) ? t('NEW_AD') : last(selected).name}
         </h2>
       </div>

@@ -295,7 +295,7 @@ export const FormGroup: FC<{
                   }}>
                   <IcClear className='fill-current text-nc-icon h-6 w-6' />
                 </Button>
-                <p className='pl-4 text-nc-title text-body-14 font-medium'>
+                <p className='pl-4 text-greyscale-900 text-body-14 font-medium'>
                   {title}
                 </p>
               </div>

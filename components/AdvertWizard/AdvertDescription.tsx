@@ -74,7 +74,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
                   className={`px-3.5 py-2.5 text-body-16 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${
                     // eslint-disable-next-line no-nested-ternary
                     language === l.isoCode
-                      ? 'text-nc-title bg-nc-accent'
+                      ? 'text-greyscale-900 bg-nc-accent'
                       : 'text-nc-link'
                   }`}>
                   <div className='shrink-0 mr-2 w-5 h-5'>

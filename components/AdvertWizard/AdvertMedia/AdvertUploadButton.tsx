@@ -34,7 +34,7 @@ const AdvertUploadButton: FC<{
   })
   const iconsClassname = 'w-6 h-6 fill-current mb-3'
   const titleClassname = `text-body-12 text-center ${
-    isHovering ? 'text-nc-title' : 'text-nc-placeholder'
+    isHovering ? 'text-greyscale-900' : 'text-nc-placeholder'
   }`
   return (
     <div {...getRootProps()}>

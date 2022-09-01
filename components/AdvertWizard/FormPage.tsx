@@ -398,7 +398,7 @@ const FormPage: FC = observer(() => {
           }}>
           <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
         </Button>
-        <h2 className='text-nc-title font-medium text-body-14'>
+        <h2 className='text-greyscale-900 font-medium text-body-14'>
           {category.data.name}
         </h2>
       </div>
@@ -473,7 +473,7 @@ const FormPage: FC = observer(() => {
                   }
                   labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
                   label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2 text-nc-title'
+                  labelClassName='mt-2 text-greyscale-900'
                   isRequired
                 />
               }
@@ -488,7 +488,7 @@ const FormPage: FC = observer(() => {
                 <div>
                   <AdvertFormField
                     id='form-field-photos'
-                    labelClassName='text-nc-title mt-2 l:mt-0'
+                    labelClassName='text-greyscale-900 mt-2 l:mt-0'
                     orientation={
                       width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
                     }
@@ -515,7 +515,7 @@ const FormPage: FC = observer(() => {
                       width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
                     }
                     id='form-field-videos'
-                    labelClassName='text-nc-title'
+                    labelClassName='text-greyscale-900'
                     body={
                       <div className='w-8/12 l:mt-7'>
                         <Field

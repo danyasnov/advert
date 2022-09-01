@@ -45,7 +45,7 @@ const MobileSelect: FC<SelectProps> = ({
               <IcArrowDropDown className='w-6 h-6 fill-current text-black-c -mr-2' />
             </>
           ) : (
-            <span className='text-body-14 text-nc-title truncate '>
+            <span className='text-body-14 text-greyscale-900 truncate '>
               {isArray(value)
                 ? value.map((v) => v.label).join(', ')
                 : value.label}
@@ -67,14 +67,14 @@ const MobileSelect: FC<SelectProps> = ({
         }}>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='fixed top-5 bg-white w-full flex flex-col items-center'>
-            <h3 className='text-h-6 font-medium text-nc-title mb-2 px-4'>
+            <h3 className='text-h-6 font-medium text-greyscale-900 mb-2 px-4'>
               {placeholder}
             </h3>
             {isSearchable && (
               <div className='w-full px-4 relative'>
                 <IcSearch className='w-6 h-6 absolute top-3 left-5 text-nc-icon' />
                 <input
-                  className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-nc-title'
+                  className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-greyscale-900'
                   placeholder={t('SEARCH')}
                   value={filter}
                   onChange={({target}) => {

@@ -33,7 +33,7 @@ const DropZone: FC<{
     isDragActive ? 'text-primary-500' : 'text-nc-icon'
   }`
   const titleClassname = `text-body-12 ${
-    isDragActive ? 'text-nc-title' : 'text-nc-placeholder'
+    isDragActive ? 'text-greyscale-900' : 'text-nc-placeholder'
   }`
 
   useEffect(() => {

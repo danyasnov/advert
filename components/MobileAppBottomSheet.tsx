@@ -40,7 +40,7 @@ const MobileAppBottomSheet: FC = observer(() => {
         }}
         snapPoints={({minHeight}) => minHeight}>
         <div className='flex flex-col items-center justify-center w-full p-4 pt-0'>
-          <h3 className='text-h-6 font-medium text-nc-title mb-6'>
+          <h3 className='text-h-6 font-medium text-greyscale-900 mb-6'>
             {t('OPEN_VOOXEE_IN')}
           </h3>
           <div className='flex justify-between w-full mb-7 items-center h-8'>
@@ -52,7 +52,7 @@ const MobileAppBottomSheet: FC = observer(() => {
               {/*  height={32} */}
               {/*  layout='fixed' */}
               {/* /> */}
-              <span className='ml-3 text-body-16 text-nc-title'>
+              <span className='ml-3 text-body-16 text-greyscale-900'>
                 {t('OPEN_IN_VOOXEE_APP')}
               </span>
             </div>
@@ -76,7 +76,7 @@ const MobileAppBottomSheet: FC = observer(() => {
           <div className='flex justify-between w-full items-center'>
             <div className='flex items-center'>
               <BrowserIcon />
-              <span className='ml-3 text-body-16 text-nc-title'>
+              <span className='ml-3 text-body-16 text-greyscale-900'>
                 {t('OPEN_IN_BROWSER')}
               </span>
             </div>

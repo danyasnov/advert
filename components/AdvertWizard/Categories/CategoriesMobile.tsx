@@ -2,6 +2,8 @@ import {Dispatch, FC, SetStateAction} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
 import {isEmpty, last} from 'lodash'
 import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
+import {ArrowRight} from 'react-iconly'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../../Buttons/Button'
 import ImageWrapper from '../../ImageWrapper'
 
@@ -15,20 +17,18 @@ const CategoryButton: FC<{
     <Button
       key={category.id}
       onClick={() => onClick(category)}
-      className='h-12 items-center w-full px-4'>
-      <div className='flex justify-between w-full items-center'>
+      className='items-center w-full py-4'>
+      <div className='flex justify-between w-full items-center text-greyscale-900'>
         <div className='flex items-center'>
           {!!url && (
             <div className='mr-2 flex items-center'>
               <ImageWrapper type={url} width={24} height={24} alt='slug' />
             </div>
           )}
-          <span className='text-body-16 text-primary-500-text'>
-            {category.name}
-          </span>
+          <span className='text-body-16'>{category.name}</span>
         </div>
-        {!isEmpty(category.items) && (
-          <IcKeyboardArrowRight className='fill-current text-nc-icon h-8 w-8' />
+        {!isEmpty(category.items) && !!category.parentId && (
+          <IcArrowDown className='fill-current text-nc-icon h-6 w-6 -rotate-90 ' />
         )}
       </div>
     </Button>
@@ -47,35 +47,24 @@ const CategoriesMobile: FC<Props> = ({
   categories,
   onSubmit,
 }) => {
-  if (isEmpty(selected)) {
-    return (
-      <div className='divide-y divide-solid'>
-        {categories.map((c) => (
-          <CategoryButton
-            category={c}
-            onClick={(category) => setSelected([category])}
-          />
-        ))}
-      </div>
-    )
-  }
+  const source = isEmpty(selected) ? categories : last(selected).items
   return (
-    <>
-      <div className='divide-y divide-solid'>
-        {last(selected).items.map((c) => (
-          <CategoryButton
-            category={c}
-            onClick={(category) => {
-              if (isEmpty(category.items)) {
-                onSubmit(category.id)
-              } else {
-                setSelected([...selected, category])
-              }
-            }}
-          />
-        ))}
-      </div>
-    </>
+    <div className='divide-y divide-solid divide-greyscale-200 px-4'>
+      {source.map((c) => (
+        <CategoryButton
+          category={c}
+          onClick={(category) => {
+            if (isEmpty(selected)) {
+              setSelected([category])
+            } else if (isEmpty(category.items)) {
+              onSubmit(category.id)
+            } else {
+              setSelected([...selected, category])
+            }
+          }}
+        />
+      ))}
+    </div>
   )
 }
 

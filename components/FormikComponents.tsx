@@ -623,7 +623,7 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
         <label className='flex items-center justify-between'>
           {label && (
             <span
-              className={`text-nc-title text-body-16 whitespace-nowrap ${
+              className={`text-greyscale-900 text-body-16 whitespace-nowrap ${
                 labelPosition === 'left' ? 'mr-3' : 'order-last ml-3'
               }`}>
               {label}

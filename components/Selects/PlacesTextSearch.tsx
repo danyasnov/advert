@@ -73,7 +73,7 @@ const PlacesTextSearch: FC<Props> = ({
   return (
     <div className='flex flex-col w-full'>
       <div
-        className='flex items-center relative bg-white rounded-3xl px-2'
+        className='flex items-center relative bg-white rounded-3xl overflow-hidden px-2'
         {...getComboboxProps()}>
         <div
           className={`absolute ml-2 ${

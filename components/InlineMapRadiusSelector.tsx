@@ -1,28 +1,13 @@
-import {FC, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import IcLocation from 'icons/location/Location.svg'
-import IcLocationSmall from 'icons/location/LocationSmall.svg'
-import IcLocationBig from 'icons/location/LocationBig.svg'
-import IcLocationHover from 'icons/location/LocationHover.svg'
-import IcLocationSmallHover from 'icons/location/LocationSmallHover.svg'
-import IcLocationBigHover from 'icons/location/LocationBigHover.svg'
-import IcLocationActive from 'icons/location/LocationActive.svg'
-import IcLocationSmallActive from 'icons/location/LocationSmallActive.svg'
-import IcLocationBigActive from 'icons/location/LocationBigActive.svg'
 import {
   DEGRADATION_TYPE_ABSENT,
   DEGRADATION_TYPE_HIGH,
   DEGRADATION_TYPE_LOW,
   TypeOfDegradation,
-} from 'front-api/src/models/index'
-import {parseCookies} from 'nookies'
-import IcClear from 'icons/material/Clear.svg'
-import IcRadius from 'icons/material/Radius.svg'
-import {useWindowSize} from 'react-use'
+} from 'front-api/src/models'
 import {Location} from 'react-iconly'
 import Button from './Buttons/Button'
-import {SerializedCookiesState} from '../types'
-import {setCookiesObject} from '../helpers'
 
 interface Props {
   radius: number
