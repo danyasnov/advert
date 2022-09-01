@@ -13,25 +13,25 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
   if (isEmpty(selected)) {
     return (
       <div
-        className='flex flex-wrap gap-x-4 gap-y-8 justify-between m:justify-start'
+        className='grid grid-cols-4 m:grid-cols-6 gap-x-4 gap-y-8 justify-between m:justify-start items-start'
         data-test-id='category-list'>
         {categories.map((c) => (
           <Button
             key={c.id}
             id={`category-item-${c.id}`}
-            className='flex flex-col'
+            className='flex flex-col space-y-3 l:space-y-4'
             onClick={() => {
               setSelected([c])
             }}>
-            <ImageWrapper
-              type={`/img/categories/${c.slug}.png`}
-              width={188}
-              height={188}
-              alt={c.name}
-              className='rounded-xl'
-              layout='fixed'
-            />
-            <span className='text-greyscale-900 text-body-16 mt-2'>
+            <div className=' w-36 h-36 l:w-[188px] l:h-[188px] relative'>
+              <ImageWrapper
+                type={`/img/categories/${c.slug}.png`}
+                alt={c.name}
+                className='rounded-xl'
+                layout='fill'
+              />
+            </div>
+            <span className='text-greyscale-900 text-body-16 font-bold'>
               {c.name}
             </span>
           </Button>

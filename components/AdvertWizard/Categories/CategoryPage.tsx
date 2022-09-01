@@ -98,8 +98,8 @@ const CategoryPage: FC = observer(() => {
 
   const header = (
     <>
-      <div className='mb-6 hidden s:block'>
-        <h3 className='text-h-5 text-hc-title font-bold mb-6 mt-8'>
+      <div className='mb-8 hidden s:block'>
+        <h5 className='text-h-5 text-greyscale-900 font-normal mb-8 mt-8'>
           {rootCategory ? (
             <div className='flex'>
               <Button
@@ -113,7 +113,7 @@ const CategoryPage: FC = observer(() => {
           ) : (
             t('SELECT_CATEGORY')
           )}
-        </h3>
+        </h5>
         <div className='w-1/2'>
           <SearchCategories
             handleSelectedItemChange={(item) => {

@@ -4,6 +4,7 @@ import {useCombobox} from 'downshift'
 import {debounce, isEmpty, isObject, last} from 'lodash'
 import {useTranslation} from 'next-i18next'
 import IcSearch from 'icons/material/Search.svg'
+import {Search} from 'react-iconly'
 import {makeRequest} from '../../api'
 
 interface Props {
@@ -67,7 +68,9 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
   return (
     <div className='flex flex-col w-full relative'>
       <div className='flex relative' {...getComboboxProps()}>
-        <IcSearch className='w-7 h-7 absolute top-1.5 left-3' />
+        <div className='absolute inset-y-0 left-3 text-greyscale-500 flex items-center'>
+          <Search size={20} />
+        </div>
         <input
           {...getInputProps({
             onKeyDown: (e) => {
@@ -80,7 +83,7 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
           })}
           data-test-id='category-search'
           placeholder={t('SEARCH_BY_CATEGORIES')}
-          className='pl-12 px-3.5 py-3 text-greyscale-900 text-body-14 rounded-2 w-full h-10 border border-nc-border'
+          className='pl-12 px-3.5 py-3 text-greyscale-900 text-body-16 rounded-xl w-full h-10 bg-greyscale-100 outline-none'
           id='search-autocomplete'
         />
       </div>
