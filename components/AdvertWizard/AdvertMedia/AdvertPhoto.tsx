@@ -17,7 +17,7 @@ const AdvertPhoto: ComponentClass<
 > = SortableElement(({onRemove, onRotate, url, loading, id}) => {
   const buttonClassname =
     'w-6 h-6 flex items-center justify-center absolute bg-white bg-opacity-75' +
-    ' top-0 mt-2 z-10 rounded-full hover:bg-opacity-100 hover:text-nc-icon-hover text-nc-icon'
+    ' top-0 mt-2 z-10 rounded-full hover:bg-opacity-100 hover:text-greyscale-800-hover text-greyscale-800'
   const iconClassname = 'h-3.5 w-3.5 fill-current'
   return (
     <div

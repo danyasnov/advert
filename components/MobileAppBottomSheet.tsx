@@ -85,7 +85,7 @@ const MobileAppBottomSheet: FC = observer(() => {
                 setOpen(false)
                 setCookiesObject({showBottomSheet: false})
               }}
-              className='py-1.5 border border-shadow-b rounded-lg text-nc-secondary-text text-body-16 w-26'>
+              className='py-1.5 border border-shadow-b rounded-lg text-greyscale-900 text-body-16 w-26'>
               {t('CONTINUE')}
             </Button>
           </div>

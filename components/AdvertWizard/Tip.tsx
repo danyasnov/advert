@@ -26,7 +26,7 @@ const Tip: FC<Props> = ({message, placement}) => {
     <div>
       <div ref={setTriggerRef}>
         <Button>
-          <IcQuestionMark className='w-6 h-6 fill-current hover:text-nc-link text-nc-icon' />
+          <IcQuestionMark className='w-6 h-6 fill-current hover:text-nc-link text-greyscale-800' />
         </Button>
       </div>
       {visible && (

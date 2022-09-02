@@ -70,10 +70,10 @@ const FormProgressBar: FC<Props> = ({category, values}) => {
       <span className='text-body-14 text-greyscale-900 mb-1'>
         {t('PERCENTAGE_FILLED_ADS_TITLE', {fillPercentage: `${progress}%`})}
       </span>
-      <span className='text-body-14 text-nc-secondary-text mb-3'>
+      <span className='text-body-14 text-greyscale-900 mb-3'>
         {t('AD_IS_FILLED_INFO')}
       </span>
-      <div className='w-full bg-nc-info rounded-full h-2 mb-2'>
+      <div className='w-full bg-greyscale-50 rounded-full h-2 mb-2'>
         <div
           className='bg-nc-success h-2 rounded-full'
           style={{width: `${progress}%`}}

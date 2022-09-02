@@ -313,9 +313,7 @@ const SafetyLayout: FC = observer(() => {
                 }`}>
                 <span
                   className={`text-h-4 ${
-                    currentTab.id === tab
-                      ? 'text-white'
-                      : 'text-nc-secondary-text'
+                    currentTab.id === tab ? 'text-white' : 'text-greyscale-900'
                   }`}>
                   {t(currentTab.title)}
                 </span>

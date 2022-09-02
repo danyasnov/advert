@@ -396,7 +396,7 @@ const FormPage: FC = observer(() => {
               page: AdvertPages.categoryPage,
             })
           }}>
-          <IcArrowBack className='w-6 h-6 fill-current text-nc-icon mr-4' />
+          <IcArrowBack className='w-6 h-6 fill-current text-greyscale-800 mr-4' />
         </Button>
         <h2 className='text-greyscale-900 font-medium text-body-14'>
           {category.data.name}
@@ -471,9 +471,6 @@ const FormPage: FC = observer(() => {
                       languagesByIsoCode={languagesByIsoCode}
                     />
                   }
-                  labelDescription={t('TIP_DESCRIPTION_CREATE_ADV')}
-                  label={t('TITLE_AND_DESCRIPTION')}
-                  labelClassName='mt-2 text-greyscale-900'
                   isRequired
                 />
               }
@@ -499,7 +496,7 @@ const FormPage: FC = observer(() => {
                           name='photos'
                           maxPhotos={category.data.maxPhotos}
                         />
-                        <p className='text-body-12 text-nc-secondary-text mb-6 mt-2'>
+                        <p className='text-body-12 text-greyscale-900 mb-6 mt-2'>
                           {t('TIP_FOR_ADDING_A_PHOTO', {
                             maxPhotos: category.data.maxPhotos,
                           })}
@@ -524,7 +521,7 @@ const FormPage: FC = observer(() => {
                           categoryId={category.data.id}
                           maxVideoDuration={category.data.maxVideoDuration}
                         />
-                        <p className='text-body-12 text-nc-secondary-text mb-6 mt-2 whitespace-pre-wrap'>
+                        <p className='text-body-12 text-greyscale-900 mb-6 mt-2 whitespace-pre-wrap'>
                           {t('INFORMATION_ BY_DOWNLOADING_VIDEO', {
                             descriptionLengthMax: `${
                               category.data.maxVideoDuration || 30
@@ -589,7 +586,7 @@ const FormPage: FC = observer(() => {
                           id='form-field-condition'
                           body={conditionComponent}
                           isRequired
-                          labelClassName='mt-2 text-nc-secondary-text'
+                          labelClassName='mt-2 text-greyscale-900'
                           label={t('PROD_CONDITION')}
                         />
                       )}
@@ -680,14 +677,14 @@ const FormPage: FC = observer(() => {
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
                     labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2 text-nc-secondary-text'
+                    labelClassName='mt-2 text-greyscale-900'
                   />
                   {!!category.data.isProduct && (
                     <>
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-swap-possible'
-                        labelClassName='text-nc-secondary-text'
+                        labelClassName='text-greyscale-900'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -703,7 +700,7 @@ const FormPage: FC = observer(() => {
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-bargain-possible'
-                        labelClassName='text-nc-secondary-text'
+                        labelClassName='text-greyscale-900'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -768,7 +765,7 @@ const FormPage: FC = observer(() => {
                           className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
                             phoneNumber
                               ? 'text-nc-disabled bg-nc-back'
-                              : 'text-primary-500-text'
+                              : 'text-greyscale-900'
                           }`}>
                           <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
                         </Button>
@@ -777,7 +774,7 @@ const FormPage: FC = observer(() => {
                     isRequired={!category.data.allowFree}
                     label={t('PHONE_NUM')}
                     // labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2 text-nc-secondary-text'
+                    labelClassName='mt-2 text-greyscale-900'
                   />
                 </div>
               }

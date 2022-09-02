@@ -252,7 +252,7 @@ const MapPage: FC = () => {
         <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
-        <span className='text-primary-500-text text-body-16 mb-6 hidden s:flex'>
+        <span className='text-greyscale-900 text-body-16 mb-6 hidden s:flex'>
           {t('INSPECTION_PLACE_INFO')}
         </span>
 

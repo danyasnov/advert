@@ -28,7 +28,7 @@ const CategoryButton: FC<{
           <span className='text-body-16'>{category.name}</span>
         </div>
         {!isEmpty(category.items) && !!category.parentId && (
-          <IcArrowDown className='fill-current text-nc-icon h-6 w-6 -rotate-90 ' />
+          <IcArrowDown className='fill-current text-greyscale-800 h-6 w-6 -rotate-90 ' />
         )}
       </div>
     </Button>

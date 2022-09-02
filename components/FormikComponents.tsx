@@ -180,7 +180,7 @@ export const FormikCreateFields: FC<{
               <FormikCreateField field={f} />
             </div>
           }
-          labelClassName='text-nc-secondary-text'
+          labelClassName='text-greyscale-900'
           orientation={width >= 768 ? 'horizontal' : 'vertical'}
           isRequired={f.isFillingRequired}
           label={width < 768 && f.fieldType === 'checkbox' ? undefined : f.name}
@@ -206,9 +206,7 @@ export const FormikCreateFields: FC<{
 }
 
 export const FormikTitle: FC<{label: string}> = ({label}) => {
-  return (
-    <div className='text-primary-500-text text-h-6 font-medium'>{label}</div>
-  )
+  return <div className='text-greyscale-900 text-h-6 font-medium'>{label}</div>
 }
 
 export const FormikCheckboxesGroup: FC<{
@@ -221,7 +219,7 @@ export const FormikCheckboxesGroup: FC<{
   return (
     <div>
       {!!description && (
-        <div className='bg-nc-info rounded-lg py-3 px-4 mb-4'>
+        <div className='bg-greyscale-50 rounded-lg py-3 px-4 mb-4'>
           <span className='text-body-14'>{t(description)}</span>
         </div>
       )}
@@ -233,7 +231,7 @@ export const FormikCheckboxesGroup: FC<{
             <Button
               onClick={() => setFieldValue(name, !value)}
               key={f.id}
-              className={`text-body-16 text-primary-500-text p-4 rounded-lg mr-3 mb-3 ${
+              className={`text-body-16 text-greyscale-900 p-4 rounded-lg mr-3 mb-3 ${
                 value ? 'bg-nc-accent' : 'bg-nc-back'
               }`}>
               {f.name}

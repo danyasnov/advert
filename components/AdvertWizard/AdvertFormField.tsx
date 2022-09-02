@@ -1,9 +1,10 @@
 import {FC} from 'react'
+import {InfoSquare} from 'react-iconly'
 import Tip from './Tip'
 
 interface Props {
   body
-  label: string
+  label?: string
   orientation?: 'vertical' | 'horizontal'
   labelTip?: string
   className?: string
@@ -41,7 +42,7 @@ const AdvertFormField: FC<Props> = ({
             labelClassName || ''
           }`}>
           {!!label && (
-            <span className='text-body-16'>
+            <span className='text-body-18 font-semibold'>
               {label}
               {isRequired && (
                 <span className='text-body-16 text-primary-500 ml-1'>*</span>
@@ -51,9 +52,14 @@ const AdvertFormField: FC<Props> = ({
           {!!labelTip && <Tip message={labelTip} placement='right' />}
         </div>
         {labelDescription && (
-          <span className='flex text-primary-500-text bg-nc-info px-4 py-3 rounded-lg whitespace-pre-wrap mb-6'>
-            {labelDescription}
-          </span>
+          <div className='flex items-center rounded-lg bg-greyscale-50 px-4 py-3 mb-6 space-x-4'>
+            <div className='text-greyscale-400'>
+              <InfoSquare size={32} filled />
+            </div>
+            <span className='text-greyscale-900 whitespace-pre-wrap '>
+              {labelDescription}
+            </span>
+          </div>
         )}
       </div>
 

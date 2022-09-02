@@ -62,57 +62,57 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
   return (
     <div className={`w-screen-offset-8 s:w-full ${className}`}>
-      <div className='flex'>
-        <div className='overflow-hidden relative' ref={viewportRef}>
-          <div className='flex mb-4 space-x-2'>
-            {userLanguages.map((l, index) => {
-              return (
-                <Button
-                  id={`ad-language-select-${l.isoCode}`}
-                  key={l.isoCode}
-                  onClick={() => setLanguage(l.isoCode)}
-                  className={`px-3.5 py-2.5 text-body-16 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${
-                    // eslint-disable-next-line no-nested-ternary
-                    language === l.isoCode
-                      ? 'text-greyscale-900 bg-nc-accent'
-                      : 'text-nc-link'
-                  }`}>
-                  <div className='shrink-0 mr-2 w-5 h-5'>
-                    <ImageWrapper
-                      type={`/img/flags/${l.isoCode}.png`}
-                      alt={l.isoCode}
-                      width={20}
-                      height={20}
-                    />
-                  </div>
+      {/* <div className='flex'> */}
+      {/*  <div className='overflow-hidden relative' ref={viewportRef}> */}
+      {/*    <div className='flex mb-4 space-x-2'> */}
+      {/*      {userLanguages.map((l, index) => { */}
+      {/*        return ( */}
+      {/*          <Button */}
+      {/*            id={`ad-language-select-${l.isoCode}`} */}
+      {/*            key={l.isoCode} */}
+      {/*            onClick={() => setLanguage(l.isoCode)} */}
+      {/*            className={`px-3.5 py-2.5 text-body-16 rounded-lg shadow-md whitespace-nowrap hover:bg-nc-accent flex items-center ${ */}
+      {/*              // eslint-disable-next-line no-nested-ternary */}
+      {/*              language === l.isoCode */}
+      {/*                ? 'text-greyscale-900 bg-nc-accent' */}
+      {/*                : 'text-nc-link' */}
+      {/*            }`}> */}
+      {/*            <div className='shrink-0 mr-2 w-5 h-5'> */}
+      {/*              <ImageWrapper */}
+      {/*                type={`/img/flags/${l.isoCode}.png`} */}
+      {/*                alt={l.isoCode} */}
+      {/*                width={20} */}
+      {/*                height={20} */}
+      {/*              /> */}
+      {/*            </div> */}
 
-                  {languagesByIsoCode[l.isoCode]?.name}
-                  {error && index === 0 && (
-                    <IcExclamation className='ml-2 w-4 h-4' />
-                  )}
-                </Button>
-              )
-            })}
-          </div>
-        </div>
-      </div>
+      {/*            {languagesByIsoCode[l.isoCode]?.name} */}
+      {/*            {error && index === 0 && ( */}
+      {/*              <IcExclamation className='ml-2 w-4 h-4' /> */}
+      {/*            )} */}
+      {/*          </Button> */}
+      {/*        ) */}
+      {/*      })} */}
+      {/*    </div> */}
+      {/*  </div> */}
+      {/* </div> */}
       <div className='flex flex-col w-full rounded-b-lg'>
         <div className='flex items-center mb-1'>
           <div className='w-full'>
-            <span className='text-body-16 text-nc-secondary-text mr-1'>
+            <span className='text-body-16 text-greyscale-900 font-bold mr-1'>
               {t('TITLE')}
             </span>
-            <span className='text-body-16 text-primary-500'>*</span>
+            <span className='text-body-16 text-error'>*</span>
           </div>
-          <span className='text-nc-icon text-body-10'>
+          <span className='text-greyscale-800 text-body-10 font-normal'>
             {`${title.length}/150`}
           </span>
         </div>
 
         <input
           placeholder={t('ENTER_THE_TITLE')}
-          className={`border text-body-16 rounded-lg py-3.5 px-3 mb-4 w-full text-primary-500-text ${
-            error ? 'border-error' : 'border-nc-border'
+          className={`border bg-greyscale-50 text-body-16 rounded-xl py-4 px-5 mb-4 w-full text-greyscale-900 ${
+            error ? 'border-error' : 'border-transparent'
           }`}
           value={title}
           maxLength={150}
@@ -136,11 +136,11 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
         <div className='flex items-center mb-1'>
           <div className='w-full'>
-            <span className='text-body-16 text-nc-secondary-text mr-1'>
+            <span className='text-body-16 text-greyscale-900 font-bold mr-1'>
               {t('DESCRIPTION')}
             </span>
           </div>
-          <span className='text-nc-icon text-body-10'>
+          <span className='text-greyscale-800 text-body-10 font-normal'>
             {`${description.length}/${maxDescriptionLength}`}
           </span>
         </div>
@@ -167,25 +167,25 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
           }}
-          className='rounded-lg text-body-16 py-3.5 px-3 text-primary-500-text w-full border border-nc-border'
+          className='rounded-xl text-body-16 py-4 px-5 text-greyscale-900 w-full bg-greyscale-50'
         />
       </div>
       <div className='flex w-full justify-between pr-4 mt-1 mb-2'>
         <span className='text-body-12 text-error'>{error}</span>
       </div>
-      {query.action === 'create' && (
-        <div className='flex space-x-2 items-center mt-4'>
-          <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '>
-            <Field
-              component={FormikSwitch}
-              name='isExclusive'
-              label={t('ONLY_ON_VOOXEE')}
-              labelPosition='right'
-            />
-          </div>
-          <Tip message={t('EXCLUSIVE_VOOXEE_TEXT')} placement='left' />
-        </div>
-      )}
+      {/* {query.action === 'create' && ( */}
+      {/*  <div className='flex space-x-2 items-center mt-4'> */}
+      {/*    <div className='bg-nc-accent rounded-lg flex w-min py-3 px-5 '> */}
+      {/*      <Field */}
+      {/*        component={FormikSwitch} */}
+      {/*        name='isExclusive' */}
+      {/*        label={t('ONLY_ON_VOOXEE')} */}
+      {/*        labelPosition='right' */}
+      {/*      /> */}
+      {/*    </div> */}
+      {/*    <Tip message={t('EXCLUSIVE_VOOXEE_TEXT')} placement='left' /> */}
+      {/*  </div> */}
+      {/* )} */}
     </div>
   )
 }

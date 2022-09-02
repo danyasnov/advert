@@ -155,7 +155,7 @@ const EnterCode: FC<PageProps> = observer(
         {/*    /> */}
         {/*  )} */}
         {/* </div> */}
-        <span className='text-primary-500-text text-body-16 font-medium mt-8 mb-6 mx-6 text-center w-[304px]'>
+        <span className='text-greyscale-900 text-body-16 font-medium mt-8 mb-6 mx-6 text-center w-[304px]'>
           {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
           {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
           {verifyMode === 2 && t('SENT_EMAIL_WITH_ACTIVATION_CODE')}
@@ -213,7 +213,7 @@ const EnterCode: FC<PageProps> = observer(
 
         {verifyMode !== 0 && (
           <span
-            className={`text-body-12 text-primary-500-text mb-6 ${
+            className={`text-body-12 text-greyscale-900 mb-6 ${
               counter ? 'visible' : 'invisible'
             }`}>
             {t('SEND_AFTER', {time: counter})}

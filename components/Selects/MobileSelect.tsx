@@ -72,7 +72,7 @@ const MobileSelect: FC<SelectProps> = ({
             </h3>
             {isSearchable && (
               <div className='w-full px-4 relative'>
-                <IcSearch className='w-6 h-6 absolute top-3 left-5 text-nc-icon' />
+                <IcSearch className='w-6 h-6 absolute top-3 left-5 text-greyscale-800' />
                 <input
                   className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-greyscale-900'
                   placeholder={t('SEARCH')}
@@ -103,7 +103,7 @@ const MobileSelect: FC<SelectProps> = ({
                   key={f.value}
                   className={`w-full px-4 border-b border-nc-border h-12 ${
                     // @ts-ignore
-                    f.disabled ? 'text-nc-secondary-text' : ''
+                    f.disabled ? 'text-greyscale-900' : ''
                   }`}
                   onClick={() => {
                     if (isMulti) {
