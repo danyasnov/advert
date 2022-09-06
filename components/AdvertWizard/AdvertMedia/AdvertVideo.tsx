@@ -8,14 +8,8 @@ const AdvertVideo: FC<{
   loading: boolean
   onRemove: () => void
 }> = ({onRemove, url, loading}) => {
-  const buttonClassname =
-    'w-6 h-6 flex items-center justify-center absolute bg-white bg-opacity-75' +
-    ' top-0 mt-2 z-10 rounded-full hover:bg-opacity-100 hover:text-greyscale-800-hover text-greyscale-800'
-  const iconClassname = 'h-3.5 w-3.5 fill-current'
   return (
-    <div
-      className={`h-40 w-72 flex rounded-lg overflow-hidden border
-     border-nc-border relative cursor-pointer relative`}>
+    <div className='h-[140px] w-[224px] flex rounded-lg overflow-hidden relative cursor-pointer relative'>
       {loading && (
         <div className='absolute z-10 inset-0 flex justify-center items-center  '>
           <CircularProgress
@@ -27,10 +21,10 @@ const AdvertVideo: FC<{
         </div>
       )}
       <Button
-        className={`${buttonClassname} right-0 mr-2`}
+        className='w-6 h-6 flex items-center justify-center absolute top-0 mt-2 z-10 rounded-full text-greyscale-900 right-0 mr-2'
         onClick={onRemove}
         disabled={loading}>
-        <IcClose className={iconClassname} />
+        <IcClose className='h-3.5 w-3.5 fill-current' />
       </Button>
 
       <div className='h-40 w-72 relative'>

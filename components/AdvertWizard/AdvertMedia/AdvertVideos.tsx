@@ -9,6 +9,7 @@ import DropZone from './DropZone'
 import AdvertUploadButton from './AdvertUploadButton'
 import AdvertVideo from './AdvertVideo'
 import {VideoFile} from '../../../types'
+import LinkButton from '../../Buttons/LinkButton'
 
 interface Props {
   maxVideoDuration: number
@@ -22,6 +23,7 @@ const AdvertVideos: FC<FieldProps & Props> = ({
 }) => {
   const {t} = useTranslation()
   const {name, value} = field
+  const [uploadCounter, setUploadCounter] = useState(0)
 
   const [video, setVideo] = useState<VideoFile>(isEmpty(value) ? null : value)
 
@@ -98,11 +100,23 @@ const AdvertVideos: FC<FieldProps & Props> = ({
   const maxSize = getMaxVideoSizeMB(maxVideoDuration) * 1000000
   return (
     <div className='mb-4 w-full relative'>
+      <div className='text-body-14 text-greyscale-900 mb-3 hidden s:flex l:mb-3'>
+        <span className='mr-1 font-normal'>{t('ADD_VIDEO_HINT')}</span>
+        <LinkButton
+          onClick={() => {
+            setUploadCounter(uploadCounter + 1)
+          }}>
+          <span className='text-body-14 font-medium'>
+            {t('ADD_VIDEO_HINT_1')}
+          </span>
+        </LinkButton>
+      </div>
       <div
         className={`${
           isDragging && !video ? 'absolute inset-0 min-h-full' : 'hidden'
         }`}>
         <DropZone
+          uploadCounter={uploadCounter}
           onDrop={onDrop}
           disabled={!!video}
           type='video'

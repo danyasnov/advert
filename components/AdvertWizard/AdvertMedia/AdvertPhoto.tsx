@@ -16,13 +16,10 @@ const AdvertPhoto: ComponentClass<
   } & SortableElementProps
 > = SortableElement(({onRemove, onRotate, url, loading, id}) => {
   const buttonClassname =
-    'w-6 h-6 flex items-center justify-center absolute bg-white bg-opacity-75' +
-    ' top-0 mt-2 z-10 rounded-full hover:bg-opacity-100 hover:text-greyscale-800-hover text-greyscale-800'
+    'w-6 h-6 flex items-center justify-center absolute top-0 mt-2 z-10 rounded-full text-greyscale-900'
   const iconClassname = 'h-3.5 w-3.5 fill-current'
   return (
-    <div
-      className={`h-34 w-34 flex rounded-lg overflow-hidden border
-     border-nc-border relative cursor-pointer relative`}>
+    <div className='h-[140px] w-[224px] flex rounded-3xl overflow-hidden relative cursor-pointer'>
       {loading && (
         <div className='absolute z-10 inset-0 flex justify-center items-center  '>
           <CircularProgress
@@ -30,7 +27,7 @@ const AdvertPhoto: ComponentClass<
             width='20px'
             height='20px'
             duration='3s'
-          />{' '}
+          />
         </div>
       )}
       <Button

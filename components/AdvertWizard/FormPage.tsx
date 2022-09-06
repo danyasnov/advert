@@ -403,8 +403,8 @@ const FormPage: FC = observer(() => {
         </h2>
       </div>
       <FormikProvider value={formik}>
-        <div className='flex px-4 s:px-0'>
-          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full'>
+        <div className='flex px-4 s:px-0 drop-shadow-card'>
+          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full '>
             <SideNavigation
               categoryName={breadcrumbs || category.data.name}
               draft={state.draft}

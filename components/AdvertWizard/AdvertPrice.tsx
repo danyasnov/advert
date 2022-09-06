@@ -35,10 +35,8 @@ const AdvertPrice: FC<FieldProps & Props> = ({
   return (
     <div>
       <div
-        className={`px-3.5 py-2 border rounded-lg flex flex-col ${
-          error
-            ? 'border-error'
-            : 'focus-within:border-nc-primary border-nc-border'
+        className={`border flex flex-col ${
+          error ? 'border-error' : 'border-transparent'
         }`}>
         <NumberFormat
           name={name}
@@ -55,7 +53,7 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={currency?.code}
-          className='w-full text-greyscale-900 text-body-16 outline-none manual-outline'
+          className='w-full text-greyscale-900 text-body-16 outline-none manual-outline bg-greyscale-50 py-4 px-5 rounded-2xl'
         />
         {!!safeDealPrice && (
           <span className='text-body-10 text-greyscale-900 mt-1'>
