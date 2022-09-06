@@ -454,9 +454,7 @@ const FormPage: FC = observer(() => {
               body={
                 <AdvertFormField
                   id='form-field-content'
-                  orientation={
-                    width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
-                  }
+                  orientation='vertical'
                   body={
                     <Field
                       className={`${
