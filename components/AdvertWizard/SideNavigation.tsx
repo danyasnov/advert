@@ -49,8 +49,8 @@ const SideNavigation: FC<Props> = ({validationState, categoryName, draft}) => {
               {title}
             </span>
             <span
-              className={`text-body-12 text-greyscale-900 mt-2 ${
-                arr.length === index + 1 ? '' : 'mb-3'
+              className={`text-body-12 text-greyscale-900  ${
+                arr.length === index + 1 ? '' : 'mb-3 mt-2'
               } w-[200px]`}>
               {description}
             </span>
