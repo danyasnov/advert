@@ -7,12 +7,11 @@ import {
 import {FC, ReactNode, useEffect, useRef, useState} from 'react'
 import {FormikErrors, useFormikContext} from 'formik'
 import ReactModal from 'react-modal'
-import IcClear from 'icons/material/Clear.svg'
-import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
-import IcCheck from 'icons/material/Check.svg'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
+import {ArrowLeft, TickSquare} from 'react-iconly'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -287,20 +286,18 @@ export const FormGroup: FC<{
             overlayClassName='z-30 fixed inset-0'
             className='w-full h-full bg-white overflow-y-scroll'>
             <div className='flex flex-col w-full'>
-              <div className='flex  border-b border-shadow-b items-center h-14 px-4'>
+              <div className='flex items-center h-14 px-4 space-x-4'>
                 <Button
                   onClick={() => {
                     formik.setErrors({})
                     setIsOpen(false)
                   }}>
-                  <IcClear className='fill-current text-greyscale-800 h-6 w-6' />
+                  <ArrowLeft size={28} />
                 </Button>
-                <p className='pl-4 text-greyscale-900 text-body-14 font-medium'>
-                  {title}
-                </p>
+                <h2 className='text-h-4 font-bold'>{title}</h2>
               </div>
               <div className='px-4 pt-4 pb-20'>{body}</div>
-              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 py-2.5 z-10 justify-around'>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 py-2.5 z-10 justify-around'>
                 <PrimaryButton
                   onClick={() => {
                     // @ts-ignore
@@ -328,18 +325,18 @@ export const FormGroup: FC<{
               </div>
             ) : (
               <Button
-                className='w-full shadow rounded-lg '
+                className='w-full rounded-3xl drop-shadow-card bg-white'
                 onClick={() => {
                   setIsOpen(true)
                 }}>
                 <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
-                    <span className='text-greyscale-900 text-body-16 pb-1'>
+                    <span className='text-greyscale-900 text-body-16 pb-1 font-semibold'>
                       {title}
                     </span>
                     <span
-                      className={`text-body-12 s:text-body-16 ${
-                        showSummaryErrors ? 'text-error' : 'text-greyscale-900'
+                      className={`text-body-14 s:text-body-16 font-normal ${
+                        showSummaryErrors ? 'text-error' : 'text-greyscale-600'
                       }`}>
                       {t('NUMBER_FROM_NUMBER', {
                         from: countMeta.filledCount,
@@ -347,13 +344,13 @@ export const FormGroup: FC<{
                       })}
                     </span>
                   </div>
-                  <div>
+                  <div className='flex items-center justify-center'>
                     {countMeta.isRequiredFilled ? (
-                      <div className='w-6 h-6 rounded-full flex items-center justify-center bg-nc-success'>
-                        <IcCheck className='fill-current text-white w-3 h-3' />
+                      <div className='text-primary-500'>
+                        <TickSquare filled size={24} />
                       </div>
                     ) : (
-                      <IcKeyboardArrowRight className='fill-current text-greyscale-800 w-5 h-5' />
+                      <IcArrowDown className='fill-current text-greyscale-600 h-6 w-6 -rotate-90' />
                     )}
                   </div>
                 </div>

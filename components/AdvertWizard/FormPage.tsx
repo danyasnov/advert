@@ -20,6 +20,7 @@ import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
 import {useWindowSize} from 'react-use'
 import {last} from 'rxjs'
+import {ArrowLeft} from 'react-iconly'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import AdvertDescription from './AdvertDescription'
@@ -374,6 +375,8 @@ const FormPage: FC = observer(() => {
     </div>
   )
   const formState = getFormState()
+  console.log('formState', formState)
+
   const currentStep = showWholeForm
     ? undefined
     : formState
@@ -387,8 +390,8 @@ const FormPage: FC = observer(() => {
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
 
   return (
-    <div className='max-w-screen w-full'>
-      <div className='flex items-center p-4 s:hidden border border-b'>
+    <div className='max-w-screen w-full '>
+      <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
         <Button
           onClick={() => {
             dispatch({
@@ -396,11 +399,9 @@ const FormPage: FC = observer(() => {
               page: AdvertPages.categoryPage,
             })
           }}>
-          <IcArrowBack className='w-6 h-6 fill-current text-greyscale-800 mr-4' />
+          <ArrowLeft size={28} />
         </Button>
-        <h2 className='text-greyscale-900 font-medium text-body-14'>
-          {category.data.name}
-        </h2>
+        <h2 className='text-h-4 font-bold'>{category.data.name}</h2>
       </div>
       <FormikProvider value={formik}>
         <div className='flex px-4 s:px-0 '>
@@ -412,7 +413,7 @@ const FormPage: FC = observer(() => {
             />
           </div>
           <Form
-            className={`flex flex-col space-y-4 w-full ${
+            className={`flex flex-col space-y-4 w-full  ${
               showWholeForm ? 's:space-y-8' : 's:space-y-6'
             }`}>
             <div className={`${showWholeForm ? 'hidden' : 's:hidden'} mt-8`}>
@@ -600,10 +601,12 @@ const FormPage: FC = observer(() => {
                     let filledCount = 0
                     let isRequiredFilled = true
 
-                    if (values.condition) {
-                      filledCount += 1
-                    } else {
-                      isRequiredFilled = false
+                    if (hasCondition) {
+                      if (values.condition) {
+                        filledCount += 1
+                      } else {
+                        isRequiredFilled = false
+                      }
                     }
 
                     arrayTypeFields.forEach(
@@ -783,7 +786,7 @@ const FormPage: FC = observer(() => {
               })}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
+            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
                 <OutlineButton
                   id='ad-back-button'

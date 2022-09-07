@@ -67,18 +67,18 @@ const FormProgressBar: FC<Props> = ({category, values}) => {
 
   return (
     <div className='flex flex-col'>
-      <span className='text-body-14 text-greyscale-900 mb-1'>
-        {t('PERCENTAGE_FILLED_ADS_TITLE', {fillPercentage: `${progress}%`})}
+      <span className='text-body-18 font-bold text-primary-500 mb-1'>
+        {t('AD_IS_FILLED', {percent: `${progress}%`})}
       </span>
-      <span className='text-body-14 text-greyscale-900 mb-3'>
-        {t('AD_IS_FILLED_INFO')}
-      </span>
-      <div className='w-full bg-greyscale-50 rounded-full h-2 mb-2'>
-        <div
-          className='bg-nc-success h-2 rounded-full'
-          style={{width: `${progress}%`}}
-        />
-      </div>
+      {/* <span className='text-body-14 text-greyscale-900 mb-3'> */}
+      {/*  {t('AD_IS_FILLED_INFO')} */}
+      {/* </span> */}
+      {/* <div className='w-full bg-greyscale-50 rounded-full h-2 mb-2'> */}
+      {/*  <div */}
+      {/*    className='bg-nc-success h-2 rounded-full' */}
+      {/*    style={{width: `${progress}%`}} */}
+      {/*  /> */}
+      {/* </div> */}
     </div>
   )
 }

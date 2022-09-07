@@ -44,7 +44,7 @@
 }
 
 input:checked + div {
-    @apply border-brand-a1 bg-brand-a1;
+    @apply border-primary-500 bg-primary-500;
 }
 input:checked + div svg {
     @apply block text-white;
@@ -60,9 +60,9 @@ input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 
-.nc-gradient-brand {
-    @apply bg-gradient-to-r from-brand-a3 to-brand-a1
-}
+/*.nc-gradient-brand {*/
+/*    @apply bg-gradient-to-r from-brand-a3 to-brand-a1*/
+/*}*/
 
 .Toastify__toast-body {
     white-space: pre-line

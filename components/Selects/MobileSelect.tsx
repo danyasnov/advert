@@ -1,10 +1,10 @@
 import {FC, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
-import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
-import {isArray, isEmpty, size} from 'lodash'
+import {get, isArray, isEmpty, size} from 'lodash'
 import IcCheck from 'icons/material/Check.svg'
 import IcSearch from 'icons/material/Search.svg'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -31,21 +31,27 @@ const MobileSelect: FC<SelectProps> = ({
     setOpen(false)
   }
 
+  let isEmptyValue
+  if (Array.isArray(value)) {
+    isEmptyValue = isEmpty(value)
+  } else {
+    isEmptyValue = !value?.value
+  }
   return (
     <div>
       <Button
-        className={`border h-10 rounded-lg w-full ${
-          isInvalid ? 'border-error' : 'border-shadow-b'
+        className={`border rounded-lg w-full bg-greyscale-50 ${
+          isInvalid ? 'border-error' : 'border-transparent'
         }`}
         onClick={() => setOpen(true)}>
-        <div className='flex justify-between items-center w-full px-3.5'>
-          {isEmpty(value) ? (
+        <div className='flex justify-between items-center w-full px-5 py-4 text-body-16'>
+          {isEmptyValue ? (
             <>
-              <span className='text-body-14 text-black-f'>{placeholder}</span>
-              <IcArrowDropDown className='w-6 h-6 fill-current text-black-c -mr-2' />
+              <span className='text-greyscale-400'>{placeholder}</span>
+              <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
             </>
           ) : (
-            <span className='text-body-14 text-greyscale-900 truncate '>
+            <span className='text-greyscale-900 truncate'>
               {isArray(value)
                 ? value.map((v) => v.label).join(', ')
                 : value.label}

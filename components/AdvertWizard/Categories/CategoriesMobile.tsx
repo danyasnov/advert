@@ -1,8 +1,6 @@
 import {Dispatch, FC, SetStateAction} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
 import {isEmpty, last} from 'lodash'
-import IcKeyboardArrowRight from 'icons/material/KeyboardArrowRight.svg'
-import {ArrowRight} from 'react-iconly'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../../Buttons/Button'
 import ImageWrapper from '../../ImageWrapper'
@@ -28,7 +26,7 @@ const CategoryButton: FC<{
           <span className='text-body-16'>{category.name}</span>
         </div>
         {!isEmpty(category.items) && !!category.parentId && (
-          <IcArrowDown className='fill-current text-greyscale-800 h-6 w-6 -rotate-90 ' />
+          <IcArrowDown className='fill-current text-greyscale-800 h-6 w-6 -rotate-90' />
         )}
       </div>
     </Button>
