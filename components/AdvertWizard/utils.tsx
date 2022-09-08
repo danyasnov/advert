@@ -381,18 +381,18 @@ export const FormGroup: FC<{
             className={`p-8 rounded-lg hidden s:block max-w-[656px] ${
               !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
             }`}>
-            <div className='flex flex-col border-b pb-3 border-nc-back'>
+            <div className='flex flex-col pb-3'>
               <div className='flex justify-between'>
                 {header}
                 <Button onClick={() => setIsExpanded(!isExpanded)}>
                   <IcKeyboardArrowLeft
-                    className={`fill-current text-black-c w-6 h-6 ${
+                    className={`fill-current text-black-c w-6 h-6 m:hidden ${
                       isExpanded ? 'rotate-90' : '-rotate-90'
                     }`}
                   />
                 </Button>
               </div>
-              <div className='text-body-14 text-greyscale-900 mt-1'>
+              <div className='text-body-14 text-greyscale-900 mt-1 m:hidden'>
                 <span
                   className={
                     !countMeta.isRequiredFilled && !isExpanded
