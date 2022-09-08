@@ -42,7 +42,7 @@ const AdvertFormField: FC<Props> = ({
             labelClassName || ''
           }`}>
           {!!label && (
-            <span className='text-body-18 font-semibold text-greyscale-900'>
+            <span className='text-body-16 font-normal text-greyscale-900'>
               {label}
               {isRequired && <span className='ml-1 text-error'>*</span>}
             </span>

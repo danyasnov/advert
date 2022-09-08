@@ -15,6 +15,8 @@ import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {AdvertPages} from './AdvertWizard'
+import OutlineButton from '../Buttons/OutlineButton'
 
 export const findSelectValue = (id, options) => {
   const option = options.find((o) => id === o.id) || {}
@@ -283,21 +285,29 @@ export const FormGroup: FC<{
             onRequestClose={() => setIsOpen(false)}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
-            overlayClassName='z-30 fixed inset-0'
+            overlayClassName='z-30 fixed inset-x-0 top-26 bottom-0'
             className='w-full h-full bg-white overflow-y-scroll'>
             <div className='flex flex-col w-full'>
-              <div className='flex items-center h-14 px-4 space-x-4'>
+              <div className='flex items-center px-4 s:px-8 space-x-2 mb-4'>
                 <Button
                   onClick={() => {
                     formik.setErrors({})
                     setIsOpen(false)
                   }}>
-                  <ArrowLeft size={28} />
+                  <IcArrowDown className='w-6 h-6 fill-current text-primary-500 rotate-90' />
                 </Button>
-                <h2 className='text-h-4 font-bold'>{title}</h2>
+                <h2 className='text-h-5 font-bold'>{title}</h2>
               </div>
-              <div className='px-4 pt-4 pb-20'>{body}</div>
-              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 py-2.5 z-10 justify-around'>
+              <div className='px-4 s:px-8 pt-4 pb-20'>{body}</div>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 py-2.5 z-10'>
+                <OutlineButton
+                  id='ad-back-button'
+                  onClick={() => {
+                    formik.setErrors({})
+                    setIsOpen(false)
+                  }}>
+                  {t('BACK')}
+                </OutlineButton>
                 <PrimaryButton
                   onClick={() => {
                     // @ts-ignore
@@ -359,7 +369,7 @@ export const FormGroup: FC<{
           </>
         )}
       </div>
-      <div className='hidden m:block'>
+      <div className='hidden m:block bg-white'>
         {showWholeForm ? (
           <div className='not-last:mb-6 flex flex-col space-y-4'>
             {header}
@@ -368,7 +378,7 @@ export const FormGroup: FC<{
         ) : (
           <div
             data-test-id={id}
-            className={`p-8 shadow rounded-lg hidden s:block max-w-[656px] ${
+            className={`p-8 rounded-lg hidden s:block max-w-[656px] ${
               !countMeta.isRequiredFilled && !isExpanded ? 'invalid-group' : ''
             }`}>
             <div className='flex flex-col border-b pb-3 border-nc-back'>

@@ -206,7 +206,11 @@ export const FormikCreateFields: FC<{
 }
 
 export const FormikTitle: FC<{label: string}> = ({label}) => {
-  return <div className='text-greyscale-900 text-h-6 font-medium'>{label}</div>
+  return (
+    <div className='text-greyscale-900 text-body-18 font-semibold pb-4'>
+      {label}
+    </div>
+  )
 }
 
 export const FormikCheckboxesGroup: FC<{

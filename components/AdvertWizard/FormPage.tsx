@@ -18,6 +18,8 @@ import {debounce, first, get, isEqual, size, isEmpty} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowBack from 'icons/material/ArrowBack.svg'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
+
 import {useWindowSize} from 'react-use'
 import {last} from 'rxjs'
 import {ArrowLeft} from 'react-iconly'
@@ -375,7 +377,6 @@ const FormPage: FC = observer(() => {
     </div>
   )
   const formState = getFormState()
-  console.log('formState', formState)
 
   const currentStep = showWholeForm
     ? undefined
@@ -390,7 +391,7 @@ const FormPage: FC = observer(() => {
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
 
   return (
-    <div className='max-w-screen w-full '>
+    <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
         <Button
           onClick={() => {
@@ -404,7 +405,28 @@ const FormPage: FC = observer(() => {
         <h2 className='text-h-4 font-bold'>{category.data.name}</h2>
       </div>
       <FormikProvider value={formik}>
-        <div className='flex px-4 s:px-0 '>
+        <div
+          className={`${
+            showWholeForm ? 'hidden' : 'm:hidden'
+          } mb-6 px-4 s:px-0`}>
+          <div className='hidden s:flex mb-6 flex items-center space-x-2'>
+            <Button
+              id='ad-back-button'
+              onClick={() => {
+                dispatch({
+                  type: 'setPage',
+                  page: AdvertPages.categoryPage,
+                })
+              }}>
+              <IcArrowDown className='w-6 h-6 fill-current text-primary-500 rotate-90' />
+            </Button>
+            <span className='text-h-5 font-bold text-greyscale-900'>
+              {category.data.name}
+            </span>
+          </div>
+          <FormProgressBar category={category.data} values={values} />
+        </div>
+        <div className='flex px-4 s:px-0'>
           <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full drop-shadow-card'>
             <SideNavigation
               categoryName={breadcrumbs || category.data.name}
@@ -412,13 +434,13 @@ const FormPage: FC = observer(() => {
               validationState={formState}
             />
           </div>
+
           <Form
-            className={`flex flex-col space-y-4 w-full  ${
-              showWholeForm ? 's:space-y-8' : 's:space-y-6'
+            className={`flex flex-col space-y-4 w-full ${
+              showWholeForm
+                ? 's:space-y-8'
+                : 's:space-y-0 s:grid s:grid-cols-2 s:gap-x-4 s:gap-y-6 m:space-y-6 m:flex m:flex-col'
             }`}>
-            <div className={`${showWholeForm ? 'hidden' : 's:hidden'} mt-8`}>
-              <FormProgressBar category={category.data} values={values} />
-            </div>
             <FormGroup
               id='form-group-title-and-description'
               hide={!formStateDict?.TITLE_AND_DESCRIPTION.visible}
@@ -786,7 +808,7 @@ const FormPage: FC = observer(() => {
               })}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
+            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
                 <OutlineButton
                   id='ad-back-button'
