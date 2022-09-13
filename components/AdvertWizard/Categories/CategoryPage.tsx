@@ -48,6 +48,7 @@ const CategoryPage: FC = observer(() => {
         method: 'post',
         data: {
           id,
+          excludeDependentFields: true,
         },
       })
         .then((res) => {

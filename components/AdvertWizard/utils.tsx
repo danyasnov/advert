@@ -285,22 +285,23 @@ export const FormGroup: FC<{
             onRequestClose={() => setIsOpen(false)}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
-            overlayClassName='z-30 fixed inset-x-0 top-26 bottom-0'
+            overlayClassName='z-30 fixed inset-0 '
             className='w-full h-full bg-white overflow-y-scroll'>
             <div className='flex flex-col w-full'>
-              <div className='flex items-center px-4 s:px-8 space-x-2 mb-4'>
+              <div className='flex items-center h-14 px-4 s:px-8 space-x-2'>
                 <Button
                   onClick={() => {
                     formik.setErrors({})
                     setIsOpen(false)
                   }}>
-                  <IcArrowDown className='w-6 h-6 fill-current text-primary-500 rotate-90' />
+                  <ArrowLeft size={28} />
                 </Button>
                 <h2 className='text-h-5 font-bold'>{title}</h2>
               </div>
               <div className='px-4 s:px-8 pt-4 pb-20'>{body}</div>
-              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 py-2.5 z-10'>
+              <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 py-2.5 z-10 space-x-2'>
                 <OutlineButton
+                  className='w-full s:w-auto'
                   id='ad-back-button'
                   onClick={() => {
                     formik.setErrors({})

@@ -149,6 +149,7 @@ const AdvertWizard: FC = () => {
             data: {
               id: result.categoryId,
               editFields: result.fields,
+              excludeDependentFields: true,
             },
           })
           const currenciesRes = await makeRequest({

@@ -1,6 +1,7 @@
 import {RestResponse} from 'front-api/src/api/request'
 import {
   AdvertiseListResponse,
+  CatalogFieldDependentResponse,
   CheckPhonePermissions,
   FieldsModel,
   OwnerModel,
@@ -91,9 +92,28 @@ export const fetchCategoryData = (
   storage: Storage,
   id: number,
   editFields?: FieldsModel,
+  excludeDependentFields?: boolean,
 ): Promise<RestResponse<CACategoryDataModel>> => {
   const rest = getRest(storage)
-  return rest.categories.fetchCategoryData({id, editFields})
+  return rest.categories.fetchCategoryData({
+    id,
+    editFields,
+    excludeDependentFields,
+  })
+}
+
+export const fetchDependentFields = (
+  storage: Storage,
+  dependenceSequenceId: number,
+  dependenceSequence: Array<number>,
+  otherValueWasSelected,
+): Promise<RestResponse<CatalogFieldDependentResponse>> => {
+  const rest = getRest(storage)
+  return rest.categories.fetchCatalogFieldDependent(
+    dependenceSequenceId,
+    dependenceSequence,
+    otherValueWasSelected,
+  )
 }
 
 export const fetchProductDetails = (

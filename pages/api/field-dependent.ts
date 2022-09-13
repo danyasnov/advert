@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {fetchCategoryData} from '../../api/v2'
+import {fetchDependentFields} from '../../api/v2'
 import {getStorageFromCookies} from '../../helpers'
 
 export default async (
@@ -9,11 +9,11 @@ export default async (
   const {body} = req
   const storage = getStorageFromCookies({req, res})
 
-  return fetchCategoryData(
+  return fetchDependentFields(
     storage,
-    body.id,
-    body.editFields,
-    body.excludeDependentFields,
+    body.dependenceSequenceId,
+    body.dependenceSequence,
+    body.otherValueWasSelected,
   ).then((response) => {
     res.json(response)
   })

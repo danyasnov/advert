@@ -1,10 +1,10 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import {Field, FieldProps, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel} from 'front-api/src/models'
-import {get, isEmpty, toNumber} from 'lodash'
+import {get, isEmpty, isEqual, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
@@ -13,6 +13,7 @@ import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 import MobileSelect from './Selects/MobileSelect'
 import AdvertFormField from './AdvertWizard/AdvertFormField'
+import {makeRequest} from '../api'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -168,6 +169,9 @@ export const FormikCreateFields: FC<{
       ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
 
     if (!isEmptyOptions && f.itemType !== 'title') {
+      if (f.dependenceSequenceId) {
+        return <FormikDependentFields field={f} />
+      }
       return (
         <AdvertFormField
           key={f.id}
@@ -638,6 +642,85 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
   )
 }
 
+export const FormikDependentFields: FC<IFormikField> = ({field}) => {
+  const {values, setFieldValue} = useFormikContext()
+  const prevValues = useRef(values)
+  const {width} = useWindowSize()
+  // @ts-ignore
+  const nextFields = values.fields
+  // @ts-ignore
+  const prevFields = prevValues.current.fields
+  const [fields, setFields] = useState([
+    {...field, value: nextFields[field.id]?.value},
+  ])
+
+  // @ts-ignore
+  useEffect(async () => {
+    console.log('fields', fields)
+    const newFields = []
+    let shouldClearNext = false
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const index in fields) {
+      const current = fields[index]
+      const nextValue = nextFields[current.id]?.value
+      const prevValue = prevFields[current.id]?.value
+
+      if (shouldClearNext) {
+        setFieldValue(`fields.${current.id}`, undefined)
+      } else if (nextValue !== prevValue) {
+        if (nextValue) {
+          newFields.push({...current, value: nextValue})
+          const result =
+            get(
+              // eslint-disable-next-line no-await-in-loop
+              await makeRequest({
+                url: '/api/field-dependent',
+                method: 'post',
+                data: {
+                  dependenceSequenceId: field.dependenceSequenceId,
+                  dependenceSequence: newFields.map(
+                    (f) => nextFields[f.id]?.value,
+                  ),
+                  otherValueWasSelected: true,
+                },
+              }),
+              'data.result',
+            ) || {}
+          setFields([
+            ...newFields,
+            ...(result.nextField ? [result.nextField] : []),
+          ])
+          shouldClearNext = true
+        }
+      } else {
+        newFields.push({...current, value: nextValue})
+      }
+    }
+
+    if (!isEqual(nextFields, prevFields)) {
+      prevValues.current = values
+    }
+  }, [values])
+  return (
+    <>
+      {fields.map((f) => (
+        <AdvertFormField
+          key={f.id}
+          id={`form-field-${f.fieldType}-${f.slug}`}
+          body={
+            <div className='w-full s:w-1/2 l:w-5/12'>
+              <FormikCreateField field={f} />
+            </div>
+          }
+          labelClassName='text-greyscale-900'
+          orientation={width >= 768 ? 'horizontal' : 'vertical'}
+          isRequired={f.isFillingRequired}
+          label={f.name}
+        />
+      ))}
+    </>
+  )
+}
 export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   field,
   form,

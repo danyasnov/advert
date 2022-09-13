@@ -1,4 +1,4 @@
-import {FC, useCallback, useContext, useRef, useState} from 'react'
+import {FC, useContext, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {
@@ -14,14 +14,12 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {debounce, first, get, isEqual, size, isEmpty} from 'lodash'
+import {first, get, size, isEmpty} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
-import IcArrowBack from 'icons/material/ArrowBack.svg'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 
 import {useWindowSize} from 'react-use'
-import {last} from 'rxjs'
 import {ArrowLeft} from 'react-iconly'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import {makeRequest} from '../../api'
@@ -165,38 +163,6 @@ const FormPage: FC = observer(() => {
       })
     }
   }
-
-  const onChangeFields = useCallback(
-    debounce((newFields) => {
-      const mappedFields = mapFormikFields(newFields, category.fieldsById)
-      if (!isEqual(mappedFields, fieldsRef.current)) {
-        fieldsRef.current = mappedFields
-        makeRequest(
-          {
-            url: '/api/category-data',
-            method: 'post',
-            data: {
-              id: categoryId,
-              editFields: mappedFields,
-            },
-          },
-          {
-            retries: 2,
-            retryDelay: () => 2000,
-          },
-        )
-          .then((res) => {
-            setCategoryData(mapCategoryData(res.data.result))
-          })
-          .catch((e) => {
-            if (!e.response) {
-              toast.error('CHECK_CONNECTION_ERROR')
-            }
-          })
-      }
-    }, 1000),
-    [category, fieldsRef],
-  )
 
   const validate = (values) => {
     const errors: any = {}
@@ -851,7 +817,6 @@ const FormPage: FC = observer(() => {
                 </PrimaryButton>
               </div>
             </div>
-            <CategoryUpdater onChangeFields={onChangeFields} />
             {query.action === 'create' && (
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
