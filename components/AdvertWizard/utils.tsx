@@ -26,7 +26,9 @@ export const findSelectValue = (id, options) => {
   }
 }
 
-const getFields = (fieldsById: Record<string, CACategoryDataFieldModel>) => {
+export const getFields = (
+  fieldsById: Record<string, CACategoryDataFieldModel>,
+) => {
   return Object.fromEntries(
     Object.entries(fieldsById).reduce((acc, [, value]) => {
       // @ts-ignore
@@ -44,6 +46,7 @@ export const mapFormikFields = (rawFields = [], fieldsById = {}) => {
       .map(([key, value]) => {
         const field = getFields(fieldsById)[key]
         let mappedValue
+        if (!field) return [key]
         switch (field.fieldType) {
           case 'select':
           case 'iconselect': {

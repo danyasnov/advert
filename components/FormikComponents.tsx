@@ -3,8 +3,8 @@ import {Field, FieldProps, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
-import {CACategoryDataFieldModel} from 'front-api/src/models'
-import {get, isEmpty, isEqual, toNumber} from 'lodash'
+import {CACategoryDataFieldModel, FieldsModel} from 'front-api/src/models'
+import {get, isEmpty, isEqual, size, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
@@ -49,6 +49,10 @@ interface IFormikNumber {
 }
 interface IFormikField {
   field: CACategoryDataFieldModel
+}
+interface IFormikDependentField {
+  onFieldsChange?: (fields: CACategoryDataFieldModel[]) => void
+  allFields?: CACategoryDataFieldModel[]
 }
 
 interface FieldOptions {
@@ -144,11 +148,13 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
 }
 
 // @ts-ignore
-export const FormikCreateFields: FC<{
-  fieldsArray: any[]
-  id?: number
-  hasArrayType?: boolean
-}> = ({fieldsArray, id, hasArrayType}) => {
+export const FormikCreateFields: FC<
+  {
+    fieldsArray: any[]
+    id?: number
+    hasArrayType?: boolean
+  } & IFormikDependentField
+> = ({fieldsArray, id, hasArrayType, onFieldsChange}) => {
   let checkboxesGroup = null
   let description = null
   let fields = fieldsArray
@@ -168,9 +174,16 @@ export const FormikCreateFields: FC<{
       isEmpty(getSelectOptions(f.multiselects)) &&
       ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
 
-    if (!isEmptyOptions && f.itemType !== 'title') {
+    // eslint-disable-next-line no-underscore-dangle
+    if (!isEmptyOptions && f.itemType !== 'title' && !f._dependenceSequenceId) {
       if (f.dependenceSequenceId) {
-        return <FormikDependentFields field={f} />
+        return (
+          <FormikDependentFields
+            field={f}
+            allFields={fields}
+            onFieldsChange={onFieldsChange}
+          />
+        )
       }
       return (
         <AdvertFormField
@@ -642,7 +655,9 @@ export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
   )
 }
 
-export const FormikDependentFields: FC<IFormikField> = ({field}) => {
+export const FormikDependentFields: FC<
+  IFormikField & IFormikDependentField
+> = ({field, onFieldsChange, allFields}) => {
   const {values, setFieldValue} = useFormikContext()
   const prevValues = useRef(values)
   const {width} = useWindowSize()
@@ -652,11 +667,16 @@ export const FormikDependentFields: FC<IFormikField> = ({field}) => {
   const prevFields = prevValues.current.fields
   const [fields, setFields] = useState([
     {...field, value: nextFields[field.id]?.value},
+    ...allFields
+      // eslint-disable-next-line no-underscore-dangle
+      // @ts-ignore
+      .filter((f) => f._dependenceSequenceId === field.dependenceSequenceId)
+      .map((f) => ({...f, value: nextFields[f.id]?.value})),
   ])
 
   // @ts-ignore
   useEffect(async () => {
-    console.log('fields', fields)
+    // console.log('fields', fields)
     const newFields = []
     let shouldClearNext = false
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
@@ -686,10 +706,14 @@ export const FormikDependentFields: FC<IFormikField> = ({field}) => {
               }),
               'data.result',
             ) || {}
-          setFields([
+          const resultFields = [
             ...newFields,
             ...(result.nextField ? [result.nextField] : []),
-          ])
+          ]
+          setFields(resultFields)
+          if (size(resultFields) > 1) {
+            onFieldsChange(resultFields)
+          }
           shouldClearNext = true
         }
       } else {

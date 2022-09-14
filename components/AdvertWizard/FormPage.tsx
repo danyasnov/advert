@@ -37,6 +37,7 @@ import FormikAdvertAutoSave from './FormikAdvertAutoSave'
 import {
   CategoryUpdater,
   FormGroup,
+  getFields,
   hasErrors,
   mapCategoryData,
   mapFormikFields,
@@ -122,7 +123,12 @@ const FormPage: FC = observer(() => {
     saveDraft: boolean
   }) => {
     const {fields, condition} = values
+    // return
+    //
 
+    // if (getFields(category.fieldsById)[2054]) debugger
+    console.log('ONsubmit fieldsById', fields, getFields(category.fieldsById))
+    // return console.log('onSubmit fields', fields)
     const mappedFields = mapFormikFields(fields, category.fieldsById)
 
     const data = {
@@ -355,7 +361,7 @@ const FormPage: FC = observer(() => {
   const isAllFormVisible = !formState.find((f) => !f.visible)
   const canPublish =
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
-
+  console.log('render', category)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
@@ -581,6 +587,63 @@ const FormPage: FC = observer(() => {
                         fieldsArray={arrayTypeFields}
                         id={id}
                         hasArrayType={fieldType === 'array'}
+                        onFieldsChange={(fields) => {
+                          const {dependenceSequenceId} = fields[0]
+                          // console.log(arrayTypeFields, fields)
+                          const mapFields = (oldFields) => {
+                            const dependentFieldIndex = oldFields.findIndex(
+                              (f) =>
+                                f.dependenceSequenceId === dependenceSequenceId,
+                            )
+                            if (dependentFieldIndex !== -1) {
+                              const result = oldFields.filter(
+                                (f) =>
+                                  // eslint-disable-next-line no-underscore-dangle
+                                  f._dependenceSequenceId !==
+                                  dependenceSequenceId,
+                              )
+                              result.splice(
+                                dependentFieldIndex,
+                                1,
+                                ...fields.map((f, fIndex) => ({
+                                  ...f,
+                                  _dependenceSequenceId:
+                                    fIndex === 0 ? null : dependenceSequenceId,
+                                })),
+                              )
+                              return result
+                            }
+                            return oldFields
+                          }
+                          let newFields
+                          if (hasArrayType) {
+                            newFields = category.data.fields.reduce(
+                              (acc, value) => {
+                                const result = {
+                                  ...value,
+                                  arrayTypeFields: mapFields(
+                                    value.arrayTypeFields,
+                                  ),
+                                }
+                                return [...acc, result]
+                              },
+                              [],
+                            )
+                          } else {
+                            newFields = mapFields(category.data.fields)
+                          }
+
+                          const newCategory = {
+                            ...category.data,
+                            fields: newFields,
+                          }
+                          console.log(
+                            'onFieldsChange',
+                            mapCategoryData(newCategory),
+                          )
+
+                          setCategoryData(mapCategoryData(newCategory))
+                        }}
                       />
                     </div>
                   }

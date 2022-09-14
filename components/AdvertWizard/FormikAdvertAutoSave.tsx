@@ -22,16 +22,16 @@ const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
       (ctx: typeof formik) => {
         onSubmit({values: ctx.values, saveDraft: true, helpers: ctx})
       },
-      15000,
+      1500,
       {leading: false},
     ),
-    [],
+    [onSubmit],
   )
   useEffect(() => {
     if (formik.dirty) {
       debouncedSubmitCaller(formik)
     } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSubmitCaller, formik.dirty, formik.values])
+  }, [formik.dirty, formik.values])
 
   return null
 }
