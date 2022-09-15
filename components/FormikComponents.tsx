@@ -701,7 +701,7 @@ export const FormikDependentFields: FC<
                   dependenceSequence: newFields.map(
                     (f) => nextFields[f.id]?.value,
                   ),
-                  otherValueWasSelected: true,
+                  otherValueWasSelected: false,
                 },
               }),
               'data.result',

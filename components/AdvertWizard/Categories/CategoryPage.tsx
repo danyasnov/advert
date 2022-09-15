@@ -5,6 +5,7 @@ import {first, isEmpty, last, toNumber} from 'lodash'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../../Buttons/Button'
 import PrimaryButton from '../../Buttons/PrimaryButton'
 import {useCategoriesStore} from '../../../providers/RootStoreProvider'
@@ -96,20 +97,21 @@ const CategoryPage: FC = observer(() => {
       })
     }
   }
-
   const header = (
     <>
       <div className='mb-8 hidden s:block'>
         <h5 className='text-h-5 text-greyscale-900 font-normal mb-8 mt-8'>
           {rootCategory ? (
-            <div className='flex'>
+            <div className='flex space-x-3'>
               <Button
                 onClick={() => {
                   setSelected([])
                 }}>
-                <IcKeyboardArrowLeft className='fill-current text-primary-500 w-7 h-7' />
+                <IcArrowDown className='fill-current text-primary-500 w-7 h-7 rotate-90' />
               </Button>
-              {rootCategory.name}
+              <span className='font-bold text-h-5 text-greyscale-900'>
+                {rootCategory.name}
+              </span>
             </div>
           ) : (
             <span className='font-bold text-h-5 text-greyscale-900'>
@@ -117,14 +119,16 @@ const CategoryPage: FC = observer(() => {
             </span>
           )}
         </h5>
-        <div className='w-1/2'>
-          <SearchCategories
-            handleSelectedItemChange={(item) => {
-              if (!item.id) return
-              onSubmit(toNumber(item.id))
-            }}
-          />
-        </div>
+        {isEmpty(selected) && (
+          <div className='w-1/2'>
+            <SearchCategories
+              handleSelectedItemChange={(item) => {
+                if (!item.id) return
+                onSubmit(toNumber(item.id))
+              }}
+            />
+          </div>
+        )}
       </div>
       <div className='s:hidden'>
         <MobileCategoriesHeader
