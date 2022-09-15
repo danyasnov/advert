@@ -247,12 +247,6 @@ const FormPage: FC = observer(() => {
       filled: !isEmpty(values.photos),
       required: !!category.data.minPhotos,
     },
-    {
-      key: 'WAYS_COMMUNICATION',
-      validate: () => validateCommunication(phoneNumber, t),
-      required: true,
-      filled: !!phoneNumber,
-    },
     ...(isEmpty(fieldsArray[0]?.arrayTypeFields) && !category.data.allowUsed
       ? []
       : fieldsArray.map((fieldArray, index) => {
@@ -294,6 +288,12 @@ const FormPage: FC = observer(() => {
         ),
       required: !category.data.allowFree,
       filled: !!values.price,
+    },
+    {
+      key: 'WAYS_COMMUNICATION',
+      validate: () => validateCommunication(phoneNumber, t),
+      required: true,
+      filled: !!phoneNumber,
     },
   ]
   const getFormState = (showAll?) => {

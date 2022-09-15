@@ -152,6 +152,7 @@ const MapPage: FC = () => {
         return Promise.reject()
       }
       newDraft.currencies = currencies
+      // newDraft.currencies = []
       if (hash) newDraft.hash = hash
       if (label) newDraft.addressDraft = label
 
