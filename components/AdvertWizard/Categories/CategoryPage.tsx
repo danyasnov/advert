@@ -112,7 +112,9 @@ const CategoryPage: FC = observer(() => {
               {rootCategory.name}
             </div>
           ) : (
-            t('SELECT_CATEGORY')
+            <span className='font-bold text-h-5 text-greyscale-900'>
+              {t('SELECT_CATEGORY')}
+            </span>
           )}
         </h5>
         <div className='w-1/2'>

@@ -31,7 +31,7 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
                 layout='fill'
               />
             </div>
-            <span className='text-greyscale-900 text-body-16 font-bold'>
+            <span className='text-greyscale-900 text-body-16 font-medium'>
               {c.name}
             </span>
           </Button>
