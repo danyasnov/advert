@@ -377,11 +377,8 @@ const FormPage: FC = observer(() => {
         <h2 className='text-h-4 font-bold'>{category.data.name}</h2>
       </div>
       <FormikProvider value={formik}>
-        <div
-          className={`${
-            showWholeForm ? 'hidden' : 'm:hidden'
-          } mb-6 px-4 s:px-0`}>
-          <div className='hidden s:flex mb-6 flex items-center space-x-2'>
+        <div className='mb-6 px-4 s:px-0'>
+          <div className='hidden s:flex m:hidden mb-6 flex items-center space-x-2'>
             <Button
               id='ad-back-button'
               onClick={() => {
@@ -396,7 +393,9 @@ const FormPage: FC = observer(() => {
               {category.data.name}
             </span>
           </div>
-          <FormProgressBar category={category.data} values={values} />
+          <div className={`${showWholeForm ? 'hidden' : 'm:hidden'}`}>
+            <FormProgressBar category={category.data} values={values} />
+          </div>
         </div>
         <div className='flex px-4 s:px-0'>
           <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full drop-shadow-card'>
