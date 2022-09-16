@@ -452,11 +452,6 @@ const FormPage: FC = observer(() => {
                   orientation='vertical'
                   body={
                     <Field
-                      className={`${
-                        hasArrayType
-                          ? 's:max-w-full m:max-w-[582px] l:max-w-[592px]'
-                          : 's:max-w-[656px] l:mt-9'
-                      }`}
                       name='content'
                       maxDescriptionLength={category.data.descriptionLengthMax}
                       component={AdvertDescription}
@@ -728,7 +723,6 @@ const FormPage: FC = observer(() => {
                     }
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
-                    labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2 text-greyscale-900'
                   />
                   {!!category.data.isProduct && (
@@ -746,7 +740,6 @@ const FormPage: FC = observer(() => {
                             />
                           </div>
                         }
-                        labelTip={t('POSSIBLE_EXCHANGE_TIP')}
                         label={width < 768 ? undefined : t('EXCHANGE')}
                       />
                       <AdvertFormField
@@ -825,7 +818,6 @@ const FormPage: FC = observer(() => {
                     }
                     isRequired={!category.data.allowFree}
                     label={t('PHONE_NUM')}
-                    // labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2 text-greyscale-900'
                   />
                 </div>
