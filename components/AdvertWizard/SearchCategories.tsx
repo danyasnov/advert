@@ -83,13 +83,13 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
           })}
           data-test-id='category-search'
           placeholder={t('SEARCH_BY_CATEGORIES')}
-          className='pl-12 px-3.5 py-3 text-greyscale-900 text-body-16 rounded-xl w-full h-10 bg-greyscale-100 outline-none'
+          className='pl-12 px-3.5 py-3 text-greyscale-900 text-body-16 rounded-xl w-full h-10 bg-greyscale-100 outline-none focus:bg-purple/10 focus:border-primary-500 border border-transparent'
           id='search-autocomplete'
         />
       </div>
       <ul
         {...getMenuProps()}
-        className='z-10 bg-white shadow-xl absolute top-12 '>
+        className='z-10 bg-white shadow-xl absolute top-12 rounded-2xl divide-y divide-greyscale-200 '>
         {isOpen &&
           inputItems.map((item, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
@@ -99,14 +99,14 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
                 closeMenu()
                 handleSelectedItemChange(item)
               }}
-              className={`flex flex-col h-14 px-4 py-3 justify-center  ${
-                highlightedIndex === index ? 'bg-brand-a2' : ''
+              className={`flex flex-col mx-5 py-4 justify-center cursor-pointer  ${
+                highlightedIndex === index ? '' : ''
               }`}
               key={item.id}>
-              <span className='text-body-14 text-greyscale-900 truncate'>
+              <span className='text-body-16 font-medium text-greyscale-900 truncate mb-1'>
                 {item.title}
               </span>
-              <span className='text-body-12 text-black-c truncate'>
+              <span className='text-body-14 text-black-c truncate'>
                 {item.secondary}
               </span>
             </li>

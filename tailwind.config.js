@@ -162,6 +162,7 @@ module.exports = {
         'dark-2': '#1F222A',
         'modal-background': 'rgba(31, 34, 42, 0.7)',
         pink: '#FFF5F5',
+        purple: '#7210FF',
       },
       zIndex: {
         9: 9,
