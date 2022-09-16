@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import {SortableContainer, SortableContainerProps} from 'react-sortable-hoc'
-import {random} from 'lodash'
+import {get, random} from 'lodash'
 import {AxiosRequestConfig} from 'axios'
 import {toast} from 'react-toastify'
 import {useTranslation} from 'next-i18next'
@@ -100,14 +100,28 @@ const AdvertPhotosContainer: ComponentClass<
             )
           })
           .catch((e) => {
+            setPhotos((prevPhotos) =>
+              prevPhotos.map((p) => {
+                if (p.hash === id) {
+                  return {...p, loading: false, error: true}
+                }
+                return p
+              }),
+            )
+            const msg = get(e, 'response.data.code')
+            if (msg) {
+              toast.error(t(msg))
+            }
+
             if (!e.response) {
-              toast.error('CHECK_CONNECTION_ERROR')
+              toast.error(t('CHECK_CONNECTION_ERROR'))
             }
           })
       })
     },
     [photos],
   )
+  console.log('photos', photos)
 
   return (
     <div className='mb-4 w-full relative'>
@@ -145,8 +159,10 @@ const AdvertPhotosContainer: ComponentClass<
           <AdvertPhoto
             id={p.id}
             loading={p.loading}
+            error={p.error}
             url={p.url}
             index={index}
+            isMain={index === 0}
             key={p.hash}
             onRemove={() => {
               setPhotos(photos.filter((v) => v.hash !== p.hash))
