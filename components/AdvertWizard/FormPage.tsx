@@ -474,9 +474,6 @@ const FormPage: FC = observer(() => {
                   <AdvertFormField
                     id='form-field-photos'
                     labelClassName='text-greyscale-900 mt-2 l:mt-0'
-                    orientation={
-                      width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
-                    }
                     body={
                       <div className='w-full'>
                         <Field
@@ -496,9 +493,6 @@ const FormPage: FC = observer(() => {
                     isRequired={category.data.minPhotos > 0}
                   />
                   <AdvertFormField
-                    orientation={
-                      width >= 1440 && !hasArrayType ? 'horizontal' : 'vertical'
-                    }
                     id='form-field-videos'
                     labelClassName='text-greyscale-900'
                     body={
