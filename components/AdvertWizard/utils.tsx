@@ -345,9 +345,13 @@ export const FormGroup: FC<{
                 }}>
                 <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
-                    <span className='text-greyscale-900 text-body-16 pb-1 font-semibold'>
-                      {title}
-                    </span>
+                    <div className='pb-1 font-semibold text-body-16'>
+                      <span className='text-greyscale-900'>{title}</span>
+                      {countMeta.isRequired && (
+                        <span className='text-error pl-1'>*</span>
+                      )}
+                    </div>
+
                     <span
                       className={`text-body-14 s:text-body-16 font-normal ${
                         showSummaryErrors ? 'text-error' : 'text-greyscale-600'

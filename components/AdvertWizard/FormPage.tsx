@@ -440,6 +440,7 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: 2,
+                  isRequired: true,
                 }
               }}
               header={
@@ -535,6 +536,7 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: category.data.allowVideo ? 2 : 1,
+                  isRequired: category.data.minPhotos > 0,
                 }
               }}
               validate={() =>
@@ -669,6 +671,9 @@ const FormPage: FC = observer(() => {
                       maxFilled: hasCondition
                         ? maxFilled.length + 1
                         : maxFilled.length,
+                      isRequired: hasCondition
+                        ? true
+                        : arrayTypeFields.some((f) => f.isFillingRequired),
                     }
                   }}
                   validate={() => ({
@@ -768,6 +773,7 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: 1,
+                  isRequired: !category.data.allowFree,
                 }
               }}
               validate={() =>
@@ -809,7 +815,7 @@ const FormPage: FC = observer(() => {
                         </Button>
                       </div>
                     }
-                    isRequired={!category.data.allowFree}
+                    isRequired
                     label={t('PHONE_NUM')}
                     labelClassName='mt-2 text-greyscale-900'
                   />
@@ -819,6 +825,7 @@ const FormPage: FC = observer(() => {
                 isRequiredFilled: false,
                 filledCount: 0,
                 maxFilled: 1,
+                isRequired: true,
               })}
               validate={() => validateCommunication(phoneNumber, t)}
             />
