@@ -37,7 +37,7 @@ const ProductLayout: FC = observer(() => {
                   />
                 </div>
               </main>
-              <aside className='hidden s:block s:w-[224px] m:w-[280px] drop-shadow-card'>
+              <aside className='hidden s:block s:w-[224px] m:w-[280px]'>
                 <ProductSidebar />
               </aside>
             </div>

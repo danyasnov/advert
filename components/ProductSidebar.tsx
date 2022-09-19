@@ -1,12 +1,9 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {browserName} from 'react-device-detect'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import UserCard from './UserCard'
-import ProductInfoIcons from './ProductInfoIcons'
-import CallButton from './Buttons/CallButton'
-import ChatButton from './Buttons/ChatButton'
-import DeactivateAdvButton from './Buttons/DeactivateAdvButton'
 import ProductPrice from './ProductPrice'
 import SharePopup from './SharePopup'
 import ProductLike from './ProductLike'
@@ -22,7 +19,15 @@ const ProductSidebar: FC = observer(() => {
     <div className='flex flex-col space-y-10'>
       <ProductPrice />
       <ProductCommunication />
-      <UserCard />
+      <div
+        className={`${
+          browserName.toLowerCase() === 'safari'
+            ? 'shadow-xl rounded-2xl'
+            : 'drop-shadow-card'
+        }`}>
+        <UserCard />
+      </div>
+
       <div className='flex flex-col items-center space-y-5'>
         <ProductLike
           userHash={owner.hash}
