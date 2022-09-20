@@ -243,7 +243,9 @@ const FormPage: FC = observer(() => {
       filled: !isEmpty(values.photos),
       required: !!category.data.minPhotos,
     },
-    ...(isEmpty(fieldsArray[0]?.arrayTypeFields) && !category.data.allowUsed
+    ...(isEmpty(fieldsArray[0]?.arrayTypeFields) &&
+    !category.data.allowUsed &&
+    !category.data.isProduct
       ? []
       : fieldsArray.map((fieldArray, index) => {
           const {name, arrayTypeFields} = fieldArray
@@ -266,11 +268,15 @@ const FormPage: FC = observer(() => {
                 t,
               ),
             }),
-            required: arrayTypeFields.some((f) =>
-              f.isFillingRequired || index === 0
-                ? category.data.allowUsed
-                : false,
-            ),
+            required: arrayTypeFields.some((f) => {
+              if (f.isFillingRequired) {
+                return true
+              }
+              if (index === 0) {
+                return category.data.allowUsed && category.data.isProduct
+              }
+              return false
+            }),
             filled: arrayTypeFields.some((f) => !isEmpty(values.fields[f.id])),
           }
         })),
@@ -411,6 +417,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               id='form-group-title-and-description'
               hide={!formStateDict?.TITLE_AND_DESCRIPTION.visible}
+              required={formStateDict?.TITLE_AND_DESCRIPTION.required}
               validate={() =>
                 validateTitle(
                   // @ts-ignore
@@ -436,7 +443,6 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: 2,
-                  isRequired: true,
                 }
               }}
               header={
@@ -462,6 +468,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               id='form-group-photo-and-video'
               hide={!formStateDict?.PHOTO_AND_VIDEO.visible}
+              required={formStateDict?.PHOTO_AND_VIDEO.required}
               title={t('PHOTO_AND_VIDEO')}
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('UPLOAD_PHOTO_AND_VIDEO')} />}
@@ -532,7 +539,6 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: category.data.allowVideo ? 2 : 1,
-                  isRequired: category.data.minPhotos > 0,
                 }
               }}
               validate={() =>
@@ -553,6 +559,7 @@ const FormPage: FC = observer(() => {
                 <FormGroup
                   id='form-group-fields'
                   hide={!formStateDict?.[name].visible}
+                  required={formStateDict?.[name].required}
                   key={name}
                   title={name}
                   showWholeForm={showWholeForm}
@@ -666,9 +673,6 @@ const FormPage: FC = observer(() => {
                       maxFilled: hasCondition
                         ? maxFilled.length + 1
                         : maxFilled.length,
-                      isRequired: hasCondition
-                        ? true
-                        : arrayTypeFields.some((f) => f.isFillingRequired),
                     }
                   }}
                   validate={() => ({
@@ -695,6 +699,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               id='form-group-cost-and-terms'
               hide={!formStateDict?.COST_AND_TERMS.visible}
+              required={formStateDict?.COST_AND_TERMS.required}
               title={t('COST_AND_TERMS')}
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('COST_AND_TERMS')} />}
@@ -770,7 +775,6 @@ const FormPage: FC = observer(() => {
                   isRequiredFilled,
                   filledCount,
                   maxFilled: 1,
-                  isRequired: !category.data.allowFree,
                 }
               }}
               validate={() =>
@@ -785,6 +789,7 @@ const FormPage: FC = observer(() => {
             <FormGroup
               id='form-group-ways-communication'
               hide={!formStateDict?.WAYS_COMMUNICATION.visible}
+              required={formStateDict?.WAYS_COMMUNICATION.required}
               title={t('WAYS_COMMUNICATION')}
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}

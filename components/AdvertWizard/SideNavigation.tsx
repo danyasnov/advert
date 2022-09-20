@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import IcCheck from 'icons/material/Check.svg'
 import {CAParamsModel} from 'front-api/src/index'
 import {TickSquare} from 'react-iconly'
 

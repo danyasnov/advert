@@ -676,7 +676,6 @@ export const FormikDependentFields: FC<
 
   // @ts-ignore
   useEffect(async () => {
-    // console.log('fields', fields)
     const newFields = []
     let shouldClearNext = false
     // eslint-disable-next-line guard-for-in,no-restricted-syntax

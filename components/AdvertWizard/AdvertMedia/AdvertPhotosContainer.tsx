@@ -121,7 +121,6 @@ const AdvertPhotosContainer: ComponentClass<
     },
     [photos],
   )
-  console.log('photos', photos)
 
   return (
     <div className='mb-4 w-full relative'>

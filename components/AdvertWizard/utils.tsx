@@ -243,6 +243,7 @@ export const FormGroup: FC<{
   id?: string
   title: string
   hide?: boolean
+  required?: boolean
   showWholeForm: boolean
   getCountMeta: () => Record<string, unknown>
   validate: () => FormikErrors<any>
@@ -255,6 +256,7 @@ export const FormGroup: FC<{
   getCountMeta,
   hide,
   showWholeForm,
+  required,
 }) => {
   const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
@@ -347,9 +349,7 @@ export const FormGroup: FC<{
                   <div className='w-full flex flex-col items-start'>
                     <div className='pb-1 font-semibold text-body-16'>
                       <span className='text-greyscale-900'>{title}</span>
-                      {countMeta.isRequired && (
-                        <span className='text-error pl-1'>*</span>
-                      )}
+                      {required && <span className='text-error pl-1'>*</span>}
                     </div>
 
                     <span

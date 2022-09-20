@@ -24,7 +24,6 @@ const SearchCategories: FC<Props> = ({handleSelectedItemChange}) => {
         url: '/api/search-suggestions',
         params: {search: trimmed},
       }).then((res) => {
-        console.log(res.data)
         const items = res.data
           // eslint-disable-next-line camelcase
           .map((i: {cat_id: string; path_word: string[]}) => {
