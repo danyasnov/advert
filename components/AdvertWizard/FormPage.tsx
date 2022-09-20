@@ -123,12 +123,7 @@ const FormPage: FC = observer(() => {
     saveDraft: boolean
   }) => {
     const {fields, condition} = values
-    // return
-    //
 
-    // if (getFields(category.fieldsById)[2054]) debugger
-    console.log('ONsubmit fieldsById', fields, getFields(category.fieldsById))
-    // return console.log('onSubmit fields', fields)
     const mappedFields = mapFormikFields(fields, category.fieldsById)
 
     const data = {
@@ -181,6 +176,7 @@ const FormPage: FC = observer(() => {
     const conditionError = validateCondition(
       condition,
       categoryData.allowUsed,
+      categoryData.isProduct,
       t,
     )
     const communicationError = validateCommunication(phoneNumber, t)
@@ -259,6 +255,7 @@ const FormPage: FC = observer(() => {
                     // @ts-ignore
                     val.condition,
                     category.data.allowUsed,
+                    category.data.isProduct,
                     t,
                   )
                 : {}),
@@ -361,7 +358,6 @@ const FormPage: FC = observer(() => {
   const isAllFormVisible = !formState.find((f) => !f.visible)
   const canPublish =
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
-  console.log('render', category)
   return (
     <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
@@ -563,23 +559,26 @@ const FormPage: FC = observer(() => {
                   header={<AdvertFormHeading title={name} />}
                   body={
                     <div className='space-y-4'>
-                      {category.data.allowUsed && index === 0 && (
-                        <AdvertFormField
-                          orientation={width >= 768 ? 'horizontal' : 'vertical'}
-                          id='form-field-condition'
-                          body={conditionComponent}
-                          isRequired
-                          labelClassName='mt-2 text-greyscale-900'
-                          label={t('PROD_CONDITION')}
-                        />
-                      )}
+                      {category.data.allowUsed &&
+                        category.data.isProduct &&
+                        index === 0 && (
+                          <AdvertFormField
+                            orientation={
+                              width >= 768 ? 'horizontal' : 'vertical'
+                            }
+                            id='form-field-condition'
+                            body={conditionComponent}
+                            isRequired
+                            labelClassName='mt-2 text-greyscale-900'
+                            label={t('PROD_CONDITION')}
+                          />
+                        )}
                       <FormikCreateFields
                         fieldsArray={arrayTypeFields}
                         id={id}
                         hasArrayType={fieldType === 'array'}
                         onFieldsChange={(fields) => {
                           const {dependenceSequenceId} = fields[0]
-                          // console.log(arrayTypeFields, fields)
                           const mapFields = (oldFields) => {
                             const dependentFieldIndex = oldFields.findIndex(
                               (f) =>
@@ -627,10 +626,6 @@ const FormPage: FC = observer(() => {
                             ...category.data,
                             fields: newFields,
                           }
-                          console.log(
-                            'onFieldsChange',
-                            mapCategoryData(newCategory),
-                          )
 
                           setCategoryData(mapCategoryData(newCategory))
                         }}
@@ -682,6 +677,8 @@ const FormPage: FC = observer(() => {
                           // @ts-ignore
                           values.condition,
                           category.data.allowUsed,
+                          category.data.isProduct,
+
                           t,
                         )
                       : {}),

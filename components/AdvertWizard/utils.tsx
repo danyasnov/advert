@@ -200,9 +200,9 @@ export const validatePrice = (price, allowFree, t) => {
   return errors
 }
 
-export const validateCondition = (condition, allowUsed, t) => {
+export const validateCondition = (condition, allowUsed, isProduct, t) => {
   const errors: FormikErrors<any> = {}
-  if (!condition && allowUsed) {
+  if (!condition && allowUsed && isProduct) {
     errors.condition = t('FIELD_REQUIRED_ERROR', {
       field: t('ADVERT_TYPE'),
     })

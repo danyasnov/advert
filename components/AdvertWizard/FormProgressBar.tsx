@@ -11,7 +11,7 @@ interface Props {
 const FormProgressBar: FC<Props> = ({category, values}) => {
   const {t} = useTranslation()
   const {photos, condition, price, videos} = values
-  const {minPhotos, allowVideo, allowUsed} = category
+  const {minPhotos, allowVideo, allowUsed, isProduct} = category
   let summary = 0
   let filled = 0
 
@@ -44,7 +44,7 @@ const FormProgressBar: FC<Props> = ({category, values}) => {
     filled += 1
   }
 
-  if (allowUsed) {
+  if (allowUsed && isProduct) {
     summary += 1
     if (condition) {
       filled += 1
