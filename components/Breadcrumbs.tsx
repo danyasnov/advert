@@ -48,7 +48,7 @@ const Breadcrumbs: FC = observer(() => {
       {breadcrumbs.flatMap((b, index, arr) => {
         const isLast = arr.length - 1 === index
         const link = isLast ? (
-          <span className='text-black-c' key={b.title}>
+          <span className='text-greyscale-900' key={b.title}>
             {b.title}
           </span>
         ) : (
@@ -56,15 +56,15 @@ const Breadcrumbs: FC = observer(() => {
             title={b.title}
             href={b.href}
             key={b.title}
-            className='text-body-14 text-brand-b1'>
+            className='font-bold text-primary-500'>
             {b.title}
           </LinkWrapper>
         )
         return index === 0
           ? [link]
           : [
-              <span key={`${index}-${b.title}`} className='text-black-c'>
-                →
+              <span key={`${index}-${b.title}`} className='text-greyscale-900'>
+                /
               </span>,
               link,
             ]

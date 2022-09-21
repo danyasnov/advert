@@ -141,6 +141,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   } else {
     const [productsResponse] = response
+
     const products = productsResponse?.result?.data ?? null
     productsStore = {
       // @ts-ignore

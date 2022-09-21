@@ -34,6 +34,7 @@ const ScrollableCardGroup: FC<Props> = ({
   hideNotFoundDescription,
 }) => {
   const hasMore = count > page * limit
+  console.log('hasMore', hasMore, count)
   if (isEmpty(products) && state === 'pending') {
     return <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
   }
