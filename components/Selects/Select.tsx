@@ -17,6 +17,7 @@ export interface SelectProps {
   id?: string
   styles?
   components?
+  classNameOpt?
 }
 
 export interface SelectItem {

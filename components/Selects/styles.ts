@@ -118,4 +118,10 @@ export const FilterStyles = {
     paddingBottom: '13px',
     height: '40px',
   }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#9E9E9E',
+  }),
 }

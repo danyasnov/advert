@@ -10,12 +10,15 @@ import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
 import {useWindowSize} from 'react-use'
 import {toJS} from 'mobx'
+import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 import MobileSelect from './Selects/MobileSelect'
 import AdvertFormField from './AdvertWizard/AdvertFormField'
 import {makeRequest} from '../api'
 import {FilterStyles} from './Selects/styles'
+import PrimaryButton from './Buttons/PrimaryButton'
+import useOnClickOutside from '../hooks/useOnClickOutside'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -33,6 +36,7 @@ interface IFormikSelect {
   isFilterable: boolean
   isClearable: boolean
   isMulti: boolean
+  filterStyle?: boolean
   styles?: Record<any, any>
 }
 interface IFormikRange {
@@ -67,7 +71,7 @@ interface FieldOptions {
   hideLabel?: boolean
   maxLength?: number
   maxValue?: number
-  styles?: Record<string, (provided: any) => any>
+  filterStyle?: boolean
   minValue?: number
   validate?: (value: any) => string
 }
@@ -108,7 +112,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = true
-      props.styles = FilterStyles
+      props.filterStyle = true
       break
     }
     case 'int': {
@@ -189,7 +193,6 @@ export const FormikFilterFields: FC<{
 export const FormikFilterChips: FC<{
   fieldsArray: CACategoryDataFieldModel[]
 }> = ({fieldsArray}) => {
-  console.log('fieldsArray', toJS(fieldsArray))
   return (
     <>
       {fieldsArray.map((f) => {
@@ -592,32 +595,90 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   const {t} = useTranslation()
   const error = get(errors, name)
   const isValid = !error
-  const commonClass = `w-1/2 py-3 px-3.5 text-greyscale-900 text-body-14 ${
+  const commonClass = `px-5 py-[13px] text-greyscale-900 text-body-12 rounded-lg bg-greyscale-50 ${
     isValid ? '' : 'border-error'
   }`
+  const ref = useRef()
+  const [show, setShow] = useState(false)
+  const [newValue, setNewValue] = useState(value ?? [])
+  const [popupError, setPopupError] = useState('')
   const mappedValue = Array.isArray(value) ? value : ['', '']
+  useOnClickOutside(ref, () => {
+    setShow(false)
+    setPopupError('')
+    setNewValue(value)
+  })
+  let displayValue = ''
+  if (mappedValue[0] && mappedValue[1]) {
+    displayValue = `${mappedValue[0]} - ${mappedValue[1]}`
+  } else if (mappedValue[0] || mappedValue[1]) {
+    displayValue = `${mappedValue[0] || 0} - ${mappedValue[1] || t('MAX')}`
+  }
+
   return (
-    <div className='flex text-greyscale-900 text-body-14'>
-      <NumberFormat
-        value={mappedValue[0]}
-        onValueChange={({value: min}) => {
-          setFieldValue(name, [min, mappedValue[1]])
-        }}
-        thousandSeparator={' '}
-        placeholder={t('TITLE_FROM', {title: placeholder})}
-        className={`border rounded-l-2xl focus:relative ${commonClass}`}
-      />
-      <NumberFormat
-        value={mappedValue[1]}
-        onValueChange={({value: max}) => {
-          setFieldValue(name, [mappedValue[0], max])
-        }}
-        thousandSeparator={' '}
-        placeholder={t('UP_TO')}
-        className={`border rounded-r-2xl focus:relative ${commonClass}`}
-      />
+    <div className='relative w-full bg-greyscale-50 rounded-lg  py-2.5 '>
+      <Button onClick={() => setShow(!show)} className='w-full px-5'>
+        <div className='flex justify-between w-full text-body-12'>
+          {displayValue ? (
+            <span className='text-greyscale-900 flex items-center'>
+              {displayValue}
+            </span>
+          ) : (
+            <span className='text-greyscale-500 flex items-center'>
+              {placeholder}
+            </span>
+          )}
+
+          <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
+        </div>
+      </Button>
+      {show && (
+        <div
+          className='absolute flex flex-col p-5 rounded-2xl shadow-md w-full top-16 bg-white z-10'
+          ref={ref}>
+          <span className='font-semibold text-body-14 text-greyscale-900 mb-1'>
+            {t('FROM')}
+          </span>
+          <NumberFormat
+            value={newValue[0]}
+            onValueChange={({value: min}) => {
+              setPopupError('')
+              setNewValue([min, newValue[1]])
+            }}
+            thousandSeparator={' '}
+            placeholder={t('FROM')}
+            className={`${commonClass} mb-4`}
+          />
+          <span className='font-semibold text-body-14 text-greyscale-900 mb-1'>
+            {t('UP_TO')}
+          </span>
+          <NumberFormat
+            value={newValue[1]}
+            onValueChange={({value: max}) => {
+              setPopupError('')
+              setNewValue([newValue[0], max])
+            }}
+            thousandSeparator={' '}
+            placeholder={t('UP_TO')}
+            className={`${commonClass} mb-5`}
+          />
+          <span className='text-body-12 text-error mb-1'>{popupError}</span>
+          <PrimaryButton
+            onClick={() => {
+              if (newValue[0] > newValue[1]) {
+                return setPopupError("Min value can't be less than max value")
+              }
+              setShow(false)
+              setNewValue([])
+              setFieldValue(name, newValue)
+            }}>
+            {t('SAVE')}
+          </PrimaryButton>
+        </div>
+      )}
     </div>
   )
+  return <div className='flex text-greyscale-900 text-body-14' />
 }
 
 export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
@@ -838,7 +899,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isFilterable,
   isMulti,
   isClearable,
-  styles,
+  filterStyle,
 }) => {
   const {width} = useWindowSize()
   const {name, value} = field
@@ -852,15 +913,26 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     placeholder,
     isSearchable: isFilterable,
     isMulti,
-    styles,
+    styles: {},
+    classNameOpt: {},
     isInvalid: !!error,
     onChange: (item) => {
       setFieldValue(name, item)
       if (error) setFieldError(name, undefined)
     },
   }
+  if (filterStyle) {
+    if (width >= 768) {
+      props.styles = FilterStyles
+    } else {
+      props.classNameOpt = {
+        singleValue: 'text-body-12',
+        valueContainer: 'py-[13px] h-10',
+      }
+    }
+  }
   return (
-    <>
+    <div>
       {width >= 768 ? (
         //  eslint-disable-next-line react/jsx-props-no-spreading
         <Select {...props} />
@@ -869,6 +941,6 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
         <MobileSelect {...props} />
       )}
       <span className='text-body-12 text-error'>{error}</span>
-    </>
+    </div>
   )
 }

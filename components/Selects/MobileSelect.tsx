@@ -18,6 +18,7 @@ const MobileSelect: FC<SelectProps> = ({
   isSearchable,
   isMulti,
   isInvalid,
+  classNameOpt,
 }) => {
   const {t} = useTranslation()
   const [open, setOpen] = useState(false)
@@ -35,28 +36,36 @@ const MobileSelect: FC<SelectProps> = ({
   if (Array.isArray(value)) {
     isEmptyValue = isEmpty(value)
   } else {
-    isEmptyValue = !value?.value
+    isEmptyValue = !value?.value && value?.value !== 0
   }
   return (
     <div>
       <Button
         className={`border rounded-lg w-full bg-greyscale-50 ${
           isInvalid ? 'border-error' : 'border-transparent'
-        }`}
+        } `}
         onClick={() => setOpen(true)}>
-        <div className='flex justify-between items-center w-full px-5 py-4 text-body-16'>
-          {isEmptyValue ? (
-            <>
-              <span className='text-greyscale-400 truncate'>{placeholder}</span>
-              <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
-            </>
-          ) : (
-            <span className='text-greyscale-900 truncate'>
-              {isArray(value)
-                ? value.map((v) => v.label).join(', ')
-                : value.label}
-            </span>
-          )}
+        <div
+          className={` w-full pl-5 pr-6 ${
+            classNameOpt.valueContainer ? classNameOpt.valueContainer : 'py-4 '
+          }`}>
+          <div
+            className={`flex justify-between items-center ${
+              classNameOpt.singleValue
+                ? classNameOpt.singleValue
+                : 'text-body-16'
+            }`}>
+            {isEmptyValue ? (
+              <span className='text-greyscale-500 truncate'>{placeholder}</span>
+            ) : (
+              <span className='text-greyscale-900 truncate'>
+                {isArray(value)
+                  ? value.map((v) => v.label).join(', ')
+                  : value.label}
+              </span>
+            )}
+            <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
+          </div>
         </div>
       </Button>
       <BottomSheet

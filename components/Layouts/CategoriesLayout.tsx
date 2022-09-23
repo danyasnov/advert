@@ -42,21 +42,22 @@ const CategoriesLayout: FC = observer(() => {
       <MetaTags title={title} description={description} />
       <div className='bg-white px-4 s:px-8 flex min-h-1/2'>
         <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
-          <main className='m:w-608px l:w-896px relative'>
+          <main className='m:w-608px l:w-896px relative '>
             <CategoryHeader />
             <FilterForm />
-
-            <ScrollableCardGroup
-              products={products}
-              count={count}
-              page={page}
-              state={state}
-              fetchProducts={() => {
-                fetchProducts({page: page + 1, isScroll: true, query}).then(
-                  () => applyFilter(),
-                )
-              }}
-            />
+            <div className='drop-shadow-card'>
+              <ScrollableCardGroup
+                products={products}
+                count={count}
+                page={page}
+                state={state}
+                fetchProducts={() => {
+                  fetchProducts({page: page + 1, isScroll: true, query}).then(
+                    () => applyFilter(),
+                  )
+                }}
+              />
+            </div>
           </main>
         </div>
       </div>
