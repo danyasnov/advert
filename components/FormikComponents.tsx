@@ -9,11 +9,13 @@ import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import Select, {SelectItem} from './Selects/Select'
 import Button from './Buttons/Button'
 import MobileSelect from './Selects/MobileSelect'
 import AdvertFormField from './AdvertWizard/AdvertFormField'
 import {makeRequest} from '../api'
+import {FilterStyles} from './Selects/styles'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -31,6 +33,7 @@ interface IFormikSelect {
   isFilterable: boolean
   isClearable: boolean
   isMulti: boolean
+  styles?: Record<any, any>
 }
 interface IFormikRange {
   placeholder: string
@@ -64,6 +67,7 @@ interface FieldOptions {
   hideLabel?: boolean
   maxLength?: number
   maxValue?: number
+  styles?: Record<string, (provided: any) => any>
   minValue?: number
   validate?: (value: any) => string
 }
@@ -104,6 +108,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = true
+      props.styles = FilterStyles
       break
     }
     case 'int': {
@@ -134,7 +139,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       break
     }
     case 'checkbox': {
-      component = FormikCheckbox
+      component = FormikChips
       props.label = name
       break
     }
@@ -144,10 +149,65 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
   }
   if (!component) return null
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Field name={`fields.${id}`} component={component} {...props} />
+  return (
+    <div>
+      <Field name={`fields.${id}`} component={component} {...props} />
+    </div>
+  )
 }
 
-// @ts-ignore
+export const FormikFilterFields: FC<{
+  fieldsArray: CACategoryDataFieldModel[]
+}> = ({fieldsArray}) => {
+  return (
+    <>
+      {fieldsArray.map((f) => {
+        // @ts-ignore
+        if (f.fieldType === 'array') {
+          return <FormikFilterFields fieldsArray={f.arrayTypeFields} />
+        }
+        const isEmptyOptions =
+          isEmpty(getSelectOptions(f.multiselects)) &&
+          ['select', 'multiselect', 'iconselect'].includes(f.fieldType)
+
+        if (
+          !isEmptyOptions &&
+          f.itemType !== 'title' &&
+          f.fieldType !== 'checkbox'
+        ) {
+          return <FormikFilterField field={f} />
+        }
+        if (f.itemType === 'title') {
+          return <FormikTitle label={f.name} />
+        }
+        return null
+      })}
+    </>
+  )
+}
+
+export const FormikFilterChips: FC<{
+  fieldsArray: CACategoryDataFieldModel[]
+}> = ({fieldsArray}) => {
+  console.log('fieldsArray', toJS(fieldsArray))
+  return (
+    <>
+      {fieldsArray.map((f) => {
+        // @ts-ignore
+        if (f.fieldType === 'array') {
+          return <FormikFilterChips fieldsArray={f.arrayTypeFields} />
+        }
+
+        if (f.fieldType === 'checkbox') {
+          return <FormikFilterField field={f} />
+        }
+
+        return null
+      })}
+    </>
+  )
+}
+
 export const FormikCreateFields: FC<
   {
     fieldsArray: any[]
@@ -611,6 +671,32 @@ export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   )
 }
 
+export const FormikChips: FC<IFormikCheckbox & FieldProps> = ({
+  field,
+  form,
+  label,
+}) => {
+  const {name, value} = field
+  const {setFieldValue, errors} = form
+  const error = get(errors, name)
+
+  return (
+    <div className='mb-2'>
+      <Button
+        className={`${
+          value ? 'bg-primary-500 text-white' : 'text-primary-500'
+        } py-1 px-4 font-medium text-body-14 border-2 border-primary-500 rounded-full`}
+        onClick={() => {
+          setFieldValue(name, !value)
+        }}>
+        {label}
+      </Button>
+
+      <span className='text-body-12 text-error'>{error}</span>
+    </div>
+  )
+}
+
 export const FormikSwitch: FC<IFormikCheckbox & FieldProps> = ({
   field,
   form,
@@ -752,6 +838,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isFilterable,
   isMulti,
   isClearable,
+  styles,
 }) => {
   const {width} = useWindowSize()
   const {name, value} = field
@@ -765,13 +852,13 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     placeholder,
     isSearchable: isFilterable,
     isMulti,
+    styles,
     isInvalid: !!error,
     onChange: (item) => {
       setFieldValue(name, item)
       if (error) setFieldError(name, undefined)
     },
   }
-
   return (
     <>
       {width >= 768 ? (

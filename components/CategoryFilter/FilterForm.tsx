@@ -4,9 +4,13 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import {
   FormikCheckbox,
+  FormikChips,
+  FormikFilterChips,
   FormikFilterField,
+  FormikFilterFields,
   FormikRange,
   FormikSegmented,
   getSelectOptions,
@@ -27,6 +31,8 @@ import {
 } from '../../helpers'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {clearUrlFromQuery} from '../../utils'
+import SortSelect from '../SortSelect'
+import {FilterStyles} from '../Selects/styles'
 
 interface Values {
   condition: SelectItem
@@ -54,7 +60,8 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   } = useProductsStore()
 
   const prevCategoryQueryRef = useRef('')
-  const {categoryDataFieldsById, categories} = useCategoriesStore()
+  const {categoryDataFieldsById, categories, categoryData} =
+    useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
@@ -127,6 +134,12 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [JSON.stringify(router.query.categories)])
+
+  useEffect(() => {
+    if (currentCategory) {
+      setFilter({categoryId: currentCategory.id})
+    }
+  }, [currentCategory, setFilter])
   const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
 
   const currentCategoriesOptions =
@@ -149,7 +162,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       initialValues={initialValues}
       onSubmit={(values: Values, {setSubmitting}: FormikHelpers<Values>) => {
         const {priceRange, onlyWithPhoto, onlyDiscounted, fields} = values
-
         const mappedFields = Object.fromEntries(
           Object.entries(fields)
             .map(([key, value]) => {
@@ -159,22 +171,27 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                 case 'select':
                 case 'iconselect':
                 case 'multiselect': {
-                  if (Array.isArray(value) && value.length)
+                  if (Array.isArray(value) && value.length) {
                     mappedValue = value.map((v) => v.value)
+                  }
                   break
                 }
                 case 'int': {
                   mappedValue = []
                   if (Array.isArray(value)) {
-                    if (value[0] || value[0] === 0)
+                    if (value[0] || value[0] === 0) {
                       mappedValue[0] = parseInt(value[0], 10)
-                    if (value[1] || value[1] === 0)
+                    }
+                    if (value[1] || value[1] === 0) {
                       mappedValue[1] = parseInt(value[1], 10)
+                    }
                   }
                   break
                 }
                 default: {
-                  if (value) mappedValue = [value]
+                  if (value) {
+                    mappedValue = [value]
+                  }
                 }
               }
               return [key, mappedValue]
@@ -214,9 +231,10 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       }}>
       {({resetForm}) => (
         <Form className='w-full'>
-          <div className='space-y-6'>
+          <div className='grid grid-cols-2 gap-x-2 gap-y-4 mb-4'>
             {!isEmpty(options) && (
               <Select
+                styles={FilterStyles}
                 id='SUBCATEGORY'
                 placeholder={t('SUBCATEGORY')}
                 value={currentOption}
@@ -232,11 +250,13 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                       '/',
                     )
                     pathArray[pathArray.length - 1] = opt.slug
-                    router.push(pathArray.join('/'))
+                    router.push(pathArray.join('/'), undefined, {shallow: true})
                   }
                 }}
               />
             )}
+            <SortSelect id='mobile-sort' />
+
             <Field
               name='condition'
               options={conditionOptions}
@@ -259,37 +279,26 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
                 return error
               }}
             />
+            {!isEmpty(aggregatedFields) && (
+              <FormikFilterFields fieldsArray={aggregatedFields} />
+            )}
           </div>
-
-          {!isEmpty(aggregatedFields) && (
-            <>
-              <div className='h-px bg-shadow-b my-8' />
-              <div className='space-y-6'>
-                {aggregatedFields.map((field) => {
-                  const isEmptyOptions =
-                    isEmpty(getSelectOptions(field.multiselects)) &&
-                    ['select', 'multiselect', 'iconselect'].includes(
-                      field.fieldType,
-                    )
-                  if (isEmptyOptions) return null
-                  return <FormikFilterField field={field} key={field.id} />
-                })}
-              </div>
-            </>
-          )}
-
-          <div className='space-y-6 pt-8'>
+          <div className='flex space-x-3 flex-wrap'>
             <Field
               name='onlyWithPhoto'
-              component={FormikCheckbox}
+              component={FormikChips}
               label={t('WITH_PHOTO')}
             />
             <Field
               name='onlyDiscounted'
-              component={FormikCheckbox}
+              component={FormikChips}
               label={t('ONLY_WITH_DISCOUNT')}
             />
+            {!isEmpty(aggregatedFields) && (
+              <FormikFilterChips fieldsArray={aggregatedFields} />
+            )}
           </div>
+
           <div className='h-px bg-shadow-b mt-8 hidden s:block' />
           <div className='sticky bottom-0 pt-4 pb-2 bg-white flex justify-center'>
             {!isFilterApplied && (

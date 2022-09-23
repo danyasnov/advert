@@ -47,7 +47,7 @@ const MobileSelect: FC<SelectProps> = ({
         <div className='flex justify-between items-center w-full px-5 py-4 text-body-16'>
           {isEmptyValue ? (
             <>
-              <span className='text-greyscale-400'>{placeholder}</span>
+              <span className='text-greyscale-400 truncate'>{placeholder}</span>
               <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
             </>
           ) : (
