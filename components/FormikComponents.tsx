@@ -181,9 +181,6 @@ export const FormikFilterFields: FC<{
         ) {
           return <FormikFilterField field={f} />
         }
-        if (f.itemType === 'title') {
-          return <FormikTitle label={f.name} />
-        }
         return null
       })}
     </>

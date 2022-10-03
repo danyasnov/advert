@@ -1,32 +1,19 @@
 import {FC, useEffect, useMemo, useRef, useState} from 'react'
-import {
-  Formik,
-  Field,
-  Form,
-  FormikHelpers,
-  FormikProps,
-  useFormik,
-  FormikProvider,
-} from 'formik'
+import {Field, Form, FormikHelpers, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {isEmpty, omit} from 'lodash'
+import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {CloseSquare} from 'react-iconly'
 import {toJS} from 'mobx'
-import {toast} from 'react-toastify'
 import {
-  FormikCheckbox,
   FormikChips,
   FormikFilterChips,
-  FormikFilterField,
   FormikFilterFields,
   FormikRange,
-  FormikSegmented,
   FormikSelect,
-  getSelectOptions,
 } from '../FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
-import SecondaryButton from '../Buttons/SecondaryButton'
 import Select, {SelectItem} from '../Selects/Select'
 import {
   useCategoriesStore,
@@ -38,12 +25,12 @@ import {
   getUrlQueryFromFilter,
   getFormikInitialFromQuery,
   shallowUpdateQuery,
+  getMappedFieldsByKey,
 } from '../../helpers'
-import PrimaryButton from '../Buttons/PrimaryButton'
 import {clearUrlFromQuery} from '../../utils'
 import SortSelect from '../SortSelect'
 import {FilterStyles} from '../Selects/styles'
-import {makeRequest} from '../../api'
+import Button from '../Buttons/Button'
 
 interface Values {
   condition: SelectItem
@@ -60,24 +47,15 @@ interface Props {
 const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {
-    setFilter,
-    resetFilter,
-    fetchProducts,
-    aggregatedFields,
-    newCount,
-    applyFilter,
-    isFilterApplied,
-  } = useProductsStore()
+  const {setFilter, resetFilter, fetchProducts, aggregatedFields, applyFilter} =
+    useProductsStore()
 
   const prevCategoryQueryRef = useRef('')
-  const {categoryDataFieldsById, categories, categoryData} =
-    useCategoriesStore()
+  const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
   )
-  const formikRef = useRef<FormikProps<Values>>()
   const conditionOptions = useMemo(
     () => [
       {
@@ -136,21 +114,13 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     return defaultValues
   }
 
-  useEffect(() => {
-    if (formikRef.current && prevCategoryQueryRef.current) {
-      formikRef.current.resetForm({values: getInitialValues(true)})
-      resetFilter()
-    } else {
-      prevCategoryQueryRef.current = JSON.stringify(router.query.categories)
-    }
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [JSON.stringify(router.query.categories)])
+  // useEffect(() => {
+  //   console.log('currentCategory', toJS(currentCategory))
+  //   if (currentCategory) {
+  //     setFilter({categoryId: currentCategory.id})
+  //   }
+  // }, [currentCategory, setFilter])
 
-  useEffect(() => {
-    if (currentCategory) {
-      setFilter({categoryId: currentCategory.id})
-    }
-  }, [currentCategory, setFilter])
   const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
 
   const currentCategoriesOptions =
@@ -166,7 +136,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     options.find((o) => o.value === currentCategory.id) ?? null
   const formik = useFormik({
     validateOnChange: false,
-    innerRef: formikRef,
     enableReinitialize: true,
     initialValues,
     onSubmit: (values: Values, {setSubmitting}: FormikHelpers<Values>) => {
@@ -174,7 +143,10 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       const mappedFields = Object.fromEntries(
         Object.entries(fields)
           .map(([key, value]) => {
-            const field = categoryDataFieldsById[key]
+            const mappedCategoryFields = getMappedFieldsByKey(
+              categoryDataFieldsById,
+            )
+            const field = mappedCategoryFields[key]
             let mappedValue
             switch (field.fieldType) {
               case 'select':
@@ -239,12 +211,35 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
       })
     },
   })
-  const {submitForm, values, isSubmitting, resetForm} = formik
-
+  const {resetForm} = formik
+  useEffect(() => {
+    if (prevCategoryQueryRef.current) {
+      resetForm({values: getInitialValues(true)})
+      resetFilter()
+    } else {
+      prevCategoryQueryRef.current = JSON.stringify(router.query.categories)
+    }
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, [JSON.stringify(router.query.categories)])
   return (
     <FormikProvider value={formik}>
       <Form className='w-full z-10 relative'>
-        <div className='grid grid-cols-2 gap-x-2 gap-y-4 mb-6'>
+        <div className='mb-4'>
+          <Button
+            onClick={() => {
+              resetForm({values: getInitialValues(true)})
+              shallowUpdateQuery()
+              resetFilter()
+              fetchProducts({query: router.query}).then(() => applyFilter())
+            }}
+            className='text-primary-500 space-x-3'>
+            <CloseSquare size={24} filled />
+            <span className='text-body-12 font-normal'>
+              {t('RESET_FILTER')}
+            </span>
+          </Button>
+        </div>
+        <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
           {!isEmpty(options) && (
             <Select
               styles={FilterStyles}
@@ -254,12 +249,16 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               options={options}
               onChange={(opt: SelectItem & {slug: string}) => {
                 if (opt?.value) setFilter({categoryId: opt.value as number})
+                console.log(
+                  'currentCategory.items.length',
+                  currentCategory.items.length,
+                )
                 if (currentCategory.items.length) {
                   router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
                 } else {
                   const pathArray = clearUrlFromQuery(router.asPath).split('/')
                   pathArray[pathArray.length - 1] = opt.slug
-                  router.push(pathArray.join('/'), undefined, {shallow: true})
+                  router.push(pathArray.join('/'))
                 }
               }}
             />
@@ -308,33 +307,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
           {!isEmpty(aggregatedFields) && (
             <FormikFilterChips fieldsArray={aggregatedFields} />
           )}
-        </div>
-
-        <div className='h-px bg-shadow-b mt-8 hidden s:block' />
-        {/* <div className='sticky bottom-0 pt-4 pb-2 bg-white flex justify-center'> */}
-        {/*  {!isFilterApplied && ( */}
-        {/*    <PrimaryButton */}
-        {/*      onClick={() => { */}
-        {/*        if (setShowFilter) setShowFilter(false) */}
-        {/*        window.scrollTo({behavior: 'smooth', top: 0, left: 0}) */}
-        {/*        applyFilter() */}
-        {/*      }} */}
-        {/*      className='w-full s:w-min py-3 px-3.5 m:w-full whitespace-nowrap'> */}
-        {/*      {t('SHOW_ADVERTS', {count: newCount})} */}
-        {/*    </PrimaryButton> */}
-        {/*  )} */}
-        {/* </div> */}
-        <div className='flex justify-center m:flex-col border-0'>
-          <SecondaryButton
-            onClick={() => {
-              resetForm({values: getInitialValues(true)})
-              shallowUpdateQuery()
-              resetFilter()
-              fetchProducts({query: router.query}).then(() => applyFilter())
-            }}
-            className='w-full hidden s:block s:w-min py-3 px-3.5 m:w-full'>
-            {t('RESET_FILTER')}
-          </SecondaryButton>
         </div>
         <FormikAutoSave />
       </Form>
