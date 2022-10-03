@@ -114,12 +114,11 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
     return defaultValues
   }
 
-  // useEffect(() => {
-  //   console.log('currentCategory', toJS(currentCategory))
-  //   if (currentCategory) {
-  //     setFilter({categoryId: currentCategory.id})
-  //   }
-  // }, [currentCategory, setFilter])
+  useEffect(() => {
+    if (currentCategory) {
+      setFilter({categoryId: currentCategory.id})
+    }
+  }, [currentCategory, setFilter])
 
   const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
 
@@ -249,10 +248,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               options={options}
               onChange={(opt: SelectItem & {slug: string}) => {
                 if (opt?.value) setFilter({categoryId: opt.value as number})
-                console.log(
-                  'currentCategory.items.length',
-                  currentCategory.items.length,
-                )
+                console.log('opt', opt)
                 if (currentCategory.items.length) {
                   router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
                 } else {

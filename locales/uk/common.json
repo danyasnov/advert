@@ -1489,6 +1489,7 @@
   "DELETE_CHAT_TEXT": "Do you really want to delete this chat?",
   "DELETE_MESSAGE_ONE": "Delete message",
   "DELETE_PHOTO": "Delete photo",
+  "FAVORITE_EMPTY": "No favor ads",
   "FILLED": "Filled",
   "FROM_2_TO_2000_CHARACTERS": "From 2 to 2000 characters",
   "GALLERY": "Gallery",
