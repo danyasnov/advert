@@ -9,6 +9,8 @@ import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {shallowUpdateQuery} from '../helpers'
+import Select from './Selects/Select'
+import {FilterStyles} from './Selects/styles'
 
 const withIcons = (options) => {
   return options.map((o) => ({
@@ -63,9 +65,9 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchBy])
-  if (isEmpty(products)) return null
   return (
-    <LinkSelect
+    <Select
+      styles={FilterStyles}
       id={id}
       onChange={({value}) => {
         const params = new URLSearchParams(window.location.search)

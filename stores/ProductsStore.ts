@@ -183,6 +183,7 @@ export class ProductsStore implements IProductsStore {
             cacheId,
           },
         } = response.data
+        console.log('aggregatedFields', aggregatedFields)
         if (page === 1) {
           this.newProducts = data
         } else {
