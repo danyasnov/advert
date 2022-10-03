@@ -54,14 +54,14 @@ deploy-develop:
     refs: 
       - develop
 
-#deploy-prod:
-#  stage: deploy
-#  script:
-#    - cd /opt/react-frontend
-#    - docker-compose pull
-#    - docker-compose up -d
-#  tags: 
-#    - deploy-react
-#  only:
-#    refs: 
-#      - master
+deploy-prod:
+  stage: deploy
+  script:
+    - cd /opt/docker/react-frontend
+    - docker-compose pull
+    - docker-compose up -d
+  tags: 
+    - deploy-react
+  only:
+    refs: 
+      - master
