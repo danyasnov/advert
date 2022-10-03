@@ -123,6 +123,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       const [key, direction] = sortBy.split('-')
       filter.sort = {key, direction}
     }
+
     promises.push(fetchProducts(state, {filter}, storage))
   }
 
@@ -147,19 +148,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       // @ts-ignore
       products,
       // @ts-ignore
-      count: productsResponse?.headers?.pagination.count,
+      count: productsResponse?.headers?.pagination.count ?? null,
       // @ts-ignore
-      page: productsResponse?.headers?.pagination.page,
+      page: productsResponse?.headers?.pagination.page ?? null,
       // @ts-ignore
-      limit: productsResponse?.headers?.pagination.limit,
+      limit: productsResponse?.headers?.pagination.limit ?? null,
       // @ts-ignore
-      cacheId: productsResponse?.headers?.cacheId,
+      cacheId: productsResponse?.headers?.cacheId ?? null,
       // @ts-ignore
-      aggregatedFields: productsResponse?.result?.aggregatedFields,
+      aggregatedFields: productsResponse?.result?.aggregatedFields ?? null,
       // @ts-ignore
       hideDistanceSort: state.modified || false,
       sortBy,
     }
+    // debugger
     if (isEmpty(products)) {
       res.statusCode = 404
     }

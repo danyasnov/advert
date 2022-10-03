@@ -18,6 +18,7 @@ import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
 import {AnalyticsService} from 'front-api/src/analytics/analytics'
+import {toJS} from 'mobx'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -339,6 +340,7 @@ export const getUrlQueryFromFilter = (
     Object.entries(fieldValues).map(([key, value]) => {
       let stringValue = ''
       const currentField = fieldById[key]
+      // debugger
       switch (currentField?.fieldType) {
         case 'select':
         case 'iconselect':
@@ -416,7 +418,13 @@ export const getFilterFromQuery = (
       Object.entries(fieldsFilter).map(([key, value]) => {
         // if (key === 'vin-number0') debugger
         const parsedKey = key
-        const currentField = category.fields.find((f) => f.slug === parsedKey)
+        const fieldsDict = getFieldsDictByParam(
+          flatArrayFields(category.fields),
+          'slug',
+        )
+
+        // const currentField = category.fields.find((f) => f.slug === parsedKey)
+        const currentField = fieldsDict[key]
 
         let parsedValue = decodeURIComponent(value as string).split(',')
         // eslint-disable-next-line default-case
@@ -758,6 +766,32 @@ export const deserializeCookies = (
   }
 }
 
+export const getMappedFieldsByKey = (fieldsById, key = 'id') => {
+  return Object.keys(fieldsById).reduce((acc, val) => {
+    if (fieldsById[val].fieldType === 'array') {
+      return {
+        ...acc,
+        ...fieldsById[val].arrayTypeFields.reduce((nAcc, nVal) => {
+          return {...nAcc, [nVal.id]: nVal}
+        }, {}),
+      }
+    }
+    return {...acc, [val]: fieldsById[val]}
+  }, {})
+}
+
+export const getFieldsDictByParam = (fields, param = 'id') => {
+  return Array.isArray(fields)
+    ? fields.reduce(
+        (acc, val) => ({
+          ...acc,
+          [val[param]]: val,
+        }),
+        {},
+      )
+    : null
+}
+
 export const redirectToLogin = (fallbackUrl) => {
   const param = fallbackUrl === '/' ? '' : `?from=${fallbackUrl}`
   return {
@@ -766,4 +800,16 @@ export const redirectToLogin = (fallbackUrl) => {
       permanent: false,
     },
   }
+}
+
+export const flatArrayFields = (fields) => {
+  const newFields = []
+  fields.forEach((f) => {
+    if (f.fieldType === 'array') {
+      newFields.push(...f.arrayTypeFields)
+    } else {
+      newFields.push(f)
+    }
+  })
+  return newFields
 }

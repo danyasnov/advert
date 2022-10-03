@@ -103,3 +103,25 @@ export const LinkStyles = {
     justifyContent: 'flex-start',
   }),
 }
+
+export const FilterStyles = {
+  singleValue: (provided) => ({
+    ...provided,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#3D3F43',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    paddingLeft: '20px',
+    paddingTop: '13px',
+    paddingBottom: '13px',
+    height: '40px',
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: '12px',
+    lineHeight: '14px',
+    color: '#9E9E9E',
+  }),
+}

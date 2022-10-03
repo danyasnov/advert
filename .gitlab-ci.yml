@@ -10,6 +10,7 @@ default:
   before_script:
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - echo "${SSH_PRIVATE_KEY_PROD}" | tr -d '\r' | ssh-add -
     - git config --global url.ssh://git@gitlab.com.insteadOf https://gitlab.com
 
 build develop:
@@ -54,14 +55,12 @@ deploy-develop:
     refs: 
       - develop
 
-#deploy-prod:
-#  stage: deploy
-#  script:
-#    - cd /opt/react-frontend
-#    - docker-compose pull
-#    - docker-compose up -d
-#  tags: 
-#    - deploy-react
-#  only:
-#    refs: 
-#      - master
+deploy-prod:
+  stage: deploy
+  script:
+    - ssh -o StrictHostKeyChecking=no -o "SendEnv=CI_*" -o RequestTTY=no "deploy@${PROD_SERVER}"
+  tags: 
+    - deploy-react
+  only:
+    refs: 
+      - master

@@ -14,13 +14,8 @@ import Breadcrumbs from './Breadcrumbs'
 import Button from './Buttons/Button'
 import {getQueryValue, shallowUpdateQuery} from '../helpers'
 
-interface Props {
-  setShowFilter: (show: boolean) => void
-  showFilter: boolean
-}
-const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
+const CategoryHeader: FC = observer(() => {
   const {categoryData} = useCategoriesStore()
-  const {resetFilter, fetchProducts, applyFilter} = useProductsStore()
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
@@ -30,38 +25,10 @@ const CategoryHeader: FC<Props> = observer(({setShowFilter, showFilter}) => {
   } else if (search) {
     header = t('SEARCH_RESULTS_BY_QUERY', {query: search})
   }
-  const {setFooterVisibility} = useGeneralStore()
   return (
-    <div className='flex my-8 items-center'>
-      <div className='flex-1'>
-        <Breadcrumbs />
-        <h1 className='text-body-14 font-bold text-greyscale-900 pt-8'>
-          {header}
-        </h1>
-      </div>
-
-      {/* {!showFilter && ( */}
-      {/*  <div className='hidden s:block min-w-52 self-end mb-1 '> */}
-      {/*    <SortSelect id='desktop-sort' /> */}
-      {/*  </div> */}
-      {/* )} */}
-      {/* <Button */}
-      {/*  className='m:hidden shadow-xl rounded-full min-w-10 w-10 h-10 bg-white flex justify-center items-center' */}
-      {/*  onClick={() => { */}
-      {/*    setShowFilter(!showFilter) */}
-      {/*    setFooterVisibility(!!showFilter) */}
-      {/*    if (showFilter) { */}
-      {/*      shallowUpdateQuery() */}
-      {/*      resetFilter() */}
-      {/*      fetchProducts({query}).then(() => applyFilter()) */}
-      {/*    } */}
-      {/*  }}> */}
-      {/*  {showFilter ? ( */}
-      {/*    <IcClear className='fill-current text-black-c h-6 w-6' /> */}
-      {/*  ) : ( */}
-      {/*    <IcFilter className='fill-current text-black-c w-6 h-6' /> */}
-      {/*  )} */}
-      {/* </Button> */}
+    <div className='flex flex-col my-8'>
+      <Breadcrumbs />
+      <h1 className='text-h-4 font-bold text-greyscale-900 pt-8'>{header}</h1>
     </div>
   )
 })

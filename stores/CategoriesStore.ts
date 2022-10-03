@@ -2,6 +2,7 @@ import {makeAutoObservable} from 'mobx'
 import {CACategoryDataModel, CACategoryModel} from 'front-api'
 import {CACategoryDataFieldModel} from 'front-api/src/models/index'
 import {RootStore} from './RootStore'
+import {getFieldsDictByParam} from '../helpers'
 
 export interface ICategoriesHydration {
   categories: Array<CACategoryModel>
@@ -62,15 +63,7 @@ export class CategoriesStore implements ICategoriesStore {
     string,
     CACategoryDataFieldModel
   > | null {
-    return Array.isArray(this.categoryData?.fields)
-      ? this.categoryData.fields.reduce(
-          (acc, val) => ({
-            ...acc,
-            [val.id]: val,
-          }),
-          {},
-        )
-      : null
+    return getFieldsDictByParam(this.categoryData?.fields, 'id')
   }
 
   get categoryDataFields(): CACategoryDataFieldModel[] | null {
