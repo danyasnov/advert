@@ -248,7 +248,6 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               options={options}
               onChange={(opt: SelectItem & {slug: string}) => {
                 if (opt?.value) setFilter({categoryId: opt.value as number})
-                console.log('opt', opt)
                 if (currentCategory.items.length) {
                   router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
                 } else {

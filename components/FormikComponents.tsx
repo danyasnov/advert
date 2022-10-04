@@ -140,6 +140,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
     case 'string': {
       component = FormikText
       props.placeholder = name
+      props.filterStyle = true
       break
     }
     case 'checkbox': {
@@ -487,6 +488,7 @@ export const FormikText: FC<
     isTextarea?: boolean
     disableTrack?: boolean
     submitOnEnter?: boolean
+    filterStyle?: boolean
   } & FieldProps
 > = ({
   field,
@@ -499,6 +501,7 @@ export const FormikText: FC<
   maxLength,
   disableTrack,
   submitOnEnter,
+  filterStyle,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
@@ -520,9 +523,11 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
-    className: `border bg-greyscale-50 rounded-lg py-4 px-5 w-full text-greyscale-900 text-body-16 ${
-      disableTrack ? 'ym-disable-keys' : ''
-    } ${isValid ? 'border-greyscale-50' : 'border-error'}`,
+    className: `border bg-greyscale-50 rounded-lg w-full text-greyscale-900 ${
+      filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
+    } ${disableTrack ? 'ym-disable-keys' : ''} ${
+      isValid ? 'border-greyscale-50' : 'border-error'
+    }`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -621,7 +626,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
               {displayValue}
             </span>
           ) : (
-            <span className='text-greyscale-500 flex items-center'>
+            <span className='text-greyscale-500 flex items-center truncate'>
               {placeholder}
             </span>
           )}
@@ -637,10 +642,10 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
             {t('FROM')}
           </span>
           <NumberFormat
-            value={newValue[0]}
+            value={newValue?.[0]}
             onValueChange={({value: min}) => {
               setPopupError('')
-              setNewValue([min, newValue[1]])
+              setNewValue([min, newValue?.[1]])
             }}
             thousandSeparator={' '}
             placeholder={t('FROM')}
@@ -650,10 +655,10 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
             {t('UP_TO')}
           </span>
           <NumberFormat
-            value={newValue[1]}
+            value={newValue?.[1]}
             onValueChange={({value: max}) => {
               setPopupError('')
-              setNewValue([newValue[0], max])
+              setNewValue([newValue?.[0], max])
             }}
             thousandSeparator={' '}
             placeholder={t('UP_TO')}
