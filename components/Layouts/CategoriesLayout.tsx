@@ -34,9 +34,9 @@ const CategoriesLayout: FC = observer(() => {
   return (
     <HeaderFooterWrapper>
       <MetaTags title={title} description={description} />
-      <div className='bg-white px-4 s:px-8 flex min-h-1/2'>
-        <div className='m:flex m:space-x-12 l:space-x-6 m:mx-auto s:w-full justify-center w-full'>
-          <main className='w-full relative '>
+      <div className='bg-white py-8 px-4 s:px-8 m:flex min-h-1/2'>
+        <div className='m:flex m:justify-center m:w-full'>
+          <main className='m:w-944px l:w-[1208px] '>
             <CategoryHeader />
             <FilterForm />
             <div className='drop-shadow-card'>
