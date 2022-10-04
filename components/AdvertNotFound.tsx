@@ -1,5 +1,6 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import ImageWrapper from './ImageWrapper'
 
 export const Placeholder: FC = () => {
   return (
@@ -30,14 +31,18 @@ const AdvertNotFoundWithDescription: FC = () => {
 
   return (
     <div className='my-4 s:my-8 flex flex-col justify-center'>
-      <div className='space-x-4 s:space-x-8 flex justify-center mb-12'>
-        <Placeholder />
-        <Placeholder />
+      <div className='flex justify-center mb-8'>
+        <ImageWrapper
+          type='/img/NothingFound.png'
+          alt='nothing found'
+          width={200}
+          height={200}
+        />
       </div>
-      <h2 className='text-body-14 text-greyscale-900 font-bold flex justify-center mb-4'>
+      <h2 className='text-h-4 text-greyscale-900 font-bold flex justify-center mb-3'>
         {t('NOTHING_FIND')}
       </h2>
-      <span className='text-body-16 text-greyscale-900 text-center'>
+      <span className='text-body-18 text-greyscale-900 text-center'>
         {t('NOTHING_FIND_TEXT')}
       </span>
     </div>
