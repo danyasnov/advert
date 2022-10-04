@@ -25,11 +25,6 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
     useSliderButtons(embla)
 
   if (!products.length) return null
-  if (
-    typeof window !== 'undefined' &&
-    window.location.hostname.includes('vooxee.com')
-  )
-    return null
 
   return (
     <div>
