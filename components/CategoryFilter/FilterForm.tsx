@@ -222,7 +222,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   }, [JSON.stringify(router.query.categories)])
   return (
     <FormikProvider value={formik}>
-      <Form className='w-full z-10 relative'>
+      <Form className='w-full'>
         <div className='mb-4'>
           <Button
             onClick={() => {
