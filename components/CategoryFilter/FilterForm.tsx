@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {CloseSquare} from 'react-iconly'
+import {CloseSquare, Filter} from 'react-iconly'
 import {toJS} from 'mobx'
 import {
   FormikChips,
@@ -40,15 +40,12 @@ interface Values {
   fields?: Record<string, unknown>
 }
 
-interface Props {
-  setShowFilter?: (val: boolean) => void
-}
-
-const FilterForm: FC<Props> = observer(({setShowFilter}) => {
+const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
   const {setFilter, resetFilter, fetchProducts, aggregatedFields, applyFilter} =
     useProductsStore()
+  const [showFilters, setShowFilters] = useState(true)
 
   const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
@@ -223,7 +220,17 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   return (
     <FormikProvider value={formik}>
       <Form className='w-full'>
-        <div className='mb-4'>
+        <div className='mb-4 flex space-x-6'>
+          <Button
+            onClick={() => {
+              setShowFilters(!showFilters)
+            }}
+            className='text-primary-500 space-x-3'>
+            <Filter size={24} filled />
+            <span className='text-body-12 font-normal'>
+              {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
+            </span>
+          </Button>
           <Button
             onClick={() => {
               resetForm({values: getInitialValues(true)})
@@ -284,7 +291,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               return error
             }}
           />
-          {!isEmpty(aggregatedFields) && (
+          {!isEmpty(aggregatedFields) && showFilters && (
             <FormikFilterFields fieldsArray={aggregatedFields} />
           )}
         </div>
@@ -299,7 +306,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
             component={FormikChips}
             label={t('ONLY_WITH_DISCOUNT')}
           />
-          {!isEmpty(aggregatedFields) && (
+          {!isEmpty(aggregatedFields) && showFilters && (
             <FormikFilterChips fieldsArray={aggregatedFields} />
           )}
         </div>
