@@ -65,6 +65,15 @@ interface FetchOptions {
   query?: ParsedUrlQuery
 }
 export const PAGE_LIMIT = 40
+
+export const defaultFilter = {
+  condition: '',
+  onlyWithPhoto: false,
+  onlyDiscounted: false,
+  onlyFromSubscribed: false,
+  fields: {},
+}
+
 export class ProductsStore implements IProductsStore {
   root
 
@@ -126,12 +135,8 @@ export class ProductsStore implements IProductsStore {
 
   resetFilter = (): void => {
     this.filter = {
-      condition: '',
+      ...defaultFilter,
       categoryId: this.filter.categoryId,
-      onlyWithPhoto: false,
-      onlyDiscounted: false,
-      onlyFromSubscribed: false,
-      fields: {},
     }
   }
 

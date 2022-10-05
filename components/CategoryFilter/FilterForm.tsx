@@ -2,7 +2,7 @@ import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {Field, Form, FormikHelpers, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {isEmpty} from 'lodash'
+import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {CloseSquare, Filter} from 'react-iconly'
 import {toJS} from 'mobx'
@@ -31,6 +31,7 @@ import {clearUrlFromQuery} from '../../utils'
 import SortSelect from '../SortSelect'
 import {FilterStyles} from '../Selects/styles'
 import Button from '../Buttons/Button'
+import {defaultFilter} from '../../stores/ProductsStore'
 
 interface Values {
   condition: SelectItem
@@ -40,13 +41,22 @@ interface Values {
   fields?: Record<string, unknown>
 }
 
+const isFilterChanged = (filter) => {
+  return !isEqual(omit(filter, ['categoryId']), defaultFilter)
+}
+
 const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter, fetchProducts, aggregatedFields, applyFilter} =
-    useProductsStore()
+  const {
+    setFilter,
+    resetFilter,
+    fetchProducts,
+    aggregatedFields,
+    applyFilter,
+    filter,
+  } = useProductsStore()
   const [showFilters, setShowFilters] = useState(true)
-
   const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
@@ -231,19 +241,21 @@ const FilterForm: FC = observer(() => {
               {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
             </span>
           </Button>
-          <Button
-            onClick={() => {
-              resetForm({values: getInitialValues(true)})
-              shallowUpdateQuery()
-              resetFilter()
-              fetchProducts({query: router.query}).then(() => applyFilter())
-            }}
-            className='text-primary-500 space-x-3'>
-            <CloseSquare size={24} filled />
-            <span className='text-body-12 font-normal'>
-              {t('RESET_FILTER')}
-            </span>
-          </Button>
+          {isFilterChanged(filter) && (
+            <Button
+              onClick={() => {
+                resetForm({values: getInitialValues(true)})
+                shallowUpdateQuery()
+                resetFilter()
+                fetchProducts({query: router.query}).then(() => applyFilter())
+              }}
+              className='text-primary-500 space-x-3'>
+              <CloseSquare size={24} filled />
+              <span className='text-body-12 font-normal'>
+                {t('RESET_FILTER')}
+              </span>
+            </Button>
+          )}
         </div>
         <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
           {!isEmpty(options) && (
