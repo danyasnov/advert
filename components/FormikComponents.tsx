@@ -668,7 +668,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           <PrimaryButton
             onClick={() => {
               if (newValue[0] > newValue[1]) {
-                return setPopupError("Min value can't be less than max value")
+                return setPopupError(t('FILTER_PRICE_ERROR'))
               }
               setShow(false)
               setNewValue([])
