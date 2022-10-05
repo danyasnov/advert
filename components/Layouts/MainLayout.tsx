@@ -45,21 +45,21 @@ const MainLayout: FC = observer(() => {
   const productsArr = [
     {
       data: {categoryId: 20},
-      name: categoriesById[20].name,
-      slug: categoriesById[20].slug,
-      url: `${locationCodes}/${categoriesById[20].slug}`,
+      name: categoriesById[20]?.name,
+      slug: categoriesById[20]?.slug,
+      url: `${locationCodes}/${categoriesById[20]?.slug}`,
     },
     {
       data: {categoryId: 1},
-      name: categoriesById[1].name,
-      slug: categoriesById[1].slug,
-      url: `${locationCodes}/${categoriesById[1].slug}`,
+      name: categoriesById[1]?.name,
+      slug: categoriesById[1]?.slug,
+      url: `${locationCodes}/${categoriesById[1]?.slug}`,
     },
     {
       data: {categoryId: 13},
-      name: categoriesById[13].name,
-      slug: categoriesById[13].slug,
-      url: `${locationCodes}/${categoriesById[13].slug}`,
+      name: categoriesById[13]?.name,
+      slug: categoriesById[13]?.slug,
+      url: `${locationCodes}/${categoriesById[13]?.slug}`,
     },
   ]
   useEffect(() => {
