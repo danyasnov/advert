@@ -41,6 +41,7 @@ const CategoriesLayout: FC = observer(() => {
             <FilterForm />
             <div className='drop-shadow-card'>
               <ScrollableCardGroup
+                enableFourthColumnForM
                 products={products}
                 count={count}
                 page={page}
