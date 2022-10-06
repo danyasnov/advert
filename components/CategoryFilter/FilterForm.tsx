@@ -309,7 +309,7 @@ const FilterForm: FC = observer(() => {
             <FormikFilterFields fieldsArray={aggregatedFields} />
           )}
         </div>
-        <div className='flex space-x-3 flex-wrap mb-10'>
+        <div className='flex space-x-3 flex-wrap mb-10 z-[1] relative'>
           <Field
             name='onlyWithPhoto'
             component={FormikChips}
