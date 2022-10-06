@@ -2,9 +2,9 @@ import {FC, useEffect, useMemo, useRef, useState} from 'react'
 import {Field, Form, FormikHelpers, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {isEmpty} from 'lodash'
+import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {CloseSquare} from 'react-iconly'
+import {CloseSquare, Filter} from 'react-iconly'
 import {toJS} from 'mobx'
 import {
   FormikChips,
@@ -31,6 +31,7 @@ import {clearUrlFromQuery} from '../../utils'
 import SortSelect from '../SortSelect'
 import {FilterStyles} from '../Selects/styles'
 import Button from '../Buttons/Button'
+import {defaultFilter} from '../../stores/ProductsStore'
 
 interface Values {
   condition: SelectItem
@@ -40,16 +41,22 @@ interface Values {
   fields?: Record<string, unknown>
 }
 
-interface Props {
-  setShowFilter?: (val: boolean) => void
+const isFilterChanged = (filter) => {
+  return !isEqual(omit(filter, ['categoryId']), defaultFilter)
 }
 
-const FilterForm: FC<Props> = observer(({setShowFilter}) => {
+const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {setFilter, resetFilter, fetchProducts, aggregatedFields, applyFilter} =
-    useProductsStore()
-
+  const {
+    setFilter,
+    resetFilter,
+    fetchProducts,
+    aggregatedFields,
+    applyFilter,
+    filter,
+  } = useProductsStore()
+  const [showFilters, setShowFilters] = useState(true)
   const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
@@ -222,21 +229,33 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
   }, [JSON.stringify(router.query.categories)])
   return (
     <FormikProvider value={formik}>
-      <Form className='w-full z-10 relative'>
-        <div className='mb-4'>
+      <Form className='w-full'>
+        <div className='mb-4 flex space-x-6'>
           <Button
             onClick={() => {
-              resetForm({values: getInitialValues(true)})
-              shallowUpdateQuery()
-              resetFilter()
-              fetchProducts({query: router.query}).then(() => applyFilter())
+              setShowFilters(!showFilters)
             }}
             className='text-primary-500 space-x-3'>
-            <CloseSquare size={24} filled />
+            <Filter size={24} filled />
             <span className='text-body-12 font-normal'>
-              {t('RESET_FILTER')}
+              {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
             </span>
           </Button>
+          {isFilterChanged(filter) && (
+            <Button
+              onClick={() => {
+                resetForm({values: getInitialValues(true)})
+                shallowUpdateQuery()
+                resetFilter()
+                fetchProducts({query: router.query}).then(() => applyFilter())
+              }}
+              className='text-primary-500 space-x-3'>
+              <CloseSquare size={24} filled />
+              <span className='text-body-12 font-normal'>
+                {t('RESET_FILTER')}
+              </span>
+            </Button>
+          )}
         </div>
         <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
           {!isEmpty(options) && (
@@ -284,7 +303,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
               return error
             }}
           />
-          {!isEmpty(aggregatedFields) && (
+          {!isEmpty(aggregatedFields) && showFilters && (
             <FormikFilterFields fieldsArray={aggregatedFields} />
           )}
         </div>
@@ -299,7 +318,7 @@ const FilterForm: FC<Props> = observer(({setShowFilter}) => {
             component={FormikChips}
             label={t('ONLY_WITH_DISCOUNT')}
           />
-          {!isEmpty(aggregatedFields) && (
+          {!isEmpty(aggregatedFields) && showFilters && (
             <FormikFilterChips fieldsArray={aggregatedFields} />
           )}
         </div>

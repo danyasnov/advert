@@ -78,10 +78,13 @@ const MapForm: FC<Props> = observer(({onClose}) => {
 
   const {isProduct} = useGeneralStore()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
-    let loc
+    let loc = {
+      latitude: 34.6841,
+      longitude: 33.0379,
+    }
     if (searchLocation) {
       loc = JSON.parse(searchLocation)
-    } else {
+    } else if (userLocation) {
       loc = JSON.parse(userLocation)
     }
     const value = {lat: loc.latitude, lng: loc.longitude}

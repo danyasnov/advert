@@ -38,11 +38,7 @@ const ScrollableCardGroup: FC<Props> = ({
     return <CardsLoader enableFourthColumnForM={enableFourthColumnForM} show />
   }
   if (isEmpty(products)) {
-    return hideNotFoundDescription ? (
-      <AdvertNotFound />
-    ) : (
-      <AdvertNotFoundWithDescription />
-    )
+    return <AdvertNotFoundWithDescription />
   }
 
   return (

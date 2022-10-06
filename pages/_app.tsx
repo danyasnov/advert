@@ -61,5 +61,9 @@ function MyApp({Component, pageProps}: AppProps) {
     </WithYandexMetrika>
   )
 }
-
+export function reportWebVitals(metric) {
+  if (metric.label === 'web-vital') {
+    console.log(JSON.stringify(metric, undefined, 2))
+  }
+}
 export default appWithTranslation(MyApp, i18n)

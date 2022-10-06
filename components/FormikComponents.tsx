@@ -610,6 +610,9 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
     setPopupError('')
     setNewValue(value)
   })
+  useEffect(() => {
+    setNewValue(value)
+  }, [value])
   let displayValue = ''
   if (mappedValue[0] && mappedValue[1]) {
     displayValue = `${mappedValue[0]} - ${mappedValue[1]}`
@@ -618,7 +621,9 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   }
 
   return (
-    <div className='relative w-full bg-greyscale-50 rounded-lg  py-2.5 '>
+    <div
+      className='relative w-full bg-greyscale-50 rounded-lg  py-2.5 '
+      ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full px-5'>
         <div className='flex justify-between w-full text-body-12'>
           {displayValue ? (
@@ -635,9 +640,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         </div>
       </Button>
       {show && (
-        <div
-          className='absolute flex flex-col p-5 rounded-2xl shadow-md w-full top-16 bg-white z-10'
-          ref={ref}>
+        <div className='absolute flex flex-col p-5 rounded-2xl shadow-md w-full top-16 bg-white z-10'>
           <span className='font-semibold text-body-14 text-greyscale-900 mb-1'>
             {t('FROM')}
           </span>
@@ -667,8 +670,14 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           <span className='text-body-12 text-error mb-1'>{popupError}</span>
           <PrimaryButton
             onClick={() => {
-              if (newValue[0] > newValue[1]) {
-                return setPopupError("Min value can't be less than max value")
+              // console.log(
+              //   'newValue[0] > newValue[1]',
+              //   newValue[0],
+              //   newValue[1],
+              //   newValue[0] > newValue[1],
+              // )
+              if (toNumber(newValue[0]) > toNumber(newValue[1])) {
+                return setPopupError(t('FILTER_PRICE_ERROR'))
               }
               setShow(false)
               setNewValue([])

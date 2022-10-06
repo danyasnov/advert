@@ -3,6 +3,7 @@ import {
   AdvertiseListResponse,
   CatalogFieldDependentResponse,
   CheckPhonePermissions,
+  CountryModel,
   FieldsModel,
   OwnerModel,
   RemoveFromSaleType,
@@ -35,7 +36,7 @@ import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import Storage from '../../stores/Storage'
 import {defaultFilter} from '../../utils'
 
-const categoriesCache = new NodeCache({stdTTL: 60 * 60 * 24})
+const cache = new NodeCache({stdTTL: 60 * 60 * 24})
 export const fetchProducts = (
   state: CookiesState,
   payload: FetchAdvertisesPayload = {},
@@ -77,29 +78,35 @@ export const fetchCategories = async (
 ): Promise<RestResponse<CACategoryModel[]>> => {
   const key = `categories-${storage.language}`
 
-  const cached: RestResponse<CACategoryModel[]> = categoriesCache.get(key)
+  const cached: RestResponse<CACategoryModel[]> = cache.get(key)
 
   if (cached) return cached
 
   const rest = getRest(storage)
   const result = await rest.categories.fetchTree(false)
-  if (result.status === 200) categoriesCache.set(key, result)
+  if (result.status === 200) cache.set(key, result)
 
   return result
 }
 
-export const fetchCategoryData = (
+export const fetchCategoryData = async (
   storage: Storage,
   id: number,
   editFields?: FieldsModel,
   excludeDependentFields?: boolean,
 ): Promise<RestResponse<CACategoryDataModel>> => {
+  const key = `category-data-${id}-${storage.language}`
+  const cached: RestResponse<CACategoryDataModel> = await cache.get(key)
+  if (cached) return cached
+
   const rest = getRest(storage)
-  return rest.categories.fetchCategoryData({
+  const categoryData = await rest.categories.fetchCategoryData({
     id,
     editFields,
     excludeDependentFields,
   })
+  if (categoryData.status === 200) cache.set(key, categoryData)
+  return categoryData
 }
 
 export const fetchDependentFields = (
