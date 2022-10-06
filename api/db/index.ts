@@ -1,6 +1,7 @@
 import {QueryTypes, Sequelize} from 'sequelize'
 import {size} from 'lodash'
 import {captureException} from '@sentry/nextjs'
+import NodeCache from 'node-cache'
 import {City} from '../../types'
 import config from '../../config.json'
 
@@ -19,14 +20,14 @@ const langs = {
   el: 25,
   uk: 67,
 }
-const cache = new Map()
+const cache = new NodeCache({stdTTL: 60 * 60 * 24})
 
 export const fetchCitiesByCountryCode = async (
   code: string,
   lang: string,
 ): Promise<City[]> => {
   const key = `cities-${code}-${lang}`
-  const cached: City[] = cache.get(key)
+  const cached: City[] = await cache.get(key)
   if (cached) return cached
   try {
     const result: City[] = await sequelize.query(
@@ -56,7 +57,7 @@ export const fetchRegionsByCountryCode = async (
   lang: string,
 ): Promise<City[]> => {
   const key = `regions-${code}-${lang}`
-  const cached: City[] = cache.get(key)
+  const cached: City[] = await cache.get(key)
   if (cached) return cached
   try {
     const result: City[] = await sequelize.query(
@@ -85,6 +86,10 @@ export const fetchCityOrRegionsBySlug = async (
   slug: string,
   lang: string,
 ): Promise<City[]> => {
+  const key = `cities-${country}-${slug}-${lang}`
+  const cached: City[] = await cache.get(key)
+  if (cached) return cached
+
   try {
     const result: City[] = await sequelize.query(
       `SELECT
@@ -101,6 +106,7 @@ WHERE (l.type = 'region' OR l.type = 'city') AND l.slug = '${slug}' AND ac.alpha
 ORDER BY word`,
       {type: QueryTypes.SELECT},
     )
+    cache.set(key, result)
     return result
   } catch (e) {
     captureException(e)
@@ -110,7 +116,7 @@ ORDER BY word`,
 
 export const fetchDocuments = async (path: string, lang = 'en') => {
   const key = `docs-${path}-${lang}`
-  const cached = cache.get(key)
+  const cached = await cache.get(key)
   if (cached) return cached
   try {
     const result = await sequelize.query(

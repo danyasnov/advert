@@ -579,11 +579,11 @@ export const getLocationCodes = (ctx?): string => {
   return result.join('/')
 }
 
-export const withLocationQuery = async (
+export const withLocationQuery = (
   state: CookiesState,
   query: ParsedUrlQuery,
   {countries, locations}: {countries: CountryModel[]; locations: City[]},
-): Promise<CookiesState> => {
+): CookiesState => {
   const updatedState = state
   const countryCode = getQueryValue(query, 'country')
   const cityCode = getQueryValue(query, 'city')

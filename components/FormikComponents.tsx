@@ -610,6 +610,9 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
     setPopupError('')
     setNewValue(value)
   })
+  useEffect(() => {
+    setNewValue(value)
+  }, [value])
   let displayValue = ''
   if (mappedValue[0] && mappedValue[1]) {
     displayValue = `${mappedValue[0]} - ${mappedValue[1]}`
@@ -667,7 +670,13 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           <span className='text-body-12 text-error mb-1'>{popupError}</span>
           <PrimaryButton
             onClick={() => {
-              if (newValue[0] > newValue[1]) {
+              // console.log(
+              //   'newValue[0] > newValue[1]',
+              //   newValue[0],
+              //   newValue[1],
+              //   newValue[0] > newValue[1],
+              // )
+              if (toNumber(newValue[0]) > toNumber(newValue[1])) {
                 return setPopupError(t('FILTER_PRICE_ERROR'))
               }
               setShow(false)

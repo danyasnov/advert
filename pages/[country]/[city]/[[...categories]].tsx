@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     state.language,
   )
   const isValidCountry = !!countries.find((c) => c.isoCode === countryCode)
-  state = await withLocationQuery(state, query, {countries, locations})
+  state = withLocationQuery(state, query, {countries, locations})
 
   let categories
   try {
@@ -68,8 +68,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     } else {
       // inconsistent url when go back in browser
       const fixedUrl = resolvedUrl.split('?')[0]
-      productRes = await fetchProductByUrl(state.language, fixedUrl, state.hash)
-      product = productRes.data?.data
+      // debugger
+      if (fixedUrl.includes('_')) {
+        productRes = await fetchProductByUrl(
+          state.language,
+          fixedUrl,
+          state.hash,
+        )
+        product = productRes.data?.data
+      }
     }
   } catch (e) {
     console.log(e)
