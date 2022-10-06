@@ -4,32 +4,42 @@ import '../styles/loader.css'
 import '../styles/tooltip.css'
 import 'rc-slider/assets/index.css'
 import 'react-toastify/dist/ReactToastify.css'
-import 'nprogress/nprogress.css'
 import '../styles/bottomSheet.css'
 import '../styles/font.css'
 import {AppProps} from 'next/app'
 import {appWithTranslation} from 'next-i18next'
 import {ToastContainer} from 'react-toastify'
-import NProgress from 'nprogress'
 import {useRouter} from 'next/router'
-import {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Head from 'next/head'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
 import WithYandexMetrika from '../components/WithYandexMetrika'
 import {startTracking} from '../helpers'
+import Loading from '../components/Loading'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
+  const [state, setState] = useState({
+    isRouteChanging: false,
+    loadingKey: 0,
+  })
   useEffect(() => {
     const handleStart = (url) => {
       console.log(`Loading: ${url}`)
-      NProgress.start()
+      setState((prevState) => ({
+        ...prevState,
+        isRouteChanging: true,
+        loadingKey: prevState.loadingKey || 1,
+      }))
       startTracking({url})
     }
     const handleStop = () => {
-      NProgress.done()
+      setState((prevState) => ({
+        ...prevState,
+        isRouteChanging: false,
+      }))
     }
 
     router.events.on('routeChangeStart', handleStart)
@@ -53,6 +63,11 @@ function MyApp({Component, pageProps}: AppProps) {
       </Head>
       {/* @ts-ignore */}
       <RootStoreProvider hydrationData={pageProps.hydrationData}>
+        <Loading
+          isRouteChanging={state.isRouteChanging}
+          key={state.loadingKey}
+        />
+
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
         <ToastContainer />
@@ -61,6 +76,7 @@ function MyApp({Component, pageProps}: AppProps) {
     </WithYandexMetrika>
   )
 }
+
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
     console.log(JSON.stringify(metric, undefined, 2))
