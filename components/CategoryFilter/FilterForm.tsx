@@ -231,16 +231,18 @@ const FilterForm: FC = observer(() => {
     <FormikProvider value={formik}>
       <Form className='w-full'>
         <div className='mb-4 flex space-x-6'>
-          <Button
-            onClick={() => {
-              setShowFilters(!showFilters)
-            }}
-            className='text-primary-500 space-x-3'>
-            <Filter size={24} filled />
-            <span className='text-body-12 font-normal'>
-              {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
-            </span>
-          </Button>
+          {!isEmpty(aggregatedFields) && (
+            <Button
+              onClick={() => {
+                setShowFilters(!showFilters)
+              }}
+              className='text-primary-500 space-x-3'>
+              <Filter size={24} filled />
+              <span className='text-body-12 font-normal'>
+                {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
+              </span>
+            </Button>
+          )}
           {isFilterChanged(filter) && (
             <Button
               onClick={() => {
