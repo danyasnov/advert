@@ -84,7 +84,7 @@ export interface Filter {
   priceMin: number
   priceMax: number
   categoryId: number
-  onlyWithPhoto: boolean
+  withPhoto: boolean
   onlyDiscounted: boolean
   onlyFromSubscribed: boolean
   search: string

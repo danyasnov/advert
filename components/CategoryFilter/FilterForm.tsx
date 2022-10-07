@@ -36,7 +36,7 @@ import {defaultFilter} from '../../stores/ProductsStore'
 interface Values {
   condition: SelectItem
   priceRange: string[]
-  onlyWithPhoto: boolean
+  withPhoto: boolean
   onlyDiscounted: boolean
   fields?: Record<string, unknown>
 }
@@ -102,7 +102,7 @@ const FilterForm: FC = observer(() => {
     const defaultValues = {
       condition: conditionOptions[0],
       priceRange,
-      onlyWithPhoto: false,
+      withPhoto: false,
       onlyDiscounted,
       fields: {},
     }
@@ -153,7 +153,7 @@ const FilterForm: FC = observer(() => {
     enableReinitialize: true,
     initialValues,
     onSubmit: (values: Values, {setSubmitting}: FormikHelpers<Values>) => {
-      const {priceRange, onlyWithPhoto, onlyDiscounted, fields} = values
+      const {priceRange, withPhoto, onlyDiscounted, fields} = values
       const mappedFields = Object.fromEntries(
         Object.entries(fields)
           .map(([key, value]) => {
@@ -203,7 +203,7 @@ const FilterForm: FC = observer(() => {
         condition,
         priceMin: parseInt(priceRange[0], 10) ?? undefined,
         priceMax: parseInt(priceRange[1], 10) ?? undefined,
-        withPhoto: onlyWithPhoto,
+        withPhoto,
         onlyDiscounted,
         fields: mappedFields,
       }
@@ -319,7 +319,7 @@ const FilterForm: FC = observer(() => {
         </div>
         <div className='flex space-x-3 flex-wrap mb-10 z-[1] relative'>
           <Field
-            name='onlyWithPhoto'
+            name='withPhoto'
             component={FormikChips}
             label={t('WITH_PHOTO')}
           />

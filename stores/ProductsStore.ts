@@ -69,7 +69,7 @@ export const PAGE_LIMIT = 40
 
 export const defaultFilter = {
   condition: '',
-  onlyWithPhoto: false,
+  withPhoto: false,
   onlyDiscounted: false,
   onlyFromSubscribed: false,
   fields: {},

@@ -262,6 +262,8 @@ const MapPage: FC = () => {
           style={{
             // @ts-ignore
             '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
+            // height: '-webkit-fill-available',
+            // '-webkit-overflow-scrolling': 'touch',
           }}>
           {location && (
             <>
