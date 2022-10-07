@@ -113,13 +113,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
+  let filter: Partial<Filter> = {}
   const promises: Promise<any>[] = []
   if (product) {
     promises.push(similarProductsPromise)
   } else {
     const filterQueryData = getFilterFromQuery(query, categoryData)
 
-    const filter: Partial<Filter> = filterQueryData || {}
+    filter = filterQueryData || {}
     if (currentCategory?.id) {
       filter.categoryId = currentCategory.id
     }
@@ -166,6 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       aggregatedFields: productsResponse?.result?.aggregatedFields ?? null,
       // @ts-ignore
       hideDistanceSort: state.modified || false,
+      filter,
       sortBy,
     }
     // debugger

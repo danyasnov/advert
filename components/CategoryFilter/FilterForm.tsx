@@ -42,7 +42,10 @@ interface Values {
 }
 
 const isFilterChanged = (filter) => {
-  return !isEqual(omit(filter, ['categoryId']), defaultFilter)
+  return !isEqual(
+    {...defaultFilter, ...omit(filter, ['categoryId'])},
+    defaultFilter,
+  )
 }
 
 const FilterForm: FC = observer(() => {
@@ -57,6 +60,7 @@ const FilterForm: FC = observer(() => {
     filter,
   } = useProductsStore()
   const [showFilters, setShowFilters] = useState(true)
+  const [showReset, setShowReset] = useState(false)
   const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
   const currentCategory = findCategoryByQuery(
@@ -80,6 +84,10 @@ const FilterForm: FC = observer(() => {
     ],
     [t],
   )
+
+  useEffect(() => {
+    setShowReset(isFilterChanged(filter))
+  }, [filter])
 
   const getInitialValues = (reset?: boolean): Values => {
     // #todo it was hotfix, needs to be refactored
@@ -243,7 +251,7 @@ const FilterForm: FC = observer(() => {
               </span>
             </Button>
           )}
-          {isFilterChanged(filter) && (
+          {showReset && (
             <Button
               onClick={() => {
                 resetForm({values: getInitialValues(true)})

@@ -24,6 +24,7 @@ export interface IProductsHydration {
   sortBy: string
   aggregatedFields: CACategoryDataFieldModel[]
   hideDistanceSort: boolean
+  filter: Partial<Filter>
 }
 
 export interface IProductsStore {
@@ -188,7 +189,6 @@ export class ProductsStore implements IProductsStore {
             cacheId,
           },
         } = response.data
-        console.log('aggregatedFields', aggregatedFields)
         if (page === 1) {
           this.newProducts = data
         } else {
@@ -241,6 +241,7 @@ export class ProductsStore implements IProductsStore {
     this.sortBy = data?.sortBy ?? 'date_updated-asc'
     this.hideDistanceSort = data?.hideDistanceSort ?? false
     this.aggregatedFields = data?.aggregatedFields ?? []
+    this.filter = data?.filter ?? {}
 
     this.newCount = null
     this.isFilterApplied = true
