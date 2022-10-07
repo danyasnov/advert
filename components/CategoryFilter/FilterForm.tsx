@@ -195,7 +195,7 @@ const FilterForm: FC = observer(() => {
         condition,
         priceMin: parseInt(priceRange[0], 10) ?? undefined,
         priceMax: parseInt(priceRange[1], 10) ?? undefined,
-        onlyWithPhoto,
+        withPhoto: onlyWithPhoto,
         onlyDiscounted,
         fields: mappedFields,
       }
