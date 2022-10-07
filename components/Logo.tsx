@@ -12,7 +12,7 @@ const Logo: FC = () => {
         <ImageWrapper
           type='/img/logo/FullLogo.png'
           alt='Logo'
-          width={150}
+          width={254}
           height={40}
           layout='fixed'
         />
