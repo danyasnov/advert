@@ -22,15 +22,15 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   } categories-selector-item text-greyscale-900 rounded-l-lg`
   const {width} = useWindowSize()
 
-  console.log('url', toJS(icon))
   const elBody = (
     <>
       {!!url && (
         <div className='mr-2'>
           <ImageWrapper
-            type={`/img/category/${category.id}.svg`}
+            type={`/img/icons/category/${category.id}.svg`}
             width={24}
             height={24}
+            layout='fixed'
             alt='slug'
           />
         </div>
