@@ -1,47 +1,35 @@
-import {FC, useState} from 'react'
+import {FC, useRef, useState} from 'react'
 import {FieldProps} from 'formik'
 import NumberFormat from 'react-number-format'
 import {CurrencyModel} from 'front-api/src/models'
-import {useTranslation} from 'next-i18next'
 import {get, size} from 'lodash'
-import RadioButtons from '../RadioButtons'
+import Button from '../Buttons/Button'
+import useOnClickOutside from '../../hooks/useOnClickOutside'
 
 interface Props {
   currencies: CurrencyModel[]
-  allowSecureDeal: boolean
 }
-const AdvertPrice: FC<FieldProps & Props> = ({
-  field,
-  form,
-  currencies,
-  allowSecureDeal,
-}) => {
+const AdvertPrice: FC<FieldProps & Props> = ({field, form, currencies}) => {
   const {setFieldValue, values, errors, setFieldError} = form
   const {currency} = values
-  const [currencyOptions] = useState(
-    currencies.map((c) => ({title: c.code, value: c.code})),
-  )
-  const {t} = useTranslation()
-
   const {name, value} = field
 
-  let safeDealPrice = 0
-  if (value && allowSecureDeal) {
-    safeDealPrice = value * 0.9
-  }
-
   const error = get(errors, name)
-
+  const [show, setShow] = useState(false)
+  const ref = useRef()
+  useOnClickOutside(ref, () => {
+    setShow(false)
+  })
   return (
-    <div>
+    <div className=''>
       <div
-        className={`border flex flex-col ${
+        ref={ref}
+        className={`border flex flex-col relative ${
           error ? 'border-error' : 'border-transparent'
         }`}>
         <NumberFormat
           name={name}
           value={value}
-          suffix={` ${currency?.code}`}
           onValueChange={({value: newValue}) => {
             setFieldValue(name, newValue)
             if (error) setFieldError(name, undefined)
@@ -53,28 +41,41 @@ const AdvertPrice: FC<FieldProps & Props> = ({
           thousandSeparator={' '}
           decimalScale={2}
           placeholder={currency?.code}
-          className='w-full text-greyscale-900 text-body-16 outline-none manual-outline bg-greyscale-50 py-4 px-5 rounded-2xl'
+          className='w-full text-greyscale-900 text-body-16 outline-none manual-outline bg-greyscale-50 py-4 pl-5 pr-10 rounded-2xl'
         />
-        {!!safeDealPrice && (
-          <span className='text-body-10 text-greyscale-900 mt-1'>
-            {t('SAFE_DEAL_TIP', {price: safeDealPrice})}
-          </span>
+        <div className='absolute inset-y-0 right-5 '>
+          <Button
+            onClick={() => {
+              if (size(currencies) > 1) {
+                setShow(!show)
+              }
+            }}
+            className='flex items-center h-full text-body-14'>
+            {currency?.symbol}
+          </Button>
+        </div>
+        {show && (
+          <div className='absolute top-16 flex flex-col z-20 bg-white rounded-2xl shadow-2xl w-full '>
+            {currencies.map((i, index) => (
+              <Button
+                onClick={() => {
+                  setFieldValue('currency', i)
+                  setShow(false)
+                }}
+                className={`hover:text-primary-500 text-greyscale-900 mx-5 ${
+                  index === currencies.length - 1
+                    ? ''
+                    : 'border-b border-greyscale-200'
+                }`}>
+                <div className='my-4 flex justify-start w-full text-body-16'>
+                  {i.code} ({i.symbol})
+                </div>
+              </Button>
+            ))}
+          </div>
         )}
       </div>
       <span className='text-body-12 text-error'>{error}</span>
-      {size(currencies) > 1 && (
-        <div className='mt-2'>
-          <RadioButtons
-            value={currency?.code}
-            options={currencyOptions}
-            onChange={(v) => {
-              const cur = currencies.find((c) => c.code === v)
-              setFieldValue('currency', cur)
-            }}
-            name='currency'
-          />
-        </div>
-      )}
     </div>
   )
 }
