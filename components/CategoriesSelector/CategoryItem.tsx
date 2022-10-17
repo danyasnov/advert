@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {CACategoryModel} from 'front-api/src/index'
 import {isMobile} from 'react-device-detect'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
@@ -21,11 +22,17 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   } categories-selector-item text-greyscale-900 rounded-l-lg`
   const {width} = useWindowSize()
 
+  console.log('url', toJS(icon))
   const elBody = (
     <>
       {!!url && (
         <div className='mr-2'>
-          <ImageWrapper type={url} width={24} height={24} alt='slug' />
+          <ImageWrapper
+            type={`/img/category/${category.id}.svg`}
+            width={24}
+            height={24}
+            alt='slug'
+          />
         </div>
       )}
       <span>{name}</span>
