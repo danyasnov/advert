@@ -20,7 +20,7 @@ const SecondaryButton: FC<Props> = ({
   return (
     <Button
       id={id}
-      className={`rounded-2xl py-3.5 px-3.5 text-body-14 text-primary-500 bg-primary-100 font-bold ${
+      className={`bg-white text-black rounded-2xl py-3.5 px-3.5 text-body-14 text-primary-500 font-bold ${
         disabled ? disabledClass : ''
       } ${className || ''}`}
       onClick={() => !disabled && onClick && onClick()}>
