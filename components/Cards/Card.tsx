@@ -69,7 +69,7 @@ const Card: FC<Props> = ({
 
   useEffect(() => {
     const cookies: SerializedCookiesState = parseCookies()
-    setHideConnect(cookies.hash === owner.hash)
+    setHideConnect(cookies.hash === owner?.hash)
   }, [])
 
   useEffect(() => {
