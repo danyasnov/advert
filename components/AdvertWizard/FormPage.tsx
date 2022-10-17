@@ -823,12 +823,21 @@ const FormPage: FC = observer(() => {
                   />
                 </div>
               }
-              getCountMeta={() => ({
-                isRequiredFilled: false,
-                filledCount: 0,
-                maxFilled: 1,
-                isRequired: true,
-              })}
+              getCountMeta={() => {
+                let filledCount = 0
+                let isRequiredFilled
+                if (phoneNumber) {
+                  isRequiredFilled = true
+                  filledCount += 1
+                }
+
+                return {
+                  isRequiredFilled,
+                  filledCount,
+                  maxFilled: 1,
+                  isRequired: true,
+                }
+              }}
               validate={() => validateCommunication(phoneNumber, t)}
             />
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
