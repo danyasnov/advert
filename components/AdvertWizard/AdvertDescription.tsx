@@ -137,7 +137,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
         <div className='flex items-center mb-1'>
           <div className='w-full'>
             <span className='text-body-16 text-greyscale-900 font-bold mr-1'>
-              {t('DESCRIPTION')}
+              {t('DESCRIPTION_TAB')}
             </span>
           </div>
           <span className='text-greyscale-800 text-body-10 font-normal'>
