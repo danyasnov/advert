@@ -13,6 +13,7 @@ import ProductLike from './ProductLike'
 import ProductMenu from './ProductMenu'
 import LinkWrapper from './Buttons/LinkWrapper'
 import Button from './Buttons/Button'
+import ProductStatus from './AdvertWizard/ProductStatus'
 
 const ProductHeader: FC = observer(() => {
   const {push} = useRouter()
@@ -31,18 +32,7 @@ const ProductHeader: FC = observer(() => {
   const isUserAdv = userHash === owner.hash
   return (
     <div className='mb-6'>
-      {advert.state === 'sold' && (
-        <div className='bg-sold-background rounded-lg	px-4 py-5 mb-4'>
-          <span className='text-body-16 font-bold'>{t('ITEM_SOLD')}</span>
-          <LinkWrapper
-            className='text-body-16 text-brand-b1'
-            href={`/user/${owner.hash}`}
-            title={t('YOU_CAN_SEE_OTHER_ADS_OF_SELLER')}>
-            {t('YOU_CAN_SEE_OTHER_ADS_OF_SELLER')}
-          </LinkWrapper>
-        </div>
-      )}
-      <div className='flex justify-between w-full items-center'>
+      <div className='flex justify-between w-full items-center mb-6'>
         <div className='flex flex-wrap'>
           {path.map((p, index) => {
             const itemClassName =
@@ -69,6 +59,7 @@ const ProductHeader: FC = observer(() => {
           {isUserAdv && <ProductMenu product={product} />}
         </div>
       </div>
+      <ProductStatus product={product} />
     </div>
   )
 })
