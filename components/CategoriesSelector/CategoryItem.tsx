@@ -27,7 +27,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       {!!url && (
         <div className='mr-2'>
           <ImageWrapper
-            type={`/img/icons/category/${category.id}.svg`}
+            type={url}
             width={24}
             height={24}
             layout='fixed'
