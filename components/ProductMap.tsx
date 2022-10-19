@@ -46,7 +46,9 @@ const ProductMap: FC = observer(() => {
         </Button>
       </div>
       {mapVisible && (
-        <div className='w-full h-96' data-test-id='map-body'>
+        <div
+          className='align-center px-5 pb-5 max-w-4xl h-96 rounded-2xl'
+          data-test-id='map-body'>
           <GoogleMapReact
             bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
             center={location}
