@@ -62,6 +62,7 @@ const Autocomplete: FC<Props> = ({
       defaultOptions
       isClearable={isClearable}
       isDisabled={isDisabled}
+      // @ts-ignore
       loadOptions={loadOptions}
       onFocus={onFocus}
       controlShouldRenderValue={false}
