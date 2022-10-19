@@ -19,7 +19,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   const url = icon?.icon?.url
   const className = `${
     isActive ? 'bg-white font-bold text-primary-500' : ''
-  } categories-selector-item text-greyscale-900 rounded-l-lg`
+  } categories-selector-item text-greyscale-900 s:rounded-l-lg`
   const {width} = useWindowSize()
 
   const elBody = (
@@ -27,7 +27,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       {!!url && (
         <div className='mr-2'>
           <ImageWrapper
-            type={`/img/icons/category/${category.id}.svg`}
+            type={url}
             width={24}
             height={24}
             layout='fixed'

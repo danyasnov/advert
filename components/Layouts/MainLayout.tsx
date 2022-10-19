@@ -21,6 +21,7 @@ import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
+import OutlineButton from '../Buttons/OutlineButton'
 import ImageWrapper from '../ImageWrapper'
 
 const MainLayout: FC = observer(() => {
@@ -153,7 +154,7 @@ const MainLayout: FC = observer(() => {
                         title={t('SEE_ALL')}
                         className='text-body-16 text-primary-500 font-bold relative z-10'
                         href={locationCodes}>
-                        <SecondaryButton>{t('SEE_ALL')}</SecondaryButton>
+                        <OutlineButton>{t('SEE_ALL')}</OutlineButton>
                       </LinkWrapper>
                     )}
                   </div>
