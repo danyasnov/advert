@@ -46,45 +46,47 @@ const ProductMap: FC = observer(() => {
         </Button>
       </div>
       {mapVisible && (
-        <div
-          className='align-center mx-5 mb-5 h-96 overflow-hidden rounded-2xl'
-          data-test-id='map-body'>
-          <GoogleMapReact
-            bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
-            center={location}
-            yesIWantToUseGoogleMapApiInternals
-            margin={[1, 2, 3, 4]}
-            defaultZoom={zoomRadiusMap[radius]}
-            onGoogleApiLoaded={({map, maps}) => {
-              if (radius) {
-                // eslint-disable-next-line no-new
-                new maps.Circle({
-                  strokeColor: '#7210FF',
-                  strokeWeight: 2,
-                  fillColor: '#7210FF',
-                  fillOpacity: 0.2,
-                  map,
-                  center: location,
-                  radius: radius * 1000,
-                })
-              } else {
-                const svgMarker = {
-                  path: SvgMapMarker,
-                  fillColor: '#7210FF',
-                  fillOpacity: 1,
-                  strokeColor: '#FFFFFF',
-                  strokeOpacity: 1,
-                  anchor: new maps.Point(14, 35),
+        <div className='pb-5'>
+          <div
+            className='align-center mx-5 h-96 overflow-hidden rounded-2xl'
+            data-test-id='map-body'>
+            <GoogleMapReact
+              bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
+              center={location}
+              yesIWantToUseGoogleMapApiInternals
+              margin={[1, 2, 3, 4]}
+              defaultZoom={zoomRadiusMap[radius]}
+              onGoogleApiLoaded={({map, maps}) => {
+                if (radius) {
+                  // eslint-disable-next-line no-new
+                  new maps.Circle({
+                    strokeColor: '#7210FF',
+                    strokeWeight: 2,
+                    fillColor: '#7210FF',
+                    fillOpacity: 0.2,
+                    map,
+                    center: location,
+                    radius: radius * 1000,
+                  })
+                } else {
+                  const svgMarker = {
+                    path: SvgMapMarker,
+                    fillColor: '#7210FF',
+                    fillOpacity: 1,
+                    strokeColor: '#FFFFFF',
+                    strokeOpacity: 1,
+                    anchor: new maps.Point(14, 35),
+                  }
+                  // eslint-disable-next-line no-new
+                  new maps.Marker({
+                    position: map.getCenter(),
+                    icon: svgMarker,
+                    map,
+                  })
                 }
-                // eslint-disable-next-line no-new
-                new maps.Marker({
-                  position: map.getCenter(),
-                  icon: svgMarker,
-                  map,
-                })
-              }
-            }}
-          />
+              }}
+            />
+          </div>
         </div>
       )}
     </div>
