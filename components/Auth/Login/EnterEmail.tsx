@@ -146,7 +146,7 @@ const EnterEmail: FC<PageProps> = observer(
                     })
                   }
                   label={t('FORGOT_PASSWORD')}
-                  className='pl-4'
+                  className='mx-auto'
                 />
               </>
             )}

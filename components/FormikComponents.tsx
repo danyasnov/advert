@@ -67,6 +67,7 @@ interface FieldOptions {
   placeholder?: string
   label?: string
   isFilterable?: boolean
+  isClearable?: boolean
   isMulti?: boolean
   hideLabel?: boolean
   maxLength?: number
@@ -113,6 +114,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isFilterable = isFilterable
       props.isMulti = true
       props.filterStyle = true
+      props.isClearable = false
       break
     }
     case 'int': {

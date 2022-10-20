@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -75,7 +75,40 @@ const DropdownIndicator = (props) => {
     </RSComponents.DropdownIndicator>
   )
 }
+const Option = (props) => {
+  const {isSelected, label} = props
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <RSComponents.Option {...props}>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label>{label}</label>
+      <input type='checkbox' checked={isSelected} onChange={() => null} />
+    </RSComponents.Option>
+  )
+}
 
+const MultiValueContainer = (props) => {
+  const {selectProps, data} = props
+  const values = selectProps.value
+  let body = null
+  if (values) {
+    body =
+      values[values.length - 1].label === data.label
+        ? data.label
+        : `${data.label},`
+  }
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <RSComponents.MultiValueContainer {...props}>
+      <span
+        className={
+          values[values.length - 1].label === data.label ? '' : 'mr-1'
+        }>
+        {body}
+      </span>
+    </RSComponents.MultiValueContainer>
+  )
+}
 const Select: FC<SelectProps> = ({
   options,
   placeholder,
@@ -90,13 +123,27 @@ const Select: FC<SelectProps> = ({
   isInvalid,
   components,
 }) => {
+  const [sorted, setSorted] = useState(options)
+  useEffect(() => {
+    if (isMulti && Array.isArray(value)) {
+      const tempOptions = [...options]
+      const selected = value.map((v) => {
+        const currentIndex = tempOptions.findIndex((o) => o.value === v.value)
+        const currentOption = tempOptions[currentIndex]
+        tempOptions.splice(currentIndex, 1)
+        return currentOption
+      })
+      setSorted([...selected, ...tempOptions])
+    }
+  }, [value])
   return (
     <>
       <RS
         inputId={id}
         id={id}
         value={value}
-        options={options}
+        options={sorted}
+        hideSelectedOptions={!isMulti}
         placeholder={placeholder}
         isSearchable={isSearchable}
         isDisabled={isDisabled}
@@ -117,6 +164,9 @@ const Select: FC<SelectProps> = ({
         components={{
           MenuList,
           DropdownIndicator,
+          MultiValueContainer,
+          MultiValueRemove: () => null,
+          ...(isMulti ? {Option} : {}),
           ...(components || {}),
         }}
       />
