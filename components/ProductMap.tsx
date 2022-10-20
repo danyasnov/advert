@@ -33,7 +33,7 @@ const ProductMap: FC = observer(() => {
     degradations.find((d) => d.key === advert.degradation)?.radius ?? 0
 
   return (
-    <div className='bg-white rounded-2xl text-body-14 text-greyscale-900'>
+    <div className='bg-white rounded-2xl text-body-14 text-greyscale-900 flex flex-col'>
       <div className='flex justify-between p-5'>
         <div className='flex items-center'>
           <div className='fill-current text-primary-500 mr-2'>
@@ -46,47 +46,45 @@ const ProductMap: FC = observer(() => {
         </Button>
       </div>
       {mapVisible && (
-        <div className='pb-5'>
-          <div
-            className='align-center mx-5 h-96 overflow-hidden rounded-2xl'
-            data-test-id='map-body'>
-            <GoogleMapReact
-              bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
-              center={location}
-              yesIWantToUseGoogleMapApiInternals
-              margin={[1, 2, 3, 4]}
-              defaultZoom={zoomRadiusMap[radius]}
-              onGoogleApiLoaded={({map, maps}) => {
-                if (radius) {
-                  // eslint-disable-next-line no-new
-                  new maps.Circle({
-                    strokeColor: '#7210FF',
-                    strokeWeight: 2,
-                    fillColor: '#7210FF',
-                    fillOpacity: 0.2,
-                    map,
-                    center: location,
-                    radius: radius * 1000,
-                  })
-                } else {
-                  const svgMarker = {
-                    path: SvgMapMarker,
-                    fillColor: '#7210FF',
-                    fillOpacity: 1,
-                    strokeColor: '#FFFFFF',
-                    strokeOpacity: 1,
-                    anchor: new maps.Point(14, 35),
-                  }
-                  // eslint-disable-next-line no-new
-                  new maps.Marker({
-                    position: map.getCenter(),
-                    icon: svgMarker,
-                    map,
-                  })
+        <div
+          className='h-96 overflow-hidden rounded-2xl mb-5 mx-5'
+          data-test-id='map-body'>
+          <GoogleMapReact
+            bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
+            center={location}
+            yesIWantToUseGoogleMapApiInternals
+            margin={[1, 2, 3, 4]}
+            defaultZoom={zoomRadiusMap[radius]}
+            onGoogleApiLoaded={({map, maps}) => {
+              if (radius) {
+                // eslint-disable-next-line no-new
+                new maps.Circle({
+                  strokeColor: '#7210FF',
+                  strokeWeight: 2,
+                  fillColor: '#7210FF',
+                  fillOpacity: 0.2,
+                  map,
+                  center: location,
+                  radius: radius * 1000,
+                })
+              } else {
+                const svgMarker = {
+                  path: SvgMapMarker,
+                  fillColor: '#7210FF',
+                  fillOpacity: 1,
+                  strokeColor: '#FFFFFF',
+                  strokeOpacity: 1,
+                  anchor: new maps.Point(14, 35),
                 }
-              }}
-            />
-          </div>
+                // eslint-disable-next-line no-new
+                new maps.Marker({
+                  position: map.getCenter(),
+                  icon: svgMarker,
+                  map,
+                })
+              }
+            }}
+          />
         </div>
       )}
     </div>
