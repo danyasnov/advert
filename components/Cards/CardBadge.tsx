@@ -17,16 +17,16 @@ const CardBadge: FC<Props> = ({state}) => {
       color = 'bg-error'
       break
     }
-    case 'draft': {
-      message = 'MODERATION'
-      color = 'bg-notification-info'
-      break
-    }
-    case 'archived': {
-      message = 'ARCHIVED'
-      color = 'bg-black-c'
-      break
-    }
+    // case 'draft': {
+    //   message = 'MODERATION'
+    //   color = 'bg-notification-info'
+    //   break
+    // }
+    // case 'archived': {
+    //   message = 'ARCHIVED'
+    //   color = 'bg-black-c'
+    //   break
+    // }
     default: {
       message = null
       color = null
@@ -38,8 +38,11 @@ const CardBadge: FC<Props> = ({state}) => {
   }
 
   return (
-    <div className={`absolute top-4 px-1 h-4 z-10 flex items-center ${color}`}>
-      <span className='uppercase text-body-12 text-white'>{t(message)}</span>
+    <div className='absolute w-full z-20 flex justify-center top-1/4 '>
+      <span
+        className={`${color} flex rounded-md text-body-14 text-white px-2.5 py-1.5`}>
+        {t(message)}
+      </span>
     </div>
   )
 }

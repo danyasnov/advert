@@ -33,7 +33,7 @@ const ProductMap: FC = observer(() => {
     degradations.find((d) => d.key === advert.degradation)?.radius ?? 0
 
   return (
-    <div className='bg-white rounded-2xl text-body-14 text-greyscale-900'>
+    <div className='bg-white rounded-2xl text-body-14 text-greyscale-900 flex flex-col'>
       <div className='flex justify-between p-5'>
         <div className='flex items-center'>
           <div className='fill-current text-primary-500 mr-2'>
@@ -46,7 +46,9 @@ const ProductMap: FC = observer(() => {
         </Button>
       </div>
       {mapVisible && (
-        <div className='w-full h-96' data-test-id='map-body'>
+        <div
+          className='h-96 overflow-hidden rounded-2xl mb-5 mx-5'
+          data-test-id='map-body'>
           <GoogleMapReact
             bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
             center={location}

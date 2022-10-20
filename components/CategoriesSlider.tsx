@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import useEmblaCarousel from 'embla-carousel-react'
 import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
 import ImageWrapper from './ImageWrapper'
 import {
   useCategoriesStore,
