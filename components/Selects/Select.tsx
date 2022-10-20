@@ -2,6 +2,7 @@ import {FC, useEffect, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import {isEqual} from 'lodash'
 import {getDefaultStyles} from './styles'
 
 export interface SelectProps {
@@ -112,8 +113,10 @@ const Select: FC<SelectProps> = ({
         return currentOption
       })
       setSorted([...selected, ...tempOptions])
+    } else if (!isEqual(sorted, options)) {
+      setSorted(options)
     }
-  }, [value])
+  }, [value, options])
   return (
     <>
       <RS

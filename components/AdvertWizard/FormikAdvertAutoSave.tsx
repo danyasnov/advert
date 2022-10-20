@@ -22,7 +22,7 @@ const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
       (ctx: typeof formik) => {
         onSubmit({values: ctx.values, saveDraft: true, helpers: ctx})
       },
-      1500,
+      3000,
       {leading: false},
     ),
     [onSubmit],
