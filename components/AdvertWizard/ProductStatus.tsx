@@ -35,9 +35,14 @@ const ProductStatus: FC<Props> = ({product}) => {
     case 'blocked':
     case 'blockedPermanently': {
       body = (
-        <span className='ml-2.5 mr-1 font-bold text-greyscale-900'>
-          {t('BLOCKED')}
-        </span>
+        <>
+          <span className='ml-2.5 mr-1 font-bold text-greyscale-900'>
+            {t('BLOCKED')}.
+          </span>
+          <span className='text-greyscale-900'>
+            {t('REASON')}: {t(advert.block.reasonCode)}
+          </span>
+        </>
       )
       bgColor = 'bg-pink'
       iconColor = 'text-error'

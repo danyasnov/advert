@@ -44,6 +44,8 @@ export const getDefaultStyles = (isInvalid) => ({
         color: '#7210FF',
       },
       display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
       alignItems: 'center',
       ...(isDisabled
         ? {'&:hover': {}, color: 'hsl(0, 0%, 80%)', backgroundColor: '#FFFFFF'}
@@ -55,6 +57,13 @@ export const getDefaultStyles = (isInvalid) => ({
     fontSize: '16px',
     lineHeight: '22px',
     color: '#3D3F43',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: 'none',
+    fontSize: '12px',
+    lineHeight: '14px',
+    margin: 0,
   }),
   menu: (provided) => ({
     ...provided,
@@ -72,7 +81,6 @@ export const getDefaultStyles = (isInvalid) => ({
     paddingLeft: '20px',
     paddingTop: '16px',
     paddingBottom: '16px',
-    height: '56px',
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
