@@ -1032,15 +1032,7 @@
   "LANDING_CORRECT_SITES": "Приклади правильних сайтів:",
   "LANDING_CORRECT_SITES_TEXT": "vooxee.com\n\nuk.vooxee.com\n\npayment.vooxee.com\n\nany-kind-of-letters-here.vooxee.com",
   "LANDING_DELIVERY": "Доставка",
-<<<<<<< HEAD
-<<<<<<< HEAD
   "LANDING_DELIVERY_TEXT": "Відправляйте товар тільки перевіреними службами доставки. Не сплачуйте послуги доставки через сторонні сайти.",
-=======
-  "LANDING_DELIVERY_TEXT": "Send goods only by trusted delivery services. Do not pay for delivery services through third-party sites.",
->>>>>>> develop
-=======
-  "LANDING_DELIVERY_TEXT": "Відправляйте товар тільки перевіреними службами доставки. Не сплачуйте послуги доставки через сторонні сайти.",
->>>>>>> develop
   "LANDING_DO NOT_ENTER_PIN": "Ніде не вводьте PIN-код",
   "LANDING_DO NOT_ENTER_PIN_TEXT": "In order to receive money, you never need to enter your PIN - this is definitely a scam.",
   "LANDING_DO_NOT_SEND_NUMBER_AND_MAIL": "Нікому не повідомляйте ваш e-mail та номер телефону",
@@ -1474,15 +1466,7 @@
   "ADD_PHOTO_AND_VIDEO": "Додати фото та відео",
   "ADD_TO_FAVS": "Add to favs",
   "ADD_VIDEO_HINT": "Drag video here or",
-<<<<<<< HEAD
-<<<<<<< HEAD
   "ADD_VIDEO_HINT_1": "Оберіть їх на своєму пристрої",
-=======
-  "ADD_VIDEO_HINT_1": "Select them on your device",
->>>>>>> develop
-=======
-  "ADD_VIDEO_HINT_1": "Оберіть їх на своєму пристрої",
->>>>>>> develop
   "ADDED_TIME": "Час публікації",
   "ADVERT_ARCHIVE_SOON": "Your advert will be archived in {{count}} days",
   "ADVERT_ARCHIVED": "Your ad has been removed from publication and moved to the archive",
