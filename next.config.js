@@ -48,7 +48,6 @@ const nextConfig = {
         },
       ],
     })
-
     return config
   },
   async rewrites() {

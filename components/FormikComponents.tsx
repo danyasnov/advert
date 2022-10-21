@@ -32,6 +32,7 @@ interface IFormikCheckbox {
 interface IFormikSelect {
   label: string
   options: SelectItem[]
+  other?: SelectItem[]
   placeholder: string
   isFilterable: boolean
   isClearable: boolean
@@ -64,6 +65,7 @@ interface IFormikDependentField {
 
 interface FieldOptions {
   options?: SelectItem[]
+  other?: SelectItem[]
   placeholder?: string
   label?: string
   isFilterable?: boolean
@@ -87,16 +89,40 @@ export const getSelectOptions = (multiselects = {}) => {
         multiselects.other
       : []),
   ]
-    .map((o) =>
-      o.isOther
-        ? null
-        : {
-            value: o.id,
-            label: o.value,
-            disabled: o.itemType === 'title',
-          },
-    )
-    .filter((o) => !!o)
+    .filter((o) => o.isOther)
+    .map((o) => ({
+      value: o.id,
+      label: o.value,
+      disabled: o.itemType === 'title',
+    }))
+}
+
+export const getCreateSelectOptions = (multiselects = {}) => {
+  return [
+    // @ts-ignore
+    ...multiselects.top,
+    // @ts-ignore
+    ...(multiselects.other
+      ? // @ts-ignore
+        multiselects.other
+      : []),
+  ].reduce(
+    (acc, val) => {
+      const item = {
+        value: val.id,
+        label: val.value,
+        isVisible: val.isVisible,
+        disabled: val.itemType === 'title',
+      }
+      if (val.isVisible) {
+        acc.visible.push(item)
+      } else {
+        acc.other.push(item)
+      }
+      return acc
+    },
+    {visible: [], other: []},
+  )
 }
 
 export const FormikFilterField: FC<IFormikField> = ({field}) => {
@@ -348,7 +374,9 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
     case 'iconselect':
     case 'multiselect': {
       component = FormikSelect
-      props.options = getSelectOptions(multiselects)
+      const {visible, other} = getCreateSelectOptions(multiselects)
+      props.options = visible
+      props.other = other
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'
@@ -851,6 +879,10 @@ export const FormikDependentFields: FC<
       if (shouldClearNext) {
         setFieldValue(`fields.${current.id}`, undefined)
       } else if (nextValue !== prevValue) {
+        const currentOption = current.multiselects.top.find(
+          (o) => o.id === nextValue,
+        )
+
         if (nextValue) {
           newFields.push({...current, value: nextValue})
           const result =
@@ -864,7 +896,7 @@ export const FormikDependentFields: FC<
                   dependenceSequence: newFields.map(
                     (f) => nextFields[f.id]?.value,
                   ),
-                  otherValueWasSelected: false,
+                  otherValueWasSelected: !currentOption.isVisible,
                 },
               }),
               'data.result',
@@ -912,20 +944,39 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   field,
   form,
   options,
+  other = [],
   placeholder,
   isFilterable,
   isMulti,
   isClearable,
   filterStyle,
 }) => {
+  const {t} = useTranslation()
   const {width} = useWindowSize()
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
+  const prevOptionsRef = useRef(options)
+  const [currentOptions, setCurrentOptions] = useState(() => {
+    if (!isEmpty(other)) {
+      if (value && other.find((o) => o.value === value.value)) {
+        return [...options, ...other]
+      }
+      return [...options, {label: t('OTHER'), value: 'other_value_button'}]
+    }
+    return options
+  })
+  useEffect(() => {
+    if (!isEqual(prevOptionsRef.current, options)) {
+      setCurrentOptions(options)
+      prevOptionsRef.current = options
+    }
+  }, [options])
+
   const props = {
     id: name,
     value: value || [],
-    options,
+    options: currentOptions,
     isClearable,
     placeholder,
     isSearchable: isFilterable,
@@ -934,8 +985,15 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     classNameOpt: {},
     isInvalid: !!error,
     onChange: (item) => {
-      setFieldValue(name, item)
-      if (error) setFieldError(name, undefined)
+      if (item.value === 'other_value_button') {
+        setCurrentOptions([
+          ...options.filter((o) => o.value === 'other_value_button'),
+          ...other,
+        ])
+      } else {
+        setFieldValue(name, item)
+        if (error) setFieldError(name, undefined)
+      }
     },
   }
   if (filterStyle) {

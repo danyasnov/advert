@@ -17,7 +17,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta name='format-detection' content='telephone=no' />
-          <meta name='apple-itunes-app' content='app-id=1287862488' />
+          {/* <meta name='apple-itunes-app' content='app-id=1287862488' /> */}
           <link
             rel='apple-touch-icon'
             sizes='180x180'
@@ -46,25 +46,25 @@ class MyDocument extends Document {
             title='Vooxee Search'
           />
 
-          <noscript>
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <img
-              height='1'
-              width='1'
-              style={{display: 'none'}}
-              src='https://www.facebook.com/tr?id=1735830353144099&ev=PageView&noscript=1'
-            />
-          </noscript>
+          {/* <noscript> */}
+          {/*  /!* eslint-disable-next-line jsx-a11y/alt-text *!/ */}
+          {/*  <img */}
+          {/*    height='1' */}
+          {/*    width='1' */}
+          {/*    style={{display: 'none'}} */}
+          {/*    src='https://www.facebook.com/tr?id=1735830353144099&ev=PageView&noscript=1' */}
+          {/*  /> */}
+          {/* </noscript> */}
 
-          <noscript>
-            <div>
-              <img
-                src='https://mc.yandex.ru/watch/46964940'
-                style={{position: 'absolute', left: '-9999px'}}
-                alt=''
-              />
-            </div>
-          </noscript>
+          {/* <noscript> */}
+          {/*  <div> */}
+          {/*    <img */}
+          {/*      src='https://mc.yandex.ru/watch/46964940' */}
+          {/*      style={{position: 'absolute', left: '-9999px'}} */}
+          {/*      alt='' */}
+          {/*    /> */}
+          {/*  </div> */}
+          {/* </noscript> */}
         </Head>
         <body className='overflow-x-hidden'>
           <Main />
