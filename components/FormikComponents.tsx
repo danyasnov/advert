@@ -857,6 +857,7 @@ export const FormikDependentFields: FC<
   const nextFields = values.fields
   // @ts-ignore
   const prevFields = prevValues.current.fields
+  const [hasOverValues, setHasOverValues] = useState(false)
   const [fields, setFields] = useState([
     {...field, value: nextFields[field.id]?.value},
     ...allFields
