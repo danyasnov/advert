@@ -53,7 +53,7 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
             }
           }
         }}
-        /*className='text-greyscale-500 space-x-2'>*/
+        /* className='text-greyscale-500 space-x-2'> */
         className={`${
           show ? 'text-primary-500' : 'text-greyscale-500'
         } space-x-2
