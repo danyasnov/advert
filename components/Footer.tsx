@@ -58,25 +58,29 @@ const Footer: FC = observer(() => {
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
                 className='flex justify-center items-center w-full'
-                href='/p/terms-and-conditions'>
+                href='/'>
+                {/* href='/p/terms-and-conditions'> */}
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
                 className='flex justify-center items-center w-full'
-                href='/p/privacy-policy'>
+                href='/'>
+                {/* href='/p/privacy-policy'> */}
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('RULES')}
                 className='flex justify-center items-center w-full'
-                href='/p/rooles/general-requirements-for-adverts'>
+                href='/'>
+                {/* href='/p/rooles/general-requirements-for-adverts'> */}
                 {t('RULES')}
               </LinkWrapper>
               <LinkWrapper
                 className='flex justify-center items-center w-full'
                 title={t('COOKIES_POLICY')}
-                href='/p/cookies-policy'>
+                href='/'>
+                {/* href='/p/cookies-policy'> */}
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper

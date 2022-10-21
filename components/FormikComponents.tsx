@@ -857,7 +857,6 @@ export const FormikDependentFields: FC<
   const nextFields = values.fields
   // @ts-ignore
   const prevFields = prevValues.current.fields
-  const [hasOverValues, setHasOverValues] = useState(false)
   const [fields, setFields] = useState([
     {...field, value: nextFields[field.id]?.value},
     ...allFields
@@ -883,6 +882,7 @@ export const FormikDependentFields: FC<
         const currentOption = current.multiselects.top.find(
           (o) => o.id === nextValue,
         )
+        // debugger
 
         if (nextValue) {
           newFields.push({...current, value: nextValue})
