@@ -60,10 +60,27 @@ export const getDefaultStyles = (isInvalid) => ({
   }),
   multiValue: (provided) => ({
     ...provided,
-    backgroundColor: 'none',
-    fontSize: '12px',
-    lineHeight: '14px',
-    margin: 0,
+    backgroundColor: '#7210FF',
+    borderRadius: '8px',
+    margin: '0',
+    marginRight: '4px',
+    marginBottom: '4px',
+    color: '#fff',
+    overflow: 'hidden',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '16px',
+    lineHeight: '22px',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    '&:hover': {
+      color: '#fff',
+      backgroundColor: 'inherit',
+      borderColor: 'inherit',
+    },
   }),
   menu: (provided) => ({
     ...provided,
@@ -106,7 +123,7 @@ export const LinkStyles = {
   valueContainer: (provided) => ({
     ...provided,
     padding: '0 8px',
-    height: '16px',
+    height: '24px',
     display: 'flex',
     justifyContent: 'flex-start',
   }),
@@ -121,15 +138,22 @@ export const FilterStyles = {
   }),
   valueContainer: (provided) => ({
     ...provided,
-    paddingLeft: '20px',
-    paddingTop: '13px',
-    paddingBottom: '13px',
-    height: '40px',
+    marginTop: '7px',
+    marginBottom: '0',
+    paddingTop: '0',
+    paddingRight: '0',
+    height: '24px',
   }),
   placeholder: (provided) => ({
     ...provided,
     fontSize: '12px',
     lineHeight: '14px',
     color: '#9E9E9E',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#fff',
+    fontSize: '12px',
+    lineHeight: '14px',
   }),
 }

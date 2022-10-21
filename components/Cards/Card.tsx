@@ -162,6 +162,10 @@ const Card: FC<Props> = ({
         <div
           className='overflow-hidden relative bg-white rounded-t-xl'
           ref={viewportRef}>
+          {['blocked', 'blockedPermanently', 'sold'].includes(state) && (
+            <div className='absolute inset-0 bg-greyscale-900 opacity-50 z-10' />
+          )}
+
           <div className='flex h-50 l:h-50 bg-image-placeholder '>
             {inView && (
               <>

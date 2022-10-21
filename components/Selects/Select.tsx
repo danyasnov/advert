@@ -2,6 +2,7 @@ import {FC, useEffect, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import {isEqual} from 'lodash'
 import {getDefaultStyles} from './styles'
 
 export interface SelectProps {
@@ -87,28 +88,6 @@ const Option = (props) => {
   )
 }
 
-const MultiValueContainer = (props) => {
-  const {selectProps, data} = props
-  const values = selectProps.value
-  let body = null
-  if (values) {
-    body =
-      values[values.length - 1].label === data.label
-        ? data.label
-        : `${data.label},`
-  }
-  return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <RSComponents.MultiValueContainer {...props}>
-      <span
-        className={
-          values[values.length - 1].label === data.label ? '' : 'mr-1'
-        }>
-        {body}
-      </span>
-    </RSComponents.MultiValueContainer>
-  )
-}
 const Select: FC<SelectProps> = ({
   options,
   placeholder,
@@ -134,8 +113,10 @@ const Select: FC<SelectProps> = ({
         return currentOption
       })
       setSorted([...selected, ...tempOptions])
+    } else if (!isEqual(sorted, options)) {
+      setSorted(options)
     }
-  }, [value])
+  }, [value, options])
   return (
     <>
       <RS
@@ -164,8 +145,6 @@ const Select: FC<SelectProps> = ({
         components={{
           MenuList,
           DropdownIndicator,
-          MultiValueContainer,
-          MultiValueRemove: () => null,
           ...(isMulti ? {Option} : {}),
           ...(components || {}),
         }}
