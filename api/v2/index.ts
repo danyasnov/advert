@@ -333,3 +333,6 @@ export const checkPhonePermissions = (
   const rest = getRest(storage)
   return rest.advertises.checkPhonePermissions(id, ip)
 }
+export const fetchBanners = (): Promise<any> => {
+  return makeRequest({method: 'get', url: `${API_URL}/v2/banners`})
+}
