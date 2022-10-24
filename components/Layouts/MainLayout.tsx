@@ -23,6 +23,7 @@ import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import OutlineButton from '../Buttons/OutlineButton'
 import ImageWrapper from '../ImageWrapper'
+import Banners from '../Banners'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -102,6 +103,7 @@ const MainLayout: FC = observer(() => {
       <div className='py-8 m:flex min-h-1/2'>
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
+            {/* <Banners /> */}
             <CategoriesSlider />
             <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
               <div className='space-y-12 overflow-hidden m:overflow-visible'>
@@ -154,7 +156,9 @@ const MainLayout: FC = observer(() => {
                         title={t('SEE_ALL')}
                         className='text-body-16 text-primary-500 font-bold relative z-10'
                         href={locationCodes}>
-                        <OutlineButton>{t('SEE_ALL')}</OutlineButton>
+                        <OutlineButton className='shadow-lg'>
+                          {t('SEE_ALL')}
+                        </OutlineButton>
                       </LinkWrapper>
                     )}
                   </div>

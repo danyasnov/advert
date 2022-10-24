@@ -67,24 +67,26 @@ const Footer: FC = observer(() => {
                 href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
-              <LinkWrapper
-                title={t('RULES')}
-                className='flex justify-center items-center w-full'
-                href='/p/rooles/general-requirements-for-adverts'>
-                {t('RULES')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex justify-center items-center w-full'
-                title={t('COOKIES_POLICY')}
-                href='/p/cookies-policy'>
-                {t('COOKIES_POLICY')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex justify-center items-center w-full'
-                title={t('SUPPORT')}
-                href='/support'>
-                {t('SUPPORT')}
-              </LinkWrapper>
+              {/* <LinkWrapper */}
+              {/*  title={t('RULES')} */}
+              {/*  className='flex justify-center items-center w-full' */}
+              {/*  href='/'> */}
+              {/*  /!* href='/p/rooles/general-requirements-for-adverts'> *!/ */}
+              {/*  {t('RULES')} */}
+              {/* </LinkWrapper> */}
+              {/* <LinkWrapper */}
+              {/*  className='flex justify-center items-center w-full' */}
+              {/*  title={t('COOKIES_POLICY')} */}
+              {/*  href='/'> */}
+              {/*  /!* href='/p/cookies-policy'> *!/ */}
+              {/*  {t('COOKIES_POLICY')} */}
+              {/* </LinkWrapper> */}
+              {/* <LinkWrapper */}
+              {/*  className='flex justify-center items-center w-full' */}
+              {/*  title={t('SUPPORT')} */}
+              {/*  href='/support'> */}
+              {/*  {t('SUPPORT')} */}
+              {/* </LinkWrapper> */}
             </div>
             <div className='text-body-14 font-normal mb-8 s:my-7 text-greyscale-900 self-start'>
               © {new Date().getFullYear()} VooXee

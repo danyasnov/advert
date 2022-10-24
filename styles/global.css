@@ -69,9 +69,6 @@ input[type=number] {
 }
 
 .ios-height-hack {
-    /*min-height: 100vh;*/
-    /*height: 100vh;*/
-    /*height: -moz-available;*/
-    /*height: -webkit-fill-available;*/
-    /*height: fill-available;*/
+    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
 }
