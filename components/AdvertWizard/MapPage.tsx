@@ -249,7 +249,7 @@ const MapPage: FC = () => {
   )
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex flex-col w-full h-full'>
+      <div className='flex flex-col w-full ios-height-hack'>
         <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
@@ -258,12 +258,10 @@ const MapPage: FC = () => {
         </span>
 
         <div
-          className='relative min-h-full w-full mb-24 s:rounded-3xl s:overflow-hidden'
+          className='relative w-full s:rounded-3xl s:overflow-hidden ios-height-hack'
           style={{
             // @ts-ignore
             '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-            // height: '-webkit-fill-available',
-            // '-webkit-overflow-scrolling': 'touch',
           }}>
           {location && (
             <>
