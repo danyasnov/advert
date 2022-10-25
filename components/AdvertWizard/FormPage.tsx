@@ -555,6 +555,7 @@ const FormPage: FC = observer(() => {
               if (isEmpty(arrayTypeFields) && !category.data.allowUsed) {
                 return null
               }
+              console.log('formStateDict', formStateDict, slug)
               return (
                 <FormGroup
                   id='form-group-fields'
