@@ -14,7 +14,9 @@ import LogoutButton from './Auth/LogoutButton'
 const UserSidebar: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
-  const {setActiveUserPage, activeUserPage, user} = useGeneralStore()
+  const {setActiveUserPage, activeUserPage, user, userHash} = useGeneralStore()
+  const isCurrentUser = userHash === user?.hash
+
   return (
     <div>
       <UserProfile />
@@ -30,32 +32,38 @@ const UserSidebar: FC = observer(() => {
             setActiveUserPage('adverts' as PagesType)
           }}>
           <IcAds className='w-7 h-7 fill-current' />
-          <span className='text-body-16'>{t('MY_ADVERTISIMENT')}</span>
+          <span className='text-body-16'>
+            {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+          </span>
         </Button>
-        <Button
-          onClick={() => {
-            setActiveUserPage('drafts' as PagesType)
-          }}
-          className={`${
-            activeUserPage === 'drafts'
-              ? 'text-primary-500'
-              : 'text-greyscale-900'
-          } space-x-4`}>
-          <IcCreate className='fill-current h-7 w-7' />
-          <span className='text-body-16'>{t('DRAFTS')}</span>
-        </Button>
-        <Button
-          onClick={() => {
-            setActiveUserPage('favorites' as PagesType)
-          }}
-          className={`${
-            activeUserPage === 'favorites'
-              ? 'text-primary-500'
-              : 'text-greyscale-900'
-          } space-x-4`}>
-          <Heart2 filled size={28} />
-          <span className='text-body-16'>{t('FAVORITE')}</span>
-        </Button>
+        {isCurrentUser && (
+          <>
+            <Button
+              onClick={() => {
+                setActiveUserPage('drafts' as PagesType)
+              }}
+              className={`${
+                activeUserPage === 'drafts'
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}>
+              <IcCreate className='fill-current h-7 w-7' />
+              <span className='text-body-16'>{t('DRAFTS')}</span>
+            </Button>
+            <Button
+              onClick={() => {
+                setActiveUserPage('favorites' as PagesType)
+              }}
+              className={`${
+                activeUserPage === 'favorites'
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}>
+              <Heart2 filled size={28} />
+              <span className='text-body-16'>{t('FAVORITE')}</span>
+            </Button>
+          </>
+        )}
         {user && (
           <LogoutButton className='text-greyscale-500 space-x-4'>
             <>

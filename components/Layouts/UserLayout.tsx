@@ -75,7 +75,9 @@ const UserLayout: FC = observer(() => {
               {((width >= 768 && activeUserPage === null) ||
                 activeUserPage === 'adverts') && (
                 <div>
-                  <SectionTitle title={t('MY_ADVERTISIMENT')} />
+                  <SectionTitle
+                    title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+                  />
 
                   <div className='z-10 relative mb-8'>
                     <Tabs
