@@ -53,7 +53,6 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
             }
           }
         }}
-        /* className='text-greyscale-500 space-x-2'> */
         className={`${
           show ? 'text-primary-500' : 'text-greyscale-500'
         } space-x-2
@@ -63,12 +62,12 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
           {t(loading ? 'LOADING_LO' : 'SHARE')}
         </span>
       </Button>
-      <div className='absolute -right-25 bottom-0 w-[280px]' ref={ref}>
+      <div className='absolute -right-[88px] bottom-0 w-[280px]' ref={ref}>
         {show && link && (
           <div
-            className='z-10 flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-3'
+            className='z-10 flex flex-col absolute bg-white shadow-2xl rounded-2xl py-4 px-6 mt-7 w-[280px]'
             data-test-id='share-popup'>
-            <h2 className='text-body-14 text-greyscale-900 font-bold'>
+            <h2 className='text-body-16 text-primary-500 font-bold'>
               {t('SHARE')}
             </h2>
             {/* <SocialShareButtons link={link} /> */}
