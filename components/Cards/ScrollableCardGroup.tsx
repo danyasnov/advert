@@ -57,7 +57,9 @@ const ScrollableCardGroup: FC<Props> = ({
             enableTwoColumnsForS ? 's:grid-cols-2' : ''
           } ${enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'}`}>
           {products.map((p) => (
-            <div className={p.isVip && !disableVipWidth ? 'col-span-2' : ''}>
+            <div
+              className={p.isVip && !disableVipWidth ? 'col-span-2' : ''}
+              key={p.hash}>
               <Card product={p} disableVipWidth={disableVipWidth} />
             </div>
           ))}
