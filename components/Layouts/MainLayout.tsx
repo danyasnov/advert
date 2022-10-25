@@ -156,7 +156,7 @@ const MainLayout: FC = observer(() => {
                         title={t('SEE_ALL')}
                         className='text-body-16 text-primary-500 font-bold relative z-10'
                         href={locationCodes}>
-                        <OutlineButton className='shadow-lg'>
+                        <OutlineButton className='mb-6 shadow-lg'>
                           {t('SEE_ALL')}
                         </OutlineButton>
                       </LinkWrapper>
