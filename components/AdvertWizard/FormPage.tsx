@@ -248,9 +248,9 @@ const FormPage: FC = observer(() => {
     !category.data.isProduct
       ? []
       : fieldsArray.map((fieldArray, index) => {
-          const {name, arrayTypeFields} = fieldArray
+          const {name, arrayTypeFields, slug} = fieldArray
           return {
-            key: name,
+            key: slug,
             validate: (val) => ({
               ...(index === 0
                 ? validateCondition(
