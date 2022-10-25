@@ -328,7 +328,7 @@ const MapPage: FC = () => {
               </div>
               <div
                 className={`s:hidden absolute  inset-x-0 w-full px-4 flex flex-col  ${
-                  isAndroid ? 'bottom-12' : 'bottom-6'
+                  isAndroid ? 'bottom-15' : 'bottom-6'
                 }`}>
                 <div className='self-end mb-4'>{locationButton}</div>
                 <Button
