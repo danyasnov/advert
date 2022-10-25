@@ -10,15 +10,15 @@ import CardsLoader from '../CardsLoader'
 interface Props {
   products: AdvertiseListItemModel[]
   state: string
-  count: number
-  page: number
+  count?: number
+  page?: number
   limit?: number
   hideNotFoundDescription?: boolean
   disableScroll?: boolean
   enableFourthColumnForM?: boolean
   enableTwoColumnsForS?: boolean
   disableVipWidth?: boolean
-  fetchProducts: () => void
+  fetchProducts?: () => void
 }
 const ScrollableCardGroup: FC<Props> = ({
   products = [],
