@@ -7,7 +7,6 @@ import {useRouter} from 'next/router'
 import IcAim from 'icons/material/Aim.svg'
 import ReactDOM from 'react-dom'
 import {observer} from 'mobx-react-lite'
-import {isAndroid} from 'react-device-detect'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
@@ -239,10 +238,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
           </div>
         </div>
       </div>
-      <div
-        className={`flex px-4 s:px-6 w-full mt-8 s:mt-0 pt-4 ${
-          isAndroid ? 'mb-20' : 'mb-6'
-        }`}>
+      <div className='flex px-4 s:px-6 w-full mt-8 s:mt-0 mb-6 pt-4'>
         <SecondaryButton
           id='location-modal-map-clean'
           className='w-full'
