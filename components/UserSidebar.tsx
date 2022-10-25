@@ -62,15 +62,13 @@ const UserSidebar: FC = observer(() => {
               <Heart2 filled size={28} />
               <span className='text-body-16'>{t('FAVORITE')}</span>
             </Button>
+            <LogoutButton className='text-greyscale-500 space-x-4'>
+              <>
+                <Logout filled size={28} />
+                <span className='text-body-16'>{t('EXIT')}</span>
+              </>
+            </LogoutButton>
           </>
-        )}
-        {user && (
-          <LogoutButton className='text-greyscale-500 space-x-4'>
-            <>
-              <Logout filled size={28} />
-              <span className='text-body-16'>{t('EXIT')}</span>
-            </>
-          </LogoutButton>
         )}
       </div>
     </div>
