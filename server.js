@@ -15,6 +15,13 @@ const domains = {
   prod: 'vooxee.com',
   stage: 'vooxee.venera.city',
 }
+const whitelist = [
+  '/b/',
+  '/_next',
+  '/api',
+  '/favicon-32x32.png',
+  '/site.webmanifest',
+]
 
 const getDomain = (host) => {
   if (host.includes('localhost')) {
@@ -46,9 +53,11 @@ app.prepare().then(() => {
     const {pathname} = parsedUrl
 
     // if deeplink - no need to redirect or set cookies
-    if (pathname.startsWith('/b/') || pathname.startsWith('/_next')) {
+    if (whitelist.findIndex((string) => pathname.startsWith(string)) !== -1) {
       return handle(req, res)
     }
+    console.warn(['pathname', pathname])
+
     // first visit
     if (!cookies.language) {
       let language
