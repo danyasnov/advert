@@ -240,7 +240,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
         </div>
       </div>
       <div
-        className={`flex px-4 s:px-6 w-full mt-8 s:mt-0  pt-4 ${
+        className={`flex px-4 s:px-6 w-full mt-8 s:mt-0 pt-4 ${
           isAndroid ? 'mb-20' : 'mb-6'
         }`}>
         <SecondaryButton

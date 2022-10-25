@@ -6,7 +6,7 @@ import IcAds from 'icons/material/Ads.svg'
 import IcCreate from 'icons/material/Create.svg'
 import {useWindowSize} from 'react-use'
 import UserProfile from './UserProfile'
-import {useGeneralStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {PagesType} from '../stores/GeneralStore'
 import LogoutButton from './Auth/LogoutButton'
@@ -14,9 +14,9 @@ import LogoutButton from './Auth/LogoutButton'
 const UserSidebar: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
-  const {setActiveUserPage, activeUserPage, user, userHash} = useGeneralStore()
+  const {setActiveUserPage, activeUserPage, userHash} = useGeneralStore()
+  const {user} = useUserStore()
   const isCurrentUser = userHash === user?.hash
-
   return (
     <div>
       <UserProfile />
