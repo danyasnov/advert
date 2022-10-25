@@ -248,9 +248,9 @@ const FormPage: FC = observer(() => {
     !category.data.isProduct
       ? []
       : fieldsArray.map((fieldArray, index) => {
-          const {name, arrayTypeFields, slug} = fieldArray
+          const {name, arrayTypeFields} = fieldArray
           return {
-            key: slug,
+            key: name,
             validate: (val) => ({
               ...(index === 0
                 ? validateCondition(
@@ -551,16 +551,15 @@ const FormPage: FC = observer(() => {
               }
             />
             {fieldsArray.map((fieldArray, index) => {
-              const {name, arrayTypeFields, id, fieldType, slug} = fieldArray
+              const {name, arrayTypeFields, id, fieldType} = fieldArray
               if (isEmpty(arrayTypeFields) && !category.data.allowUsed) {
                 return null
               }
-              console.log('formStateDict', formStateDict, slug)
               return (
                 <FormGroup
                   id='form-group-fields'
-                  hide={!formStateDict?.[slug].visible}
-                  required={formStateDict?.[slug].required}
+                  hide={!formStateDict?.[name].visible}
+                  required={formStateDict?.[name].required}
                   key={name}
                   title={name}
                   showWholeForm={showWholeForm}
