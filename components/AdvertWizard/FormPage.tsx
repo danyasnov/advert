@@ -551,15 +551,15 @@ const FormPage: FC = observer(() => {
               }
             />
             {fieldsArray.map((fieldArray, index) => {
-              const {name, arrayTypeFields, id, fieldType} = fieldArray
+              const {name, arrayTypeFields, id, fieldType, slug} = fieldArray
               if (isEmpty(arrayTypeFields) && !category.data.allowUsed) {
                 return null
               }
               return (
                 <FormGroup
                   id='form-group-fields'
-                  hide={!formStateDict?.[name].visible}
-                  required={formStateDict?.[name].required}
+                  hide={!formStateDict?.[slug].visible}
+                  required={formStateDict?.[slug].required}
                   key={name}
                   title={name}
                   showWholeForm={showWholeForm}
