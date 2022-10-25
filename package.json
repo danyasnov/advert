@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "yarn fetch-translations && next dev",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production next dev",
+    "start": "cross-env NODE_ENV=production next start",
     "fetch-translations": "node fetchTranslations.js"
   },
   "dependencies": {
