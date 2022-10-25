@@ -27,6 +27,7 @@ module.exports = {
         // 'adverto.sale',
         // 'fpreprod.adverto.sale',
         'vooxee.venera.city',
+        'vooxee.com',
       ]),
     ],
   },
