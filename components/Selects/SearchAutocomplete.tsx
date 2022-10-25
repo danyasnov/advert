@@ -115,7 +115,7 @@ const SearchAutocomplete: FC<Props> = observer(
         <ul
           {...getMenuProps()}
           className='z-10 bg-white shadow-xl absolute top-10 w-full'>
-          {!isOpen &&
+          {isOpen &&
             inputItems.map((item, index) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
