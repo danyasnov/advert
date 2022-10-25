@@ -31,14 +31,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((response) =>
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  if (categoriesData.status === 401) {
+  if (
+    categoriesData.status === 401 &&
+    !['terms-and-conditions', 'privacy-policy'].includes(param)
+  ) {
     return redirectToLogin(ctx.resolvedUrl)
   }
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
 
-  const document = doc[0]
-  if (!document) {
+  const document = ['terms-and-conditions', 'privacy-policy'].includes(param)
+    ? null
+    : doc[0]
+  if (
+    !document &&
+    !['terms-and-conditions', 'privacy-policy'].includes(param)
+  ) {
     return {
       redirect: {
         destination: '/countries',
@@ -57,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         generalStore: {
           locationCodes: getLocationCodes(ctx),
-          document,
+          document: document || {},
         },
       },
       ...(await serverSideTranslations(state.language)),

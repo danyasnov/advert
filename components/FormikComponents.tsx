@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import NumberFormat, {NumberFormatProps} from 'react-number-format'
 import IcCheck from 'icons/material/Check.svg'
 import {CACategoryDataFieldModel, FieldsModel} from 'front-api/src/models'
-import {get, isEmpty, isEqual, size, toNumber} from 'lodash'
+import {get, isEmpty, isEqual, size, toArray, toNumber} from 'lodash'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcHidden from 'icons/material/Hidden.svg'
 import Switch from 'react-switch'
@@ -89,7 +89,7 @@ export const getSelectOptions = (multiselects = {}) => {
         multiselects.other
       : []),
   ]
-    .filter((o) => o.isOther)
+    .filter((o) => !o.isOther)
     .map((o) => ({
       value: o.id,
       label: o.value,
@@ -870,34 +870,38 @@ export const FormikDependentFields: FC<
   useEffect(async () => {
     const newFields = []
     let shouldClearNext = false
+    let otherValueWasSelected = false
     // eslint-disable-next-line guard-for-in,no-restricted-syntax
     for (const index in fields) {
       const current = fields[index]
       const nextValue = nextFields[current.id]?.value
       const prevValue = prevFields[current.id]?.value
+      const currentOption = current.multiselects.top.find(
+        (o) => o.id === nextValue,
+      )
+      if (currentOption && !otherValueWasSelected) {
+        otherValueWasSelected = !currentOption.isVisible
+      }
 
       if (shouldClearNext) {
         setFieldValue(`fields.${current.id}`, undefined)
       } else if (nextValue !== prevValue) {
-        const currentOption = current.multiselects.top.find(
-          (o) => o.id === nextValue,
-        )
-
+        // @todo fix multiple requests
         if (nextValue) {
           newFields.push({...current, value: nextValue})
+          const params = {
+            dependenceSequenceId: field.dependenceSequenceId,
+            dependenceSequence: newFields.map((f) => nextFields[f.id]?.value),
+            otherValueWasSelected,
+          }
+
           const result =
             get(
               // eslint-disable-next-line no-await-in-loop
               await makeRequest({
                 url: '/api/field-dependent',
                 method: 'post',
-                data: {
-                  dependenceSequenceId: field.dependenceSequenceId,
-                  dependenceSequence: newFields.map(
-                    (f) => nextFields[f.id]?.value,
-                  ),
-                  otherValueWasSelected: !currentOption.isVisible,
-                },
+                data: params,
               }),
               'data.result',
             ) || {}

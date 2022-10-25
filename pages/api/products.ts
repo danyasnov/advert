@@ -16,6 +16,7 @@ export default async (
   const {body} = req
   const {filter, page, advHash, limit, cacheId, query} = body
   let state = await processCookies({req})
+
   if (query) {
     const countryCode = getQueryValue(query, 'country')
     const cityCode = getQueryValue(query, 'city')
@@ -26,7 +27,7 @@ export default async (
       state.language,
     )
 
-    state = await withLocationQuery(state, query, {countries, locations})
+    state = withLocationQuery(state, query, {countries, locations})
   }
 
   const storage = getStorageFromCookies({res, req})

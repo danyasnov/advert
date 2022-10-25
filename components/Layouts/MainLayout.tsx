@@ -23,6 +23,7 @@ import {makeRequest} from '../../api'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import OutlineButton from '../Buttons/OutlineButton'
 import ImageWrapper from '../ImageWrapper'
+import Banners from '../Banners'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -45,6 +46,11 @@ const MainLayout: FC = observer(() => {
   const {t} = useTranslation()
   const productsArr = [
     {
+      data: {categoryId: null},
+      name: 'all',
+      slug: 'all',
+    },
+    {
       data: {categoryId: 20},
       name: categoriesById[20]?.name,
       slug: categoriesById[20]?.slug,
@@ -65,9 +71,9 @@ const MainLayout: FC = observer(() => {
   ]
   useEffect(() => {
     const initProducts = async () => {
-      resetFilter()
-      setFilter({categoryId: null})
-      fetchProducts().then(applyFilter)
+      // resetFilter()
+      // setFilter({categoryId: null})
+      // fetchProducts().then(applyFilter)
       const url = '/api/products'
 
       const promises = productsArr.map((p) =>
@@ -81,6 +87,7 @@ const MainLayout: FC = observer(() => {
         setProducts(res[0].data?.result?.data || [], productsArr[0].slug)
         setProducts(res[1].data?.result?.data || [], productsArr[1].slug)
         setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
+        setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
       })
     }
     initProducts()
@@ -92,7 +99,7 @@ const MainLayout: FC = observer(() => {
     cookies.cityId,
     cookies.regionId,
   ])
-
+  console.log('productsArr', productsArr, toJS(otherProducts))
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -102,23 +109,26 @@ const MainLayout: FC = observer(() => {
       <div className='py-8 m:flex min-h-1/2'>
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
+            {/* <Banners /> */}
             <CategoriesSlider />
             <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
               <div className='space-y-12 overflow-hidden m:overflow-visible'>
-                {productsArr.map((p) => (
-                  <ProductsSlider
-                    products={otherProducts[p.slug] || []}
-                    title={p.name}
-                    rightContent={
-                      <LinkWrapper
-                        title={t('SEE_ALL')}
-                        className='text-body-16 text-primary-500 font-bold'
-                        href={p.url}>
-                        {t('SEE_ALL')}
-                      </LinkWrapper>
-                    }
-                  />
-                ))}
+                {productsArr
+                  .filter((p) => p.url)
+                  .map((p) => (
+                    <ProductsSlider
+                      products={otherProducts[p.slug] || []}
+                      title={p.name}
+                      rightContent={
+                        <LinkWrapper
+                          title={t('SEE_ALL')}
+                          className='text-body-16 text-primary-500 font-bold'
+                          href={p.url}>
+                          {t('SEE_ALL')}
+                        </LinkWrapper>
+                      }
+                    />
+                  ))}
                 <div>
                   {!isEmpty(products) && (
                     <TitleWithSeparator
@@ -135,19 +145,10 @@ const MainLayout: FC = observer(() => {
                   )}
                   <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                     <ScrollableCardGroup
-                      products={products}
-                      count={count}
-                      page={page}
+                      products={otherProducts.all}
                       state={state}
                       disableScroll
                       hideNotFoundDescription
-                      fetchProducts={() =>
-                        fetchProducts({
-                          page: page + 1,
-                          isScroll: true,
-                          query,
-                        }).then(() => applyFilter())
-                      }
                     />
                     {!isEmpty(products) && (
                       <LinkWrapper
@@ -161,12 +162,12 @@ const MainLayout: FC = observer(() => {
                 </div>
               </div>
               <div className='hidden m:block w-[280px] h-[380px]'>
-                <ImageWrapper
-                  type='/img/promo.png'
-                  alt='promo'
-                  width={280}
-                  height={380}
-                />
+                {/* <ImageWrapper */}
+                {/*  type='/img/promo.png' */}
+                {/*  alt='promo' */}
+                {/*  width={280} */}
+                {/*  height={380} */}
+                {/* /> */}
               </div>
             </div>
           </main>

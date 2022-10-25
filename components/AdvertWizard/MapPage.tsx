@@ -10,6 +10,7 @@ import {first, get} from 'lodash'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import localforage from 'localforage'
+import {isAndroid} from 'react-device-detect'
 import {SerializedCookiesState} from '../../types'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import Button from '../Buttons/Button'
@@ -249,7 +250,7 @@ const MapPage: FC = () => {
   )
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex flex-col w-full h-full'>
+      <div className='flex flex-col w-full ios-height-hack'>
         <h3 className='text-h-5 text-hc-title font-bold mb-2 mt-8 hidden s:flex'>
           {t('INSPECTION_PLACE')}
         </h3>
@@ -258,12 +259,10 @@ const MapPage: FC = () => {
         </span>
 
         <div
-          className='relative min-h-full w-full mb-24 s:rounded-3xl s:overflow-hidden'
+          className='relative w-full s:rounded-3xl s:overflow-hidden ios-height-hack'
           style={{
             // @ts-ignore
             '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-            // height: '-webkit-fill-available',
-            // '-webkit-overflow-scrolling': 'touch',
           }}>
           {location && (
             <>
@@ -327,7 +326,10 @@ const MapPage: FC = () => {
                   setRadius={onChangeRadius}
                 />
               </div>
-              <div className='s:hidden absolute bottom-6 inset-x-0 w-full px-4 flex flex-col'>
+              <div
+                className={`s:hidden absolute  inset-x-0 w-full px-4 flex flex-col  ${
+                  isAndroid ? 'bottom-20' : 'bottom-6'
+                }`}>
                 <div className='self-end mb-4'>{locationButton}</div>
                 <Button
                   className='w-full bg-primary-500 rounded-full text-body-16 py-4 text-white font-bold s:hidden'
@@ -338,7 +340,7 @@ const MapPage: FC = () => {
             </>
           )}
         </div>
-        <div className='fixed inset-x-0 bottom-0 flex justify-end bg-white shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around hidden s:flex'>
+        <div className='fixed inset-x-0 flex justify-end bg-white bottom-0 shadow-2xl px-8 m:px-10 l:px-29 py-2.5 justify-around hidden s:flex'>
           <div className='w-full l:w-1208px flex justify-end'>
             <PrimaryButton
               onClick={onSubmit}

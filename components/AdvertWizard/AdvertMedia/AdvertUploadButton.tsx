@@ -38,7 +38,7 @@ const AdvertUploadButton: FC<{
         ref={ref}
         className={`text-primary-500 rounded-3xl border flex cursor-pointer
          text-primary-500 px-2 h-[140px] w-[212px] ${
-           error ? 'border-error' : 'border-primary-500'
+           error ? 'text-error border-error' : 'border-primary-500'
          }`}>
         <div className='flex flex-col justify-center items-center flex-1'>
           <input {...getInputProps()} />
