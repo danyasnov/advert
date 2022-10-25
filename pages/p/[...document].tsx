@@ -40,7 +40,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
 
-  const document = doc[0]
+  const document = ['terms-and-conditions', 'privacy-policy'].includes(param)
+    ? null
+    : doc[0]
   if (
     !document &&
     !['terms-and-conditions', 'privacy-policy'].includes(param)

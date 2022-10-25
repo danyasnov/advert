@@ -89,7 +89,7 @@ export const getSelectOptions = (multiselects = {}) => {
         multiselects.other
       : []),
   ]
-    .filter((o) => o.isOther)
+    .filter((o) => !o.isOther)
     .map((o) => ({
       value: o.id,
       label: o.value,

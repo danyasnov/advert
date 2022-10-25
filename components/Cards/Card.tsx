@@ -14,7 +14,7 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {Call, Star} from 'react-iconly'
+import {Call, Image, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
@@ -170,16 +170,8 @@ const Card: FC<Props> = ({
             {inView && (
               <>
                 {isEmpty(images) ? (
-                  <div className='relative min-w-full'>
-                    {/* <CardImage */}
-                    {/*  url={`/img/subcategories/${categoryId}.jpg`} */}
-                    {/*  fallbackUrl={[ */}
-                    {/*    // @ts-ignore */}
-                    {/*    `/img/subcategories/${rootCategoryId}.jpg`, */}
-                    {/*    `/img/CommonPlaceholder.jpg`, */}
-                    {/*  ]} */}
-                    {/*  alt={title} */}
-                    {/* /> */}
+                  <div className='relative min-w-full text-greyscale-400 flex items-center justify-center'>
+                    <Image filled size={50} />
                   </div>
                 ) : (
                   images.map((i, index) => (

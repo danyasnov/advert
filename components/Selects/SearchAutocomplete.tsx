@@ -114,7 +114,7 @@ const SearchAutocomplete: FC<Props> = observer(
         </div>
         <ul
           {...getMenuProps()}
-          className='z-10 bg-white shadow-xl absolute top-10 left-8 right-8 s:left-24 s:right-24 m:left-48 m:right-48 l:left-80 l:right-80'>
+          className='z-10 bg-white shadow-xl absolute top-10 w-full'>
           {isOpen &&
             inputItems.map((item, index) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
@@ -125,7 +125,7 @@ const SearchAutocomplete: FC<Props> = observer(
                   redirect(item)
                 }}
                 className={`flex flex-col h-14 px-4 py-3 justify-center  ${
-                  highlightedIndex === index ? 'bg-brand-a2' : ''
+                  highlightedIndex === index ? 'bg-primary-100' : ''
                 }`}
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${item.secondary}${index}`}>
