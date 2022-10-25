@@ -165,12 +165,12 @@ const MainLayout: FC = observer(() => {
                 </div>
               </div>
               <div className='hidden m:block w-[280px] h-[380px]'>
-                <ImageWrapper
-                  type='/img/promo.png'
-                  alt='promo'
-                  width={280}
-                  height={380}
-                />
+                {/* <ImageWrapper */}
+                {/*  type='/img/promo.png' */}
+                {/*  alt='promo' */}
+                {/*  width={280} */}
+                {/*  height={380} */}
+                {/* /> */}
               </div>
             </div>
           </main>
