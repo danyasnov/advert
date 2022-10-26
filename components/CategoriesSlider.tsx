@@ -55,7 +55,7 @@ const CategoriesSlider: FC = observer(() => {
                   className='rounded-xl'
                   layout='fixed'
                 />
-                <p className='text-body-14 text-greyscale-900 text-center'>
+                <p className='text-body-18 text-greyscale-900 text-center mt-4 hover:text-primary-500 hover:font-medium'>
                   {c.name}
                 </p>
               </LinkWrapper>
