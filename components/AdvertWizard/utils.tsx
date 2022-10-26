@@ -15,7 +15,6 @@ import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../Buttons/Button'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {AdvertPages} from './AdvertWizard'
 import OutlineButton from '../Buttons/OutlineButton'
 
 export const findSelectValue = (id, options) => {
@@ -165,6 +164,20 @@ export const scrollToFirstError = (): void => {
   })
 }
 
+export const scrollToLastSection = (): void => {
+  setTimeout(() => {
+    const inputs = document.querySelectorAll(`.form-group`)
+    const input = inputs[inputs.length - 1]
+
+    if (input) {
+      input.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
+  })
+}
+
 export const validateTitle = (content, t) => {
   const errors: FormikErrors<any> = {}
   const title = get(content, '[0].title', '')
@@ -281,7 +294,7 @@ export const FormGroup: FC<{
   if (hide) return null
 
   return (
-    <>
+    <div className='form-group'>
       <div className='m:hidden'>
         {isOpen ? (
           <ReactModal
@@ -421,6 +434,6 @@ export const FormGroup: FC<{
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }

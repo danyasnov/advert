@@ -35,14 +35,13 @@ import SideNavigation from './SideNavigation'
 import Button from '../Buttons/Button'
 import FormikAdvertAutoSave from './FormikAdvertAutoSave'
 import {
-  CategoryUpdater,
   FormGroup,
-  getFields,
   hasErrors,
   mapCategoryData,
   mapFormikFields,
   mapOriginalFields,
   scrollToFirstError,
+  scrollToLastSection,
   validateCommunication,
   validateCondition,
   validateFields,
@@ -871,6 +870,8 @@ const FormPage: FC = observer(() => {
                       setErrors(errors)
                       if (hasErrors(errors)) {
                         toast.error(t('ADVERT_CREATING_HELP_ALERT'))
+                      } else {
+                        scrollToLastSection()
                       }
                       const newFormState = getFormStateDict(formState)
                       setFormStateDict(newFormState)
