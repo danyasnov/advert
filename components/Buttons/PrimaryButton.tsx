@@ -24,9 +24,11 @@ const PrimaryButton: FC<Props> = ({
   return (
     <Button
       id={id}
-      className={`rounded-2xl text-body-14 text-white-a  ${
+      className={`rounded-2xl text-body-14 ${
         isSmall ? 'py-[11px] px-4 font-semibold' : 'py-3.5 px-6 font-bold'
-      } ${disabled ? disabledClass : 'bg-primary-500'} ${className || ''}`}
+      } ${disabled ? disabledClass : 'bg-primary-500 text-white'} ${
+        className || ''
+      }`}
       type={type}
       disabled={disabled}
       onClick={(e) => !disabled && onClick && onClick(e)}>
