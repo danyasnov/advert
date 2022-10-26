@@ -65,11 +65,14 @@ const ProductHeader: FC = observer(() => {
 })
 
 const getPath = (categories, categoryId, rootCategoryId, t) => {
+  if (!categoryId || !rootCategoryId) return []
   const root = categories.find((c) => rootCategoryId === c.id)
   return [{id: 0, name: t('CATEGORIES')}, root, ...tree(root, categoryId)]
 }
 
 const tree = (struct, id) => {
+  if (!struct) return []
+
   if (struct.id === id) {
     return []
   }

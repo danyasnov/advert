@@ -8,9 +8,9 @@ import useSliderButtons from '../hooks/useSliderButtons'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import Button from './Buttons/Button'
 import PhotosModal from './PhotosModal'
-import ExclusiveMark from './ExclusiveMark'
 import {ThumbObject} from '../types'
 import {Thumb, VideoThumb} from './Thumb'
+import ProductBadge from './ProductBadge'
 
 const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
 
@@ -69,6 +69,9 @@ const ProductPhotos: FC = observer(() => {
 
   return (
     <div className='relative'>
+      <div className='absolute right-7 top-7 z-9'>
+        <ProductBadge />
+      </div>
       <div className='overflow-hidden relative rounded-xl' ref={viewportRef}>
         <div className='flex w-full h-[180px] s:h-[257px] m:h-[340px] l:h-[504px]'>
           {items.map((item, index) => {
