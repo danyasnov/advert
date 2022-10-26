@@ -99,7 +99,6 @@ const MainLayout: FC = observer(() => {
     cookies.cityId,
     cookies.regionId,
   ])
-  console.log('productsArr', productsArr, toJS(otherProducts))
   return (
     <HeaderFooterWrapper>
       <MetaTags
