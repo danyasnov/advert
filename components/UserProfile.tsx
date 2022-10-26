@@ -18,11 +18,11 @@ const UserProfile: FC = observer(() => {
           size={40}
         />
       </div>
-      {user.isOnline && (
-        <span className='mb-3 text-body-14 text-green text-center'>
-          {t('ONLINE')}
-        </span>
-      )}
+      {/*  {user.isOnline && ( */}
+      <span className='mb-3 text-body-14 text-green text-center'>
+        {t('ONLINE')}
+      </span>
+      {/* )} */}
 
       <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words'>
         {user.name}
