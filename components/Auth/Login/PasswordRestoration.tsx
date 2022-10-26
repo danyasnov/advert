@@ -53,17 +53,15 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
               </span>
             )}
           </Form>
-          <div className='-mx-4'>
-            <Controls
-              onBack={() => {
-                dispatch({type: 'setPage', page: AuthPages.initialPage})
-              }}
-              onNext={() => {
-                submitForm()
-              }}
-              nextDisabled={!!errors.email || showHint}
-            />
-          </div>
+          <Controls
+            onBack={() => {
+              dispatch({type: 'setPage', page: AuthPages.initialPage})
+            }}
+            onNext={() => {
+              submitForm()
+            }}
+            nextDisabled={!!errors.email || showHint}
+          />
         </div>
       )}
     </Formik>
