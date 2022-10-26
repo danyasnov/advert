@@ -46,11 +46,11 @@ const UserCard: FC = observer(() => {
             size={16}
           />
         </div>
-        {product.owner.isOnline && (
-          <span className='mb-2 text-body-12 text-green text-center'>
-            {t('ONLINE')}
-          </span>
-        )}
+        {/* {product.owner.isOnline && ( */}
+        <span className='mb-2 text-body-12 text-green text-center'>
+          {t('ONLINE')}
+        </span>
+        {/* )} */}
       </div>
 
       <div className='w-full flex flex-col items-start s:items-center'>
