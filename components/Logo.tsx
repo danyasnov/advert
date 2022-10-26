@@ -10,16 +10,16 @@ const Logo: FC = () => {
       className='flex flex-col justify-center items-center cursor-pointer '>
       <div className='m:block hidden h-10'>
         <ImageWrapper
-          type='/img/logo/FullLogo.png'
+          type='/img/logo/FullLogo.svg'
           alt='Logo'
-          width={254}
+          width={172}
           height={40}
           layout='fixed'
         />
       </div>
       <div className='m:hidden h-10 w-10'>
         <ImageWrapper
-          type='/img/logo/ShortLogo.png'
+          type='/img/logo/ShortLogo.svg'
           alt='Logo'
           width={40}
           height={40}

@@ -42,7 +42,7 @@ const ScrollableCardGroup: FC<Props> = ({
   }
 
   return (
-    <div className='flex flex-col m:items-start relative p-24 -m-24'>
+    <div className='flex flex-col m:items-start relative'>
       <InfiniteScroll
         style={{overflow: 'visible'}}
         dataLength={products?.length}
