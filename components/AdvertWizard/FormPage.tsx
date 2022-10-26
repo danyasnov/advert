@@ -723,6 +723,7 @@ const FormPage: FC = observer(() => {
                     }
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
+                    labelTip={t('PRICE_TIP')}
                     labelClassName='mt-2 text-greyscale-900'
                   />
                   {!!category.data.isProduct && (

@@ -1,17 +1,16 @@
 .tooltip-container {
-    --tooltipBackground: #0058A6;
-    --tooltipBorder: #0058A6;
-    @apply w-56 s:w-96 whitespace-normal text-body-16 whitespace-pre p-2 s:p-4;
+    --tooltipBackground: #fff;
+    --tooltipBorder: #fff;
+    @apply w-56 s:w-96 whitespace-normal text-body-16 whitespace-pre p-2 s:p-4 shadow-2xl;
     background-color: var(--tooltipBackground);
     border-radius: 16px;
     border: 1px solid var(--tooltipBorder);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);*/
     color: #fff;
     display: flex;
     flex-direction: column;
     transition: opacity 0.3s;
     z-index: 9999;
-
 }
 
 .tooltip-container[data-popper-interactive='false'] {

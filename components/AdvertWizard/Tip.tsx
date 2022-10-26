@@ -4,6 +4,7 @@ import IcQuestionMark from 'icons/material/QuestionMark.svg'
 import {usePopperTooltip} from 'react-popper-tooltip'
 import * as PopperJS from '@popperjs/core'
 import {isMobile} from 'react-device-detect'
+import {InfoSquare} from 'react-iconly'
 import Button from '../Buttons/Button'
 
 interface Props {
@@ -25,8 +26,8 @@ const Tip: FC<Props> = ({message, placement}) => {
   return (
     <div>
       <div ref={setTriggerRef}>
-        <Button>
-          <IcQuestionMark className='w-6 h-6 fill-current hover:text-nc-link text-greyscale-800' />
+        <Button className='text-primary-500'>
+          <InfoSquare size={24} />
         </Button>
       </div>
       {visible && (
@@ -35,8 +36,10 @@ const Tip: FC<Props> = ({message, placement}) => {
           {...getTooltipProps({
             className: 'tooltip-container',
           })}>
-          <div {...getArrowProps({className: 'tooltip-arrow'})} />
-          <span className='text-body-16 whitespace-normal'>{message}</span>
+          <div {...getArrowProps()} />
+          <span className='text-body-16 whitespace-normal text-greyscale-900'>
+            {message}
+          </span>
         </div>
       )}
     </div>
