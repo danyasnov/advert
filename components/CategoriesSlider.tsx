@@ -46,18 +46,18 @@ const CategoriesSlider: FC = observer(() => {
                 key={c.id}
                 title={c.name}
                 href={`/${locationCodes}/${c.slug}`}
-                className='relative cursor-pointer mr-4'>
-                <ImageWrapper
-                  type={`/img/categories/${c.slug}.png`}
-                  width={136}
-                  height={136}
-                  alt={c.name}
-                  className='rounded-xl'
-                  layout='fixed'
-                />
-                <p className='text-body-18 text-greyscale-900 text-center mt-4 hover:text-primary-500 hover:font-medium'>
-                  {c.name}
-                </p>
+                className='relative cursor-pointer mr-4 '>
+                <div className='hover:text-primary-500 hover:font-medium text-greyscale-900'>
+                  <ImageWrapper
+                    type={`/img/categories/${c.slug}.png`}
+                    width={136}
+                    height={136}
+                    alt={c.name}
+                    className='rounded-xl'
+                    layout='fixed'
+                  />
+                  <p className='text-body-18 text-center mt-4'>{c.name}</p>
+                </div>
               </LinkWrapper>
             ))}
           </div>

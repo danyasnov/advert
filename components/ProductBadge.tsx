@@ -3,9 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {Discount} from 'react-iconly'
 import IcFlash from 'icons/material/Flash.svg'
-import {
-  useProductsStore,
-} from '../providers/RootStoreProvider'
+import {useProductsStore} from '../providers/RootStoreProvider'
 
 const ProductBadge: FC = observer(() => {
   const {t} = useTranslation()
