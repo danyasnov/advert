@@ -38,11 +38,11 @@ const AdvertFormField: FC<Props> = ({
           orientation === 'vertical' ? '' : 'w-288px shrink-0 mr-4'
         }`}>
         <div
-          className={`flex items-center mb-2 s:mb-4 m:mb-2 space-x-2 ${
+          className={`flex items-center mb-2 s:mb-4 m:mb-2 space-x-2 text-body-16 ${
             labelClassName || ''
           }`}>
           {!!label && (
-            <span className='text-body-16 font-normal text-greyscale-900'>
+            <span className='text-greyscale-900'>
               {label}
               {isRequired && <span className='ml-1 text-error'>*</span>}
             </span>
