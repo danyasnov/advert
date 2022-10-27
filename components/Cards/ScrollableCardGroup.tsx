@@ -46,7 +46,11 @@ const ScrollableCardGroup: FC<Props> = ({
     )
   }
   if (isEmpty(products)) {
-    return <AdvertNotFoundWithDescription />
+    return (
+      <div className='flex justify-center'>
+        <AdvertNotFoundWithDescription />
+      </div>
+    )
   }
 
   return (
