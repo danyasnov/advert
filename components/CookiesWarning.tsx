@@ -18,7 +18,7 @@ const DevBanner: FC = () => {
   }, [])
   if (!show) return null
   return (
-    <div className='fixed inset-x-0 bottom-0 bg-dark-2 text-white py-4 z-10'>
+    <div className='fixed inset-x-0 bottom-0 bg-dark-2/90 text-white py-4 z-10'>
       <div className='header-width flex flex-col s:flex-row s:justify-between s:items-center px-4 s:px-0 s:mx-auto'>
         <span className='text-body-16 font-normal mb-8 s:mb-0 s:w-9/12'>
           {t('COOKIES_WARNING')}
