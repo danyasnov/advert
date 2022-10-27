@@ -21,7 +21,7 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
   } else if (name) {
     let fontSize
     if (size >= 16) {
-      fontSize = 'text-body-14'
+      fontSize = 'text-h-2'
     } else if (size < 6) {
       fontSize = 'text-body-14'
     } else {

@@ -110,8 +110,8 @@ const MainLayout: FC = observer(() => {
           <main className='m:w-944px l:w-[1208px] '>
             {/* <Banners /> */}
             <CategoriesSlider />
-            <div className='flex mt-12 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
-              <div className='space-y-12 overflow-hidden m:overflow-visible'>
+            <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
+              <div className='space-y-15 overflow-hidden m:overflow-visible'>
                 {productsArr
                   .filter((p) => p.url)
                   .map((p) => (
@@ -129,7 +129,7 @@ const MainLayout: FC = observer(() => {
                     />
                   ))}
                 <div>
-                  {!isEmpty(products) && (
+                  {!isEmpty(otherProducts.all) && (
                     <TitleWithSeparator
                       title={t('RECOMMENDATIONS_FOR_YOU')}
                       rightContent={

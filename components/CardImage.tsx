@@ -22,7 +22,7 @@ const getImageUrl = (url, screenWidth, isVip): string => {
     return url.replace('original', isVip ? '464_200' : '224_200')
   }
   if (screenWidth >= 1024 && screenWidth < 1440) {
-    return url.replace('original', isVip ? '404_200' : '194_200')
+    return url.replace('original', isVip ? '404_200' : '224_240')
   }
   if (screenWidth >= 1440) {
     return url.replace('original', isVip ? '440_200' : '212_200')

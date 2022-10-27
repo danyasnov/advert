@@ -15,7 +15,7 @@ const UserProfile: FC = observer(() => {
           url={user.imageUrl}
           name={user.name}
           key={user.imageUrl}
-          size={40}
+          size={30}
         />
       </div>
       {/*  {user.isOnline && ( */}
