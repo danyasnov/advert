@@ -30,19 +30,20 @@ const AdvertNotFoundWithDescription: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='my-4 s:my-8 flex flex-col justify-center'>
+    <div className='my-4 s:my-8 flex flex-col justify-center max-w-[600px]'>
       <div className='flex justify-center mb-8'>
         <ImageWrapper
           type='/img/NothingFound.png'
           alt='nothing found'
+          quality={100}
           width={200}
           height={200}
         />
       </div>
-      <h2 className='text-h-4 text-greyscale-900 font-bold flex justify-center mb-3'>
+      <h2 className='text-h-5 text-greyscale-900 font-bold flex justify-center mb-3'>
         {t('NOTHING_FIND')}
       </h2>
-      <span className='text-body-18 text-greyscale-900 text-center'>
+      <span className='text-body-16 text-greyscale-900 text-center'>
         {t('NOTHING_FIND_TEXT')}
       </span>
     </div>
