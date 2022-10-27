@@ -20,7 +20,7 @@ const UserSidebar: FC = observer(() => {
   return (
     <div>
       <UserProfile />
-      <div className='space-y-5 my-10'>
+      <div className='space-y-9 my-10'>
         <Button
           className={`${
             activeUserPage === 'adverts' ||

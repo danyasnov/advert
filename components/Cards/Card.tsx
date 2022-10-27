@@ -191,7 +191,7 @@ const Card: FC<Props> = ({
           </div>
           {inView && (
             <>
-              {!!images.length && (
+              {size(images) > 1 && (
                 <div className='absolute bottom-0 w-full flex justify-center space-x-1 px-1 pb-1'>
                   {images.map((i, index) => (
                     <div

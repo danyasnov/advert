@@ -79,7 +79,7 @@ const UserLayout: FC = observer(() => {
                     title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
                   />
 
-                  <div className='z-10 relative mb-8'>
+                  <div className='z-10 relative mb-10'>
                     <Tabs
                       items={isCurrentUser ? tabs : tabs.slice(1, 3)}
                       onChange={(id) => setActiveTab(id)}
