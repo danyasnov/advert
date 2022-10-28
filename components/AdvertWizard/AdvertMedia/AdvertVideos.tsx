@@ -107,7 +107,7 @@ const AdvertVideos: FC<FieldProps & Props> = ({
             setUploadCounter(uploadCounter + 1)
           }}>
           <span className='text-body-14 font-medium'>
-            {t('ADD_VIDEO_HINT_1')}
+            {t('ADD_VIDEO_HINT_1').toLowerCase()}
           </span>
         </LinkButton>
       </div>
