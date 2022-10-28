@@ -22,6 +22,7 @@ const whitelist = [
   '/favicon-32x32.png',
   '/site.webmanifest',
   '/__nextjs',
+  '/img',
 ]
 
 const getDomain = (host) => {
