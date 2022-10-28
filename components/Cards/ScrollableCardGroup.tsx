@@ -16,7 +16,7 @@ interface Props {
   hideNotFoundDescription?: boolean
   disableScroll?: boolean
   enableFourthColumnForM?: boolean
-  enableSixColumnsForL?: boolean
+  enableFiveColumnsForL?: boolean
   enableTwoColumnsForS?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
@@ -30,7 +30,7 @@ const ScrollableCardGroup: FC<Props> = ({
   disableScroll,
   enableFourthColumnForM,
   enableTwoColumnsForS,
-  enableSixColumnsForL,
+  enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
   hideNotFoundDescription,
@@ -40,13 +40,17 @@ const ScrollableCardGroup: FC<Props> = ({
     return (
       <CardsLoader
         enableFourthColumnForM={enableFourthColumnForM}
-        enableSixColumnsForL={enableSixColumnsForL}
+        enableFiveColumnsForL={enableFiveColumnsForL}
         show
       />
     )
   }
   if (isEmpty(products)) {
-    return <AdvertNotFoundWithDescription />
+    return (
+      <div className='flex justify-center'>
+        <AdvertNotFoundWithDescription />
+      </div>
+    )
   }
 
   return (
@@ -60,7 +64,7 @@ const ScrollableCardGroup: FC<Props> = ({
         loader={
           <CardsLoader
             enableFourthColumnForM={enableFourthColumnForM}
-            enableSixColumnsForL={enableSixColumnsForL}
+            enableFiveColumnsForL={enableFiveColumnsForL}
             show
           />
         }>
@@ -68,7 +72,7 @@ const ScrollableCardGroup: FC<Props> = ({
           className={`grid grid-cols-2 xs:grid-cols-3 m:gap-y-6 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4 ${
             enableTwoColumnsForS ? 's:grid-cols-2' : ''
           } ${enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'} ${
-            enableSixColumnsForL ? 'l:grid-cols-6' : 'l:grid-cols-4'
+            enableFiveColumnsForL ? 'l:grid-cols-5' : 'l:grid-cols-4'
           }`}>
           {products.map((p) => (
             <div

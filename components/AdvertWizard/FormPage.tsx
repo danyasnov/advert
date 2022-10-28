@@ -475,7 +475,7 @@ const FormPage: FC = observer(() => {
                 <div>
                   <AdvertFormField
                     id='form-field-photos'
-                    labelClassName='text-greyscale-900 mt-2 l:mt-0'
+                    labelClassName='mt-2 pb-3 l:mt-0 font-medium text-body-18'
                     body={
                       <div className='w-full'>
                         <Field
@@ -496,7 +496,7 @@ const FormPage: FC = observer(() => {
                   />
                   <AdvertFormField
                     id='form-field-videos'
-                    labelClassName='text-greyscale-900'
+                    labelClassName='font-medium text-body-18 pb-3'
                     body={
                       <div className='w-8/12 l:mt-7'>
                         <Field
@@ -575,7 +575,7 @@ const FormPage: FC = observer(() => {
                             id='form-field-condition'
                             body={conditionComponent}
                             isRequired
-                            labelClassName='mt-2 text-greyscale-900'
+                            labelClassName='mt-2'
                             label={t('PROD_CONDITION')}
                           />
                         )}
@@ -723,14 +723,13 @@ const FormPage: FC = observer(() => {
                     isRequired={!category.data.allowFree}
                     label={t('PRICE')}
                     labelTip={t('PRICE_TIP')}
-                    labelClassName='mt-2 text-greyscale-900'
+                    labelClassName='mt-2'
                   />
                   {!!category.data.isProduct && (
                     <>
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-swap-possible'
-                        labelClassName='text-greyscale-900'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -745,7 +744,6 @@ const FormPage: FC = observer(() => {
                       <AdvertFormField
                         orientation={width >= 768 ? 'horizontal' : 'vertical'}
                         id='form-field-is-bargain-possible'
-                        labelClassName='text-greyscale-900'
                         body={
                           <div className='w-full s:w-4/12'>
                             <Field
@@ -819,7 +817,7 @@ const FormPage: FC = observer(() => {
                     }
                     isRequired
                     label={t('PHONE_NUM')}
-                    labelClassName='mt-2 text-greyscale-900'
+                    labelClassName='mt-2'
                   />
                 </div>
               }

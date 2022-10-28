@@ -1,10 +1,8 @@
 import {FC, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {useRouter} from 'next/router'
 import {parseCookies} from 'nookies'
 import {isEmpty} from 'lodash'
-import {toJS} from 'mobx'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -16,33 +14,17 @@ import {
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import TitleWithSeparator from '../TitleWithSeparator'
-import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
-import SecondaryButton from '../Buttons/SecondaryButton'
 import OutlineButton from '../Buttons/OutlineButton'
-import ImageWrapper from '../ImageWrapper'
-import Banners from '../Banners'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
-  const {locationCodes, setShowLogin, user} = useGeneralStore()
+  const {locationCodes} = useGeneralStore()
   const {categoriesById} = useCategoriesStore()
   const cookies: SerializedCookiesState = parseCookies()
-  const {
-    otherProducts,
-    products,
-    state,
-    count,
-    page,
-    fetchProducts,
-    applyFilter,
-    setProducts,
-    resetFilter,
-    setFilter,
-  } = useProductsStore()
-  const {query, push} = useRouter()
+  const {otherProducts, products, state, setProducts} = useProductsStore()
   const {t} = useTranslation()
   const productsArr = [
     {
