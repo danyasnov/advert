@@ -3,18 +3,18 @@ export const getDefaultStyles = (isInvalid) => ({
   control: (provided, state) => ({
     ...provided,
     borderRadius: 12,
-    border: 0,
     backgroundColor: '#FAFAFA',
     boxShadow: 'none',
-    borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
+    borderColor: isInvalid ? '#CC3237' : 'transparent',
     '&:hover': {
-      borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
+      borderColor: isInvalid ? '#CC3237' : 'transparent',
     },
     ...(state.isFocused
       ? {
-          borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
+          borderColor: isInvalid ? '#CC3237' : '#7210FF',
+          backgroundColor: 'rgba(114, 16, 255, 0.08)',
           '&:hover': {
-            borderColor: isInvalid ? '#CC3237' : '#CCDBEB',
+            borderColor: isInvalid ? '#CC3237' : '#7210FF',
           },
         }
       : {}),

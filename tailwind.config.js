@@ -165,6 +165,7 @@ module.exports = {
         'modal-background': 'rgba(31, 34, 42, 0.7)',
         pink: '#FFF5F5',
         purple: '#7210FF',
+        'input-bg': 'rgba(114, 16, 255, 0.08)'
       },
       zIndex: {
         9: 9,
