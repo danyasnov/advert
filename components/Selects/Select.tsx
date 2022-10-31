@@ -1,8 +1,9 @@
-import {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {isEqual} from 'lodash'
+import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
 
 export interface SelectProps {
@@ -83,7 +84,18 @@ const Option = (props) => {
     <RSComponents.Option {...props}>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>{label}</label>
-      <input type='checkbox' checked={isSelected} onChange={() => null} />
+      {/* <input type='checkbox' checked={isSelected} onChange={() => null} /> */}
+      <input
+        type='checkbox'
+        name={label}
+        checked={isSelected}
+        id={label}
+        onChange={() => null}
+        className='opacity-0 '
+      />
+      <div className='bg-white border-2 rounded-md h-4 w-4 flex shrink-0 justify-center items-center border-primary-500'>
+        <IcCheck className='h-2.5 w-2.5 hidden' />
+      </div>
     </RSComponents.Option>
   )
 }

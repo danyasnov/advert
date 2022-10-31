@@ -295,6 +295,7 @@ const FilterForm: FC = observer(() => {
             options={conditionOptions}
             component={FormikSelect}
             filterStyle
+            isFilterable={false}
           />
           <Field
             name='priceRange'
