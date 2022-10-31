@@ -173,6 +173,9 @@ module.exports = {
       dropShadow: {
         card: '0 50px 80px rgba(4, 6, 15, 0.08)',
       },
+      boxShadow: {
+        'popup': '4px 8px 24px rgba(114, 16, 255, 0.25)',
+      },
       inset: {
         '89px': '89px',
         '105px': '105px',
