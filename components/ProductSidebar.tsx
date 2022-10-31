@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {browserName} from 'react-device-detect'
+import {Location} from 'react-iconly'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import UserCard from './UserCard'
 import ProductPrice from './ProductPrice'
@@ -16,8 +17,15 @@ const ProductSidebar: FC = observer(() => {
   const {userHash} = useGeneralStore()
 
   return (
-    <div className='flex flex-col space-y-10'>
+    <div className='flex flex-col'>
       <ProductPrice />
+      <div className='flex items-center space-x-2 text-primary-500 my-6'>
+        <Location size={18} filled />
+        <span className='text-body-14 text-greyscale-800'>
+          {product.advert.location.description}
+        </span>
+      </div>
+
       <ProductCommunication />
       <div
         className={`${
