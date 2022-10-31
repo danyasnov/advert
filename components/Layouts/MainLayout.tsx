@@ -45,10 +45,10 @@ const MainLayout: FC = observer(() => {
       url: `${locationCodes}/${categoriesById[1]?.slug}`,
     },
     {
-      data: {categoryId: 13},
-      name: categoriesById[13]?.name,
-      slug: categoriesById[13]?.slug,
-      url: `${locationCodes}/${categoriesById[13]?.slug}`,
+      data: {categoryId: 10068},
+      name: categoriesById[10068]?.name,
+      slug: categoriesById[10068]?.slug,
+      url: `${locationCodes}/${categoriesById[10068]?.slug}`,
     },
   ]
   useEffect(() => {
@@ -69,7 +69,7 @@ const MainLayout: FC = observer(() => {
         setProducts(res[0].data?.result?.data || [], productsArr[0].slug)
         setProducts(res[1].data?.result?.data || [], productsArr[1].slug)
         setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
-        setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
+        setProducts(res[3].data?.result?.data || [], productsArr[3].slug)
       })
     }
     initProducts()
