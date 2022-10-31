@@ -300,6 +300,8 @@ const FormPage: FC = observer(() => {
   ]
   const getFormState = (showAll?) => {
     let hasPending = false
+    let hasChangedVisible = false
+
     return formItems.map((s) => {
       const validation = s.validate(values, true)
       const validationState = validation
@@ -311,16 +313,22 @@ const FormPage: FC = observer(() => {
       }
 
       let visible
+      const prevVisible = formStateDict?.[s.key]?.visible
+      if (!hasChangedVisible) {
+        if (showAll || width < 1024) {
+          visible = true
+        } else if (hasPending) {
+          visible = formStateDict?.[s.key]?.visible || false
+        } else if (hasErrors(validationState)) {
+          hasPending = true
+          visible = true
+        } else {
+          visible = true
+        }
+      }
 
-      if (showAll || width < 1024) {
-        visible = true
-      } else if (hasPending) {
-        visible = formStateDict?.[s.key]?.visible || false
-      } else if (hasErrors(validationState)) {
-        hasPending = true
-        visible = true
-      } else {
-        visible = true
+      if (prevVisible !== visible) {
+        hasChangedVisible = true
       }
 
       return {...s, state: validationState, status, visible}
@@ -351,7 +359,7 @@ const FormPage: FC = observer(() => {
     </div>
   )
   const formState = getFormState()
-
+  console.log('formState', formState)
   const currentStep = showWholeForm
     ? undefined
     : formState
