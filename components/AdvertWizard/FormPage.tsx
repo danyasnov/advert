@@ -498,7 +498,7 @@ const FormPage: FC = observer(() => {
                     id='form-field-videos'
                     labelClassName='font-medium text-body-18 pb-3'
                     body={
-                      <div className='w-8/12 l:mt-7'>
+                      <div className='l:mt-7'>
                         <Field
                           component={AdvertVideos}
                           name='videos'
