@@ -89,9 +89,9 @@ export const getDefaultStyles = (isInvalid) => ({
   }),
   placeholder: (provided) => ({
     ...provided,
-    fontSize: '14px',
-    lineHeight: '16px',
-    color: '#7C7E83',
+    fontSize: '16px',
+    lineHeight: '22px',
+    color: '#9E9E9E',
   }),
   valueContainer: (provided) => ({
     ...provided,

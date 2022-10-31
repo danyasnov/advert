@@ -45,14 +45,8 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
   const state: SerializedCookiesState = parseCookies()
-  const {
-    sortBy,
-    setSortBy,
-    fetchProducts,
-    hideDistanceSort,
-    applyFilter,
-    products,
-  } = useProductsStore()
+  const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
+    useProductsStore()
 
   const [options, setOptions] = useState(getSortOptions(t))
   useEffect(() => {

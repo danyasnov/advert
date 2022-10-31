@@ -7,13 +7,13 @@
     /*    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1*/
     /*}*/
 
-    /*input:not(.manual-outline), textarea {*/
-    /*    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-a1*/
-    /*}*/
+    input:not(.manual-outline), textarea {
+        @apply focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-500 focus-visible:bg-primary-100
+    }
 
-    /*.react-select input {*/
-    /*    @apply focus-visible:ring-0*/
-    /*}*/
+    .react-select input {
+        @apply focus-visible:ring-0
+    }
 }
 
 .fixed-breakpoints-width {
