@@ -130,8 +130,8 @@ const AdvertPhotosContainer: ComponentClass<
           onClick={() => {
             setUploadCounter(uploadCounter + 1)
           }}>
-          <span className='text-body-14 font-medium'>
-            {t('ADD_PHOTO_HINT_1').toLowerCase()}
+          <span className='text-body-14 font-medium text-transform: lowercase'>
+            {t('ADD_PHOTO_HINT_1')}
           </span>
         </LinkButton>
       </div>
