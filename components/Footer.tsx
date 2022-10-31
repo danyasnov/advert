@@ -81,12 +81,12 @@ const Footer: FC = observer(() => {
               {/*  /!* href='/p/cookies-policy'> *!/ */}
               {/*  {t('COOKIES_POLICY')} */}
               {/* </LinkWrapper> */}
-              {/* <LinkWrapper */}
-              {/*  className='flex justify-center items-center w-full' */}
-              {/*  title={t('SUPPORT')} */}
-              {/*  href='/support'> */}
-              {/*  {t('SUPPORT')} */}
-              {/* </LinkWrapper> */}
+              <LinkWrapper
+                className='flex justify-center items-center w-full'
+                title={t('SUPPORT')}
+                href='/support'>
+                {t('SUPPORT')}
+              </LinkWrapper>
             </div>
             <div className='text-body-14 font-normal mb-8 s:my-7 text-greyscale-900 self-start'>
               © {new Date().getFullYear()} VooXee
