@@ -314,10 +314,10 @@ const FormPage: FC = observer(() => {
 
       let visible
       const prevVisible = formStateDict?.[s.key]?.visible
-      if (!hasChangedVisible) {
-        if (showAll || width < 1024) {
-          visible = true
-        } else if (hasPending) {
+      if (showAll || width < 1024) {
+        visible = true
+      } else if (!hasChangedVisible) {
+        if (hasPending) {
           visible = formStateDict?.[s.key]?.visible || false
         } else if (hasErrors(validationState)) {
           hasPending = true
