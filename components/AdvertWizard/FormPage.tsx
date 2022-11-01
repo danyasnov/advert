@@ -41,7 +41,7 @@ import {
   mapFormikFields,
   mapOriginalFields,
   scrollToFirstError,
-  scrollToLastSection,
+  scrollToSection,
   validateCommunication,
   validateCondition,
   validateFields,
@@ -300,35 +300,26 @@ const FormPage: FC = observer(() => {
   ]
   const getFormState = (showAll?) => {
     let hasPending = false
-    let hasChangedVisible = false
-
     return formItems.map((s) => {
-      const validation = s.validate(values, true)
-      const validationState = validation
+      const validationState = s.validate(values, true)
       let status
       if (s.required) {
-        status = hasErrors(validation) ? 'pending' : 'done'
+        status = hasErrors(validationState) ? 'pending' : 'done'
       } else {
         status = s.filled ? 'done' : 'pending'
       }
 
       let visible
-      const prevVisible = formStateDict?.[s.key]?.visible
+
       if (showAll || width < 1024) {
         visible = true
-      } else if (!hasChangedVisible) {
-        if (hasPending) {
-          visible = formStateDict?.[s.key]?.visible || false
-        } else if (hasErrors(validationState)) {
-          hasPending = true
-          visible = true
-        } else {
-          visible = true
-        }
-      }
-
-      if (prevVisible !== visible) {
-        hasChangedVisible = true
+      } else if (hasPending) {
+        visible = formStateDict?.[s.key]?.visible || false
+      } else if (hasErrors(validationState)) {
+        hasPending = true
+        visible = true
+      } else {
+        visible = true
       }
 
       return {...s, state: validationState, status, visible}
@@ -359,13 +350,15 @@ const FormPage: FC = observer(() => {
     </div>
   )
   const formState = getFormState()
-  console.log('formState', formState)
+
   const currentStep = showWholeForm
     ? undefined
     : formState
         .slice()
         .reverse()
         .find((i) => i.status === 'pending' && i.visible)
+
+  const currentStepRef = useRef(currentStep)
 
   if (!category || !user) return null
   const isAllFormVisible = !formState.find((f) => !f.visible)
@@ -433,7 +426,7 @@ const FormPage: FC = observer(() => {
                 )
               }
               showWholeForm={showWholeForm}
-              title={t('TITLE_AND_DESCRIPTION')}
+              title='TITLE_AND_DESCRIPTION'
               getCountMeta={() => {
                 let filledCount = 0
                 let isRequiredFilled
@@ -476,7 +469,7 @@ const FormPage: FC = observer(() => {
               id='form-group-photo-and-video'
               hide={!formStateDict?.PHOTO_AND_VIDEO.visible}
               required={formStateDict?.PHOTO_AND_VIDEO.required}
-              title={t('PHOTO_AND_VIDEO')}
+              title='PHOTO_AND_VIDEO'
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('UPLOAD_PHOTO_AND_VIDEO')} />}
               body={
@@ -707,7 +700,7 @@ const FormPage: FC = observer(() => {
               id='form-group-cost-and-terms'
               hide={!formStateDict?.COST_AND_TERMS.visible}
               required={formStateDict?.COST_AND_TERMS.required}
-              title={t('COST_AND_TERMS')}
+              title='COST_AND_TERMS'
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('COST_AND_TERMS')} />}
               body={
@@ -796,7 +789,7 @@ const FormPage: FC = observer(() => {
               id='form-group-ways-communication'
               hide={!formStateDict?.WAYS_COMMUNICATION.visible}
               required={formStateDict?.WAYS_COMMUNICATION.required}
-              title={t('WAYS_COMMUNICATION')}
+              title='WAYS_COMMUNICATION'
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
               body={
@@ -874,13 +867,25 @@ const FormPage: FC = observer(() => {
                         return s.key === currentStep.key
                       })
                       setErrors(errors)
+                      const newFormState = getFormStateDict(formState)
+                      setFormStateDict(newFormState)
                       if (hasErrors(errors)) {
                         toast.error(t('ADVERT_CREATING_HELP_ALERT'))
                       } else {
-                        scrollToLastSection()
+                        const currentStepIndex = formState.findIndex(
+                          (i) => i.key === currentStepRef.current?.key,
+                        )
+                        const nextStep = formState[currentStepIndex + 1]
+
+                        if (
+                          currentStepIndex !== -1 &&
+                          nextStep &&
+                          nextStep.visible
+                        ) {
+                          scrollToSection(nextStep.key)
+                          currentStepRef.current = nextStep
+                        }
                       }
-                      const newFormState = getFormStateDict(formState)
-                      setFormStateDict(newFormState)
                     } else if (!isSubmitting) {
                       submitForm()
                     }
