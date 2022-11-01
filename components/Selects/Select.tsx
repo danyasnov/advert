@@ -1,10 +1,12 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useState, useRef} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {isEqual} from 'lodash'
 import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
+import Button from '../Buttons/Button'
+import useOnClickOutside from '../../hooks/useOnClickOutside'
 
 export interface SelectProps {
   options: Array<SelectItem>
@@ -65,16 +67,34 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
-  const {isFocused} = props
+  const { isFocused } = props
+  const [show, setShow] = useState(false)
+  const ref = useRef()
+  useOnClickOutside(ref, () => {
+    setShow(false)
+  })
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
+    /*
     <RSComponents.DropdownIndicator {...props}>
       <IcArrowDown
         className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-          isFocused ? 'rotate-180' : ''
+          isFocused ? 'rotate-180 text-primary-500' : ''
         }`}
       />
     </RSComponents.DropdownIndicator>
+      */
+    <div ref={ref}>
+      <Button onClick = {() => setShow(!show)}>
+        <RSComponents.DropdownIndicator {...props}>
+          <IcArrowDown
+            className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
+            (isFocused && show) ? 'rotate-180 text-primary-500' : ''
+            }`}
+          />
+        </RSComponents.DropdownIndicator>
+      </Button> 
+    </div>
   )
 }
 const Option = (props) => {

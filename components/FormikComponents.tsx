@@ -668,7 +668,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 ${
-              show ? 'rotate-180' : ''
+              show ? 'rotate-180 text-primary-500' : ''
             }`}
           />
         </div>
