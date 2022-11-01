@@ -164,15 +164,15 @@ export const scrollToFirstError = (): void => {
   })
 }
 
-export const scrollToLastSection = (): void => {
+export const scrollToSection = (id): void => {
   setTimeout(() => {
-    const inputs = document.querySelectorAll(`.form-group`)
-    const input = inputs[inputs.length - 1]
+    const input = document.getElementById(id)
+    // const input = inputs[inputs.length - 1]
 
     if (input) {
       input.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
+        block: 'start',
       })
     }
   })
@@ -294,7 +294,7 @@ export const FormGroup: FC<{
   if (hide) return null
 
   return (
-    <div className='form-group'>
+    <div className='form-group' id={title}>
       <div className='m:hidden'>
         {isOpen ? (
           <ReactModal
@@ -314,7 +314,7 @@ export const FormGroup: FC<{
                   }}>
                   <ArrowLeft size={28} />
                 </Button>
-                <h2 className='text-h-5 font-bold'>{title}</h2>
+                <h2 className='text-h-5 font-bold'>{t(title)}</h2>
               </div>
               <div className='px-4 s:px-8 pt-4 pb-20'>{body}</div>
               <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 py-2.5 z-10 space-x-2'>
@@ -361,7 +361,7 @@ export const FormGroup: FC<{
                 <div className='flex w-full px-4 py-3 s:px-8 s:pt-6 s:pb-8'>
                   <div className='w-full flex flex-col items-start'>
                     <div className='pb-1 font-semibold text-body-16'>
-                      <span className='text-greyscale-900'>{title}</span>
+                      <span className='text-greyscale-900'>{t(title)}</span>
                       {required && <span className='text-error pl-1'>*</span>}
                     </div>
 
