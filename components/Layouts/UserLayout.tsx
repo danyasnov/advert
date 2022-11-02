@@ -88,6 +88,7 @@ const UserLayout: FC = observer(() => {
                   </div>
                   {isCurrentUser && activeTab === 1 && (
                     <ScrollableCardGroup
+                      showMenu={isCurrentUser}
                       products={userOnModeration.items}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
@@ -106,6 +107,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {activeTab === 2 && (
                     <ScrollableCardGroup
+                      showMenu={isCurrentUser}
                       products={userSale.items}
                       page={userSale.page}
                       count={userSale.count}
@@ -124,6 +126,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {activeTab === 3 && (
                     <ScrollableCardGroup
+                      showMenu={isCurrentUser}
                       products={userSold.items}
                       page={userSold.page}
                       count={userSold.count}
@@ -142,6 +145,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {isCurrentUser && activeTab === 4 && (
                     <ScrollableCardGroup
+                      showMenu={isCurrentUser}
                       products={userArchive.items}
                       page={userArchive.page}
                       count={userArchive.count}

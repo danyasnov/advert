@@ -1,22 +1,21 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {toJS} from 'mobx'
 import {useRouter} from 'next/router'
+import IcMoreHoriz from 'icons/material/MoreHoriz.svg'
+import {ArrowLeftSquare, Delete, Edit, TickSquare} from 'react-iconly'
 import {
   useCategoriesStore,
   useGeneralStore,
   useProductsStore,
 } from '../providers/RootStoreProvider'
-import ProductInfoIcons from './ProductInfoIcons'
-import ProductLike from './ProductLike'
 import ProductMenu from './ProductMenu'
 import LinkWrapper from './Buttons/LinkWrapper'
 import Button from './Buttons/Button'
 import ProductStatus from './AdvertWizard/ProductStatus'
+import {makeRequest} from '../api'
 
 const ProductHeader: FC = observer(() => {
-  const {push} = useRouter()
   const {product} = useProductsStore()
   const {categories} = useCategoriesStore()
   const {userHash, locationCodes} = useGeneralStore()
@@ -27,9 +26,79 @@ const ProductHeader: FC = observer(() => {
     product.advert.rootCategoryId,
     t,
   )
+  const router = useRouter()
   if (!product) return null
   const {advert, owner} = product
   const isUserAdv = userHash === owner.hash
+  const getOptions = (setShowDeactivateModal) => {
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/delete-adv`,
+          method: 'post',
+          data: {
+            hash: advert.hash,
+          },
+        }).then(() => {
+          router.push(`/user/${owner.hash}`)
+        })
+      },
+    }
+    const publish = {
+      title: 'PUBLISH',
+      icon: <TickSquare size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/publish-adv`,
+          method: 'post',
+          data: {
+            hash: advert.hash,
+          },
+        }).then(() => {
+          router.push(`/user/${owner.hash}`)
+        })
+      },
+    }
+    const deactivate = {
+      title: 'REMOVE_FROM_SALE',
+      icon: <ArrowLeftSquare size={16} filled />,
+      onClick: () => {
+        setShowDeactivateModal(true)
+      },
+      cb: () => {
+        router.push(`/user/${owner.hash}`)
+      },
+    }
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/edit/${advert.hash}`)
+      },
+    }
+    const items = []
+
+    if (['active', 'archived', 'blocked', 'draft'].includes(advert.state)) {
+      items.push(edit)
+    }
+    if (
+      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
+        advert.state,
+      )
+    ) {
+      if (advert.state === 'archived') {
+        items.push(publish)
+      }
+      items.push(remove)
+    }
+    if (advert.state === 'active') {
+      items.push(deactivate)
+    }
+    return items
+  }
+
   return (
     <div className='mb-6'>
       <div className='flex justify-between w-full items-center mb-6'>
@@ -56,7 +125,44 @@ const ProductHeader: FC = observer(() => {
           })}
         </div>
         <div className='flex ml-4 space-x-2'>
-          {isUserAdv && <ProductMenu product={product} />}
+          {isUserAdv && (
+            <ProductMenu
+              getOptions={(setShowDeactivateModal) =>
+                getOptions(setShowDeactivateModal)
+              }
+              advertHash={advert.hash}
+              title={advert.title}
+              listRender={(options, setShowPopup) => (
+                <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
+                  {/* eslint-disable-next-line no-shadow */}
+                  {options.map(({title, onClick, icon}, index) => (
+                    <Button
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onClick()
+                        setShowPopup(false)
+                      }}>
+                      <div className='flex items-center justify-start w-full'>
+                        <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
+                        <span className='truncate'>{t(title)}</span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              )}
+              iconRender={() => (
+                <IcMoreHoriz
+                  className='fill-current text-black-c'
+                  width={24}
+                  height={24}
+                />
+              )}
+              images={advert.images}
+            />
+          )}
         </div>
       </div>
       <ProductStatus product={product} />

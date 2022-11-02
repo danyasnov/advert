@@ -25,6 +25,8 @@ const DeactivateAdvButton: FC<Props> = ({product}) => {
 
       {showDeactivateModal && (
         <DeactivateAdvModal
+          images={advert.images}
+          title={advert.title}
           isOpen={showDeactivateModal}
           onClose={() => setShowDeactivateModal(false)}
           onSelect={(value: RemoveFromSaleType) => {
@@ -39,7 +41,6 @@ const DeactivateAdvButton: FC<Props> = ({product}) => {
               router.push(`/user/${owner.hash}`)
             })
           }}
-          advert={advert}
         />
       )}
     </div>
