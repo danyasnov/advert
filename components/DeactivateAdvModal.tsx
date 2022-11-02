@@ -16,10 +16,17 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   onSelect: (value: RemoveFromSaleType) => void
-  advert: AdvertiseFullModel
+  images: string[]
+  title: string
 }
 
-const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
+const DeactivateAdvModal: FC<Props> = ({
+  isOpen,
+  onClose,
+  onSelect,
+  images,
+  title,
+}) => {
   const {t} = useTranslation()
   useLockBodyScroll()
   return (
@@ -42,14 +49,14 @@ const DeactivateAdvModal: FC<Props> = ({isOpen, onClose, onSelect, advert}) => {
         <div className='px-3 py-4'>
           <div className='flex space-x-4'>
             <ImageWrapper
-              type={advert.images[0]}
+              type={images[0]}
               alt='Product'
               objectFit='contain'
               width={163}
               height={105}
             />
             <span className='text-greyscale-900 text-body-12 font-bold'>
-              {advert.title}
+              {title}
             </span>
           </div>
           <div className='space-y-2 my-2'>

@@ -14,8 +14,18 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {Call, Image, Star} from 'react-iconly'
+import {
+  ArrowLeftSquare,
+  Call,
+  Delete,
+  Edit,
+  Image,
+  Star,
+  TickSquare,
+} from 'react-iconly'
 import {parseCookies} from 'nookies'
+import IcMoreVert from 'icons/material/MoreVert.svg'
+import {useRouter} from 'next/router'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
@@ -23,18 +33,23 @@ import {trackSingle} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
+import ProductMenu from '../ProductMenu'
+import Button from '../Buttons/Button'
+import {makeRequest} from '../../api'
 
 interface Props {
   product: AdvertiseListItemModel
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
   disableVipWidth?: boolean
+  showMenu?: boolean
 }
 const Card: FC<Props> = ({
   product,
   setLockParentScroll,
   href,
   disableVipWidth,
+  showMenu,
 }) => {
   const {t} = useTranslation()
   const {
@@ -53,6 +68,7 @@ const Card: FC<Props> = ({
   } = product
   const imagesCount = size(product.images)
 
+  const router = useRouter()
   const [images] = useState(
     imagesCount > 4 ? product.images.slice(0, 4) : product.images,
   )
@@ -120,6 +136,75 @@ const Card: FC<Props> = ({
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
+  const getOptions = (setShowDeactivateModal) => {
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/delete-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const publish = {
+      title: 'PUBLISH',
+      icon: <TickSquare size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/publish-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const deactivate = {
+      title: 'REMOVE_FROM_SALE',
+      icon: <ArrowLeftSquare size={16} filled />,
+      onClick: () => {
+        setShowDeactivateModal(true)
+      },
+      cb: () => {
+        router.reload()
+      },
+    }
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/edit/${hash}`)
+      },
+    }
+    const items = []
+
+    if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
+      items.push(edit)
+    }
+    if (
+      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
+        state,
+      )
+    ) {
+      if (state === 'archived') {
+        items.push(publish)
+      }
+      items.push(remove)
+    }
+    if (state === 'active') {
+      items.push(deactivate)
+    }
+    return items
+  }
+
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
@@ -143,6 +228,50 @@ const Card: FC<Props> = ({
               hash={hash}
               isFavorite={isFavorite}
               state={state}
+            />
+          </div>
+        )}
+        {showMenu && (
+          <div className='absolute top-4 right-4 w-8 h-8 z-20'>
+            <ProductMenu
+              getOptions={(setShowDeactivateModal) =>
+                getOptions(setShowDeactivateModal)
+              }
+              advertHash={product.hash}
+              title={product.title}
+              listRender={(options, setShowPopup) => (
+                <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
+                  {/* eslint-disable-next-line no-shadow */}
+                  {options.map(({title, onClick, icon}, index) => (
+                    <Button
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onClick()
+                        setShowPopup(false)
+                      }}>
+                      <div className='flex items-center justify-start w-full'>
+                        <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
+                        <span className='truncate'>{t(title)}</span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              )}
+              iconRender={(show) => (
+                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center'>
+                  <IcMoreVert
+                    className={`fill-current ${
+                      show ? 'text-primary-500' : 'text-greyscale-500'
+                    }`}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              )}
+              images={product.images}
             />
           </div>
         )}
