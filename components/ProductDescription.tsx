@@ -13,6 +13,7 @@ import ProductPrice from './ProductPrice'
 import ProductCommunication from './ProductCommunication'
 import ProductLike from './ProductLike'
 import SharePopup from './SharePopup'
+import ProductBadges from './ProductBadges'
 
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
@@ -45,6 +46,7 @@ const ProductDescription: FC = observer(() => {
           </span>
         </div>
       </div>
+      <ProductBadges />
       <div className='s:hidden mb-6'>
         <ProductPrice />
       </div>
