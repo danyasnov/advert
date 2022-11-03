@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
+import EditProfilePopup from './EditProfilePopup'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -45,8 +46,9 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
-      <div className=''>
+      <div className='flex space-x-10'>
         <SharePopup userHash={user.hash} />
+        <EditProfilePopup />
       </div>
     </div>
   )
