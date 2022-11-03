@@ -4,6 +4,7 @@ import {AuthType} from 'front-api/src/models'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {toast} from 'react-toastify'
 import {object, string, ref} from 'yup'
+import {trim} from 'lodash'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
 import {FormikPassword, FormikText} from '../../FormikComponents'
@@ -69,8 +70,8 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             ...(state.authType === 1 ? {phone: state.incoming} : {}),
           },
           params: {
-            name: values.name,
-            surname: values.surname,
+            name: trim(values.name),
+            surname: trim(values.surname),
           },
         },
       })

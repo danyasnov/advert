@@ -14,7 +14,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {first, get, size, isEmpty} from 'lodash'
+import {first, get, size, isEmpty, trim} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -121,18 +121,24 @@ const FormPage: FC = observer(() => {
     helpers: FormikHelpers<any>
     saveDraft: boolean
   }) => {
-    const {fields, condition} = values
+    const {fields, condition, content} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
 
     const data = {
       ...state.draft,
       ...values,
+      content: content.map((c) => ({
+        ...c,
+        title: trim(c.title),
+        description: trim(c.description),
+      })),
       userHash: user.hash,
       condition: condition?.value,
       fields: mappedFields,
       hash,
     }
+    return console.log('data', data)
 
     if (saveDraft) {
       makeRequest({
