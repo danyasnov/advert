@@ -30,7 +30,6 @@ const UserLayout: FC = observer(() => {
   )
   const router = useRouter()
   useEffect(() => {
-    console.log(router)
     router.push(`/user/${query.id}?activeTab=${activeTab}`, undefined, {
       shallow: true,
     })

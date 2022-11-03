@@ -138,7 +138,6 @@ const FormPage: FC = observer(() => {
       fields: mappedFields,
       hash,
     }
-    return console.log('data', data)
 
     if (saveDraft) {
       makeRequest({
