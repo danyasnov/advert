@@ -67,7 +67,7 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
         ref={ref}>
         {show && link && (
           <div
-            className='flex flex-col bg-white shadow-2xl rounded-2xl py-4 px-6'
+            className='flex flex-col bg-white shadow-popup rounded-2xl py-4 px-6'
             data-test-id='share-popup'>
             <h2 className='text-body-16 text-primary-500 font-bold'>
               {t('SHARE')}
