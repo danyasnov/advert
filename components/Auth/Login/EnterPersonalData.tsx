@@ -15,10 +15,11 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
 
   const baseSchema = object().shape({
     name: string()
+      .trim()
       .required(t('TOO_SHORT_NAME_OR_SURNAME'))
       .max(90, t('TOO_SHORT_NAME_OR_SURNAME'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
-    surname: string().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
+    surname: string().trim().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
   })
 
   const emailSchema = baseSchema.concat(
