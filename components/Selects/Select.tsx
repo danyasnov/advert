@@ -6,7 +6,6 @@ import {isEqual} from 'lodash'
 import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
 import Button from '../Buttons/Button'
-import useOnClickOutside from '../../hooks/useOnClickOutside'
 
 export interface SelectProps {
   options: Array<SelectItem>
@@ -68,35 +67,18 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
-  const { isFocused } = props
   const { menuIsOpen } = props.selectProps;
-  const [show, setShow] = useState(false)
-  const ref = useRef()
-  useOnClickOutside(ref, () => {
-    setShow(false)
-  })
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    /*
-    <RSComponents.DropdownIndicator {...props}>
-      <IcArrowDown
-        className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-          isFocused ? 'rotate-180 text-primary-500' : ''
-        }`}
-      />
-    </RSComponents.DropdownIndicator>
-      */
-    <div ref={ref}>
-      <Button onClick = {() => setShow(!show)}>
-        <RSComponents.DropdownIndicator {...props}>
-          <IcArrowDown
-            className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-            (menuIsOpen ) ? 'rotate-180 text-primary-500' : ''
-            }`}
-          />
-        </RSComponents.DropdownIndicator>
-      </Button> 
-    </div>
+    <Button>
+      <RSComponents.DropdownIndicator {...props}>
+        <IcArrowDown
+          className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
+            menuIsOpen ? 'rotate-180 text-primary-500' : ''
+          }`}
+        />
+      </RSComponents.DropdownIndicator>
+    </Button>
   )
 }
 const Option = (props) => {
@@ -152,7 +134,7 @@ const Select: FC<SelectProps> = ({
     }
   }, [value, options])
   return (
-    <>
+    <> 
       <RS
         inputId={id}
         id={id}
@@ -175,7 +157,7 @@ const Select: FC<SelectProps> = ({
           menuPortal: (base) => ({...base, zIndex: 9999}),
         }}
         isOptionDisabled={(option) => option.disabled}
-        className='react-select'
+        className='react-selects'
         components={{
           MenuList,
           DropdownIndicator,

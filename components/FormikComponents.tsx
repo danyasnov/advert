@@ -652,7 +652,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className='relative w-full bg-greyscale-50 rounded-lg  py-2.5 '
+      className='relative w-full bg-greyscale-50 rounded-xl py-2.5'
       ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full px-5'>
         <div className='flex justify-between w-full text-body-12'>
@@ -1014,7 +1014,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     <div>
       {width >= 768 ? (
         //  eslint-disable-next-line react/jsx-props-no-spreading
-        <Select {...props} />
+        <Select  {...props} />
       ) : (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <MobileSelect {...props} />
