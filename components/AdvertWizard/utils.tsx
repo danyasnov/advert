@@ -1,4 +1,13 @@
-import {get, isEmpty, isEqual, omit, parseInt, size, toNumber} from 'lodash'
+import {
+  get,
+  isEmpty,
+  isEqual,
+  omit,
+  parseInt,
+  size,
+  toNumber,
+  trim,
+} from 'lodash'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
@@ -180,7 +189,7 @@ export const scrollToSection = (id): void => {
 
 export const validateTitle = (content, t) => {
   const errors: FormikErrors<any> = {}
-  const title = get(content, '[0].title', '')
+  const title = trim(get(content, '[0].title', ''))
   if (title?.length < 3) {
     errors.content = t('EMPTY_TITLE_AND_DESCRIPTION')
   }

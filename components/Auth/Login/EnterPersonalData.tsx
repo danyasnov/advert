@@ -4,6 +4,7 @@ import {AuthType} from 'front-api/src/models'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {toast} from 'react-toastify'
 import {object, string, ref} from 'yup'
+import {trim} from 'lodash'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
 import {FormikPassword, FormikText} from '../../FormikComponents'
@@ -14,10 +15,11 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
 
   const baseSchema = object().shape({
     name: string()
+      .trim()
       .required(t('TOO_SHORT_NAME_OR_SURNAME'))
       .max(90, t('TOO_SHORT_NAME_OR_SURNAME'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
-    surname: string().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
+    surname: string().trim().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
   })
 
   const emailSchema = baseSchema.concat(
@@ -69,8 +71,8 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             ...(state.authType === 1 ? {phone: state.incoming} : {}),
           },
           params: {
-            name: values.name,
-            surname: values.surname,
+            name: trim(values.name),
+            surname: trim(values.surname),
           },
         },
       })

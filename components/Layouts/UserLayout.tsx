@@ -28,6 +28,12 @@ const UserLayout: FC = observer(() => {
   const [activeTab, setActiveTab] = useState(
     query.activeTab ? toNumber(query.activeTab) : 2,
   )
+  const router = useRouter()
+  useEffect(() => {
+    router.push(`/user/${query.id}?activeTab=${activeTab}`, undefined, {
+      shallow: true,
+    })
+  }, [activeTab])
   const {width} = useWindowSize()
   const {
     userSale,
