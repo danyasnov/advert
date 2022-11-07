@@ -14,7 +14,7 @@ export default async (
   const rest = getRest(storage)
   const linkHash = rest.deeplinkUtils.generateDeeplinkHash()
 
-  if (productHash && userHash) {
+  if (productHash) {
     link = rest.deeplinkUtils.generateProductLink(
       linkHash,
       productHash,
