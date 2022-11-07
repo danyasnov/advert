@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState, useRef} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -67,7 +67,7 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
-  const { menuIsOpen } = props.selectProps;
+  const { menuIsOpen } = props.selectProps
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Button>
@@ -157,7 +157,7 @@ const Select: FC<SelectProps> = ({
           menuPortal: (base) => ({...base, zIndex: 9999}),
         }}
         isOptionDisabled={(option) => option.disabled}
-        className='react-selects'
+        className='react-select'
         components={{
           MenuList,
           DropdownIndicator,

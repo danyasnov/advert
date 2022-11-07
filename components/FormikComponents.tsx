@@ -1014,7 +1014,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     <div>
       {width >= 768 ? (
         //  eslint-disable-next-line react/jsx-props-no-spreading
-        <Select  {...props} />
+        <Select {...props} />
       ) : (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <MobileSelect {...props} />
