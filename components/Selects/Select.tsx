@@ -70,7 +70,6 @@ const DropdownIndicator = (props) => {
   const { menuIsOpen } = props.selectProps
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Button>
       <RSComponents.DropdownIndicator {...props}>
         <IcArrowDown
           className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
@@ -78,7 +77,6 @@ const DropdownIndicator = (props) => {
           }`}
         />
       </RSComponents.DropdownIndicator>
-    </Button>
   )
 }
 const Option = (props) => {
