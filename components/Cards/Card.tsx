@@ -208,9 +208,6 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
-        onClick={() =>
-          trackSingle({categoryId: rootCategoryId, event: 'CustomizeProduct'})
-        }
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'

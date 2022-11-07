@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -10,6 +10,7 @@ import ProductsSlider from '../Cards/ProductsSlider'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import {unixToDate} from '../../utils'
 import MetaTags from '../MetaTags'
+import {trackSingle} from '../../helpers'
 
 const ProductLayout: FC = observer(() => {
   const {t} = useTranslation()
@@ -19,6 +20,9 @@ const ProductLayout: FC = observer(() => {
   } - ${t('SITE_PAGE_DESCRIPTION_PART')}, ${t('PRICE')} ${
     product.advert.price
   }, ${t('HOSTED')}: ${unixToDate(product.advert.dateUpdated)}`
+  useEffect(() => {
+    trackSingle('ViewContent')
+  }, [])
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />

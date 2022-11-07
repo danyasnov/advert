@@ -33,7 +33,7 @@ function MyApp({Component, pageProps}: AppProps) {
         isRouteChanging: true,
         loadingKey: prevState.loadingKey || 1,
       }))
-      startTracking({url})
+      startTracking()
     }
     const handleStop = () => {
       setState((prevState) => ({
