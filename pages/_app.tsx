@@ -67,11 +67,12 @@ function MyApp({Component, pageProps}: AppProps) {
           isRouteChanging={state.isRouteChanging}
           key={state.loadingKey}
         />
-
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-        <ToastContainer />
-        <CookiesWarning />
+        <div className={state.isRouteChanging ? 'blur-[2px]' : ''}>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+          <ToastContainer />
+          <CookiesWarning />
+        </div>
       </RootStoreProvider>
     </WithYandexMetrika>
   )
