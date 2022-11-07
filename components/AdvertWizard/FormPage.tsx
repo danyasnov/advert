@@ -14,7 +14,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {first, get, size, isEmpty} from 'lodash'
+import {first, get, size, isEmpty, trim} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -58,6 +58,7 @@ import {
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
+import {trackSingle} from '../../helpers'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -121,13 +122,18 @@ const FormPage: FC = observer(() => {
     helpers: FormikHelpers<any>
     saveDraft: boolean
   }) => {
-    const {fields, condition} = values
+    const {fields, condition, content} = values
 
     const mappedFields = mapFormikFields(fields, category.fieldsById)
 
     const data = {
       ...state.draft,
       ...values,
+      content: content.map((c) => ({
+        ...c,
+        title: trim(c.title),
+        description: trim(c.description),
+      })),
       userHash: user.hash,
       condition: condition?.value,
       fields: mappedFields,
@@ -155,6 +161,7 @@ const FormPage: FC = observer(() => {
         method: 'post',
       }).then((res) => {
         if (res.data.status === 200) {
+          trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
         } else if (res.data.error) {
           helpers.setSubmitting(false)

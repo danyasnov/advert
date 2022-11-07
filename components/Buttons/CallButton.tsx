@@ -39,10 +39,7 @@ const CallButton: FC<Props> = ({
         id='call'
         onClick={async (e) => {
           e.preventDefault()
-          trackSingle({
-            categoryId: rootCategoryId,
-            event: 'Contact',
-          })
+          trackSingle('Contact')
           const {data: permissionData} = await makeRequest({
             method: 'post',
             url: '/api/check-phone-permissions',

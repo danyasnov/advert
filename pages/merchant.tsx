@@ -10,6 +10,7 @@ import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
 
 export default function Home() {
+  return null
   return <MerchantLayout />
 }
 

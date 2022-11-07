@@ -31,7 +31,7 @@ const Loading: React.FC<{isRouteChanging: boolean}> = ({isRouteChanging}) => {
       `}</style>
       <div className='container'>
         <div className='bar' />
-        <div className='flex justify-center items-center absolute -right-3 -top-3'>
+        <div className='flex justify-center items-center fixed inset-0 z-50'>
           <Lottie options={{animationData: Loader}} height={100} width={100} />
         </div>
       </div>

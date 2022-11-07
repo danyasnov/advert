@@ -1,23 +1,29 @@
 import {FC, useRef, useState} from 'react'
-import IcMoreHoriz from 'icons/material/MoreHoriz.svg'
 import {useClickAway} from 'react-use'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {isEmpty} from 'lodash'
-import {AdvertiseDetail} from 'front-api'
-import {RemoveFromSaleType} from 'front-api/src/models'
-import {ArrowLeftSquare, Delete, Edit, TickSquare} from 'react-iconly'
+import {get, isEmpty} from 'lodash'
+import {AdvertiseState, RemoveFromSaleType} from 'front-api/src/models'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import DeactivateAdvModal from './DeactivateAdvModal'
 
 interface Props {
-  product: AdvertiseDetail
+  advertHash: string
+  title: string
+  images: string[]
+  iconRender
+  listRender
+  getOptions
 }
-const ProductMenu: FC<Props> = ({product}) => {
-  const {advert, owner} = product
-  const {t} = useTranslation()
-  const router = useRouter()
+const ProductMenu: FC<Props> = ({
+  iconRender,
+  listRender,
+  advertHash,
+  images,
+  title,
+  getOptions,
+}) => {
   const [showPopup, setShowPopup] = useState(false)
   const [showDeactivateModal, setShowDeactivateModal] = useState(false)
 
@@ -25,103 +31,21 @@ const ProductMenu: FC<Props> = ({product}) => {
   useClickAway(ref, () => {
     setShowPopup(false)
   })
-  const getOptions = () => {
-    const remove = {
-      title: t('REMOVE'),
-      icon: <Delete size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/delete-adv`,
-          method: 'post',
-          data: {
-            hash: advert.hash,
-          },
-        }).then(() => {
-          router.push(`/user/${owner.hash}`)
-        })
-      },
-    }
-    const publish = {
-      title: t('PUBLISH'),
-      icon: <TickSquare size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/publish-adv`,
-          method: 'post',
-          data: {
-            hash: advert.hash,
-          },
-        }).then(() => {
-          router.push(`/user/${owner.hash}`)
-        })
-      },
-    }
-    const deactivate = {
-      title: t('REMOVE_FROM_SALE'),
-      icon: <ArrowLeftSquare size={16} filled />,
-      onClick: () => {
-        setShowDeactivateModal(true)
-      },
-    }
-    const edit = {
-      title: t('EDIT_AD'),
-      icon: <Edit size={16} filled />,
-      onClick: () => {
-        router.push(`/advert/edit/${advert.hash}`)
-      },
-    }
-    const items = []
 
-    if (['active', 'archived', 'blocked', 'draft'].includes(advert.state)) {
-      items.push(edit)
-    }
-    if (
-      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
-        advert.state,
-      )
-    ) {
-      if (advert.state === 'archived') {
-        items.push(publish)
-      }
-      items.push(remove)
-    }
-    if (advert.state === 'active') {
-      items.push(deactivate)
-    }
-    return items
-  }
-
-  const options = getOptions()
+  const options = getOptions(setShowDeactivateModal)
   if (isEmpty(options)) return null
   return (
     <>
       <div ref={ref}>
-        <Button onClick={() => setShowPopup(!showPopup)} className='relative'>
-          <IcMoreHoriz
-            className='fill-current text-black-c'
-            width={24}
-            height={24}
-          />
-          {showPopup && (
-            <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
-              {options.map(({title, onClick, icon}, index) => (
-                <Button
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
-                  onClick={() => {
-                    onClick()
-                    setShowPopup(false)
-                  }}>
-                  <div className='flex items-center justify-start w-full'>
-                    <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
-                    <span className='truncate'>{title}</span>
-                  </div>
-                </Button>
-              ))}
-            </div>
-          )}
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            setShowPopup(!showPopup)
+          }}
+          className='relative'>
+          {iconRender(showPopup)}
         </Button>
+        {showPopup && listRender(options, setShowPopup)}
       </div>
       {showDeactivateModal && (
         <DeactivateAdvModal
@@ -132,14 +56,20 @@ const ProductMenu: FC<Props> = ({product}) => {
               url: `/api/deactivate-adv`,
               method: 'post',
               data: {
-                hash: advert.hash,
+                hash: advertHash,
                 soldMode: value,
               },
             }).then(() => {
-              router.push(`/user/${owner.hash}`)
+              get(
+                options.find((o) => o.title === 'REMOVE_FROM_SALE'),
+                'cb',
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                () => {},
+              )()
             })
           }}
-          advert={advert}
+          title={title}
+          images={images}
         />
       )}
     </>

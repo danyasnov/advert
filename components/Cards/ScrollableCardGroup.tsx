@@ -18,6 +18,7 @@ interface Props {
   enableFourthColumnForM?: boolean
   enableFiveColumnsForL?: boolean
   enableTwoColumnsForS?: boolean
+  showMenu?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
 }
@@ -33,7 +34,7 @@ const ScrollableCardGroup: FC<Props> = ({
   enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
-  hideNotFoundDescription,
+  showMenu,
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
@@ -78,7 +79,11 @@ const ScrollableCardGroup: FC<Props> = ({
             <div
               className={p.isVip && !disableVipWidth ? 'col-span-2' : ''}
               key={p.hash}>
-              <Card product={p} disableVipWidth={disableVipWidth} />
+              <Card
+                product={p}
+                disableVipWidth={disableVipWidth}
+                showMenu={showMenu}
+              />
             </div>
           ))}
         </div>

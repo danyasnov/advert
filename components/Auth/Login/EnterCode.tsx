@@ -6,16 +6,12 @@ import {observer} from 'mobx-react-lite'
 import {VerifyMode} from 'front-api/src/models/auth'
 import {useFormik} from 'formik'
 import {object, string} from 'yup'
-import Lottie from 'react-lottie'
 import {useRouter} from 'next/router'
 import {makeRequest} from '../../../api'
-import {setCookiesObject} from '../../../helpers'
+import {setCookiesObject, trackSingle} from '../../../helpers'
 import LinkButton from '../../Buttons/LinkButton'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
-import MailAnimation from '../../../lottie/mail_animation.json'
-import CallAnimation from '../../../lottie/call_test.json'
-import SmsAnimation from '../../../lottie/sms_animation.json'
 
 const getCharacters = (verifyMode) => {
   switch (verifyMode) {
@@ -117,6 +113,7 @@ const EnterCode: FC<PageProps> = observer(
           promo,
         })
         if (state.isNew) {
+          trackSingle('CompleteRegistration')
           dispatch({type: 'setPage', page: AuthPages.success})
         } else if (onFinish) {
           onFinish()

@@ -3,7 +3,6 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import useEmblaCarousel from 'embla-carousel-react'
 import {parseCookies} from 'nookies'
-import {toJS} from 'mobx'
 import ImageWrapper from './ImageWrapper'
 import {
   useCategoriesStore,
@@ -47,8 +46,9 @@ const CategoriesSlider: FC = observer(() => {
                 title={c.name}
                 href={`/${locationCodes}/${c.slug}`}
                 className='relative cursor-pointer mr-4 '>
-                <div className='hover:text-primary-500 hover:font-medium text-greyscale-900'>
+                <div className='hover:text-primary-500 text-greyscale-900'>
                   <ImageWrapper
+                    quality={100}
                     type={`/img/categories/${c.slug}.png`}
                     width={136}
                     height={136}
@@ -56,7 +56,7 @@ const CategoriesSlider: FC = observer(() => {
                     className='rounded-xl'
                     layout='fixed'
                   />
-                  <p className='text-body-18 text-center mt-4'>{c.name}</p>
+                  <p className='text-body-16 text-center mt-4'>{c.name}</p>
                 </div>
               </LinkWrapper>
             ))}

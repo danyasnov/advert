@@ -8,6 +8,7 @@ import {Heart2} from 'react-iconly'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import {SerializedCookiesState} from '../types'
+import {trackSingle} from '../helpers'
 
 interface Props {
   hash: string
@@ -56,6 +57,7 @@ const ProductLike: FC<Props> = ({
     <Button
       onClick={(e) => {
         e.preventDefault()
+        if (!like) trackSingle('AddToWishlist', {hash})
         makeRequest({
           url: '/api/set-favorite',
           method: 'post',
