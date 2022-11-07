@@ -237,13 +237,13 @@ const Card: FC<Props> = ({
               advertHash={product.hash}
               title={product.title}
               listRender={(options, setShowPopup) => (
-                <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
+                <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200 px-5'>
                   {/* eslint-disable-next-line no-shadow */}
                   {options.map(({title, onClick, icon}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
-                      className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      className='py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
                       onClick={(e) => {
                         e.preventDefault()
                         onClick()
@@ -258,7 +258,7 @@ const Card: FC<Props> = ({
                 </div>
               )}
               iconRender={(show) => (
-                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center'>
+                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center shadow'>
                   <IcMoreVert
                     className={`fill-current ${
                       show ? 'text-primary-500' : 'text-greyscale-500'
