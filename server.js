@@ -23,6 +23,7 @@ const whitelist = [
   '/site.webmanifest',
   '/__nextjs',
   '/img',
+  '/android-chrome-192x192.png',
 ]
 
 const getDomain = (host) => {

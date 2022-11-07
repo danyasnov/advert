@@ -6,7 +6,11 @@ import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {makeRequest} from '../../api'
-import {getCategoriesSlugsPathFromIds, getLocationCodes} from '../../helpers'
+import {
+  getCategoriesSlugsPathFromIds,
+  getLocationCodes,
+  trackSingle,
+} from '../../helpers'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 
 interface Props {
@@ -84,10 +88,14 @@ const SearchAutocomplete: FC<Props> = observer(
       } else if (searchItem) {
         if (searchItem.path) pathname = `${pathname}/${searchItem.path}`
       }
+      const query = searchItem.primary.trim()
+      if (query) {
+        trackSingle('Search', {search_string: query})
+      }
       router.push({
         pathname,
         query: {
-          ...(searchItem.path ? {} : {q: searchItem.primary.trim()}),
+          ...(searchItem.path ? {} : {q: query}),
         },
       })
     }

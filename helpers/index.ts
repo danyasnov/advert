@@ -78,6 +78,8 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
       maxAge: 30 * 24 * 60 * 60,
     }
     const domain = process.env.DOMAIN || process.env.NEXT_PUBLIC_DOMAIN
+    console.log('domain', domain)
+
     if (domain) options.domain = domain
     setCookie(ctx, key, value, options)
   })
@@ -669,35 +671,19 @@ export const getCategoriesSlugsPathFromIds = (
   return slugs
 }
 
-export const trackSingle = ({categoryId, event}) => {
+export const trackSingle = (event, data?) => {
   if (typeof window === 'undefined') return
   const ReactPixel = require('react-facebook-pixel').default
-  let pixelId
-  if (categoryId === 20) {
-    pixelId = '677980023408638'
-  }
-  if (categoryId === 1) {
-    pixelId = '494552645683424'
-  }
-  if (!pixelId) return
+  const pixelId = '678216410546433'
 
   ReactPixel.init(pixelId)
-  ReactPixel.trackSingle(pixelId, event)
+  ReactPixel.trackSingle(pixelId, event, data)
 }
 
-export const startTracking = ({url}) => {
+export const startTracking = () => {
   if (typeof window === 'undefined') return
-  const propertyRegex = /CY\/\w+\/property/g
-  const vehicleRegex = /CY\/\w+\/vehicles/g
   const ReactPixel = require('react-facebook-pixel').default
-  let pixelId
-  if (propertyRegex.test(url)) {
-    pixelId = '677980023408638'
-  }
-  if (vehicleRegex.test(url)) {
-    pixelId = '494552645683424'
-  }
-  if (!pixelId) return
+  const pixelId = '678216410546433'
 
   ReactPixel.init(pixelId)
   ReactPixel.pageView()
