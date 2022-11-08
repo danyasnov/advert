@@ -6,11 +6,11 @@ import {City} from '../../types'
 import config from '../../config.json'
 
 const sequelize = new Sequelize(
-  'advretoapi_db1',
-  'advretoapi_usr',
-  'o~6?!5drsp)+',
+  config.database,
+  config.username,
+  config.password,
   {
-    host: '78.47.78.163',
+    host: config.host,
     dialect: 'mysql',
   },
 )
