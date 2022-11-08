@@ -88,6 +88,8 @@ export const fetchCityOrRegionsBySlug = async (
 ): Promise<City[]> => {
   const key = `cities-${country}-${slug}-${lang}`
   const cached: City[] = await cache.get(key)
+  console.log('config', config.database)
+
   if (cached) return cached
 
   try {
@@ -109,7 +111,6 @@ ORDER BY word`,
     cache.set(key, result)
     return result
   } catch (e) {
-    console.log('config', config)
     captureException(e)
     return []
   }
