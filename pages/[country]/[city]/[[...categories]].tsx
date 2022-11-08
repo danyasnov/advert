@@ -42,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     cityCode,
     state.language,
   )
+
   const isValidCountry = !!countries.find((c) => c.isoCode === countryCode)
   state = withLocationQuery(state, query, {countries, locations})
 
