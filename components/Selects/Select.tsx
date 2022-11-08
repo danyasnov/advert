@@ -5,6 +5,7 @@ import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {isEqual} from 'lodash'
 import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
+import Button from '../Buttons/Button'
 
 export interface SelectProps {
   options: Array<SelectItem>
@@ -16,6 +17,7 @@ export interface SelectProps {
   isClearable?: boolean
   isMulti?: boolean
   isInvalid?: boolean
+  menuIsOpen?: boolean
   id?: string
   styles?
   components?
@@ -65,16 +67,16 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
-  const {isFocused} = props
+  const { menuIsOpen } = props.selectProps
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <RSComponents.DropdownIndicator {...props}>
-      <IcArrowDown
-        className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-          isFocused ? 'rotate-180' : ''
-        }`}
-      />
-    </RSComponents.DropdownIndicator>
+      <RSComponents.DropdownIndicator {...props}>
+        <IcArrowDown
+          className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
+            menuIsOpen ? 'rotate-180 text-primary-500' : ''
+          }`}
+        />
+      </RSComponents.DropdownIndicator>
   )
 }
 const Option = (props) => {
@@ -130,7 +132,7 @@ const Select: FC<SelectProps> = ({
     }
   }, [value, options])
   return (
-    <>
+    <> 
       <RS
         inputId={id}
         id={id}
