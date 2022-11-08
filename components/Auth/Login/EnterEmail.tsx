@@ -1,5 +1,7 @@
 import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
+import IcEmail from 'icons/material/Email.svg'
+import {Message} from 'react-iconly'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {string, object, boolean} from 'yup'
 import {useTranslation} from 'next-i18next'
@@ -129,6 +131,13 @@ const EnterEmail: FC<PageProps> = observer(
               disabled={values.showPass}
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
+              leftIcon={
+                <div className='fill-current text-greyscale-500'>
+                  <Message set='bold' size={21} />
+                </div>
+              }
+              // eslint-disable-next-line react/jsx-boolean-value
+              hasIcon={true}
             />
             {values.showPass && (
               <>

@@ -519,6 +519,8 @@ export const FormikText: FC<
     disableTrack?: boolean
     submitOnEnter?: boolean
     filterStyle?: boolean
+    leftIcon
+    hasIcon?: boolean
   } & FieldProps
 > = ({
   field,
@@ -532,6 +534,8 @@ export const FormikText: FC<
   disableTrack,
   submitOnEnter,
   filterStyle,
+  leftIcon,
+  hasIcon,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
@@ -539,6 +543,7 @@ export const FormikText: FC<
   const isValid = !error
   const props = {
     'data-test-id': name,
+    leftIcon,
     disabled,
     rows,
     type,
@@ -557,7 +562,7 @@ export const FormikText: FC<
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
-    }`,
+    } ${hasIcon ? 'pl-13' : ''}`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -566,8 +571,15 @@ export const FormikText: FC<
     },
   }
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
+  const Component = isTextarea ? (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <textarea {...props} />
+  ) : (
+    <div className='relative'>
+      <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+      <input {...props} />
+    </div>
+  )
   return (
     <div className='flex flex-col'>
       {Component}
