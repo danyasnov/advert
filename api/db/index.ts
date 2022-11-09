@@ -110,6 +110,7 @@ ORDER BY word`,
     cache.set(key, result)
     return result
   } catch (e) {
+    console.error(e)
     captureException(e)
     return []
   }
