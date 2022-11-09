@@ -132,7 +132,12 @@ const EnterEmail: FC<PageProps> = observer(
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
               leftIcon={
-                <div className='fill-current text-greyscale-500'>
+                <div
+                  className={`fill-current ${
+                    !values.showPass
+                      ? 'text-greyscale-500'
+                      : 'text-greyscale-900'
+                  }`}>
                   <Message set='bold' size={21} />
                 </div>
               }
