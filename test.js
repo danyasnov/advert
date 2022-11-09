@@ -1,5 +1,5 @@
-import {Sequelize} from 'sequelize'
-import config from './config.json'
+const {Sequelize} = require('sequelize')
+const config = require('./config.json')
 
 const sequelize = new Sequelize(
   config.database,
@@ -10,9 +10,11 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   },
 )
-try {
-  await sequelize.authenticate()
-  console.log('Connection has been established successfully.')
-} catch (error) {
-  console.error('Unable to connect to the database:', error)
-}
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.')
+  })
+  .catch((error) => {
+    console.error('Unable to connect to the database:', error)
+  })
