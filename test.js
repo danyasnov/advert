@@ -1,7 +1,6 @@
-const {Sequelize, QueryTypes} = require('sequelize')
+const {Sequelize} = require('sequelize')
 const {captureException} = require('@sentry/nextjs')
 const config = require('./config.json')
-const {City} = require('./types')
 
 const sequelize = new Sequelize(
   config.database,
