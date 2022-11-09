@@ -577,6 +577,7 @@ export const FormikText: FC<
   ) : (
     <div className='relative'>
       <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...props} />
     </div>
   )
@@ -589,8 +590,13 @@ export const FormikText: FC<
 }
 
 export const FormikPassword: FC<
-  {placeholder: string; value: number} & FieldProps
-> = ({field, form, placeholder}) => {
+  {
+    placeholder: string
+    value: number
+    leftIcon
+    hasIcon?: boolean
+  } & FieldProps
+> = ({field, form, placeholder, leftIcon, hasIcon}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const error = get(errors, name)
@@ -599,6 +605,7 @@ export const FormikPassword: FC<
   return (
     <div className='flex flex-col'>
       <div className='relative'>
+        <div className='absolute top-4.5 left-5'>{leftIcon}</div>
         <input
           data-test-id={name}
           type={type}
@@ -607,7 +614,7 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border bg-greyscale-50 rounded-lg py-4 px-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
+          className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pl-13 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
             isValid ? 'border-greyscale-50' : 'border-error'
           }`}
         />
