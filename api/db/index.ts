@@ -3,7 +3,9 @@ import {size} from 'lodash'
 import {captureException} from '@sentry/nextjs'
 import NodeCache from 'node-cache'
 import {City} from '../../types'
-import config from '../../config.json'
+// import config from '../../config.json'
+// const {Sequelize} = require('sequelize')
+const config = require('../../config.json')
 
 const sequelize = new Sequelize(
   config.database,
