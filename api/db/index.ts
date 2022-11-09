@@ -16,6 +16,18 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   },
 )
+sequelize
+  .authenticate()
+  .then(() => {
+    captureException('Connection has been established successfully.')
+
+    console.log('Connection has been established successfully.')
+  })
+  .catch((error) => {
+    captureException(error)
+
+    console.error('Unable to connect to the database:', error)
+  })
 const langs = {
   en: 2,
   ru: 1,
