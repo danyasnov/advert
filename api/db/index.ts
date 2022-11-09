@@ -4,14 +4,22 @@ import {captureException} from '@sentry/nextjs'
 import NodeCache from 'node-cache'
 import {City} from '../../types'
 
-const getSequelize = async (): Promise<Sequelize> => {
-  const config = await import('../../config.json')
-  return new Sequelize(config.database, config.username, config.password, {
-    host: config.host,
-    dialect: 'mysql',
-  })
+const config = {
+  username: 'adv_user',
+  password: 'aKjh76aa915BN',
+  database: 'adv',
+  host: '10.0.0.3',
 }
 
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  {
+    host: config.host,
+    dialect: 'mysql',
+  },
+)
 const langs = {
   en: 2,
   ru: 1,
@@ -24,7 +32,6 @@ export const fetchCitiesByCountryCode = async (
   code: string,
   lang: string,
 ): Promise<City[]> => {
-  const sequelize = await getSequelize()
   const key = `cities-${code}-${lang}`
   const cached: City[] = await cache.get(key)
   if (cached) return cached
@@ -55,8 +62,6 @@ export const fetchRegionsByCountryCode = async (
   code: string,
   lang: string,
 ): Promise<City[]> => {
-  const sequelize = await getSequelize()
-
   const key = `regions-${code}-${lang}`
   const cached: City[] = await cache.get(key)
   if (cached) return cached
@@ -87,11 +92,8 @@ export const fetchCityOrRegionsBySlug = async (
   slug: string,
   lang: string,
 ): Promise<City[]> => {
-  const sequelize = await getSequelize()
-
   const key = `cities-${country}-${slug}-${lang}`
   const cached: City[] = await cache.get(key)
-
   if (cached) return cached
 
   try {
@@ -113,15 +115,12 @@ ORDER BY word`,
     cache.set(key, result)
     return result
   } catch (e) {
-    console.error(e)
     captureException(e)
     return []
   }
 }
 
 export const fetchDocuments = async (path: string, lang = 'en') => {
-  const sequelize = await getSequelize()
-
   const key = `docs-${path}-${lang}`
   const cached = await cache.get(key)
   if (cached) return cached
@@ -145,8 +144,6 @@ export const fetchDocuments = async (path: string, lang = 'en') => {
 }
 
 export const fetchFirebaseLink = async (hash: string) => {
-  const sequelize = await getSequelize()
-
   try {
     const result = await sequelize.query(
       `SELECT hash_link, firebase_link, date_off FROM adv_cover_links WHERE hash_link='${hash}'`,
@@ -160,8 +157,6 @@ export const fetchFirebaseLink = async (hash: string) => {
 }
 
 export const incrementDeeplinkCounter = async (hash: string) => {
-  const sequelize = await getSequelize()
-
   try {
     return await sequelize.query(
       `UPDATE adv_cover_links SET count_view=count_view+1, time_view=${Math.floor(
@@ -179,8 +174,6 @@ export const addMetaToDeeplink = async (
   referrer: string,
   userAgent: string,
 ) => {
-  const sequelize = await getSequelize()
-
   try {
     return await sequelize.query(
       `INSERT INTO adv_cover_links_log VALUES ('${hash}', ${Math.floor(
@@ -196,8 +189,6 @@ export const addMetaToDeeplink = async (
 export const fetchUser = async (
   hash: string,
 ): Promise<{hash: string; lang: number}[]> => {
-  const sequelize = await getSequelize()
-
   try {
     return await sequelize.query(
       `SELECT hash, email, name, surname, lang FROM adv_users WHERE hash='${hash}'`,
@@ -209,8 +200,6 @@ export const fetchUser = async (
   }
 }
 export const setUserPass = async (hash: string, pass: string) => {
-  const sequelize = await getSequelize()
-
   try {
     return await sequelize.query(
       `UPDATE adv_users SET email_pass='${pass}' WHERE hash='${hash}'`,
