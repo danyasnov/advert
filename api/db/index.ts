@@ -3,9 +3,7 @@ import {size} from 'lodash'
 import {captureException} from '@sentry/nextjs'
 import NodeCache from 'node-cache'
 import {City} from '../../types'
-// import config from '../../config.json'
-// const {Sequelize} = require('sequelize')
-const config = require('../../config.json')
+import config from '../../config.json'
 
 const sequelize = new Sequelize(
   config.database,
@@ -16,18 +14,6 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   },
 )
-sequelize
-  .authenticate()
-  .then(() => {
-    captureException('Connection has been established successfully.')
-
-    console.log('Connection has been established successfully.')
-  })
-  .catch((error) => {
-    captureException(error)
-
-    console.error('Unable to connect to the database:', error)
-  })
 const langs = {
   en: 2,
   ru: 1,
