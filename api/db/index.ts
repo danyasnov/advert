@@ -14,6 +14,13 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   },
 )
+try {
+  await sequelize.authenticate()
+  console.log('Connection has been established successfully.')
+} catch (error) {
+  captureException(error)
+  console.error('Unable to connect to the database:', error)
+}
 const langs = {
   en: 2,
   ru: 1,
@@ -110,7 +117,6 @@ ORDER BY word`,
     cache.set(key, result)
     return result
   } catch (e) {
-    console.log(JSON.stringify(e, undefined, 2))
     captureException(e)
     return []
   }
