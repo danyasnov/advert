@@ -17,8 +17,6 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import {AnalyticsService} from 'front-api/src/analytics/analytics'
-import {toJS} from 'mobx'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -30,7 +28,7 @@ import {
 import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
 import {clearFalsyValues} from '../utils'
 import PublicKey from '../PublicKey'
-import Storage, {StorageOptions} from '../stores/Storage'
+import Storage from '../stores/Storage'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -78,7 +76,6 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
       maxAge: 30 * 24 * 60 * 60,
     }
     const domain = process.env.DOMAIN || process.env.NEXT_PUBLIC_DOMAIN
-    console.log('domain', domain)
 
     if (domain) options.domain = domain
     setCookie(ctx, key, value, options)

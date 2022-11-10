@@ -24,6 +24,7 @@ const whitelist = [
   '/__nextjs',
   '/img',
   '/android-chrome-192x192.png',
+  '/android-chrome-512x512.png',
 ]
 
 const getDomain = (host) => {
