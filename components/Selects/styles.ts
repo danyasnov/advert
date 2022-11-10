@@ -122,7 +122,7 @@ export const LinkStyles = {
   }),
   valueContainer: (provided) => ({
     ...provided,
-    padding: '0 8px',
+    padding: '0px',
     height: '24px',
     display: 'flex',
     justifyContent: 'flex-start',
