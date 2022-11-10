@@ -76,7 +76,6 @@ export const setCookiesObject = (data: CookiesState, ctx = null): void => {
       maxAge: 30 * 24 * 60 * 60,
     }
     const domain = process.env.DOMAIN || process.env.NEXT_PUBLIC_DOMAIN
-    console.log('domain', domain)
 
     if (domain) options.domain = domain
     setCookie(ctx, key, value, options)
