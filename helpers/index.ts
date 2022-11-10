@@ -17,8 +17,6 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import {AnalyticsService} from 'front-api/src/analytics/analytics'
-import {toJS} from 'mobx'
 import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
 import {
   City,
@@ -30,7 +28,7 @@ import {
 import {fetchCities, fetchCountries, fetchRegions} from '../api/v1'
 import {clearFalsyValues} from '../utils'
 import PublicKey from '../PublicKey'
-import Storage, {StorageOptions} from '../stores/Storage'
+import Storage from '../stores/Storage'
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert

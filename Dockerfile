@@ -42,6 +42,8 @@ COPY --from=builder /app/server.js ./server.js
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/dblib ./dblib
 COPY --from=builder /app/config.php ./config.php
+COPY --from=builder /app/config.json ./config.json
+COPY --from=builder /app/test.js ./test.js
 
 USER nextjs
 

@@ -3,7 +3,13 @@ import {size} from 'lodash'
 import {captureException} from '@sentry/nextjs'
 import NodeCache from 'node-cache'
 import {City} from '../../types'
-import config from '../../config.json'
+
+const config = {
+  username: 'adv_user',
+  password: 'aKjh76aa915BN',
+  database: 'adv',
+  host: '10.0.0.3',
+}
 
 const sequelize = new Sequelize(
   config.database,
