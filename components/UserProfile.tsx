@@ -1,13 +1,16 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {useUserStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
 import EditProfilePopup from './EditProfilePopup'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
+  const {userHash} = useGeneralStore()
+  const isCurrentUser = userHash === user?.hash
+
   const {t} = useTranslation()
   return (
     <div className='flex flex-col items-center rounded-2xl bg-white py-5 px-7'>
@@ -48,7 +51,7 @@ const UserProfile: FC = observer(() => {
       </div>
       <div className='flex space-x-10'>
         <SharePopup userHash={user.hash} />
-        <EditProfilePopup />
+        {isCurrentUser && <EditProfilePopup />}
       </div>
     </div>
   )

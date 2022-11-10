@@ -7,7 +7,7 @@ import IcClear from 'icons/material/Clear.svg'
 import {useFormik, FormikProvider, Field} from 'formik'
 import {object, string} from 'yup'
 import {isEqual} from 'lodash'
-import {useUserStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import {FormikSelect, FormikText} from './FormikComponents'
@@ -17,11 +17,13 @@ import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const EditProfilePopup: FC = observer(() => {
   const {user, setUserPersonalData} = useUserStore()
+
   const {settings} = user
   const {name, surname, sex} = settings.personal
   const {t} = useTranslation()
   const [show, setShow] = useState(false)
   useDisableBodyScroll(show)
+
   const sexOptionsRef = useRef([
     {value: '1', label: t('MALE')},
     {value: '2', label: t('FEMALE')},
