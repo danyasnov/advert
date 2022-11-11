@@ -519,7 +519,7 @@ export const FormikText: FC<
     disableTrack?: boolean
     submitOnEnter?: boolean
     filterStyle?: boolean
-    leftIcon
+    leftIcon?: JSX.Element
     hasIcon?: boolean
   } & FieldProps
 > = ({
@@ -593,7 +593,7 @@ export const FormikPassword: FC<
   {
     placeholder: string
     value: number
-    leftIcon
+    leftIcon?: JSX.Element
     hasIcon?: boolean
   } & FieldProps
 > = ({field, form, placeholder, leftIcon, hasIcon}) => {
@@ -614,9 +614,10 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pl-13 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
-            isValid ? 'border-greyscale-50' : 'border-error'
-          }`}
+          className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
+            hasIcon ? 'pl-13' : ''
+          }
+             ${isValid ? 'border-greyscale-50' : 'border-error'}`}
         />
         <div className='absolute top-4 right-5'>
           {type === 'password' && (
