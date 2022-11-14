@@ -208,14 +208,10 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
-        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2
+        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'
         } ${widthClassname}`}
-        style={{
-          // @ts-ignore safari fix border radius
-          '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-        }}
         ref={setRefs}>
         <CardBadge state={state} />
         {owner?.hash && (
