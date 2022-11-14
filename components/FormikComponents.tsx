@@ -520,7 +520,6 @@ export const FormikText: FC<
     submitOnEnter?: boolean
     filterStyle?: boolean
     leftIcon?: JSX.Element
-    hasIcon?: boolean
   } & FieldProps
 > = ({
   field,
