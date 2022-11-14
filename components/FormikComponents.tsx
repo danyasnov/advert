@@ -535,7 +535,6 @@ export const FormikText: FC<
   submitOnEnter,
   filterStyle,
   leftIcon,
-  hasIcon,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
@@ -562,7 +561,7 @@ export const FormikText: FC<
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
-    } ${hasIcon ? 'pl-13' : ''}`,
+    } ${!!leftIcon ? 'pl-13' : ''}`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -594,9 +593,8 @@ export const FormikPassword: FC<
     placeholder: string
     value: number
     leftIcon?: JSX.Element
-    hasIcon?: boolean
   } & FieldProps
-> = ({field, form, placeholder, leftIcon, hasIcon}) => {
+> = ({field, form, placeholder, leftIcon}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const error = get(errors, name)
@@ -615,7 +613,7 @@ export const FormikPassword: FC<
           }}
           placeholder={placeholder}
           className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
-            hasIcon ? 'pl-13' : ''
+            !!leftIcon ? 'pl-13' : ''
           }
              ${isValid ? 'border-greyscale-50' : 'border-error'}`}
         />

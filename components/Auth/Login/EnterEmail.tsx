@@ -140,8 +140,6 @@ const EnterEmail: FC<PageProps> = observer(
                   <Message set='bold' size={21} />
                 </div>
               }
-              // eslint-disable-next-line react/jsx-boolean-value
-              hasIcon={true}
             />
             {values.showPass && (
               <>
@@ -155,8 +153,6 @@ const EnterEmail: FC<PageProps> = observer(
                       <Lock set='bold' size={22} />
                     </div>
                   }
-                  // eslint-disable-next-line react/jsx-boolean-value
-                  hasIcon={true}
                 />
                 <LinkButton
                   onClick={() =>
