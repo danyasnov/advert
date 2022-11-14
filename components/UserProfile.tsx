@@ -49,7 +49,7 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
-      <div className='flex space-x-10'>
+      <div className='flex flex-col space-y-4 items-center'>
         <SharePopup userHash={user.hash} />
         {isCurrentUser && <EditProfilePopup />}
       </div>

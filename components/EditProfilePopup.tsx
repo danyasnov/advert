@@ -96,7 +96,7 @@ const EditProfilePopup: FC = observer(() => {
         onClick={() => setShow(true)}>
         <div className='flex justify-center items-center space-x-2'>
           <Edit filled size={16} />
-          <span className='text-body-14'>{t('EDIT')}</span>
+          <span className='text-body-14'>{t('EDIT_PROFILE_SETTINGS')}</span>
         </div>
       </Button>
       {show && (
@@ -107,11 +107,11 @@ const EditProfilePopup: FC = observer(() => {
           ariaHideApp={false}
           contentLabel='Personal Data'
           className='absolute w-full  bg-white-a inset-x-0 mx-auto flex outline-none'
-          overlayClassName='fixed inset-0  bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
+          overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
           <div className='flex flex-col w-full absolute bg-white z-10 left-0'>
             <div className='px-6 mt-6 pb-4 flex justify-between'>
               <span className='text-h-5 text-greyscale-900 font-bold'>
-                {t('PERSONAL_INFORMATION')}
+                {t('EDIT_PROFILE')}
               </span>
               <Button onClick={onClose}>
                 <IcClear className='fill-current text-black-d h-6 w-6' />
