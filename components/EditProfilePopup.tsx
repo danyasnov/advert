@@ -106,7 +106,7 @@ const EditProfilePopup: FC = observer(() => {
           shouldCloseOnOverlayClick={false}
           ariaHideApp={false}
           contentLabel='Personal Data'
-          className='absolute w-full  bg-white-a inset-x-0 mx-auto flex outline-none'
+          className='absolute w-full bg-white-a inset-x-0 mx-auto flex outline-none'
           overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
           <div className='flex flex-col w-full absolute bg-white z-10 left-0'>
             <div className='px-6 mt-6 pb-4 flex justify-between'>

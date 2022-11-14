@@ -38,12 +38,13 @@ const UserAvatar: FC<Props> = ({url, size = 16, name}) => {
     )
   }
 
-  const heightClass = `h-[${size * 4}]`
-  const widthClass = `h-[${size * 4}]`
-
   return (
     <div
-      className={`rounded-full overflow-hidden bg-black-c flex items-center z-9 [-webkit-mask-image:-webkit-radial-gradient(white,black)] ${heightClass} ${widthClass}`}>
+      style={{
+        height: size * 4,
+        width: size * 4,
+      }}
+      className='rounded-full overflow-hidden bg-black-c flex items-center z-9 [-webkit-mask-image:-webkit-radial-gradient(white,black)]'>
       {content}
     </div>
   )
