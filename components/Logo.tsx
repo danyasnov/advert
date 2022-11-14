@@ -29,7 +29,7 @@ const Logo: FC<Props> = ({variant = 'both'}) => {
     body = (
       <>
         <div className='m:block hidden h-10'>{big}</div>
-        <div className='m:hidden -ml-0.5 h-10 w-10'>{small}</div>
+        <div className='m:hidden h-10 w-10'>{small}</div>
       </>
     )
   }
