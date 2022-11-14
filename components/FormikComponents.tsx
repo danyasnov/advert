@@ -619,12 +619,12 @@ export const FormikPassword: FC<
         <div className='absolute top-4 right-5'>
           {type === 'password' && (
             <Button onClick={() => setType('text')}>
-              <IcHidden className='fill-current text-black-c h-6 w-6' />
+              <IcVisibility className='fill-current text-black-c h-6 w-6' />
             </Button>
           )}
           {type === 'text' && (
             <Button onClick={() => setType('password')}>
-              <IcVisibility className='fill-current text-black-c h-6 w-6' />
+              <IcHidden className='fill-current text-black-c h-6 w-6' />
             </Button>
           )}
         </div>
