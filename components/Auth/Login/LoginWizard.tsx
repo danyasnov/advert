@@ -12,6 +12,7 @@ import {reducer, State} from '../utils'
 export const AuthPages = {
   initialPage: {
     title: 'LOG_IN',
+    style: 'text-h-3 text-primary-500 font-bold',
     component: InitialPage,
   },
   enterPhone: {
