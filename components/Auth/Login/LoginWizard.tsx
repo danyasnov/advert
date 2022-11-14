@@ -19,7 +19,7 @@ export const AuthPages = {
     component: EnterPhone,
   },
   enterEmail: {
-    title: 'LOG_IN',
+    title: 'LOGIN_WITH_EMAIL',
     component: EnterEmail,
   },
   enterCode: {
