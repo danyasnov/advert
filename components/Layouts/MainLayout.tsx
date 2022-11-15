@@ -18,6 +18,7 @@ import MetaTags from '../MetaTags'
 import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 import OutlineButton from '../Buttons/OutlineButton'
+import Banners from '../Banners'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -90,7 +91,9 @@ const MainLayout: FC = observer(() => {
       <div className='py-8 m:flex min-h-1/2'>
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
-            {/* <Banners /> */}
+            {/* <div className='-m:mx-12 w-full'> */}
+            {/*  <Banners /> */}
+            {/* </div> */}
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
               <div className='space-y-15 overflow-hidden m:overflow-visible'>
