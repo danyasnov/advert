@@ -26,7 +26,7 @@ module.exports = {
       ...getDomains([
         // 'adverto.sale',
         // 'fpreprod.adverto.sale',
-        // 'vooxee.venera.city',
+        'vooxee.venera.city',
         'vooxee.com',
       ]),
     ],
