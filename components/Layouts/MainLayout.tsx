@@ -88,12 +88,10 @@ const MainLayout: FC = observer(() => {
         title={t('SITE_MAIN_PAGE_META_TITLE')}
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
-      <div className='py-8 m:flex min-h-1/2'>
+      <div className='py-8 flex flex-col min-h-1/2'>
+        <Banners />
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
-            {/* <div className='-m:mx-12 w-full'> */}
-            {/*  <Banners /> */}
-            {/* </div> */}
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
               <div className='space-y-15 overflow-hidden m:overflow-visible'>
