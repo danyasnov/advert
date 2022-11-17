@@ -85,9 +85,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           />
         ))}
       </div>
-      <div
-        className='border-r border-greyscale-100 overflow-y-scroll h-[450px]'
-        style={{scrollbarColor: '#7210FF'}}>
+      <div className='border-r border-greyscale-100 overflow-y-scroll h-[450px] [scrollbar-color:#7210FF]'>
         <Col
           urlPath={activeCategory?.slug}
           activeId={secondColumnActiveCategory?.id}

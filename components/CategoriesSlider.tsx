@@ -39,7 +39,7 @@ const CategoriesSlider: FC = observer(() => {
       <TitleWithSeparator title={t('CATEGORIES')} />
       <div className='relative'>
         <div className='overflow-hidden' ref={viewportRef}>
-          <div className='flex mx-4 s:mx-8  m:mx-0'>
+          <div className='flex mx-4 s:mx-8 m:mx-0'>
             {categoriesWithoutAll.map((c) => (
               <LinkWrapper
                 key={c.id}

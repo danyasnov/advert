@@ -197,7 +197,9 @@ export const FormikFilterFields: FC<{
       {fieldsArray.map((f) => {
         // @ts-ignore
         if (f.fieldType === 'array') {
-          return <FormikFilterFields fieldsArray={f.arrayTypeFields} />
+          return (
+            <FormikFilterFields key={f.id} fieldsArray={f.arrayTypeFields} />
+          )
         }
         const isEmptyOptions =
           isEmpty(getSelectOptions(f.multiselects)) &&
@@ -208,7 +210,7 @@ export const FormikFilterFields: FC<{
           f.itemType !== 'title' &&
           f.fieldType !== 'checkbox'
         ) {
-          return <FormikFilterField field={f} />
+          return <FormikFilterField key={f.id} field={f} />
         }
         return null
       })}
@@ -669,7 +671,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className='relative w-full bg-greyscale-50 rounded-lg  py-2.5 '
+      className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full px-5'>
         <div className='flex justify-between w-full text-body-12'>
@@ -685,7 +687,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 ${
-              show ? 'rotate-180' : ''
+              show ? 'rotate-180 text-primary-500' : ''
             }`}
           />
         </div>

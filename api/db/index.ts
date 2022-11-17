@@ -3,7 +3,13 @@ import {size} from 'lodash'
 import {captureException} from '@sentry/nextjs'
 import NodeCache from 'node-cache'
 import {City} from '../../types'
-import config from '../../config.json'
+
+const config = {
+  database: 'advretoapi_db1',
+  username: 'advretoapi_usr',
+  password: 'o~6?!5drsp)+',
+  host: '78.47.78.163',
+}
 
 const sequelize = new Sequelize(
   config.database,

@@ -76,9 +76,6 @@ const Card: FC<Props> = ({
   const [hideConnect, setHideConnect] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-    containScroll: 'trimSnaps',
     draggable: images.length > 1,
     speed: 30,
   })
@@ -126,7 +123,7 @@ const Card: FC<Props> = ({
     [inViewRef],
   )
   useEffect(() => {
-    if (inView) {
+    if (inView && embla) {
       embla.reInit()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -208,14 +205,10 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
-        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2
+        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'
         } ${widthClassname}`}
-        style={{
-          // @ts-ignore safari fix border radius
-          '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-        }}
         ref={setRefs}>
         <CardBadge state={state} />
         {owner?.hash && (
@@ -237,13 +230,13 @@ const Card: FC<Props> = ({
               advertHash={product.hash}
               title={product.title}
               listRender={(options, setShowPopup) => (
-                <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
+                <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200 px-5'>
                   {/* eslint-disable-next-line no-shadow */}
                   {options.map(({title, onClick, icon}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
-                      className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      className='py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
                       onClick={(e) => {
                         e.preventDefault()
                         onClick()
@@ -258,7 +251,7 @@ const Card: FC<Props> = ({
                 </div>
               )}
               iconRender={(show) => (
-                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center'>
+                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center shadow'>
                   <IcMoreVert
                     className={`fill-current ${
                       show ? 'text-primary-500' : 'text-greyscale-500'

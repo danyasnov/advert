@@ -26,7 +26,7 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
     setShow(false)
   })
   return (
-    <div className='relative'>
+    <div className='relative' ref={ref}>
       <Button
         id='share'
         onClick={async () => {
@@ -62,9 +62,7 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
           {t(loading ? 'LOADING_LO' : 'SHARE')}
         </span>
       </Button>
-      <div
-        className='absolute w-[280px] s:w-[224px] m:w-[280px] -right-[90px] s:-right-[60px] m:-right-[88px] top-12 z-10'
-        ref={ref}>
+      <div className='absolute w-[280px] s:w-[224px] m:w-[280px] top-12 left-1/2 right-1/2 -translate-x-1/2 z-10'>
         {show && link && (
           <div
             className='flex flex-col bg-white shadow-popup rounded-2xl py-4 px-6'

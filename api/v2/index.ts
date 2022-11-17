@@ -3,8 +3,8 @@ import {
   AdvertiseListResponse,
   CatalogFieldDependentResponse,
   CheckPhonePermissions,
-  CountryModel,
   FieldsModel,
+  Gender,
   OwnerModel,
   RemoveFromSaleType,
   RestFetchUserProductsPayload,
@@ -310,6 +310,18 @@ export const changeContact = async (
 ): Promise<RestResponse<ChangeContactResponse>> => {
   const rest = getRest(storage)
   return rest.user.changeContact(verifyMode, code, incoming, conflictsResolving)
+}
+export const changePersonalData = async (
+  params: {
+    name: string
+    surname: string
+    gender: Gender
+    avaHash?: string
+  },
+  storage,
+): Promise<RestResponse<ChangeContactResponse>> => {
+  const rest = getRest(storage)
+  return rest.user.changePersonalData(params)
 }
 
 export const fetchUser = async (

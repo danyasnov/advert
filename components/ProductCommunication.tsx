@@ -1,19 +1,18 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {useTranslation} from 'next-i18next'
 import CallButton from './Buttons/CallButton'
-import ChatButton from './Buttons/ChatButton'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 
 const ProductCommunication: FC = observer(() => {
   const {product} = useProductsStore()
-  const {t} = useTranslation()
   const {owner, advert} = product
-  const {setShowLogin, userHash} = useGeneralStore()
+  const {userHash} = useGeneralStore()
 
   const isUserAdv = userHash === owner.hash
 
-  if (isUserAdv || advert.state === 'sold') return null
+  if (isUserAdv || advert.state === 'sold' || !advert.showCallButton) {
+    return null
+  }
   return (
     <div>
       <CallButton

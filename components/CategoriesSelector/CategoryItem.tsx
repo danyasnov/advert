@@ -32,6 +32,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
             height={24}
             layout='fixed'
             alt='slug'
+            quality={100}
           />
         </div>
       )}

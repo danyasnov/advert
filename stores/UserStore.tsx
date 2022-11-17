@@ -27,6 +27,11 @@ export interface IUserStore {
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   fetchDrafts: () => Promise<void>
+  setUserPersonalData: (data: {
+    name: string
+    surname: string
+    sex: string
+  }) => void
   ratings: ReviewModel[]
 }
 
@@ -195,6 +200,11 @@ export class UserStore implements IUserStore {
         return Promise.reject(error)
       }),
     )
+  }
+
+  setUserPersonalData = (data) => {
+    this.user.settings.personal = {...this.user.settings.personal, data}
+    this.user.name = data.name
   }
 
   constructor(root: RootStore) {

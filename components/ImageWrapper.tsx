@@ -38,7 +38,6 @@ const ImageWrapper: FC<Props> = ({
   const [fallbackIndex, setFallbackIndex] = useState(0)
   if (!type || hide) return null
   return (
-    // @ts-ignore
     <Image
       quality={quality}
       src={imgSrc}
@@ -46,7 +45,6 @@ const ImageWrapper: FC<Props> = ({
       height={height}
       alt={alt}
       className={`${className || ''} relative`}
-      // @ts-ignore
       layout={layout}
       objectFit={objectFit}
       priority={priority}

@@ -258,12 +258,7 @@ const MapPage: FC = () => {
           {t('INSPECTION_PLACE_INFO')}
         </span>
 
-        <div
-          className='relative w-full s:rounded-3xl s:overflow-hidden ios-height-hack'
-          style={{
-            // @ts-ignore
-            '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-          }}>
+        <div className='relative w-full s:rounded-3xl s:overflow-hidden ios-height-hack [-webkit-mask-image:-webkit-radial-gradient(white,black)]'>
           {location && (
             <>
               <div className='absolute top-8 z-10 hidden s:flex justify-between w-full space-x-8 inset-x-0 px-8'>
