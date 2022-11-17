@@ -132,7 +132,7 @@ const EnterEmail: FC<PageProps> = observer(
               placeholder={t('FORM_EMAIL')}
               leftIcon={
                 <div
-                  className={`fill-current ${
+                  className={`${
                     !values.showPass
                       ? 'text-greyscale-500'
                       : 'text-greyscale-900'
@@ -149,7 +149,7 @@ const EnterEmail: FC<PageProps> = observer(
                   validate={validatePass}
                   placeholder={t('ENTER_PASSWORD')}
                   leftIcon={
-                    <div className='fill-current text-greyscale-900'>
+                    <div className='text-greyscale-900'>
                       <Lock set='bold' size={22} />
                     </div>
                   }

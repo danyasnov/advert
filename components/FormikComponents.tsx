@@ -576,7 +576,7 @@ export const FormikText: FC<
     <textarea {...props} />
   ) : (
     <div className='relative'>
-      <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+      {!!leftIcon && <div className='absolute top-4.5 left-5'>{leftIcon}</div>}
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...props} />
     </div>
@@ -604,7 +604,9 @@ export const FormikPassword: FC<
   return (
     <div className='flex flex-col'>
       <div className='relative'>
-        <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+        {!!leftIcon && (
+          <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+        )}
         <input
           data-test-id={name}
           type={type}

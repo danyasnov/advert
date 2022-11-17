@@ -48,7 +48,7 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
               leftIcon={
-                <div className='fill-current text-greyscale-500'>
+                <div className=' text-greyscale-500'>
                   <Message set='bold' size={21} />
                 </div>
               }
