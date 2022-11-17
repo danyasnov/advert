@@ -6,6 +6,7 @@ import IcCloseSquare from 'icons/material/CloseSquare.svg'
 import IcActiveCloseSquare from 'icons/material/ActiveCloseSquare.svg'
 import {CloseSquare} from 'react-iconly'
 import {useHover, useHoverDirty, useMouseHovered} from 'react-use'
+import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import Button from '../Buttons/Button'
 
 interface Props {
