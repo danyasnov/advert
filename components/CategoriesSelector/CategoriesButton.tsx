@@ -1,4 +1,5 @@
 import {FC, useRef} from 'react'
+import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import IcCloseSquare from 'icons/material/CloseSquare.svg'
@@ -13,7 +14,7 @@ interface Props {
   onClick: () => void
 }
 
-const CategoriesButton: FC<Props> = ({show, onClick}) => {
+const CategoriesButton: FC<Props> = observer(({show, onClick}) => {
   const {t} = useTranslation()
   const ref = useRef(null)
   const {categoryData} = useCategoriesStore()
@@ -57,5 +58,5 @@ const CategoriesButton: FC<Props> = ({show, onClick}) => {
       </Button>
     </div>
   )
-}
+})
 export default CategoriesButton
