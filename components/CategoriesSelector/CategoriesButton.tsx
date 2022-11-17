@@ -3,8 +3,7 @@ import {useTranslation} from 'next-i18next'
 import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import IcCloseSquare from 'icons/material/CloseSquare.svg'
 import IcActiveCloseSquare from 'icons/material/ActiveCloseSquare.svg'
-import {CloseSquare} from 'react-iconly'
-import {useHover, useHoverDirty, useMouseHovered} from 'react-use'
+import {useHoverDirty} from 'react-use'
 import Button from '../Buttons/Button'
 
 interface Props {
