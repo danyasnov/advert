@@ -39,6 +39,7 @@ const EditProfilePopup: FC = observer(() => {
   })
   const onClose = () => {
     setShow(false)
+    formik.resetForm()
   }
   const schema = object().shape({
     name: string()

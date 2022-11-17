@@ -76,9 +76,6 @@ const Card: FC<Props> = ({
   const [hideConnect, setHideConnect] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-    containScroll: 'trimSnaps',
     draggable: images.length > 1,
     speed: 30,
   })
@@ -126,7 +123,7 @@ const Card: FC<Props> = ({
     [inViewRef],
   )
   useEffect(() => {
-    if (inView) {
+    if (inView && embla) {
       embla.reInit()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
