@@ -1,6 +1,6 @@
 import React, {FC, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Edit} from 'react-iconly'
+import {Edit, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
@@ -128,11 +128,21 @@ const EditProfilePopup: FC = observer(() => {
                     name='name'
                     component={FormikText}
                     placeholder={t('NAME')}
+                    leftIcon={
+                      <div className='text-greyscale-900'>
+                        <User set='bold' size={21} />
+                      </div>
+                    }
                   />
                   <Field
                     name='surname'
                     component={FormikText}
                     placeholder={t('SURNAME')}
+                    leftIcon={
+                      <div className='text-greyscale-900'>
+                        <User set='bold' size={21} />
+                      </div>
+                    }
                   />
                   <Field
                     component={FormikSelect}
