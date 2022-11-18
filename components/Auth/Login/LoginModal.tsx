@@ -3,8 +3,7 @@ import ReactModal from 'react-modal'
 import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
 import Button from '../../Buttons/Button'
-import LoginWizard, {AuthPages} from './LoginWizard'
-import InitialPage from './InitialPage'
+import LoginWizard from './LoginWizard'
 
 interface Props {
   isOpen: boolean
