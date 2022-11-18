@@ -28,8 +28,8 @@ const UserProfile: FC = observer(() => {
       </span>
       {/* )} */}
 
-      <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words'>
-        {user.name}
+      <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words text-center w-full'>
+        {user.name} {user.settings.personal.surname}
       </span>
       <div className='flex justify-between mb-8 w-full'>
         <div className='flex s:flex-col s:text-center w-1/2 justify-center'>
@@ -49,7 +49,7 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
-      <div className='flex space-x-10'>
+      <div className='flex flex-col space-y-4 items-center'>
         <SharePopup userHash={user.hash} />
         {isCurrentUser && <EditProfilePopup />}
       </div>

@@ -165,7 +165,7 @@ module.exports = {
         'modal-background': 'rgba(31, 34, 42, 0.7)',
         pink: '#FFF5F5',
         purple: '#7210FF',
-        'input-bg': 'rgba(114, 16, 255, 0.08)'
+        'input-bg': 'rgba(114, 16, 255, 0.08)',
       },
       zIndex: {
         9: 9,
@@ -174,7 +174,7 @@ module.exports = {
         card: '0 50px 80px rgba(4, 6, 15, 0.08)',
       },
       boxShadow: {
-        'popup': '4px 8px 24px rgba(114, 16, 255, 0.25)',
+        popup: '4px 8px 24px rgba(114, 16, 255, 0.25)',
       },
       inset: {
         '89px': '89px',

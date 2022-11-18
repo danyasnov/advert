@@ -76,9 +76,6 @@ const Card: FC<Props> = ({
   const [hideConnect, setHideConnect] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [viewportRef, embla] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-    containScroll: 'trimSnaps',
     draggable: images.length > 1,
     speed: 30,
   })
@@ -126,7 +123,7 @@ const Card: FC<Props> = ({
     [inViewRef],
   )
   useEffect(() => {
-    if (inView) {
+    if (inView && embla) {
       embla.reInit()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -208,14 +205,10 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
-        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2
+        className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'
         } ${widthClassname}`}
-        style={{
-          // @ts-ignore safari fix border radius
-          '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
-        }}
         ref={setRefs}>
         <CardBadge state={state} />
         {owner?.hash && (

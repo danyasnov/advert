@@ -67,16 +67,16 @@ const MenuList = ({options, children, getValue}) => {
 }
 
 const DropdownIndicator = (props) => {
-  const { menuIsOpen } = props.selectProps
+  const {menuIsOpen} = props.selectProps
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-      <RSComponents.DropdownIndicator {...props}>
-        <IcArrowDown
-          className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-            menuIsOpen ? 'rotate-180 text-primary-500' : ''
-          }`}
-        />
-      </RSComponents.DropdownIndicator>
+    <RSComponents.DropdownIndicator {...props}>
+      <IcArrowDown
+        className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
+          menuIsOpen ? 'rotate-180 text-primary-500' : ''
+        }`}
+      />
+    </RSComponents.DropdownIndicator>
   )
 }
 const Option = (props) => {
@@ -132,7 +132,7 @@ const Select: FC<SelectProps> = ({
     }
   }, [value, options])
   return (
-    <> 
+    <>
       <RS
         inputId={id}
         id={id}

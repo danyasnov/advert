@@ -7,6 +7,7 @@ import IcClear from 'icons/material/Clear.svg'
 import {useFormik, FormikProvider, Field} from 'formik'
 import {object, string} from 'yup'
 import {isEqual} from 'lodash'
+import {useLockBodyScroll} from 'react-use'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
@@ -22,7 +23,7 @@ const EditProfilePopup: FC = observer(() => {
   const {name, surname, sex} = settings.personal
   const {t} = useTranslation()
   const [show, setShow] = useState(false)
-  useDisableBodyScroll(show)
+  useLockBodyScroll(show)
 
   const sexOptionsRef = useRef([
     {value: '1', label: t('MALE')},
@@ -38,6 +39,7 @@ const EditProfilePopup: FC = observer(() => {
   })
   const onClose = () => {
     setShow(false)
+    formik.resetForm()
   }
   const schema = object().shape({
     name: string()
@@ -96,7 +98,7 @@ const EditProfilePopup: FC = observer(() => {
         onClick={() => setShow(true)}>
         <div className='flex justify-center items-center space-x-2'>
           <Edit filled size={16} />
-          <span className='text-body-14'>{t('EDIT')}</span>
+          <span className='text-body-14'>{t('EDIT_PROFILE_SETTINGS')}</span>
         </div>
       </Button>
       {show && (
@@ -106,12 +108,12 @@ const EditProfilePopup: FC = observer(() => {
           shouldCloseOnOverlayClick={false}
           ariaHideApp={false}
           contentLabel='Personal Data'
-          className='absolute w-full  bg-white-a inset-x-0 mx-auto flex outline-none'
-          overlayClassName='fixed inset-0  bg-shadow-overlay max-h-screen z-20 overflow-y-auto'>
-          <div className='flex flex-col w-full absolute bg-white z-10 left-0'>
+          className='absolute w-full bg-white-a inset-x-0 mx-auto s:w-[480px] s:top-20 flex outline-none'
+          overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto '>
+          <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl s:overflow-hidden '>
             <div className='px-6 mt-6 pb-4 flex justify-between'>
               <span className='text-h-5 text-greyscale-900 font-bold'>
-                {t('PERSONAL_INFORMATION')}
+                {t('EDIT_PROFILE')}
               </span>
               <Button onClick={onClose}>
                 <IcClear className='fill-current text-black-d h-6 w-6' />
