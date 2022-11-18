@@ -14,6 +14,7 @@ interface Props {
 const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -25,7 +26,14 @@ const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
       overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex justify-between'>
-          <span className='text-h-5 text-greyscale-900 font-bold'>{title}</span>
+          <span
+            className={`${
+              title.toString() !== t('LOG_IN')
+                ? 'text-h-5 text-grayscale-900 font-bold'
+                : 'text-h-3 text-primary-500 font-bold w-1/2'
+            }`}>
+            {title}
+          </span>
           <Button onClick={onClose}>
             <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
           </Button>
