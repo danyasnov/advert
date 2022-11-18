@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
+import {Message, Lock} from 'react-iconly'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {string, object, boolean} from 'yup'
 import {useTranslation} from 'next-i18next'
@@ -129,6 +130,16 @@ const EnterEmail: FC<PageProps> = observer(
               disabled={values.showPass}
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
+              leftIcon={
+                <div
+                  className={`${
+                    !values.showPass
+                      ? 'text-greyscale-500'
+                      : 'text-greyscale-900'
+                  }`}>
+                  <Message set='bold' size={21} />
+                </div>
+              }
             />
             {values.showPass && (
               <>
@@ -137,6 +148,11 @@ const EnterEmail: FC<PageProps> = observer(
                   component={FormikPassword}
                   validate={validatePass}
                   placeholder={t('ENTER_PASSWORD')}
+                  leftIcon={
+                    <div className='text-greyscale-900'>
+                      <Lock set='bold' size={22} />
+                    </div>
+                  }
                 />
                 <LinkButton
                   onClick={() =>

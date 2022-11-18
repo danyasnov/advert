@@ -4,6 +4,7 @@ import {Field, Form, Formik} from 'formik'
 import {string, object} from 'yup'
 import {useTranslation} from 'next-i18next'
 import {toast} from 'react-toastify'
+import {Message} from 'react-iconly'
 import {FormikText} from '../../FormikComponents'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
@@ -46,6 +47,11 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
               disableTrack
               component={FormikText}
               placeholder={t('FORM_EMAIL')}
+              leftIcon={
+                <div className=' text-greyscale-500'>
+                  <Message set='bold' size={21} />
+                </div>
+              }
             />
             {showHint && (
               <span className='text-body-14 text-greyscale-900 self-center pt-4'>

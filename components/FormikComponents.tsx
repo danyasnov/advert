@@ -521,6 +521,7 @@ export const FormikText: FC<
     disableTrack?: boolean
     submitOnEnter?: boolean
     filterStyle?: boolean
+    leftIcon?: JSX.Element
   } & FieldProps
 > = ({
   field,
@@ -534,6 +535,7 @@ export const FormikText: FC<
   disableTrack,
   submitOnEnter,
   filterStyle,
+  leftIcon,
 }) => {
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
@@ -541,6 +543,7 @@ export const FormikText: FC<
   const isValid = !error
   const props = {
     'data-test-id': name,
+    leftIcon,
     disabled,
     rows,
     type,
@@ -559,7 +562,7 @@ export const FormikText: FC<
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
-    }`,
+    } ${!!leftIcon ? 'pl-13' : ''}`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -568,8 +571,16 @@ export const FormikText: FC<
     },
   }
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  const Component = isTextarea ? <textarea {...props} /> : <input {...props} />
+  const Component = isTextarea ? (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <textarea {...props} />
+  ) : (
+    <div className='relative'>
+      {!!leftIcon && <div className='absolute top-4.5 left-5'>{leftIcon}</div>}
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <input {...props} />
+    </div>
+  )
   return (
     <div className='flex flex-col'>
       {Component}
@@ -579,8 +590,12 @@ export const FormikText: FC<
 }
 
 export const FormikPassword: FC<
-  {placeholder: string; value: number} & FieldProps
-> = ({field, form, placeholder}) => {
+  {
+    placeholder: string
+    value: number
+    leftIcon?: JSX.Element
+  } & FieldProps
+> = ({field, form, placeholder, leftIcon}) => {
   const {name, value} = field
   const {setFieldValue, errors} = form
   const error = get(errors, name)
@@ -589,6 +604,9 @@ export const FormikPassword: FC<
   return (
     <div className='flex flex-col'>
       <div className='relative'>
+        {!!leftIcon && (
+          <div className='absolute top-4.5 left-5'>{leftIcon}</div>
+        )}
         <input
           data-test-id={name}
           type={type}
@@ -597,9 +615,10 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border bg-greyscale-50 rounded-lg py-4 px-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
-            isValid ? 'border-greyscale-50' : 'border-error'
-          }`}
+          className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
+            !!leftIcon ? 'pl-13' : ''
+          }
+             ${isValid ? 'border-greyscale-50' : 'border-error'}`}
         />
         <div className='absolute top-4 right-5'>
           {type === 'password' && (
