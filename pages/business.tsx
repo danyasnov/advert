@@ -5,13 +5,12 @@ import {
   processCookies,
   redirectToLogin,
 } from '../helpers'
-import MerchantLayout from '../components/Layouts/MerchantLayout'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
+import BusinessLayout from '../components/Layouts/BusinessLayout'
 
 export default function Home() {
-  return null
-  return <MerchantLayout />
+  return <BusinessLayout />
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

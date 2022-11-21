@@ -90,8 +90,9 @@ const Banners: FC = observer(() => {
         {banners.map((c) => (
           <Button
             onClick={() => {
-              console.log('c.path', c.path)
-              router.push(c.path)
+              if (embla.clickAllowed()) {
+                router.push(c.path)
+              }
             }}
             key={`${c.id}-${imgSize}-${imgWidth}`}>
             <BannerItem
