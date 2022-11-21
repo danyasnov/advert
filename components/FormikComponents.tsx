@@ -501,7 +501,7 @@ export const FormikNumber: FC<IFormikNumber & FieldProps> = ({
         format={format}
         thousandSeparator={thousandSeparator}
         placeholder={placeholder}
-        className={`rounded-2xl bg-greyscale-50 py-4 px-5 w-full text-greyscale-900 text-body-16 ${
+        className={`rounded-xl bg-greyscale-50 py-4 px-5 w-full text-greyscale-900 text-body-16 ${
           disableTrack ? 'ym-disable-keys' : ''
         } ${isValid ? '' : 'border border-error text-error'}`}
       />
@@ -558,11 +558,11 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
-    className: `border bg-greyscale-50 rounded-lg w-full text-greyscale-900 ${
+    className: `border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
-    } ${!!leftIcon ? 'pl-13' : ''}`,
+    } ${leftIcon ? 'pl-13' : ''}`,
     onKeyDown: (e) => {
       if (e.keyCode === 13 && e.shiftKey === false && submitOnEnter) {
         e.preventDefault()
@@ -584,7 +584,7 @@ export const FormikText: FC<
   return (
     <div className='flex flex-col'>
       {Component}
-      <span className='text-body-12 text-error pt-3'>{error}</span>
+      {!!error && <span className='text-body-12 text-error pt-3'>{error}</span>}
     </div>
   )
 }
@@ -616,7 +616,7 @@ export const FormikPassword: FC<
           }}
           placeholder={placeholder}
           className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
-            !!leftIcon ? 'pl-13' : ''
+            leftIcon ? 'pl-13' : ''
           }
              ${isValid ? 'border-greyscale-50' : 'border-error'}`}
         />

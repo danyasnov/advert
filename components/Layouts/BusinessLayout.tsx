@@ -5,11 +5,17 @@ import IcUpload from 'icons/landing/Upload.svg'
 import IcTranslate from 'icons/landing/Translate.svg'
 import IcSales from 'icons/landing/Sales.svg'
 import {Field, FormikProvider, useFormik} from 'formik'
-import {noop} from 'lodash'
+import {noop, omit} from 'lodash'
 import {parseCookies} from 'nookies'
 import ReCAPTCHA from 'react-google-recaptcha'
+import {boolean, object, string} from 'yup'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {FormikNumber, FormikSelect, FormikText} from '../FormikComponents'
+import {
+  FormikCheckbox,
+  FormikNumber,
+  FormikSelect,
+  FormikText,
+} from '../FormikComponents'
 import Select from '../Selects/Select'
 import {
   useCategoriesStore,
@@ -25,6 +31,7 @@ import Logo from '../Logo'
 import Auth from '../Auth'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
+import Footer from '../Footer'
 
 const features = [
   {
@@ -79,35 +86,45 @@ const BusinessLayout: FC = observer(() => {
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
+    validationSchema: object().shape({
+      name: string().required(t('EMPTY_FIELD')),
+      business_name: string().required(t('EMPTY_FIELD')),
+      phone: string().required(t('EMPTY_FIELD')).min(8),
+      privacy: boolean().required(t('EMPTY_FIELD')),
+      email: string()
+        .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
+        .required(t('EMAIL_REQUIRED_FIELD')),
+    }),
     initialValues: {
       name: '',
-      category: '',
       business_name: '',
       email: '',
       phone: '',
+      privacy: false,
     },
     onSubmit: (values) => {
       if (!token) return
       setIsSubmitted(true)
       makeRequest({
         method: 'post',
-        url: '/api/landing-submit',
+        url: '/api/contact-support',
         data: {
-          ...values,
-          // @ts-ignore
-          category: values.category.slug,
-          phone: `+${country.phonePrefix}${values.phone}`,
+          message: JSON.stringify(
+            omit({...values, from: 'Business Landing'}, ['privacy']),
+            null,
+            2,
+          ),
         },
       })
     },
   })
 
-  const [country, setCountry] = useState<Country>()
-
-  const validateRequired = (value) => {
-    if (!value) return t('FILL_EMPTY_FIELDS')
-    return ''
-  }
+  const startButton = (
+    <Button className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white '>
+      {t('LANDING_BUSINESS_START_TODAY')}
+    </Button>
+  )
+  const {handleSubmit} = formik
 
   return (
     <>
@@ -120,7 +137,7 @@ const BusinessLayout: FC = observer(() => {
           <Logo variant='small' />
           <Auth />
         </div>
-        <div className='flex flex-col mb-12 items-center'>
+        <div className='flex flex-col mb-12 items-center text-center'>
           <span className='text-body-10 font-normal text-greyscale-600 mb-6'>
             {t('LANDING_BUSINESS_NUMBER_ONE')}
           </span>
@@ -130,12 +147,18 @@ const BusinessLayout: FC = observer(() => {
               __html: t('LENDING_BUSINESS_TO_DO_TOGETHER'),
             }}
           />
-          <span className='text-body-10 font-normal text-greyscale-900 mb-6'>
+          <span className='text-body-14 font-normal text-greyscale-900 mb-4'>
             {t('LANDING_BUSINESS_TO_DO_TOGETHER_DESCRIPTION')}
           </span>
-          <Button className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white '>
-            {t('LANDING_BUSINESS_START_TODAY')}
-          </Button>
+          <div className='relative w-[184px] h-[242px] mb-6'>
+            <ImageWrapper
+              quality={100}
+              type='/img/with-vooxee.png'
+              alt='with vooxee'
+              layout='fill'
+            />
+          </div>
+          {startButton}
         </div>
         <div className='flex flex-col items-center mb-12'>
           <span className='text-primary-500 text-body-16 mb-2'>
@@ -192,7 +215,7 @@ const BusinessLayout: FC = observer(() => {
             ))}
           </div>
         </div>
-        <div className='flex flex-col items-center '>
+        <div className='flex flex-col items-center mb-12'>
           <span className='text-primary-500 text-body-16 mb-2'>
             {t('LANDING_BUSINESS_WHO_WE_ARE')}
           </span>
@@ -205,6 +228,92 @@ const BusinessLayout: FC = observer(() => {
               alt='who we are'
               layout='fill'
             />
+          </div>
+          <span className='text-body-14 text-greyscale-900 font-normal whitespace-pre-line mb-4'>
+            {t('LANDING_BUSINESS_ABOUT_US_DESCRIPTION')}
+          </span>
+          {startButton}
+        </div>
+        <div className='flex flex-col items-center'>
+          <span className='text-primary-500 text-body-16 mb-2'>
+            {t('LANDING_BUSINESS_TO_HELP')}
+          </span>
+          <span className='text-h-5 font-bold text-greyscale-900 mb-6 text-center'>
+            {t('LANDING_BUSINESS_TO_HELP_DESCRIPTION')}
+          </span>
+          <div className='bg-gradient-to-l from-[#7210FF] to-[#9D59FF] w-full py-8 px-6 flex flex-col rounded-3xl'>
+            <span className='text-body-14 text-secondary-500 font-bold mb-2 text-center'>
+              {t('LANDING_BUSINESS_IT_IS_FREE')}
+            </span>
+            <span className='text-body-14 text-secondary-500 font-bold mb-6 text-center'>
+              {t('LANDING_BUSINESS_IT_IS_FREE_DESCRIPTION')}
+            </span>
+            <FormikProvider value={formik}>
+              <div className='flex flex-col space-y-4'>
+                <Field
+                  component={FormikText}
+                  name='name'
+                  placeholder={t('LANDING_BUSINESS_YOUR_NAME')}
+                />
+                <Field
+                  component={FormikText}
+                  name='business_name'
+                  placeholder={t('LANDING_BUSINESS_NAME')}
+                />
+                <Field
+                  component={FormikText}
+                  name='email'
+                  type='email'
+                  placeholder={t('LANDING_BUSINESS_ENTER_EMAIL')}
+                />
+                <Field
+                  name='phone'
+                  component={FormikNumber}
+                  format='+357 ## ######'
+                  mask='_'
+                  allowEmptyFormatting
+                  minLength={8}
+                />
+                <Field
+                  labelClassname='text-body-12 mt-4 text-white'
+                  name='privacy'
+                  component={FormikCheckbox}
+                  label={t('LANDING_BUSINESS_AGREE_PERSONAL_DATA')}
+                />
+              </div>
+              <Button
+                onClick={() => handleSubmit()}
+                className='rounded-full bg-secondary-500 text-body-18 w-full h-[62px] text-greyscale-900 mt-6'>
+                {t('LANDING_BUSINESS_START_TODAY')}
+              </Button>
+            </FormikProvider>
+          </div>
+        </div>
+        <div className='border-t border-greyscale-200 mt-12 mb-8 -mx-4'>
+          <div className='flex flex-col mx-4'>
+            <div className='flex flex-col space-y-10 text-greyscale-900 text-body-16 font-semibold text-left my-8'>
+              <LinkWrapper
+                title={t('TERMS_AND_CONDITIONS')}
+                className='flex items-center whitespace-nowrap'
+                href='/p/terms-and-conditions'>
+                {t('TERMS_AND_CONDITIONS')}
+              </LinkWrapper>
+              <LinkWrapper
+                title={t('PRIVACY_POLICY')}
+                className='flex items-center whitespace-nowrap'
+                href='/p/privacy-policy'>
+                {t('PRIVACY_POLICY')}
+              </LinkWrapper>
+              <LinkWrapper
+                className='flex items-center w-full'
+                title={t('SUPPORT')}
+                href='/support'>
+                {t('SUPPORT')}
+              </LinkWrapper>
+            </div>
+            <div className='text-body-14 font-normal text-greyscale-900 self-start'>
+              © {new Date().getFullYear()} VooXee
+            </div>
           </div>
         </div>
       </div>
