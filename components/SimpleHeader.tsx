@@ -1,18 +1,14 @@
 import {FC} from 'react'
-import {useTranslation} from 'next-i18next'
-import {observer} from 'mobx-react-lite'
-import Logo from '../Logo'
-import Auth from '../Auth'
+import Logo from './Logo'
+import Auth from './Auth'
 
-const Header: FC = observer(() => {
-  const {t} = useTranslation()
-
+const SimpleHeader: FC<{title?: string}> = ({title}) => {
   return (
     <header className='hidden s:block relative z-10 header-width mx-auto py-8'>
       <div className='w-full l:w-1208px flex items-center justify-between'>
         <div className='flex items-center'>
           <Logo variant='small' />
-          <span className='ml-6 text-h-4 font-bold'>{t('NEW_AD')}</span>
+          {!!title && <span className='ml-6 text-h-4 font-bold'>{title}</span>}
         </div>
         <div className='flex items-center px-6'>
           <Auth />
@@ -20,6 +16,6 @@ const Header: FC = observer(() => {
       </div>
     </header>
   )
-})
+}
 
-export default Header
+export default SimpleHeader
