@@ -615,7 +615,7 @@ export const FormikPassword: FC<
             setFieldValue(name, e.target.value)
           }}
           placeholder={placeholder}
-          className={`border bg-greyscale-50 rounded-lg py-4 pr-5 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
+          className={`border bg-greyscale-50 rounded-lg px-5 py-4 pr-10 w-full text-greyscale-900 ym-disable-keys text-body-16 ${
             !!leftIcon ? 'pl-13' : ''
           }
              ${isValid ? 'border-greyscale-50' : 'border-error'}`}

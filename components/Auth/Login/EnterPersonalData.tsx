@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import {useTranslation} from 'next-i18next'
+import {User, Lock} from 'react-iconly'
 import {AuthType} from 'front-api/src/models'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {toast} from 'react-toastify'
@@ -94,12 +95,22 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             disableTrack
             component={FormikText}
             placeholder={t('NAME')}
+            leftIcon={
+              <div className='text-greyscale-500'>
+                <User set='bold' size={22} />
+              </div>
+            }
           />
           <Field
             name='surname'
             disableTrack
             component={FormikText}
             placeholder={t('SURNAME')}
+            leftIcon={
+              <div className='text-greyscale-500'>
+                <User set='bold' size={22} />
+              </div>
+            }
           />
           {state.authType === 2 && (
             <>
@@ -107,11 +118,21 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
                 name='pass'
                 component={FormikPassword}
                 placeholder={t('ENTER_PASSWORD')}
+                leftIcon={
+                  <div className='text-greyscale-500'>
+                    <Lock set='bold' size={22} />
+                  </div>
+                }
               />
               <Field
                 name='confirmPass'
                 component={FormikPassword}
                 placeholder={t('ENTER_PASSWORD')}
+                leftIcon={
+                  <div className='text-greyscale-500'>
+                    <Lock set='bold' size={22} />
+                  </div>
+                }
               />
             </>
           )}
