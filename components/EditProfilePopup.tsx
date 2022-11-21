@@ -129,7 +129,13 @@ const EditProfilePopup: FC = observer(() => {
                     component={FormikText}
                     placeholder={t('NAME')}
                     leftIcon={
-                      <div className='text-greyscale-900'>
+                      <div
+                        className={`${
+                          /* eslint-disable-next-line no-extra-boolean-cast */
+                          !!formik.errors.name
+                            ? 'text-error'
+                            : 'text-greyscale-900'
+                        }`}>
                         <User set='bold' size={21} />
                       </div>
                     }
@@ -139,7 +145,13 @@ const EditProfilePopup: FC = observer(() => {
                     component={FormikText}
                     placeholder={t('SURNAME')}
                     leftIcon={
-                      <div className='text-greyscale-900'>
+                      <div
+                        className={`${
+                          /* eslint-disable-next-line no-extra-boolean-cast */
+                          !!formik.errors.surname
+                            ? 'text-error'
+                            : 'text-greyscale-900'
+                        }`}>
                         <User set='bold' size={21} />
                       </div>
                     }
