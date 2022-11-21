@@ -96,8 +96,12 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             component={FormikText}
             placeholder={t('NAME')}
             leftIcon={
-              <div className='text-greyscale-500'>
-                <User set='bold' size={22} />
+              <div
+                className={`${
+                  /* eslint-disable-next-line no-extra-boolean-cast */
+                  !!formik.errors.name ? 'text-error' : 'text-greyscale-500'
+                }`}>
+                <User set='bold' size={21} />
               </div>
             }
           />
@@ -107,8 +111,12 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
             component={FormikText}
             placeholder={t('SURNAME')}
             leftIcon={
-              <div className='text-greyscale-500'>
-                <User set='bold' size={22} />
+              <div
+                className={`${
+                  /* eslint-disable-next-line no-extra-boolean-cast */
+                  !!formik.errors.surname ? 'text-error' : 'text-greyscale-500'
+                }`}>
+                <User set='bold' size={21} />
               </div>
             }
           />
@@ -119,7 +127,11 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
                 component={FormikPassword}
                 placeholder={t('ENTER_PASSWORD')}
                 leftIcon={
-                  <div className='text-greyscale-500'>
+                  <div
+                    className={`${
+                      /* eslint-disable-next-line no-extra-boolean-cast */
+                      !!formik.errors.pass ? 'text-error' : 'text-greyscale-500'
+                    }`}>
                     <Lock set='bold' size={22} />
                   </div>
                 }
@@ -129,7 +141,13 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
                 component={FormikPassword}
                 placeholder={t('ENTER_PASSWORD')}
                 leftIcon={
-                  <div className='text-greyscale-500'>
+                  <div
+                    className={`${
+                      /* eslint-disable-next-line no-extra-boolean-cast */
+                      !!formik.errors.confirmPass
+                        ? 'text-error'
+                        : 'text-greyscale-500'
+                    }`}>
                     <Lock set='bold' size={22} />
                   </div>
                 }
