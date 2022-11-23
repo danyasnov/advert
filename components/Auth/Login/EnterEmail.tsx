@@ -132,11 +132,15 @@ const EnterEmail: FC<PageProps> = observer(
               placeholder={t('FORM_EMAIL')}
               leftIcon={
                 <div
-                  className={`${
-                    !values.showPass
+                  className={`text-greyscale-900 ${
+                    /* eslint-disable-next-line no-nested-ternary */
+                    !!formik.errors.email
+                      ? 'text-error'
+                      : !values.showPass
                       ? 'text-greyscale-500'
-                      : 'text-greyscale-900'
-                  }`}>
+                      : ''
+                  } 
+                  `}>
                   <Message set='bold' size={21} />
                 </div>
               }
@@ -149,7 +153,13 @@ const EnterEmail: FC<PageProps> = observer(
                   validate={validatePass}
                   placeholder={t('ENTER_PASSWORD')}
                   leftIcon={
-                    <div className='text-greyscale-900'>
+                    <div
+                      className={`${
+                        /* eslint-disable-next-line no-extra-boolean-cast */
+                        !!formik.errors.pass
+                          ? 'text-error'
+                          : 'text-greyscale-900'
+                      } `}>
                       <Lock set='bold' size={22} />
                     </div>
                   }
