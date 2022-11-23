@@ -74,7 +74,7 @@ const ChatLayout: FC = observer(() => {
             os_version: 'web',
             timezone_offset: 0,
           }),
-          chatsEndpointOverrides: 'wss://backend.venera.city',
+          chatsEndpointOverrides: 'https://ao-dev.venera.city:5002/ws',
         },
       })
       globalChatsStore.init({

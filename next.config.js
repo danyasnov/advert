@@ -21,13 +21,11 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'cache.adverto.sale',
-      'adverto.sale',
-      'cache.advretoapi.com',
       'cache.venera.city',
       'vooxee.com',
       'cache.vooxee.com',
       'vooxee.venera.city',
+      'ao-dev.venera.city',
     ],
   },
   publicRuntimeConfig: {
