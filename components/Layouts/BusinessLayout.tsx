@@ -120,7 +120,7 @@ const BusinessLayout: FC = observer(() => {
 
   return (
     <>
-      <MetaTags title={t('LANDING_HEAD_TEXT')} />
+      <MetaTags title={t('LENDING_BUSINESS_TITLE')} />
       <div className='flex flex-col mx-4 s:mx-auto mt-3 s:w-704px m:w-944px l:w-1208px '>
         <div className='mb-6'>
           <LanguageSelect />
