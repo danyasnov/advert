@@ -114,6 +114,8 @@ const ChatLayout: FC = observer(() => {
     init()
   }, [user])
 
+  return null
+
   return (
     <div className='flex mx-4 h-screen'>
       {!selectedChatId && (
