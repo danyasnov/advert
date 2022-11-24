@@ -44,22 +44,32 @@ const whyUs = [
   {
     title: 'LANDING_BUSINESS_ELECTRONICS',
     img: '/img/electronics.png',
+    className:
+      's:left-[-280px] s:top-[-10px] m:left-[-350px] m:top-[-30px] l:left-[-400px] l:top-[-30px]',
   },
   {
     title: 'LANDING_BUSINESS_PERSONAL_GOODS',
     img: '/img/personal-goods.png',
+    className:
+      's:left-[-310px] s:top-[160px] m:left-[-430px] m:top-[190px] l:left-[-480px] l:top-[230px]',
   },
   {
     title: 'LANDING_BUSINESS_CARS',
     img: '/img/cars.png',
+    className:
+      's:left-[-120px] s:top-[240px] m:left-[-150px] m:top-[320px] l:left-[-170px] l:top-[390px]',
   },
   {
     title: 'LANDING_BUSINESS_SERVICES',
     img: '/img/services.png',
+    className:
+      's:left-[170px] s:top-[60px] m:left-[220px] m:top-[60px] l:left-[270px] l:top-[60px]',
   },
   {
     title: 'LANDING_BUSINESS_REAL_ESTATE',
     img: '/img/real-estate.png',
+    className:
+      's:left-[130px] s:top-[180px] m:left-[190px] m:top-[230px] l:left-[240px] l:top-[270px]',
   },
 ]
 const BusinessLayout: FC = observer(() => {
@@ -145,7 +155,7 @@ const BusinessLayout: FC = observer(() => {
             </span>
             <div className='hidden s:flex'>{startButton}</div>
           </div>
-          <div className='relative w-[184px] h-[242px] s:w-[220px] s:h-[289px] m:w-[304px] m:h-[400px] l:w-[420px] l:h-[551px] shrink-0 mb-6 m:mr-12'>
+          <div className='relative w-[222px] h-[243px] s:w-[312px] s:h-[290px] m:w-[420px] m:h-[400px] l:w-[550px] l:h-[551px] shrink-0 mb-6 m:mr-12'>
             <ImageWrapper
               quality={100}
               type='/img/with-vooxee.png'
@@ -191,25 +201,28 @@ const BusinessLayout: FC = observer(() => {
           <span className='text-h-5 s:text-h-4 m:text-h-3 font-bold text-greyscale-900 mb-6 s:mb-15 text-center'>
             {t('LANDING_BUSINESS_WHY_US_DESCRIPTION')}
           </span>
-          <div className='w-[328px] h-[230px] s:w-[398px] s:h-[260px] m:w-[550px] m:h-[360px] l:w-[640px] l:h-[420px] relative mb-6'>
-            <ImageWrapper type='/img/why-us.png' alt='why us' layout='fill' />
-          </div>
-          <div className='flex flex-wrap justify-center'>
-            {whyUs.map((reason) => (
-              <div className='flex space-x-1 bg-white items-center mr-2 mb-3 shadow-popup rounded-lg s:rounded-2xl m:rounded-3xl px-2 m:px-4 py-1 m:py-2'>
-                <div className='w-5 h-5 s:w-10 s:h-10 m:w-15 m:h-15  relative'>
-                  <ImageWrapper
-                    type={reason.img}
-                    alt={reason.img}
-                    layout='fill'
-                    objectFit='contain'
-                  />
+          <div className='flex flex-col relative items-center'>
+            <div className='w-[328px] h-[230px] s:w-[398px] s:h-[260px] m:w-[550px] m:h-[360px] l:w-[640px] l:h-[420px] relative mb-6'>
+              <ImageWrapper type='/img/why-us.png' alt='why us' layout='fill' />
+            </div>
+            <div className='flex flex-wrap justify-center s:absolute'>
+              {whyUs.map((reason) => (
+                <div
+                  className={`flex space-x-1 bg-white items-center mr-2 mb-3 shadow-popup rounded-lg s:rounded-2xl m:rounded-3xl px-2 m:px-4 py-1 m:py-2 s:absolute ${reason.className}`}>
+                  <div className='w-5 h-5 s:w-10 s:h-10 m:w-15 m:h-15 relative'>
+                    <ImageWrapper
+                      type={reason.img}
+                      alt={reason.img}
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
+                  <span className='text-body-12 s:text-body-16 m:text-h-5 font-bold'>
+                    {t(reason.title)}
+                  </span>
                 </div>
-                <span className='text-body-12 s:text-body-16 m:text-h-5 font-bold'>
-                  {t(reason.title)}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
         <div className='flex flex-col items-center mb-12 s:mb-25 m:mb-[150px]'>
@@ -244,7 +257,7 @@ const BusinessLayout: FC = observer(() => {
           <span className='text-h-5 s:text-h-4 m:text-h-3 font-bold text-greyscale-900 mb-6 s:mb-12 text-center'>
             {t('LANDING_BUSINESS_TO_HELP_DESCRIPTION')}
           </span>
-          <div className='bg-gradient-to-l from-[#7210FF] to-[#9D59FF] w-full py-8 s:py-12 px-6 flex flex-col rounded-3xl items-center'>
+          <div className='bg-[url("/img/Brizgi_360.svg")] s:bg-[url("/img/Brizgi_768.svg")] m:bg-[url("/img/Brizgi_1024.svg")] l:bg-[url("/img/Brizgi_1440.svg")] bg-no-repeat bg-cover w-full py-8 s:py-12 px-6 flex flex-col rounded-3xl items-center'>
             <div className='flex flex-col s:w-[450px] m:w-[500px] '>
               <span className='text-body-14 s:text-h-4 text-secondary-500 font-bold mb-2 text-center'>
                 {t('LANDING_BUSINESS_IT_IS_FREE')}

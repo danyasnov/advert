@@ -7,6 +7,7 @@ import {toJS} from 'mobx'
 import {Chats, ChatStore, globalChatsStore} from 'chats'
 import {Form, useFormik, FormikProvider, Field} from 'formik'
 import {object, string} from 'yup'
+import WebSocket, {WebSocketServer} from 'ws'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {SerializedCookiesState} from '../../types'
 import {getRest} from '../../api'
@@ -36,80 +37,30 @@ const ChatLayout: FC = observer(() => {
 
     const init = async () => {
       const state: SerializedCookiesState = parseCookies()
-      const storage = mapCookies(state)
-      const restApi = getRest(storage)
-      Chats.init({
-        deps: {
-          restApi,
-          t,
-          langProvider: () => 'ru',
-          ui: {showLoading: () => {}, hideLoading: () => {}},
-          notifier: {
-            showNotifierSuccess: (message) => {
-              console.log('🔦 SUCC')
-              // showNotifierSuccess({message})
-            },
-            showNotifierError: (message) => {
-              console.log('🔦 ERR', message)
-              // showNotifierError({message})
-            },
+      // const storage = mapCookies(state)
+      // const restApi = getRest(storage)
+      const wss = new WebSocketServer({
+        port: 8080,
+        perMessageDeflate: {
+          zlibDeflateOptions: {
+            // See zlib defaults.
+            chunkSize: 1024,
+            memLevel: 7,
+            level: 3,
           },
-          system: {
-            mediaPathMapper: () => '',
-            loadDisabledAutoTranslationChatIds: async () => new Set(),
-            saveDisabledAutoTranslationChatIds: async () => new Set(),
-            sendMedia: async () => new Set(),
+          zlibInflateOptions: {
+            chunkSize: 10 * 1024,
           },
-        },
-        options: {
-          isStaging: false,
-          debug: true,
-          connectionParams: async () => ({
-            secur: state.authNewToken,
-            hash: state.hash,
-            device_id: 'web',
-            device_model: 'web',
-            device_type: 'web',
-            install_id: '',
-            os_version: 'web',
-            timezone_offset: 0,
-          }),
-          chatsEndpointOverrides: 'https://ao-dev.venera.city:5002/ws',
+          // Other options settable:
+          clientNoContextTakeover: true, // Defaults to negotiated value.
+          serverNoContextTakeover: true, // Defaults to negotiated value.
+          serverMaxWindowBits: 10, // Defaults to negotiated value.
+          // Below options specified as default values.
+          concurrencyLimit: 10, // Limits zlib concurrency for perf.
+          threshold: 1024, // Size (in bytes) below which messages
+          // should not be compressed if context takeover is disabled.
         },
       })
-      globalChatsStore.init({
-        id: user.hash,
-        name: user.name,
-        avatarSrc: user.imageUrl,
-        updatedAt: 0,
-        surname: '',
-        onlineLastTime: 0,
-        online: user.isOnline,
-        langCode: user.mainLanguage.isoCode,
-      })
-
-      const error = await globalChatsStore.startConnection()
-
-      // console.log('error', error)
-
-      await globalChatsStore.fetchMoreChats()
-      // console.log('globalChatsStore', toJS(globalChatsStore))
-
-      if (query.hash) {
-        let chatData = globalChatsStore.chats.find(
-          (chat) => chat.product.id === query.hash,
-        )
-        if (!chatData) {
-          chatData = await globalChatsStore.createChat(query.hash as string)
-        }
-
-        chatsRef.current[chatData.id] = new ChatStore(chatData, user.hash)
-
-        if (chatData) {
-          await chatsRef.current[chatData.id].fetchBefore()
-          setSelectedChatId(chatData.id)
-        }
-      }
     }
     init()
   }, [user])
