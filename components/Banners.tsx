@@ -22,7 +22,7 @@ const Banners: FC = observer(() => {
       id: 'business',
       title: 'BANNER2_TITLE',
       color: 'text-[#009689]',
-      path: `/`,
+      path: `/business`,
     },
     {
       id: 'community',
