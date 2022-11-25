@@ -139,7 +139,7 @@ const BusinessLayout: FC = observer(() => {
           <Logo variant='both' />
           <Auth />
         </div>
-        <div className='flex flex-col s:flex-row mb-12 s:mb-25 m:mb-[150px] items-center s:justify-between'>
+        <div className='mx-8 s:mx-0 flex flex-col s:flex-row mb-12 s:mb-25 m:mb-[150px] items-center s:justify-between'>
           <div className='flex flex-col s:w-[380px] m:w-[430px] l:w-[616px] text-center s:text-left'>
             <span className='text-body-10 s:text-body-14 m:text-body-16 l:text-body-18 font-normal text-greyscale-600 mb-6'>
               {t('LANDING_BUSINESS_NUMBER_ONE')}
@@ -166,7 +166,7 @@ const BusinessLayout: FC = observer(() => {
           </div>
           <div className='flex s:hidden'>{startButton}</div>
         </div>
-        <div className='flex flex-col items-center mb-12 s:mb-25  m:mb-[150px]'>
+        <div className='mx-8 s:mx-0 flex flex-col items-center mb-12 s:mb-25  m:mb-[150px]'>
           <span className='text-primary-500 text-body-16 mb-2'>
             {t('LANDING_BUSINESS_OUR_SERVICES')}
           </span>
