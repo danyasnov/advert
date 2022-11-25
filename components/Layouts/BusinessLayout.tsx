@@ -127,7 +127,6 @@ const BusinessLayout: FC = observer(() => {
     </Button>
   )
   const {handleSubmit} = formik
-
   return (
     <>
       <MetaTags title={t('LENDING_BUSINESS_TITLE')} />
@@ -147,7 +146,10 @@ const BusinessLayout: FC = observer(() => {
             <h3
               className='text-h-3 s:text-h-2 m:text-h-1 l:text-[85px] l:leading-[81px] font-semibold mb-4 '
               dangerouslySetInnerHTML={{
-                __html: t('LENDING_BUSINESS_TO_DO_TOGETHER'),
+                __html: t('LENDING_BUSINESS_TO_DO_TOGETHER').replaceAll(
+                  '\\',
+                  '',
+                ),
               }}
             />
             <span className='text-body-14 s:text-body-16 m:text-body-18 font-normal text-greyscale-900 mb-4 s:mb-8'>
