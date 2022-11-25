@@ -21,6 +21,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const param = (query.document as string[]).join('/')
   const storage = getStorageFromCookies(ctx)
 
+  const publicDocs = [
+    'terms-and-conditions',
+    'privacy-policy',
+    'cookies-policy',
+  ]
   const promises = [
     fetchCountries(state.language),
     fetchCategories(storage),
@@ -31,22 +36,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((response) =>
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  if (
-    categoriesData.status === 401 &&
-    !['terms-and-conditions', 'privacy-policy'].includes(param)
-  ) {
+  if (categoriesData.status === 401 && !publicDocs.includes(param)) {
     return redirectToLogin(ctx.resolvedUrl)
   }
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
 
-  const document = ['terms-and-conditions', 'privacy-policy'].includes(param)
-    ? null
-    : doc[0]
-  if (
-    !document &&
-    !['terms-and-conditions', 'privacy-policy'].includes(param)
-  ) {
+  const document = publicDocs.includes(param) ? null : doc[0]
+  if (!document && !publicDocs.includes(param)) {
     return {
       redirect: {
         destination: '/countries',
