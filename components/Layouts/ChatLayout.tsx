@@ -2,12 +2,8 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
-import {useRouter} from 'next/router'
-import {io} from 'socket.io-client'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
-import ChatItem from '../Chat/ChatItem'
-import Auth from '../Auth'
 
 const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
