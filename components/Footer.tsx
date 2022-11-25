@@ -74,13 +74,12 @@ const Footer: FC = observer(() => {
               {/*  /!* href='/p/rooles/general-requirements-for-adverts'> *!/ */}
               {/*  {t('RULES')} */}
               {/* </LinkWrapper> */}
-              {/* <LinkWrapper */}
-              {/*  className='flex justify-center items-center w-full' */}
-              {/*  title={t('COOKIES_POLICY')} */}
-              {/*  href='/'> */}
-              {/*  /!* href='/p/cookies-policy'> *!/ */}
-              {/*  {t('COOKIES_POLICY')} */}
-              {/* </LinkWrapper> */}
+              <LinkWrapper
+                className='flex justify-center items-center whitespace-nowrap'
+                title={t('COOKIES_POLICY')}
+                href='/p/cookies-policy'>
+                {t('COOKIES_POLICY')}
+              </LinkWrapper>
               <LinkWrapper
                 className='flex justify-center items-center w-full'
                 title={t('SUPPORT')}

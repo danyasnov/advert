@@ -323,6 +323,12 @@ const BusinessLayout: FC = observer(() => {
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
               <LinkWrapper
+                className='flex items-center whitespace-nowrap'
+                title={t('COOKIES_POLICY')}
+                href='/p/cookies-policy'>
+                {t('COOKIES_POLICY')}
+              </LinkWrapper>
+              <LinkWrapper
                 className='flex items-center w-full'
                 title={t('SUPPORT')}
                 href='/support'>
