@@ -2,6 +2,7 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import WebSocket from 'ws'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 
@@ -17,9 +18,12 @@ const ChatLayout: FC = observer(() => {
       const state: SerializedCookiesState = parseCookies()
       // const storage = mapCookies(state)
       // const restApi = getRest(storage)
-      const socket = new WebSocket('ws://ao-dev.venera.city:5002/ws')
-      socket.addEventListener('error', (event) => {
-        console.log('event', event)
+      const ws = new WebSocket('wss://backend.venera.city/ws')
+      ws.on('open', function open() {
+        console.log('open')
+      })
+      ws.on('error', function open(error) {
+        console.log('error', error)
       })
       // ws.on('open', function open() {
       //   const array = new Float32Array(5)
