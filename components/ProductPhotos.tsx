@@ -69,7 +69,7 @@ const ProductPhotos: FC = observer(() => {
 
   return (
     <div className='relative'>
-      <div className='absolute right-7 top-7 z-9'>
+      <div className='absolute right-4 top-4 s:right-7 s:top-7 z-9'>
         <ProductBadge />
       </div>
       <div className='overflow-hidden relative rounded-xl' ref={viewportRef}>
