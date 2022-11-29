@@ -692,6 +692,7 @@ export const getStorageFromCookies = (
   },
 ) => {
   const state = parseCookies(ctx)
+  if (!state.language) state.language = ctx.req.locale || 'en'
   return mapCookies(state, ctx)
 }
 

@@ -3,6 +3,8 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import useEmblaCarousel from 'embla-carousel-react'
 import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
+import {isEmpty} from 'lodash'
 import ImageWrapper from './ImageWrapper'
 import {
   useCategoriesStore,
@@ -33,6 +35,7 @@ const CategoriesSlider: FC = observer(() => {
   })
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
+  if (isEmpty(categoriesWithoutAll)) return null
   return (
     // здесь div нужен для корректных отступов между секциями
     <div>
