@@ -7,7 +7,6 @@ import {
   getStorageFromCookies,
   processCookies,
   redirectToLogin,
-  setCookiesObject,
 } from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {checkCode, fetchCategories} from '../api/v2'
