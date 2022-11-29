@@ -541,6 +541,7 @@ export const FormikText: FC<
   const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
   const isValid = !error
+  const [active, setActive] = useState(false)
   const props = {
     'data-test-id': name,
     leftIcon,
@@ -558,6 +559,8 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
+    onBlur: () => setActive(false),
+    onFocus: () => setActive(true),
     className: `border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
@@ -576,7 +579,14 @@ export const FormikText: FC<
     <textarea {...props} />
   ) : (
     <div className='relative'>
-      {!!leftIcon && <div className='absolute top-4.5 left-5'>{leftIcon}</div>}
+      {!!leftIcon && (
+        <div
+          className={`${
+            active ? 'text-primary-500' : ''
+          } absolute top-4.5 left-5`}>
+          {leftIcon}
+        </div>
+      )}
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...props} />
     </div>

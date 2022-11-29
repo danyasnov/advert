@@ -133,9 +133,7 @@ const EditProfilePopup: FC = observer(() => {
                         <div
                           className={`${
                             /* eslint-disable-next-line no-extra-boolean-cast */
-                            !!formik.errors.name
-                              ? 'text-error'
-                              : 'text-greyscale-900'
+                            !!formik.errors.name ? 'text-error' : ''
                           }`}>
                           <User set='bold' size={21} />
                         </div>
@@ -149,9 +147,7 @@ const EditProfilePopup: FC = observer(() => {
                         <div
                           className={`${
                             /* eslint-disable-next-line no-extra-boolean-cast */
-                            !!formik.errors.surname
-                              ? 'text-error'
-                              : 'text-greyscale-900'
+                            !!formik.errors.surname ? 'text-error' : ''
                           }`}>
                           <User set='bold' size={21} />
                         </div>
