@@ -601,7 +601,7 @@
   "SUPPORT_CONTACT": "Επικοινωνήστε με την ομάδα υποστήριξης",
   "SUPPORT_SERVICE": "Υποστήριξη πελατών",
   "SURNAME": "Επώνυμο",
-  "SURNAME_NOT_CORRECT": "Surname must be more than 2 letters and less than 100",
+  "SURNAME_NOT_CORRECT": "Το επώνυμο πρέπει να είναι πάνω από 2 χαρακτήρες και λιγότερο από 100 χαρακτήρες",
   "TAKE_NUM": "Αυτός ο αριθμός τηλέφωνο είναι ήδη σε χρήση",
   "TAKE_PHOTO": "Λήψη φωτογραφίας",
   "TERMS_OF_USER": "Με την Σύνδεση ή Εγγραφή συμφωνείς με τους [Όρους και Προϋποθέσεις](vooxee.venera.city/p/terms-and-conditions), [Πολιτική Απορρήτου](vooxee.venera.city/p/privacy-policy)",
