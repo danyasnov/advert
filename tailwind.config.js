@@ -302,7 +302,9 @@ module.exports = {
     plugin(({addBase, theme}) => {
       addBase({
         '.scrollbar': {
-          scrollbarColor: `${theme('colors.purple')} ${theme('colors.white')}`,
+          scrollbarColor: `${theme('colors.greyscale-300')} ${theme(
+            'colors.white',
+          )}`,
           scrollbarWidth: 'thin',
         },
         '.scrollbar::-webkit-scrollbar': {
