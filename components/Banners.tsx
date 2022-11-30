@@ -82,10 +82,10 @@ const Banners: FC = observer(() => {
     }
   }, [embla])
   useEffect(() => {
-    if (width >= 2560) {
+    if (embla && width >= 2560) {
       embla.plugins().autoplay.stop()
     }
-  }, [width])
+  }, [width, embla])
   let imgSize
   let imgWidth
   if (width < 768) {
