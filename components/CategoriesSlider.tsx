@@ -5,6 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import {parseCookies} from 'nookies'
 import {toJS} from 'mobx'
 import {isEmpty} from 'lodash'
+import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import ImageWrapper from './ImageWrapper'
 import {
   useCategoriesStore,
@@ -27,12 +28,15 @@ const CategoriesSlider: FC = observer(() => {
   useEffect(() => {
     setLocationCodes(getLocationCodes())
   }, [cookies.cityId, cookies.regionId, cookies.countryId])
-  const [viewportRef, embla] = useEmblaCarousel({
-    align: 'start',
-    containScroll: 'trimSnaps',
-    slidesToScroll: 1,
-    loop: true,
-  })
+  const [viewportRef, embla] = useEmblaCarousel(
+    {
+      align: 'start',
+      containScroll: 'trimSnaps',
+      slidesToScroll: 1,
+      loop: true,
+    },
+    [WheelGesturesPlugin()],
+  )
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
     useSliderButtons(embla)
   if (isEmpty(categoriesWithoutAll)) return null
