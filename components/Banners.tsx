@@ -4,6 +4,8 @@ import {useTranslation} from 'next-i18next'
 import {useWindowSize} from 'react-use'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
+import Autoplay from 'embla-carousel-autoplay'
+import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
 import {useGeneralStore} from '../providers/RootStoreProvider'
@@ -11,6 +13,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 const Banners: FC = observer(() => {
   const {t} = useTranslation()
   const {locationCodes} = useGeneralStore()
+  const {width} = useWindowSize()
   const banners = [
     {
       id: 'auto',
@@ -46,29 +49,34 @@ const Banners: FC = observer(() => {
   const router = useRouter()
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const [viewportRef, embla] = useEmblaCarousel({
-    align: 0.04,
-    loop: true,
-    breakpoints: {
-      '(min-width: 768px)': {
-        align: 0.04,
-      },
-      '(min-width: 1024px)': {
-        align: 0.08,
-      },
-      '(min-width: 1440px)': {
-        align: 0.11,
+  const [viewportRef, embla] = useEmblaCarousel(
+    {
+      align: 0.04,
+      loop: true,
+      breakpoints: {
+        '(min-width: 768px)': {
+          align: 0.04,
+        },
+        '(min-width: 1024px)': {
+          align: 0.08,
+        },
+        '(min-width: 1440px)': {
+          align: 0.11,
+        },
       },
     },
-  })
+    [Autoplay({delay: 5000}), WheelGesturesPlugin()],
+  )
   useEffect(() => {
     if (embla) {
       embla.on('select', () => {
         setCurrentIndex(embla.selectedScrollSnap() || 0)
       })
+      if (width >= 2560) {
+        embla.plugins().autoplay.stop()
+      }
     }
   }, [embla])
-  const {width} = useWindowSize()
   let imgSize
   let imgWidth
   if (width < 768) {
@@ -115,7 +123,7 @@ const Banners: FC = observer(() => {
             <div
               key={banner.id}
               className={`w-2 h-2 rounded-full ${
-                currentIndex === index ? 'bg-primary-500' : 'bg-greyscale-200'
+                currentIndex === index ? 'bg-primary-500' : 'bg-greyscale-300'
               }`}
             />
           </Button>
