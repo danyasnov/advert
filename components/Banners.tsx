@@ -65,6 +65,7 @@ const Banners: FC = observer(() => {
         },
         '(min-width: 2560px)': {
           align: 0.05,
+          draggable: false,
         },
       },
     },
@@ -117,7 +118,7 @@ const Banners: FC = observer(() => {
           </Button>
         ))}
       </div>
-      <div className='w-full flex justify-center space-x-1.5 mt-4'>
+      <div className='w-full flex justify-center space-x-1.5 mt-4 xxl:hidden'>
         {banners.map((banner, index) => (
           <Button
             onClick={() => {
