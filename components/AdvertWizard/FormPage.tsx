@@ -71,7 +71,6 @@ const FormPage: FC = observer(() => {
   const [showAddNumber, setShowAddNumber] = useState(false)
   const phoneNumber = user?.settings.personal.phoneNum
 
-  const fieldsRef = useRef({})
   const {t} = useTranslation()
   const conditionOptions = useRef([
     {
@@ -89,7 +88,7 @@ const FormPage: FC = observer(() => {
   } | null>(() => mapCategoryData(state.draft.data))
 
   // @ts-ignore
-  const {categoryId, breadcrumbs} = state.draft
+  const {breadcrumbs} = state.draft
   const [initialValues] = useState(() => {
     const {draft} = state
     const mappedFields = mapOriginalFields(draft.fields, category.fieldsById)
