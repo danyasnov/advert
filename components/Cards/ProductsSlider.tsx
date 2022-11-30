@@ -1,6 +1,7 @@
 import {FC, ReactNode} from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import {AdvertiseListItemModel} from 'front-api'
+import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import Card from './Card'
 import TitleWithSeparator from '../TitleWithSeparator'
 import useNestedEmblaCarousel from '../../hooks/useNestedEmblaCarousel'
@@ -14,11 +15,14 @@ interface Props {
 }
 
 const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
-  const [viewportRef, embla] = useEmblaCarousel({
-    align: 'start',
-    containScroll: 'trimSnaps',
-    slidesToScroll: 1,
-  })
+  const [viewportRef, embla] = useEmblaCarousel(
+    {
+      align: 'start',
+      containScroll: 'trimSnaps',
+      slidesToScroll: 1,
+    },
+    [WheelGesturesPlugin()],
+  )
   const setLockParentScroll = useNestedEmblaCarousel(embla)
 
   const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
