@@ -63,6 +63,9 @@ const Banners: FC = observer(() => {
         '(min-width: 1440px)': {
           align: 0.11,
         },
+        '(min-width: 2560px)': {
+          align: 0.05,
+        },
       },
     },
     [Autoplay({delay: 5000}), WheelGesturesPlugin()],
