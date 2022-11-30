@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
@@ -27,6 +27,10 @@ const MainLayout: FC = observer(() => {
   const cookies: SerializedCookiesState = parseCookies()
   const {otherProducts, products, state, setProducts} = useProductsStore()
   const {t} = useTranslation()
+  const [showBanners, setShowBanners] = useState(false)
+  useEffect(() => {
+    setShowBanners(true)
+  }, [])
   const productsArr = [
     {
       data: {categoryId: null},
@@ -89,8 +93,8 @@ const MainLayout: FC = observer(() => {
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
       <div className='py-8 flex flex-col min-h-1/2'>
-        <Banners />
-        <div className='m:flex m:justify-center m:w-full'>
+        {showBanners && <Banners />}
+        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>

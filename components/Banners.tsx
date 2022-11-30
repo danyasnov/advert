@@ -63,10 +63,6 @@ const Banners: FC = observer(() => {
         '(min-width: 1440px)': {
           align: 0.11,
         },
-        '(min-width: 2560px)': {
-          align: 0.05,
-          draggable: false,
-        },
       },
     },
     [Autoplay({delay: 5000}), WheelGesturesPlugin()],
@@ -76,9 +72,6 @@ const Banners: FC = observer(() => {
       embla.on('select', () => {
         setCurrentIndex(embla.selectedScrollSnap() || 0)
       })
-      if (width >= 2560) {
-        embla.plugins().autoplay.stop()
-      }
     }
   }, [embla])
 
@@ -98,28 +91,28 @@ const Banners: FC = observer(() => {
     imgWidth = 440
   }
   const is4k = width >= 2560
-  // console.log('typeof window', typeof window)
-  // if (typeof window === 'undefined') return null
   return (
     <div className='overflow-hidden mb-8' ref={is4k ? null : viewportRef}>
       <div className={`flex shrink-0 ${is4k ? 'justify-center' : ''}`}>
         {banners.map((c) => (
-          <Button
-            onClick={() => {
-              if (embla.clickAllowed()) {
-                router.push(c.path)
-              }
-            }}
-            key={`${c.id}-${imgSize}-${imgWidth}`}>
-            <BannerItem
-              title={t(c.title)}
-              id={c.id}
-              key={`${c.id}-${imgSize}-${imgWidth}`}
-              imgWidth={imgWidth}
-              imgSize={imgSize}
-              color={c.color}
-            />
-          </Button>
+          <div className='ml-4'>
+            <Button
+              onClick={() => {
+                if (embla.clickAllowed()) {
+                  router.push(c.path)
+                }
+              }}
+              key={`${c.id}-${imgSize}-${imgWidth}`}>
+              <BannerItem
+                title={t(c.title)}
+                id={c.id}
+                key={`${c.id}-${imgSize}-${imgWidth}`}
+                imgWidth={imgWidth}
+                imgSize={imgSize}
+                color={c.color}
+              />
+            </Button>
+          </div>
         ))}
       </div>
       <div className='w-full flex justify-center space-x-1.5 mt-4 xxl:hidden'>
@@ -150,7 +143,7 @@ const BannerItem: FC<{
 }> = ({title, id, imgWidth, imgSize, color}) => {
   // console.log(imgWidth)
   return (
-    <div className='w-[328px] s:w-[344px] m:w-[464px] l:w-[440px] h-[180px] shrink-0 rounded-[32px] overflow-hidden flex ml-4 relative'>
+    <div className='w-[328px] s:w-[344px] m:w-[464px] l:w-[440px] h-[180px] shrink-0 rounded-[32px] overflow-hidden flex relative'>
       <span
         className={`absolute z-10 top-[54px] left-[23px] s:top-[49px] m:left-[35px] text-body-16 font-semibold ${color} whitespace-pre-line`}>
         {title}
