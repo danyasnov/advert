@@ -81,11 +81,7 @@ const Banners: FC = observer(() => {
       }
     }
   }, [embla])
-  useEffect(() => {
-    if (embla && width >= 2560) {
-      embla.plugins().autoplay.stop()
-    }
-  }, [width, embla])
+
   let imgSize
   let imgWidth
   if (width < 768) {
@@ -101,11 +97,12 @@ const Banners: FC = observer(() => {
     imgSize = `l`
     imgWidth = 440
   }
+  const is4k = width >= 2560
   // console.log('typeof window', typeof window)
   // if (typeof window === 'undefined') return null
   return (
-    <div className='overflow-hidden mb-8' ref={viewportRef}>
-      <div className='flex shrink-0'>
+    <div className='overflow-hidden mb-8' ref={is4k ? null : viewportRef}>
+      <div className={`flex shrink-0 ${is4k ? 'justify-center' : ''}`}>
         {banners.map((c) => (
           <Button
             onClick={() => {
