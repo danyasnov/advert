@@ -101,8 +101,8 @@ const Banners: FC = observer(() => {
     imgSize = `l`
     imgWidth = 440
   }
-  console.log('typeof window', typeof window)
-  if (typeof window === 'undefined') return null
+  // console.log('typeof window', typeof window)
+  // if (typeof window === 'undefined') return null
   return (
     <div className='overflow-hidden mb-8' ref={viewportRef}>
       <div className='flex shrink-0'>
