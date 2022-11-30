@@ -310,7 +310,7 @@ module.exports = {
         },
         '.scrollbar::-webkit-scrollbar-thumb': {
           backgroundColor: theme('colors.purple'),
-          borderRadius: '10px',
+          borderRadius: '100vh',
         },
         '.scrollbar::-webkit-scrollbar-track-piece': {
           backgroundColor: theme('colors.white'),
