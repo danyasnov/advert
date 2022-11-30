@@ -12,6 +12,7 @@ interface Props {
   height?: number
   quality?: number
   priority?: boolean
+  style?: Record<string, unknown>
   fallbackUrl?: string | string[]
   onLoadingComplete?: (size: {
     naturalWidth: number
@@ -32,6 +33,7 @@ const ImageWrapper: FC<Props> = ({
   id,
   onLoadingComplete,
   quality,
+  style,
 }) => {
   const [hide, setHide] = useState(false)
   const [imgSrc, setImgSrc] = useState(type)
@@ -39,6 +41,7 @@ const ImageWrapper: FC<Props> = ({
   if (!type || hide) return null
   return (
     <Image
+      style={style}
       quality={quality}
       src={imgSrc}
       width={width}

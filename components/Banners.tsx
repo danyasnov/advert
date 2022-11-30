@@ -144,14 +144,16 @@ const BannerItem: FC<{
   imgSize: string
   color: string
 }> = ({title, id, imgWidth, imgSize, color}) => {
+  // console.log(imgWidth)
   return (
     <div className='w-[328px] s:w-[344px] m:w-[464px] l:w-[440px] h-[180px] shrink-0 rounded-[32px] overflow-hidden flex ml-4 relative'>
       <span
         className={`absolute z-10 top-[54px] left-[23px] s:top-[49px] m:left-[35px] text-body-16 font-semibold ${color} whitespace-pre-line`}>
         {title}
       </span>
-      <div className='flex flex-1'>
+      <div className='flex flex-1 '>
         <ImageWrapper
+          // style={{width: imgWidth}}
           type={`/img/banners/${id}-${imgSize}.png`}
           alt={id}
           width={imgWidth}
