@@ -81,6 +81,11 @@ const Banners: FC = observer(() => {
       }
     }
   }, [embla])
+  useEffect(() => {
+    if (width >= 2560) {
+      embla.plugins().autoplay.stop()
+    }
+  }, [width])
   let imgSize
   let imgWidth
   if (width < 768) {
@@ -96,6 +101,8 @@ const Banners: FC = observer(() => {
     imgSize = `l`
     imgWidth = 440
   }
+  console.log('typeof window', typeof window)
+  if (typeof window === 'undefined') return null
   return (
     <div className='overflow-hidden mb-8' ref={viewportRef}>
       <div className='flex shrink-0'>
@@ -153,7 +160,7 @@ const BannerItem: FC<{
       </span>
       <div className='flex flex-1 '>
         <ImageWrapper
-          // style={{width: imgWidth}}
+          // style={{width: '100%'}}
           type={`/img/banners/${id}-${imgSize}.png`}
           alt={id}
           width={imgWidth}
