@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import IcPeople from 'icons/safety-landing/People.svg'
+import {ArrowDown} from 'react-iconly'
 import IcLanguage from 'icons/safety-landing/Language.svg'
 import IcVerified from 'icons/safety-landing/Verified.svg'
 import IcImportant from 'icons/safety-landing/Important.svg'
@@ -44,8 +45,8 @@ const SafetyLayout: FC = observer(() => {
     <LinkWrapper
       href='/support'
       title='Support'
-      className='mt-15 s:mt-18 self-center w-full'>
-      <PrimaryButton className='px-12 py-5 rounded-[120px] w-full s:max-w-[420px]'>
+      className=' self-center w-full'>
+      <PrimaryButton className='px-12 py-5 rounded-[120px] w-[328px] s:w-[240px] h-[62px] text-body-18 font-normal'>
         {t('REPORT_FRAUD')}
       </PrimaryButton>
     </LinkWrapper>
@@ -53,46 +54,50 @@ const SafetyLayout: FC = observer(() => {
   return (
     <div>
       <MetaTags title={t('SECURITY_TITLE')} />
-      <div className='flex justify-between items-center my-2.5 mx-4 s:mx-15 l:mx-30 xl:mx-80 s:my-7'>
-        <div className='flex items-center'>
+      <div className='flex flex-col mx-4 s:mx-8 m:mx-10 l:mx-28 mt-8 s:[w-704px] m:[w-944px] l:[w-1208px]'>
+        <div className='flex justify-between items-centerw-[328px] mb-7 s:mb-14 m:mb-12 l:mb-16'>
           <Logo />
-          <span className='ml-5 font-medium text-body-14 w-[350px] hidden m:block'>
-            {t('LANDING_HEAD_TEXT')}
-          </span>
+          <LanguageSelect />
         </div>
-        <LanguageSelect />
-      </div>
-      <div className='flex flex-col l:flex-row bg-[#FFF6EE] pt-8 pb-18 l:pt-[133px] relative xl:justify-center'>
-        <IcPeople
-          className='w-[240px] s:w-[309px] m:w-[280px] h-[291px] s:h-[375px] m:h-[340px]
-         mb-15 s:mb-18 self-center m:mb-0 m:order-last m:scale-x-[-1] m:self-end m:-mt-10 m:mr-10
-         l:order-first l:scale-x-[1] l:self-start l:w-[400px] l:h-[481px] l:ml-[125px] l:mt-[100px]
-         xl:w-[535px] xl:h-[651px] xl:ml-[151px] xl:mr-16'
-        />
-        <div className='mx-4 s:mx-15 l:mx-30 xl:mx-0 flex flex-col space-y-4 m:w-[722px] xl:w-[849px]'>
-          <h1 className='text-body-14 s:text-h-1 font-medium'>
-            {t('SECURITY_TITLE')}
-          </h1>
-          <span
-            className='text-h-6 s:text-h-4 s:py-10 whitespace-pre-wrap'
-            dangerouslySetInnerHTML={{
-              __html: t('SECURITY_TEXT'),
-            }}
-          />
-          <span className='text-h-6 s:text-h-4 font-medium '>
-            {t('SECURITY_TEXT_BR')}
-          </span>
-          <div className='w-full m:self-start pt-11 m:pt-10 l:pb-40'>
-            {supportButton}
+
+        <div className='flex flex-col s:flex-row  mb-14 items-center s:justify-between'>
+          <div className='flex flex-col s:w-[344px] m:w-[460px] l:w-[568px] text-left'>
+            <div className='flex'>
+              <div className='mr-2 text-primary-500'>
+                <ArrowDown set='bold' size={16} />
+              </div>
+              <span className='text-body-14 font-regular text-greyscale-900 mb-6'>
+                {t('LENDING_SECURITY_FOLLOW_OUR_ADVICE')}
+              </span>
+            </div>
+            <h1 className='text-greyscale-900 text-h-4 s:text-h-3 m:text-h-2 l:text-h-1 font-semibold'>
+              {t('SECURITY_TITLE')}
+            </h1>
+            <span
+              className='text-body-14  m:text-body-18 text-greyscale-800 py-6 s:py-7 whitespace-pre-wrap '
+              dangerouslySetInnerHTML={{
+                __html: t('SECURITY_TEXT'),
+              }}
+            />
+            <span className='text-body-14 m:text-body-18 text-greyscale-800'>
+              {t('SECURITY_TEXT_BR')}
+            </span>
+            <div className='self-center s:self-start pt-6 m:pt-8'>
+              {supportButton}
+            </div>
+          </div>
+          <div className='flex relative w-[222px] h-[243px] s:w-[312px] s:h-[290px] m:w-[470px] m:h-[470px] l:w-[640px] l:h-[534px] shrink-0 mb-6 -l-20'>
+            <ImageWrapper
+              quality={100}
+              type='/img/scam.png'
+              alt='scam'
+              layout='fill'
+              objectFit='contain'
+            />
           </div>
         </div>
-        <IcFooter
-          className='w-[250px] h-[200px] xl:w-[302px] xl:h-[257px] mt-11 self-end mx-4 s:mx-15 l:mx-30 xl:mx-80 m:-mt-16 hidden l:flex l:absolute
-        l:bottom-10 l:right-0'
-        />
       </div>
-
-      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
+      {/*      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
         <div className='flex flex-col l:w-[1200px] xl:w-[1280px]'>
           <h1 className='text-body-14 s:text-h-1 font-medium mb-9 text-center'>
             {t('LANDING_GENERAL_SAFETY_RULES')}
@@ -457,7 +462,7 @@ const SafetyLayout: FC = observer(() => {
             <IcFooter className='w-[173px] h-[148px] mt-11 self-center hidden m:flex l:absolute -bottom-20 right-30 xl:-bottom-10 xl:right-50' />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 })

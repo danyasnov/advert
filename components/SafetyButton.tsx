@@ -8,7 +8,7 @@ const SafetyButton: FC = () => {
   return (
     <LinkWrapper
       title='security'
-      href='/safety'
+      href='/security'
       className='flex justify-center items-center cursor-pointer '>
       <div className='mr-2 text-primary-500'>
         <Danger set='light' size={20} />
