@@ -54,6 +54,7 @@ const Banners: FC = observer(() => {
       align: 0.04,
       loop: true,
       dragFree: true,
+      containScroll: 'trimSnaps',
       breakpoints: {
         '(min-width: 768px)': {
           align: 0.04,
