@@ -94,7 +94,7 @@ const MainLayout: FC = observer(() => {
       />
       <div className='py-8 flex flex-col min-h-1/2'>
         {showBanners && <Banners />}
-        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
+        <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
