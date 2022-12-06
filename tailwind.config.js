@@ -299,6 +299,26 @@ module.exports = {
         })
       })
     }),
-    scrollbar,
+    plugin(({addBase, theme}) => {
+      addBase({
+        '.scrollbar': {
+          scrollbarColor: `${theme('colors.greyscale-300')} ${theme(
+            'colors.white',
+          )}`,
+          scrollbarWidth: 'thin',
+        },
+        '.scrollbar::-webkit-scrollbar': {
+          height: '2px',
+          width: '4px',
+        },
+        '.scrollbar::-webkit-scrollbar-thumb': {
+          backgroundColor: theme('colors.purple'),
+          borderRadius: '100vh',
+        },
+        '.scrollbar::-webkit-scrollbar-track-piece': {
+          backgroundColor: theme('colors.white'),
+        },
+      })
+    }),
   ],
 }
