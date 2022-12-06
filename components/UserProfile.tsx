@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
+import {toJS} from 'mobx'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
@@ -29,7 +30,7 @@ const UserProfile: FC = observer(() => {
       {/* )} */}
 
       <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words text-center w-full'>
-        {user.name} {user.settings.personal.surname}
+        {user.name} {user.settings?.personal.surname}
       </span>
       <div className='flex justify-between mb-8 w-full'>
         <div className='flex s:flex-col s:text-center w-1/2 justify-center'>
