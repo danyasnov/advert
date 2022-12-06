@@ -74,7 +74,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
        category-selector-width m-auto grid grid-cols-4
        m:grid-cols-category-selector-m l:grid-cols-category-selector-l
        l:justify-center categories-bg'>
-      <div className='bg-greyscale-50 s:pl-8 m:pl-10 l:pl-18 overflow-y-scroll h-[450px]'>
+      <div className='bg-greyscale-50 s:pl-8 m:pl-10 l:pl-18 overflow-y-scroll scrollbar h-[450px]'>
         {categoriesWithoutAll.map((c) => (
           <FirstColItem
             category={c}
@@ -85,7 +85,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           />
         ))}
       </div>
-      <div className='border-r border-greyscale-100 overflow-y-scroll h-[450px] [scrollbar-color:#7210FF]'>
+      <div className='border-r border-greyscale-100 overflow-y-scroll h-[450px] scrollbar'>
         <Col
           urlPath={activeCategory?.slug}
           activeId={secondColumnActiveCategory?.id}
@@ -96,7 +96,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
       <div
         className={
           thirdLevelItems.length
-            ? 'border-r border-greyscale-100 overflow-y-scroll h-[450px]'
+            ? 'border-r border-greyscale-100 overflow-y-scroll h-[450px] scrollbar'
             : ''
         }>
         <Col
@@ -106,7 +106,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
           onMouseEnter={handleHoverThirdCol}
         />
       </div>
-      <div className='s:pr-8 m:pr-10 l:pr-18 overflow-y-scroll h-[450px]'>
+      <div className='s:pr-8 m:pr-10 l:pr-18 overflow-y-scroll h-[450px] scrollbar'>
         <Col
           items={fourthLevelItems}
           urlPath={`${activeCategory?.slug}/${secondColumnActiveCategory?.slug}/${thirdColumnActiveCategory?.slug}`}
