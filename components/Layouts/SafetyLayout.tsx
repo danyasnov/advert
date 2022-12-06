@@ -55,6 +55,21 @@ const rules = [
     text: 'LENDING_SECURITY_RECEIPT_OF_FUNDS_TO_THE_ACCOUNT',
   },
 ]
+
+const features = [
+  {
+    title: 'LENDING_SECURITY_DELIVERY',
+    text: 'LENDING_SECURITY_DELIVERY_SERVICE',
+  },
+  {
+    title: 'LENDING_SECURITY_PERSONAL_MEETING',
+    text: 'LENDING_SECURITY_PROTECTION_OPTION',
+  },
+  {
+    title: 'LENDING_SECURITY_CAREFUL_COMMUNICATION',
+    text: 'LENDING_SECURITY_DOUBTS',
+  },
+]
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -196,41 +211,22 @@ const SafetyLayout: FC = observer(() => {
                 </div>
               ))}
             </div>
-
-            {/* <div className='space-y-4 mb-6 s:mb-10'>
-              <div className='flex'>
-                <IcImportant className='min-w-[16px] h-4 mr-2' />
-                <span className='text-body-14 text-greyscale-800'>
-                  {t('LENDING_SECURITY_NEVER_GIVE_YOR_PERSONAL_DATA_TO_ANYONE')}
-                </span>
-              </div>
-              <div className='flex'>
-                <IcImportant className='min-w-[16px] h-4 mr-2' />
-                <span className='text-body-14 text-greyscale-800'>
-                  {t('LENDING_SECURITY_CHAT')}
-                </span>
-              </div>
-              <div className='flex'>
-                <IcImportant className='min-w-[16px] h-4 mr-2' />
-                <span className='text-body-14 text-greyscale-800'>
-                  {t('LENDING_SECURITY_PAYMENT_DATA')}
-                </span>
-              </div>
-              <div className='flex'>
-                <IcImportant className='min-w-[16px] h-4 mr-2' />
-                <span className='text-body-14 text-greyscale-800'>
-                  {t('LENDING_SECURITY_MONEY_TRANSFER')}
-                </span>
-              </div>
-              <div className='flex'>
-                <IcImportant className='min-w-[16px] h-4 mr-2' />
-                <span className='text-body-14 text-greyscale-800'>
-                  {t('LENDING_SECURITY_RECEIPT_OF_FUNDS_TO_THE_ACCOUNT')}
-                </span>
-              </div>
-            </div>
-            */}
           </div>
+        </div>
+      </div>
+
+      <div className='flex mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
+        <div className='flex flex-col drop-shadow-card space-y-4 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-12'>
+          {features.map((feature) => (
+            <div className='flex flex-col items-start h-[220px] px-4 s:px-8 m:px-3 pb-4 s:pb-6 m:pb-4 pt-6 s:pt-6 m:pt-4 bg-white items-center rounded-2xl  s:w-[224px] m:w-[304px] l:w-[350px]'>
+              <span className='mb-2 text-h-6 font-bold text-greyscale-900 text-left'>
+                {t(feature.title)}
+              </span>
+              <span className='text-body-14 font-normal text-grayscale-800'>
+                {t(feature.text)}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
