@@ -6,6 +6,7 @@ import {ArrowDown} from 'react-iconly'
 import IcLanguage from 'icons/safety-landing/Language.svg'
 import IcVerified from 'icons/safety-landing/Verified.svg'
 import IcImportant from 'icons/safety-landing/Important.svg'
+import IcCheck from 'icons/safety-landing/Check.svg'
 import IcDeliveryFast from 'icons/safety-landing/DeliveryFast.svg'
 import IcHand from 'icons/safety-landing/Hand.svg'
 import IcFraud from 'icons/safety-landing/Fraud.svg'
@@ -37,6 +38,23 @@ const tabs = [
   },
 ]
 
+const rules = [
+  {
+    text: 'LENDING_SECURITY_NEVER_GIVE_YOR_PERSONAL_DATA_TO_ANYONE',
+  },
+  {
+    text: 'LENDING_SECURITY_CHAT',
+  },
+  {
+    text: 'LENDING_SECURITY_PAYMENT_DATA',
+  },
+  {
+    text: 'LENDING_SECURITY_MONEY_TRANSFER',
+  },
+  {
+    text: 'LENDING_SECURITY_RECEIPT_OF_FUNDS_TO_THE_ACCOUNT',
+  },
+]
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -55,12 +73,12 @@ const SafetyLayout: FC = observer(() => {
     <div>
       <MetaTags title={t('SECURITY_TITLE')} />
       <div className='flex flex-col mx-4 s:mx-8 m:mx-10 l:mx-28 mt-8 s:[w-704px] m:[w-944px] l:[w-1208px]'>
-        <div className='flex justify-between items-centerw-[328px] mb-7 s:mb-14 m:mb-12 l:mb-16'>
+        <div className='flex justify-between items-center mb-7 s:mb-14 m:mb-12 l:mb-16'>
           <Logo />
           <LanguageSelect />
         </div>
 
-        <div className='flex flex-col s:flex-row  mb-14 items-center s:justify-between'>
+        <div className='flex flex-col s:flex-row mb-6 s:mb-14 items-center s:justify-between'>
           <div className='flex flex-col s:w-[344px] m:w-[460px] l:w-[568px] text-left'>
             <div className='flex'>
               <div className='mr-2 text-primary-500'>
@@ -73,6 +91,15 @@ const SafetyLayout: FC = observer(() => {
             <h1 className='text-greyscale-900 text-h-4 s:text-h-3 m:text-h-2 l:text-h-1 font-semibold'>
               {t('SECURITY_TITLE')}
             </h1>
+            <div className='relative flex s:hidden self-center w-[270px] h-[296px]  mb-6 '>
+              <ImageWrapper
+                quality={100}
+                type='/img/scam2.png'
+                alt='scam'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
             <span
               className='text-body-14  m:text-body-18 text-greyscale-800 py-6 s:py-7 whitespace-pre-wrap '
               dangerouslySetInnerHTML={{
@@ -86,7 +113,7 @@ const SafetyLayout: FC = observer(() => {
               {supportButton}
             </div>
           </div>
-          <div className='flex relative w-[222px] h-[243px] s:w-[312px] s:h-[290px] m:w-[470px] m:h-[470px] l:w-[640px] l:h-[534px] shrink-0 mb-6 -l-20'>
+          <div className='hidden s:flex relative w-[222px] h-[243px] s:w-[359px] s:h-[355px] m:w-[405px] m:h-[430px] l:w-[470px] l:h-[460px] shrink-0'>
             <ImageWrapper
               quality={100}
               type='/img/scam.png'
@@ -97,6 +124,116 @@ const SafetyLayout: FC = observer(() => {
           </div>
         </div>
       </div>
+
+      <div className='bg-greyscale-50'>
+        <div className='flex flex-col mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
+          <div className='relative s:hidden mx-auto inset-x-0 -bottom-[25px] w-[160px] h-[169px]'>
+            <ImageWrapper
+              quality={100}
+              type='/img/site-check.png'
+              alt='site check'
+              layout='fill'
+              objectFit='contain'
+            />
+          </div>
+          <div className='flex s:justify-between relative bg-white rounded-3xl drop-shadow-card  w-auto h-auto s:w-[704px] s:h-[187px] m:w-[944px] m:h-[208px] l:w-[1208px] l:h-[208px]'>
+            <div className='flex'>
+              <div className='hidden s:flex absolute bottom-0 left-0 w-[160px] h-[169px] s:w-[240px] s:h-[240px] m:w-[300px] m:h-[300px]'>
+                <ImageWrapper
+                  quality={100}
+                  type='/img/site-check.png'
+                  alt='site check'
+                  layout='fill'
+                  objectFit='contain'
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className='flex flex-col justify-center p-6 w-auto s:w-[440px] m:w-[600px] l:w-[780px] '>
+                <h1 className='text-h-4 m:text-h-3 text-greyscale-900 font-semibold'>
+                  {t('LENDING_SECURITY_SITE')}
+                </h1>
+                <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+                  {t('LENDING_SECURITY_SITE_DESCRIPTION')}
+                </span>
+              </div>
+
+              <div
+                className='absolute mx-auto inset-x-0  right-0 -bottom-[214px] s:mr-4 s:inset-x-3/4 s:right-0 s:-bottom-[443px] m:-bottom-[490px] l:-bottom-[570px]
+              w-[115px] h-[214px] s:w-[224px] s:h-[443px] m:w-[244px] m:h-[490px] l:w-[284px] l:h-[570px]'>
+                <ImageWrapper
+                  quality={100}
+                  type='/img/scammer.png'
+                  alt='scammer'
+                  layout='fill'
+                  objectFit='contain'
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='flex flex-col mt-[234px] mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16 s:w-[393px] m:w-[544px] l:w-[800px]'>
+          <div className='flex flex-col justify-center'>
+            <h1 className='text-h-5 s:text-h-4 m:text-h-3 l:text-h-2 text-greyscale-900 font-semibold'>
+              {t('LENDING_SECURITY_GENERAL')}
+            </h1>
+            <h3 className='my-4 m:mt-8 m:mb-4 text-body-16 s:text-body-18 m:text-h-5 l:text-h-3 text-greyscale-900 font-medium'>
+              {t('LENDING_SECURITY_PERSONAL_DATE')}
+            </h3>
+            <span className='text-body-14 mb-4 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+              {t('LENDING_SECURITY_SAFETY_POLICY')}
+            </span>
+
+            <div className='space-y-4 mb-6 s:mb-10'>
+              {rules.map((rule) => (
+                <div className='flex'>
+                  <IcCheck className='min-w-[24px] h-5 mr-2' />
+                  <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+                    {t(rule.text)}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* <div className='space-y-4 mb-6 s:mb-10'>
+              <div className='flex'>
+                <IcImportant className='min-w-[16px] h-4 mr-2' />
+                <span className='text-body-14 text-greyscale-800'>
+                  {t('LENDING_SECURITY_NEVER_GIVE_YOR_PERSONAL_DATA_TO_ANYONE')}
+                </span>
+              </div>
+              <div className='flex'>
+                <IcImportant className='min-w-[16px] h-4 mr-2' />
+                <span className='text-body-14 text-greyscale-800'>
+                  {t('LENDING_SECURITY_CHAT')}
+                </span>
+              </div>
+              <div className='flex'>
+                <IcImportant className='min-w-[16px] h-4 mr-2' />
+                <span className='text-body-14 text-greyscale-800'>
+                  {t('LENDING_SECURITY_PAYMENT_DATA')}
+                </span>
+              </div>
+              <div className='flex'>
+                <IcImportant className='min-w-[16px] h-4 mr-2' />
+                <span className='text-body-14 text-greyscale-800'>
+                  {t('LENDING_SECURITY_MONEY_TRANSFER')}
+                </span>
+              </div>
+              <div className='flex'>
+                <IcImportant className='min-w-[16px] h-4 mr-2' />
+                <span className='text-body-14 text-greyscale-800'>
+                  {t('LENDING_SECURITY_RECEIPT_OF_FUNDS_TO_THE_ACCOUNT')}
+                </span>
+              </div>
+            </div>
+            */}
+          </div>
+        </div>
+      </div>
+
       {/*      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
         <div className='flex flex-col l:w-[1200px] xl:w-[1280px]'>
           <h1 className='text-body-14 s:text-h-1 font-medium mb-9 text-center'>
