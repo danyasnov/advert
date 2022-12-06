@@ -146,8 +146,8 @@ export const FilterStyles = {
   }),
   placeholder: (provided) => ({
     ...provided,
-    fontSize: '12px',
-    lineHeight: '14px',
+    fontSize: '11px',
+    lineHeight: '12px',
     color: '#9E9E9E',
   }),
   multiValueLabel: (provided) => ({

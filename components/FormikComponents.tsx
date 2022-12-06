@@ -675,14 +675,17 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
     <div
       className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
-      <Button onClick={() => setShow(!show)} className='w-full px-5'>
+      <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
         <div className='flex justify-between w-full text-body-12'>
           {displayValue ? (
             <span className='text-greyscale-900 flex items-center'>
               {displayValue}
             </span>
           ) : (
-            <span className='text-greyscale-500 flex items-center truncate'>
+            <span
+              className={`${
+                placeholder.length > 12 ? 'text-body-10' : ''
+              } text-greyscale-500 flex items-center text-left`}>
               {placeholder}
             </span>
           )}
