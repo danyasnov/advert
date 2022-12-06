@@ -601,7 +601,7 @@
   "SUPPORT_CONTACT": "Зв'язатися зі службою підтримки",
   "SUPPORT_SERVICE": "Служба підтримки",
   "SURNAME": "Прізвище",
-  "SURNAME_NOT_CORRECT": "Surname must be more than 2 letters and less than 100",
+  "SURNAME_NOT_CORRECT": "Прізвище повинно бути більше 2-х символів та менше 100",
   "TAKE_NUM": "Цей номер телефону вже використовується",
   "TAKE_PHOTO": "Зробити фото",
   "TERMS_OF_USER": "При реєстрації ви погоджуєтеся з [Умовами використання](vooxee.venera.city/p/terms-and-conditions), [Політикою конфіденційності](vooxee.venera.city/p/privacy-policy)",

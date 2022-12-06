@@ -45,9 +45,9 @@ const EditProfilePopup: FC = observer(() => {
     name: string()
       .trim()
       .required(t('TOO_SHORT_NAME_OR_SURNAME'))
-      .max(90, t('TOO_SHORT_NAME_OR_SURNAME'))
+      .max(100, t('NAME_NOT_CORRECT'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
-    surname: string().trim().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
+    surname: string().trim().max(100, t('SURNAME_NOT_CORRECT')),
   })
   const formik = useFormik({
     initialValues: personalDataRef.current,
