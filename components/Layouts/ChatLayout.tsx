@@ -2,55 +2,67 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import HeaderFooterWrapper from './HeaderFooterWrapper'
 
 const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {user} = useGeneralStore()
+  const pingPongRef = useRef<any>()
+  console.log('user', toJS(user))
 
   useEffect(() => {
-    // debugger
-    // if (!user) return
-
-    const init = async () => {
-      const state: SerializedCookiesState = parseCookies()
-      // const storage = mapCookies(state)
-      // const restApi = getRest(storage)
-      const socket = new WebSocket('wss://backend.venera.city/ws/')
-      // socket.addEventListener('open', (event) => {
-      //   socket.send('Hello Server!')
-      // })
-
-      // Listen for messages
-      // socket.addEventListener('message', (event) => {
-      //   console.log('Message from server ', event.data)
-      // })
-      // ws.on('open', function open() {
-      //   const array = new Float32Array(5)
-      //
-      //   for (let i = 0; i < array.length; ++i) {
-      //     array[i] = i / 2
-      //   }
-      //
-      //   ws.send(array)
-      // })
-
-      // const socket = io('wss://ao-dev.venera.city:5002/ws')
-      // socket.on('connect', () => {
-      //   console.log(socket.id)
-      // })
-      // socket.on('disconnect', () => {
-      //   console.log(socket.id)
-      // })
-      // socket.on('connect_error', (err) => {
-      //   console.log(err)
-      // })
+    if (!user) return
+    const state: SerializedCookiesState = parseCookies()
+    console.log('state', state, toJS(user))
+    const socket = new WebSocket('wss://backend.venera.city/ws/')
+    socket.onopen = function (e) {
+      console.log('connected')
+      pingPongRef.current = setInterval(() => {
+        socket.send(
+          JSON.stringify({
+            method: 'ping',
+            params: {},
+          }),
+        )
+      }, 5000)
+      socket.send(
+        JSON.stringify({
+          method: 'login',
+          params: {
+            token: state.authNewToken,
+            // информация о клиенте
+            // device_id: 'web',
+            // device_type: 3,
+            // device_model: 'model',
+            // os_version: 'macos',
+            // install_id: 'install-1',
+            // timezone_offset: 0,
+          },
+        }),
+      )
     }
-    init()
+
+    socket.onmessage = function (event) {
+      console.log('onmessage', event, JSON.parse(event.data))
+    }
+
+    socket.onclose = function (event) {
+      console.log('onclose', event)
+    }
+
+    socket.onerror = function (error) {
+      console.log('onerror', error)
+    }
+    return () => {
+      socket.close()
+      clearInterval(pingPongRef.current)
+    }
   }, [user])
 
-  return null
+  return <HeaderFooterWrapper>qwerty</HeaderFooterWrapper>
 
   // return (
   //   <div className='flex mx-4 h-screen'>
