@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {toNumber} from 'lodash'
+import {isEmpty, toNumber} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
@@ -14,6 +14,7 @@ import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
+import EmptyTabs from '../EmptyTabs'
 
 const getTabs = (t: TFunction) => [
   {title: `${t('MODERATION')}`, id: 1},
@@ -109,6 +110,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userOnModeration',
                         })
                       }}
+                      tab='moderation'
                     />
                   )}
                   {activeTab === 2 && (
@@ -128,6 +130,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSale',
                         })
                       }}
+                      tab='sale'
                     />
                   )}
                   {activeTab === 3 && (
@@ -147,6 +150,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSold',
                         })
                       }}
+                      tab='sold'
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
@@ -166,6 +170,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userArchive',
                         })
                       }}
+                      tab='archive'
                     />
                   )}
                 </div>
@@ -174,16 +179,25 @@ const UserLayout: FC = observer(() => {
                 <div>
                   <SectionTitle title={t('DRAFTS')} />
 
-                  <div className='flex flex-col m:items-start relative'>
-                    <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
-                      {drafts.map((d) => (
-                        <Card
-                          product={d as unknown as AdvertiseListItemModel}
-                          href={`/advert/create/${d.hash}`}
-                        />
-                      ))}
+                  {isEmpty(drafts) ? (
+                    <div className='flex justify-center'>
+                      <EmptyTabs
+                        description='DRAWINGS_EMPTY'
+                        img='/img/drafts-tab.png'
+                      />
                     </div>
-                  </div>
+                  ) : (
+                    <div className='flex flex-col m:items-start relative'>
+                      <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
+                        {drafts.map((d) => (
+                          <Card
+                            product={d as unknown as AdvertiseListItemModel}
+                            href={`/advert/create/${d.hash}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {activeUserPage === 'favorites' && (
@@ -204,6 +218,7 @@ const UserLayout: FC = observer(() => {
                         path: 'userFavorite',
                       })
                     }}
+                    tab='favorites'
                   />
                 </div>
               )}

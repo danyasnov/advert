@@ -5,6 +5,7 @@ import {AdvertiseListItemModel} from 'front-api'
 import Card from './Card'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
+import EmptyTabs from '../EmptyTabs'
 import CardsLoader from '../CardsLoader'
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
   showMenu?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
+  tab?: string
 }
 const ScrollableCardGroup: FC<Props> = ({
   products = [],
@@ -35,6 +37,7 @@ const ScrollableCardGroup: FC<Props> = ({
   disableVipWidth,
   limit = PAGE_LIMIT,
   showMenu,
+  tab,
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
@@ -46,6 +49,56 @@ const ScrollableCardGroup: FC<Props> = ({
       />
     )
   }
+
+  if (isEmpty(products) && tab === 'moderation') {
+    return (
+      <div className='flex justify-center'>
+        <EmptyTabs
+          description='NO_PRODUCTS_FOR_MODERATION'
+          img='/img/empty-tab.png'
+        />
+      </div>
+    )
+  }
+
+  if (isEmpty(products) && tab === 'sale') {
+    return (
+      <div className='flex justify-center'>
+        <EmptyTabs
+          description='NO_PRODUCTS_FOR_SALE'
+          img='/img/empty-tab.png'
+        />
+      </div>
+    )
+  }
+
+  if (isEmpty(products) && tab === 'sold') {
+    return (
+      <div className='flex justify-center'>
+        <EmptyTabs description='NO_PRODUCTS_SOLD' img='/img/empty-tab.png' />
+      </div>
+    )
+  }
+
+  if (isEmpty(products) && tab === 'archive') {
+    return (
+      <div className='flex justify-center'>
+        <EmptyTabs description='DRAWINGS_EMPTY' img='/img/empty-tab.png' />
+      </div>
+    )
+  }
+
+  if (isEmpty(products) && tab === 'favorites') {
+    return (
+      <div className='flex justify-center'>
+        <EmptyTabs
+          description='FAVOURITES_EMPTY'
+          img='/img/favorites-tab.png'
+        />
+      </div>
+    )
+  }
+
   if (isEmpty(products)) {
     return (
       <div className='flex justify-center'>
