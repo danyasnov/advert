@@ -26,6 +26,8 @@ function MyApp({Component, pageProps}: AppProps) {
     loadingKey: 0,
   })
   useEffect(() => {
+    startTracking()
+
     const handleStart = (url) => {
       console.log(`Loading: ${url}`)
       setState((prevState) => ({
