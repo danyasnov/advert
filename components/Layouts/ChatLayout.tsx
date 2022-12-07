@@ -11,51 +11,47 @@ const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {user} = useGeneralStore()
   const pingPongRef = useRef<any>()
+  // const requestsRef = useRef<Record<string, boolean>>({})
   console.log('user', toJS(user))
 
   useEffect(() => {
     if (!user) return
     const state: SerializedCookiesState = parseCookies()
-    console.log('state', state, toJS(user))
     const socket = new WebSocket('wss://backend.venera.city/ws/')
-    socket.onopen = function (e) {
-      console.log('connected')
-      pingPongRef.current = setInterval(() => {
-        socket.send(
-          JSON.stringify({
-            method: 'ping',
-            params: {},
-          }),
-        )
-      }, 5000)
+
+    const send = (method, params = {}) => {
       socket.send(
         JSON.stringify({
-          method: 'login',
-          params: {
-            token: state.authNewToken,
-            // информация о клиенте
-            // device_id: 'web',
-            // device_type: 3,
-            // device_model: 'model',
-            // os_version: 'macos',
-            // install_id: 'install-1',
-            // timezone_offset: 0,
-          },
+          method,
+          params,
+          id: method,
         }),
       )
     }
 
-    socket.onmessage = function (event) {
-      console.log('onmessage', event, JSON.parse(event.data))
-    }
-
-    socket.onclose = function (event) {
-      console.log('onclose', event)
-    }
-
-    socket.onerror = function (error) {
-      console.log('onerror', error)
-    }
+    socket.addEventListener('message', (event) => {
+      console.log('message', event, JSON.parse(event.data))
+      const response = JSON.parse(event.data)
+      if (response.id === 'login') {
+        send('chat_list')
+      }
+      if (response.id === 'chat') {
+      }
+    })
+    socket.addEventListener('open', () => {
+      pingPongRef.current = setInterval(() => {
+        send('ping')
+      }, 5000)
+      send('login', {
+        token: state.authNewToken,
+        device_id: 'web',
+        device_type: 1,
+        device_model: 'web',
+        os_version: 'web',
+        install_id: 'web',
+        timezone_offset: 0,
+      })
+    })
     return () => {
       socket.close()
       clearInterval(pingPongRef.current)
