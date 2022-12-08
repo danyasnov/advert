@@ -215,13 +215,16 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
-        <div className='flex flex-col drop-shadow-card space-y-4 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-12'>
+      <div className='flex justify-center mx-4 my-10 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
+        <div className='flex flex-col drop-shadow-card space-y-6 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-12'>
           {features.map((feature) => (
-            <div className='flex flex-col items-start h-[220px] px-4 s:px-8 m:px-3 pb-4 s:pb-6 m:pb-4 pt-6 s:pt-6 m:pt-4 bg-white items-center rounded-2xl  s:w-[224px] m:w-[304px] l:w-[350px]'>
-              <span className='mb-2 text-h-6 font-bold text-greyscale-900 text-left'>
+            <div
+              className='flex flex-col min-h-[220px] px-4 py-6 bg-gradient-to-br from-safety-1 to-safety-2 
+                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl s:w-[224px] m:w-[304px] l:w-[350px]'>
+              <span className='mb-2 text-h-6 font-bold text-greyscale-900 self-start'>
                 {t(feature.title)}
               </span>
+              <div className='w-[72px] border-b border-greyscale-600 self-start mb-4 mt-1' />
               <span className='text-body-14 font-normal text-grayscale-800'>
                 {t(feature.text)}
               </span>
