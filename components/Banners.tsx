@@ -72,7 +72,8 @@ const Banners: FC = observer(() => {
   useEffect(() => {
     if (embla) {
       embla.on('select', () => {
-        setCurrentIndex(embla.selectedScrollSnap() || 0)
+        const index = embla.selectedScrollSnap() || 0
+        setCurrentIndex(index > 4 ? index - 5 : index)
       })
     }
   }, [embla])
@@ -96,8 +97,9 @@ const Banners: FC = observer(() => {
   return (
     <div className='overflow-hidden mb-8' ref={is4k ? null : viewportRef}>
       <div className={`flex shrink-0 ${is4k ? 'justify-center' : ''}`}>
-        {banners.map((c) => (
-          <div className='ml-4'>
+        {[...banners, ...(is4k ? [] : banners)].map((c, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div className='ml-4' key={`${c.id}-${imgSize}-${imgWidth}-${index}`}>
             <Button
               onClick={() => {
                 if (embla.clickAllowed()) {
@@ -108,7 +110,6 @@ const Banners: FC = observer(() => {
               <BannerItem
                 title={t(c.title)}
                 id={c.id}
-                key={`${c.id}-${imgSize}-${imgWidth}`}
                 imgWidth={imgWidth}
                 imgSize={imgSize}
                 color={c.color}

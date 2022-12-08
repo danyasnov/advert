@@ -2,55 +2,63 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
 import {SerializedCookiesState} from '../../types'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
+import HeaderFooterWrapper from './HeaderFooterWrapper'
 
 const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {user} = useGeneralStore()
+  const pingPongRef = useRef<any>()
+  // const requestsRef = useRef<Record<string, boolean>>({})
+  console.log('user', toJS(user))
 
   useEffect(() => {
-    // debugger
-    // if (!user) return
+    if (!user) return
+    const state: SerializedCookiesState = parseCookies()
+    const socket = new WebSocket('wss://backend.venera.city/ws/')
 
-    const init = async () => {
-      const state: SerializedCookiesState = parseCookies()
-      // const storage = mapCookies(state)
-      // const restApi = getRest(storage)
-      const socket = new WebSocket('wss://backend.venera.city/ws/')
-      // socket.addEventListener('open', (event) => {
-      //   socket.send('Hello Server!')
-      // })
-
-      // Listen for messages
-      // socket.addEventListener('message', (event) => {
-      //   console.log('Message from server ', event.data)
-      // })
-      // ws.on('open', function open() {
-      //   const array = new Float32Array(5)
-      //
-      //   for (let i = 0; i < array.length; ++i) {
-      //     array[i] = i / 2
-      //   }
-      //
-      //   ws.send(array)
-      // })
-
-      // const socket = io('wss://ao-dev.venera.city:5002/ws')
-      // socket.on('connect', () => {
-      //   console.log(socket.id)
-      // })
-      // socket.on('disconnect', () => {
-      //   console.log(socket.id)
-      // })
-      // socket.on('connect_error', (err) => {
-      //   console.log(err)
-      // })
+    const send = (method, params = {}) => {
+      socket.send(
+        JSON.stringify({
+          method,
+          params,
+          id: method,
+        }),
+      )
     }
-    init()
+
+    socket.addEventListener('message', (event) => {
+      console.log('message', event, JSON.parse(event.data))
+      const response = JSON.parse(event.data)
+      if (response.id === 'login') {
+        send('chat_list')
+      }
+      if (response.id === 'chat') {
+      }
+    })
+    socket.addEventListener('open', () => {
+      pingPongRef.current = setInterval(() => {
+        send('ping')
+      }, 5000)
+      send('login', {
+        token: state.authNewToken,
+        device_id: 'web',
+        device_type: 1,
+        device_model: 'web',
+        os_version: 'web',
+        install_id: 'web',
+        timezone_offset: 0,
+      })
+    })
+    return () => {
+      socket.close()
+      clearInterval(pingPongRef.current)
+    }
   }, [user])
 
-  return null
+  return <HeaderFooterWrapper>qwerty</HeaderFooterWrapper>
 
   // return (
   //   <div className='flex mx-4 h-screen'>

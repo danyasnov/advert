@@ -19,15 +19,17 @@ import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 import OutlineButton from '../Buttons/OutlineButton'
 import Banners from '../Banners'
+import CardsLoader from '../CardsLoader'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
   const {locationCodes} = useGeneralStore()
   const {categoriesById} = useCategoriesStore()
   const cookies: SerializedCookiesState = parseCookies()
-  const {otherProducts, products, state, setProducts} = useProductsStore()
+  const {otherProducts, products, setProducts} = useProductsStore()
   const {t} = useTranslation()
   const [showBanners, setShowBanners] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     setShowBanners(true)
   }, [])
@@ -70,7 +72,9 @@ const MainLayout: FC = observer(() => {
           method: 'post',
         }),
       )
+      setIsLoading(true)
       Promise.all(promises).then((res) => {
+        setIsLoading(false)
         setProducts(res[0].data?.result?.data || [], productsArr[0].slug)
         setProducts(res[1].data?.result?.data || [], productsArr[1].slug)
         setProducts(res[2].data?.result?.data || [], productsArr[2].slug)
@@ -94,7 +98,7 @@ const MainLayout: FC = observer(() => {
       />
       <div className='py-8 flex flex-col min-h-1/2'>
         {showBanners && <Banners />}
-        <div className='m:flex m:mx-12 m:justify-center m:w-full'>
+        <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
@@ -132,7 +136,7 @@ const MainLayout: FC = observer(() => {
                   <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                     <ScrollableCardGroup
                       products={otherProducts.all}
-                      state={state}
+                      state={isLoading ? 'pending' : 'done'}
                       disableScroll
                       hideNotFoundDescription
                     />

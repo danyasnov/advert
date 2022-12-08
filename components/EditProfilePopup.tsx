@@ -1,10 +1,10 @@
 import React, {FC, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Edit} from 'react-iconly'
+import {Edit, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
-import {useFormik, FormikProvider, Field} from 'formik'
+import {useFormik, FormikProvider, Field, Form} from 'formik'
 import {object, string} from 'yup'
 import {isEqual} from 'lodash'
 import {useLockBodyScroll} from 'react-use'
@@ -45,9 +45,9 @@ const EditProfilePopup: FC = observer(() => {
     name: string()
       .trim()
       .required(t('TOO_SHORT_NAME_OR_SURNAME'))
-      .max(90, t('TOO_SHORT_NAME_OR_SURNAME'))
+      .max(100, t('NAME_NOT_CORRECT'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
-    surname: string().trim().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
+    surname: string().trim().max(100, t('SURNAME_NOT_CORRECT')),
   })
   const formik = useFormik({
     initialValues: personalDataRef.current,
@@ -124,22 +124,42 @@ const EditProfilePopup: FC = observer(() => {
               data-test-id='location-modal-form'>
               <div className='h-full flex flex-col px-6 pt-4'>
                 <FormikProvider value={formik}>
-                  <Field
-                    name='name'
-                    component={FormikText}
-                    placeholder={t('NAME')}
-                  />
-                  <Field
-                    name='surname'
-                    component={FormikText}
-                    placeholder={t('SURNAME')}
-                  />
-                  <Field
-                    component={FormikSelect}
-                    name='gender'
-                    options={sexOptionsRef.current}
-                    placeholder={t('SEX')}
-                  />
+                  <Form className='space-y-4'>
+                    <Field
+                      name='name'
+                      component={FormikText}
+                      placeholder={t('NAME')}
+                      leftIcon={
+                        <div
+                          className={`${
+                            /* eslint-disable-next-line no-extra-boolean-cast */
+                            !!formik.errors.name ? 'text-error' : ''
+                          }`}>
+                          <User set='bold' size={21} />
+                        </div>
+                      }
+                    />
+                    <Field
+                      name='surname'
+                      component={FormikText}
+                      placeholder={t('SURNAME')}
+                      leftIcon={
+                        <div
+                          className={`${
+                            /* eslint-disable-next-line no-extra-boolean-cast */
+                            !!formik.errors.surname ? 'text-error' : ''
+                          }`}>
+                          <User set='bold' size={21} />
+                        </div>
+                      }
+                    />
+                    <Field
+                      component={FormikSelect}
+                      name='gender'
+                      options={sexOptionsRef.current}
+                      placeholder={t('SEX')}
+                    />
+                  </Form>
                 </FormikProvider>
                 <div className='flex w-full mt-8 mb-6'>
                   <SecondaryButton
