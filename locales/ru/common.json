@@ -847,9 +847,13 @@
   "CONVENIENT_PROFILES_BY_ACTIVITY_TYPE": "Выберите в настройках как ваши покупатели будут видеть ваш профиль",
   "COOKIES_POLICY": "Политика куки",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "COOKIES_WARNING": "Продолжая просматривать этот сайт вы соглашаетесь на использование файлов cookie и с <a href=\"https://vooxee.com/p/cookies-policy\"><font color=\"#7210FF\">политикой куки</font></a>",
 =======
   "COOKIES_WARNING": "Продолжая просматривать этот сайт вы соглашаетесь на использование файлов cookie и с <a href=\"https://ru.vooxee.com/p/cookies-policy\"><font color=\"#7210FF\">политикой куки</font></a>",
+>>>>>>> develop
+=======
+  "COOKIES_WARNING": "Продолжая просматривать этот сайт вы соглашаетесь на использование файлов cookie и с <a class=\"cookie-policy\" href=\"https://vooxee.com/p/cookies-policy\"><font color=\"#FFFFFF\"><b>политикой куки</b></font></a>",
 >>>>>>> develop
   "COPIED_TO_CLIPBOARD": "Cкопировано в буфер обмена",
   "COST_AD_20": "20 дней",
