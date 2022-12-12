@@ -87,7 +87,7 @@ const SafetyLayout: FC = observer(() => {
   return (
     <div>
       <MetaTags title={t('SECURITY_TITLE')} />
-      <div className='flex flex-col mx-4 s:mx-8 m:mx-10 l:mx-28 mt-8 s:[w-704px] m:[w-944px] l:[w-1208px]'>
+      <div className='flex flex-col mx-4 s:mx-auto mt-8 s:w-[704px] m:w-[944px] l:w-[1208px]'>
         <div className='flex justify-between items-center mb-7 s:mb-14 m:mb-12 l:mb-16'>
           <Logo />
           <LanguageSelect />
@@ -124,7 +124,7 @@ const SafetyLayout: FC = observer(() => {
             <span className='text-body-14 m:text-body-18 text-greyscale-800'>
               {t('SECURITY_TEXT_BR')}
             </span>
-            <div className='self-center s:self-start pt-6 m:pt-8'>
+            <div className='self-center s:self-start pt-6 m:pt-8 drop-shadow-card'>
               {supportButton}
             </div>
           </div>
@@ -140,8 +140,8 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='bg-greyscale-50'>
-        <div className='flex flex-col mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
+      <div className='bg-greyscale-50 pb-4 m:pb-10'>
+        <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16'>
           <div className='relative s:hidden mx-auto inset-x-0 -bottom-[25px] w-[160px] h-[169px]'>
             <ImageWrapper
               quality={100}
@@ -175,7 +175,7 @@ const SafetyLayout: FC = observer(() => {
               </div>
 
               <div
-                className='absolute mx-auto inset-x-0  right-0 -bottom-[214px] s:mr-4 s:inset-x-3/4 s:right-0 s:-bottom-[443px] m:-bottom-[490px] l:-bottom-[570px]
+                className='absolute mx-auto inset-x-0 right-0 -bottom-[214px] s:mr-4 s:inset-x-3/4 s:right-0 s:-bottom-[443px] m:-bottom-[490px] l:-bottom-[570px]
               w-[115px] h-[214px] s:w-[224px] s:h-[443px] m:w-[244px] m:h-[490px] l:w-[284px] l:h-[570px]'>
                 <ImageWrapper
                   quality={100}
@@ -189,15 +189,15 @@ const SafetyLayout: FC = observer(() => {
           </div>
         </div>
 
-        <div className='flex flex-col mt-[234px] mx-4 s:mx-8 m:mx-10 l:mx-28 s:mt-16 s:w-[393px] m:w-[544px] l:w-[800px]'>
-          <div className='flex flex-col justify-center'>
+        <div className='flex flex-col items-center mt-[234px] mx-4 s:mx-auto s:mt-16 s:w-[704px] m:w-[944px] l:w-[1208px] '>
+          <div className='flex flex-col self-left justify-center s:w-[393px] m:w-[544px] l:w-[800px] self-start'>
             <h1 className='text-h-5 s:text-h-4 m:text-h-3 l:text-h-2 text-greyscale-900 font-semibold'>
               {t('LENDING_SECURITY_GENERAL')}
             </h1>
             <h3 className='my-4 m:mt-8 m:mb-4 text-body-16 s:text-body-18 m:text-h-5 l:text-h-3 text-greyscale-900 font-medium'>
               {t('LENDING_SECURITY_PERSONAL_DATE')}
             </h3>
-            <span className='text-body-14 mb-4 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+            <span className='text-body-14 mb-4 m:text-body-16 text-greyscale-800 whitespace-pre-wrap '>
               {t('LENDING_SECURITY_SAFETY_POLICY')}
             </span>
 
@@ -215,8 +215,8 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex justify-center mx-4 my-10 s:mx-8 m:mx-10 l:mx-28 s:mt-16'>
-        <div className='flex flex-col drop-shadow-card space-y-6 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-12'>
+      <div className='flex justify-center mx-4 my-10 s:mx-auto s:mt-16 s:w-[704px] m:w-[944px] l:w-[1208px]'>
+        <div className='flex flex-col drop-shadow-card space-y-6 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-20'>
           {features.map((feature) => (
             <div
               className='flex flex-col min-h-[220px] px-4 py-6 bg-gradient-to-br from-safety-1 to-safety-2 
