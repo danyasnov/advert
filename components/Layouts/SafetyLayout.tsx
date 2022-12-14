@@ -70,6 +70,25 @@ const features = [
     text: 'LENDING_SECURITY_DOUBTS',
   },
 ]
+
+const tricks = [
+  {
+    title: 'LENDING_SECURITY_PIN_CODE',
+    text: 'LENDING_SECURITY_UNWANTED_LINKS',
+  },
+  {
+    title: 'LENDING_SECURITY_REFERRAL_LINKS',
+    text: 'LENDING_SECURITY_BE_ATTENTIVE',
+  },
+  {
+    title: 'LENDING_SECURITY_CODE_IN_SMS',
+    text: 'LENDING_SECURITY_DO_NOT_GIVE_CODE',
+  },
+  {
+    title: 'LENDING_SECURITY_DATA_COMMUNICATIONS',
+    text: 'LENDING_SECURITY_FRAUDERS',
+  },
+]
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -85,7 +104,7 @@ const SafetyLayout: FC = observer(() => {
     </LinkWrapper>
   )
   return (
-    <div>
+    <>
       <MetaTags title={t('SECURITY_TITLE')} />
       <div className='flex flex-col mx-4 s:mx-auto mt-8 s:w-[704px] m:w-[944px] l:w-[1208px]'>
         <div className='flex justify-between items-center mb-7 s:mb-14 m:mb-12 l:mb-16'>
@@ -124,7 +143,7 @@ const SafetyLayout: FC = observer(() => {
             <span className='text-body-14 m:text-body-18 text-greyscale-800'>
               {t('SECURITY_TEXT_BR')}
             </span>
-            <div className='self-center s:self-start pt-6 m:pt-8 drop-shadow-card'>
+            <div className='self-center s:self-start pt-6 m:pt-8'>
               {supportButton}
             </div>
           </div>
@@ -215,7 +234,7 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex justify-center mx-4 my-10 s:mx-auto s:mt-16 s:w-[704px] m:w-[944px] l:w-[1208px]'>
+      <div className='flex justify-center mx-4 my-10 s:my-16 m:my-20 l:my-26 s:mx-auto s:w-[704px] m:w-[944px] l:w-[1208px]'>
         <div className='flex flex-col drop-shadow-card space-y-6 s:space-y-0 s:grid s:grid-cols-3 s:gap-2 m:gap-6 l:gap-20'>
           {features.map((feature) => (
             <div
@@ -230,6 +249,33 @@ const SafetyLayout: FC = observer(() => {
               </span>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className='bg-greyscale-50 pb-10 '>
+        <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
+          <h1 className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'>
+            {t('LENDING_SECURITY_TRICK')}
+          </h1>
+          <span className='text-body-16 m:text-body-16 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
+            {t('LENDING_SECURITY_BE_ATTENTIVE')}
+          </span>
+        </div>
+        <div className='mx-0 bg-none s:bg-[url("/img/landing/hands.png")] bg-no-repeat bg-left'>
+          <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
+            {tricks.map((trick) => (
+              <div
+                className='flex flex-col px-4 py-6 bg-gradient-to-br from-[#ffffffcc_0%] to-[#ffffffcc_100%)] 
+                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] backdrop-blur-[10px] rounded-2xl mb-8 s:w-[514px] m:w-[667px] l:w-[667px]'>
+                <span className='mb-2 text-h-6 font-bold text-greyscale-900 self-start'>
+                  {t(trick.title)}
+                </span>
+                <span className='text-body-16 font-normal text-grayscale-800'>
+                  {t(trick.text)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -599,7 +645,7 @@ const SafetyLayout: FC = observer(() => {
           </div>
         </div>
       </div> */}
-    </div>
+    </>
   )
 })
 
