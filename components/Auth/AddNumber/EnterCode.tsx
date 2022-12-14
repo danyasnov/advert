@@ -156,8 +156,8 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
             }
           })
         }}
-        containerClassName='space-x-2'
-        inputClassName={`w-14 h-18 p-4 text-body-14 text-greyscale-900 font-bold border rounded-lg ${
+        containerClassName='space-x-3'
+        inputClassName={`w-12 h-[60px] p-4 text-h-4 text-greyscale-900 font-bold border rounded-lg ${
           errors.code ? 'border-error' : 'border-nc-border'
         }`}
       />
