@@ -252,29 +252,90 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='bg-greyscale-50 pb-10 '>
+      <div className='bg-greyscale-50 pb-8'>
         <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
           <h1 className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'>
             {t('LENDING_SECURITY_TRICK')}
           </h1>
-          <span className='text-body-16 m:text-body-16 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
+          <span className='text-body-16 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
             {t('LENDING_SECURITY_BE_ATTENTIVE')}
           </span>
         </div>
-        <div className='mx-0 bg-none s:bg-[url("/img/landing/hands.png")] bg-no-repeat bg-left'>
-          <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
+        <div className='flex flex-col mx-0 bg-none s:bg-[url("/img/landing/hands.png")] bg-no-repeat bg-left'>
+          <div className='relative w-[340px] h-[230px] s:hidden mt-8'>
+            <ImageWrapper
+              quality={100}
+              type='/img/landing/hands.png'
+              alt='hands'
+              layout='fill'
+              objectFit='contain'
+            />
+          </div>
+          <div className='flex flex-col items-center mx-4 mt-8 s:mx-auto s:w-[514px] m:w-[667px] l:w-[667px]'>
             {tricks.map((trick) => (
               <div
-                className='flex flex-col px-4 py-6 bg-gradient-to-br from-[#ffffffcc_0%] to-[#ffffffcc_100%)] 
-                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] backdrop-blur-[10px] rounded-2xl mb-8 s:w-[514px] m:w-[667px] l:w-[667px]'>
+                className='flex flex-col mb-4 m:mb-6 px-4 py-6 bg-gradient-to-br from-[#ffffffcc_0%] to-[#ffffffcc_100%)] 
+                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] backdrop-blur-[10px] rounded-2xl w-full'>
                 <span className='mb-2 text-h-6 font-bold text-greyscale-900 self-start'>
                   {t(trick.title)}
                 </span>
-                <span className='text-body-16 font-normal text-grayscale-800'>
+                <span className='text-body-14 s:text-body-16 font-normal text-grayscale-800'>
                   {t(trick.text)}
                 </span>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className='flex flex-col'>
+        <div className='flex flex-col mx-4 s:mx-auto s:w-[514px] m:w-[667px] l:w-[667px]'>
+          <h1 className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'>
+            {t('LENDING_SECURITY_STAY_ON_VOOXEE')}
+          </h1>
+          <span className='text-body-16 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
+            {t('LENDING_SECURITY_STAY_ON_VOOXEE_DESCRIPTION')}
+          </span>
+        </div>
+
+        <div className='flex flex-col s:flex-row s:justify-between s:items-center mx-4 s:mx-auto s:w-[704px] m:w-[944px] l:w-[1208px]'>
+          <div
+            className='flex flex-col mt-10 px-4 py-8 bg-gradient-to-l from-safety-1 to-safety-2 
+                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl w-full h-[314px] s:w-[344px] s:h-[306px] m:w-[464px] m:h-[400px] l:w-[580px] l:h-[448px]'>
+            <div className='relative mx-auto w-[78px] h-[80px] m:w-[108px] m:h-[110px]'>
+              <ImageWrapper
+                quality={100}
+                type='/img/good-site.png'
+                alt='good site'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+            <span className='mt-4 mb-2 text-h-6 font-bold text-greyscale-900 self-center'>
+              {t('LENDING_SECURITY_GOOD_SITES')}
+            </span>
+            <span className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center font-bold text-grayscale-900'>
+              {t('LENDING_SECURITY_GOOD_SITES_DESCRIPTION')}
+            </span>
+          </div>
+          <div
+            className='flex flex-col mt-10 px-4 py-8 bg-gradient-to-l from-safety-1 to-safety-2 
+                  shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl  w-full h-[314px] s:w-[344px] s:h-[306px] m:w-[464px] m:h-[400px] l:w-[580px] l:h-[448px]'>
+            <div className='relative mx-auto w-[78px] h-[80px] m:w-[108px] m:h-[110px]'>
+              <ImageWrapper
+                quality={100}
+                type='/img/fake-site.png'
+                alt='fake site'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+            <span className='mt-4 mb-2 text-h-6 font-bold text-greyscale-900 self-center'>
+              {t('LENDING_SECURITY_FAKE_SITES')}
+            </span>
+            <span className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center font-bold text-[#FF7386]'>
+              {t('LENDING_SECURITY_FAKE_SITES_DESCRIPTION')}
+            </span>
           </div>
         </div>
       </div>
