@@ -813,9 +813,9 @@ const FormPage: FC = observer(() => {
                             setShowAddNumber(true)
                           }}
                           disabled={!!phoneNumber}
-                          className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
+                          className={`w-full text-body-16 px-4 py-2.5 border bg-nc-back rounded-lg h-10 ${
                             phoneNumber
-                              ? 'text-nc-disabled bg-nc-back'
+                              ? 'text-nc-disabled  '
                               : 'text-greyscale-900'
                           }`}>
                           <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
