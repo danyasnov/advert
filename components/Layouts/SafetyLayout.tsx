@@ -314,12 +314,15 @@ const SafetyLayout: FC = observer(() => {
             <span className='mt-4 mb-2 text-h-6 font-bold text-greyscale-900 self-center'>
               {t('LENDING_SECURITY_GOOD_SITES')}
             </span>
-            <span className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center font-bold text-grayscale-900'>
-              {t('LENDING_SECURITY_GOOD_SITES_DESCRIPTION')}
-            </span>
+            <span
+              className='mt-2 text-body-16 m:text-h-6 l:text-h-4 text-center leading-3 font-bold text-grayscale-900 whitespace-pre'
+              dangerouslySetInnerHTML={{
+                __html: t('LENDING_SECURITY_GOOD_SITES_DESCRIPTION'),
+              }}
+            />
           </div>
           <div
-            className='flex flex-col mt-10 px-4 py-8 bg-gradient-to-l from-safety-1 to-safety-2 
+            className='flex flex-col mt-6 s:mt-10 px-4 py-8 bg-gradient-to-l from-safety-1 to-safety-2 
                   shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl  w-full h-[314px] s:w-[344px] s:h-[306px] m:w-[464px] m:h-[400px] l:w-[580px] l:h-[448px]'>
             <div className='relative mx-auto w-[78px] h-[80px] m:w-[108px] m:h-[110px]'>
               <ImageWrapper
@@ -333,9 +336,12 @@ const SafetyLayout: FC = observer(() => {
             <span className='mt-4 mb-2 text-h-6 font-bold text-greyscale-900 self-center'>
               {t('LENDING_SECURITY_FAKE_SITES')}
             </span>
-            <span className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center font-bold text-[#FF7386]'>
-              {t('LENDING_SECURITY_FAKE_SITES_DESCRIPTION')}
-            </span>
+            <span
+              className='mt-2 text-body-16 m:text-h-6 l:text-h-4 text-center leading-3 font-bold text-[#FF7386] whitespace-pre'
+              dangerouslySetInnerHTML={{
+                __html: t('LENDING_SECURITY_FAKE_SITES_DESCRIPTION'),
+              }}
+            />
           </div>
         </div>
       </div>
