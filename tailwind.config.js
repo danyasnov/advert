@@ -171,6 +171,7 @@ module.exports = {
         pink: '#FFF5F5',
         purple: '#7210FF',
         'input-bg': 'rgba(114, 16, 255, 0.08)',
+        'purple-gradient': '(286.17deg, #7210FF 0%, #9D59FF 100%)',
       },
       zIndex: {
         9: 9,

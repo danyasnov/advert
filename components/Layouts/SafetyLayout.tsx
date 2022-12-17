@@ -29,11 +29,11 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 
 const tabs = [
   {
-    title: 'LENDING_SELLER_CAN_DECEIVE',
+    title: 'LENDING_SECURITY_SELLER_CHEAT',
     id: 0,
   },
   {
-    title: 'LENDING_BUYER_CAN_DECEIVE',
+    title: 'LENDING_SECURITY_BUYER_CHEAT',
     id: 1,
   },
 ]
@@ -346,6 +346,177 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
+      <div className='flex flex-col items-center mx-4 mt-10 mb-16 s:mx-auto s:mt-16'>
+        <div className='s:flex hidden m:px-16 p-6 space-x-10 s:justify-between relative bg-white rounded-3xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)]  w-auto h-auto s:w-[704px] m:w-[944px] l:w-[1208px]'>
+          <div className='flex'>
+            <div className='flex relative self-center s:w-[137px] s:h-[228px] m:w-[163px] m:h-[272px]'>
+              <ImageWrapper
+                quality={100}
+                type='/img/guard.png'
+                alt='guard'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+          </div>
+
+          <div className='flex flex-col justify-center space-y-4 w-auto '>
+            <h1 className='s:text-h-6 m:text-h-5 text-greyscale-900 font-semibold'>
+              {t('LENDING_SECURITY_DO_NOT_GIVE_YOUR_DATA')}
+            </h1>
+            <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+              {t('LENDING_SECURITY_DO_NOT_GIVE_YOUR_DATA_DESCRIPTION')}
+            </span>
+            <h1 className='s:text-h-6 m:text-h-5 text-greyscale-900 font-semibold'>
+              {t('LENDING_SECURITY_MAKE_SURE')}
+            </h1>
+            <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+              {t('LENDING_SECURITY_MAKE_SURE_DESCRIPTION')}
+            </span>
+          </div>
+        </div>
+        <div className='s:hidden flex relative self-center w-[137px] h-[228px]'>
+          <ImageWrapper
+            quality={100}
+            type='/img/guard.png'
+            alt='guard'
+            layout='fill'
+            objectFit='contain'
+          />
+        </div>
+        <div className='s:hidden mt-8 flex flex-col justify-center space-y-4 w-auto'>
+          <h1 className='text-h-6 text-greyscale-900 font-semibold'>
+            {t('LENDING_SECURITY_DO_NOT_GIVE_YOUR_DATA')}
+          </h1>
+          <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+            {t('LENDING_SECURITY_DO_NOT_GIVE_YOUR_DATA_DESCRIPTION')}
+          </span>
+          <h1 className='text-h-6 text-greyscale-900 font-semibold'>
+            {t('LENDING_SECURITY_MAKE_SURE')}
+          </h1>
+          <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+            {t('LENDING_SECURITY_MAKE_SURE_DESCRIPTION')}
+          </span>
+        </div>
+      </div>
+
+      <div className='flex flex-col mx-4 s:mx-auto s:mt-20 items-center mx-4 s:mx-auto mt-8 s:w-[704px] m:w-[944px] l:w-[1208px]'>
+        <h1 className='mb-[72px] text-h-4 m:text-h-2 l:text-h-1 text-center text-greyscale-900 font-semibold'>
+          {t('LENDING_SECURITY_FRAUDSTERS_CAN_BE')}
+        </h1>
+        <div className='hidden shadow-[0px_4px_60px_rgba(4,6,15,0.08)] rounded-2xl m:flex w-full bg-white h-16 mb-20'>
+          {tabs.map((currentTab) => (
+            <Button
+              onClick={() => setTab(currentTab.id)}
+              key={currentTab.title}
+              className={`w-full rounded-2xl font-normal ${
+                currentTab.id === tab
+                  ? 'bg-gradient-to-l from-[#7210FF] to-[#9D59FF]'
+                  : ''
+              }`}>
+              <span
+                className={`text-h-4 font-bold ${
+                  currentTab.id === tab ? 'text-white' : 'text-greyscale-900 '
+                }`}>
+                {t(currentTab.title)}
+              </span>
+            </Button>
+          ))}
+        </div>
+        {(width < 1024 || tab === 0) && (
+          <>
+            <div className='flex flex-col bg-nc-salmon py-4 mb-7 w-screen m:hidden'>
+              <span className='text-h-4 s:text-h-3 font-medium text-center'>
+                {t('LENDING_SECURITY_SELLER_CHEAT')}
+              </span>
+            </div>
+            <div className='flex flex-col items-center m:flex-row m:flex-wrap m:justify-evenly m:w-full mb-7 s:mb-18 m:mb-25'>
+              <div className='w-[328px] h-[481px] s:w-[405px] s:h-[596px] m:w-[309px] m:h-[447px] l:w-[405px] l:h-[596px] xl:w-[433px] xl:h-[635px] relative mb-7'>
+                <ImageWrapper
+                  layout='fill'
+                  type='/img/safety-landing/seller-fraud-1.png'
+                  alt='seller fraud'
+                />
+              </div>
+              <div className='flex flex-col'>
+                <div className='w-[328px] h-[231px] s:w-[600px] s:h-[423px] m:w-[450px] m:h-[318px] l:w-[600px] l:h-[423px] xl:w-[640px] xl:h-[452px] relative mb-7 s:mb-15'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud-2.png'
+                    alt='seller fraud'
+                  />
+                </div>
+                <IcChat className='w-25 h-25 self-end hidden m:block' />
+              </div>
+            </div>
+            <div className='flex flex-col'>
+              <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
+                {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER')}
+              </h1>
+              <div className='flex'>
+                <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
+                <span
+                  className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
+                  dangerouslySetInnerHTML={{
+                    __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER_TEXT'),
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        )}
+        {(width < 1024 || tab === 1) && (
+          <>
+            <div className='flex flex-col bg-nc-salmon py-4 my-15 s:my-18 s:w-screen m:hidden'>
+              <span className='text-h-4 font-medium text-center'>
+                {t('LENDING_SECURITY_BUYER_CHEAT')}
+              </span>
+            </div>
+            <div className='flex flex-col  m:flex-row m:flex-wrap m:justify-evenly m:w-full mb-7 s:mb-18 m:mb-25'>
+              <div className='flex flex-col'>
+                <div className='w-[328px] h-[481px] s:w-[405px] s:h-[596px] m:w-[353px] m:h-[526px] l:w-[471px] l:h-[703px] xl:w-[503px] xl:h-[750px] relative mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud-1.png'
+                    alt='seller fraud'
+                  />
+                </div>
+                <div className='w-[328px] h-[115px] s:w-[470px] s:h-[166px] m:w-[353px] m:h-[124px] l:w-[471px] l:h-[166px] xl:w-[503px] xl:h-[177px] relative mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud-2.png'
+                    alt='seller fraud'
+                  />
+                </div>
+              </div>
+              <div className='flex flex-col'>
+                <div className='w-[328px] h-[721px] s:w-[379px] s:h-[834px] m:w-[284px] m:h-[625px] l:w-[379px] l:h-[834px] xl:w-[404px] xl:h-[890px] relative mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud-1.png'
+                    alt='seller fraud'
+                  />
+                </div>
+                <IcChat className='w-25 h-25 self-end hidden m:block' />
+              </div>
+            </div>
+            <div className='flex flex-col'>
+              <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
+                {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER')}
+              </h1>
+              <div className='flex '>
+                <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
+                <span
+                  className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
+                  dangerouslySetInnerHTML={{
+                    __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER_TEXT'),
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
       {/*      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
         <div className='flex flex-col l:w-[1200px] xl:w-[1280px]'>
           <h1 className='text-body-14 s:text-h-1 font-medium mb-9 text-center'>
