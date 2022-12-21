@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {Edit} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
@@ -17,13 +17,30 @@ import PrimaryButton from './Buttons/PrimaryButton'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const EditProfilePopup: FC = observer(() => {
+  const [show, setShow] = useState(false)
+  const {t} = useTranslation()
+  return (
+    <div>
+      <Button
+        className='hover:text-primary-500 text-greyscale-500'
+        onClick={() => setShow(true)}>
+        <div className='flex justify-center items-center space-x-2'>
+          <Edit filled size={16} />
+          <span className='text-body-14'>{t('EDIT_PROFILE_SETTINGS')}</span>
+        </div>
+      </Button>
+      {show && <EditForm onClose={() => setShow(false)} />}
+    </div>
+  )
+})
+
+const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
   const {user, setUserPersonalData} = useUserStore()
 
   const {settings} = user
   const {name, surname, sex} = settings.personal
   const {t} = useTranslation()
-  const [show, setShow] = useState(false)
-  useLockBodyScroll(show)
+  useLockBodyScroll(true)
 
   const sexOptionsRef = useRef([
     {value: '1', label: t('MALE')},
@@ -37,10 +54,7 @@ const EditProfilePopup: FC = observer(() => {
       (o) => o.value === (sex as unknown as string),
     ),
   })
-  const onClose = () => {
-    setShow(false)
-    formik.resetForm()
-  }
+
   const schema = object().shape({
     name: string()
       .trim()
@@ -90,41 +104,31 @@ const EditProfilePopup: FC = observer(() => {
       }
     },
   })
-  const {handleSubmit} = formik
+  const {handleSubmit, resetForm} = formik
   return (
-    <div>
-      <Button
-        className='hover:text-primary-500 text-greyscale-500'
-        onClick={() => setShow(true)}>
-        <div className='flex justify-center items-center space-x-2'>
-          <Edit filled size={16} />
-          <span className='text-body-14'>{t('EDIT_PROFILE_SETTINGS')}</span>
+    <ReactModal
+      isOpen
+      onRequestClose={onClose}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
+      contentLabel='Personal Data'
+      className='absolute w-full bg-white-a inset-x-0 mx-auto s:w-[480px] s:top-20 flex outline-none'
+      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto '>
+      <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl s:overflow-hidden '>
+        <div className='px-6 mt-6 pb-4 flex justify-between'>
+          <span className='text-h-5 text-greyscale-900 font-bold'>
+            {t('EDIT_PROFILE')}
+          </span>
+          <Button onClick={onClose}>
+            <IcClear className='fill-current text-black-d h-6 w-6' />
+          </Button>
         </div>
-      </Button>
-      {show && (
-        <ReactModal
-          isOpen={show}
-          onRequestClose={onClose}
-          shouldCloseOnOverlayClick={false}
-          ariaHideApp={false}
-          contentLabel='Personal Data'
-          className='absolute w-full bg-white-a inset-x-0 mx-auto s:w-[480px] s:top-20 flex outline-none'
-          overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto '>
-          <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl s:overflow-hidden '>
-            <div className='px-6 mt-6 pb-4 flex justify-between'>
-              <span className='text-h-5 text-greyscale-900 font-bold'>
-                {t('EDIT_PROFILE')}
-              </span>
-              <Button onClick={onClose}>
-                <IcClear className='fill-current text-black-d h-6 w-6' />
-              </Button>
-            </div>
-            <div
-              className='flex flex-col w-full bg-white z-10 left-0 h-full'
-              data-test-id='location-modal-form'>
-              <div className='h-full flex flex-col px-6 pt-4'>
-                <FormikProvider value={formik}>
-                  <Field
+        <div
+          className='flex flex-col w-full bg-white z-10 left-0 h-full'
+          data-test-id='location-modal-form'>
+          <div className='h-full flex flex-col px-6 pt-4'>
+            <FormikProvider value={formik}>
+              <Field
                     name='name'
                     component={FormikText}
                     placeholder={t('NAME')}
@@ -140,29 +144,28 @@ const EditProfilePopup: FC = observer(() => {
                     options={sexOptionsRef.current}
                     placeholder={t('SEX')}
                   />
-                </FormikProvider>
-                <div className='flex w-full mt-8 mb-6'>
-                  <SecondaryButton
-                    id='location-modal-map-clean'
-                    className='w-full'
-                    onClick={onClose}>
-                    {t('CANCEL')}
-                  </SecondaryButton>
-                  <PrimaryButton
-                    className='ml-2 w-full'
-                    id='location-modal-map-apply'
-                    onClick={() => {
-                      handleSubmit()
-                    }}>
-                    {t('APPLY')}
-                  </PrimaryButton>
-                </div>
-              </div>
+            </FormikProvider>
+            <div className='flex w-full mt-8 mb-6'>
+              <SecondaryButton
+                id='location-modal-map-clean'
+                className='w-full'
+                onClick={onClose}>
+                {t('CANCEL')}
+              </SecondaryButton>
+              <PrimaryButton
+                className='ml-2 w-full'
+                id='location-modal-map-apply'
+                onClick={() => {
+                  handleSubmit()
+                }}>
+                {t('APPLY')}
+              </PrimaryButton>
             </div>
           </div>
-        </ReactModal>
-      )}
-    </div>
+        </div>
+      </div>
+    </ReactModal>
   )
 })
+
 export default EditProfilePopup
