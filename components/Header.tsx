@@ -24,7 +24,7 @@ const Header: FC = observer(() => {
     <header className='flex s:justify-center relative z-10'>
       <div className='header-width'>
         <div className='flex justify-start pl-4 s:pl-0 py-2 mb-2'>
-          <div className='flex items-center '>
+          <div className='flex items-center'>
             <LanguageSelect />
           </div>
           <div className='flex items-center'>
