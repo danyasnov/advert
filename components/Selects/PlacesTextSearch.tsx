@@ -96,7 +96,7 @@ const PlacesTextSearch: FC<Props> = ({
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={t('SEARCH')}
-          className='pr-4 py-3 pl-10 text-greyscale-900 text-body-16 w-full h-full outline-none'
+          className='manual-outline pr-4 py-3 pl-10 text-greyscale-900 text-body-16 w-full h-full outline-none'
           data-test-id='location-search'
           id='search-autocomplete'
         />
