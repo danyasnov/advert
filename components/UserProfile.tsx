@@ -13,6 +13,7 @@ const UserProfile: FC = observer(() => {
   const isCurrentUser = userHash === user?.hash
 
   const {t} = useTranslation()
+  console.log(toJS(user))
   return (
     <div className='flex flex-col items-center rounded-2xl bg-white py-5 px-7'>
       <div className='mb-3'>

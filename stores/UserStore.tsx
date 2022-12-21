@@ -203,7 +203,7 @@ export class UserStore implements IUserStore {
   }
 
   setUserPersonalData = (data) => {
-    this.user.settings.personal = {...this.user.settings.personal, data}
+    this.user.settings.personal = {...this.user.settings.personal, ...data}
     this.user.name = data.name
   }
 
