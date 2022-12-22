@@ -14,7 +14,7 @@ import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
-import ChatList from '../ChatList'
+// import ChatList from '../ChatList'
 
 const getTabs = (t: TFunction) => [
   {title: `${t('MODERATION')}`, id: 1},
@@ -51,7 +51,7 @@ const UserLayout: FC = observer(() => {
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
   useEffect(() => {
-    setActiveUserPage('chat')
+    // setActiveUserPage('chat')
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
     if (isCurrentUser) {
@@ -209,12 +209,12 @@ const UserLayout: FC = observer(() => {
                   />
                 </div>
               )}
-              {activeUserPage === 'chat' && (
-                <div>
-                  <SectionTitle title={t('MESSAGES')} />
-                  <ChatList />
-                </div>
-              )}
+              {/* {activeUserPage === 'chat' && ( */}
+              {/*  <div> */}
+              {/*    <SectionTitle title={t('MESSAGES')} /> */}
+              {/*    <ChatList /> */}
+              {/*  </div> */}
+              {/* )} */}
             </main>
           </div>
         </div>
