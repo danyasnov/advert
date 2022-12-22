@@ -17,6 +17,7 @@ import Auth from '../Auth'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {trackSingle} from '../../helpers'
 
 const features = [
   {
@@ -111,6 +112,8 @@ const BusinessLayout: FC = observer(() => {
           ),
         },
       })
+      trackSingle('CompleteRegistration')
+      trackSingle('BusinessRegistration')
     },
   })
 
