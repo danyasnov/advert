@@ -6,7 +6,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
-import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
+import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
 import Tabs from '../Tabs'
@@ -14,7 +14,7 @@ import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
-import EmptyTabs from '../EmptyTabs'
+import EmptyTab from '../EmptyTab'
 
 const getTabs = (t: TFunction) => [
   {title: `${t('MODERATION')}`, id: 1},
@@ -94,7 +94,7 @@ const UserLayout: FC = observer(() => {
                     />
                   </div>
                   {isCurrentUser && activeTab === 1 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userOnModeration.items}
                       page={userOnModeration.page}
@@ -114,7 +114,7 @@ const UserLayout: FC = observer(() => {
                     />
                   )}
                   {activeTab === 2 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userSale.items}
                       page={userSale.page}
@@ -134,7 +134,7 @@ const UserLayout: FC = observer(() => {
                     />
                   )}
                   {activeTab === 3 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userSold.items}
                       page={userSold.page}
@@ -154,7 +154,7 @@ const UserLayout: FC = observer(() => {
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userArchive.items}
                       page={userArchive.page}
@@ -181,7 +181,7 @@ const UserLayout: FC = observer(() => {
 
                   {isEmpty(drafts) ? (
                     <div className='flex justify-center'>
-                      <EmptyTabs
+                      <EmptyTab
                         description='DRAWINGS_EMPTY'
                         img='/img/drafts-tab.png'
                       />
@@ -203,7 +203,7 @@ const UserLayout: FC = observer(() => {
               {activeUserPage === 'favorites' && (
                 <div>
                   <SectionTitle title={t('FAVORITE')} />
-                  <ScrollableCardGroup
+                  <UserTabWrapper
                     products={userFavorite.items}
                     page={userFavorite.page}
                     count={userFavorite.count}

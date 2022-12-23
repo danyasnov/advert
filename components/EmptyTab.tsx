@@ -7,7 +7,7 @@ interface Props {
   img: string
 }
 
-const EmptyTabs: FC<Props> = ({description, img}) => {
+const EmptyTab: FC<Props> = ({description, img}) => {
   const {t} = useTranslation()
 
   return (
@@ -28,4 +28,4 @@ const EmptyTabs: FC<Props> = ({description, img}) => {
   )
 }
 
-export default EmptyTabs
+export default EmptyTab
