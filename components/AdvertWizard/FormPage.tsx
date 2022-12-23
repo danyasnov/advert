@@ -906,7 +906,7 @@ const FormPage: FC = observer(() => {
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
             <AddNumberModal
-              onFinish={() => {}}
+              onFinish={() => setShowAddNumber(false)}
               isOpen={showAddNumber}
               onClose={() => setShowAddNumber(false)}
             />

@@ -30,6 +30,8 @@ import {clearFalsyValues} from '../utils'
 import PublicKey from '../PublicKey'
 import Storage from '../stores/Storage'
 
+const PIXEL_ID = '678216410546433'
+
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
   window.alert('NotImplemented')
@@ -671,18 +673,16 @@ export const getCategoriesSlugsPathFromIds = (
 export const trackSingle = (event, data?) => {
   if (typeof window === 'undefined') return
   const ReactPixel = require('react-facebook-pixel').default
-  const pixelId = '678216410546433'
 
-  ReactPixel.init(pixelId)
-  ReactPixel.trackSingle(pixelId, event, data)
+  ReactPixel.init(PIXEL_ID)
+  ReactPixel.trackSingle(PIXEL_ID, event, data)
 }
 
 export const startTracking = () => {
   if (typeof window === 'undefined') return
   const ReactPixel = require('react-facebook-pixel').default
-  const pixelId = '678216410546433'
 
-  ReactPixel.init(pixelId)
+  ReactPixel.init(PIXEL_ID)
   ReactPixel.pageView()
 }
 

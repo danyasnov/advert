@@ -5,6 +5,7 @@ const withTM = require('next-transpile-modules')(
     'front-api/node_modules/axios-curlirize',
     'react-cssfx-loading',
     'chats',
+    // 'chats/node_modules/front-api',
   ],
   {
     resolveSymlinks: false,
