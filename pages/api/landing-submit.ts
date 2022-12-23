@@ -20,13 +20,13 @@ export default async (
       campaign_id: 'postman_inline_both_example',
       recipients: [
         {
-          address: 'busines@vooxee.com',
+          address: 'yasnov.one@gmail.com',
         },
       ],
       content: {
         from: {
-          email: 'landing@vooxee.com',
-          name: 'Busines Landing',
+          email: 'info@vooxee.com',
+          name: 'info@vooxee.com',
         },
 
         subject: 'New application from Business Landing',
