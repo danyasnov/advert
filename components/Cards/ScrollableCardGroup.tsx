@@ -66,6 +66,7 @@ const ScrollableCardGroup: FC<Props> = ({
           <CardsLoader
             enableFourthColumnForM={enableFourthColumnForM}
             enableFiveColumnsForL={enableFiveColumnsForL}
+            enableTwoColumnsForS={enableTwoColumnsForS}
             show
           />
         }>
