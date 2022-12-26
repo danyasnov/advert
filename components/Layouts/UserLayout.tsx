@@ -6,6 +6,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -97,7 +98,13 @@ const UserLayout: FC = observer(() => {
                   {isCurrentUser && activeTab === 1 && (
                     <ScrollableCardGroup
                       showMenu={isCurrentUser}
-                      products={userOnModeration.items}
+                      products={userOnModeration.items.map((i) => {
+                        if (i.state === 'blocked') {
+                          // @ts-ignore
+                          i.url = `/advert/edit/${i.hash}`
+                        }
+                        return i
+                      })}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
                       state={userOnModeration.state}
