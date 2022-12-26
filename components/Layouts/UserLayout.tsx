@@ -98,7 +98,7 @@ const UserLayout: FC = observer(() => {
                   {isCurrentUser && activeTab === 1 && (
                     <ScrollableCardGroup
                       showMenu={isCurrentUser}
-                      products={userOnModeration.items.map((i) => {
+                      products={(userOnModeration.items || []).map((i) => {
                         if (i.state === 'blocked') {
                           // @ts-ignore
                           i.url = `/advert/edit/${i.hash}`
