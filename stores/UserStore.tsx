@@ -145,7 +145,7 @@ export class UserStore implements IUserStore {
     }
     currentScope.cancelTokenSource = cancelToken.source()
 
-    currentScope.state = 'pending-scroll'
+    currentScope.state = 'pending'
     const config: AxiosRequestConfig = {
       url: urlMap[path],
       method: 'POST',

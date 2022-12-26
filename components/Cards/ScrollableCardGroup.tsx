@@ -13,7 +13,6 @@ interface Props {
   count?: number
   page?: number
   limit?: number
-  hideNotFoundDescription?: boolean
   disableScroll?: boolean
   enableFourthColumnForM?: boolean
   enableFiveColumnsForL?: boolean
@@ -42,6 +41,7 @@ const ScrollableCardGroup: FC<Props> = ({
       <CardsLoader
         enableFourthColumnForM={enableFourthColumnForM}
         enableFiveColumnsForL={enableFiveColumnsForL}
+        enableTwoColumnsForS={enableTwoColumnsForS}
         show
       />
     )
