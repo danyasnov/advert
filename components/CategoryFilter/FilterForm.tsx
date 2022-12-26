@@ -59,7 +59,7 @@ const FilterForm: FC = observer(() => {
     applyFilter,
     filter,
   } = useProductsStore()
-  const [showFilters, setShowFilters] = useState(true)
+  const [showFilters, setShowFilters] = useState(false)
   const [showReset, setShowReset] = useState(false)
   const prevCategoryQueryRef = useRef('')
   const {categoryDataFieldsById, categories} = useCategoriesStore()
