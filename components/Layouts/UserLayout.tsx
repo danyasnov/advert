@@ -101,7 +101,7 @@ const UserLayout: FC = observer(() => {
                       products={userOnModeration.items}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
-                      state={userOnModeration.state}
+                      state={userOnModeration.state || 'pending'}
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userOnModeration.limit}
