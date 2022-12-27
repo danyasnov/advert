@@ -52,15 +52,15 @@ export class UserStore implements IUserStore {
 
   user
 
-  userSale: Partial<ProductSummary> = {}
+  userSale: Partial<ProductSummary> = {state: 'pending'}
 
-  userSold: Partial<ProductSummary> = {}
+  userSold: Partial<ProductSummary> = {state: 'pending'}
 
-  userFavorite: Partial<ProductSummary> = {}
+  userFavorite: Partial<ProductSummary> = {state: 'pending'}
 
-  userOnModeration: Partial<ProductSummary> = {}
+  userOnModeration: Partial<ProductSummary> = {state: 'pending'}
 
-  userArchive: Partial<ProductSummary> = {}
+  userArchive: Partial<ProductSummary> = {state: 'pending'}
 
   drafts: DraftModel[] = []
 
