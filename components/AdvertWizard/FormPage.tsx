@@ -371,7 +371,7 @@ const FormPage: FC = observer(() => {
   const canPublish =
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
   return (
-    <div className='max-w-screen w-full'>
+    <div className='max-w-screen w-full pb-20 s:pb-0'>
       <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
         <Button
           onClick={() => {
@@ -906,7 +906,7 @@ const FormPage: FC = observer(() => {
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
             <AddNumberModal
-              onFinish={() => {}}
+              onFinish={() => setShowAddNumber(false)}
               isOpen={showAddNumber}
               onClose={() => setShowAddNumber(false)}
             />

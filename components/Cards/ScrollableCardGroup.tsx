@@ -13,7 +13,6 @@ interface Props {
   count?: number
   page?: number
   limit?: number
-  hideNotFoundDescription?: boolean
   disableScroll?: boolean
   enableFourthColumnForM?: boolean
   enableFiveColumnsForL?: boolean
@@ -37,11 +36,13 @@ const ScrollableCardGroup: FC<Props> = ({
   showMenu,
 }) => {
   const hasMore = count > page * limit
+  console.log('state', state)
   if (isEmpty(products) && state === 'pending') {
     return (
       <CardsLoader
         enableFourthColumnForM={enableFourthColumnForM}
         enableFiveColumnsForL={enableFiveColumnsForL}
+        enableTwoColumnsForS={enableTwoColumnsForS}
         show
       />
     )
@@ -66,6 +67,7 @@ const ScrollableCardGroup: FC<Props> = ({
           <CardsLoader
             enableFourthColumnForM={enableFourthColumnForM}
             enableFiveColumnsForL={enableFiveColumnsForL}
+            enableTwoColumnsForS={enableTwoColumnsForS}
             show
           />
         }>

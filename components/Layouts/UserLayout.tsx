@@ -6,6 +6,7 @@ import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -14,6 +15,7 @@ import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
+// import ChatList from '../ChatList'
 
 const getTabs = (t: TFunction) => [
   {title: `${t('MODERATION')}`, id: 1},
@@ -50,6 +52,7 @@ const UserLayout: FC = observer(() => {
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
   useEffect(() => {
+    // setActiveUserPage('chat')
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
     if (isCurrentUser) {
@@ -102,7 +105,6 @@ const UserLayout: FC = observer(() => {
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userOnModeration.limit}
-                      hideNotFoundDescription
                       fetchProducts={() => {
                         fetchProducts({
                           page: userOnModeration.page + 1,
@@ -121,7 +123,6 @@ const UserLayout: FC = observer(() => {
                       limit={userSale.limit}
                       enableTwoColumnsForS
                       disableVipWidth
-                      hideNotFoundDescription
                       fetchProducts={() => {
                         fetchProducts({
                           page: userSale.page + 1,
@@ -137,7 +138,6 @@ const UserLayout: FC = observer(() => {
                       page={userSold.page}
                       count={userSold.count}
                       state={userSold.state}
-                      hideNotFoundDescription
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userSold.limit}
@@ -156,7 +156,6 @@ const UserLayout: FC = observer(() => {
                       page={userArchive.page}
                       count={userArchive.count}
                       state={userArchive.state}
-                      hideNotFoundDescription
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userArchive.limit}
@@ -194,7 +193,6 @@ const UserLayout: FC = observer(() => {
                     page={userFavorite.page}
                     count={userFavorite.count}
                     state={userFavorite.state}
-                    hideNotFoundDescription
                     enableTwoColumnsForS
                     disableVipWidth
                     limit={userFavorite.limit}
@@ -207,6 +205,12 @@ const UserLayout: FC = observer(() => {
                   />
                 </div>
               )}
+              {/* {activeUserPage === 'chat' && ( */}
+              {/*  <div> */}
+              {/*    <SectionTitle title={t('MESSAGES')} /> */}
+              {/*    <ChatList /> */}
+              {/*  </div> */}
+              {/* )} */}
             </main>
           </div>
         </div>

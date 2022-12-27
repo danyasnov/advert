@@ -203,7 +203,7 @@ const MapPage: FC = () => {
     })
 
     circle.current = new maps.Circle({
-      strokeColor: '#7210FF',
+      strokeColor: '#FFFFFF',
       strokeWeight: 2,
       fillColor: '#7210FF',
       fillOpacity: 0.2,

@@ -138,7 +138,6 @@ const MainLayout: FC = observer(() => {
                       products={otherProducts.all}
                       state={isLoading ? 'pending' : 'done'}
                       disableScroll
-                      hideNotFoundDescription
                     />
                     {!isEmpty(products) && (
                       <LinkWrapper

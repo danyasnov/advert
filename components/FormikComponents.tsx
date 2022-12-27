@@ -965,7 +965,7 @@ export const FormikDependentFields: FC<
           key={f.id}
           id={`form-field-${f.fieldType}-${f.slug}`}
           body={
-            <div className='w-full s:w-1/2 l:w-5/12'>
+            <div className='w-full s:w-1/2 l:w-full'>
               <FormikCreateField field={f} />
             </div>
           }
