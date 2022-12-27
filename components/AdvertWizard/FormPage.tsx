@@ -371,7 +371,7 @@ const FormPage: FC = observer(() => {
   const canPublish =
     isAllFormVisible && !formState.find((f) => f.required && !f.filled)
   return (
-    <div className='max-w-screen w-full pb-20 s:pb-0'>
+    <div className='max-w-screen w-full'>
       <div className='flex items-center p-4 text-greyscale-900 space-x-4 s:hidden'>
         <Button
           onClick={() => {
@@ -799,7 +799,7 @@ const FormPage: FC = observer(() => {
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
               body={
-                <div className='space-y-4'>
+                <div className='space-y-4 pb-20 s:pb-0'>
                   <AdvertFormField
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     id='form-field-phone-number'
