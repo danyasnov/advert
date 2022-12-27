@@ -36,6 +36,7 @@ const ScrollableCardGroup: FC<Props> = ({
   showMenu,
 }) => {
   const hasMore = count > page * limit
+  console.log('state', state)
   if (isEmpty(products) && state === 'pending') {
     return (
       <CardsLoader
