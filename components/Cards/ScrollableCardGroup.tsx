@@ -37,9 +37,7 @@ const ScrollableCardGroup: FC<Props> = ({
   showMenu,
 }) => {
   const hasMore = count > page * limit
-  console.log('state', state, isEmpty(products), toJS(products))
   if (isEmpty(products) && state === 'pending') {
-    console.log("isEmpty(products) && state === 'pending'")
     return (
       <CardsLoader
         enableFourthColumnForM={enableFourthColumnForM}
@@ -50,8 +48,6 @@ const ScrollableCardGroup: FC<Props> = ({
     )
   }
   if (isEmpty(products)) {
-    console.log('isEmpty(products)')
-
     return (
       <div className='flex justify-center'>
         <AdvertNotFoundWithDescription />
