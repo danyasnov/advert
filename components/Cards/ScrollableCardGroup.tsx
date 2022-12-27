@@ -2,6 +2,7 @@ import {FC} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api'
+import {toJS} from 'mobx'
 import Card from './Card'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
@@ -36,7 +37,6 @@ const ScrollableCardGroup: FC<Props> = ({
   showMenu,
 }) => {
   const hasMore = count > page * limit
-  console.log('state', state)
   if (isEmpty(products) && state === 'pending') {
     return (
       <CardsLoader
