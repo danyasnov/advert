@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Heart2, Logout} from 'react-iconly'
+import {Heart2, Logout, Message} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import IcAds from 'icons/material/Ads.svg'
 import IcCreate from 'icons/material/Create.svg'
@@ -62,6 +62,18 @@ const UserSidebar: FC = observer(() => {
               <Heart2 filled size={28} />
               <span className='text-body-16'>{t('FAVORITE')}</span>
             </Button>
+            {/* <Button */}
+            {/*  onClick={() => { */}
+            {/*    setActiveUserPage('chat' as PagesType) */}
+            {/*  }} */}
+            {/*  className={`${ */}
+            {/*    activeUserPage === 'favorites' */}
+            {/*      ? 'text-primary-500' */}
+            {/*      : 'text-greyscale-900' */}
+            {/*  } space-x-4`}> */}
+            {/*  <Message filled size={28} /> */}
+            {/*  <span className='text-body-16'>{t('MESSAGES')}</span> */}
+            {/* </Button> */}
             <LogoutButton className='text-greyscale-500 space-x-4'>
               <>
                 <Logout filled size={28} />

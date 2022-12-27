@@ -541,6 +541,7 @@ export const FormikText: FC<
   const {setFieldValue, errors, setFieldError} = form
   const error = get(errors, name)
   const isValid = !error
+  const [active, setActive] = useState(false)
   const props = {
     'data-test-id': name,
     leftIcon,
@@ -558,6 +559,8 @@ export const FormikText: FC<
       if (error) setFieldError(name, undefined)
     },
     placeholder,
+    onBlur: () => setActive(false),
+    onFocus: () => setActive(true),
     className: `border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
@@ -576,7 +579,14 @@ export const FormikText: FC<
     <textarea {...props} />
   ) : (
     <div className='relative'>
-      {!!leftIcon && <div className='absolute top-4.5 left-5'>{leftIcon}</div>}
+      {!!leftIcon && (
+        <div
+          className={`${
+            active ? 'text-primary-500' : ''
+          } absolute top-4.5 left-5`}>
+          {leftIcon}
+        </div>
+      )}
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...props} />
     </div>
@@ -675,14 +685,17 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
     <div
       className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
-      <Button onClick={() => setShow(!show)} className='w-full px-5'>
+      <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
         <div className='flex justify-between w-full text-body-12'>
           {displayValue ? (
             <span className='text-greyscale-900 flex items-center'>
               {displayValue}
             </span>
           ) : (
-            <span className='text-greyscale-500 flex items-center truncate'>
+            <span
+              className={`${
+                placeholder.length > 12 ? 'text-body-10' : ''
+              } text-greyscale-500 flex items-center text-left`}>
               {placeholder}
             </span>
           )}
@@ -952,7 +965,7 @@ export const FormikDependentFields: FC<
           key={f.id}
           id={`form-field-${f.fieldType}-${f.slug}`}
           body={
-            <div className='w-full s:w-1/2 l:w-5/12'>
+            <div className='w-full s:w-1/2 l:w-full'>
               <FormikCreateField field={f} />
             </div>
           }
