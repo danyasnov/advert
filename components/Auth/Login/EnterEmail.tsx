@@ -134,7 +134,7 @@ const EnterEmail: FC<PageProps> = observer(
                 <div
                   className={`text-greyscale-900 ${
                     /* eslint-disable-next-line no-nested-ternary */
-                    !!formik.errors.email
+                    formik.errors.email
                       ? 'text-error'
                       : !values.showPass
                       ? 'text-greyscale-500'
