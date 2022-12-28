@@ -20,6 +20,7 @@ export default function Home() {
     destroyCookiesWrapper('aup')
     destroyCookiesWrapper('authNewRefreshToken')
     destroyCookiesWrapper('authNewToken')
+    destroyCookiesWrapper('sessionID')
     localforage.clear()
   }, [])
   return (
