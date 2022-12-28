@@ -12,10 +12,9 @@ import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 
 const Banners: FC = observer(() => {
   const {t} = useTranslation()
-  const {locationCodes, setShowLogin} = useGeneralStore()
+  const {locationCodes, setShowLogin, user} = useGeneralStore()
   const {width} = useWindowSize()
   const router = useRouter()
-  const {user} = useUserStore()
   const banners = [
     {
       id: 'auto',
