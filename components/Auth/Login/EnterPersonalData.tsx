@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {User, Lock} from 'react-iconly'
 import {AuthType} from 'front-api/src/models'
@@ -6,6 +6,7 @@ import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {toast} from 'react-toastify'
 import {object, string, ref} from 'yup'
 import {trim} from 'lodash'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
 import {FormikPassword, FormikText} from '../../FormikComponents'
@@ -13,7 +14,7 @@ import {makeRequest} from '../../../api'
 
 const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
   const {t} = useTranslation()
-
+  const [token, setToken] = useState('')
   const baseSchema = object().shape({
     name: string()
       .trim()
@@ -60,6 +61,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
+      if (state.authType === 1 && !token) return
       const registerResponse = await makeRequest({
         url: '/api/register',
         method: 'post',
@@ -120,6 +122,14 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               </div>
             }
           />
+          {state.authType === 1 && process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+              onChange={(val) => {
+                setToken(val)
+              }}
+            />
+          )}
           {state.authType === 2 && (
             <>
               <Field

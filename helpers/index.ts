@@ -674,7 +674,7 @@ export const trackSingle = (event, data?) => {
   if (typeof window === 'undefined') return
   const ReactPixel = require('react-facebook-pixel').default
 
-  ReactPixel.init(PIXEL_ID)
+  // ReactPixel.init(PIXEL_ID)
   ReactPixel.trackSingle(PIXEL_ID, event, data)
 }
 

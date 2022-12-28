@@ -124,7 +124,7 @@ const ProductHeader: FC = observer(() => {
             )
           })}
         </div>
-        <div className='flex ml-4 space-x-2'>
+        <div className='flex ml-4 space-x-2 relative'>
           {isUserAdv && (
             <ProductMenu
               getOptions={(setShowDeactivateModal) =>
