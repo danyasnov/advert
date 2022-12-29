@@ -183,7 +183,7 @@ const UserLayout: FC = observer(() => {
                     <div className='flex justify-center'>
                       <EmptyTab
                         description='DRAWINGS_EMPTY'
-                        img='/img/drafts-tab.png'
+                        img='/img/drafts-tab.svg'
                       />
                     </div>
                   ) : (
