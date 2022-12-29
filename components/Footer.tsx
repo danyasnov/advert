@@ -43,6 +43,34 @@ const Footer: FC = observer(() => {
                 <div className='text-body-16 text-greyscale-800 capitalize-first mb-2 l:mb-4'>
                   {t('INSTALL_MOBILE_APP')}
                 </div>
+                <div className='flex flex-wrap items-center justify-around s:justify-start'>
+                  <a
+                    href='https://play.google.com/store/apps/details?id=vooxee.com&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
+                    className='l:mr-2 inline-flex m:-ml-2'
+                    style={{width: '135px', height: '55px'}}>
+                    <img
+                      alt='Get it on Google Play'
+                      src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'
+                    />
+                  </a>
+                  <a
+                    className='inline-flex'
+                    href='https://apps.apple.com/ru/app/vooxee/id6443601677'
+                    style={{
+                      borderRadius: '13px',
+                      width: '130px',
+                    }}>
+                    <img
+                      src='https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1513555200&h=328ae9fa89f9b000ff0df1a0bd814025'
+                      alt='Download on the App Store'
+                      style={{
+                        borderRadius: '13px',
+                        width: '120px',
+                        height: '40px',
+                      }}
+                    />
+                  </a>
+                </div>
               </>
             }
           />
