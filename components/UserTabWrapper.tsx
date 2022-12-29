@@ -43,7 +43,7 @@ const UserTabWrapper: FC<Props> = ({
       <div className='flex justify-center'>
         <EmptyTab
           description='NO_PRODUCTS_FOR_MODERATION'
-          img='/img/empty-tab.png'
+          img='/img/empty-tab.svg'
         />
       </div>
     )
@@ -52,7 +52,7 @@ const UserTabWrapper: FC<Props> = ({
   if (isEmpty(products) && tab === 'sale') {
     return (
       <div className='flex justify-center'>
-        <EmptyTab description='NO_PRODUCTS_FOR_SALE' img='/img/empty-tab.png' />
+        <EmptyTab description='NO_PRODUCTS_FOR_SALE' img='/img/empty-tab.svg' />
       </div>
     )
   }
@@ -60,7 +60,7 @@ const UserTabWrapper: FC<Props> = ({
   if (isEmpty(products) && tab === 'sold') {
     return (
       <div className='flex justify-center'>
-        <EmptyTab description='NO_PRODUCTS_SOLD' img='/img/empty-tab.png' />
+        <EmptyTab description='NO_PRODUCTS_SOLD' img='/img/empty-tab.svg' />
       </div>
     )
   }
@@ -68,7 +68,7 @@ const UserTabWrapper: FC<Props> = ({
   if (isEmpty(products) && tab === 'archive') {
     return (
       <div className='flex justify-center'>
-        <EmptyTab description='DRAWINGS_EMPTY' img='/img/empty-tab.png' />
+        <EmptyTab description='ARCHIVE_EMPTY' img='/img/empty-tab.svg' />
       </div>
     )
   }
@@ -80,7 +80,7 @@ const UserTabWrapper: FC<Props> = ({
   ) {
     return (
       <div className='flex justify-center'>
-        <EmptyTab description='FAVOURITES_EMPTY' img='/img/favorites-tab.png' />
+        <EmptyTab description='FAVOURITES_EMPTY' img='/img/favorites-tab.svg' />
       </div>
     )
   }
