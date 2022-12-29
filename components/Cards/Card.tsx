@@ -29,7 +29,7 @@ import {useRouter} from 'next/router'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
-import {trackSingle} from '../../helpers'
+import {handleMetrics, trackSingle} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
@@ -206,6 +206,9 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
+        onClick={() => {
+          handleMetrics('clickTo_advt')
+        }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'

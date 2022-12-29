@@ -78,7 +78,7 @@ const DeactivateAdvModal: FC<{isOpen: boolean; onClose: () => void}> = ({
               destroyCookiesWrapper('aup')
               destroyCookiesWrapper('authNewRefreshToken')
               destroyCookiesWrapper('authNewToken')
-              destroyCookiesWrapper('sessionID')
+              destroyCookiesWrapper('sessionId')
               localforage.clear()
               router.reload()
               onClose()
