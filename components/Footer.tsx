@@ -82,7 +82,7 @@ const Footer: FC = observer(() => {
         </div>
         <div className='border-t border-shadow-b pt-2'>
           <div className='flex flex-col m:flex-row justify-between  mx-4 s:mx-auto'>
-            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-y-0 s:space-x-10 text-greyscale-900 text-body-14 font-semibold text-left'>
+            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-x-4 s:space-y-0 s:flex-wrap text-greyscale-900 text-body-14 font-medium m:font-semibold text-left'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
                 className='flex justify-center items-center whitespace-nowrap'
@@ -109,10 +109,16 @@ const Footer: FC = observer(() => {
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper
-                className='flex justify-center items-center w-full'
+                className='flex justify-center items-center'
                 title={t('SUPPORT')}
                 href='/support'>
                 {t('SUPPORT')}
+              </LinkWrapper>
+              <LinkWrapper
+                className='flex justify-center items-center whitespace-nowrap'
+                title={t('FOR_BUSINESS')}
+                href='/business'>
+                {t('FOR_BUSINESS')}
               </LinkWrapper>
             </div>
             <div className='text-body-14 font-normal mb-8 s:my-7 text-greyscale-900 self-start'>
