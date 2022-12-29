@@ -82,16 +82,16 @@ const Footer: FC = observer(() => {
         </div>
         <div className='border-t border-shadow-b pt-2'>
           <div className='flex flex-col m:flex-row justify-between  mx-4 s:mx-auto'>
-            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-y-0 s:flex-wrap text-greyscale-900 text-body-14 font-medium m:font-semibold text-left'>
+            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-x-4 s:space-y-0 s:flex-wrap text-greyscale-900 text-body-14 font-medium m:font-semibold text-left'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
-                className='flex s:mr-10 justify-center items-center whitespace-nowrap'
+                className='flex justify-center items-center whitespace-nowrap'
                 href='/p/terms-and-conditions'>
                 {t('TERMS_AND_CONDITIONS')}
               </LinkWrapper>
               <LinkWrapper
                 title={t('PRIVACY_POLICY')}
-                className='flex s:mr-10 justify-center items-center whitespace-nowrap'
+                className='flex justify-center items-center whitespace-nowrap'
                 href='/p/privacy-policy'>
                 {t('PRIVACY_POLICY')}
               </LinkWrapper>
@@ -103,19 +103,19 @@ const Footer: FC = observer(() => {
               {/*  {t('RULES')} */}
               {/* </LinkWrapper> */}
               <LinkWrapper
-                className='flex s:mr-10 justify-center items-center whitespace-nowrap'
+                className='flex justify-center items-center whitespace-nowrap'
                 title={t('COOKIES_POLICY')}
                 href='/p/cookies-policy'>
                 {t('COOKIES_POLICY')}
               </LinkWrapper>
               <LinkWrapper
-                className='flex m:mr-10 justify-center items-center'
+                className='flex justify-center items-center'
                 title={t('SUPPORT')}
                 href='/support'>
                 {t('SUPPORT')}
               </LinkWrapper>
               <LinkWrapper
-                className='flex s:mr-10 justify-center items-center whitespace-nowrap'
+                className='flex justify-center items-center whitespace-nowrap'
                 title={t('FOR_BUSINESS')}
                 href='/business'>
                 {t('FOR_BUSINESS')}
