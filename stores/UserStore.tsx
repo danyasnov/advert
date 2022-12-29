@@ -52,15 +52,15 @@ export class UserStore implements IUserStore {
 
   user
 
-  userSale: Partial<ProductSummary> = {}
+  userSale: Partial<ProductSummary> = {state: 'pending'}
 
-  userSold: Partial<ProductSummary> = {}
+  userSold: Partial<ProductSummary> = {state: 'pending'}
 
-  userFavorite: Partial<ProductSummary> = {}
+  userFavorite: Partial<ProductSummary> = {state: 'pending'}
 
-  userOnModeration: Partial<ProductSummary> = {}
+  userOnModeration: Partial<ProductSummary> = {state: 'pending'}
 
-  userArchive: Partial<ProductSummary> = {}
+  userArchive: Partial<ProductSummary> = {state: 'pending'}
 
   drafts: DraftModel[] = []
 
@@ -145,7 +145,7 @@ export class UserStore implements IUserStore {
     }
     currentScope.cancelTokenSource = cancelToken.source()
 
-    currentScope.state = 'pending-scroll'
+    currentScope.state = 'pending'
     const config: AxiosRequestConfig = {
       url: urlMap[path],
       method: 'POST',
@@ -203,7 +203,7 @@ export class UserStore implements IUserStore {
   }
 
   setUserPersonalData = (data) => {
-    this.user.settings.personal = {...this.user.settings.personal, data}
+    this.user.settings.personal = {...this.user.settings.personal, ...data}
     this.user.name = data.name
   }
 

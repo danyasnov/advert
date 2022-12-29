@@ -18,6 +18,7 @@ import CookiesWarning from '../components/CookiesWarning'
 import WithYandexMetrika from '../components/WithYandexMetrika'
 import {startTracking} from '../helpers'
 import Loading from '../components/Loading'
+// import ChatListener from '../components/ChatListener'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
@@ -74,6 +75,7 @@ function MyApp({Component, pageProps}: AppProps) {
           <Component {...pageProps} />
           <ToastContainer />
           <CookiesWarning />
+          {/* <ChatListener /> */}
         </div>
       </RootStoreProvider>
     </WithYandexMetrika>

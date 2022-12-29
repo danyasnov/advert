@@ -1,12 +1,14 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {toNumber} from 'lodash'
+import {isEmpty, toNumber} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
+import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
 import Tabs from '../Tabs'
@@ -14,6 +16,8 @@ import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import Card from '../Cards/Card'
+// import ChatList from '../ChatList'
+import EmptyTab from '../EmptyTab'
 
 const getTabs = (t: TFunction) => [
   {title: `${t('MODERATION')}`, id: 1},
@@ -50,6 +54,7 @@ const UserLayout: FC = observer(() => {
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
   useEffect(() => {
+    // setActiveUserPage('chat')
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
     if (isCurrentUser) {
@@ -93,26 +98,26 @@ const UserLayout: FC = observer(() => {
                     />
                   </div>
                   {isCurrentUser && activeTab === 1 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userOnModeration.items}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
-                      state={userOnModeration.state}
+                      state={userOnModeration.state || 'pending'}
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userOnModeration.limit}
-                      hideNotFoundDescription
                       fetchProducts={() => {
                         fetchProducts({
                           page: userOnModeration.page + 1,
                           path: 'userOnModeration',
                         })
                       }}
+                      tab='moderation'
                     />
                   )}
                   {activeTab === 2 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userSale.items}
                       page={userSale.page}
@@ -121,23 +126,22 @@ const UserLayout: FC = observer(() => {
                       limit={userSale.limit}
                       enableTwoColumnsForS
                       disableVipWidth
-                      hideNotFoundDescription
                       fetchProducts={() => {
                         fetchProducts({
                           page: userSale.page + 1,
                           path: 'userSale',
                         })
                       }}
+                      tab='sale'
                     />
                   )}
                   {activeTab === 3 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userSold.items}
                       page={userSold.page}
                       count={userSold.count}
                       state={userSold.state}
-                      hideNotFoundDescription
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userSold.limit}
@@ -147,16 +151,16 @@ const UserLayout: FC = observer(() => {
                           path: 'userSold',
                         })
                       }}
+                      tab='sold'
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
-                    <ScrollableCardGroup
+                    <UserTabWrapper
                       showMenu={isCurrentUser}
                       products={userArchive.items}
                       page={userArchive.page}
                       count={userArchive.count}
                       state={userArchive.state}
-                      hideNotFoundDescription
                       enableTwoColumnsForS
                       disableVipWidth
                       limit={userArchive.limit}
@@ -166,6 +170,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userArchive',
                         })
                       }}
+                      tab='archive'
                     />
                   )}
                 </div>
@@ -174,27 +179,35 @@ const UserLayout: FC = observer(() => {
                 <div>
                   <SectionTitle title={t('DRAFTS')} />
 
-                  <div className='flex flex-col m:items-start relative'>
-                    <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
-                      {drafts.map((d) => (
-                        <Card
-                          product={d as unknown as AdvertiseListItemModel}
-                          href={`/advert/create/${d.hash}`}
-                        />
-                      ))}
+                  {isEmpty(drafts) ? (
+                    <div className='flex justify-center'>
+                      <EmptyTab
+                        description='DRAWINGS_EMPTY'
+                        img='/img/drafts-tab.svg'
+                      />
                     </div>
-                  </div>
+                  ) : (
+                    <div className='flex flex-col m:items-start relative'>
+                      <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
+                        {drafts.map((d) => (
+                          <Card
+                            product={d as unknown as AdvertiseListItemModel}
+                            href={`/advert/create/${d.hash}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {activeUserPage === 'favorites' && (
                 <div>
                   <SectionTitle title={t('FAVORITE')} />
-                  <ScrollableCardGroup
+                  <UserTabWrapper
                     products={userFavorite.items}
                     page={userFavorite.page}
                     count={userFavorite.count}
                     state={userFavorite.state}
-                    hideNotFoundDescription
                     enableTwoColumnsForS
                     disableVipWidth
                     limit={userFavorite.limit}
@@ -204,9 +217,16 @@ const UserLayout: FC = observer(() => {
                         path: 'userFavorite',
                       })
                     }}
+                    tab='favorites'
                   />
                 </div>
               )}
+              {/* {activeUserPage === 'chat' && ( */}
+              {/*  <div> */}
+              {/*    <SectionTitle title={t('MESSAGES')} /> */}
+              {/*    <ChatList /> */}
+              {/*  </div> */}
+              {/* )} */}
             </main>
           </div>
         </div>

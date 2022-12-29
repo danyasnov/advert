@@ -40,7 +40,7 @@ export interface IGeneralStore {
   languagesByIsoCode: Record<string, SettingsLanguageModel>
   hydrate(data: IGeneralsHydration): void
 }
-export type PagesType = 'adverts' | 'favorites' | 'reviews' | 'drafts'
+export type PagesType = 'adverts' | 'favorites' | 'reviews' | 'drafts' | 'chat'
 
 export class GeneralStore implements IGeneralStore {
   root

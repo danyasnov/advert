@@ -7,6 +7,7 @@ import {boolean, object, string} from 'yup'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
 import {useRouter} from 'next/router'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {FormikCheckbox, FormikNumber, FormikText} from '../FormikComponents'
 import {makeRequest} from '../../api'
 import MetaTags from '../MetaTags'
@@ -17,6 +18,7 @@ import Auth from '../Auth'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {trackSingle} from '../../helpers'
 
 const features = [
   {
@@ -75,6 +77,7 @@ const whyUs = [
 const BusinessLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const formRef = useRef<HTMLDivElement>()
 
   const formik = useFormik({
@@ -90,27 +93,26 @@ const BusinessLayout: FC = observer(() => {
       email: string()
         .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
         .required(t('EMAIL_REQUIRED_FIELD')),
+      token: string().required(t('EMPTY_FIELD')),
     }),
     initialValues: {
       name: '',
       business_name: '',
       email: '',
       phone: '',
+      token: '',
       privacy: false,
     },
     onSubmit: (values) => {
       setIsSubmitted(true)
+      setShowSuccess(true)
       makeRequest({
         method: 'post',
-        url: '/api/contact-support',
-        data: {
-          message: JSON.stringify(
-            omit({...values, from: 'Business Landing'}, ['privacy']),
-            null,
-            2,
-          ),
-        },
+        url: '/api/landing-submit',
+        data: omit(values, ['privacy', 'token']),
       })
+      trackSingle('CompleteRegistration')
+      trackSingle('BusinessRegistration')
     },
   })
 
@@ -126,7 +128,7 @@ const BusinessLayout: FC = observer(() => {
       {t('LANDING_BUSINESS_START_TODAY')}
     </Button>
   )
-  const {handleSubmit} = formik
+  const {handleSubmit, errors} = formik
 
   return (
     <>
@@ -298,7 +300,22 @@ const BusinessLayout: FC = observer(() => {
                     label={t('LANDING_BUSINESS_AGREE_PERSONAL_DATA')}
                   />
                 </div>
+                {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+                  <ReCAPTCHA
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                    onChange={(val) => {
+                      formik.setFieldValue('token', val)
+                      formik.setFieldError('token', undefined)
+                    }}
+                  />
+                )}
+                {errors.token && (
+                  <span className='text-error text-body-12'>
+                    {errors.token}
+                  </span>
+                )}
                 <Button
+                  disabled={isSubmitted}
                   onClick={() => handleSubmit()}
                   className='rounded-full bg-secondary-500 text-body-18 w-full h-[62px] text-greyscale-900 mt-6 max-w-[300px] self-center'>
                   {t('LANDING_BUSINESS_START_TODAY')}
@@ -342,8 +359,8 @@ const BusinessLayout: FC = observer(() => {
         </div>
       </div>
       <SuccessModal
-        isOpen={isSubmitted}
-        onClose={() => setIsSubmitted(false)}
+        isOpen={showSuccess}
+        onClose={() => setShowSuccess(false)}
       />
     </>
   )

@@ -27,7 +27,7 @@ const AddNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex justify-between'>
-          <span className='text-body-14 text-greyscale-900 font-bold leading-8	'>
+          <span className='text-h-5 text-greyscale-900 font-bold leading-8	'>
             {title}
           </span>
           <Button onClick={onClose}>

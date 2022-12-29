@@ -799,7 +799,7 @@ const FormPage: FC = observer(() => {
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
               body={
-                <div className='space-y-4'>
+                <div className='space-y-4 pb-20 s:pb-0'>
                   <AdvertFormField
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     id='form-field-phone-number'
@@ -906,7 +906,7 @@ const FormPage: FC = observer(() => {
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
             <AddNumberModal
-              onFinish={() => {}}
+              onFinish={() => setShowAddNumber(false)}
               isOpen={showAddNumber}
               onClose={() => setShowAddNumber(false)}
             />
