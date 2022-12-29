@@ -237,6 +237,9 @@ export const processCookies = async (
     const base64 = encrypted.toString('base64')
     state.aup = base64.match(new RegExp(`.{0,${76}}`, 'g')).join('\r\n')
   }
+  if (!cookies.sessionId) {
+    state.sessionId = Date.now().toString()
+  }
   setCookiesObject(state, ctx)
   return state
 }
