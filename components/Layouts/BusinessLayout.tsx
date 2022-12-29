@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {Field, FormikProvider, useFormik} from 'formik'
@@ -18,7 +18,7 @@ import Auth from '../Auth'
 import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import {trackSingle} from '../../helpers'
+import {handleMetrics, trackSingle} from '../../helpers'
 
 const features = [
   {
@@ -79,6 +79,9 @@ const BusinessLayout: FC = observer(() => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const formRef = useRef<HTMLDivElement>()
+  useEffect(() => {
+    handleMetrics('visitBusiness_paged')
+  }, [])
 
   const formik = useFormik({
     validateOnBlur: false,
@@ -111,15 +114,19 @@ const BusinessLayout: FC = observer(() => {
         url: '/api/landing-submit',
         data: omit(values, ['privacy', 'token']),
       })
+      handleMetrics('creationBussiness_sccess')
+
       trackSingle('CompleteRegistration')
       trackSingle('BusinessRegistration')
     },
   })
 
-  const startButton = (
+  const startButton = (index) => (
     <Button
       className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white'
       onClick={() => {
+        handleMetrics('clickStart_now', {index})
+
         formRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',
@@ -155,7 +162,7 @@ const BusinessLayout: FC = observer(() => {
             <span className='text-body-14 s:text-body-16 m:text-body-18 font-normal text-greyscale-900 mb-4 s:mb-8'>
               {t('LANDING_BUSINESS_TO_DO_TOGETHER_DESCRIPTION')}
             </span>
-            <div className='hidden s:flex'>{startButton}</div>
+            <div className='hidden s:flex'>{startButton(0)}</div>
           </div>
           <div className='relative w-[222px] h-[243px] s:w-[312px] s:h-[290px] m:w-[420px] m:h-[400px] l:w-[550px] l:h-[551px] shrink-0 mb-6 m:mr-12'>
             <ImageWrapper
@@ -166,7 +173,7 @@ const BusinessLayout: FC = observer(() => {
               objectFit='contain'
             />
           </div>
-          <div className='flex s:hidden'>{startButton}</div>
+          <div className='flex s:hidden'>{startButton(1)}</div>
         </div>
         <div className='mx-8 s:mx-0 flex flex-col items-center mb-12 s:mb-25  m:mb-[150px]'>
           <span className='text-primary-500 text-body-16 mb-2'>
@@ -248,7 +255,7 @@ const BusinessLayout: FC = observer(() => {
               <span className='text-body-14 m:text-body-16 l:text-body-18 text-greyscale-900 font-normal whitespace-pre-line mb-4'>
                 {t('LANDING_BUSINESS_ABOUT_US_DESCRIPTION')}
               </span>
-              {startButton}
+              {startButton(2)}
             </div>
           </div>
         </div>

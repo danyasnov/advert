@@ -12,6 +12,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import LanguageSelect from './LanguageSelect'
 import Button from './Buttons/Button'
+import {handleMetrics} from '../helpers'
 import BusinessButton from './BusinessButton'
 
 const Header: FC = observer(() => {
@@ -42,6 +43,7 @@ const Header: FC = observer(() => {
           <Button
             className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
             onClick={async () => {
+              handleMetrics('click_addNew_advt')
               if (!user) {
                 return setShowLogin(true)
               }
@@ -56,7 +58,12 @@ const Header: FC = observer(() => {
               </span>
             </div>
           </Button>
-          <Auth onLogin={() => setShowLogin(true)} />
+          <Auth
+            onLogin={() => {
+              setShowLogin(true)
+              handleMetrics('clickLogin')
+            }}
+          />
         </div>
       </div>
       {showLogin && (

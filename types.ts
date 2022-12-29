@@ -39,6 +39,7 @@ export interface CookiesState {
   promo?: string
   authType?: number
   phone?: string
+  sessionId?: string
   token?: string
   authNewToken?: string
   authNewRefreshToken?: string
@@ -69,6 +70,7 @@ export interface SerializedCookiesState {
   promo?: string
   authType?: string
   phone?: string
+  sessionId?: string
   token?: string
   authNewToken?: string
   authNewRefreshToken?: string

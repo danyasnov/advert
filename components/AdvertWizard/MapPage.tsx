@@ -22,7 +22,7 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
 import MobileMapSearch from './MobileMapSearch'
 import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
-import {setCookiesObject} from '../../helpers'
+import {handleMetrics, setCookiesObject} from '../../helpers'
 
 const zoomRadiusMap = {
   0: 15,
@@ -161,6 +161,7 @@ const MapPage: FC = () => {
         type: 'setDraft',
         draft: newDraft,
       })
+      handleMetrics('addAdvt_adress')
       if (hash) {
         return makeRequest({
           url: '/api/save-draft',
