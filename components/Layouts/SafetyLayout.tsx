@@ -89,6 +89,21 @@ const tricks = [
     text: 'LENDING_SECURITY_FRAUDERS',
   },
 ]
+
+const seller = [
+  {
+    text: 'LENDING_SECURITY_AVOIDS_PERSONAL_MEETINGS',
+  },
+  {
+    text: 'LENDING_SECURITY_TRIES_TO_FIND',
+  },
+  {
+    text: 'LENDING_SECURITY_DISGUISES_HIS_COMMUNICATION',
+  },
+  {
+    text: 'LENDING_SECURITY_PUSHES_YOU',
+  },
+]
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -400,8 +415,8 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex flex-col mx-4 s:mx-auto s:mt-20 items-center mx-4 s:mx-auto mt-8 s:w-[704px] m:w-[944px] l:w-[1208px]'>
-        <h1 className='mb-6 m:mb-[72px] text-h-4 m:text-h-2 l:text-h-1 text-center text-greyscale-900 font-semibold'>
+      <div className='flex flex-col mx-4 s:mx-auto s:mt-20 items-center mx-4 s:mx-auto mt-8 '>
+        <h1 className='mb-6 m:mb-[72px] text-h-4 m:text-h-2 l:text-h-1 text-center text-greyscale-900 font-semibold s:w-[704px] m:w-[944px] l:w-[1208px]'>
           {t('LENDING_SECURITY_FRAUDSTERS_CAN_BE')}
         </h1>
         <div className='shadow-[0px_4px_60px_rgba(4,6,15,0.08)] rounded-2xl flex w-full s:w-[570px] m:w-[784px] l:w-[1004px] bg-white h-[50px] m:h-16 mb-6 s:mb-16'>
@@ -424,15 +439,15 @@ const SafetyLayout: FC = observer(() => {
           ))}
         </div>
 
-        {(width < 1024 || tab === 0) && (
+        {tab === 0 && (
           <>
-            <div className='flex flex-col items-center s:flex-row s:flex-wrap s:justify-evenly s:w-[704px] m:w-[944px] l:w-[1208px] mb-7 s:mb-18 m:mb-25'>
+            <div className='flex flex-col items-center s:items-start s:flex-row s:flex-wrap s:justify-between s:w-[704px] m:w-[944px] l:w-[1208px]'>
               <div className='flex flex-col'>
-                <span className='text-h-6 text-center py-4 mb-7 w-screen m:hidden s:text-start font-bold'>
+                <span className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
                   {t('LENDING_SECURITY_FAKE')}
                 </span>
 
-                <div className='rounded-2xl self-center s:self-start w-[223px] h-[315px] m:w-[309px] m:h-[447px] l:w-[405px] l:h-[596px] xl:w-[433px] xl:h-[635px] relative mb-7'>
+                <div className='rounded-2xl self-center s:self-start w-[223px] h-[315px] l:w-[296px] l:h-[417px] relative mb-7'>
                   <ImageWrapper
                     layout='fill'
                     type='/img/safety-landing/seller-fraud1.png'
@@ -441,39 +456,61 @@ const SafetyLayout: FC = observer(() => {
                 </div>
               </div>
               <div className='flex flex-col'>
-                <div className='rounded-2xl w-[327px] h-[424px] relative mb-7 s:mb-15'>
+                <span className='text-h-6 text-center py-4 s:text-left font-bold'>
+                  {t('LENDING_SECURITY_EXAMPLE_CHAT')}
+                </span>
+                <div className='self-center s:hidden s:self-start w-[327px] h-[424px] relative mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud2.png'
+                    alt='seller fraud'
+                  />
+                </div>
+                <div className='hidden s:flex m:hidden relative self-center s:self-start w-[464px] h-[364px] mb-7'>
                   <ImageWrapper
                     layout='fill'
                     type='/img/safety-landing/seller-fraud3.png'
                     alt='seller fraud'
                   />
                 </div>
-                {/* <IcChat className='w-25 h-25 self-end hidden m:block' /> */}
+                <div className='hidden m:flex l:hidden relative self-center s:self-start w-[704px] h-[364px] mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud4.png'
+                    alt='seller fraud'
+                  />
+                </div>
+                <div className='hidden l:flex relative self-center s:self-start w-[839px] h-[417px] mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud5.png'
+                    alt='seller fraud'
+                  />
+                </div>
               </div>
             </div>
             <div className='flex flex-col'>
-              <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
+              <h1 className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
                 {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER')}
               </h1>
-              <div className='flex'>
-                <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
-                <span
-                  className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
-                  dangerouslySetInnerHTML={{
-                    __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_SELLER_TEXT'),
-                  }}
-                />
+              <div className='flex flex-col space-y-4 s:space-y-0 s:grid s:grid-cols-2 s:gap-6 '>
+                {seller.map((fraud) => (
+                  <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
+                    <span className='text-body-14 font-normal text-grayscale-900 self-start'>
+                      {t(fraud.text)}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </>
         )}
 
-        {/* 
-        {(width < 1024 || tab === 1) && (
+        {tab === 1 && (
           <>
             <div className='flex flex-col bg-nc-salmon py-4 my-15 s:my-18 s:w-screen m:hidden'>
-              <span className='text-h-4 font-medium text-center'>
-                {t('LENDING_SECURITY_BUYER_CHEAT')}
+              <span className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
+                {t('LENDING_SECURITY_FAKE')}
               </span>
             </div>
             <div className='flex flex-col  m:flex-row m:flex-wrap m:justify-evenly m:w-full mb-7 s:mb-18 m:mb-25'>
@@ -520,7 +557,6 @@ const SafetyLayout: FC = observer(() => {
             </div>
           </>
         )}
-        */}
       </div>
 
       {/*      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
