@@ -47,6 +47,7 @@ const ScrollableCardGroup: FC<Props> = ({
       />
     )
   }
+
   if (isEmpty(products)) {
     return (
       <div className='flex justify-center'>

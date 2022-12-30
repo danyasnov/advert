@@ -8,7 +8,7 @@ import {useFormik} from 'formik'
 import {object, string} from 'yup'
 import {useRouter} from 'next/router'
 import {makeRequest} from '../../../api'
-import {setCookiesObject, trackSingle} from '../../../helpers'
+import {handleMetrics, setCookiesObject, trackSingle} from '../../../helpers'
 import LinkButton from '../../Buttons/LinkButton'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
@@ -42,6 +42,8 @@ const EnterCode: FC<PageProps> = observer(
     const AuthInputRef = useRef<AuthCodeRef>(null)
 
     const sendCode = () => {
+      handleMetrics('sendAutorization_code')
+
       return makeRequest({
         url: '/api/send-code',
         data: {
@@ -112,6 +114,7 @@ const EnterCode: FC<PageProps> = observer(
           authNewRefreshToken: refresh,
           promo,
         })
+        handleMetrics('autorizationSuccess')
         if (state.isNew) {
           trackSingle('CompleteRegistration')
           dispatch({type: 'setPage', page: AuthPages.success})
