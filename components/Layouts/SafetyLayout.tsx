@@ -104,6 +104,15 @@ const seller = [
     text: 'LENDING_SECURITY_PUSHES_YOU',
   },
 ]
+
+const buyer = [
+  {
+    text: 'LENDING_SECURITY_AVOIDS_PERSONAL_MEETINGS',
+  },
+  {
+    text: 'LENDING_SECURITY_TRIES_TO_FIND_OUT_YOUR_FULL_PERSONAL_DATA',
+  },
+]
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -508,24 +517,100 @@ const SafetyLayout: FC = observer(() => {
 
         {tab === 1 && (
           <>
-            <div className='flex flex-col bg-nc-salmon py-4 my-15 s:my-18 s:w-screen m:hidden'>
+            <div className='flex flex-col items-center s:items-start s:flex-row s:flex-wrap s:justify-between s:w-[704px] m:w-[944px] l:w-[1208px]'>
+              <div className='flex flex-col'>
+                <span className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
+                  {t('LENDING_SECURITY_FAKE')}
+                </span>
+
+                <div className='rounded-2xl self-center s:self-start w-[223px] h-[315px] l:w-[296px] l:h-[417px] relative mb-4'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/seller-fraud1.png'
+                    alt='buyer fraud'
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <div className='self-center s:self-start w-[223px] h-[58px] l:w-[296px] l:h-[77px] relative mb-7'>
+                    <ImageWrapper
+                      layout='fill'
+                      type='/img/safety-landing/buyer-fraud1.png'
+                      alt='buyer fraud'
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className='flex flex-col'>
+                <span className='text-h-6 text-center py-4 s:text-left font-bold'>
+                  {t('LENDING_SECURITY_EXAMPLE_CHAT')}
+                </span>
+                <div className='self-center s:hidden s:self-start w-[327px] h-[856px] relative mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud2.png'
+                    alt='buyer fraud'
+                  />
+                </div>
+                <div className='hidden s:flex m:hidden relative self-center s:self-start w-[464px] h-[756px] mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud3.png'
+                    alt='buyer fraud'
+                  />
+                </div>
+                <div className='hidden m:flex l:hidden relative self-center s:self-start w-[704px] h-[756px] mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud4.png'
+                    alt='buyer fraud'
+                  />
+                </div>
+                <div className='hidden l:flex relative self-center s:self-start w-[839px] h-[756px] mb-7'>
+                  <ImageWrapper
+                    layout='fill'
+                    type='/img/safety-landing/buyer-fraud5.png'
+                    alt='buyer fraud'
+                  />
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-col'>
+              <h1 className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
+                {t('LENDING_SECURITY_HOW_TO_RECOGNIZ_BUYER')}
+              </h1>
+              <div className='flex flex-col space-y-4 s:space-y-0 s:grid s:grid-cols-2 s:gap-6 '>
+                {buyer.map((fraud) => (
+                  <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
+                    <span className='text-body-14 font-normal text-grayscale-900 self-start'>
+                      {t(fraud.text)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
+                <span className='text-body-14 font-normal text-grayscale-900 justify-self-center'>
+                  {t('LENDING_SECURITY_SENDS_FAKE_LINKS')}
+                </span>
+              </div>
+            </div>
+            {/* <div className='flex flex-col py-4 my-15 s:my-18 s:w-screen m:hidden'>
               <span className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
                 {t('LENDING_SECURITY_FAKE')}
               </span>
             </div>
             <div className='flex flex-col  m:flex-row m:flex-wrap m:justify-evenly m:w-full mb-7 s:mb-18 m:mb-25'>
               <div className='flex flex-col'>
-                <div className='w-[328px] h-[481px] s:w-[405px] s:h-[596px] m:w-[353px] m:h-[526px] l:w-[471px] l:h-[703px] xl:w-[503px] xl:h-[750px] relative mb-7'>
+                <div className='rounded-2xl self-center s:self-start w-[223px] h-[315px] l:w-[296px] l:h-[417px] relative'>
                   <ImageWrapper
                     layout='fill'
-                    type='/img/safety-landing/seller-fraud-1.png'
+                    type='/img/safety-landing/seller-fraud1.png'
                     alt='seller fraud'
                   />
                 </div>
-                <div className='w-[328px] h-[115px] s:w-[470px] s:h-[166px] m:w-[353px] m:h-[124px] l:w-[471px] l:h-[166px] xl:w-[503px] xl:h-[177px] relative mb-7'>
+                <div className='self-center s:self-start w-[223px] l:w-[296px] relative mb-7'>
                   <ImageWrapper
                     layout='fill'
-                    type='/img/safety-landing/buyer-fraud-2.png'
+                    type='/img/safety-landing/buyer-fraud1.png'
                     alt='seller fraud'
                   />
                 </div>
@@ -554,7 +639,7 @@ const SafetyLayout: FC = observer(() => {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
           </>
         )}
       </div>
