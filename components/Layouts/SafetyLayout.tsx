@@ -113,6 +113,25 @@ const buyer = [
     text: 'LENDING_SECURITY_TRIES_TO_FIND_OUT_YOUR_FULL_PERSONAL_DATA',
   },
 ]
+
+const helpers = [
+  {
+    title: 'LENDING_SECURITY_CONTACT',
+    description: 'LENDING_SECURITY_CONTACT_DESCRIPTION',
+    img: '/img/safety-landing/help-contact.png',
+  },
+  {
+    title: 'LENDING_SECURITY_SAVE_HISTORY',
+    description: 'LENDING_SECURITY_SAVE_HISTORY_DESCRIPTION',
+    img: '/img/safety-landing/help-history.png',
+  },
+  {
+    title: 'LENDING_SECURITY_ SUBMIT',
+    description: 'LENDING_SECURITY_ SUBMIT_DESCRIPTION',
+    img: '/img/safety-landing/help-submit.png',
+  },
+]
+
 const SafetyLayout: FC = observer(() => {
   const {t} = useTranslation()
   const [tab, setTab] = useState(0)
@@ -122,8 +141,8 @@ const SafetyLayout: FC = observer(() => {
       href='/support'
       title='Support'
       className=' self-center w-full'>
-      <PrimaryButton className='px-12 py-5 rounded-[120px] w-[328px] s:w-[240px] h-[62px] text-body-18 font-normal'>
-        {t('REPORT_FRAUD')}
+      <PrimaryButton className='px-12 py-5 shadow-[4px_8px_24px_rgba(114,16,255,0.25)] rounded-[120px] w-[328px] s:w-[240px] h-[62px] text-body-18 font-normal'>
+        {t('LENDING_SECURITY_SEND')}
       </PrimaryButton>
     </LinkWrapper>
   )
@@ -149,14 +168,33 @@ const SafetyLayout: FC = observer(() => {
             <h1 className='text-greyscale-900 text-h-4 s:text-h-3 m:text-h-2 l:text-h-1 font-semibold'>
               {t('SECURITY_TITLE')}
             </h1>
-            <div className='relative flex s:hidden self-center w-[270px] h-[296px]  mb-6 '>
-              <ImageWrapper
-                quality={100}
-                type='/img/scam2.png'
-                alt='scam'
-                layout='fill'
-                objectFit='contain'
-              />
+            <div className='relative'>
+              <div className='relative flex mx-auto s:hidden self-center w-[270px] h-[296px] mb-6'>
+                <ImageWrapper
+                  quality={100}
+                  type='/img/scam2.png'
+                  alt='scam'
+                  layout='fill'
+                  objectFit='contain'
+                />
+              </div>
+
+              <div className='absolute s:hidden py-1 px-2 bottom-[135px] right-0 bg-white rounded-lg shadow-[4px_8px_24px_rgba(114,16,255,0.25)] w-[109px] h-[32px]'>
+                <div className='flex justify-between items-center'>
+                  <div className='relative w-[24px] h-[24px]'>
+                    <ImageWrapper
+                      quality={100}
+                      type='/img/bell.png'
+                      alt='bell'
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
+                  <span className='text-body-12 text-greyscale-900 font-bold'>
+                    {t('LENDING_SECURITY_ATTENTION')}
+                  </span>
+                </div>
+              </div>
             </div>
             <span
               className='text-body-14  m:text-body-18 text-greyscale-800 py-6 s:py-7 whitespace-pre-wrap '
@@ -171,14 +209,32 @@ const SafetyLayout: FC = observer(() => {
               {supportButton}
             </div>
           </div>
-          <div className='hidden s:flex relative w-[222px] h-[243px] s:w-[359px] s:h-[355px] m:w-[405px] m:h-[430px] l:w-[470px] l:h-[460px] shrink-0'>
-            <ImageWrapper
-              quality={100}
-              type='/img/scam.png'
-              alt='scam'
-              layout='fill'
-              objectFit='contain'
-            />
+          <div className='relative'>
+            <div className='hidden s:flex relative w-[222px] h-[243px] s:w-[359px] s:h-[355px] m:w-[405px] m:h-[430px] l:w-[470px] l:h-[460px] shrink-0'>
+              <ImageWrapper
+                quality={100}
+                type='/img/scam.png'
+                alt='scam'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+            <div className='absolute hidden s:flex s:py-1 s:px-4 s:w-[135px] s:h-[32px] m:w-[152px] s:h-[40px] l:w-[169px] l:h-[56px] s:bottom-[121px] m:bottom-[160px] l:bottom-[155px] right-0 bg-white s:rounded-lg m:rounded-2xl shadow-[4px_8px_24px_rgba(114,16,255,0.25)]'>
+              <div className='flex justify-between items-center'>
+                <div className='relative s:w-[24px] s:h-[24px] m:w-[32px] m:h-[32px] l:w-[40px] l:h-[40px]'>
+                  <ImageWrapper
+                    quality={100}
+                    type='/img/bell.png'
+                    alt='bell'
+                    layout='fill'
+                    objectFit='contain'
+                  />
+                </div>
+                <span className='s:text-body-14 m:text-body-16 l:text-h-6 text-greyscale-900 font-bold'>
+                  {t('LENDING_SECURITY_ATTENTION')}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -194,7 +250,7 @@ const SafetyLayout: FC = observer(() => {
               objectFit='contain'
             />
           </div>
-          <div className='flex s:justify-between relative bg-white rounded-3xl drop-shadow-card  w-auto h-auto s:w-[704px] s:h-[187px] m:w-[944px] m:h-[208px] l:w-[1208px] l:h-[208px]'>
+          <div className='flex s:justify-between relative bg-white rounded-3xl drop-shadow-card w-auto h-auto s:w-[704px] s:h-[187px] m:w-[944px] m:h-[208px] l:w-[1208px] l:h-[208px]'>
             <div className='flex'>
               <div className='hidden s:flex absolute bottom-0 left-0 w-[160px] h-[169px] s:w-[240px] s:h-[240px] m:w-[300px] m:h-[300px]'>
                 <ImageWrapper
@@ -587,61 +643,113 @@ const SafetyLayout: FC = observer(() => {
                   </div>
                 ))}
               </div>
-              <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
-                <span className='text-body-14 font-normal text-grayscale-900 justify-self-center'>
+              <div className='flex flex-col mt-4 px-8 py-6 bg-white self-center shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
+                <span className='text-body-14 font-normal text-grayscale-900 '>
                   {t('LENDING_SECURITY_SENDS_FAKE_LINKS')}
                 </span>
               </div>
             </div>
-            {/* <div className='flex flex-col py-4 my-15 s:my-18 s:w-screen m:hidden'>
-              <span className='text-h-6 text-center s:self-start s:text-left py-4 font-bold'>
-                {t('LENDING_SECURITY_FAKE')}
-              </span>
-            </div>
-            <div className='flex flex-col  m:flex-row m:flex-wrap m:justify-evenly m:w-full mb-7 s:mb-18 m:mb-25'>
-              <div className='flex flex-col'>
-                <div className='rounded-2xl self-center s:self-start w-[223px] h-[315px] l:w-[296px] l:h-[417px] relative'>
-                  <ImageWrapper
-                    layout='fill'
-                    type='/img/safety-landing/seller-fraud1.png'
-                    alt='seller fraud'
-                  />
-                </div>
-                <div className='self-center s:self-start w-[223px] l:w-[296px] relative mb-7'>
-                  <ImageWrapper
-                    layout='fill'
-                    type='/img/safety-landing/buyer-fraud1.png'
-                    alt='seller fraud'
-                  />
-                </div>
-              </div>
-              <div className='flex flex-col'>
-                <div className='w-[328px] h-[721px] s:w-[379px] s:h-[834px] m:w-[284px] m:h-[625px] l:w-[379px] l:h-[834px] xl:w-[404px] xl:h-[890px] relative mb-7'>
-                  <ImageWrapper
-                    layout='fill'
-                    type='/img/safety-landing/buyer-fraud-1.png'
-                    alt='seller fraud'
-                  />
-                </div>
-                <IcChat className='w-25 h-25 self-end hidden m:block' />
-              </div>
-            </div>
-            <div className='flex flex-col'>
-              <h1 className='text-body-14 font-medium text-center mb-15 s:mb-18'>
-                {t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER')}
-              </h1>
-              <div className='flex '>
-                <IcAttention className='w-[95px] h-[136px] hidden m:block mr-16' />
-                <span
-                  className='text-body-14 s:text-h-6 whitespace-pre-line text-justify l:w-[882px] mx-4 s:mx-15 '
-                  dangerouslySetInnerHTML={{
-                    __html: t('LANDING_HOW_TO_RECOGNIZE_FRAUD_BUYER_TEXT'),
-                  }}
-                />
-              </div>
-            </div> */}
           </>
         )}
+      </div>
+
+      <div className='flex flex-col items-center mx-4 mt-20 s:mt-32 m:mt-36 mb-16 s:mx-auto s:mt-16'>
+        <div className='flex m:px-16 px-4 py-6 s:px-6 m:py-10 space-x-10 justify-between relative bg-white rounded-3xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)] w-full h-auto s:w-[704px] m:w-[944px] l:w-[1208px]'>
+          <div className='flex flex-col'>
+            <div
+              className='absolute mx-auto inset-x-0 -top-[40px] inset-x-3/4 s:-top-[75px] m:-top-[100px] l:-top-[125px]
+              w-[85px] h-[85px] s:w-[150px] s:h-[150px] m:w-[200px] m:h-[200px] l:w-[250px] l:h-[250px]'>
+              <ImageWrapper
+                quality={100}
+                type='/img/bell.png'
+                alt='scammer'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+
+            <h1 className='text-h-6 s:text-h-4 m:text-h-3 l:text-h-2 text-greyscale-900 font-bold mb-4 w-[200px] s:w-[456px] m:w-[560px] l:w-[750px]'>
+              {t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS')}
+            </h1>
+            <span
+              className='text-body-14 s:text-body-16 l:text-body-18 font-normal text-grayscale-900  s:w-[456px] m:w-[560px] l:w-[750px]'
+              dangerouslySetInnerHTML={{
+                __html: t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS_DESCRIPTION'),
+              }}
+            />
+
+            <div className='flex flex-col mt-8 items-center s:items-start space-y-4 s:space-y-0 s:flex-row s:space-x-10 m:space-x-6 l:space-x-16'>
+              {helpers.map((help) => (
+                <div className='flex flex-col px-4 pb-4 pt-2 items-center rounded-2xl w-[240px] s:w-[192px] m:w-[256px] l:w-[318px]'>
+                  <div className='w-[70px] h-[70px] relative mb-4 l:mb-6'>
+                    <ImageWrapper
+                      type={help.img}
+                      layout='fill'
+                      quality={100}
+                      alt={help.img}
+                    />
+                  </div>
+                  <span className='mb-4 text-h-5 font-bold text-greyscale-900 text-center'>
+                    {t(help.title)}
+                  </span>
+                  <span
+                    className='text-body-14 m:text-body-18 font-normal text-grayscale-800 text-center'
+                    dangerouslySetInnerHTML={{
+                      __html: t(help.description),
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className='flex justify-center mt-4 pt-6 m:pt-8'>
+          <LinkWrapper
+            href='/support'
+            title='Support'
+            className=' self-center w-full'>
+            <PrimaryButton className='px-12 py-5 shadow-[4px_8px_24px_rgba(114,16,255,0.25)] rounded-[100px] w-[328px] s:w-[240px] h-[62px] text-body-18 font-normal'>
+              {t('LENDING_SECURITY_SEND')}
+            </PrimaryButton>
+          </LinkWrapper>
+        </div>
+      </div>
+
+      <div className='flex flex-col mx-4 s:mx-auto s:w-704px m:w-944px l:w-1208px '>
+        <div className='border-t border-greyscale-200 mt-12  mb-8 -mx-4 s:-mx-8 m:-mx-10'>
+          <div className='flex flex-col s:flex-row s:items-center mx-4 s:mx-8 m:mx-10 s:mt-8'>
+            <div className='flex flex-col s:flex-row space-y-10 s:space-y-0 s:space-x-10 text-greyscale-900 text-body-16 font-semibold text-left my-8 s:my-0 s:justify-between w-full'>
+              <LinkWrapper
+                title={t('TERMS_AND_CONDITIONS')}
+                className='flex items-center whitespace-nowrap'
+                href='/p/terms-and-conditions'>
+                {t('TERMS_AND_CONDITIONS')}
+              </LinkWrapper>
+              <LinkWrapper
+                title={t('PRIVACY_POLICY')}
+                className='flex items-center whitespace-nowrap'
+                href='/p/privacy-policy'>
+                {t('PRIVACY_POLICY')}
+              </LinkWrapper>
+              <LinkWrapper
+                className='flex items-center whitespace-nowrap'
+                title={t('COOKIES_POLICY')}
+                href='/p/cookies-policy'>
+                {t('COOKIES_POLICY')}
+              </LinkWrapper>
+              <LinkWrapper
+                className='flex items-center w-full'
+                title={t('SUPPORT')}
+                href='/support'>
+                {t('SUPPORT')}
+              </LinkWrapper>
+            </div>
+            <div className='text-body-14 font-normal text-greyscale-900 self-start whitespace-nowrap'>
+              © {new Date().getFullYear()} VooXee
+            </div>
+          </div>
+        </div>
       </div>
 
       {/*      <div className='flex flex-col pt-15 s:pt-18 mx-4 s:mx-15 l:mx-30 xl:mx-80 mb-12 s:mb-15 l:mb-30 xl:mb-[132px] l:items-center'>
