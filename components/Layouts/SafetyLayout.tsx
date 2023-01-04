@@ -3,7 +3,6 @@ import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {ArrowDown} from 'react-iconly'
 import IcCheck from 'icons/safety-landing/Check.svg'
-import {useWindowSize} from 'react-use'
 import Logo from '../Logo'
 import LanguageSelect from '../LanguageSelect'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -234,7 +233,7 @@ const SafetyLayout: FC = observer(() => {
               objectFit='contain'
             />
           </div>
-          <div className='flex s:justify-between relative bg-white rounded-3xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)]  w-auto h-auto s:w-[704px] s:h-[187px] m:w-[944px] m:h-[208px] l:w-[1208px] l:h-[208px]'>
+          <div className='flex s:justify-between relative s:pr-6 m:pr-10 l:pr-20 l:pt-2 bg-white rounded-3xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)] w-auto h-auto s:w-[704px] s:h-[187px] m:w-[944px] m:h-[208px] l:w-[1208px] l:h-[208px]'>
             <div className='flex'>
               <div className='hidden s:flex absolute bottom-0 left-0 w-[160px] h-[169px] s:w-[240px] s:h-[240px] m:w-[300px] m:h-[300px]'>
                 <ImageWrapper
@@ -248,7 +247,7 @@ const SafetyLayout: FC = observer(() => {
             </div>
 
             <div>
-              <div className='flex flex-col justify-center p-6 w-auto s:w-[440px] m:w-[600px] l:w-[780px] '>
+              <div className='flex flex-col justify-center p-6 w-auto s:w-[440px] m:w-[600px] l:w-[800px] '>
                 <h1 className='text-h-4 m:text-h-3 text-greyscale-900 font-semibold'>
                   {t('LENDING_SECURITY_SITE')}
                 </h1>
