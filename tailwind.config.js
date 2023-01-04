@@ -167,7 +167,6 @@ module.exports = {
         pink: '#FFF5F5',
         purple: '#7210FF',
         'input-bg': 'rgba(114, 16, 255, 0.08)',
-        'purple-gradient': '(286.17deg, #7210FF 0%, #9D59FF 100%)',
       },
       zIndex: {
         9: 9,
@@ -177,12 +176,6 @@ module.exports = {
       },
       boxShadow: {
         popup: '4px 8px 24px rgba(114, 16, 255, 0.25)',
-        safety:
-          '0px -10px 10px rgba(164, 179, 255, 0.15), 0px 10px 10px rgba(255, 255, 255, 0.15)',
-        safety2: [
-          'inset 0px -10px 10px rgba(164, 179, 255, 0.15)',
-          'inset 0px 10px 10px rgba(255, 255, 255, 0.15)',
-        ],
       },
       inset: {
         '89px': '89px',
