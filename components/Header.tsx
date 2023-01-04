@@ -25,7 +25,7 @@ const Header: FC = observer(() => {
   return (
     <header className='flex s:justify-center relative z-10'>
       <div className='header-width'>
-        <div className='flex justify-start items-center pl-4 s:pl-0 py-2 mb-2'>
+        <div className='flex justify-start items-center px-4 s:px-0 py-2 mb-2'>
           <LanguageSelect />
           <BusinessButton />
           <SafetyButton />

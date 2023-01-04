@@ -6,7 +6,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 const SafetyButton: FC = () => {
   const {t} = useTranslation()
   return (
-    <div className='h-3 ml-6'>
+    <div className='h-3 ml-2 s:ml-6'>
       <LinkWrapper
         title='security'
         href='/security'
