@@ -169,7 +169,7 @@ export const handleClickHouse = ({
   }
   return makeRequest({
     method: 'post',
-    url: `${API_URL}/v2/statistics/products/viewed`,
+    url: `${API_URL}/v2/statistics/event`,
     data: {
       eventType,
       data,

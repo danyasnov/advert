@@ -1,6 +1,5 @@
 import {parseCookies} from 'nookies'
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {fetchCities} from '../../api/v1'
 import {handleClickHouse} from '../../api/v2'
 import {SerializedCookiesState} from '../../types'
 
