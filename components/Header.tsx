@@ -14,6 +14,7 @@ import LanguageSelect from './LanguageSelect'
 import Button from './Buttons/Button'
 import {handleMetrics} from '../helpers'
 import BusinessButton from './BusinessButton'
+import SafetyButton from './SafetyButton'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()
@@ -27,6 +28,7 @@ const Header: FC = observer(() => {
         <div className='flex justify-start items-center pl-4 s:pl-0 py-2 mb-2'>
           <LanguageSelect />
           <BusinessButton />
+          <SafetyButton />
         </div>
         <div className='flex pt-2 pb-5 px-4 s:px-0 space-x-4 s:space-x-6 m:space-x-8'>
           <Logo />
