@@ -107,10 +107,6 @@ module.exports = {
         'main-l': '898px 280px',
       },
       colors: {
-        'safety-1': 'rgba(255, 171, 188, 0.1)',
-        'safety-2': 'rgba(164, 179, 255, 0.1)',
-        'safety-3': 'rgba(255, 255, 255, 0.8) -0.06%',
-        'safety-4': 'rgba(255, 255, 255, 0.8) 97.65%)',
         current: 'currentColor',
         'brand-a1': '#FF9514',
         'brand-a2': '#FFEEDD',
@@ -178,8 +174,6 @@ module.exports = {
       },
       dropShadow: {
         card: '0 50px 80px rgba(4, 6, 15, 0.08)',
-        safety:
-          '0px -10px 10px rgba(164, 179, 255, 0.15), 0px 10px 10px rgba(255, 255, 255, 0.15)',
       },
       boxShadow: {
         popup: '4px 8px 24px rgba(114, 16, 255, 0.25)',
