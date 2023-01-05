@@ -9,6 +9,7 @@ import {makeRequest} from '../../api'
 import {
   getCategoriesSlugsPathFromIds,
   getLocationCodes,
+  handleMetrics,
   trackSingle,
 } from '../../helpers'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
@@ -92,6 +93,7 @@ const SearchAutocomplete: FC<Props> = observer(
       if (query) {
         trackSingle('Search', {search_string: query})
       }
+      if (query) handleMetrics('searchCategory', {q: query})
       router.push({
         pathname,
         query: {

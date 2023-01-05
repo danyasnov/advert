@@ -12,6 +12,8 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 import LanguageSelect from './LanguageSelect'
 import Button from './Buttons/Button'
+import {handleMetrics} from '../helpers'
+import BusinessButton from './BusinessButton'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()
@@ -22,10 +24,9 @@ const Header: FC = observer(() => {
   return (
     <header className='flex s:justify-center relative z-10'>
       <div className='header-width'>
-        <div className='flex s:justify-between px-4 s:px-0 py-2 mb-2'>
-          <div className='flex  w-full s:w-auto space-x-4 items-center'>
-            <LanguageSelect />
-          </div>
+        <div className='flex justify-start items-center pl-4 s:pl-0 py-2 mb-2'>
+          <LanguageSelect />
+          <BusinessButton />
         </div>
         <div className='flex pt-2 pb-5 px-4 s:px-0 space-x-4 s:space-x-6 m:space-x-8'>
           <Logo />
@@ -38,6 +39,7 @@ const Header: FC = observer(() => {
           <Button
             className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
             onClick={async () => {
+              handleMetrics('click_addNew_advt')
               if (!user) {
                 return setShowLogin(true)
               }
@@ -52,7 +54,12 @@ const Header: FC = observer(() => {
               </span>
             </div>
           </Button>
-          <Auth onLogin={() => setShowLogin(true)} />
+          <Auth
+            onLogin={() => {
+              setShowLogin(true)
+              handleMetrics('clickLogin')
+            }}
+          />
         </div>
       </div>
       {showLogin && (

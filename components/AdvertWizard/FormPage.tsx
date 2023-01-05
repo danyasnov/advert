@@ -58,7 +58,7 @@ import {
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
-import {trackSingle} from '../../helpers'
+import {handleMetrics, trackSingle} from '../../helpers'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -160,6 +160,7 @@ const FormPage: FC = observer(() => {
         method: 'post',
       }).then((res) => {
         if (res.data.status === 200) {
+          handleMetrics('advt_success')
           trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
         } else if (res.data.error) {
@@ -893,6 +894,7 @@ const FormPage: FC = observer(() => {
                         }
                       }
                     } else if (!isSubmitting) {
+                      handleMetrics('addAdvt_clickPublish')
                       submitForm()
                     }
                     scrollToFirstError()

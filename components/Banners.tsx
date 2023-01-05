@@ -9,6 +9,7 @@ import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
+import {handleMetrics} from '../helpers'
 
 const Banners: FC = observer(() => {
   const {t} = useTranslation()
@@ -21,6 +22,8 @@ const Banners: FC = observer(() => {
       title: 'BANNER1_TITLE',
       color: 'text-[#F75555]',
       onClick: () => {
+        handleMetrics('clickPromo', {banner: 'auto'})
+
         router.push(`/${locationCodes}/vehicles/vehicles-cars`)
       },
     },
@@ -29,6 +32,8 @@ const Banners: FC = observer(() => {
       title: 'BANNER2_TITLE',
       color: 'text-[#009689]',
       onClick: () => {
+        handleMetrics('clickPromo', {banner: 'business'})
+
         router.push(`/business`)
       },
     },
@@ -37,6 +42,8 @@ const Banners: FC = observer(() => {
       title: 'BANNER3_TITLE',
       color: 'text-[#7210FF]',
       onClick: () => {
+        handleMetrics('clickPromo', {banner: 'community'})
+
         if (user) {
           router.push(`/advert/create`)
         } else {
@@ -49,6 +56,8 @@ const Banners: FC = observer(() => {
       title: 'BANNER4_TITLE',
       color: 'text-[#7A5548]',
       onClick: () => {
+        handleMetrics('clickPromo', {banner: 'property-rent'})
+
         router.push(`/${locationCodes}/property/property-rent?priceMax=1000`)
       },
     },
@@ -57,6 +66,8 @@ const Banners: FC = observer(() => {
       title: 'BANNER5_TITLE',
       color: 'text-[#E97E00]',
       onClick: () => {
+        handleMetrics('clickPromo', {banner: 'property-sales-land'})
+
         router.push(
           `/${locationCodes}/property/property-sale/property-sales-land`,
         )
