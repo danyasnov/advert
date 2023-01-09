@@ -109,13 +109,13 @@ const PhoneModal: FC<ModalProps> = observer(
       )
     } else if (currentUser) {
       body = (
-        <div className='text-body-14 text=greyscale-900 space-y-2 font-normal flex flex-col'>
+        <div className='text-body-14 text-greyscale-900 space-y-2 font-normal flex flex-col'>
           <span>{t('PHONE_NUMBER_SHOW_LIMIT_REGISTERED')}</span>
         </div>
       )
     } else {
       body = (
-        <div className='text-body-14 text=greyscale-900 space-y-2 font-normal flex flex-col'>
+        <div className='text-body-14 text-greyscale-900 space-y-2 font-normal flex flex-col'>
           <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED')}</span>
           <span>{t('PHONE_NUMBER_SHOW_LIMIT_UNREGISTERED_TEXT')}</span>
         </div>
