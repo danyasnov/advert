@@ -29,7 +29,7 @@ export interface PageProps {
   state: State
   dispatch: Dispatch<Partial<State & {type: string; title: string}>>
   onClose: () => void
-  onFinish: (phoneNum: string) => void
+  onFinish: (phoneNum?: string) => void
 }
 
 export interface State {
