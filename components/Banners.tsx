@@ -8,45 +8,72 @@ import Autoplay from 'embla-carousel-autoplay'
 import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
-import {useGeneralStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
+import {handleMetrics} from '../helpers'
 
 const Banners: FC = observer(() => {
   const {t} = useTranslation()
-  const {locationCodes} = useGeneralStore()
+  const {locationCodes, setShowLogin, user} = useGeneralStore()
   const {width} = useWindowSize()
+  const router = useRouter()
   const banners = [
     {
       id: 'auto',
       title: 'BANNER1_TITLE',
       color: 'text-[#F75555]',
-      path: `/${locationCodes}/vehicles/vehicles-cars`,
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'auto'})
+
+        router.push(`/${locationCodes}/vehicles/vehicles-cars`)
+      },
     },
     {
       id: 'business',
       title: 'BANNER2_TITLE',
       color: 'text-[#009689]',
-      path: `/business`,
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'business'})
+
+        router.push(`/business`)
+      },
     },
     {
       id: 'community',
       title: 'BANNER3_TITLE',
       color: 'text-[#7210FF]',
-      path: `/advert/create`,
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'community'})
+
+        if (user) {
+          router.push(`/advert/create`)
+        } else {
+          setShowLogin(true)
+        }
+      },
     },
     {
       id: 'house',
       title: 'BANNER4_TITLE',
       color: 'text-[#7A5548]',
-      path: `/${locationCodes}/property/property-rent?priceMax=1000`,
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'property-rent'})
+
+        router.push(`/${locationCodes}/property/property-rent?priceMax=1000`)
+      },
     },
     {
       id: 'land',
       title: 'BANNER5_TITLE',
       color: 'text-[#E97E00]',
-      path: `/${locationCodes}/property/property-sale/property-sales-land`,
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'property-sales-land'})
+
+        router.push(
+          `/${locationCodes}/property/property-sale/property-sales-land`,
+        )
+      },
     },
   ]
-  const router = useRouter()
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const [viewportRef, embla] = useEmblaCarousel(
@@ -103,7 +130,7 @@ const Banners: FC = observer(() => {
             <Button
               onClick={() => {
                 if (embla.clickAllowed()) {
-                  router.push(c.path)
+                  c.onClick()
                 }
               }}
               key={`${c.id}-${imgSize}-${imgWidth}`}>

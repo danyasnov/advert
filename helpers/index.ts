@@ -17,7 +17,7 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import {getAddressByGPS, getLocationByIp, parseIp} from '../api'
+import {getAddressByGPS, getLocationByIp, makeRequest, parseIp} from '../api'
 import {
   City,
   CookiesState,
@@ -236,6 +236,9 @@ export const processCookies = async (
     )
     const base64 = encrypted.toString('base64')
     state.aup = base64.match(new RegExp(`.{0,${76}}`, 'g')).join('\r\n')
+  }
+  if (!cookies.sessionId) {
+    state.sessionId = Date.now().toString()
   }
   setCookiesObject(state, ctx)
   return state
@@ -674,7 +677,7 @@ export const trackSingle = (event, data?) => {
   if (typeof window === 'undefined') return
   const ReactPixel = require('react-facebook-pixel').default
 
-  ReactPixel.init(PIXEL_ID)
+  // ReactPixel.init(PIXEL_ID)
   ReactPixel.trackSingle(PIXEL_ID, event, data)
 }
 
@@ -796,4 +799,12 @@ export const flatArrayFields = (fields) => {
     }
   })
   return newFields
+}
+export const handleMetrics = (eventType, data?) => {
+  trackSingle(eventType, data)
+  makeRequest({
+    url: '/api/clickhouse',
+    method: 'post',
+    data: {eventType, data},
+  })
 }

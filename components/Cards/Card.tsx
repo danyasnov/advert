@@ -29,7 +29,7 @@ import {useRouter} from 'next/router'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
-import {trackSingle} from '../../helpers'
+import {handleMetrics, trackSingle} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
@@ -67,6 +67,7 @@ const Card: FC<Props> = ({
     showCallButton,
   } = product
   const imagesCount = size(product.images)
+  // if (hash === 'hQmHD7') debugger
 
   const router = useRouter()
   const [images] = useState(
@@ -129,7 +130,7 @@ const Card: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
   const isFree = price === '0'
-  let widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
+  let widthClassname = 'w-40 min-w-40 s:w-56 m:w-[194px] l:w-53'
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
@@ -205,6 +206,9 @@ const Card: FC<Props> = ({
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
+        onClick={() => {
+          handleMetrics('clickTo_advt')
+        }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
           isTop || isVip ? 'border-primary-500' : 'border-transparent'

@@ -18,7 +18,7 @@ import {
   Unknown,
 } from 'front-api'
 import {isObject, isNil} from 'lodash'
-import {AxiosPromise} from 'axios'
+import {AxiosPromise, AxiosRequestHeaders} from 'axios'
 import NodeCache from 'node-cache'
 import {
   AuthExistsResponse,
@@ -157,6 +157,27 @@ export const fetchProductByUrl = (
     data,
   })
 }
+export const handleClickHouse = ({
+  eventType,
+  sessionId,
+  token,
+  data,
+}): AxiosPromise<{data: AdvertiseDetail}> => {
+  const headers: AxiosRequestHeaders = {}
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+  return makeRequest({
+    method: 'post',
+    url: `${API_URL}/v2/statistics/event`,
+    data: {
+      eventType,
+      data,
+      sessionId,
+    },
+    headers,
+  })
+}
 
 export const fetchUserSale = (
   payload: RestFetchUserProductsPayload,
@@ -201,6 +222,11 @@ export const fetchUserArchive = (
 export const deleteAdv = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.advertises.delete(hash)
+}
+
+export const deleteDraft = (hash: string, storage: Storage) => {
+  const rest = getRest(storage)
+  return rest.createAdvertise.deleteDraft([hash])
 }
 
 export const publishAdv = (hash: string, storage: Storage) => {
