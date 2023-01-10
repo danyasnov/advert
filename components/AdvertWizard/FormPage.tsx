@@ -14,7 +14,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {first, get, size, isEmpty, trim} from 'lodash'
+import {first, get, size, isEmpty, trim, merge} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -68,7 +68,7 @@ const FormPage: FC = observer(() => {
 
   const {width} = useWindowSize()
 
-  const {languagesByIsoCode, user} = useGeneralStore()
+  const {languagesByIsoCode, user, setUser} = useGeneralStore()
   const [showAddNumber, setShowAddNumber] = useState(false)
   const phoneNumber = user?.settings.personal.phoneNum
 
@@ -931,7 +931,18 @@ const FormPage: FC = observer(() => {
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
             <AddNumberModal
-              onFinish={() => setShowAddNumber(false)}
+              onFinish={(phoneNum) => {
+                setShowAddNumber(false)
+                const change = {
+                  settings: {
+                    personal: {
+                      phoneNum,
+                    },
+                  },
+                }
+
+                setUser(merge(user, change))
+              }}
               isOpen={showAddNumber}
               onClose={() => setShowAddNumber(false)}
             />

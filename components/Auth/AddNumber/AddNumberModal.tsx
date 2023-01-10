@@ -9,7 +9,7 @@ import AddNumberWizard from './AddNumberWizard'
 interface Props {
   isOpen: boolean
   onClose: () => void
-  onFinish: () => void
+  onFinish: (phoneNum: string) => void
 }
 
 const AddNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
