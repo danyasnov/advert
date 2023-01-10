@@ -59,6 +59,7 @@ import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -414,7 +415,25 @@ const FormPage: FC = observer(() => {
           </div>
         </div>
         <div className='flex px-4 s:px-0'>
-          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full drop-shadow-card'>
+          <div className='mr-8 hidden m:flex flex-col w-full max-w-[280px] shrink-0 sticky top-8 h-full drop-shadow-card space-y-5'>
+            <Button
+              id='ad-back-button'
+              onClick={() => {
+                dispatch({
+                  type: 'setPage',
+                  page: AdvertPages.categoryPage,
+                })
+              }}
+              className={`${
+                query.action === 'create' ? 'visible' : 'invisible'
+              } hidden s:block`}>
+              <div className='flex justify-start items-center ml-2 space-x-4'>
+                <IcArrowDown className='fill-current text-primary-500 h-4 w-4 rotate-90' />
+                <span className='text-body-12 text-greyscale-900'>
+                  {t('BACK')}
+                </span>
+              </div>
+            </Button>
             <SideNavigation
               categoryName={breadcrumbs || category.data.name}
               draft={state.draft}
@@ -855,19 +874,16 @@ const FormPage: FC = observer(() => {
             />
             <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
               <div className='w-full l:w-1208px flex justify-between'>
-                <OutlineButton
+                <SecondaryButton
                   id='ad-back-button'
                   onClick={() => {
-                    dispatch({
-                      type: 'setPage',
-                      page: AdvertPages.categoryPage,
-                    })
+                    push('/')
                   }}
                   className={`${
                     query.action === 'create' ? 'visible' : 'invisible'
                   } hidden s:block`}>
-                  {t('BACK')}
-                </OutlineButton>
+                  {t('SAVE_AND_EXIT')}
+                </SecondaryButton>
                 <PrimaryButton
                   id='ad-publish-button'
                   onClick={() => {
