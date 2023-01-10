@@ -160,6 +160,13 @@ const FormPage: FC = observer(() => {
         method: 'post',
       }).then((res) => {
         if (res.data.status === 200) {
+          makeRequest({
+            url: '/api/delete-draft',
+            method: 'post',
+            data: {
+              hash: data.hash,
+            },
+          })
           handleMetrics('advt_success')
           trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
