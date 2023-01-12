@@ -9,9 +9,14 @@ import UserAvatar from './UserAvatar'
 const ChatList: FC = observer(() => {
   const {chats} = globalChatsStore
   console.log('chats', JSON.parse(JSON.stringify(chats)))
-  const [selectedChat, setSelectedChat] = useState<ChatData>()
+  const [selectedChat, setSelectedChat] = useState<ChatData>(null)
   if (selectedChat) {
-    return <ChatView chat={selectedChat} />
+    return (
+      <div className='flex flex-col'>
+        <Button onClick={() => setSelectedChat(null)}>close</Button>
+        <ChatView chat={selectedChat} />
+      </div>
+    )
   }
   return (
     <div className='flex flex-col'>
@@ -61,7 +66,7 @@ const ChatView: FC<{chat: ChatData}> = observer(({chat}) => {
     console.log('store.fetchInitialMessages(),')
     store.fetchInitialMessages()
   }, [store])
-  console.log('store.messages', messages)
+  console.log('store.messages', JSON.parse(JSON.stringify(messages)))
 
   return (
     <div className='flex flex-col'>
