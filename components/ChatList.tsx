@@ -5,6 +5,7 @@ import {toJS} from 'mobx'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
+import {unixToDate, unixToDateTime} from '../utils'
 
 const ChatList: FC = observer(() => {
   const {chats} = globalChatsStore
@@ -19,15 +20,16 @@ const ChatList: FC = observer(() => {
     )
   }
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col space-y-4'>
       {chats.map((chat) => {
         return (
           <Button
+            className='w-full'
             onClick={() => {
               setSelectedChat(chat)
             }}>
-            <div className='bg-white rounded-3xl p-6 flex'>
-              <div className='relative'>
+            <div className='bg-white rounded-3xl p-6 flex w-full'>
+              <div className='relative w-20 h-20 mr-4'>
                 <div className='rounded-[19px] overflow-hidden'>
                   <ImageWrapper
                     type={chat.product.image}
@@ -37,16 +39,35 @@ const ChatList: FC = observer(() => {
                   />
                 </div>
               </div>
-              <div className='flex flex-col'>
-                <span className='text-body-18 text-greyscale-900'>
-                  {chat.user.name}
-                </span>
-                <span className='text-body-18 font-semibold text-greyscale-900'>
+              <div className='flex flex-col w-full items-start'>
+                <div className='flex justify-between w-full items-center'>
+                  <span className='text-body-18 text-greyscale-900 text-left w-[240px] truncate text-body-18 font-medium'>
+                    {chat.user.name}
+                  </span>
+                  {!!chat.last_message.created_at && (
+                    <span className='text-body-16 text-greyscale-700'>
+                      {unixToDate(chat.last_message.created_at)}
+                    </span>
+                  )}
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      globalChatsStore.deleteChat(chat.id)
+                    }}>
+                    remove
+                  </Button>
+                </div>
+                <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
                   {chat.product.name}
                 </span>
-                <span className='text-body-16 font-normal text-greyscale-700'>
-                  {chat.last_message.text}
-                </span>
+                <div className='flex justify-between w-full items-center'>
+                  <span className='text-body-16 font-normal text-greyscale-700'>
+                    {chat.last_message.text}
+                  </span>
+                  <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
+                    {chat.unread_messages}
+                  </span>
+                </div>
               </div>
               {/* {chat.id} */}
             </div>

@@ -11,9 +11,10 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 const ChatListener: FC = observer(() => {
   const {user} = useGeneralStore()
   const {t} = useTranslation()
+  const state: SerializedCookiesState = parseCookies()
+
   useEffect(async () => {
-    if (!user) return
-    const state: SerializedCookiesState = parseCookies()
+    if (!user || !state.authNewToken) return
     const storage = new Storage(state)
     const restApi = getRest(storage)
     // const {Chats, globalChatsStore} = await import('chats')
@@ -72,7 +73,7 @@ const ChatListener: FC = observer(() => {
       langCode: user.mainLanguage.isoCode,
     })
     const error = await globalChatsStore.startConnection()
-  }, [user])
+  }, [user, state.authNewToken])
 
   return null
 })

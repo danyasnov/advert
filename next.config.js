@@ -27,6 +27,7 @@ const nextConfig = {
       'cache.vooxee.com',
       'vooxee.venera.city',
       'ao-dev.venera.city',
+      'cache.adverto.sale',
     ],
   },
   publicRuntimeConfig: {
