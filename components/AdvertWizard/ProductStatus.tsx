@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {AdvertiseDetail} from 'front-api'
 import {useTranslation} from 'next-i18next'
 import {InfoCircle} from 'react-iconly'
+import {toJS} from 'mobx'
 import LinkWrapper from '../Buttons/LinkWrapper'
 
 interface Props {
@@ -40,7 +41,7 @@ const ProductStatus: FC<Props> = ({product}) => {
             {t('BLOCKED')}.
           </span>
           <span className='text-greyscale-900'>
-            {t('REASON')}: {t(advert.block.reasonCode)}
+            {t('REASON')}: {t(advert.block?.reasonCode)}
           </span>
         </>
       )
