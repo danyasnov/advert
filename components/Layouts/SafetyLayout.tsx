@@ -155,7 +155,7 @@ const SafetyLayout: FC = observer(() => {
               <div className='relative flex mx-auto s:hidden self-center w-[270px] h-[296px] mb-6'>
                 <ImageWrapper
                   quality={100}
-                  type='/img/scam2.png'
+                  type='/img/scam.png'
                   alt='scam'
                   layout='fill'
                   objectFit='contain'
@@ -472,7 +472,7 @@ const SafetyLayout: FC = observer(() => {
             <Button
               onClick={() => setTab(currentTab.id)}
               key={currentTab.title}
-              className={`w-full rounded-2xl font-normal ${
+              className={`w-full px-4 rounded-2xl font-normal ${
                 currentTab.id === tab
                   ? 'bg-gradient-to-l from-[#7210FF] to-[#9D59FF]'
                   : ''
@@ -701,8 +701,8 @@ const SafetyLayout: FC = observer(() => {
 
       <div className='flex flex-col mx-4 s:mx-auto s:w-704px m:w-944px l:w-1208px '>
         <div className='border-t border-greyscale-200 mt-12  mb-8 -mx-4 s:-mx-8 m:-mx-10'>
-          <div className='flex flex-col s:flex-row s:items-center mx-4 s:mx-8 m:mx-10 s:mt-8'>
-            <div className='flex flex-col s:flex-row space-y-10 s:space-y-0 s:space-x-10 text-greyscale-900 text-body-16 font-semibold text-left my-8 s:my-0 s:justify-between w-full'>
+          <div className='flex flex-col m:flex-row m:items-center mx-4 s:mx-8 m:mx-10 s:mt-8'>
+            <div className='flex flex-col s:flex-row space-y-10 s:space-y-0 s:space-x-5 m:space-x-10 text-greyscale-900 text-body-16 font-semibold text-left my-8 s:my-0 s:justify-between w-full'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
                 className='flex items-center whitespace-nowrap'
@@ -728,7 +728,7 @@ const SafetyLayout: FC = observer(() => {
                 {t('SUPPORT')}
               </LinkWrapper>
             </div>
-            <div className='text-body-14 font-normal text-greyscale-900 self-start whitespace-nowrap'>
+            <div className='s:mt-4 m:mt-0 text-body-14 font-normal text-greyscale-900 self-start whitespace-nowrap'>
               © {new Date().getFullYear()} VooXee
             </div>
           </div>

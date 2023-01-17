@@ -6,7 +6,7 @@ import IcLoginSuccess from 'icons/LoginSuccess.svg'
 import {PageProps} from './utils'
 import PrimaryButton from '../Buttons/PrimaryButton'
 
-const Success: FC<PageProps> = observer(({onClose, onFinish}) => {
+const Success: FC<PageProps> = observer(({onClose, onFinish, state}) => {
   const {t} = useTranslation()
   const {reload} = useRouter()
   return (
@@ -26,7 +26,7 @@ const Success: FC<PageProps> = observer(({onClose, onFinish}) => {
           className='w-[212px]'
           onClick={() => {
             if (onFinish) {
-              onFinish()
+              onFinish(state.incoming)
             } else {
               onClose()
               reload()
