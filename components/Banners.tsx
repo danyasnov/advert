@@ -73,6 +73,36 @@ const Banners: FC = observer(() => {
         )
       },
     },
+    {
+      id: 'beauty',
+      title: 'BANNER6_TITLE',
+      color: 'text-[#F75555]',
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'beauty'})
+
+        router.push(`/${locationCodes}/health-and-beauty`)
+      },
+    },
+    {
+      id: 'electronics',
+      title: 'BANNER7_TITLE',
+      color: 'text-[#7210FF]',
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'electronics'})
+
+        router.push(`/${locationCodes}/electronics`)
+      },
+    },
+    {
+      id: 'autoparts',
+      title: 'BANNER8_TITLE',
+      color: 'text-[#7A5548]',
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'autoparts'})
+
+        router.push(`/${locationCodes}/vehicles-autoparts-autoaccessories`)
+      },
+    },
   ]
   const [currentIndex, setCurrentIndex] = useState(0)
 
