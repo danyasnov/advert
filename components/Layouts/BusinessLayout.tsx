@@ -145,7 +145,7 @@ const BusinessLayout: FC = observer(() => {
           <LanguageSelect />
         </div>
         <div className='flex justify-between mb-6'>
-          <Logo variant='both' />
+          <Logo />
           <Auth />
         </div>
         <div className='mx-8 s:mx-0 flex flex-col s:flex-row mb-12 s:mb-25 m:mb-[150px] items-center s:justify-between'>
