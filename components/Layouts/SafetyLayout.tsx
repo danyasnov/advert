@@ -148,7 +148,7 @@ const SafetyLayout: FC = observer(() => {
                 {t('LENDING_SECURITY_FOLLOW_OUR_ADVICE')}
               </span>
             </div>
-            <h1 className='text-greyscale-900 text-h-4 s:text-h-3 m:text-h-2 l:text-h-1 font-semibold'>
+            <h1 className='text-greyscale-900 text-h-4 s:text-h-3 m:text-h-1 font-semibold'>
               {t('SECURITY_TITLE')}
             </h1>
             <div className='relative'>
@@ -271,7 +271,7 @@ const SafetyLayout: FC = observer(() => {
           </div>
         </div>
 
-        <div className='flex flex-col items-center mt-[234px] mx-4 s:mx-auto s:mt-16 s:w-[704px] m:w-[944px] l:w-[1208px] '>
+        <div className='flex flex-col items-center mt-[234px] mx-4 l:pb-20 s:mx-auto s:mt-16 s:w-[704px] m:w-[944px] l:w-[1208px] '>
           <div className='flex flex-col self-left justify-center s:w-[393px] m:w-[544px] l:w-[800px] self-start'>
             <h1 className='text-h-5 s:text-h-4 m:text-h-3 l:text-h-2 text-greyscale-900 font-semibold'>
               {t('LENDING_SECURITY_GENERAL')}
@@ -279,7 +279,7 @@ const SafetyLayout: FC = observer(() => {
             <h3 className='my-4 m:mt-8 m:mb-4 text-body-16 s:text-body-18 m:text-h-5 l:text-h-3 text-greyscale-900 font-medium'>
               {t('LENDING_SECURITY_PERSONAL_DATE')}
             </h3>
-            <span className='text-body-14 mb-4 m:text-body-16 text-greyscale-800 whitespace-pre-wrap '>
+            <span className='text-body-14 mb-4 text-greyscale-800 whitespace-pre-wrap '>
               {t('LENDING_SECURITY_SAFETY_POLICY')}
             </span>
 
@@ -287,7 +287,7 @@ const SafetyLayout: FC = observer(() => {
               {rules.map((rule) => (
                 <div className='flex'>
                   <IcCheck className='min-w-[24px] h-5 mr-2' />
-                  <span className='text-body-14 m:text-body-16 text-greyscale-800 whitespace-pre-wrap'>
+                  <span className='text-body-14 text-greyscale-800 whitespace-pre-wrap'>
                     {t(rule.text)}
                   </span>
                 </div>
@@ -303,11 +303,11 @@ const SafetyLayout: FC = observer(() => {
             <div
               className='flex flex-col min-h-[220px] px-4 py-6 bg-gradient-to-r from-[#A4B3FF1A] to-[#FFABBC1A] 
                   shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl s:w-[224px] m:w-[304px] l:w-[350px]'>
-              <span className='mb-2 text-h-6 font-bold text-greyscale-900 self-start'>
+              <span className='mb-2 text-h-6 m:text-h-4 font-bold text-greyscale-900 self-start'>
                 {t(feature.title)}
               </span>
               <div className='w-[72px] border-b border-greyscale-600 self-start mb-4 mt-1' />
-              <span className='text-body-14 font-normal text-grayscale-800'>
+              <span className='text-body-14 s:text-body-16 font-normal text-greyscale-800'>
                 {t(feature.text)}
               </span>
             </div>
@@ -342,10 +342,10 @@ const SafetyLayout: FC = observer(() => {
               <div
                 className='flex flex-col mb-4 m:mb-6 px-4 py-6 bg-gradient-to-br from-[#ffffffcc_0%] to-[#ffffffcc_100%)] 
                   shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] backdrop-blur-[10px] rounded-2xl w-full'>
-                <span className='mb-2 text-h-6 font-bold text-greyscale-900 self-start'>
+                <span className='mb-2 text-h-6 s:text-h-5 font-bold text-greyscale-900 self-start'>
                   {t(trick.title)}
                 </span>
-                <span className='text-body-14 s:text-body-16 font-normal text-grayscale-800'>
+                <span className='text-body-14 s:text-body-16 font-normal text-greyscale-800'>
                   {t(trick.text)}
                 </span>
               </div>
@@ -359,7 +359,7 @@ const SafetyLayout: FC = observer(() => {
           <h1 className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'>
             {t('LENDING_SECURITY_STAY_ON_VOOXEE')}
           </h1>
-          <span className='text-body-16 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
+          <span className='text-body-14 m:text-body-18 mt-6 text-center text-greyscale-800 whitespace-pre-wrap '>
             {t('LENDING_SECURITY_STAY_ON_VOOXEE_DESCRIPTION')}
           </span>
         </div>
@@ -381,7 +381,7 @@ const SafetyLayout: FC = observer(() => {
               {t('LENDING_SECURITY_GOOD_SITES')}
             </span>
             <span
-              className='mt-2 text-body-16 m:text-h-6 l:text-h-4 text-center leading-3 font-bold text-grayscale-900 whitespace-pre'
+              className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center leading-3 font-bold text-greyscale-900 whitespace-pre'
               dangerouslySetInnerHTML={{
                 __html: t('LENDING_SECURITY_GOOD_SITES_DESCRIPTION'),
               }}
@@ -403,7 +403,7 @@ const SafetyLayout: FC = observer(() => {
               {t('LENDING_SECURITY_FAKE_SITES')}
             </span>
             <span
-              className='mt-2 text-body-16 m:text-h-6 l:text-h-4 text-center leading-3 font-bold text-[#FF7386] whitespace-pre'
+              className='mt-2 text-body-16 s:text-h-6 m:text-h-4 text-center leading-3 font-bold text-[#FF7386] whitespace-pre'
               dangerouslySetInnerHTML={{
                 __html: t('LENDING_SECURITY_FAKE_SITES_DESCRIPTION'),
               }}
@@ -547,7 +547,7 @@ const SafetyLayout: FC = observer(() => {
               <div className='flex flex-col space-y-4 s:space-y-0 s:grid s:grid-cols-2 s:gap-6 '>
                 {seller.map((fraud) => (
                   <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
-                    <span className='text-body-14 font-normal text-grayscale-900 self-start'>
+                    <span className='text-body-14 font-normal text-greyscale-900 self-start'>
                       {t(fraud.text)}
                     </span>
                   </div>
@@ -622,15 +622,15 @@ const SafetyLayout: FC = observer(() => {
               </h1>
               <div className='flex flex-col space-y-4 s:space-y-0 s:grid s:grid-cols-2 s:gap-6 '>
                 {buyer.map((fraud) => (
-                  <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
-                    <span className='text-body-14 font-normal text-grayscale-900 self-start'>
+                  <div className='flex flex-col px-8 py-6 bg-white shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl w-[328px] s:w-[344px] m:w-[464px] l:w-[580px]'>
+                    <span className='text-body-14 font-normal text-greyscale-900 self-start'>
                       {t(fraud.text)}
                     </span>
                   </div>
                 ))}
               </div>
-              <div className='flex flex-col mt-4 px-8 py-6 bg-white self-center shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl s:w-[344px] m:w-[464px] l:w-[580px]'>
-                <span className='text-body-14 font-normal text-grayscale-900 '>
+              <div className='flex flex-col mt-4 px-8 py-6 bg-white self-center shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] items-center rounded-2xl w-[328px] s:w-[344px] m:w-[464px] l:w-[580px]'>
+                <span className='text-body-14 font-normal text-greyscale-900 self-start text-left'>
                   {t('LENDING_SECURITY_SENDS_FAKE_LINKS')}
                 </span>
               </div>
@@ -658,7 +658,7 @@ const SafetyLayout: FC = observer(() => {
               {t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS')}
             </h1>
             <span
-              className='text-body-14 s:text-body-16 l:text-body-18 font-normal text-grayscale-900  s:w-[456px] m:w-[560px] l:w-[750px]'
+              className='text-body-14 s:text-body-16 l:text-body-18 font-normal text-greyscale-900 s:w-[456px] m:w-[560px] l:w-[750px]'
               dangerouslySetInnerHTML={{
                 __html: t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS_DESCRIPTION'),
               }}
@@ -679,7 +679,7 @@ const SafetyLayout: FC = observer(() => {
                     {t(help.title)}
                   </span>
                   <span
-                    className='text-body-14 m:text-body-18 font-normal text-grayscale-800 text-center'
+                    className='text-body-14 m:text-body-18 font-normal text-greyscale-800 text-center'
                     dangerouslySetInnerHTML={{
                       __html: t(help.description),
                     }}
