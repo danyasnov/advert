@@ -14,6 +14,7 @@ import LanguageSelect from './LanguageSelect'
 import Button from './Buttons/Button'
 import {handleMetrics} from '../helpers'
 import BusinessButton from './BusinessButton'
+import SafetyButton from './SafetyButton'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()
@@ -28,11 +29,13 @@ const Header: FC = observer(() => {
           <Logo />
           <div className='hidden s:flex items-center space-x-5'>
             <BusinessButton />
+            <SafetyButton />
             <LanguageSelect />
           </div>
         </div>
         <div className='flex s:hidden items-center ml-4 mt-6 space-x-5'>
           <BusinessButton />
+          <SafetyButton />
           <LanguageSelect />
         </div>
         <div className='flex pt-5 pb-5 px-4 s:px-0 space-x-4 s:space-x-6 m:space-x-8'>
