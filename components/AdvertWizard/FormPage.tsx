@@ -9,6 +9,7 @@ import {
   useFormik,
   FormikProvider,
   FormikErrors,
+  FieldProps,
 } from 'formik'
 import {
   CACategoryDataFieldModel,
@@ -232,6 +233,30 @@ const FormPage: FC = observer(() => {
         },
       ]
     }
+  }
+
+  const PhoneButton: FC<FieldProps> = ({field, form}) => {
+    const {name} = field
+    const {errors} = form
+    const error = get(errors, name)
+
+    return (
+      <>
+        <Button
+          onClick={() => {
+            setShowAddNumber(true)
+          }}
+          disabled={!!phoneNumber}
+          className={`w-full text-body-16 px-4 py-2.5 border bg-nc-back rounded-lg h-10  ${
+            error && !phoneNumber ? 'border-error' : ''
+          } ${phoneNumber ? 'text-nc-disabled  ' : 'text-greyscale-900'}`}>
+          <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
+        </Button>
+        <span className='text-body-12 text-error'>
+          {error && !phoneNumber ? t('FORM_ENTER_PHONE_NUMBER') : ''}
+        </span>
+      </>
+    )
   }
   const formItems: NavItem[] = [
     {
@@ -835,18 +860,11 @@ const FormPage: FC = observer(() => {
                         className={`w-full s:w-1/3 ${
                           hasArrayType ? 'l:w-full' : ''
                         }`}>
-                        <Button
-                          onClick={() => {
-                            setShowAddNumber(true)
-                          }}
-                          disabled={!!phoneNumber}
-                          className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
-                            phoneNumber
-                              ? 'text-nc-disabled bg-nc-back'
-                              : 'text-greyscale-900'
-                          }`}>
-                          <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
-                        </Button>
+                        <Field
+                          name='phoneButton'
+                          component={PhoneButton}
+                          validate={() => validateCommunication(phoneNumber, t)}
+                        />
                       </div>
                     }
                     isRequired
