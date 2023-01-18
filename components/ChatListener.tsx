@@ -13,9 +13,9 @@ const ChatListener: FC = observer(() => {
   const {t} = useTranslation()
   const state: SerializedCookiesState = parseCookies()
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!user || !state.authNewToken) return
-    const storage = new Storage(state)
+    const storage = new Storage({language: state.language})
     const restApi = getRest(storage)
     // const {Chats, globalChatsStore} = await import('chats')
 
@@ -24,7 +24,7 @@ const ChatListener: FC = observer(() => {
         restApi,
         t,
         langProvider: () => 'en',
-        ui: {showLoading: () => {}, hideLoading: () => {}},
+        ui: {showLoading: () => ({}), hideLoading: () => ({})},
         notifier: {
           showNotifierSuccess: (message) => {
             console.log({message})
@@ -35,9 +35,9 @@ const ChatListener: FC = observer(() => {
         },
         system: {
           mediaPathMapper: () => '',
-          sendMedia: () => {},
-          saveDisabledAutoTranslationChatIds: () => {},
-          loadDisabledAutoTranslationChatIds: async () => {},
+          sendMedia: () => ({}),
+          saveDisabledAutoTranslationChatIds: () => ({}),
+          loadDisabledAutoTranslationChatIds: async () => new Set(),
         },
       },
       options: {
@@ -51,15 +51,8 @@ const ChatListener: FC = observer(() => {
           device_model: 'web',
           os_version: 'web',
           install_id: 'web',
-          // timezone_offset: 0,
           timezone_offset: Math.floor(restApi.utils.timestamp()),
         }),
-        //   {
-        //   hash: hash,
-        //   secur: accessToken,
-        //   timezone_offset: globalRestApi.utils.timestamp(),
-        // },
-        // chatsEndpointOverrides: asyncStorage.stand?.chatApiOverride,
       },
     })
     globalChatsStore.init({
@@ -67,12 +60,14 @@ const ChatListener: FC = observer(() => {
       name: user.name,
       avatarSrc: user.imageUrl,
       updatedAt: 0,
-      surname: '',
       onlineLastTime: 0,
       online: user.isOnline,
       langCode: user.mainLanguage.isoCode,
     })
-    const error = await globalChatsStore.startConnection()
+    const startConnection = async () => {
+      const error = await globalChatsStore.startConnection()
+    }
+    startConnection()
   }, [user, state.authNewToken])
 
   return null

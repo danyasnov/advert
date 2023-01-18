@@ -1544,7 +1544,7 @@
   "LENDING_SECURITY_EXAMPLE_CHAT": "Приклад чата з шахраєм",
   "LENDING_SECURITY_FAKE": "Fake-vooxee-domain.com",
   "LENDING_SECURITY_FAKE_SITES": "Приклади підробних сайтів:",
-  "LENDING_SECURITY_FAKE_SITES_DESCRIPTION": "vooxee-payment.com — scammers\n\npaymentvooxee.com — scammers\n\nPay-vooxee.com — scammers",
+  "LENDING_SECURITY_FAKE_SITES_DESCRIPTION": "vooxee-payment.com — шахраї \n \npaymentvooxee.com — шахраї \n \nPay-vooxee.com — шахраї",
   "LENDING_SECURITY_FOLLOW_OUR_ADVICE": "Дотримуйтесь наших порад і бережіть себе.",
   "LENDING_SECURITY_FRAUDERS": "Ваша адреса електронної пошти не потрібна для завершення транзакції. Якщо вас про це просять, швидше за все, це шахраї. Вони можуть надсилати вам посилання на підроблені сайти або надсилати підроблену інформацію про відправлений платеж. Будьте уважні, не надсилайте товар, доки не побачите гроші на своєму банківському рахунку.",
   "LENDING_SECURITY_FRAUDSTERS_CAN_BE": "Шахраї можуть бути як продавцями, так і покупцями",

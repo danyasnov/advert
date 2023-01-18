@@ -6,6 +6,7 @@ import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
 import {unixToDate, unixToDateTime} from '../utils'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 const ChatList: FC = observer(() => {
   const {chats} = globalChatsStore
@@ -42,11 +43,11 @@ const ChatList: FC = observer(() => {
               <div className='flex flex-col w-full items-start'>
                 <div className='flex justify-between w-full items-center'>
                   <span className='text-body-18 text-greyscale-900 text-left w-[240px] truncate text-body-18 font-medium'>
-                    {chat.user.name}
+                    {chat.title}
                   </span>
-                  {!!chat.last_message.created_at && (
+                  {!!chat.lastMessage.date && (
                     <span className='text-body-16 text-greyscale-700'>
-                      {unixToDate(chat.last_message.created_at)}
+                      {unixToDate(chat.lastMessage.date)}
                     </span>
                   )}
                   <Button
@@ -58,18 +59,17 @@ const ChatList: FC = observer(() => {
                   </Button>
                 </div>
                 <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
-                  {chat.product.name}
+                  {chat.product.title}
                 </span>
                 <div className='flex justify-between w-full items-center'>
                   <span className='text-body-16 font-normal text-greyscale-700'>
-                    {chat.last_message.text}
+                    {chat.lastMessage.text}
                   </span>
                   <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
-                    {chat.unread_messages}
+                    {chat.newMessagesCount}
                   </span>
                 </div>
               </div>
-              {/* {chat.id} */}
             </div>
           </Button>
         )
@@ -79,15 +79,14 @@ const ChatList: FC = observer(() => {
 })
 
 const ChatView: FC<{chat: ChatData}> = observer(({chat}) => {
-  const storeCreator = useCallback(() => new ChatStore(chat), [chat])
+  const {user} = useGeneralStore()
+  const storeCreator = useCallback(() => new ChatStore(chat, user.hash), [chat])
   const [message, setMessage] = useState('')
-  const [store, updateStore] = useState(storeCreator)
+  const [store] = useState(storeCreator)
   const {messages, sendMessage} = store
   useEffect(() => {
-    console.log('store.fetchInitialMessages(),')
     store.fetchInitialMessages()
   }, [store])
-  console.log('store.messages', JSON.parse(JSON.stringify(messages)))
 
   return (
     <div className='flex flex-col'>
