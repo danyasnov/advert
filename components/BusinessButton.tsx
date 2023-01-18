@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import {Work} from 'react-iconly'
 import LinkWrapper from './Buttons/LinkWrapper'
 
 const BusinessButton: FC = () => {
