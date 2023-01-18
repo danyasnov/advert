@@ -826,7 +826,7 @@ const FormPage: FC = observer(() => {
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
               body={
-                <div className='space-y-4 pb-20 s:pb-0'>
+                <div className='space-y-4'>
                   <AdvertFormField
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     id='form-field-phone-number'
@@ -872,8 +872,9 @@ const FormPage: FC = observer(() => {
               }}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
-              <div className='w-full l:w-1208px flex justify-between'>
+            <div className='s:hidden h-35' />
+            <div className='fixed inset-x-0 bottom-0 flex justify-between px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
+              <div className='w-full l:w-1208px flex justify-between bg-white shadow-2xl flex-col s:flex-row space-y-4 s:space-y-0'>
                 <SecondaryButton
                   id='ad-back-button'
                   onClick={() => {
@@ -881,7 +882,7 @@ const FormPage: FC = observer(() => {
                   }}
                   className={`${
                     query.action === 'create' ? 'visible' : 'invisible'
-                  } hidden s:block`}>
+                  }`}>
                   {t('SAVE_AND_EXIT')}
                 </SecondaryButton>
                 <PrimaryButton
