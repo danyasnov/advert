@@ -31,7 +31,7 @@ const initialState: State = {
 const AddNumberWizard: FC<{
   setTitle: Dispatch<SetStateAction<() => never>>
   onClose: () => void
-  onFinish: () => void
+  onFinish: (phoneNum: string) => void
 }> = ({setTitle, onClose, onFinish}) => {
   const {t} = useTranslation()
   const [state, dispatch] = useReducer(reducer, initialState)

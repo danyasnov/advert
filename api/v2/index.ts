@@ -224,6 +224,11 @@ export const deleteAdv = (hash: string, storage: Storage) => {
   return rest.advertises.delete(hash)
 }
 
+export const deleteDraft = (hash: string, storage: Storage) => {
+  const rest = getRest(storage)
+  return rest.createAdvertise.deleteDraft([hash])
+}
+
 export const publishAdv = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.advertises.activate(hash)

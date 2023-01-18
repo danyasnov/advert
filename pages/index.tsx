@@ -2,6 +2,7 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import {AuthType} from 'front-api/src/models'
 import {VerifyMode} from 'front-api/src/models/auth'
+import {captureException} from '@sentry/nextjs'
 import {
   getLocationCodes,
   getStorageFromCookies,
@@ -54,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
+  captureException(new Error(categoriesData.status))
   if (categoriesData.status === 401) {
     return redirectToLogin(ctx.resolvedUrl)
   }
