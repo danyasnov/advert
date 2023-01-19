@@ -18,14 +18,18 @@ const MainBanner: FC = () => {
       />
       <Banner
         id='main-banner-2'
-        title={t('PROMOTION_TITLE1')}
+        title={
+          <span className='text-primary-500 font-bold'>
+            {t('PROMOTION_TITLE1')}
+          </span>
+        }
         description={t('PROMOTION_DESCRIPTION1')}
       />
     </div>
   )
 }
 
-const Banner: FC<{id: string; title: string; description: string}> = ({
+const Banner: FC<{id: string; title: any; description: string}> = ({
   id,
   title,
   description,
