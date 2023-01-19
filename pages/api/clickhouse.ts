@@ -11,7 +11,9 @@ export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     sessionId: cookies.sessionId,
     token: cookies.authNewToken,
     data: body.data,
+    user: cookies.hash,
   }).then((response) => {
-    res.json(response)
+    res.status(response.status)
+    res.json({})
   })
 }
