@@ -15,7 +15,7 @@ import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {first, get, size, isEmpty, trim, merge} from 'lodash'
+import {first, get, size, isEmpty, trim, merge, last} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -55,6 +55,7 @@ import {
   FormikCreateFields,
   FormikSelect,
   FormikSwitch,
+  getCreateSelectOptions,
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
@@ -218,7 +219,7 @@ const FormPage: FC = observer(() => {
     onSubmit: (values, helpers) =>
       onSubmit({values, saveDraft: false, helpers}),
   })
-  const {submitForm, values, isSubmitting, setErrors} = formik
+  const {submitForm, values, isSubmitting, setErrors, setFieldValue} = formik
 
   let fieldsArray = []
   let hasArrayType = false
@@ -690,6 +691,16 @@ const FormPage: FC = observer(() => {
                           const newCategory = {
                             ...category.data,
                             fields: newFields,
+                          }
+
+                          const lastField = last(fields)
+                          const opts = getCreateSelectOptions(
+                            lastField.multiselects,
+                          ).visible
+                          if (size(opts) === 1) {
+                            setTimeout(() => {
+                              setFieldValue(`fields.${lastField.id}`, opts[0])
+                            })
                           }
 
                           setCategoryData(mapCategoryData(newCategory))
