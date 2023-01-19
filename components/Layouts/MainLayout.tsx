@@ -20,6 +20,7 @@ import {makeRequest} from '../../api'
 import OutlineButton from '../Buttons/OutlineButton'
 import Banners from '../Banners'
 import CardsLoader from '../CardsLoader'
+import MainBanner from '../MainBanner'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -150,14 +151,7 @@ const MainLayout: FC = observer(() => {
                   </div>
                 </div>
               </div>
-              <div className='hidden m:block w-[280px] h-[380px]'>
-                {/* <ImageWrapper */}
-                {/*  type='/img/promo.png' */}
-                {/*  alt='promo' */}
-                {/*  width={280} */}
-                {/*  height={380} */}
-                {/* /> */}
-              </div>
+              {/* <MainBanner /> */}
             </div>
           </main>
         </div>

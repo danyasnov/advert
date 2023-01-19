@@ -872,9 +872,12 @@ const FormPage: FC = observer(() => {
                           hasArrayType ? 'l:w-full' : ''
                         }`}>
                         <Field
-                          name='phoneButton'
+                          name='phone'
                           component={PhoneButton}
-                          validate={() => validateCommunication(phoneNumber, t)}
+                          validate={() => {
+                            const err = validateCommunication(phoneNumber, t)
+                            return err.phone
+                          }}
                         />
                       </div>
                     }
