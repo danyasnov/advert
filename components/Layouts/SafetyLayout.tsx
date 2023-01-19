@@ -658,7 +658,7 @@ const SafetyLayout: FC = observer(() => {
               {t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS')}
             </h1>
             <span
-              className='text-body-14 whitespace-pre-line s:text-body-16 l:text-body-18 font-normal text-greyscale-900 s:w-[456px] m:w-[560px] l:w-[750px]'
+              className='text-body-14 whitespace-pre-line  s:text-body-16 l:text-body-18 font-normal text-greyscale-900 s:w-[456px] m:w-[560px] l:w-[750px]'
               dangerouslySetInnerHTML={{
                 __html: t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS_DESCRIPTION'),
               }}
