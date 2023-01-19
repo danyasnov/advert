@@ -318,7 +318,7 @@ const SafetyLayout: FC = observer(() => {
       <div className='bg-greyscale-50 pb-8'>
         <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
           <h1
-            className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'
+            className='text-h-4 whitespace-pre-line m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'
             dangerouslySetInnerHTML={{
               __html: t('LENDING_SECURITY_TRICK'),
             }}
