@@ -2,18 +2,18 @@ import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import LinkWrapper from './Buttons/LinkWrapper'
 
-const BusinessButton: FC = () => {
+const SafetyButton: FC = () => {
   const {t} = useTranslation()
   return (
     <LinkWrapper
-      title='business'
-      href='/business'
+      title='security'
+      href='/security'
       className='flex justify-center items-center'>
       <div className='text-greyscale-800 text-body-12 font-medium'>
-        {t('FOR_BUSINESS')}
+        {t('SECURITY')}
       </div>
     </LinkWrapper>
   )
 }
 
-export default BusinessButton
+export default SafetyButton
