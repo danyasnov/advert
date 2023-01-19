@@ -100,7 +100,9 @@ const Banners: FC = observer(() => {
       onClick: () => {
         handleMetrics('clickPromo', {banner: 'autoparts'})
 
-        router.push(`/${locationCodes}/vehicles-autoparts-autoaccessories`)
+        router.push(
+          `/${locationCodes}/vehicles/vehicles-autoparts-autoaccessories`,
+        )
       },
     },
   ]
