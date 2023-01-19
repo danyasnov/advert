@@ -162,8 +162,11 @@ export const handleClickHouse = ({
   sessionId,
   token,
   data,
+  user,
 }): AxiosPromise<{data: AdvertiseDetail}> => {
-  const headers: AxiosRequestHeaders = {}
+  const headers: AxiosRequestHeaders = {
+    'Content-Type': 'application/json',
+  }
   if (token) {
     headers.Authorization = `Bearer ${token}`
   }
@@ -171,6 +174,7 @@ export const handleClickHouse = ({
     method: 'post',
     url: `${API_URL}/v2/statistics/event`,
     data: {
+      user,
       eventType,
       data,
       sessionId,
@@ -222,6 +226,11 @@ export const fetchUserArchive = (
 export const deleteAdv = (hash: string, storage: Storage) => {
   const rest = getRest(storage)
   return rest.advertises.delete(hash)
+}
+
+export const deleteDraft = (hash: string, storage: Storage) => {
+  const rest = getRest(storage)
+  return rest.createAdvertise.deleteDraft([hash])
 }
 
 export const publishAdv = (hash: string, storage: Storage) => {

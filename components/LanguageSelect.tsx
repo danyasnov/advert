@@ -34,7 +34,7 @@ const LanguageSelect: FC = observer(() => {
   const languages = useRef(withLangIcons(languageOptions))
 
   return (
-    <div className='h-4 w-28'>
+    <div className='w-28'>
       <LinkSelect
         id='language-select'
         onChange={({value}) => {

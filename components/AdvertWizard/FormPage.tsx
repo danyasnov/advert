@@ -9,12 +9,13 @@ import {
   useFormik,
   FormikProvider,
   FormikErrors,
+  FieldProps,
 } from 'formik'
 import {
   CACategoryDataFieldModel,
   CACategoryDataModel,
 } from 'front-api/src/models'
-import {first, get, size, isEmpty, trim} from 'lodash'
+import {first, get, size, isEmpty, trim, merge, last} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
@@ -54,11 +55,13 @@ import {
   FormikCreateFields,
   FormikSelect,
   FormikSwitch,
+  getCreateSelectOptions,
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -67,7 +70,7 @@ const FormPage: FC = observer(() => {
 
   const {width} = useWindowSize()
 
-  const {languagesByIsoCode, user} = useGeneralStore()
+  const {languagesByIsoCode, user, setUser} = useGeneralStore()
   const [showAddNumber, setShowAddNumber] = useState(false)
   const phoneNumber = user?.settings.personal.phoneNum
 
@@ -160,6 +163,13 @@ const FormPage: FC = observer(() => {
         method: 'post',
       }).then((res) => {
         if (res.data.status === 200) {
+          makeRequest({
+            url: '/api/delete-draft',
+            method: 'post',
+            data: {
+              hash: data.hash,
+            },
+          })
           handleMetrics('advt_success')
           trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
@@ -209,7 +219,7 @@ const FormPage: FC = observer(() => {
     onSubmit: (values, helpers) =>
       onSubmit({values, saveDraft: false, helpers}),
   })
-  const {submitForm, values, isSubmitting, setErrors} = formik
+  const {submitForm, values, isSubmitting, setErrors, setFieldValue} = formik
 
   let fieldsArray = []
   let hasArrayType = false
@@ -224,6 +234,30 @@ const FormPage: FC = observer(() => {
         },
       ]
     }
+  }
+
+  const PhoneButton: FC<FieldProps> = ({field, form}) => {
+    const {name} = field
+    const {errors} = form
+    const error = get(errors, name)
+
+    return (
+      <>
+        <Button
+          onClick={() => {
+            setShowAddNumber(true)
+          }}
+          disabled={!!phoneNumber}
+          className={`w-full text-body-16 px-4 py-2.5 border bg-nc-back rounded-lg h-10  ${
+            error && !phoneNumber ? 'border-error' : ''
+          } ${phoneNumber ? 'text-nc-disabled  ' : 'text-greyscale-900'}`}>
+          <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
+        </Button>
+        <span className='text-body-12 text-error'>
+          {error && !phoneNumber ? t('FORM_ENTER_PHONE_NUMBER') : ''}
+        </span>
+      </>
+    )
   }
   const formItems: NavItem[] = [
     {
@@ -407,7 +441,25 @@ const FormPage: FC = observer(() => {
           </div>
         </div>
         <div className='flex px-4 s:px-0'>
-          <div className='mr-8 hidden m:flex w-full max-w-[280px] shrink-0 sticky mt-8 top-8 h-full drop-shadow-card'>
+          <div className='mr-8 hidden m:flex flex-col w-full max-w-[280px] shrink-0 sticky top-8 h-full drop-shadow-card space-y-5'>
+            <Button
+              id='ad-back-button'
+              onClick={() => {
+                dispatch({
+                  type: 'setPage',
+                  page: AdvertPages.categoryPage,
+                })
+              }}
+              className={`${
+                query.action === 'create' ? 'visible' : 'invisible'
+              } hidden s:block`}>
+              <div className='flex justify-start items-center ml-2 space-x-4'>
+                <IcArrowDown className='fill-current text-primary-500 h-4 w-4 rotate-90' />
+                <span className='text-body-12 text-greyscale-900'>
+                  {t('BACK')}
+                </span>
+              </div>
+            </Button>
             <SideNavigation
               categoryName={breadcrumbs || category.data.name}
               draft={state.draft}
@@ -641,6 +693,16 @@ const FormPage: FC = observer(() => {
                             fields: newFields,
                           }
 
+                          const lastField = last(fields)
+                          const opts = getCreateSelectOptions(
+                            lastField.multiselects,
+                          ).visible
+                          if (size(opts) === 1) {
+                            setTimeout(() => {
+                              setFieldValue(`fields.${lastField.id}`, opts[0])
+                            })
+                          }
+
                           setCategoryData(mapCategoryData(newCategory))
                         }}
                       />
@@ -800,7 +862,7 @@ const FormPage: FC = observer(() => {
               showWholeForm={showWholeForm}
               header={<AdvertFormHeading title={t('WAYS_COMMUNICATION')} />}
               body={
-                <div className='space-y-4 pb-20 s:pb-0'>
+                <div className='space-y-4'>
                   <AdvertFormField
                     orientation={width >= 768 ? 'horizontal' : 'vertical'}
                     id='form-field-phone-number'
@@ -809,18 +871,14 @@ const FormPage: FC = observer(() => {
                         className={`w-full s:w-1/3 ${
                           hasArrayType ? 'l:w-full' : ''
                         }`}>
-                        <Button
-                          onClick={() => {
-                            setShowAddNumber(true)
+                        <Field
+                          name='phone'
+                          component={PhoneButton}
+                          validate={() => {
+                            const err = validateCommunication(phoneNumber, t)
+                            return err.phone
                           }}
-                          disabled={!!phoneNumber}
-                          className={`w-full text-body-16 px-4 py-2.5 border border-nc-border rounded-lg h-10 ${
-                            phoneNumber
-                              ? 'text-nc-disabled bg-nc-back'
-                              : 'text-greyscale-900'
-                          }`}>
-                          <span>{phoneNumber ? `+${phoneNumber}` : ''}</span>
-                        </Button>
+                        />
                       </div>
                     }
                     isRequired
@@ -846,21 +904,18 @@ const FormPage: FC = observer(() => {
               }}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='fixed inset-x-0 bottom-0 flex justify-between bg-white shadow-2xl px-4 s:px-8 m:px-10 l:px-29 py-2.5 z-10 justify-around'>
-              <div className='w-full l:w-1208px flex justify-between'>
-                <OutlineButton
+            <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5 z-10 justify-around'>
+              <div className='w-full l:w-1208px flex justify-between flex-col s:flex-row space-y-4 s:space-y-0'>
+                <SecondaryButton
                   id='ad-back-button'
                   onClick={() => {
-                    dispatch({
-                      type: 'setPage',
-                      page: AdvertPages.categoryPage,
-                    })
+                    push('/')
                   }}
                   className={`${
                     query.action === 'create' ? 'visible' : 'invisible'
-                  } hidden s:block`}>
-                  {t('BACK')}
-                </OutlineButton>
+                  }`}>
+                  {t('SAVE_AND_EXIT')}
+                </SecondaryButton>
                 <PrimaryButton
                   id='ad-publish-button'
                   onClick={() => {
@@ -908,7 +963,18 @@ const FormPage: FC = observer(() => {
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
             <AddNumberModal
-              onFinish={() => setShowAddNumber(false)}
+              onFinish={(phoneNum) => {
+                setShowAddNumber(false)
+                const change = {
+                  settings: {
+                    personal: {
+                      phoneNum,
+                    },
+                  },
+                }
+
+                setUser(merge(user, change))
+              }}
               isOpen={showAddNumber}
               onClose={() => setShowAddNumber(false)}
             />
