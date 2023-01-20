@@ -151,7 +151,7 @@ const MainLayout: FC = observer(() => {
                   </div>
                 </div>
               </div>
-              {/* <MainBanner /> */}
+              <MainBanner />
             </div>
           </main>
         </div>
