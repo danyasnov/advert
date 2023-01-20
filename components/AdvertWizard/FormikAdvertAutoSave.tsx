@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect} from 'react'
 import {FormikHelpers, FormikValues, useFormikContext} from 'formik'
-import {throttle} from 'lodash'
+import {debounce, throttle} from 'lodash'
 
 interface Props {
   onSubmit: ({
@@ -15,23 +15,24 @@ interface Props {
 }
 const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
   const formik = useFormikContext()
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSubmitCaller = useCallback(
-    throttle(
-      (ctx: typeof formik) => {
-        onSubmit({values: ctx.values, saveDraft: true, helpers: ctx})
-      },
-      3000,
-      {leading: false},
-    ),
-    [onSubmit],
+    debounce((ctx: typeof formik) => {
+      onSubmit({values: ctx.values, saveDraft: true, helpers: ctx})
+    }, 3000),
+    [],
   )
   useEffect(() => {
     if (formik.dirty) {
       debouncedSubmitCaller(formik)
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.dirty, formik.values])
+
+  useEffect(() => {
+    if (formik.isSubmitting) {
+      debouncedSubmitCaller.cancel()
+    }
+  }, [formik.isSubmitting])
 
   return null
 }

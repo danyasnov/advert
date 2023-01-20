@@ -55,7 +55,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  captureException(new Error(categoriesData.status))
   if (categoriesData.status === 401) {
     return redirectToLogin(ctx.resolvedUrl)
   }

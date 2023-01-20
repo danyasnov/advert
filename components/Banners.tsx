@@ -100,7 +100,9 @@ const Banners: FC = observer(() => {
       onClick: () => {
         handleMetrics('clickPromo', {banner: 'autoparts'})
 
-        router.push(`/${locationCodes}/vehicles-autoparts-autoaccessories`)
+        router.push(
+          `/${locationCodes}/vehicles/vehicles-autoparts-autoaccessories`,
+        )
       },
     },
   ]
@@ -130,7 +132,7 @@ const Banners: FC = observer(() => {
     if (embla) {
       embla.on('select', () => {
         const index = embla.selectedScrollSnap() || 0
-        setCurrentIndex(index > 4 ? index - 5 : index)
+        setCurrentIndex(index > 7 ? index - 8 : index)
       })
     }
   }, [embla])

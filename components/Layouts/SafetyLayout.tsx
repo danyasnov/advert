@@ -318,7 +318,7 @@ const SafetyLayout: FC = observer(() => {
       <div className='bg-greyscale-50 pb-8'>
         <div className='flex flex-col items-center mx-4 s:mx-auto s:mt-16 s:w-[514px] m:w-[667px] l:w-[667px]'>
           <h1
-            className='text-h-4 m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'
+            className='text-h-4 whitespace-pre-line m:text-h-2 l:text-h-1 text-center mt-8 s:mt-12 l:mt-15 text-greyscale-900 font-semibold'
             dangerouslySetInnerHTML={{
               __html: t('LENDING_SECURITY_TRICK'),
             }}
@@ -658,7 +658,7 @@ const SafetyLayout: FC = observer(() => {
               {t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS')}
             </h1>
             <span
-              className='text-body-14 s:text-body-16 l:text-body-18 font-normal text-greyscale-900 s:w-[456px] m:w-[560px] l:w-[750px]'
+              className='text-body-14 whitespace-pre-line  s:text-body-16 l:text-body-18 font-normal text-greyscale-900 s:w-[456px] m:w-[560px] l:w-[750px]'
               dangerouslySetInnerHTML={{
                 __html: t('LENDING_SECURITY_HELP_PUNISH_SCAMMERS_DESCRIPTION'),
               }}

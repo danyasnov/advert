@@ -34,6 +34,7 @@ export const makeRequest = (
   retryConfig?: IAxiosRetryConfig,
 ): AxiosPromise => {
   const client = axios.create()
+  // curlirize(client)
   axiosRetry(client, retryConfig)
   return client(config)
 }
