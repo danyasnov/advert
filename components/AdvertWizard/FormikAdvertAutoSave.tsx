@@ -15,7 +15,6 @@ interface Props {
 }
 const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
   const formik = useFormikContext()
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSubmitCaller = useCallback(
     debounce((ctx: typeof formik) => {
@@ -28,6 +27,12 @@ const FormikAdvertAutoSave: FC<Props> = ({onSubmit}) => {
       debouncedSubmitCaller(formik)
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.dirty, formik.values])
+
+  useEffect(() => {
+    if (formik.isSubmitting) {
+      debouncedSubmitCaller.cancel()
+    }
+  }, [formik.isSubmitting])
 
   return null
 }
