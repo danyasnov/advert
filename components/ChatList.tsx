@@ -24,7 +24,11 @@ const ChatList: FC = observer(() => {
     <div className='flex flex-col space-y-4'>
       {chats.map((chat) => {
         return (
-          <Button
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          <div
+            tabIndex={0}
+            role='button'
+            key={chat.id}
             className='w-full'
             onClick={() => {
               setSelectedChat(chat)
@@ -71,7 +75,7 @@ const ChatList: FC = observer(() => {
                 </div>
               </div>
             </div>
-          </Button>
+          </div>
         )
       })}
     </div>

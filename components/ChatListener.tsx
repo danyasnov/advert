@@ -21,6 +21,7 @@ const ChatListener: FC = observer(() => {
 
     Chats.init({
       deps: {
+        // @ts-ignore
         restApi,
         t,
         langProvider: () => 'en',
