@@ -73,7 +73,11 @@ function MyApp({Component, pageProps}: AppProps) {
         <div className={state.isRouteChanging ? 'blur-[2px]' : ''}>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
-          <ToastContainer />
+          <ToastContainer
+            style={{width: '100%'}}
+            position='top-center'
+            bodyClassName='font-sans text-body-14'
+          />
           <CookiesWarning />
           {/* <ChatListener /> */}
         </div>
