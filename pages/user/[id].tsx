@@ -32,7 +32,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     await Promise.allSettled(promises).then((response) =>
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
     )
-
   if (categoriesData.status === 401) {
     return redirectToLogin(ctx.resolvedUrl)
   }
