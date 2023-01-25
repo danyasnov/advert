@@ -2,6 +2,8 @@ import {FC, useCallback, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
+import {ArrowLeft, MoreCircle} from 'react-iconly'
+import {useTranslation} from 'next-i18next'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
@@ -15,8 +17,7 @@ const ChatList: FC = observer(() => {
   if (selectedChat) {
     return (
       <div className='flex flex-col'>
-        <Button onClick={() => setSelectedChat(null)}>close</Button>
-        <ChatView chat={selectedChat} />
+        <ChatView chat={selectedChat} onClose={() => setSelectedChat(null)} />
       </div>
     )
   }
@@ -82,35 +83,103 @@ const ChatList: FC = observer(() => {
   )
 })
 
-const ChatView: FC<{chat: ChatData}> = observer(({chat}) => {
-  const {user} = useGeneralStore()
-  const storeCreator = useCallback(() => new ChatStore(chat, user.hash), [chat])
-  const [message, setMessage] = useState('')
-  const [store] = useState(storeCreator)
-  const {messages, sendMessage} = store
-  useEffect(() => {
-    store.fetchInitialMessages()
-  }, [store])
+const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
+  ({chat, onClose}) => {
+    const {t} = useTranslation()
+    const {user} = useGeneralStore()
+    const storeCreator = useCallback(
+      () => new ChatStore(chat, user.hash),
+      [chat],
+    )
+    const [message, setMessage] = useState('')
+    const [store] = useState(storeCreator)
+    const {messages, sendMessage} = store
+    useEffect(() => {
+      store.fetchInitialMessages()
+    }, [store])
+    const {interlocutor, product} = store.chat
 
-  return (
-    <div className='flex flex-col'>
-      <div className='flex flex-col'>
-        {messages.map((m) => {
-          return <div>{m.text}</div>
-        })}
+    console.log('store', store, interlocutor, messages)
+    return (
+      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px]'>
+        <div className='flex items-center mb-6'>
+          <Button onClick={onClose}>
+            <ArrowLeft size={28} />
+          </Button>
+          <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
+            {!!interlocutor.avatarSrc && (
+              <ImageWrapper
+                height={40}
+                width={40}
+                type={interlocutor.avatarSrc}
+                alt='avatar'
+              />
+            )}
+          </div>
+          <div className='flex flex-col'>
+            <span className='text-body-16 font-semibold text-greyscale-900 w-[276px] truncate'>
+              {interlocutor.name}
+            </span>
+            <span
+              className={`text-body-14 font-semibold ${
+                interlocutor.online ? 'text-green' : 'text-greyscale-600'
+              }`}>
+              {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
+            </span>
+          </div>
+          <Button className='ml-4'>
+            <MoreCircle size={24} />
+          </Button>
+        </div>
+        <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
+          <div className='rounded-2xl w-[56px] h-[56px] mr-4 bg-gray-300'>
+            {!!product.image && (
+              <ImageWrapper
+                type={product.image}
+                alt='product'
+                width={56}
+                height={56}
+              />
+            )}
+          </div>
+          <span className='text-body-16 text-greyscale-900'>
+            {product.title}
+          </span>
+        </div>
+        <div className='flex flex-col h-full w-full'>
+          {messages.map((m) => {
+            return (
+              <div className='w-full'>
+                <div className='flex flex-col'>
+                  <span className='mb-[7px] text-body-12 text-greyscale-500'>
+                    123
+                  </span>
+                  <div
+                    className={`${
+                      user.hash === m.ownerId
+                        ? 'bg-primary-500 rounded-l-2xl text-white self-end'
+                        : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900 self-start'
+                    } rounded-b-2xl p-3`}>
+                    <span>{m.text}</span>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <div className='flex'>
+          <input value={message} onChange={(e) => setMessage(e.target.value)} />
+          <Button
+            onClick={() => {
+              setMessage('')
+              sendMessage(message)
+            }}>
+            send
+          </Button>
+        </div>
       </div>
-      <div className='flex'>
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
-        <Button
-          onClick={() => {
-            setMessage('')
-            sendMessage(message)
-          }}>
-          send
-        </Button>
-      </div>
-    </div>
-  )
-})
+    )
+  },
+)
 
 export default ChatList

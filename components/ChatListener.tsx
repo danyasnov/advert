@@ -48,7 +48,7 @@ const ChatListener: FC = observer(() => {
           token: state.authNewToken,
           hash: state.hash,
           device_id: 'web',
-          device_type: 1,
+          device_type: 3,
           device_model: 'web',
           os_version: 'web',
           install_id: 'web',
