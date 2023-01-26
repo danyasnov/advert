@@ -13,7 +13,6 @@ const UserProfile: FC = observer(() => {
   const isCurrentUser = userHash === user?.hash
 
   const {t} = useTranslation()
-  console.log(toJS(user))
   return (
     <div className='flex flex-col items-center rounded-2xl bg-white py-5 px-7'>
       <div className='mb-3'>
@@ -24,11 +23,9 @@ const UserProfile: FC = observer(() => {
           size={30}
         />
       </div>
-      {/*  {user.isOnline && ( */}
       <span className='mb-3 text-body-14 text-green text-center'>
         {t('ONLINE')}
       </span>
-      {/* )} */}
 
       <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words text-center w-full'>
         {user.name} {user.settings?.personal.surname}

@@ -138,7 +138,7 @@ export const FilterStyles = {
   }),
   valueContainer: (provided) => ({
     ...provided,
-    marginTop: '7px',
+    marginTop: '0',
     marginBottom: '0',
     paddingTop: '0',
     paddingRight: '0',
@@ -146,7 +146,7 @@ export const FilterStyles = {
   }),
   placeholder: (provided) => ({
     ...provided,
-    fontSize: '11px',
+    fontSize: '12px',
     lineHeight: '12px',
     color: '#9E9E9E',
   }),

@@ -138,7 +138,6 @@ const Select: FC<SelectProps> = ({
         id={id}
         value={value}
         options={sorted}
-        hideSelectedOptions={!isMulti}
         placeholder={placeholder}
         isSearchable={isSearchable}
         isDisabled={isDisabled}
