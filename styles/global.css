@@ -105,10 +105,6 @@ input[type='number'] {
   margin-left: 60px !important;
 }
 
-.Toastify__toast-container {
-  max-height: 56px !important;
-}
-
 .Toastify__toast > button > svg {
   display: none;
 }
