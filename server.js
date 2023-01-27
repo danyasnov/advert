@@ -7,7 +7,8 @@ const next = require('next')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
-const app = next({dev})
+const hostname = 'localhost'
+const app = next({dev, hostname, port})
 const handle = app.getRequestHandler()
 const locales = ['en', 'el', 'ru', 'uk']
 const domains = {
@@ -27,6 +28,7 @@ const whitelist = [
   '/android-chrome-512x512.png',
   '/apple-touch-icon.png',
   '/favicon.ico',
+  '/site.webmanifest',
 ]
 
 const getDomain = (host) => {

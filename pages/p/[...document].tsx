@@ -2,14 +2,16 @@ import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {
   getLocationCodes,
-  getStorageFromCookies,
   processCookies,
   redirectToLogin,
+  refreshToken,
+  setCookiesObject,
 } from '../../helpers'
 import {fetchCategories} from '../../api/v2'
 import {fetchDocuments} from '../../api/db'
 import {fetchCountries} from '../../api/v1'
 import DocumentLayout from '../../components/Layouts/DocumentLayout'
+import Storage from '../../stores/Storage'
 
 export default function Home() {
   return <DocumentLayout />
@@ -19,8 +21,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query} = ctx
   const state = await processCookies(ctx)
   const param = (query.document as string[]).join('/')
-  const storage = getStorageFromCookies(ctx)
-
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const newAuth = await refreshToken({
+    authNewToken: state.authNewToken,
+    authNewRefreshToken: state.authNewRefreshToken,
+  })
+  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
+    storage.saveNewTokens({
+      accessToken: newAuth.authNewToken,
+      refreshToken: newAuth.authNewRefreshToken,
+    })
+    setCookiesObject(newAuth, ctx)
+  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
   const publicDocs = [
     'terms-and-conditions',
     'privacy-policy',
@@ -36,9 +54,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ).then((response) =>
     response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  if (categoriesData.status === 401 && !publicDocs.includes(param)) {
-    return redirectToLogin(ctx.resolvedUrl)
-  }
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null
 
