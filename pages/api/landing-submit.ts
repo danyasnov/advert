@@ -20,7 +20,7 @@ export default async (
       campaign_id: 'postman_inline_both_example',
       recipients: [
         {
-          address: 'info@vooxee.com',
+          address: 'sales@vooxee.com',
         },
       ],
       content: {
