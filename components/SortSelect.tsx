@@ -5,6 +5,8 @@ import {parseCookies} from 'nookies'
 import IcSort from 'icons/material/Sort.svg'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
+import {useWindowSize} from 'react-use'
+import MobileSelect from './Selects/MobileSelect'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
@@ -44,6 +46,11 @@ const getSortOptions = (t: TFunction) =>
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
+  const mobileStyles = {
+    singleValue: 'text-body-12',
+    valueContainer: 'py-[10px] h-10',
+  }
+  const {width} = useWindowSize()
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
     useProductsStore()
@@ -60,22 +67,44 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchBy])
   return (
-    <Select
-      styles={FilterStyles}
-      id={id}
-      onChange={({value}) => {
-        const params = new URLSearchParams(window.location.search)
-        params.set('sortBy', value as string)
-        setSortBy(value as string)
+    <div>
+      {width >= 768 ? (
+        <Select
+          styles={FilterStyles}
+          id={id}
+          onChange={({value}) => {
+            const params = new URLSearchParams(window.location.search)
+            params.set('sortBy', value as string)
+            setSortBy(value as string)
 
-        shallowUpdateQuery(params.toString())
-        fetchProducts({query}).then(() => applyFilter())
-      }}
-      value={options.find(({value}) => value === sortBy)}
-      options={options}
-      isSearchable={false}
-      placeholder={t('SORTING_ORDER')}
-    />
+            shallowUpdateQuery(params.toString())
+            fetchProducts({query}).then(() => applyFilter())
+          }}
+          value={options.find(({value}) => value === sortBy)}
+          options={options}
+          isSearchable={false}
+          placeholder={t('SORTING_ORDER')}
+        />
+      ) : (
+        <MobileSelect
+          // styles={FilterStyles}
+          id={id}
+          onChange={({value}) => {
+            const params = new URLSearchParams(window.location.search)
+            params.set('sortBy', value as string)
+            setSortBy(value as string)
+
+            shallowUpdateQuery(params.toString())
+            fetchProducts({query}).then(() => applyFilter())
+          }}
+          value={options.find(({value}) => value === sortBy)}
+          options={options}
+          isSearchable={false}
+          placeholder={t('SORTING_ORDER')}
+          classNameOpt={mobileStyles}
+        />
+      )}
+    </div>
   )
 })
 

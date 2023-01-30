@@ -6,6 +6,7 @@ import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {CloseSquare, Filter} from 'react-iconly'
 import {toJS} from 'mobx'
+import {useWindowSize} from 'react-use'
 import {
   FormikChips,
   FormikFilterChips,
@@ -15,6 +16,7 @@ import {
 } from '../FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import Select, {SelectItem} from '../Selects/Select'
+import MobileSelect from '../Selects/MobileSelect'
 import {
   useCategoriesStore,
   useProductsStore,
@@ -226,6 +228,11 @@ const FilterForm: FC = observer(() => {
     },
   })
   const {resetForm} = formik
+  const mobileStyles = {
+    singleValue: 'text-body-12',
+    valueContainer: 'py-[10px] h-10',
+  }
+  const {width} = useWindowSize()
   useEffect(() => {
     if (prevCategoryQueryRef.current) {
       resetForm({values: getInitialValues(true)})
@@ -268,7 +275,7 @@ const FilterForm: FC = observer(() => {
           )}
         </div>
         <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
-          {!isEmpty(options) && (
+          {!isEmpty(options) && width >= 768 ? (
             <Select
               styles={FilterStyles}
               id='SUBCATEGORY'
@@ -286,6 +293,31 @@ const FilterForm: FC = observer(() => {
                 }
               }}
             />
+          ) : (
+            !isEmpty(options) && (
+              <MobileSelect
+                // styles={FilterStyles}
+                id='SUBCATEGORY'
+                placeholder={t('SUBCATEGORY')}
+                value={currentOption}
+                options={options}
+                onChange={(opt: SelectItem & {slug: string}) => {
+                  if (opt?.value) setFilter({categoryId: opt.value as number})
+                  if (currentCategory.items.length) {
+                    router.push(
+                      `${clearUrlFromQuery(router.asPath)}/${opt.slug}`,
+                    )
+                  } else {
+                    const pathArray = clearUrlFromQuery(router.asPath).split(
+                      '/',
+                    )
+                    pathArray[pathArray.length - 1] = opt.slug
+                    router.push(pathArray.join('/'))
+                  }
+                }}
+                classNameOpt={mobileStyles}
+              />
+            )
           )}
           <SortSelect id='mobile-sort' />
 
