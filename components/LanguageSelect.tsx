@@ -34,7 +34,7 @@ const LanguageSelect: FC = observer(() => {
   const languages = useRef(withLangIcons(languageOptions))
 
   return (
-    <div className='flex justify-end min-w-min'>
+    <div className='flex justify-end'>
       <LinkSelect
         id='language-select'
         onChange={({value}) => {
