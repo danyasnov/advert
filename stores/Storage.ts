@@ -110,14 +110,16 @@ export default class Storage implements AppStorage {
   memoryState: CurrentProfile | undefined
 
   saveNewTokens: (params: {
-    id: string
+    id?: string
     accessToken: string
     refreshToken: string
   }) => void = ({accessToken, refreshToken}) => {
     console.log('saveNewTokens', accessToken, refreshToken)
     this.memoryState.authNewRefreshToken = refreshToken
     this.memoryState.authNewToken = accessToken
-    this.saveTokenToCookies({refreshToken, accessToken})
+    if (this.saveTokenToCookies) {
+      this.saveTokenToCookies({refreshToken, accessToken})
+    }
   }
 
   get language(): string {
