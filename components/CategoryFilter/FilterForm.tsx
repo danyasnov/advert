@@ -244,9 +244,9 @@ const FilterForm: FC = observer(() => {
               onClick={() => {
                 setShowFilters(!showFilters)
               }}
-              className='text-primary-500 space-x-3'>
-              <Filter size={24} filled />
-              <span className='text-body-12 font-normal'>
+              className='text-primary-500 space-x-2'>
+              <Filter size={16} filled />
+              <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-medium'>
                 {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
               </span>
             </Button>
@@ -259,9 +259,9 @@ const FilterForm: FC = observer(() => {
                 resetFilter()
                 fetchProducts({query: router.query}).then(() => applyFilter())
               }}
-              className='text-primary-500 space-x-3'>
-              <CloseSquare size={24} filled />
-              <span className='text-body-12 font-normal'>
+              className='text-primary-500 space-x-2'>
+              <CloseSquare size={16} filled />
+              <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-medium'>
                 {t('RESET_FILTER')}
               </span>
             </Button>

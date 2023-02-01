@@ -825,7 +825,7 @@ export const FormikChips: FC<IFormikCheckbox & FieldProps> = ({
       <Button
         className={`${
           value ? 'bg-primary-500 text-white' : 'text-primary-500'
-        } py-1 px-4 font-medium text-body-14 border-2 border-primary-500 rounded-full`}
+        } py-1 px-4 font-medium text-body-12 border-2 border-primary-500 rounded-full`}
         onClick={() => {
           setFieldValue(name, !value)
         }}>
