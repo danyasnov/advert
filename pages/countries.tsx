@@ -5,12 +5,14 @@ import {useTranslation} from 'next-i18next'
 import {CountryModel} from 'front-api'
 import LocationContents from '../components/Layouts/LocationContents'
 import {
-  getStorageFromCookies,
   processCookies,
   redirectToLogin,
+  refreshToken,
+  setCookiesObject,
 } from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
+import Storage from '../stores/Storage'
 
 export default function Home() {
   const {t} = useTranslation()
@@ -20,16 +22,30 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
-
-  const storage = getStorageFromCookies(ctx)
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const newAuth = await refreshToken({
+    authNewToken: state.authNewToken,
+    authNewRefreshToken: state.authNewRefreshToken,
+  })
+  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
+    storage.saveNewTokens({
+      accessToken: newAuth.authNewToken,
+      refreshToken: newAuth.authNewRefreshToken,
+    })
+    setCookiesObject(newAuth, ctx)
+  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
   const promises = [fetchCategories(storage), fetchCountries(state.language)]
   const [categoriesData, countries] = await Promise.allSettled(promises).then(
     (response) =>
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
-  if (categoriesData.status === 401) {
-    return redirectToLogin(ctx.resolvedUrl)
-  }
+
   const categories = categoriesData?.result ?? null
   let countriesByAlphabet = null
   countriesByAlphabet = countries.reduce((acc, value) => {

@@ -1,20 +1,25 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {useFormik, FormikProvider, Field} from 'formik'
+import ReactModal from 'react-modal'
+import IcClear from 'icons/material/Clear.svg'
 import ReCAPTCHA from 'react-google-recaptcha'
 import {omit} from 'lodash'
 import {toast} from 'react-toastify'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import MetaTags from '../MetaTags'
 import {FormikCheckbox, FormikText} from '../FormikComponents'
+import ImageWrapper from '../ImageWrapper'
+import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {makeRequest} from '../../api'
 
 const SupportLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {push} = useRouter()
+  const [showSuccess, setShowSuccess] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -41,8 +46,7 @@ const SupportLayout: FC = observer(() => {
           message: JSON.stringify(omit(values, ['privacy', 'token']), null, 2),
         },
       })
-      toast.success(t('LANDING_MESSAGE'))
-      push('/')
+      setShowSuccess(true)
     },
   })
 
@@ -151,8 +155,60 @@ const SupportLayout: FC = observer(() => {
           </main>
         </div>
       </div>
+      <SuccessModal
+        isOpen={showSuccess}
+        onClose={() => setShowSuccess(false)}
+      />
     </HeaderFooterWrapper>
   )
 })
+
+const SuccessModal: FC<{isOpen: boolean; onClose: () => void}> = ({
+  isOpen,
+  onClose,
+}) => {
+  const {t} = useTranslation()
+  const {push} = useRouter()
+  return (
+    <ReactModal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      shouldCloseOnOverlayClick={false}
+      ariaHideApp={false}
+      className='absolute flex rounded-6 w-[328px] s:w-480px bg-white-a inset-x-0 mx-auto top-24 outline-none drop-shadow-2xl'
+      overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
+      <div className='flex flex-col w-full p-8'>
+        <div className='pb-4 hidden s:flex justify-end'>
+          <Button onClick={onClose}>
+            <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
+          </Button>
+        </div>
+        <div className='relative flex flex-col items-center'>
+          <div className='relative pb-6'>
+            <ImageWrapper
+              type='/img/empty-tab.svg'
+              alt='thank you'
+              width={124}
+              height={124}
+              quality={100}
+            />
+          </div>
+          <span className='text-h-4 text-primary-500 font-bold pb-6'>
+            {t('SUCCESSFULLY_SENT')}
+          </span>
+          <span
+            className='text-body-16 text-greyscale-900 font-normal pb-8 whitespace-pre-line text-center'
+            dangerouslySetInnerHTML={{
+              __html: t('MESSAGE_TO_SUPPORT_HAS_BEEN_SENT'),
+            }}
+          />
+          <PrimaryButton className='w-[212px] mb-8' onClick={() => push('/')}>
+            {t('OK')}
+          </PrimaryButton>
+        </div>
+      </div>
+    </ReactModal>
+  )
+}
 
 export default SupportLayout

@@ -28,7 +28,8 @@ const UserProfile: FC = observer(() => {
       </span>
 
       <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words text-center w-full'>
-        {user.name} {user.settings?.personal.surname}
+        {/* @ts-ignore */}
+        {user.name} {user.surname}
       </span>
       <div className='flex justify-between mb-8 w-full'>
         <div className='flex s:flex-col s:text-center w-1/2 justify-center'>

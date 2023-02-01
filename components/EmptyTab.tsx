@@ -21,9 +21,12 @@ const EmptyTab: FC<Props> = ({description, img}) => {
           height={124}
         />
       </div>
-      <span className='text-body-16 text-greyscale-900 text-center'>
-        {t(description)}
-      </span>
+      <span
+        className='text-body-16 text-greyscale-900 text-center whitespace-pre-wrap'
+        dangerouslySetInnerHTML={{
+          __html: t(description),
+        }}
+      />
     </div>
   )
 }
