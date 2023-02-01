@@ -96,7 +96,9 @@ const BusinessLayout: FC = observer(() => {
       email: string()
         .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
         .required(t('EMAIL_REQUIRED_FIELD')),
-      token: string().required(t('EMPTY_FIELD')),
+      token: process.env.NEXT_PUBLIC_RECAPTCHA_KEY
+        ? string().required(t('EMPTY_FIELD'))
+        : string(),
     }),
     initialValues: {
       name: '',
@@ -126,7 +128,6 @@ const BusinessLayout: FC = observer(() => {
       className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white'
       onClick={() => {
         handleMetrics('clickStart_now', {index})
-
         formRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',
