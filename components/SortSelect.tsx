@@ -5,11 +5,14 @@ import {parseCookies} from 'nookies'
 import IcSort from 'icons/material/Sort.svg'
 import {useRouter} from 'next/router'
 import {isEmpty} from 'lodash'
+import {useWindowSize} from 'react-use'
+import MobileSelect from './Selects/MobileSelect'
 import {SerializedCookiesState} from '../types'
 import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {shallowUpdateQuery} from '../helpers'
 import Select from './Selects/Select'
+import SelectWrapper from './SelectWrapper'
 import {FilterStyles} from './Selects/styles'
 
 const withIcons = (options) => {
@@ -44,6 +47,10 @@ const getSortOptions = (t: TFunction) =>
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
+  const mobileStyles = {
+    singleValue: 'text-body-12',
+    valueContainer: 'py-[10px] h-10',
+  }
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
     useProductsStore()
@@ -60,7 +67,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchBy])
   return (
-    <Select
+    <SelectWrapper
       styles={FilterStyles}
       id={id}
       onChange={({value}) => {
@@ -75,6 +82,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
       options={options}
       isSearchable={false}
       placeholder={t('SORTING_ORDER')}
+      classNameOpt={mobileStyles}
     />
   )
 })

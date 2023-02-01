@@ -1040,7 +1040,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     } else {
       props.classNameOpt = {
         singleValue: 'text-body-12',
-        valueContainer: 'py-[13px] h-10',
+        valueContainer: 'py-[10px] h-10',
       }
     }
   }
