@@ -121,6 +121,7 @@ export class UserStore implements IUserStore {
       config.data.page = payload.page
       config.data.cacheId = currentScope.cacheId
     }
+    // fetch drafts
     if (payload.limit) {
       config.data.limit = payload.limit
       config.data.userId = undefined
