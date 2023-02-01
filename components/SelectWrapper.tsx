@@ -1,26 +1,10 @@
 import {FC} from 'react'
 import {useWindowSize} from 'react-use'
 import {isEmpty} from 'lodash'
-import Select, {SelectItem} from './Selects/Select'
+import Select, {SelectItem, SelectProps} from './Selects/Select'
 import MobileSelect from './Selects/MobileSelect'
 
-interface Props {
-  options: Array<SelectItem>
-  placeholder?: string
-  onChange: (value: SelectItem) => void
-  value?: SelectItem
-  isSearchable?: boolean
-  isDisabled?: boolean
-  isClearable?: boolean
-  isMulti?: boolean
-  isInvalid?: boolean
-  id?: string
-  styles?
-  components?
-  classNameOpt?
-}
-
-const SelectWrapper: FC<Props> = ({
+const SelectWrapper: FC<SelectProps> = ({
   options,
   placeholder,
   onChange,
@@ -36,8 +20,8 @@ const SelectWrapper: FC<Props> = ({
   classNameOpt,
 }) => {
   const {width} = useWindowSize()
-
-  if (!isEmpty(options) && width >= 768) {
+  if (isEmpty(options)) return null
+  if (width >= 768) {
     return (
       <Select
         options={options}
