@@ -12,6 +12,7 @@ import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {shallowUpdateQuery} from '../helpers'
 import Select from './Selects/Select'
+import SelectWrapper from './SelectWrapper'
 import {FilterStyles} from './Selects/styles'
 
 const withIcons = (options) => {
@@ -50,7 +51,6 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     singleValue: 'text-body-12',
     valueContainer: 'py-[10px] h-10',
   }
-  const {width} = useWindowSize()
   const state: SerializedCookiesState = parseCookies()
   const {sortBy, setSortBy, fetchProducts, hideDistanceSort, applyFilter} =
     useProductsStore()
@@ -68,42 +68,23 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
   }, [state.searchBy])
   return (
     <div>
-      {width >= 768 ? (
-        <Select
-          styles={FilterStyles}
-          id={id}
-          onChange={({value}) => {
-            const params = new URLSearchParams(window.location.search)
-            params.set('sortBy', value as string)
-            setSortBy(value as string)
+      <SelectWrapper
+        styles={FilterStyles}
+        id={id}
+        onChange={({value}) => {
+          const params = new URLSearchParams(window.location.search)
+          params.set('sortBy', value as string)
+          setSortBy(value as string)
 
-            shallowUpdateQuery(params.toString())
-            fetchProducts({query}).then(() => applyFilter())
-          }}
-          value={options.find(({value}) => value === sortBy)}
-          options={options}
-          isSearchable={false}
-          placeholder={t('SORTING_ORDER')}
-        />
-      ) : (
-        <MobileSelect
-          // styles={FilterStyles}
-          id={id}
-          onChange={({value}) => {
-            const params = new URLSearchParams(window.location.search)
-            params.set('sortBy', value as string)
-            setSortBy(value as string)
-
-            shallowUpdateQuery(params.toString())
-            fetchProducts({query}).then(() => applyFilter())
-          }}
-          value={options.find(({value}) => value === sortBy)}
-          options={options}
-          isSearchable={false}
-          placeholder={t('SORTING_ORDER')}
-          classNameOpt={mobileStyles}
-        />
-      )}
+          shallowUpdateQuery(params.toString())
+          fetchProducts({query}).then(() => applyFilter())
+        }}
+        value={options.find(({value}) => value === sortBy)}
+        options={options}
+        isSearchable={false}
+        placeholder={t('SORTING_ORDER')}
+        classNameOpt={mobileStyles}
+      />
     </div>
   )
 })

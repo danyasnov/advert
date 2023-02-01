@@ -6,7 +6,6 @@ import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {CloseSquare, Filter} from 'react-iconly'
 import {toJS} from 'mobx'
-import {useWindowSize} from 'react-use'
 import {
   FormikChips,
   FormikFilterChips,
@@ -16,7 +15,6 @@ import {
 } from '../FormikComponents'
 import FormikAutoSave from '../FormikAutoSave'
 import Select, {SelectItem} from '../Selects/Select'
-import MobileSelect from '../Selects/MobileSelect'
 import SelectWrapper from '../SelectWrapper'
 import {
   useCategoriesStore,
@@ -233,7 +231,6 @@ const FilterForm: FC = observer(() => {
     singleValue: 'text-body-12',
     valueContainer: 'py-[10px] h-10',
   }
-  const {width} = useWindowSize()
   useEffect(() => {
     if (prevCategoryQueryRef.current) {
       resetForm({values: getInitialValues(true)})
