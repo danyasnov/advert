@@ -67,25 +67,23 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchBy])
   return (
-    <div>
-      <SelectWrapper
-        styles={FilterStyles}
-        id={id}
-        onChange={({value}) => {
-          const params = new URLSearchParams(window.location.search)
-          params.set('sortBy', value as string)
-          setSortBy(value as string)
+    <SelectWrapper
+      styles={FilterStyles}
+      id={id}
+      onChange={({value}) => {
+        const params = new URLSearchParams(window.location.search)
+        params.set('sortBy', value as string)
+        setSortBy(value as string)
 
-          shallowUpdateQuery(params.toString())
-          fetchProducts({query}).then(() => applyFilter())
-        }}
-        value={options.find(({value}) => value === sortBy)}
-        options={options}
-        isSearchable={false}
-        placeholder={t('SORTING_ORDER')}
-        classNameOpt={mobileStyles}
-      />
-    </div>
+        shallowUpdateQuery(params.toString())
+        fetchProducts({query}).then(() => applyFilter())
+      }}
+      value={options.find(({value}) => value === sortBy)}
+      options={options}
+      isSearchable={false}
+      placeholder={t('SORTING_ORDER')}
+      classNameOpt={mobileStyles}
+    />
   )
 })
 
