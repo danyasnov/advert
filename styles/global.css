@@ -65,50 +65,6 @@ input[type='number'] {
 /*    @apply bg-gradient-to-r from-brand-a3 to-brand-a1*/
 /*}*/
 
-.Toastify__toast--success {
-  background: #4aaf57 !important;
-  border-radius: 16px !important;
-}
-
-.Toastify__toast--success::after {
-  content: url('../public/img/successToast.png');
-  font-size: 15px;
-  position: absolute;
-  left: 27px;
-  padding-top: 10px !important;
-}
-.Toastify__toast--error {
-  background: #f54336 !important;
-  border-radius: 16px !important;
-}
-
-.Toastify__toast--error::after {
-  content: url('../public/img/errorToast.png');
-  position: absolute;
-  left: 27px;
-  padding-top: 10px !important;
-}
-
-.Toastify__toast--info {
-  background: #00a9f1 !important;
-  border-radius: 16px !important;
-}
-
-.Toastify__toast--info::after {
-  content: url('../public/img/infoToast.png');
-  position: absolute;
-  left: 27px;
-  padding-top: 10px !important;
-}
-
-.Toastify__toast-body {
-  margin-left: 60px !important;
-}
-
-.Toastify__toast > button > svg {
-  display: none;
-}
-
 .ios-height-hack {
   height: -webkit-fill-available;
   min-height: -webkit-fill-available;
