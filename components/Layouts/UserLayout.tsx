@@ -2,11 +2,11 @@ import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {isEmpty, toNumber} from 'lodash'
-import {AdvertiseListItemModel} from 'front-api/src/index'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
 import {toJS} from 'mobx'
+import {DraftModel} from 'front-api/src/models/index'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -48,7 +48,6 @@ const UserLayout: FC = observer(() => {
     userFavorite,
     userOnModeration,
     userArchive,
-    fetchDrafts,
     drafts,
   } = useUserStore()
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
@@ -61,11 +60,22 @@ const UserLayout: FC = observer(() => {
       fetchProducts({page: 1, path: 'userOnModeration'})
       fetchProducts({page: 1, path: 'userArchive'})
       fetchProducts({page: 1, path: 'userFavorite'})
-      fetchDrafts()
+      fetchProducts({page: 1, path: 'drafts', limit: 20})
     }
     return () => setActiveUserPage('adverts')
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
   const tabs = getTabs(t)
+  const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
+    (d) => ({
+      ...d.advertDraft,
+      ...d,
+      ...(d.advertDraft.content[0] ? d.advertDraft.content[0] : {}),
+      url: `/advert/create/${d.hash}`,
+      images: d.advertDraft.photos
+        ? d.advertDraft.photos.map((p) => p.url)
+        : [],
+    }),
+  )
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -187,16 +197,24 @@ const UserLayout: FC = observer(() => {
                       />
                     </div>
                   ) : (
-                    <div className='flex flex-col m:items-start relative'>
-                      <div className='grid grid-cols-2 xs:grid-cols-3 l:grid-cols-4 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4'>
-                        {drafts.map((d) => (
-                          <Card
-                            product={d as unknown as AdvertiseListItemModel}
-                            href={`/advert/create/${d.hash}`}
-                          />
-                        ))}
-                      </div>
-                    </div>
+                    <ScrollableCardGroup
+                      showMenu={isCurrentUser}
+                      // @ts-ignore
+                      products={mappedDrafts}
+                      page={drafts.page}
+                      count={drafts.count}
+                      state={drafts.state}
+                      enableTwoColumnsForS
+                      disableVipWidth
+                      limit={drafts.limit}
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: drafts.page + 1,
+                          path: 'drafts',
+                          limit: 20,
+                        })
+                      }}
+                    />
                   )}
                 </div>
               )}
