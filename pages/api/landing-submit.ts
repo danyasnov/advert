@@ -23,7 +23,7 @@ export default async (
           address: 'sales@vooxee.com',
         },
         {
-          address: 'info@vooxee.com',
+          address: 'marketing@vooxee.com',
         },
       ],
       content: {
