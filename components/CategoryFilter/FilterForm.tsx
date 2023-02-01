@@ -17,6 +17,7 @@ import {
 import FormikAutoSave from '../FormikAutoSave'
 import Select, {SelectItem} from '../Selects/Select'
 import MobileSelect from '../Selects/MobileSelect'
+import SelectWrapper from '../SelectWrapper'
 import {
   useCategoriesStore,
   useProductsStore,
@@ -275,50 +276,25 @@ const FilterForm: FC = observer(() => {
           )}
         </div>
         <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
-          {!isEmpty(options) && width >= 768 ? (
-            <Select
-              styles={FilterStyles}
-              id='SUBCATEGORY'
-              placeholder={t('SUBCATEGORY')}
-              value={currentOption}
-              options={options}
-              onChange={(opt: SelectItem & {slug: string}) => {
-                if (opt?.value) setFilter({categoryId: opt.value as number})
-                if (currentCategory.items.length) {
-                  router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
-                } else {
-                  const pathArray = clearUrlFromQuery(router.asPath).split('/')
-                  pathArray[pathArray.length - 1] = opt.slug
-                  router.push(pathArray.join('/'))
-                }
-              }}
-            />
-          ) : (
-            !isEmpty(options) && (
-              <MobileSelect
-                // styles={FilterStyles}
-                id='SUBCATEGORY'
-                placeholder={t('SUBCATEGORY')}
-                value={currentOption}
-                options={options}
-                onChange={(opt: SelectItem & {slug: string}) => {
-                  if (opt?.value) setFilter({categoryId: opt.value as number})
-                  if (currentCategory.items.length) {
-                    router.push(
-                      `${clearUrlFromQuery(router.asPath)}/${opt.slug}`,
-                    )
-                  } else {
-                    const pathArray = clearUrlFromQuery(router.asPath).split(
-                      '/',
-                    )
-                    pathArray[pathArray.length - 1] = opt.slug
-                    router.push(pathArray.join('/'))
-                  }
-                }}
-                classNameOpt={mobileStyles}
-              />
-            )
-          )}
+          <SelectWrapper
+            styles={FilterStyles}
+            id='SUBCATEGORY'
+            placeholder={t('SUBCATEGORY')}
+            value={currentOption}
+            options={options}
+            onChange={(opt: SelectItem & {slug: string}) => {
+              if (opt?.value) setFilter({categoryId: opt.value as number})
+              if (currentCategory.items.length) {
+                router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
+              } else {
+                const pathArray = clearUrlFromQuery(router.asPath).split('/')
+                pathArray[pathArray.length - 1] = opt.slug
+                router.push(pathArray.join('/'))
+              }
+            }}
+            classNameOpt={mobileStyles}
+          />
+
           <SortSelect id='mobile-sort' />
 
           <Field
