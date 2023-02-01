@@ -22,6 +22,9 @@ export default async (
         {
           address: 'sales@vooxee.com',
         },
+        {
+          address: 'info@vooxee.com',
+        },
       ],
       content: {
         from: {
@@ -40,5 +43,8 @@ export default async (
               </html>`,
       },
     },
-  }).then((data) => res.json(data.data))
+  }).then((data) => {
+    console.log(data)
+    res.json(data.data)
+  })
 }
