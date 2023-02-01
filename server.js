@@ -27,6 +27,7 @@ const whitelist = [
   '/android-chrome-512x512.png',
   '/apple-touch-icon.png',
   '/favicon.ico',
+  '/site.webmanifest',
 ]
 
 const getDomain = (host) => {

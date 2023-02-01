@@ -27,7 +27,7 @@ const Header: FC = observer(() => {
       <div className='header-width'>
         <div className='flex justify-between ml-4 s:ml-0 mt-4'>
           <Logo />
-          <div className='hidden s:flex items-center space-x-5'>
+          <div className='hidden s:flex items-center space-x-5 '>
             <BusinessButton />
             <SafetyButton />
             <LanguageSelect />
