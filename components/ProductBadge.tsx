@@ -18,7 +18,7 @@ const ProductBadge: FC = observer(() => {
 
   if (advert.condition === 'new') {
     return (
-      <div className='flex items-center space-x-2 px-3 py-2 s:px-8 s:py-4 bg-gradient-to-l from-[#FACC15] to-[#FFE580] rounded-3xl'>
+      <div className='flex items-center space-x-2 px-3 py-2 s:px-8 s:py-4 bg-gradient-to-l from-[#FACC15] to-[#FFE580] rounded-[27px]'>
         <IcFlash className={width >= 768 ? 'w-6 h-6' : 'w-3 h-3'} />
         <span className='text-body-12 s:text-body-18 text-primary-500 uppercase font-bold'>
           {t('NEW_PRODUCT')}
@@ -28,7 +28,7 @@ const ProductBadge: FC = observer(() => {
   }
   if (advert.condition === 'used') {
     return (
-      <div className='flex items-center space-x-2 px-3 py-2 s:px-8 s:py-4 bg-gradient-to-l from-[#7210FF] to-[#9D59FF] rounded-3xl'>
+      <div className='flex items-center space-x-2 px-3 py-2 s:px-8 s:py-4 bg-gradient-to-l from-[#7210FF] to-[#9D59FF] rounded-[27px]'>
         <div className='text-white'>
           <Discount filled size={width >= 768 ? 24 : 14} />
         </div>
