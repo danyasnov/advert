@@ -34,7 +34,7 @@ const ProductLayout: FC = observer(() => {
                 <ProductHeader />
                 <ProductPhotos />
                 <ProductDescription />
-                <div className='-mx-4 s:hidden'>
+                <div className='-mx-4 s:hidden drop-shadow-card'>
                   <ProductsSlider
                     products={similarProducts}
                     title={t('SIMILAR_ADS_TAB')}
@@ -45,7 +45,7 @@ const ProductLayout: FC = observer(() => {
                 <ProductSidebar />
               </aside>
             </div>
-            <div className='-mx-8 m:-mx-0 hidden s:block'>
+            <div className='-mx-8 m:-mx-0 hidden s:block drop-shadow-card'>
               <ProductsSlider
                 products={similarProducts}
                 title={t('SIMILAR_ADS_TAB')}

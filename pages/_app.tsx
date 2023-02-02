@@ -2,6 +2,7 @@ import '../styles/global.css'
 import '../styles/radio.css'
 import '../styles/loader.css'
 import '../styles/tooltip.css'
+import '../styles/toast.css'
 import 'rc-slider/assets/index.css'
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/bottomSheet.css'
@@ -73,7 +74,11 @@ function MyApp({Component, pageProps}: AppProps) {
         <div className={state.isRouteChanging ? 'blur-[2px]' : ''}>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
-          <ToastContainer />
+          <ToastContainer
+            style={{width: '100%'}}
+            position='top-center'
+            bodyClassName='font-sans text-body-14'
+          />
           <CookiesWarning />
           {/* <ChatListener /> */}
         </div>

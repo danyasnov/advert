@@ -19,14 +19,13 @@ export interface IUserStore {
   hydrate(data: IUserHydration): void
   user: OwnerModel
   userSale: Partial<ProductSummary>
-  drafts: DraftModel[]
+  drafts: Partial<ProductSummary>
   userSold: Partial<ProductSummary>
   userFavorite: Partial<ProductSummary>
   userOnModeration: Partial<ProductSummary>
   userArchive: Partial<ProductSummary>
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
-  fetchDrafts: () => Promise<void>
   setUserPersonalData: (data: {
     name: string
     surname: string
@@ -38,6 +37,7 @@ export interface IUserStore {
 interface FetchPayload {
   path: string
   page?: number
+  limit?: number
 }
 const urlMap = {
   userSale: '/api/user-sale',
@@ -62,47 +62,9 @@ export class UserStore implements IUserStore {
 
   userArchive: Partial<ProductSummary> = {state: 'pending'}
 
-  drafts: DraftModel[] = []
+  drafts: Partial<ProductSummary> = {state: 'pending'}
 
   ratings: ReviewModel[]
-
-  fetchDrafts = (): Promise<void> => {
-    const config: AxiosRequestConfig = {
-      url: '/api/fetch-drafts',
-      method: 'POST',
-    }
-
-    return makeRequest(config).then(
-      action('fetchSuccess', (response) => {
-        if (!response.data || isEmpty(response.data) || response?.data?.error) {
-          if (response?.data?.error) {
-            toast.error(response.data.error)
-          }
-          return Promise.reject(
-            !response.data || isEmpty(response.data) || response?.data?.error,
-          )
-        }
-        const drafts = response?.data?.result
-
-        this.drafts = Array.isArray(drafts)
-          ? drafts.map((d) => ({
-              ...d.advertDraft,
-              hash: d.hash,
-              title: d.hash,
-              images: d.images ? d.images : [],
-            }))
-          : []
-
-        return Promise.resolve()
-      }),
-      action('fetchError', (error) => {
-        if (error?.message !== 'got_new_request') {
-          toast.error(error.message)
-        }
-        return Promise.reject(error)
-      }),
-    )
-  }
 
   fetchRatings = (): Promise<void> => {
     const config: AxiosRequestConfig = {
@@ -159,6 +121,11 @@ export class UserStore implements IUserStore {
       config.data.page = payload.page
       config.data.cacheId = currentScope.cacheId
     }
+    // fetch drafts
+    if (payload.limit) {
+      config.data.limit = payload.limit
+      config.data.userId = undefined
+    }
 
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {
@@ -205,6 +172,7 @@ export class UserStore implements IUserStore {
   setUserPersonalData = (data) => {
     this.user.settings.personal = {...this.user.settings.personal, ...data}
     this.user.name = data.name
+    this.user.surname = data.surname
   }
 
   constructor(root: RootStore) {

@@ -18,7 +18,9 @@ const ProductSidebar: FC = observer(() => {
 
   return (
     <div className='flex flex-col'>
-      <ProductPrice />
+      <div className='mt-11'>
+        <ProductPrice />
+      </div>
       <div className='flex items-center space-x-2 text-primary-500 my-6'>
         <Location size={18} filled />
         <span className='text-body-14 text-greyscale-800'>

@@ -46,7 +46,7 @@ const MobileSelect: FC<SelectProps> = ({
         } `}
         onClick={() => setOpen(true)}>
         <div
-          className={` w-full pl-5 pr-6 ${
+          className={` w-full pl-3 pr-6 ${
             classNameOpt.valueContainer ? classNameOpt.valueContainer : 'py-4 '
           }`}>
           <div

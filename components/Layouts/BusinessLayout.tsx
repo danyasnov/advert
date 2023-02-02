@@ -141,13 +141,10 @@ const BusinessLayout: FC = observer(() => {
   return (
     <>
       <MetaTags title={t('LENDING_BUSINESS_TITLE')} />
-      <div className='flex flex-col mx-4 s:mx-auto mt-3 s:w-704px m:w-944px l:w-1208px '>
-        <div className='mb-6'>
-          <LanguageSelect />
-        </div>
-        <div className='flex justify-between mb-6'>
+      <div className='flex flex-col mx-4 s:mx-auto mt-6 s:mt-8 s:w-704px m:w-944px l:w-1208px '>
+        <div className='flex items-center justify-between mb-6'>
           <Logo />
-          <Auth />
+          <LanguageSelect />
         </div>
         <div className='mx-8 s:mx-0 flex flex-col s:flex-row mb-12 s:mb-25 m:mb-[150px] items-center s:justify-between'>
           <div className='flex flex-col s:w-[380px] m:w-[430px] l:w-[616px] text-center s:text-left'>

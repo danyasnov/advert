@@ -272,9 +272,12 @@ export const fetchDraft = (hash: string, storage: Storage) => {
   return rest.createAdvertise.fetchDraft(hash)
 }
 
-export const fetchDrafts = (storage: Storage) => {
+export const fetchDrafts = (
+  payload: {limit: number; page: number; cacheId: string},
+  storage: Storage,
+) => {
   const rest = getRest(storage)
-  return rest.createAdvertise.fetchListDrafts({limit: 50, page: 1})
+  return rest.createAdvertise.fetchListDrafts(payload)
 }
 
 export const checkExisting = async (
