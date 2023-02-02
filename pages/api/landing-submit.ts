@@ -20,7 +20,10 @@ export default async (
       campaign_id: 'postman_inline_both_example',
       recipients: [
         {
-          address: 'info@vooxee.com',
+          address: 'sales@vooxee.com',
+        },
+        {
+          address: 'marketing@vooxee.com',
         },
       ],
       content: {
@@ -40,5 +43,8 @@ export default async (
               </html>`,
       },
     },
-  }).then((data) => res.json(data.data))
+  }).then((data) => {
+    console.log(data)
+    res.json(data.data)
+  })
 }

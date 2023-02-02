@@ -6,9 +6,11 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
+  const {body} = req
+  const {limit, page, cacheId} = body
   const storage = getStorageFromCookies({req, res})
 
-  return fetchDrafts(storage).then((result) => {
+  return fetchDrafts({limit, page, cacheId}, storage).then((result) => {
     return res.json(result)
   })
 }

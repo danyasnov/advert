@@ -72,7 +72,7 @@ const ProductPhotos: FC = observer(() => {
       <div className='absolute right-4 top-4 s:right-7 s:top-7 z-9'>
         <ProductBadge />
       </div>
-      <div className='overflow-hidden relative rounded-xl' ref={viewportRef}>
+      <div className='overflow-hidden relative rounded-3xl' ref={viewportRef}>
         <div className='flex w-full h-[180px] s:h-[257px] m:h-[340px] l:h-[504px]'>
           {items.map((item, index) => {
             if (item.type === 'video') {

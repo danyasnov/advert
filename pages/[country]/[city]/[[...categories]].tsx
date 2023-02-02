@@ -7,9 +7,10 @@ import {
   getFilterFromQuery,
   getLocationCodes,
   getQueryValue,
-  getStorageFromCookies,
   processCookies,
   redirectToLogin,
+  refreshToken,
+  setCookiesObject,
   withLocationQuery,
 } from '../../../helpers'
 import {
@@ -24,6 +25,7 @@ import ProductLayout from '../../../components/Layouts/ProductLayout'
 import {defaultFilter} from '../../../utils'
 import {Filter} from '../../../types'
 import {fetchCityOrRegionsBySlug} from '../../../api/db'
+import Storage from '../../../stores/Storage'
 
 export default function Home({isProduct}) {
   return isProduct ? <ProductLayout /> : <CategoriesLayout />
@@ -32,7 +34,24 @@ export default function Home({isProduct}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {query, resolvedUrl, res} = ctx
   let state = await processCookies(ctx)
-  const storage = getStorageFromCookies(ctx)
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const newAuth = await refreshToken({
+    authNewToken: state.authNewToken,
+    authNewRefreshToken: state.authNewRefreshToken,
+  })
+  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
+    storage.saveNewTokens({
+      accessToken: newAuth.authNewToken,
+      refreshToken: newAuth.authNewRefreshToken,
+    })
+    setCookiesObject(newAuth, ctx)
+  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
   const countryCode = getQueryValue(query, 'country')
   const sortBy = getQueryValue(query, 'sortBy') ?? null
   const cityCode = getQueryValue(query, 'city')
@@ -49,9 +68,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let categories
   try {
     const response = await fetchCategories(storage)
-    if (response.status === 401) {
-      return redirectToLogin(ctx.resolvedUrl)
-    }
     categories = response?.result
   } catch (e) {
     console.error(e)

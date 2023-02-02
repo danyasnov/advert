@@ -17,7 +17,14 @@ import {IncomingMessage} from 'http'
 import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
-import {getAddressByGPS, getLocationByIp, makeRequest, parseIp} from '../api'
+import jwtDecode from 'jwt-decode'
+import {
+  API_URL,
+  getAddressByGPS,
+  getLocationByIp,
+  makeRequest,
+  parseIp,
+} from '../api'
 import {
   City,
   CookiesState,
@@ -695,29 +702,80 @@ export const getStorageFromCookies = (
   },
 ) => {
   const state = parseCookies(ctx)
-  if (!state.language) state.language = ctx.req.locale || 'en'
-  return mapCookies(state, ctx)
-}
-
-export const mapCookies = (state: SerializedCookiesState, ctx?) => {
+  if (!state.language) {
+    state.language = ctx.req.locale || 'en'
+  }
   const deserializedState = deserializeCookies(state)
 
-  return new Storage(
-    {
-      ...deserializedState,
-      location: deserializedState.searchLocation,
-      userHash: deserializedState.hash,
-    },
-    ({accessToken, refreshToken}) => {
-      setCookiesObject(
-        {
-          authNewRefreshToken: refreshToken,
-          authNewToken: accessToken,
+  return new Storage({
+    ...deserializedState,
+    location: deserializedState.searchLocation,
+    userHash: deserializedState.hash,
+  })
+}
+
+export const refreshToken = async ({
+  authNewToken,
+  authNewRefreshToken,
+}: {
+  authNewRefreshToken?: string
+  authNewToken?: string
+}): Promise<{
+  err?: string
+  authNewRefreshToken?: string
+  authNewToken?: string
+}> => {
+  if (!authNewToken) {
+    return {
+      err: 'NOT_AUTHORIZED',
+    }
+  }
+  let decoded
+  try {
+    decoded = jwtDecode(authNewToken)
+  } catch (e) {
+    console.error(e)
+  }
+  if (!decoded) {
+    return {
+      err: 'DECODE_FAILED',
+    }
+  }
+  const date = new Date()
+  const exp = decoded.exp * 1000
+  if (exp > date.valueOf()) {
+    return {
+      err: 'STILL_VALID',
+    }
+  }
+  if (!authNewRefreshToken) {
+    return {
+      err: 'LOGIN_REDIRECT',
+    }
+  }
+  let refreshData
+  try {
+    refreshData = await makeRequest({
+      url: `${API_URL}/v2/auth/token/refresh`,
+      method: 'post',
+      data: {
+        data: {
+          token: authNewRefreshToken,
         },
-        ctx,
-      )
-    },
-  )
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+  if (refreshData?.data?.newAuth) {
+    return {
+      authNewToken: refreshData.data.newAuth.access,
+      authNewRefreshToken: refreshData.data.newAuth.refresh,
+    }
+  }
+  return {
+    err: 'LOGIN_REDIRECT',
+  }
 }
 
 export const deserializeCookies = (

@@ -2,12 +2,14 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
 import AdvertWizardLayout from '../../../components/Layouts/AdvertWizardLayout'
 import {
-  getStorageFromCookies,
   processCookies,
   redirectToLogin,
+  refreshToken,
+  setCookiesObject,
 } from '../../../helpers'
 import {fetchCategories} from '../../../api/v2'
 import {fetchCountries, fetchLanguages} from '../../../api/v1'
+import Storage from '../../../stores/Storage'
 
 export default function Home() {
   return <AdvertWizardLayout />
@@ -15,8 +17,24 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
-  const storage = getStorageFromCookies(ctx)
-
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const newAuth = await refreshToken({
+    authNewToken: state.authNewToken,
+    authNewRefreshToken: state.authNewRefreshToken,
+  })
+  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
+    storage.saveNewTokens({
+      accessToken: newAuth.authNewToken,
+      refreshToken: newAuth.authNewRefreshToken,
+    })
+    setCookiesObject(newAuth, ctx)
+  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
   const promises = [
     fetchCountries(state.language),
     fetchCategories(storage),
@@ -28,9 +46,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
     )
 
-  if (categoriesData.status === 401) {
-    return redirectToLogin(ctx.resolvedUrl)
-  }
   const categories = categoriesData?.result ?? null
   const languages = languagesData?.result ?? null
   const countries = countriesData ?? null

@@ -4,12 +4,14 @@ import {fetchCountries} from '../../api/v1'
 import {
   getLocationCodes,
   getQueryValue,
-  getStorageFromCookies,
   processCookies,
   redirectToLogin,
+  refreshToken,
+  setCookiesObject,
 } from '../../helpers'
 import {fetchCategories, fetchUser, fetchUserSale} from '../../api/v2'
 import UserLayout from '../../components/Layouts/UserLayout'
+import Storage from '../../stores/Storage'
 
 export default function Home() {
   return <UserLayout />
@@ -20,8 +22,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
   const userId = getQueryValue(query, 'id')
 
-  const storage = getStorageFromCookies(ctx)
-
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const newAuth = await refreshToken({
+    authNewToken: state.authNewToken,
+    authNewRefreshToken: state.authNewRefreshToken,
+  })
+  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
+    storage.saveNewTokens({
+      accessToken: newAuth.authNewToken,
+      refreshToken: newAuth.authNewRefreshToken,
+    })
+    setCookiesObject(newAuth, ctx)
+  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
   const promises = [
     fetchCountries(state.language),
     fetchCategories(storage),
@@ -32,10 +50,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     await Promise.allSettled(promises).then((response) =>
       response.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
     )
-
-  if (categoriesData.status === 401) {
-    return redirectToLogin(ctx.resolvedUrl)
-  }
 
   const categories = categoriesData?.result ?? null
   const countries = countriesData ?? null

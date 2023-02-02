@@ -194,30 +194,27 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           />
         </>
       )}
-      {/* <Script */}
-      {/*  id='gtag' */}
-      {/*  src='https://www.googletagmanager.com/gtag/js?id=UA-211806856-1' */}
-      {/* /> */}
-      {/* <Script */}
-      {/*  id='gtag-config' */}
-      {/*  // eslint-disable-next-line react/no-danger */}
-      {/*  dangerouslySetInnerHTML={{ */}
-      {/*    __html: `window.dataLayer = window.dataLayer || []; */}
-      {/*      function gtag(){dataLayer.push(arguments);} */}
-      {/*      gtag('js', new Date()); */}
-      {/*    */}
-      {/*      gtag('config', 'UA-211806856-1');`, */}
-      {/*  }} */}
-      {/* /> */}
-      <noscript>
-        {/* eslint-disable-next-line jsx-a11y/alt-text */}
-        {/* <img */}
-        {/*  height='1' */}
-        {/*  width='1' */}
-        {/*  style={{display: 'none'}} */}
-        {/*  src='https://www.facebook.com/tr?id=501894937955088&ev=PageView&noscript=1' */}
-        {/* /> */}
-      </noscript>
+      <Script
+        src='https://www.googletagmanager.com/gtag/js?id=UA-255622289-1'
+        strategy='afterInteractive'
+      />
+      <Script id='google-analytics' strategy='afterInteractive'>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-255622289-1');
+        `}
+      </Script>
+      {/* <Script id='clarity' strategy='afterInteractive'> */}
+      {/*  {` */}
+      {/*    (function(c,l,a,r,i,t,y){ */}
+      {/*    c[a]=c[a]function(){(c[a].q=c[a].q[]).push(arguments)}; */}
+      {/*    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; */}
+      {/*    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); */}
+      {/*    })(window, document, "clarity", "script", "fmi9tmugn8"); */}
+      {/*  `} */}
+      {/* </Script> */}
     </>
   )
 }
