@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isEmpty, toNumber} from 'lodash'
+import {get, isEmpty, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
@@ -66,15 +66,19 @@ const UserLayout: FC = observer(() => {
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
   const tabs = getTabs(t)
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
-    (d) => ({
-      ...d.advertDraft,
-      ...d,
-      ...(d.advertDraft.content[0] ? d.advertDraft.content[0] : {}),
-      url: `/advert/create/${d.hash}`,
-      images: d.advertDraft.photos
-        ? d.advertDraft.photos.map((p) => p.url)
-        : [],
-    }),
+    (d) => {
+      const title =
+        d.advertDraft.content[0]?.title || d.advertDraft.categoryName
+      return {
+        ...d,
+        ...d.advertDraft,
+        title,
+        url: `/advert/create/${d.hash}`,
+        images: d.advertDraft.photos
+          ? d.advertDraft.photos.map((p) => p.url)
+          : [],
+      }
+    },
   )
   return (
     <HeaderFooterWrapper>
