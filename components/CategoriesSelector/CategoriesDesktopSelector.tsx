@@ -70,7 +70,7 @@ const CategoriesDesktopSelector: FC = observer(() => {
 
   return (
     <div
-      className='absolute top-[108px] inset-x-0 z-10 shadow-xl
+      className='absolute top-[148px] inset-x-0 z-10 shadow-xl
        category-selector-width m-auto grid grid-cols-4
        m:grid-cols-category-selector-m l:grid-cols-category-selector-l
        l:justify-center categories-bg'>
