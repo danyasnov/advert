@@ -250,34 +250,6 @@ const UserLayout: FC = observer(() => {
                     }}
                     tab='drafts'
                   />
-
-                  {/*  {isEmpty(drafts) ? (
-                    <div className='flex justify-center'>
-                      <EmptyTab
-                        description='DRAWINGS_EMPTY'
-                        img='/img/drafts-tab.svg'
-                      />
-                    </div>
-                  ) : (
-                    <ScrollableCardGroup
-                      showMenu={isCurrentUser}
-                      // @ts-ignore
-                      products={mappedDrafts}
-                      page={drafts.page}
-                      count={drafts.count}
-                      state={drafts.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={drafts.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: drafts.page + 1,
-                          path: 'drafts',
-                          limit: 20,
-                        })
-                      }}
-                    />
-                  )} */}
                 </div>
               )}
               {activeUserPage === 'favorites' && (
