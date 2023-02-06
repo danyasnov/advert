@@ -901,62 +901,65 @@ export const FormikDependentFields: FC<
   ])
 
   // @ts-ignore
-  useEffect(async () => {
-    const newFields = []
-    let shouldClearNext = false
-    let otherValueWasSelected = false
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
-    for (const index in fields) {
-      const current = fields[index]
-      const nextValue = nextFields[current.id]?.value
-      const prevValue = prevFields[current.id]?.value
-      const currentOption = current.multiselects.top.find(
-        (o) => o.id === nextValue,
-      )
-      if (currentOption && !otherValueWasSelected) {
-        otherValueWasSelected = !currentOption.isVisible
-      }
-
-      if (shouldClearNext) {
-        setFieldValue(`fields.${current.id}`, undefined)
-      } else if (nextValue !== prevValue) {
-        // @todo fix multiple requests
-        if (nextValue) {
-          newFields.push({...current, value: nextValue})
-          const params = {
-            dependenceSequenceId: field.dependenceSequenceId,
-            dependenceSequence: newFields.map((f) => nextFields[f.id]?.value),
-            otherValueWasSelected,
-          }
-
-          const result =
-            get(
-              // eslint-disable-next-line no-await-in-loop
-              await makeRequest({
-                url: '/api/field-dependent',
-                method: 'post',
-                data: params,
-              }),
-              'data.result',
-            ) || {}
-          const resultFields = [
-            ...newFields,
-            ...(result.nextField ? [result.nextField] : []),
-          ]
-          setFields(resultFields)
-          if (size(resultFields) > 1) {
-            onFieldsChange(resultFields)
-          }
-          shouldClearNext = true
+  useEffect(() => {
+    const cb = async () => {
+      const newFields = []
+      let shouldClearNext = false
+      let otherValueWasSelected = false
+      // eslint-disable-next-line guard-for-in,no-restricted-syntax
+      for (const index in fields) {
+        const current = fields[index]
+        const nextValue = nextFields[current.id]?.value
+        const prevValue = prevFields[current.id]?.value
+        const currentOption = current.multiselects.top.find(
+          (o) => o.id === nextValue,
+        )
+        if (currentOption && !otherValueWasSelected) {
+          otherValueWasSelected = !currentOption.isVisible
         }
-      } else {
-        newFields.push({...current, value: nextValue})
+
+        if (shouldClearNext) {
+          setFieldValue(`fields.${current.id}`, undefined)
+        } else if (nextValue !== prevValue) {
+          // @todo fix multiple requests
+          if (nextValue) {
+            newFields.push({...current, value: nextValue})
+            const params = {
+              dependenceSequenceId: field.dependenceSequenceId,
+              dependenceSequence: newFields.map((f) => nextFields[f.id]?.value),
+              otherValueWasSelected,
+            }
+
+            const result =
+              get(
+                // eslint-disable-next-line no-await-in-loop
+                await makeRequest({
+                  url: '/api/field-dependent',
+                  method: 'post',
+                  data: params,
+                }),
+                'data.result',
+              ) || {}
+            const resultFields = [
+              ...newFields,
+              ...(result.nextField ? [result.nextField] : []),
+            ]
+            setFields(resultFields)
+            if (size(resultFields) > 1) {
+              onFieldsChange(resultFields)
+            }
+            shouldClearNext = true
+          }
+        } else {
+          newFields.push({...current, value: nextValue})
+        }
+      }
+
+      if (!isEqual(nextFields, prevFields)) {
+        prevValues.current = values
       }
     }
-
-    if (!isEqual(nextFields, prevFields)) {
-      prevValues.current = values
-    }
+    cb()
   }, [values])
   return (
     <>
