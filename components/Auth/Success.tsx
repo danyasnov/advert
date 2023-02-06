@@ -5,14 +5,21 @@ import {useRouter} from 'next/router'
 import IcLoginSuccess from 'icons/LoginSuccess.svg'
 import {PageProps} from './utils'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import ImageWrapper from '../ImageWrapper'
 
 const Success: FC<PageProps> = observer(({onClose, onFinish, state}) => {
   const {t} = useTranslation()
   const {reload} = useRouter()
   return (
     <div className='flex flex-col'>
-      <div className='mb-6 flex justify-center'>
-        <IcLoginSuccess className='w-[124px] h-[124px]' />
+      <div className='flex justify-center'>
+        <ImageWrapper
+          type='/img/success.png'
+          alt='Success'
+          width={150}
+          height={150}
+          layout='fixed'
+        />
       </div>
       <span className='text-primary-500 text-h-4 font-bold mx-12 text-center mb-6'>
         {t('CONGRATULATIONS')}
