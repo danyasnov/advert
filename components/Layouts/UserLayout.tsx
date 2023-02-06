@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {get, isEmpty, toNumber} from 'lodash'
+import {isNumber, isEmpty, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {ArrowLeft} from 'react-iconly'
 import {useWindowSize} from 'react-use'
@@ -19,11 +19,11 @@ import Card from '../Cards/Card'
 // import ChatList from '../ChatList'
 import EmptyTab from '../EmptyTab'
 
-const getTabs = (t: TFunction) => [
-  {title: `${t('MODERATION')}`, id: 1},
-  {title: `${t('SALE')}`, id: 2},
-  {title: `${t('SOLD')}`, id: 3},
-  {title: `${t('ARCHIVE')}`, id: 4},
+const getTabs = (t: TFunction, sizes) => [
+  {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
+  {title: `${t('SALE')}`, id: 2, count: sizes[2]},
+  {title: `${t('SOLD')}`, id: 3, count: sizes[3]},
+  {title: `${t('ARCHIVE')}`, id: 4, count: sizes[4]},
 ]
 
 const UserLayout: FC = observer(() => {
@@ -64,7 +64,12 @@ const UserLayout: FC = observer(() => {
     }
     return () => setActiveUserPage('adverts')
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
-  const tabs = getTabs(t)
+  const tabs = getTabs(t, {
+    1: isNumber(userOnModeration.count) ? userOnModeration.count : '',
+    2: userSale.count,
+    3: isNumber(userSold.count) ? userSold.count : '',
+    4: isNumber(userArchive.count) ? userArchive.count : '',
+  })
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
     (d) => {
       const title =
