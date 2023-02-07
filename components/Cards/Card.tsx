@@ -16,6 +16,7 @@ import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
 import {Call, Image, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
+import IcMoreVert from 'icons/material/MoreVert.svg'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
@@ -24,6 +25,7 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
+import Button from '../Buttons/Button'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -151,6 +153,38 @@ const Card: FC<Props> = ({
               state={product.state}
               title={product.title}
               images={product.images}
+              listRender={(options, setShowPopup) => (
+                <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200 px-5'>
+                  {/* eslint-disable-next-line no-shadow */}
+                  {options.map(({title, onClick, icon}, index) => (
+                    <Button
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      className='py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onClick()
+                        setShowPopup(false)
+                      }}>
+                      <div className='flex items-center justify-start w-full'>
+                        <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
+                        <span className='truncate'>{t(title)}</span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              )}
+              iconRender={(show) => (
+                <div className='w-8 h-8 bg-white rounded-full flex justify-center items-center shadow'>
+                  <IcMoreVert
+                    className={`fill-current ${
+                      show ? 'text-primary-500' : 'text-greyscale-500'
+                    }`}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              )}
             />
           </div>
         )}
