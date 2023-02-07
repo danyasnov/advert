@@ -3,10 +3,15 @@ import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {isNumber, isEmpty, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
-import {ArrowLeft} from 'react-iconly'
+import {
+  ArrowLeft,
+  ArrowLeftSquare,
+  Delete,
+  Edit,
+  TickSquare,
+} from 'react-iconly'
 import {useWindowSize} from 'react-use'
-import {toJS} from 'mobx'
-import {DraftModel} from 'front-api/src/models/index'
+import {DraftModel} from 'front-api/src/models'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -15,9 +20,8 @@ import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import Card from '../Cards/Card'
-// import ChatList from '../ChatList'
 import EmptyTab from '../EmptyTab'
+import {makeRequest} from '../../api'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -85,6 +89,102 @@ const UserLayout: FC = observer(() => {
       }
     },
   )
+  const getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/delete-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const publish = {
+      title: 'PUBLISH',
+      icon: <TickSquare size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/publish-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const deactivate = {
+      title: 'REMOVE_FROM_SALE',
+      icon: <ArrowLeftSquare size={16} filled />,
+      onClick: () => {
+        setShowDeactivateModal(true)
+      },
+      cb: () => {
+        router.reload()
+      },
+    }
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/edit/${hash}`)
+      },
+    }
+    const items = []
+
+    if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
+      items.push(edit)
+    }
+    if (
+      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
+        state,
+      )
+    ) {
+      if (state === 'archived') {
+        items.push(publish)
+      }
+      items.push(remove)
+    }
+    if (state === 'active') {
+      items.push(deactivate)
+    }
+    return items
+  }
+
+  const getDraftOptions = ({hash}) => {
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/create/${hash}`)
+      },
+    }
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: '/api/delete-draft',
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+
+    return [edit, remove]
+  }
+
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -118,7 +218,7 @@ const UserLayout: FC = observer(() => {
                   </div>
                   {isCurrentUser && activeTab === 1 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userOnModeration.items}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
@@ -137,7 +237,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {activeTab === 2 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userSale.items}
                       page={userSale.page}
                       count={userSale.count}
@@ -156,7 +256,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {activeTab === 3 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userSold.items}
                       page={userSold.page}
                       count={userSold.count}
@@ -175,7 +275,7 @@ const UserLayout: FC = observer(() => {
                   )}
                   {isCurrentUser && activeTab === 4 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userArchive.items}
                       page={userArchive.page}
                       count={userArchive.count}
@@ -207,7 +307,7 @@ const UserLayout: FC = observer(() => {
                     </div>
                   ) : (
                     <ScrollableCardGroup
-                      showMenu={isCurrentUser}
+                      getOptions={getDraftOptions}
                       // @ts-ignore
                       products={mappedDrafts}
                       page={drafts.page}
