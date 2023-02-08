@@ -235,7 +235,7 @@ const UserLayout: FC = observer(() => {
                       tab='moderation'
                     />
                   )}
-                  {activeTab === 2 && (
+                  {isCurrentUser && activeTab === 2 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSale.items}
@@ -254,7 +254,26 @@ const UserLayout: FC = observer(() => {
                       tab='sale'
                     />
                   )}
-                  {activeTab === 3 && (
+                  {!isCurrentUser && activeTab === 2 && (
+                    <UserTabWrapper
+                      getOptions={getAdvertOptions}
+                      products={userSale.items}
+                      page={userSale.page}
+                      count={userSale.count}
+                      state={userSale.state}
+                      limit={userSale.limit}
+                      enableTwoColumnsForS
+                      disableVipWidth
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSale.page + 1,
+                          path: 'userSale',
+                        })
+                      }}
+                      tab='other-sale'
+                    />
+                  )}
+                  {isCurrentUser && activeTab === 3 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSold.items}
@@ -271,6 +290,25 @@ const UserLayout: FC = observer(() => {
                         })
                       }}
                       tab='sold'
+                    />
+                  )}
+                  {!isCurrentUser && activeTab === 3 && (
+                    <UserTabWrapper
+                      getOptions={getAdvertOptions}
+                      products={userSold.items}
+                      page={userSold.page}
+                      count={userSold.count}
+                      state={userSold.state}
+                      enableTwoColumnsForS
+                      disableVipWidth
+                      limit={userSold.limit}
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSold.page + 1,
+                          path: 'userSold',
+                        })
+                      }}
+                      tab='other-sold'
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
@@ -298,33 +336,25 @@ const UserLayout: FC = observer(() => {
                 <div>
                   <SectionTitle title={t('DRAFTS')} />
 
-                  {isEmpty(drafts) ? (
-                    <div className='flex justify-center'>
-                      <EmptyTab
-                        description='DRAWINGS_EMPTY'
-                        img='/img/drafts-tab.svg'
-                      />
-                    </div>
-                  ) : (
-                    <ScrollableCardGroup
-                      getOptions={getDraftOptions}
-                      // @ts-ignore
-                      products={mappedDrafts}
-                      page={drafts.page}
-                      count={drafts.count}
-                      state={drafts.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={drafts.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: drafts.page + 1,
-                          path: 'drafts',
-                          limit: 20,
-                        })
-                      }}
-                    />
-                  )}
+                  <UserTabWrapper
+                    showMenu={isCurrentUser}
+                    // @ts-ignore
+                    products={mappedDrafts}
+                    page={drafts.page}
+                    count={drafts.count}
+                    state={drafts.state}
+                    enableTwoColumnsForS
+                    disableVipWidth
+                    limit={drafts.limit}
+                    fetchProducts={() => {
+                      fetchProducts({
+                        page: drafts.page + 1,
+                        path: 'drafts',
+                        limit: 20,
+                      })
+                    }}
+                    tab='drafts'
+                  />
                 </div>
               )}
               {activeUserPage === 'favorites' && (
