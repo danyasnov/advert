@@ -14,42 +14,32 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {
-  ArrowLeftSquare,
-  Call,
-  Delete,
-  Edit,
-  Image,
-  Star,
-  TickSquare,
-} from 'react-iconly'
+import {Call, Image, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
 import IcMoreVert from 'icons/material/MoreVert.svg'
-import {useRouter} from 'next/router'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
-import {handleMetrics, trackSingle} from '../../helpers'
+import {handleMetrics} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
-import {makeRequest} from '../../api'
 
 interface Props {
   product: AdvertiseListItemModel
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
   disableVipWidth?: boolean
-  showMenu?: boolean
+  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
 }
 const Card: FC<Props> = ({
   product,
   setLockParentScroll,
   href,
   disableVipWidth,
-  showMenu,
+  getOptions,
 }) => {
   const {t} = useTranslation()
   const {
@@ -67,9 +57,7 @@ const Card: FC<Props> = ({
     showCallButton,
   } = product
   const imagesCount = size(product.images)
-  // if (hash === 'hQmHD7') debugger
 
-  const router = useRouter()
   const [images] = useState(
     imagesCount > 4 ? product.images.slice(0, 4) : product.images,
   )
@@ -134,74 +122,6 @@ const Card: FC<Props> = ({
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
-  const getOptions = (setShowDeactivateModal) => {
-    const remove = {
-      title: 'REMOVE',
-      icon: <Delete size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/delete-adv`,
-          method: 'post',
-          data: {
-            hash,
-          },
-        }).then(() => {
-          router.reload()
-        })
-      },
-    }
-    const publish = {
-      title: 'PUBLISH',
-      icon: <TickSquare size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/publish-adv`,
-          method: 'post',
-          data: {
-            hash,
-          },
-        }).then(() => {
-          router.reload()
-        })
-      },
-    }
-    const deactivate = {
-      title: 'REMOVE_FROM_SALE',
-      icon: <ArrowLeftSquare size={16} filled />,
-      onClick: () => {
-        setShowDeactivateModal(true)
-      },
-      cb: () => {
-        router.reload()
-      },
-    }
-    const edit = {
-      title: 'EDIT_AD',
-      icon: <Edit size={16} filled />,
-      onClick: () => {
-        router.push(`/advert/edit/${hash}`)
-      },
-    }
-    const items = []
-
-    if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
-      items.push(edit)
-    }
-    if (
-      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
-        state,
-      )
-    ) {
-      if (state === 'archived') {
-        items.push(publish)
-      }
-      items.push(remove)
-    }
-    if (state === 'active') {
-      items.push(deactivate)
-    }
-    return items
-  }
 
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
@@ -225,14 +145,14 @@ const Card: FC<Props> = ({
             />
           </div>
         )}
-        {showMenu && (
+        {getOptions && (
           <div className='absolute top-4 right-4 w-8 h-8 z-20'>
             <ProductMenu
-              getOptions={(setShowDeactivateModal) =>
-                getOptions(setShowDeactivateModal)
-              }
-              advertHash={product.hash}
+              getOptions={getOptions}
+              hash={product.hash}
+              state={product.state}
               title={product.title}
+              images={product.images}
               listRender={(options, setShowPopup) => (
                 <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200 px-5'>
                   {/* eslint-disable-next-line no-shadow */}
@@ -265,7 +185,6 @@ const Card: FC<Props> = ({
                   />
                 </div>
               )}
-              images={product.images}
             />
           </div>
         )}

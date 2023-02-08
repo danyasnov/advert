@@ -2,35 +2,38 @@ import {FC, useRef, useState} from 'react'
 import {useClickAway} from 'react-use'
 import {get, isEmpty} from 'lodash'
 import {RemoveFromSaleType} from 'front-api/src/models'
+import {useTranslation} from 'next-i18next'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import DeactivateAdvModal from './DeactivateAdvModal'
 
 interface Props {
-  advertHash: string
+  hash: string
   title: string
+  state?: string
   images: string[]
+  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
   iconRender
   listRender
-  getOptions
 }
 const ProductMenu: FC<Props> = ({
-  iconRender,
-  listRender,
-  advertHash,
+  hash,
   images,
   title,
   getOptions,
+  state,
+  iconRender,
+  listRender,
 }) => {
   const [showPopup, setShowPopup] = useState(false)
   const [showDeactivateModal, setShowDeactivateModal] = useState(false)
-
+  const {t} = useTranslation()
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShowPopup(false)
   })
 
-  const options = getOptions(setShowDeactivateModal)
+  const options = getOptions({setShowDeactivateModal, hash, state})
   if (isEmpty(options)) return null
   return (
     <>
@@ -54,7 +57,7 @@ const ProductMenu: FC<Props> = ({
               url: `/api/deactivate-adv`,
               method: 'post',
               data: {
-                hash: advertHash,
+                hash,
                 soldMode: value,
               },
             }).then(() => {
