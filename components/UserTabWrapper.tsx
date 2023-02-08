@@ -1,25 +1,12 @@
 import {FC} from 'react'
-import {AdvertiseListItemModel} from 'front-api'
 import {isEmpty} from 'lodash'
-import ScrollableCardGroup from './Cards/ScrollableCardGroup'
+import ScrollableCardGroup, {
+  ScrollableCardGroupInterface,
+} from './Cards/ScrollableCardGroup'
 import EmptyTab from './EmptyTab'
-import {AdvertNotFoundWithDescription} from './AdvertNotFound'
 import {PAGE_LIMIT} from '../stores/ProductsStore'
 
-interface Props {
-  products: AdvertiseListItemModel[]
-  state: string
-  count?: number
-  page?: number
-  limit?: number
-  hideNotFoundDescription?: boolean
-  disableScroll?: boolean
-  enableFourthColumnForM?: boolean
-  enableFiveColumnsForL?: boolean
-  enableTwoColumnsForS?: boolean
-  showMenu?: boolean
-  disableVipWidth?: boolean
-  fetchProducts?: () => void
+interface Props extends ScrollableCardGroupInterface {
   tab?: string
 }
 
@@ -35,8 +22,8 @@ const UserTabWrapper: FC<Props> = ({
   enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
-  showMenu,
   tab,
+  getOptions,
 }) => {
   if (isEmpty(products) && tab === 'drafts') {
     return (
@@ -132,7 +119,7 @@ const UserTabWrapper: FC<Props> = ({
 
   return (
     <ScrollableCardGroup
-      showMenu={showMenu}
+      getOptions={getOptions}
       products={products}
       page={page}
       count={count}

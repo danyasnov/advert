@@ -2,13 +2,12 @@ import {FC} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {isEmpty} from 'lodash'
 import {AdvertiseListItemModel} from 'front-api'
-import {toJS} from 'mobx'
 import Card from './Card'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
-import {AdvertNotFound, AdvertNotFoundWithDescription} from '../AdvertNotFound'
+import {AdvertNotFoundWithDescription} from '../AdvertNotFound'
 import CardsLoader from '../CardsLoader'
 
-interface Props {
+export interface ScrollableCardGroupInterface {
   products: AdvertiseListItemModel[]
   state: string
   count?: number
@@ -18,11 +17,11 @@ interface Props {
   enableFourthColumnForM?: boolean
   enableFiveColumnsForL?: boolean
   enableTwoColumnsForS?: boolean
-  showMenu?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
+  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
 }
-const ScrollableCardGroup: FC<Props> = ({
+const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   products = [],
   state,
   count,
@@ -34,7 +33,7 @@ const ScrollableCardGroup: FC<Props> = ({
   enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
-  showMenu,
+  getOptions,
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
@@ -85,7 +84,7 @@ const ScrollableCardGroup: FC<Props> = ({
               <Card
                 product={p}
                 disableVipWidth={disableVipWidth}
-                showMenu={showMenu}
+                getOptions={getOptions}
               />
             </div>
           ))}

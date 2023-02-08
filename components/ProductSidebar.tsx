@@ -21,7 +21,7 @@ const ProductSidebar: FC = observer(() => {
       <div className='mt-11'>
         <ProductPrice />
       </div>
-      <div className='flex items-center space-x-2 text-primary-500 my-6'>
+      <div className='flex items-center space-x-2 text-greyscale-400 mt-4 mb-8'>
         <Location size={18} filled />
         <span className='text-body-14 text-greyscale-800'>
           {product.advert.location.description}
