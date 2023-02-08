@@ -55,7 +55,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
     },
   ]
   const buttonClassName =
-    'px-5 text-greyscale-900 hover:text-primary-500 hover:font-bold w-full rounded-lg'
+    'px-5 text-greyscale-900 hover:text-primary-500 w-full rounded-lg'
   if (hide) return null
   return (
     <div ref={ref}>
