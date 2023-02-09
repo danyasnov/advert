@@ -1,10 +1,10 @@
 import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
-import {isEmpty} from 'lodash'
+import {isEmpty, isNumber} from 'lodash'
 import Button from './Buttons/Button'
 
 interface Props {
-  items: {title: string; id: number}[]
+  items: {title: string; id: number; count?: number}[]
   value: number
   onChange: (id: number) => void
 }
@@ -47,7 +47,8 @@ const Tabs: FC<Props> = ({items, value, onChange}) => {
                 : 'text-greyscale-500'
             } ${widthClass}`}
             onClick={() => onChange(i.id)}>
-            {t(i.title)}
+            <span>{t(i.title)}</span>
+            {!!i.count && <span className='font-bold ml-1'>{i.count}</span>}
           </Button>
         )
       })}

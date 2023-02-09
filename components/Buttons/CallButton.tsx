@@ -62,7 +62,7 @@ const CallButton: FC<Props> = ({
         }}
         className={className}>
         {!!icon && icon}
-        <span className='text-body-16'>{t('CONTACT_SELLER')}</span>
+        <span className='text-body-16 font-bold'>{t('CONTACT_SELLER')}</span>
       </Button>
 
       {showModal && (

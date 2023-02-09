@@ -1,12 +1,17 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {get, isEmpty, toNumber} from 'lodash'
+import {isNumber, isEmpty, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
-import {ArrowLeft} from 'react-iconly'
+import {
+  ArrowLeft,
+  ArrowLeftSquare,
+  Delete,
+  Edit,
+  TickSquare,
+} from 'react-iconly'
 import {useWindowSize} from 'react-use'
-import {toJS} from 'mobx'
-import {DraftModel} from 'front-api/src/models/index'
+import {DraftModel} from 'front-api/src/models'
 import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -15,15 +20,14 @@ import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import Card from '../Cards/Card'
-// import ChatList from '../ChatList'
 import EmptyTab from '../EmptyTab'
+import {makeRequest} from '../../api'
 
-const getTabs = (t: TFunction) => [
-  {title: `${t('MODERATION')}`, id: 1},
-  {title: `${t('SALE')}`, id: 2},
-  {title: `${t('SOLD')}`, id: 3},
-  {title: `${t('ARCHIVE')}`, id: 4},
+const getTabs = (t: TFunction, sizes) => [
+  {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
+  {title: `${t('SALE')}`, id: 2, count: sizes[2]},
+  {title: `${t('SOLD')}`, id: 3, count: sizes[3]},
+  {title: `${t('ARCHIVE')}`, id: 4, count: sizes[4]},
 ]
 
 const UserLayout: FC = observer(() => {
@@ -64,7 +68,12 @@ const UserLayout: FC = observer(() => {
     }
     return () => setActiveUserPage('adverts')
   }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
-  const tabs = getTabs(t)
+  const tabs = getTabs(t, {
+    1: isNumber(userOnModeration.count) ? userOnModeration.count : '',
+    2: userSale.count,
+    3: isNumber(userSold.count) ? userSold.count : '',
+    4: isNumber(userArchive.count) ? userArchive.count : '',
+  })
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
     (d) => {
       const title =
@@ -80,6 +89,102 @@ const UserLayout: FC = observer(() => {
       }
     },
   )
+  const getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/delete-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const publish = {
+      title: 'PUBLISH',
+      icon: <TickSquare size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: `/api/publish-adv`,
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+    const deactivate = {
+      title: 'REMOVE_FROM_SALE',
+      icon: <ArrowLeftSquare size={16} filled />,
+      onClick: () => {
+        setShowDeactivateModal(true)
+      },
+      cb: () => {
+        router.reload()
+      },
+    }
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/edit/${hash}`)
+      },
+    }
+    const items = []
+
+    if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
+      items.push(edit)
+    }
+    if (
+      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
+        state,
+      )
+    ) {
+      if (state === 'archived') {
+        items.push(publish)
+      }
+      items.push(remove)
+    }
+    if (state === 'active') {
+      items.push(deactivate)
+    }
+    return items
+  }
+
+  const getDraftOptions = ({hash}) => {
+    const edit = {
+      title: 'EDIT_AD',
+      icon: <Edit size={16} filled />,
+      onClick: () => {
+        router.push(`/advert/create/${hash}`)
+      },
+    }
+    const remove = {
+      title: 'REMOVE',
+      icon: <Delete size={16} filled />,
+      onClick: () => {
+        makeRequest({
+          url: '/api/delete-draft',
+          method: 'post',
+          data: {
+            hash,
+          },
+        }).then(() => {
+          router.reload()
+        })
+      },
+    }
+
+    return [edit, remove]
+  }
+
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -113,7 +218,7 @@ const UserLayout: FC = observer(() => {
                   </div>
                   {isCurrentUser && activeTab === 1 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userOnModeration.items}
                       page={userOnModeration.page}
                       count={userOnModeration.count}
@@ -130,9 +235,9 @@ const UserLayout: FC = observer(() => {
                       tab='moderation'
                     />
                   )}
-                  {activeTab === 2 && (
+                  {isCurrentUser && activeTab === 2 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userSale.items}
                       page={userSale.page}
                       count={userSale.count}
@@ -149,9 +254,28 @@ const UserLayout: FC = observer(() => {
                       tab='sale'
                     />
                   )}
-                  {activeTab === 3 && (
+                  {!isCurrentUser && activeTab === 2 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
+                      products={userSale.items}
+                      page={userSale.page}
+                      count={userSale.count}
+                      state={userSale.state}
+                      limit={userSale.limit}
+                      enableTwoColumnsForS
+                      disableVipWidth
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSale.page + 1,
+                          path: 'userSale',
+                        })
+                      }}
+                      tab='other-sale'
+                    />
+                  )}
+                  {isCurrentUser && activeTab === 3 && (
+                    <UserTabWrapper
+                      getOptions={getAdvertOptions}
                       products={userSold.items}
                       page={userSold.page}
                       count={userSold.count}
@@ -168,9 +292,28 @@ const UserLayout: FC = observer(() => {
                       tab='sold'
                     />
                   )}
+                  {!isCurrentUser && activeTab === 3 && (
+                    <UserTabWrapper
+                      getOptions={getAdvertOptions}
+                      products={userSold.items}
+                      page={userSold.page}
+                      count={userSold.count}
+                      state={userSold.state}
+                      enableTwoColumnsForS
+                      disableVipWidth
+                      limit={userSold.limit}
+                      fetchProducts={() => {
+                        fetchProducts({
+                          page: userSold.page + 1,
+                          path: 'userSold',
+                        })
+                      }}
+                      tab='other-sold'
+                    />
+                  )}
                   {isCurrentUser && activeTab === 4 && (
                     <UserTabWrapper
-                      showMenu={isCurrentUser}
+                      getOptions={getAdvertOptions}
                       products={userArchive.items}
                       page={userArchive.page}
                       count={userArchive.count}
@@ -193,33 +336,25 @@ const UserLayout: FC = observer(() => {
                 <div>
                   <SectionTitle title={t('DRAFTS')} />
 
-                  {isEmpty(drafts) ? (
-                    <div className='flex justify-center'>
-                      <EmptyTab
-                        description='DRAWINGS_EMPTY'
-                        img='/img/drafts-tab.svg'
-                      />
-                    </div>
-                  ) : (
-                    <ScrollableCardGroup
-                      showMenu={isCurrentUser}
-                      // @ts-ignore
-                      products={mappedDrafts}
-                      page={drafts.page}
-                      count={drafts.count}
-                      state={drafts.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={drafts.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: drafts.page + 1,
-                          path: 'drafts',
-                          limit: 20,
-                        })
-                      }}
-                    />
-                  )}
+                  <UserTabWrapper
+                    showMenu={isCurrentUser}
+                    // @ts-ignore
+                    products={mappedDrafts}
+                    page={drafts.page}
+                    count={drafts.count}
+                    state={drafts.state}
+                    enableTwoColumnsForS
+                    disableVipWidth
+                    limit={drafts.limit}
+                    fetchProducts={() => {
+                      fetchProducts({
+                        page: drafts.page + 1,
+                        path: 'drafts',
+                        limit: 20,
+                      })
+                    }}
+                    tab='drafts'
+                  />
                 </div>
               )}
               {activeUserPage === 'favorites' && (

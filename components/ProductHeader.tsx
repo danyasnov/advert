@@ -30,7 +30,7 @@ const ProductHeader: FC = observer(() => {
   if (!product) return null
   const {advert, owner} = product
   const isUserAdv = userHash === owner.hash
-  const getOptions = (setShowDeactivateModal) => {
+  const getOptions = ({setShowDeactivateModal, }) => {
     const remove = {
       title: 'REMOVE',
       icon: <Delete size={16} filled />,
@@ -127,10 +127,8 @@ const ProductHeader: FC = observer(() => {
         <div className='flex ml-4 space-x-2 relative'>
           {isUserAdv && (
             <ProductMenu
-              getOptions={(setShowDeactivateModal) =>
-                getOptions(setShowDeactivateModal)
-              }
-              advertHash={advert.hash}
+              getOptions={getOptions}
+              hash={advert.hash}
               title={advert.title}
               listRender={(options, setShowPopup) => (
                 <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
