@@ -2179,6 +2179,10 @@ axios-curlirize@^2.0.0:
   resolved "https://registry.yarnpkg.com/axios-curlirize/-/axios-curlirize-2.0.0.tgz#c63eedac2c18ef5591371d7658b733cacd2e731a"
   integrity sha512-TrQBa8MfIwaYsrCoYhfCr7NDRXLuGm+Rqh/PtAuO64b8PCCOJWn37BWQvpN4/mzzig3uHb4qXzvpxJmALHaiwA==
 
+axios-curlirize@lexgorbunov/axios-curlirize#1.4.5:
+  version "1.4.5"
+  resolved "https://codeload.github.com/lexgorbunov/axios-curlirize/tar.gz/e2ab2c7249b6c1737d93e15acae6c37ef0716c38"
+
 axios-retry@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/axios-retry/-/axios-retry-3.3.1.tgz#47624646138aedefbad2ac32f226f4ee94b6dcab"
@@ -2186,6 +2190,13 @@ axios-retry@^3.3.1:
   dependencies:
     "@babel/runtime" "^7.15.4"
     is-retry-allowed "^2.2.0"
+
+axios@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.22.0.tgz#bf702c41fb50fbca4539589d839a077117b79b25"
+  integrity sha512-Z0U3uhqQeg1oNcihswf4ZD57O3NrR1+ZXhxaROaWpDmsDTx7T2HNBV2ulBtie2hwJptu8UvgnJoK+BIqdzh/1w==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axios@^0.27.2:
   version "0.27.2"
@@ -2428,6 +2439,11 @@ charcodes@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/charcodes/-/charcodes-0.2.0.tgz#5208d327e6cc05f99eb80ffc814707572d1f14e4"
   integrity sha512-Y4kiDb+AM4Ecy58YkuZrrSRJBDQdQ2L+NyS1vHHFtNtUjgutcZfx3yp1dAONI/oPaPmyGfCLx5CxL+zauIMyKQ==
+
+charenc@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+  integrity sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==
 
 "chats@ssh://git@gitlab.venera.city/vooxee/chat-lib#3.0.3":
   version "3.0.3"
@@ -2676,6 +2692,11 @@ cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypt@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
+  integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
 
 css-in-js-utils@^2.0.0:
   version "2.0.1"
@@ -3458,6 +3479,11 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
+fetch-to-curl@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/fetch-to-curl/-/fetch-to-curl-0.5.2.tgz#9f007ecb3547edeffee49394ff076727dc56d603"
+  integrity sha512-ygmvsJlU+V4GE91lflkRNAJ956xm5MFl6QukIyxkd6yojTxr6gjp4BsYh7hYXlwVw+ffnMlAIXOTWsWJdk017Q==
+
 file-entry-cache@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-6.0.1.tgz#211b2dd9659cb0394b073e7323ac3c933d522027"
@@ -3539,6 +3565,11 @@ focus-trap@^6.2.2:
   dependencies:
     tabbable "^5.2.1"
 
+follow-redirects@^1.14.4:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
+
 follow-redirects@^1.14.9:
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
@@ -3581,9 +3612,15 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.7.4":
-  version "5.7.4"
-  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#570443c96c4feb86cd7f9de82563a754c8f8bec6"
+"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.7.5":
+  version "5.7.5"
+  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#99524dc0daec2c62ff4490553c06f8bb6e9fe828"
+  dependencies:
+    axios "^0.22.0"
+    axios-curlirize lexgorbunov/axios-curlirize#1.4.5
+    fetch-to-curl "^0.5.2"
+    md5 "^2.3.0"
+    moment "^2.29.1"
 
 fs.realpath@^1.0.0:
   version "1.0.0"
@@ -3981,6 +4018,11 @@ is-boolean-object@^1.1.0:
   dependencies:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
+
+is-buffer@~1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+  integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
 is-callable@^1.1.4, is-callable@^1.2.4:
   version "1.2.4"
@@ -4452,6 +4494,15 @@ mammoth@^1.5.1:
     underscore "^1.13.1"
     xmlbuilder "^10.0.0"
 
+md5@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
+  integrity sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+  dependencies:
+    charenc "0.0.2"
+    crypt "0.0.2"
+    is-buffer "~1.1.6"
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
@@ -4584,6 +4635,11 @@ moment-timezone@^0.5.31:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
+moment@^2.29.1:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mrmime@^1.0.0:
   version "1.0.0"

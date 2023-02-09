@@ -7,7 +7,10 @@ export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 
   const storage = getStorageFromCookies({req, res})
   const rest = getRest(storage)
-  const cb = (data) => res.json(data)
+  const cb = (data) => {
+    console.log('chat data', data)
+    res.json(data.result)
+  }
 
   if (method === 'GET') {
     if (url === '/api/v2/chat') {
