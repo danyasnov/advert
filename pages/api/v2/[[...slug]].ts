@@ -1,0 +1,19 @@
+import type {NextApiRequest, NextApiResponse} from 'next'
+import {getStorageFromCookies} from '../../../helpers'
+import {getRest} from '../../../api'
+
+export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+  const {body, method, url} = req
+
+  const storage = getStorageFromCookies({req, res})
+  const rest = getRest(storage)
+  const cb = (data) => res.json(data)
+
+  if (method === 'GET') {
+    if (url === '/api/v2/chat') {
+      return rest.chat.fetchChats().then(cb)
+    }
+  }
+
+  console.log(req)
+}

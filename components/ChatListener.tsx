@@ -7,6 +7,7 @@ import {SerializedCookiesState} from '../types'
 import Storage from '../stores/Storage'
 import {getRest} from '../api'
 import {useGeneralStore} from '../providers/RootStoreProvider'
+import {getStorageFromCookies} from '../helpers'
 
 const ChatListener: FC = observer(() => {
   const {user} = useGeneralStore()
@@ -15,8 +16,9 @@ const ChatListener: FC = observer(() => {
 
   useEffect(() => {
     if (!user || !state.authNewToken) return
-    const storage = new Storage({language: state.language})
-    const restApi = getRest(storage)
+    // const storage = new Storage({language: state.language})
+    const storage = getStorageFromCookies()
+    const restApi = getRest(storage, '/api')
     // const {Chats, globalChatsStore} = await import('chats')
 
     Chats.init({
@@ -69,6 +71,9 @@ const ChatListener: FC = observer(() => {
       const error = await globalChatsStore.startConnection()
     }
     startConnection()
+    return () => {
+      globalChatsStore.closeConnection()
+    }
   }, [user, state.authNewToken])
 
   return null

@@ -697,7 +697,7 @@ export const startTracking = () => {
 }
 
 export const getStorageFromCookies = (
-  ctx: Partial<GetServerSidePropsContext> & {
+  ctx?: Partial<GetServerSidePropsContext> & {
     req: IncomingMessage & {cookies: NextApiRequestCookies; locale?: string}
   },
 ) => {
