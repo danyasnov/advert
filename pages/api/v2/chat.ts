@@ -13,9 +13,7 @@ export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   }
 
   if (method === 'GET') {
-    if (url === '/api/v2/chat') {
-      return rest.chat.fetchChats().then(cb)
-    }
+    return rest.chat.fetchChats().then(cb)
   }
 
   console.log(req)
