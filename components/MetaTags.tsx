@@ -206,7 +206,6 @@ const MetaTags: FC<Props> = ({title, description, product = {}, user}) => {
           gtag('config', 'UA-255622289-1');
         `}
       </Script>
-      <Script src='https://www.clarity.ms/tag/fmi9tmugn8' />
     </>
   )
 }
