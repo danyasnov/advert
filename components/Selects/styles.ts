@@ -124,6 +124,16 @@ export const LinkStyles = {
     display: 'flex',
     justifyContent: 'flex-start',
   }),
+  menu: (provided) => ({
+    ...provided,
+    width: '120px',
+    borderRadius: '16px',
+    padding: '5px',
+    right: '0',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+    overflow: 'hidden',
+  }),
 }
 
 export const FilterStyles = {
