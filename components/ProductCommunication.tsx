@@ -19,7 +19,7 @@ const ProductCommunication: FC = observer(() => {
     <div>
       {advert.showCallButton && (
         <CallButton
-          className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[60px] mb-4'
+          className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[52px] mb-4'
           hash={advert.hash}
           ownerHash={owner.hash}
           rootCategoryId={advert.rootCategoryId}

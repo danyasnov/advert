@@ -17,8 +17,8 @@ const EmptyTab: FC<Props> = ({description, img}) => {
           type={img}
           alt='empty page'
           quality={100}
-          width={124}
-          height={124}
+          width={140}
+          height={140}
         />
       </div>
       <span

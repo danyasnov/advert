@@ -1,6 +1,7 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import IcVisibility from 'icons/material/Visibility.svg'
+import IcTranslate from 'icons/Translate.svg'
 import {isEmpty} from 'lodash'
 import {useTranslation} from 'next-i18next'
 import {Calendar, Heart} from 'react-iconly'
@@ -14,6 +15,7 @@ import ProductCommunication from './ProductCommunication'
 import ProductLike from './ProductLike'
 import SharePopup from './SharePopup'
 import ProductBadges from './ProductBadges'
+import Button from './Buttons/Button'
 
 const ProductDescription: FC = observer(() => {
   const {product} = useProductsStore()
@@ -80,13 +82,32 @@ const ProductDescription: FC = observer(() => {
 })
 
 const DescriptionTab: FC = observer(() => {
+  const {t} = useTranslation()
   const {product} = useProductsStore()
+  const [translate, setTranslate] = useState(true)
 
   if (!product.advert.description) return null
   return (
-    <div className='text-greyscale-900 text-body-14 font-normal break-words whitespace-pre-wrap mb-10'>
-      {product.advert.description}
-    </div>
+    <>
+      <div className='text-greyscale-900 text-body-14 font-normal break-words whitespace-pre-wrap mb-3'>
+        {translate
+          ? product.advert.description
+          : product.advert.descriptionOriginal}
+      </div>
+      <div className='flex justify-start mb-6 s:mb-10'>
+        <Button
+          onClick={() => {
+            setTranslate(!translate)
+          }}>
+          <div className='flex items-center space-x-2'>
+            <IcTranslate className='h-[18px] w-[18px]' />
+            <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-bold underline'>
+              {t(translate ? 'SHOW_ORIGINAL' : 'TRANSLATE')}
+            </span>
+          </div>
+        </Button>
+      </div>
+    </>
   )
 })
 
