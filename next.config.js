@@ -4,8 +4,6 @@ const withTM = require('next-transpile-modules')(
     'front-api/node_modules/axios-curlirize',
     'react-cssfx-loading',
     'chats',
-    // 'chats/node_modules/front-api',
-    // 'chats/node_modules/axios-curlirize',
   ],
   {
     resolveSymlinks: false,
@@ -77,4 +75,5 @@ const config = plugins.reduce((acc, next) => {
   }
   return next(acc)
 }, nextConfig)
+console.log(config)
 module.exports = config
