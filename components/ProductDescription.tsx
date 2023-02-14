@@ -94,13 +94,13 @@ const DescriptionTab: FC = observer(() => {
           ? product.advert.description
           : product.advert.descriptionOriginal}
       </div>
-      <div className='flex justify-start items-center mb-6 s:mb-10'>
+      <div className='flex justify-start mb-6 s:mb-10'>
         <Button
           onClick={() => {
             setTranslate(!translate)
           }}>
-          <div className='flex space-x-2'>
-            <IcTranslate className='h-[18px] w-[18px] mb-1' />
+          <div className='flex items-center space-x-2'>
+            <IcTranslate className='h-[18px] w-[18px]' />
             <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-bold underline'>
               {t(translate ? 'SHOW_ORIGINAL' : 'TRANSLATE')}
             </span>

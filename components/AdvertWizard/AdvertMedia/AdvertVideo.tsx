@@ -9,9 +9,9 @@ const AdvertVideo: FC<{
   onRemove: () => void
 }> = ({onRemove, url, loading}) => {
   return (
-    <div className='h-[140px] w-[224px] flex rounded-lg overflow-hidden relative cursor-pointer relative'>
+    <div className='h-[140px] w-[224px] flex rounded-lg overflow-hidden relative cursor-pointer relative after:content-[""] after:absolute after:top-0 after:bottom-0 after:right-0 after:left-0'>
       {loading && (
-        <div className='absolute z-10 inset-0 flex justify-center items-center  '>
+        <div className='absolute z-10 inset-0 flex justify-center items-center'>
           <CircularProgress
             color='#7210FF'
             width='20px'

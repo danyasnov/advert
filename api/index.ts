@@ -14,20 +14,17 @@ if (!process.env.PRODUCTION) curlirize(axios)
 
 export const {API_URL} = process.env
 
-export const getRest = (storage: AppStorage): RestApi =>
-  new RestApi({
-    newAuth: {
-      onLogin() {
-        console.log('LOGIN REQUEST')
-      },
-    },
+export const getRest = (storage: AppStorage, endpoint?: string): RestApi => {
+  // @ts-ignore
+  return new RestApi({
     isDev: true,
     storage,
     isLogRequest: true,
     isLogResponse: false,
     sendLog: (msg) => msg.includes('curl ') && console.log(`\n${msg}\n`),
-    endpoint: API_URL,
+    endpoint: endpoint || API_URL,
   })
+}
 
 export const makeRequest = (
   config: AxiosRequestConfig,

@@ -37,7 +37,11 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
             {products.map((p) => (
-              <Card product={p} setLockParentScroll={setLockParentScroll} />
+              <Card
+                key={p.hash}
+                product={p}
+                setLockParentScroll={setLockParentScroll}
+              />
             ))}
           </div>
         </div>

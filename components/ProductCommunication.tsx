@@ -2,6 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import CallButton from './Buttons/CallButton'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
+import ChatButton from './Buttons/ChatButton'
 
 const ProductCommunication: FC = observer(() => {
   const {product} = useProductsStore()
@@ -10,18 +11,21 @@ const ProductCommunication: FC = observer(() => {
 
   const isUserAdv = userHash === owner.hash
 
-  if (isUserAdv || advert.state === 'sold' || !advert.showCallButton) {
+  if (isUserAdv || advert.state === 'sold') {
     return null
   }
+
   return (
     <div>
-      <CallButton
-        className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[52px] mb-4'
-        hash={advert.hash}
-        ownerHash={owner.hash}
-        rootCategoryId={advert.rootCategoryId}
-      />
-      {/* <ChatButton setShowLogin={setShowLogin} hash={advert.hash} /> */}
+      {advert.showCallButton && (
+        <CallButton
+          className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[52px] mb-4'
+          hash={advert.hash}
+          ownerHash={owner.hash}
+          rootCategoryId={advert.rootCategoryId}
+        />
+      )}
+      <ChatButton product={product} />
     </div>
   )
 })
