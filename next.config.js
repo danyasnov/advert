@@ -4,8 +4,8 @@ const withTM = require('next-transpile-modules')(
     'front-api/node_modules/axios-curlirize',
     'react-cssfx-loading',
     'chats',
-    'chats/node_modules/front-api',
-    'chats/node_modules/axios-curlirize',
+    // 'chats/node_modules/front-api',
+    // 'chats/node_modules/axios-curlirize',
   ],
   {
     resolveSymlinks: false,
@@ -71,9 +71,10 @@ const nextConfig = {
 }
 const plugins = [withTM, withBundleAnalyzer, withSentryConfig]
 
-module.exports = plugins.reduce((acc, next) => {
+const config = plugins.reduce((acc, next) => {
   if (next.name === 'withSentryConfig') {
     return next(acc, {silent: true})
   }
   return next(acc)
 }, nextConfig)
+module.exports = config
