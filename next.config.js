@@ -1,11 +1,9 @@
-const withPlugins = require('next-compose-plugins')
 const withTM = require('next-transpile-modules')(
   [
     'front-api',
     'front-api/node_modules/axios-curlirize',
     'react-cssfx-loading',
     'chats',
-    // 'chats/node_modules/front-api',
   ],
   {
     resolveSymlinks: false,
@@ -27,6 +25,7 @@ const nextConfig = {
       'cache.vooxee.com',
       'vooxee.venera.city',
       'ao-dev.venera.city',
+      'cache.adverto.sale',
     ],
   },
   publicRuntimeConfig: {
@@ -68,8 +67,13 @@ const nextConfig = {
     ]
   },
 }
+const plugins = [withTM, withBundleAnalyzer, withSentryConfig]
 
-module.exports = withPlugins(
-  [withTM, withBundleAnalyzer, [withSentryConfig, {silent: true}]],
-  nextConfig,
-)
+const config = plugins.reduce((acc, next) => {
+  if (next.name === 'withSentryConfig') {
+    return next(acc, {silent: true})
+  }
+  return next(acc)
+}, nextConfig)
+console.log(config)
+module.exports = config
