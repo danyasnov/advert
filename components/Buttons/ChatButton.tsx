@@ -33,8 +33,8 @@ const ChatButton: FC<Props> = observer(({product}) => {
           className='w-full h-15'
           onClick={() => {
             globalChatsStore.createChat({
-              product_hash: advert.hash,
-              user_hash: owner.hash,
+              productHash: advert.hash,
+              userHash: owner.hash,
             })
             push(`/user/${user.hash}`)
           }}>
