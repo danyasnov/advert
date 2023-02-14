@@ -103,7 +103,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": ">=6",
     "lint-staged": ">=10",
-    "next-compose-plugins": "^2.2.1",
     "next-transpile-modules": "^9.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.4.1",

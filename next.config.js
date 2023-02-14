@@ -71,4 +71,9 @@ const nextConfig = {
 }
 const plugins = [withTM, withBundleAnalyzer, withSentryConfig]
 
-module.exports = plugins.reduce((acc, next) => next(acc), nextConfig)
+module.exports = plugins.reduce((acc, next) => {
+  if (next.name === 'withSentryConfig') {
+    return next(acc, {silent: true})
+  }
+  return next(acc)
+}, nextConfig)
