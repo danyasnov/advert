@@ -1,4 +1,3 @@
-const withPlugins = require('next-compose-plugins')
 const withTM = require('next-transpile-modules')(
   [
     'front-api',
@@ -68,8 +67,6 @@ const nextConfig = {
     ]
   },
 }
+const plugins = [withTM, withBundleAnalyzer, withSentryConfig]
 
-module.exports = withPlugins(
-  [withTM, withBundleAnalyzer, [withSentryConfig, {silent: true}]],
-  nextConfig,
-)
+module.exports = plugins.reduce((acc, next) => next(acc), nextConfig)
