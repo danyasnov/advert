@@ -22,7 +22,7 @@ const Footer: FC = observer(() => {
             title={t('CATEGORIES')}
             className='m:col-span-4 l:col-span-6'
             body={
-              <div className='grid s:grid-cols-1 m:grid-cols-2 l:grid-cols-3 gap-y-4 s:gap-y-2'>
+              <div className='grid s:grid-cols-1 m:grid-cols-2 m:gap-x-4 l:grid-cols-3 gap-y-4 s:gap-y-2'>
                 {ids.map((id) => (
                   <LinkWrapper
                     title={categoriesById[id]?.name}
@@ -82,7 +82,7 @@ const Footer: FC = observer(() => {
         </div>
         <div className='border-t border-shadow-b pt-2'>
           <div className='flex flex-col m:flex-row justify-between  mx-4 s:mx-auto'>
-            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-x-4 s:space-y-0 s:flex-wrap text-greyscale-900 text-body-14 font-medium m:font-semibold text-left'>
+            <div className='flex flex-col space-y-5 my-8 s:my-0 s:flex-row s:space-x-4 m:space-x-10 s:space-y-0 s:flex-wrap text-greyscale-900 text-body-14 font-medium m:font-semibold text-left'>
               <LinkWrapper
                 title={t('TERMS_AND_CONDITIONS')}
                 className='flex justify-center items-center whitespace-nowrap'
