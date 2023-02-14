@@ -34,13 +34,10 @@ export const getDefaultStyles = (isInvalid) => ({
       paddingTop: '16px',
       paddingBottom: '16px',
       color: '#212121',
-      ...(state.isFocused
-        ? {backgroundColor: '#fff', fontWeight: 'bold', color: '#7210FF'}
-        : {}),
+      ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
       backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
       '&:hover ': {
         backgroundColor: '#fff',
-        fontWeight: 'bold',
         color: '#7210FF',
       },
       display: 'flex',

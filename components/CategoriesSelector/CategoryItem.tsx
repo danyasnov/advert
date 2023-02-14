@@ -18,7 +18,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   const {id, name, icon} = category
   const url = icon?.icon?.url
   const className = `${
-    isActive ? 'bg-white font-bold text-primary-500' : ''
+    isActive ? 'bg-white text-primary-500' : ''
   } categories-selector-item text-greyscale-900 s:rounded-l-lg`
   const {width} = useWindowSize()
 
