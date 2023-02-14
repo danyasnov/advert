@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {getStorageFromCookies} from '../../../helpers'
-import {getRest} from '../../../api'
+import {getStorageFromCookies} from '../../../../helpers'
+import {getRest} from '../../../../api'
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const {body, method, url} = req
