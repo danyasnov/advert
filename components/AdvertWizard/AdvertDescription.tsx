@@ -11,6 +11,7 @@ import Button from '../Buttons/Button'
 import {FormikSwitch} from '../FormikComponents'
 import Tip from './Tip'
 import ImageWrapper from '../ImageWrapper'
+import {handleMetrics} from '../../helpers'
 
 interface Props {
   user: OwnerModel
@@ -131,6 +132,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
+            handleMetrics('addAdvt_title', {title})
           }}
         />
 
