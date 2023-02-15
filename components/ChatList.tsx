@@ -1,14 +1,17 @@
-import {FC, useCallback, useEffect, useState} from 'react'
+import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
-import {ArrowLeft, MoreCircle} from 'react-iconly'
+import {ArrowLeft, MoreCircle, Send} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
+import {groupBy} from 'lodash'
+import TextareaAutosize from 'react-textarea-autosize'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
-import {unixToDate, unixToDateTime} from '../utils'
+import {unixMlToDate, unixToDate, unixToDateTime} from '../utils'
 import {useGeneralStore} from '../providers/RootStoreProvider'
+import Message from './Chat/Message'
 
 const ChatList: FC = observer(() => {
   const {chats} = globalChatsStore
@@ -87,21 +90,54 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
   ({chat, onClose}) => {
     const {t} = useTranslation()
     const {user} = useGeneralStore()
+    const messagesRef = useRef<HTMLDivElement>()
+
     const storeCreator = useCallback(
       () => new ChatStore(chat, user.hash),
       [chat],
     )
-    const [message, setMessage] = useState('')
+    const [messagesByDay, setMessagesByDay] = useState([])
     const [store] = useState(storeCreator)
-    const {messages, sendMessage} = store
+
+    useEffect(() => {
+      const messagesByDate = store.messages
+        .slice()
+        .reverse()
+        .map((m) => {
+          return {
+            ...m,
+            day: unixToDate(m.date),
+          }
+        })
+      setMessagesByDay(Object.entries(groupBy(messagesByDate, 'day')))
+    }, [store.messages])
+    useEffect(() => {
+      if (messagesRef.current) {
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+      }
+    }, [messagesByDay])
+    const [hasLoadedHistory, setHasLoadedHistory] = useState(false)
+    const [message, setMessage] = useState('')
+    const {sendMessage} = store
     useEffect(() => {
       store.fetchInitialMessages()
+      if (!hasLoadedHistory) {
+        store.fetchBefore()
+        setHasLoadedHistory(true)
+      }
     }, [store])
-    const {interlocutor, product} = store.chat
+    const {interlocutor, product, id} = store.chat
 
-    console.log('store', store, interlocutor, messages)
+    const submitMessage = useCallback(
+      (text) => {
+        setMessage('')
+        sendMessage(text)
+      },
+      [sendMessage, setMessage],
+    )
+
     return (
-      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px]'>
+      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-[464px]'>
         <div className='flex items-center mb-6'>
           <Button onClick={onClose}>
             <ArrowLeft size={28} />
@@ -146,36 +182,57 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             {product.title}
           </span>
         </div>
-        <div className='flex flex-col h-full w-full'>
-          {messages.map((m) => {
+        <div
+          ref={messagesRef}
+          className='flex flex-col h-[500px] w-full overflow-y-scroll'>
+          {messagesByDay.map((messagesGroup) => {
+            const [title, messages] = messagesGroup
+            const today = unixMlToDate(+new Date())
             return (
-              <div className='w-full'>
-                <div className='flex flex-col'>
-                  <span className='mb-[7px] text-body-12 text-greyscale-500'>
-                    123
+              <>
+                <div className='flex items-center mb-5'>
+                  <div className='w-full h-px bg-gray-200' />
+                  <span className='px-2 text-body-14 text-gray-500'>
+                    {title === today ? t('TODAY') : title}
                   </span>
-                  <div
-                    className={`${
-                      user.hash === m.ownerId
-                        ? 'bg-primary-500 rounded-l-2xl text-white self-end'
-                        : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900 self-start'
-                    } rounded-b-2xl p-3`}>
-                    <span>{m.text}</span>
-                  </div>
+                  <div className='w-full h-px bg-gray-200' />
                 </div>
-              </div>
+                {messages.map((m) => {
+                  return <Message message={m} user={user} />
+                })}
+              </>
             )
           })}
         </div>
-        <div className='flex'>
-          <input value={message} onChange={(e) => setMessage(e.target.value)} />
-          <Button
-            onClick={() => {
-              setMessage('')
-              sendMessage(message)
-            }}>
-            send
-          </Button>
+        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2'>
+          <TextareaAutosize
+            maxRows={5}
+            minRows={1}
+            placeholder={t('START_TYPE')}
+            maxLength={1000}
+            className='w-full text-body-14 text-grayscale-900 pl-12 overflow-y-scroll bg-greyscale-50 manual-outline outline-none'
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value)
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.shiftKey === false) {
+                e.preventDefault()
+                submitMessage(message)
+              }
+            }}
+          />
+          <div className='w-12 flex items-end'>
+            {message && (
+              <Button
+                onClick={() => {
+                  submitMessage(message)
+                }}
+                className='text-primary-500'>
+                <Send size={20} />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     )
