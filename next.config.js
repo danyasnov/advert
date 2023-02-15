@@ -75,5 +75,4 @@ const config = plugins.reduce((acc, next) => {
   }
   return next(acc)
 }, nextConfig)
-console.log(config)
 module.exports = config

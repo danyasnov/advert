@@ -8,6 +8,7 @@
   /*}*/
 
   input:not(.manual-outline),
+  textarea:not(.manual-outline),
   textarea {
     @apply focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-500 focus-visible:bg-primary-100;
   }
