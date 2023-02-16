@@ -49,7 +49,8 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       className={className}
       key={id}
       href={href}
-      preventDefault={width <= 768 ? false : isMobile && !isActive}>
+      preventDefault={width <= 768 ? false : isMobile && !isActive}
+      isClicked>
       {elBody}
     </LinkWrapper>
   )

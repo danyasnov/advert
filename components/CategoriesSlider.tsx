@@ -52,7 +52,8 @@ const CategoriesSlider: FC = observer(() => {
                 key={c.id}
                 title={c.name}
                 href={`/${locationCodes}/${c.slug}`}
-                className='relative cursor-pointer mr-4 '>
+                className='relative cursor-pointer mr-4 '
+                isClicked>
                 <div className='hover:text-primary-500 text-greyscale-900'>
                   <ImageWrapper
                     quality={100}
