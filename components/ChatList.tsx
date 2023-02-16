@@ -2,7 +2,7 @@ import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
-import {ArrowLeft, MoreCircle, Send} from 'react-iconly'
+import {ArrowLeft, CloseSquare, MoreCircle, Send, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import {groupBy} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -12,6 +12,7 @@ import UserAvatar from './UserAvatar'
 import {unixMlToDate, unixToDate, unixToDateTime} from '../utils'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import Message from './Chat/Message'
+import EmptyProductImage from './EmptyProductImage'
 
 const ChatList: FC = observer(() => {
   const {chats} = globalChatsStore
@@ -38,39 +39,45 @@ const ChatList: FC = observer(() => {
               setSelectedChat(chat)
             }}>
             <div className='bg-white rounded-3xl p-6 flex w-full'>
-              <div className='relative w-20 h-20 mr-4'>
-                <div className='rounded-[19px] overflow-hidden'>
-                  <ImageWrapper
-                    type={chat.product.image}
-                    alt='image'
-                    width={80}
-                    height={80}
-                  />
-                </div>
+              <div className='relative  mr-4 flex items-center justify-center'>
+                {chat.product.image ? (
+                  <div className='rounded-[19px] overflow-hidden shrink-0 w-20 h-20 '>
+                    <ImageWrapper
+                      type={chat.product.image}
+                      alt='image'
+                      layout='fill'
+                      objectFit='cover'
+                    />
+                  </div>
+                ) : (
+                  <EmptyProductImage size={80} />
+                )}
               </div>
               <div className='flex flex-col w-full items-start'>
                 <div className='flex justify-between w-full items-center'>
                   <span className='text-body-18 text-greyscale-900 text-left w-[240px] truncate text-body-18 font-medium'>
                     {chat.title}
                   </span>
-                  {!!chat.lastMessage.date && (
-                    <span className='text-body-16 text-greyscale-700'>
-                      {unixToDate(chat.lastMessage.date)}
-                    </span>
-                  )}
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      globalChatsStore.deleteChat(chat.id)
-                    }}>
-                    remove
-                  </Button>
+                  <div className='flex justify-center'>
+                    {!!chat.lastMessage.date && (
+                      <span className='text-body-16 text-greyscale-700'>
+                        {unixToDate(chat.lastMessage.date)}
+                      </span>
+                    )}
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        globalChatsStore.deleteChat(chat.id)
+                      }}>
+                      <CloseSquare size={20} />
+                    </Button>
+                  </div>
                 </div>
                 <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
                   {chat.product.title}
                 </span>
                 <div className='flex justify-between w-full items-center'>
-                  <span className='text-body-16 font-normal text-greyscale-700'>
+                  <span className='text-body-16 font-normal text-greyscale-700 truncate w-[370px]'>
                     {chat.lastMessage.text}
                   </span>
                   <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
@@ -143,14 +150,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             <ArrowLeft size={28} />
           </Button>
           <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
-            {!!interlocutor.avatarSrc && (
-              <ImageWrapper
-                height={40}
-                width={40}
-                type={interlocutor.avatarSrc}
-                alt='avatar'
-              />
-            )}
+            <UserAvatar
+              size={10}
+              name={interlocutor.name}
+              url={interlocutor.avatarSrc}
+            />
           </div>
           <div className='flex flex-col'>
             <span className='text-body-16 font-semibold text-greyscale-900 w-[276px] truncate'>
@@ -163,19 +167,23 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
             </span>
           </div>
-          <Button className='ml-4'>
-            <MoreCircle size={24} />
-          </Button>
+          {/* <Button className='ml-4'> */}
+          {/*  <MoreCircle size={24} /> */}
+          {/* </Button> */}
         </div>
         <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
-          <div className='rounded-2xl w-[56px] h-[56px] mr-4 bg-gray-300'>
-            {!!product.image && (
-              <ImageWrapper
-                type={product.image}
-                alt='product'
-                width={56}
-                height={56}
-              />
+          <div className='relative mr-4'>
+            {product.image ? (
+              <div className='rounded-2xl w-[56px] h-[56px]'>
+                <ImageWrapper
+                  type={product.image}
+                  alt='product'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </div>
+            ) : (
+              <EmptyProductImage size={56} />
             )}
           </div>
           <span className='text-body-16 text-greyscale-900'>
@@ -184,7 +192,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
         </div>
         <div
           ref={messagesRef}
-          className='flex flex-col h-[500px] w-full overflow-y-scroll'>
+          className='flex flex-col h-[520px] w-full overflow-y-scroll'>
           {messagesByDay.map((messagesGroup) => {
             const [title, messages] = messagesGroup
             const today = unixMlToDate(+new Date())
