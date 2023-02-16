@@ -59,7 +59,6 @@ const UserLayout: FC = observer(() => {
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
   useEffect(() => {
-    setActiveUserPage('chat')
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
     if (isCurrentUser) {

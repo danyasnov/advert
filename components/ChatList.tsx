@@ -210,7 +210,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             minRows={1}
             placeholder={t('START_TYPE')}
             maxLength={1000}
-            className='w-full text-body-14 text-grayscale-900 pl-12 overflow-y-scroll bg-greyscale-50 manual-outline outline-none'
+            className='w-full text-body-14 text-grayscale-900 pl-12 overflow-y-scroll bg-greyscale-50 manual-outline outline-none resize-none'
             value={message}
             onChange={(e) => {
               setMessage(e.target.value)
