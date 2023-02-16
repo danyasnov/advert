@@ -123,15 +123,10 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight
       }
     }, [messagesByDay])
-    const [hasLoadedHistory, setHasLoadedHistory] = useState(false)
     const [message, setMessage] = useState('')
     const {sendMessage} = store
     useEffect(() => {
       store.fetchInitialMessages()
-      if (!hasLoadedHistory) {
-        store.fetchBefore()
-        setHasLoadedHistory(true)
-      }
     }, [store])
     const {interlocutor, product, id} = store.chat
 
