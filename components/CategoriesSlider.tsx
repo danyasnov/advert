@@ -16,7 +16,7 @@ import SliderButton from './Buttons/SliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 import LinkWrapper from './Buttons/LinkWrapper'
 import {SerializedCookiesState} from '../types'
-import {getLocationCodes} from '../helpers'
+import {getLocationCodes, handleMetrics} from '../helpers'
 
 const CategoriesSlider: FC = observer(() => {
   const {categoriesWithoutAll} = useCategoriesStore()
@@ -53,7 +53,9 @@ const CategoriesSlider: FC = observer(() => {
                 title={c.name}
                 href={`/${locationCodes}/${c.slug}`}
                 className='relative cursor-pointer mr-4 '
-                isClicked>
+                handleClick={() => {
+                  handleMetrics('clickCategory', c.id)
+                }}>
                 <div className='hover:text-primary-500 text-greyscale-900'>
                   <ImageWrapper
                     quality={100}

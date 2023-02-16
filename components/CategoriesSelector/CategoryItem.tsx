@@ -6,6 +6,7 @@ import {toJS} from 'mobx'
 import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
+import {handleMetrics} from '../../helpers'
 
 interface Props {
   category: CACategoryModel
@@ -50,7 +51,9 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       key={id}
       href={href}
       preventDefault={width <= 768 ? false : isMobile && !isActive}
-      isClicked>
+      handleClick={() => {
+        handleMetrics('clickCategory', id)
+      }}>
       {elBody}
     </LinkWrapper>
   )

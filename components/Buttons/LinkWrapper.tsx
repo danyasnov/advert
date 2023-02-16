@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import {FC, ReactNode} from 'react'
 import Link from 'next/link'
-import {handleMetrics} from '../../helpers'
 
 interface Props {
   href: string
@@ -11,7 +10,7 @@ interface Props {
   title: string
   target?: '_self' | '_blank'
   preventDefault?: boolean
-  isClicked?: boolean
+  handleClick?: () => void
 }
 
 const LinkWrapper: FC<Props> = ({
@@ -22,7 +21,7 @@ const LinkWrapper: FC<Props> = ({
   id,
   preventDefault,
   target = '_self',
-  isClicked,
+  handleClick,
 }) => {
   return (
     <Link href={href}>
@@ -33,7 +32,7 @@ const LinkWrapper: FC<Props> = ({
         className={className || ''}
         onClick={(e) => {
           if (preventDefault) e.preventDefault()
-          if (isClicked) handleMetrics('clickCategory', id)
+          handleClick()
         }}>
         {children}
       </a>
