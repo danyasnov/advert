@@ -159,7 +159,6 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
       [sendMessage, setMessage],
     )
 
-    console.log('product', store.chat)
     return (
       <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-full'>
         <div className='flex items-center mb-6'>
