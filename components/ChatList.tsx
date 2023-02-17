@@ -126,7 +126,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     const [message, setMessage] = useState('')
     const {sendMessage} = store
     useEffect(() => {
-      store.fetchInitialMessages()
+      store.fetchBefore()
     }, [store])
     const {interlocutor, product, id} = store.chat
 
