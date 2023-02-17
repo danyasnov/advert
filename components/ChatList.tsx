@@ -139,7 +139,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     )
 
     return (
-      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-[464px]'>
+      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-full'>
         <div className='flex items-center mb-6'>
           <Button onClick={onClose}>
             <ArrowLeft size={28} />
