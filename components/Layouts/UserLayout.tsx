@@ -40,9 +40,13 @@ const UserLayout: FC = observer(() => {
   )
   const router = useRouter()
   useEffect(() => {
-    router.push(`/user/${query.id}?activeTab=${activeTab}`, undefined, {
-      shallow: true,
-    })
+    if (query.chatId) {
+      setActiveUserPage('chat')
+    } else {
+      router.push(`/user/${query.id}?activeTab=${activeTab}`, undefined, {
+        shallow: true,
+      })
+    }
   }, [activeTab])
   const {width} = useWindowSize()
   const {

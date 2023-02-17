@@ -26,17 +26,17 @@ const ChatButton: FC<Props> = observer(({product}) => {
     setShowChat(!!state.hash)
   }, [])
   return (
-    <div className='w-full'>
+    <div className='w-full mb-4'>
       {showChat && (
         <SecondaryButton
           id='chat'
-          className='w-full h-15'
-          onClick={() => {
-            globalChatsStore.createChat({
+          className='w-full h-13'
+          onClick={async () => {
+            const chat = await globalChatsStore.createChat({
               productHash: advert.hash,
               userHash: owner.hash,
             })
-            push(`/user/${user.hash}`)
+            push(`/user/${user.hash}?chatId=${chat.id}`)
           }}>
           {t('SEND_A_MESSAGE')}
         </SecondaryButton>

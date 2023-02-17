@@ -4,24 +4,41 @@ import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
 import {ArrowLeft, CloseSquare, MoreCircle, Send, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
-import {groupBy} from 'lodash'
+import {groupBy, size} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
+import {useRouter} from 'next/router'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import UserAvatar from './UserAvatar'
-import {unixMlToDate, unixToDate, unixToDateTime} from '../utils'
+import {unixMlToDate, unixToDate} from '../utils'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import Message from './Chat/Message'
 import EmptyProductImage from './EmptyProductImage'
 
 const ChatList: FC = observer(() => {
+  const {query, push} = useRouter()
   const {chats} = globalChatsStore
-  console.log('chats', JSON.parse(JSON.stringify(chats)))
+  useEffect(() => {
+    if (query.chatId && size(chats)) {
+      const selected = chats.find((c) => c.id === query.chatId)
+      if (selected) {
+        setSelectedChat(selected)
+      }
+    }
+  }, [chats, query.chatId])
   const [selectedChat, setSelectedChat] = useState<ChatData>(null)
   if (selectedChat) {
     return (
       <div className='flex flex-col'>
-        <ChatView chat={selectedChat} onClose={() => setSelectedChat(null)} />
+        <ChatView
+          chat={selectedChat}
+          onClose={() => {
+            setSelectedChat(null)
+            push(`/user/${query.id}`, undefined, {
+              shallow: true,
+            })
+          }}
+        />
       </div>
     )
   }
@@ -37,6 +54,9 @@ const ChatList: FC = observer(() => {
             className='w-full'
             onClick={() => {
               setSelectedChat(chat)
+              push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
+                shallow: true,
+              })
             }}>
             <div className='bg-white rounded-3xl p-6 flex w-full'>
               <div className='relative  mr-4 flex items-center justify-center'>
