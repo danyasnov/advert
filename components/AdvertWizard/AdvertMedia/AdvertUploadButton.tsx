@@ -6,6 +6,7 @@ import {useDropzone} from 'react-dropzone'
 import IcAddPhoto from 'icons/material/AddPhoto.svg'
 import IcAddVideo from 'icons/material/AddVideo.svg'
 import {Camera} from 'react-iconly'
+import {handleMetrics} from '../../../helpers'
 
 const AdvertUploadButton: FC<{
   onDrop: (acceptedFiles: any, rejectedFiles: any) => void
@@ -37,11 +38,20 @@ const AdvertUploadButton: FC<{
       <div
         ref={ref}
         className={`text-primary-500 rounded-3xl border flex cursor-pointer
-         text-primary-500 px-2 h-[140px] w-[212px] ${
-           error ? 'text-error border-error' : 'border-primary-500'
-         }`}>
+          px-2 h-[140px] w-[212px] ${
+            error ? 'text-error border-error' : 'border-primary-500'
+          }`}>
         <div className='flex flex-col justify-center items-center flex-1'>
-          <input {...getInputProps()} />
+          <input
+            {...getInputProps()}
+            onClick={() => {
+              handleMetrics(
+                `${
+                  type === 'photo' ? 'addAdvt_photoItems' : 'addAdvt_videoItems'
+                }`,
+              )
+            }}
+          />
           <>
             <Camera filled size={32} />
             <span className='text-body-12 text-center mt-3'>

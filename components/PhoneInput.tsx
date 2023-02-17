@@ -7,6 +7,7 @@ import {useTranslation} from 'next-i18next'
 import IcSearch from 'icons/material/Search.svg'
 import IcCheck from 'icons/material/Check.svg'
 import {Country} from '../types'
+import {handleMetrics} from '../helpers'
 
 interface CountryOption {
   label: string
@@ -48,6 +49,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
       <NumberFormat
         onValueChange={({value: inputValue}) => {
           onChange(inputValue)
+          handleMetrics('addAdvt_priceItems')
         }}
         value={value}
         mask='_'

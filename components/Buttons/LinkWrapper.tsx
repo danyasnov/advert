@@ -10,6 +10,7 @@ interface Props {
   title: string
   target?: '_self' | '_blank'
   preventDefault?: boolean
+  handleClick?: () => void
 }
 
 const LinkWrapper: FC<Props> = ({
@@ -20,6 +21,7 @@ const LinkWrapper: FC<Props> = ({
   id,
   preventDefault,
   target = '_self',
+  handleClick,
 }) => {
   return (
     <Link href={href}>
@@ -30,6 +32,7 @@ const LinkWrapper: FC<Props> = ({
         className={className || ''}
         onClick={(e) => {
           if (preventDefault) e.preventDefault()
+          handleClick()
         }}>
         {children}
       </a>
