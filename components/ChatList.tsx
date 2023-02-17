@@ -14,6 +14,7 @@ import {unixMlToDate, unixToDate} from '../utils'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import Message from './Chat/Message'
 import EmptyProductImage from './EmptyProductImage'
+import LinkWrapper from './Buttons/LinkWrapper'
 
 const ChatList: FC = observer(() => {
   const {query, push} = useRouter()
@@ -158,6 +159,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
       [sendMessage, setMessage],
     )
 
+    console.log('product', store.chat)
     return (
       <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-full'>
         <div className='flex items-center mb-6'>
@@ -186,25 +188,31 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
           {/*  <MoreCircle size={24} /> */}
           {/* </Button> */}
         </div>
-        <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
-          <div className='relative mr-4'>
-            {product.image ? (
-              <div className='rounded-2xl w-[56px] h-[56px]'>
-                <ImageWrapper
-                  type={product.image}
-                  alt='product'
-                  layout='fill'
-                  objectFit='cover'
-                />
-              </div>
-            ) : (
-              <EmptyProductImage size={56} />
-            )}
+        <LinkWrapper
+          href={`/b/${product.id}`}
+          title='product link'
+          target='_blank'>
+          <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
+            <div className='mr-4'>
+              {product.image ? (
+                <div className='rounded-2xl relative overflow-hidden w-[56px] h-[56px]'>
+                  <ImageWrapper
+                    type={product.image}
+                    alt='product'
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                </div>
+              ) : (
+                <EmptyProductImage size={56} />
+              )}
+            </div>
+            <span className='text-body-16 text-greyscale-900'>
+              {product.title}
+            </span>
           </div>
-          <span className='text-body-16 text-greyscale-900'>
-            {product.title}
-          </span>
-        </div>
+        </LinkWrapper>
+
         <div
           ref={messagesRef}
           className='flex flex-col h-[520px] w-full overflow-y-scroll'>
