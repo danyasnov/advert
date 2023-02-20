@@ -32,7 +32,7 @@ const LinkWrapper: FC<Props> = ({
         className={className || ''}
         onClick={(e) => {
           if (preventDefault) e.preventDefault()
-          handleClick()
+          if (handleClick) handleClick()
         }}>
         {children}
       </a>
