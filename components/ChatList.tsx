@@ -2,7 +2,14 @@ import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
-import {ArrowLeft, CloseSquare, MoreCircle, Send, User} from 'react-iconly'
+import {
+  ArrowLeft,
+  CloseSquare,
+  Delete,
+  MoreCircle,
+  Send,
+  User,
+} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import {groupBy, size} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -17,6 +24,7 @@ import EmptyProductImage from './EmptyProductImage'
 import LinkWrapper from './Buttons/LinkWrapper'
 
 const ChatList: FC = observer(() => {
+  const {t} = useTranslation()
   const {query, push} = useRouter()
   const {chats} = globalChatsStore
   useEffect(() => {
@@ -86,11 +94,13 @@ const ChatList: FC = observer(() => {
                       </span>
                     )}
                     <Button
+                      className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6'
                       onClick={(e) => {
                         e.stopPropagation()
                         globalChatsStore.deleteChat(chat.id)
                       }}>
-                      <CloseSquare size={20} />
+                      <Delete filled size={20} />
+                      <span>{t('DELETE')}</span>
                     </Button>
                   </div>
                 </div>
