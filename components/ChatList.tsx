@@ -2,7 +2,14 @@ import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
-import {ArrowLeft, CloseSquare, MoreCircle, Send, User} from 'react-iconly'
+import {
+  ArrowLeft,
+  CloseSquare,
+  Delete,
+  MoreCircle,
+  Send,
+  User,
+} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import {groupBy, size, isEmpty} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -18,6 +25,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 import EmptyTab from './EmptyTab'
 
 const ChatList: FC = observer(() => {
+  const {t} = useTranslation()
   const {query, push} = useRouter()
   const {chats} = globalChatsStore
   useEffect(() => {
@@ -99,13 +107,21 @@ const ChatList: FC = observer(() => {
                   <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
                     {chat.product.title}
                   </span>
-                  <div className='flex justify-between w-full items-center'>
-                    <span className='text-body-16 font-normal text-greyscale-700 truncate w-[370px]'>
-                      {chat.lastMessage.text}
-                    </span>
-                    <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
-                      {chat.newMessagesCount}
-                    </span>
+                  <div className='flex justify-center'>
+                    {!!chat.lastMessage.date && (
+                      <span className='text-body-16 text-greyscale-700'>
+                        {unixToDate(chat.lastMessage.date)}
+                      </span>
+                    )}
+                    <Button
+                      className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6'
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        globalChatsStore.deleteChat(chat.id)
+                      }}>
+                      <Delete filled size={20} />
+                      <span className='text-body-14'>{t('DELETE')}</span>
+                    </Button>
                   </div>
                 </div>
               </div>

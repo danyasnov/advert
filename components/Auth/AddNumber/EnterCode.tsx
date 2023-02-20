@@ -189,6 +189,7 @@ const EnterCode: FC<PageProps> = observer(({state, dispatch}) => {
             setDisabled(true)
             setCounter(59)
             setFieldValue('code', null)
+            setFieldError('code', null)
             AuthInputRef.current?.clear()
           }}
           label={t('NOT_RECEIVED_CALL')}
