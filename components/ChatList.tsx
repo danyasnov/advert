@@ -100,7 +100,7 @@ const ChatList: FC = observer(() => {
                         globalChatsStore.deleteChat(chat.id)
                       }}>
                       <Delete filled size={20} />
-                      <span>{t('DELETE')}</span>
+                      <span className='text-body-14'>{t('DELETE')}</span>
                     </Button>
                   </div>
                 </div>
