@@ -4,7 +4,7 @@ import {ChatData, ChatStore, globalChatsStore} from 'chats'
 import {toJS} from 'mobx'
 import {ArrowLeft, CloseSquare, MoreCircle, Send, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
-import {groupBy, size} from 'lodash'
+import {groupBy, size, isEmpty} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
 import {useRouter} from 'next/router'
 import Button from './Buttons/Button'
@@ -15,6 +15,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import Message from './Chat/Message'
 import EmptyProductImage from './EmptyProductImage'
 import LinkWrapper from './Buttons/LinkWrapper'
+import EmptyTab from './EmptyTab'
 
 const ChatList: FC = observer(() => {
   const {query, push} = useRouter()
@@ -43,73 +44,80 @@ const ChatList: FC = observer(() => {
       </div>
     )
   }
-  return (
-    <div className='flex flex-col space-y-4'>
-      {chats.map((chat) => {
-        return (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-          <div
-            tabIndex={0}
-            role='button'
-            key={chat.id}
-            className='w-full'
-            onClick={() => {
-              setSelectedChat(chat)
-              push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
-                shallow: true,
-              })
-            }}>
-            <div className='bg-white rounded-3xl p-6 flex w-full'>
-              <div className='relative  mr-4 flex items-center justify-center'>
-                {chat.product.image ? (
-                  <div className='rounded-[19px] overflow-hidden shrink-0 w-20 h-20 '>
-                    <ImageWrapper
-                      type={chat.product.image}
-                      alt='image'
-                      layout='fill'
-                      objectFit='cover'
-                    />
-                  </div>
-                ) : (
-                  <EmptyProductImage size={80} />
-                )}
-              </div>
-              <div className='flex flex-col w-full items-start'>
-                <div className='flex justify-between w-full items-center'>
-                  <span className='text-body-18 text-greyscale-900 text-left w-[240px] truncate text-body-18 font-medium'>
-                    {chat.title}
-                  </span>
-                  <div className='flex justify-center'>
-                    {!!chat.lastMessage.date && (
-                      <span className='text-body-16 text-greyscale-700'>
-                        {unixToDate(chat.lastMessage.date)}
-                      </span>
-                    )}
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        globalChatsStore.deleteChat(chat.id)
-                      }}>
-                      <CloseSquare size={20} />
-                    </Button>
-                  </div>
+  if (!isEmpty(chats)) {
+    return (
+      <div className='flex flex-col space-y-4'>
+        {chats.map((chat) => {
+          return (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+            <div
+              tabIndex={0}
+              role='button'
+              key={chat.id}
+              className='w-full'
+              onClick={() => {
+                setSelectedChat(chat)
+                push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
+                  shallow: true,
+                })
+              }}>
+              <div className='bg-white rounded-3xl p-6 flex w-full'>
+                <div className='relative  mr-4 flex items-center justify-center'>
+                  {chat.product.image ? (
+                    <div className='rounded-[19px] overflow-hidden shrink-0 w-20 h-20 '>
+                      <ImageWrapper
+                        type={chat.product.image}
+                        alt='image'
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </div>
+                  ) : (
+                    <EmptyProductImage size={80} />
+                  )}
                 </div>
-                <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
-                  {chat.product.title}
-                </span>
-                <div className='flex justify-between w-full items-center'>
-                  <span className='text-body-16 font-normal text-greyscale-700 truncate w-[370px]'>
-                    {chat.lastMessage.text}
+                <div className='flex flex-col w-full items-start'>
+                  <div className='flex justify-between w-full items-center'>
+                    <span className='text-body-18 text-greyscale-900 text-left w-[240px] truncate font-medium'>
+                      {chat.title}
+                    </span>
+                    <div className='flex justify-center'>
+                      {!!chat.lastMessage.date && (
+                        <span className='text-body-16 text-greyscale-700'>
+                          {unixToDate(chat.lastMessage.date)}
+                        </span>
+                      )}
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          globalChatsStore.deleteChat(chat.id)
+                        }}>
+                        <CloseSquare size={20} />
+                      </Button>
+                    </div>
+                  </div>
+                  <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
+                    {chat.product.title}
                   </span>
-                  <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
-                    {chat.newMessagesCount}
-                  </span>
+                  <div className='flex justify-between w-full items-center'>
+                    <span className='text-body-16 font-normal text-greyscale-700 truncate w-[370px]'>
+                      {chat.lastMessage.text}
+                    </span>
+                    <span className='text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-8 h-8 flex items-center justify-center'>
+                      {chat.newMessagesCount}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
+    )
+  }
+  return (
+    <div className='flex justify-center'>
+      <EmptyTab description='MASSAGES_EMPTY' img='/img/empty-tabs/chat.png' />
     </div>
   )
 })

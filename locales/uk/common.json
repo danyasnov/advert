@@ -1590,6 +1590,7 @@
   "LOAD_MORE": "Завантажити більше",
   "LOG_IN_ICON": "Вхід",
   "MANY_PHOTOS": "{{count}} фото",
+  "MASSAGES_EMPTY": "<b>Немає повідомлень</b>\nТут відображатимуться всі активні чати.",
   "MORE_PHOTOS": "ще {{count}} фото",
   "MOST_POPULAR": "Найпопулярніші",
   "MY_ADVERTISIMENT": "Мої оголошення",

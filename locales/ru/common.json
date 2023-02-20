@@ -1590,6 +1590,7 @@
   "LOAD_MORE": "Загрузить больше",
   "LOG_IN_ICON": "Вход",
   "MANY_PHOTOS": "{{count}} фото",
+  "MASSAGES_EMPTY": "<b>Сообщений нет</b>\nЗдесь будут отображаться все активные чаты.",
   "MORE_PHOTOS": "ещё {{count}} фото",
   "MOST_POPULAR": "Самые популярные",
   "MY_ADVERTISIMENT": "Мои объявления",
