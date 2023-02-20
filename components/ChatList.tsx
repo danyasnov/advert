@@ -78,7 +78,7 @@ const ChatList: FC = observer(() => {
               })
             }}>
             <div className='bg-white rounded-3xl p-4 s:p-6 flex w-full flex-col s:flex-row'>
-              <div className='flex'>
+              <div className='flex w-full'>
                 <div className='relative  mr-4 flex items-center justify-center'>
                   {chat.product.image ? (
                     <div className='rounded-[19px] overflow-hidden w-[52px] h-[52px] s:w-20 s:h-20'>
@@ -100,15 +100,15 @@ const ChatList: FC = observer(() => {
                     </>
                   )}
                 </div>
-                <div className='flex flex-col s:flex-row'>
+                <div className='flex flex-col s:flex-row w-full'>
                   <div className='flex flex-col w-full items-start'>
                     <div className='flex justify-between w-full items-center'>
                       <span className='text-body-14 s:text-body-18 text-greyscale-900 text-left w-[137px] s:w-[240px] truncate font-medium'>
                         {chat.title}
                       </span>
-                      <div className='flex justify-center'>
+                      <div className='flex justify-between'>
                         {!!chat.lastMessage.date && (
-                          <span className='text-body-16 text-greyscale-700'>
+                          <span className='text-body-14 s:text-body-16 text-greyscale-700'>
                             {unixToDate(chat.lastMessage.date)}
                           </span>
                         )}
