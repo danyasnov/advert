@@ -13,6 +13,10 @@ export default async (
   return fetchUser(hash, storage)
     .then((response) => {
       res.json(response)
+      if (response.status === 401) {
+        console.log('login redirect from user-info')
+        res.redirect('/login')
+      }
     })
     .catch((e) => {
       res.json(e)
