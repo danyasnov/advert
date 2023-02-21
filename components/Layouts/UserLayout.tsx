@@ -342,7 +342,7 @@ const UserLayout: FC = observer(() => {
                   <SectionTitle title={t('DRAFTS')} />
 
                   <UserTabWrapper
-                    showMenu={isCurrentUser}
+                    getOptions={getDraftOptions}
                     // @ts-ignore
                     products={mappedDrafts}
                     page={drafts.page}

@@ -21,6 +21,7 @@ const ChatListener: FC = observer(() => {
     const restApi = getRest(storage, '/api')
     // const {Chats, globalChatsStore} = await import('chats')
 
+    console.log('globalChatsStore.isConnected', globalChatsStore.isConnected)
     Chats.init({
       deps: {
         // @ts-ignore
