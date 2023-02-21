@@ -67,7 +67,7 @@ const UserSidebar: FC = observer(() => {
                 setActiveUserPage('chat' as PagesType)
               }}
               className={`${
-                activeUserPage === 'favorites'
+                activeUserPage === 'chat'
                   ? 'text-primary-500'
                   : 'text-greyscale-900'
               } space-x-4`}>
