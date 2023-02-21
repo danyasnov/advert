@@ -52,107 +52,109 @@ const ChatList: FC = observer(() => {
       </div>
     )
   }
-  return (
-    <div className='flex flex-col space-y-4'>
-      {chats.map((chat) => {
-        const hasNewMessages = !!chat.newMessagesCount
-        const lastMsg = (
-          <div className='flex justify-between w-full items-center mt-2 s:mt-0'>
-            <span
-              className={`text-body-14 s:text-body-16 font-normal truncate w-[264px] s:w-[236px] m:w-[370px] ${
-                hasNewMessages ? 'text-greyscale-700' : 'text-greyscale-500'
-              }`}>
-              {chat.lastMessage.text}
-            </span>
-            {hasNewMessages && (
-              <span className='text-body-12 s:text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
-                {chat.newMessagesCount}
+  if (!isEmpty(chats)) {
+    return (
+      <div className='flex flex-col space-y-4'>
+        {chats.map((chat) => {
+          const hasNewMessages = !!chat.newMessagesCount
+          const lastMsg = (
+            <div className='flex justify-between w-full items-center mt-2 s:mt-0'>
+              <span
+                className={`text-body-14 s:text-body-16 font-normal truncate w-[264px] s:w-[236px] m:w-[370px] ${
+                  hasNewMessages ? 'text-greyscale-700' : 'text-greyscale-500'
+                }`}>
+                {chat.lastMessage.text}
               </span>
-            )}
-          </div>
-        )
-        return (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-          <div
-            tabIndex={0}
-            role='button'
-            key={chat.id}
-            className='w-full'
-            onClick={() => {
-              setSelectedChat(chat)
-              push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
-                shallow: true,
-              })
-            }}>
-            <div className='bg-white rounded-3xl p-4 s:p-6 flex w-full flex-col s:flex-row'>
-              <div className='flex w-full'>
-                <div className='relative  mr-4 flex items-center justify-center'>
-                  {chat.product.image ? (
-                    <div className='rounded-[19px] overflow-hidden w-[52px] h-[52px] s:w-20 s:h-20'>
-                      <ImageWrapper
-                        type={chat.product.image}
-                        alt='image'
-                        layout='fill'
-                        objectFit='cover'
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      <div className='s:hidden'>
-                        <EmptyProductImage size={52} />
+              {hasNewMessages && (
+                <span className='text-body-12 s:text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
+                  {chat.newMessagesCount}
+                </span>
+              )}
+            </div>
+          )
+          return (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+            <div
+              tabIndex={0}
+              role='button'
+              key={chat.id}
+              className='w-full'
+              onClick={() => {
+                setSelectedChat(chat)
+                push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
+                  shallow: true,
+                })
+              }}>
+              <div className='bg-white rounded-3xl p-4 s:p-6 flex w-full flex-col s:flex-row'>
+                <div className='flex w-full'>
+                  <div className='relative  mr-4 flex items-center justify-center'>
+                    {chat.product.image ? (
+                      <div className='rounded-[19px] overflow-hidden w-[52px] h-[52px] s:w-20 s:h-20'>
+                        <ImageWrapper
+                          type={chat.product.image}
+                          alt='image'
+                          layout='fill'
+                          objectFit='cover'
+                        />
                       </div>
-                      <div className='hidden s:block'>
-                        <EmptyProductImage size={80} />
+                    ) : (
+                      <>
+                        <div className='s:hidden'>
+                          <EmptyProductImage size={52} />
+                        </div>
+                        <div className='hidden s:block'>
+                          <EmptyProductImage size={80} />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className='flex flex-col s:flex-row w-full'>
+                    <div className='flex flex-col w-full items-start'>
+                      <div className='flex justify-between w-full items-center'>
+                        <span
+                          className={`text-body-14 s:text-body-18 text-left w-[137px] s:w-[240px] truncate font-medium ${
+                            hasNewMessages
+                              ? 'text-greyscale-900'
+                              : 'text-greyscale-500'
+                          }`}>
+                          {chat.title}
+                        </span>
+                        <div className='flex justify-between'>
+                          {!!chat.lastMessage.date && (
+                            <span
+                              className={`text-body-14 s:text-body-16 ${
+                                hasNewMessages
+                                  ? 'text-greyscale-700'
+                                  : 'text-greyscale-500'
+                              }`}>
+                              {unixToDate(chat.lastMessage.date)}
+                            </span>
+                          )}
+                          <Button
+                            className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6 hidden m:flex'
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              globalChatsStore.deleteChat(chat.id)
+                            }}>
+                            <Delete filled size={20} />
+                            <span className='text-body-14'>{t('DELETE')}</span>
+                          </Button>
+                        </div>
                       </div>
-                    </>
-                  )}
-                </div>
-                <div className='flex flex-col s:flex-row w-full'>
-                  <div className='flex flex-col w-full items-start'>
-                    <div className='flex justify-between w-full items-center'>
                       <span
-                        className={`text-body-14 s:text-body-18 text-left w-[137px] s:w-[240px] truncate font-medium ${
+                        className={`text-body-18 font-semibold pb-2 ${
                           hasNewMessages
                             ? 'text-greyscale-900'
                             : 'text-greyscale-500'
                         }`}>
-                        {chat.title}
+                        {chat.product.title}
                       </span>
-                      <div className='flex justify-between'>
-                        {!!chat.lastMessage.date && (
-                          <span
-                            className={`text-body-14 s:text-body-16 ${
-                              hasNewMessages
-                                ? 'text-greyscale-700'
-                                : 'text-greyscale-500'
-                            }`}>
-                            {unixToDate(chat.lastMessage.date)}
-                          </span>
-                        )}
-                        <Button
-                          className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6 hidden m:flex'
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            globalChatsStore.deleteChat(chat.id)
-                          }}>
-                          <Delete filled size={20} />
-                          <span className='text-body-14'>{t('DELETE')}</span>
-                        </Button>
-                      </div>
+                      <div className='hidden s:block w-full'>{lastMsg}</div>
                     </div>
-                    <span
-                      className={`text-body-18 font-semibold pb-2 ${
-                        hasNewMessages
-                          ? 'text-greyscale-900'
-                          : 'text-greyscale-500'
-                      }`}>
-                      {chat.product.title}
-                    </span>
-                    <div className='hidden s:block w-full'>{lastMsg}</div>
                   </div>
                 </div>
+                <div className='block s:hidden w-full'>{lastMsg}</div>
               </div>
-              <div className='block s:hidden w-full'>{lastMsg}</div>
             </div>
           )
         })}
