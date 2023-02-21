@@ -1,101 +1,34 @@
 import {FC, useEffect, useState} from 'react'
 import IcFB from 'icons/social/FB.svg'
 import IcInstagram from 'icons/social/Instagram.svg'
-import IcYouTube from 'icons/social/YouTube.svg'
-import IcTikTok from 'icons/social/TikTok.svg'
 import {parseCookies} from 'nookies'
 import {observer} from 'mobx-react-lite'
 import LinkWrapper from './Buttons/LinkWrapper'
 import {SerializedCookiesState} from '../types'
 
-const fb = {
-  icon: <IcFB width={24} height={24} />,
-  title: 'Facebook',
-}
-const ig = {
-  icon: <IcInstagram width={24} height={24} />,
-  title: 'Instagram',
-}
-const yt = {
-  icon: <IcYouTube width={24} height={24} />,
-  title: 'YouTube',
-}
-const tt = {
-  icon: <IcTikTok width={24} height={24} />,
-  title: 'TikTok',
-}
-const socials = {
-  // el: [
-  //   {
-  //     ...fb,
-  //     url: 'https://www.facebook.com/adverto.el',
-  //   },
-  //   {
-  //     ...ig,
-  //     url: 'https://www.instagram.com/adverto_el/',
-  //   },
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  //   {
-  //     ...tt,
-  //     url: 'https://www.tiktok.com/@adverto_sale',
-  //   },
-  // ],
-  // ru: [
-  //   {
-  //     ...fb,
-  //     url: 'https://www.facebook.com/Adverto_official-233833728555124',
-  //   },
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  // ],
-  // en: [
-  //   {
-  //     ...fb,
-  //     url: 'https://www.facebook.com/adverto.el',
-  //   },
-  //   {
-  //     ...ig,
-  //     url: 'https://www.instagram.com/adverto_sale/',
-  //   },
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  //   {
-  //     ...tt,
-  //     url: 'https://www.tiktok.com/@adverto_sale',
-  //   },
-  // ],
-  // uk: [
-  //   {
-  //     ...fb,
-  //     url: 'https://www.facebook.com/Adverto_Ukraine-106412321776569',
-  //   },
-  //   {
-  //     ...yt,
-  //     url: 'https://www.youtube.com/channel/UCNw45Njh62Xq8-xPLQ2loXg',
-  //   },
-  // ],
-}
+const socialsStyle = 'fill-current group-hover:fill-primary-500'
+
+const socials = [
+  {
+    icon: <IcFB className={socialsStyle} width={9} height={19} />,
+    title: 'Facebook',
+    url: 'https://www.facebook.com/vooxee.cy/',
+  },
+  {
+    icon: <IcInstagram className={socialsStyle} width={16} height={16} />,
+    title: 'Instagram',
+    url: 'https://www.instagram.com/vooxee/',
+  },
+]
 
 const Socials: FC = observer(() => {
-  const [current, setCurrent] = useState([])
-  useEffect(() => {
-    const state: SerializedCookiesState = parseCookies()
-    const {language} = state
-    setCurrent(socials[language || 'en'])
-  }, [])
-  if (!current) return null
   return (
-    <div className='flex space-x-2'>
-      {current.map((s) => (
+    <div className='flex space-x-4'>
+      {socials.map((s) => (
         <LinkWrapper key={s.url} href={s.url} title={s.title} target='_blank'>
-          {s.icon}
+          <div className='flex group w-10 h-10 justify-center items-center rounded-full border-[1.5px] border-greyscale-900 hover:border-primary-500'>
+            {s.icon}
+          </div>
         </LinkWrapper>
       ))}
     </div>

@@ -14,6 +14,7 @@ export default async (
     .then((response) => {
       res.json(response)
       if (response.status === 401) {
+        console.log('login redirect from user-info')
         res.redirect('/login')
       }
     })

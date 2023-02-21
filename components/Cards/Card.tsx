@@ -26,6 +26,7 @@ import CallButton from '../Buttons/CallButton'
 import {SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
+import EmptyProductImage from '../EmptyProductImage'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -212,9 +213,7 @@ const Card: FC<Props> = ({
             {inView && (
               <>
                 {isEmpty(images) ? (
-                  <div className='relative min-w-full text-greyscale-400 flex items-center justify-center'>
-                    <Image filled size={50} />
-                  </div>
+                  <EmptyProductImage size={50} />
                 ) : (
                   images.map((i, index) => (
                     <div key={i} className='relative min-w-full'>

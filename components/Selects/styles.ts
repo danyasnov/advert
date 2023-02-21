@@ -34,13 +34,10 @@ export const getDefaultStyles = (isInvalid) => ({
       paddingTop: '16px',
       paddingBottom: '16px',
       color: '#212121',
-      ...(state.isFocused
-        ? {backgroundColor: '#fff', fontWeight: 'bold', color: '#7210FF'}
-        : {}),
+      ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
       backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
       '&:hover ': {
         backgroundColor: '#fff',
-        fontWeight: 'bold',
         color: '#7210FF',
       },
       display: 'flex',
@@ -126,6 +123,16 @@ export const LinkStyles = {
     height: '24px',
     display: 'flex',
     justifyContent: 'flex-start',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    width: '120px',
+    borderRadius: '16px',
+    padding: '5px',
+    right: '0',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+    overflow: 'hidden',
   }),
 }
 

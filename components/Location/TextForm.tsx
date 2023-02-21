@@ -257,7 +257,7 @@ const TextForm: FC<Props> = observer(({onClose}) => {
                     isoCode: value.isoCode,
                   })
                 }
-                className={`px-4 py-4 hover:text-primary-500 hover:font-bold rounded-lg justify-start
+                className={`px-4 py-4 hover:text-primary-500 rounded-lg justify-start
               ${id === country?.value ? 'text-primary-500 font-bold' : ''}`}>
                 <span className='text-body-12 truncate max-w-44 whitespace-nowrap w-full text-left'>
                   {value.title}

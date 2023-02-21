@@ -62,18 +62,18 @@ const UserSidebar: FC = observer(() => {
               <Heart2 filled size={28} />
               <span className='text-body-16'>{t('FAVORITE')}</span>
             </Button>
-            {/* <Button */}
-            {/*  onClick={() => { */}
-            {/*    setActiveUserPage('chat' as PagesType) */}
-            {/*  }} */}
-            {/*  className={`${ */}
-            {/*    activeUserPage === 'favorites' */}
-            {/*      ? 'text-primary-500' */}
-            {/*      : 'text-greyscale-900' */}
-            {/*  } space-x-4`}> */}
-            {/*  <Message filled size={28} /> */}
-            {/*  <span className='text-body-16'>{t('MESSAGES')}</span> */}
-            {/* </Button> */}
+            <Button
+              onClick={() => {
+                setActiveUserPage('chat' as PagesType)
+              }}
+              className={`${
+                activeUserPage === 'chat'
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}>
+              <Message filled size={28} />
+              <span className='text-body-16'>{t('MESSAGES')}</span>
+            </Button>
             <LogoutButton className='text-greyscale-500 space-x-4'>
               <>
                 <Logout filled size={28} />
