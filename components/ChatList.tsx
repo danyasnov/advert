@@ -54,14 +54,20 @@ const ChatList: FC = observer(() => {
   return (
     <div className='flex flex-col space-y-4'>
       {chats.map((chat) => {
+        const hasNewMessages = !!chat.newMessagesCount
         const lastMsg = (
           <div className='flex justify-between w-full items-center mt-2 s:mt-0'>
-            <span className='text-body-14 s:text-body-16 font-normal text-greyscale-700 truncate w-[264px] s:w-[236px] m:w-[370px]'>
+            <span
+              className={`text-body-14 s:text-body-16 font-normal truncate w-[264px] s:w-[236px] m:w-[370px] ${
+                hasNewMessages ? 'text-greyscale-700' : 'text-greyscale-500'
+              }`}>
               {chat.lastMessage.text}
             </span>
-            <span className='text-body-12 s:text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
-              {chat.newMessagesCount}
-            </span>
+            {hasNewMessages && (
+              <span className='text-body-12 s:text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
+                {chat.newMessagesCount}
+              </span>
+            )}
           </div>
         )
         return (
@@ -103,12 +109,22 @@ const ChatList: FC = observer(() => {
                 <div className='flex flex-col s:flex-row w-full'>
                   <div className='flex flex-col w-full items-start'>
                     <div className='flex justify-between w-full items-center'>
-                      <span className='text-body-14 s:text-body-18 text-greyscale-900 text-left w-[137px] s:w-[240px] truncate font-medium'>
+                      <span
+                        className={`text-body-14 s:text-body-18 text-left w-[137px] s:w-[240px] truncate font-medium ${
+                          hasNewMessages
+                            ? 'text-greyscale-900'
+                            : 'text-greyscale-500'
+                        }`}>
                         {chat.title}
                       </span>
                       <div className='flex justify-between'>
                         {!!chat.lastMessage.date && (
-                          <span className='text-body-14 s:text-body-16 text-greyscale-700'>
+                          <span
+                            className={`text-body-14 s:text-body-16 ${
+                              hasNewMessages
+                                ? 'text-greyscale-700'
+                                : 'text-greyscale-500'
+                            }`}>
                             {unixToDate(chat.lastMessage.date)}
                           </span>
                         )}
@@ -123,7 +139,12 @@ const ChatList: FC = observer(() => {
                         </Button>
                       </div>
                     </div>
-                    <span className='text-body-18 font-semibold text-greyscale-900 pb-2'>
+                    <span
+                      className={`text-body-18 font-semibold pb-2 ${
+                        hasNewMessages
+                          ? 'text-greyscale-900'
+                          : 'text-greyscale-500'
+                      }`}>
                       {chat.product.title}
                     </span>
                     <div className='hidden s:block w-full'>{lastMsg}</div>
