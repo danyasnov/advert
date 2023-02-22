@@ -58,7 +58,6 @@ const nextConfig = {
         source: '/upload/:type',
         // destination: 'https://backend.venera.city/files/:type/upload',
         destination: 'https://backend.vooxee.com/files/:type/upload',
-        // destination: 'https://api.adverto.sale/files/:type/upload',
       },
     ]
   },
