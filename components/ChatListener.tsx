@@ -4,8 +4,7 @@ import {parseCookies} from 'nookies'
 import {useTranslation} from 'next-i18next'
 import {Chats, globalChatsStore} from 'chats'
 import {SerializedCookiesState} from '../types'
-import Storage from '../stores/Storage'
-import {getRest} from '../api'
+import {getRest, NEXT_PUBLIC_CHAT_URL} from '../api'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {getStorageFromCookies} from '../helpers'
 
@@ -47,6 +46,7 @@ const ChatListener: FC = observer(() => {
       options: {
         isStaging: false,
         debug: true,
+        chatsEndpointOverrides: NEXT_PUBLIC_CHAT_URL,
         connectionParams: async () => ({
           token: state.authNewToken,
           hash: state.hash,

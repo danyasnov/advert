@@ -12,7 +12,7 @@ import Storage from '../stores/Storage'
 
 if (!process.env.PRODUCTION) curlirize(axios)
 
-export const {API_URL} = process.env
+export const {API_URL, NEXT_PUBLIC_CHAT_URL} = process.env
 
 export const getRest = (storage: AppStorage, endpoint?: string): RestApi => {
   // @ts-ignore
