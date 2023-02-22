@@ -743,7 +743,8 @@ export const refreshToken = async ({
   }
   const date = new Date().valueOf()
   const exp = decoded.exp * 1000
-  if (exp > date) {
+  const gap = 1000 * 60 * 60 * 24
+  if (exp - gap > date) {
     return {
       err: 'STILL_VALID',
     }
