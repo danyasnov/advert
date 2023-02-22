@@ -55,10 +55,6 @@ const nextConfig = {
         destination: '/api/robots',
       },
       {
-        source: '/chats',
-        destination: 'https://ao-dev.venera.city:5002/ws',
-      },
-      {
         source: '/upload/:type',
         // destination: 'https://backend.venera.city/files/:type/upload',
         destination: 'https://backend.vooxee.com/files/:type/upload',
