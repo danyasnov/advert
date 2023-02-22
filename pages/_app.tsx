@@ -13,7 +13,6 @@ import {ToastContainer} from 'react-toastify'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 import Head from 'next/head'
-import {clarity} from 'react-microsoft-clarity'
 import {RootStoreProvider} from '../providers/RootStoreProvider'
 import i18n from '../next-i18next.config'
 import CookiesWarning from '../components/CookiesWarning'
@@ -28,9 +27,6 @@ function MyApp({Component, pageProps}: AppProps) {
     isRouteChanging: false,
     loadingKey: 0,
   })
-  useEffect(() => {
-    clarity.init('fmi9tmugn8')
-  }, [])
   useEffect(() => {
     startTracking()
 
