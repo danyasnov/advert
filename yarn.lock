@@ -5513,11 +5513,6 @@ react-lottie@^1.2.3:
     babel-runtime "^6.26.0"
     lottie-web "^5.1.3"
 
-react-microsoft-clarity@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/react-microsoft-clarity/-/react-microsoft-clarity-1.1.2.tgz#d76611709d01231cc6b44272a82aea528425dfdb"
-  integrity sha512-89xn2gvQSO1LjrgaKBik0bBRwkebt8biWkS4K3DsdhYdJtVVYHoAa62JDE9Wth4A+Vt0DsfUeG75OfmrD7EcIA==
-
 react-modal@^3.14.3:
   version "3.14.4"
   resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.14.4.tgz#2ca7e8e9a180955e5c9508c228b73167c1e6f6a3"
