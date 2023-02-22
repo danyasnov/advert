@@ -741,9 +741,9 @@ export const refreshToken = async ({
       err: 'DECODE_FAILED',
     }
   }
-  const date = new Date()
+  const date = new Date().valueOf()
   const exp = decoded.exp * 1000
-  if (exp > date.valueOf()) {
+  if (exp > date) {
     return {
       err: 'STILL_VALID',
     }
