@@ -9,7 +9,7 @@ import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import Button from './Buttons/Button'
 import PhotosModal from './PhotosModal'
 import {ThumbObject} from '../types'
-import {Thumb, VideoThumb} from './Thumb'
+import {Thumb} from './Thumb'
 import ProductBadge from './ProductBadge'
 
 const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
@@ -125,12 +125,14 @@ const ProductPhotos: FC = observer(() => {
           </div>
         )}
         <FullHeightSliderButton
+          size={40}
           onClick={scrollPrev}
           enabled={prevBtnEnabled}
           direction='left'
           className='absolute inset-y-0 left-0'
         />
         <FullHeightSliderButton
+          size={40}
           onClick={scrollNext}
           enabled={nextBtnEnabled}
           direction='right'
@@ -139,27 +141,17 @@ const ProductPhotos: FC = observer(() => {
       </div>
 
       <div className='flex mt-3 s:mt-4 flex-row -mx-1 s:-mx-2 m:-mx-3 l:-mx-2 flex-wrap'>
-        {items.map((item, index) =>
-          item.type === 'video' ? (
-            <VideoThumb
-              url={item.src}
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${item.src}-${index}`}
-              onHover={onHover}
-              index={index}
-              activePhotoIndex={activePhotoIndex}
-            />
-          ) : (
+        {items.map((item, index) => (
+          <div className='mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4'>
             <Thumb
               url={item.src}
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${item.src}-${index}`}
               onHover={onHover}
               index={index}
               activePhotoIndex={activePhotoIndex}
+              type={item.type}
             />
-          ),
-        )}
+          </div>
+        ))}
       </div>
       {showModal && (
         <PhotosModal

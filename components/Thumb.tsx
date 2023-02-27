@@ -10,9 +10,10 @@ interface ThumbProps {
   activePhotoIndex: number
 }
 const className =
-  'mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4 w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden'
+  'w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden shrink-0 border-[3px]'
+// 'mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4 w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden'
 
-export const Thumb: FC<ThumbProps> = ({
+export const PhotoThumb: FC<ThumbProps> = ({
   url,
   onHover,
   index,
@@ -30,8 +31,8 @@ export const Thumb: FC<ThumbProps> = ({
     <div
       className={`${className} ${
         isHovering || activePhotoIndex === index
-          ? 'border border-primary-500'
-          : 'border border-transparent'
+          ? 'border-primary-500'
+          : 'border-transparent'
       }`}
       ref={ref}>
       <ImageWrapper
@@ -62,12 +63,38 @@ export const VideoThumb: FC<ThumbProps> = ({
   return (
     <div
       ref={ref}
-      className={`${className} bg-black flex justify-center items-center ${
+      className={`${className} bg-black flex justify-center items-center border ${
         isHovering || activePhotoIndex === index
-          ? 'border border-primary-500'
-          : 'border border-transparent'
+          ? 'border-primary-500'
+          : 'border-transparent'
       }`}>
       <IcPLay className='fill-current text-white-b h-10 w-10' />
     </div>
+  )
+}
+
+export const Thumb: FC<ThumbProps & {type: string}> = ({
+  url,
+  onHover,
+  index,
+  activePhotoIndex,
+  type,
+}) => {
+  return type === 'video' ? (
+    <VideoThumb
+      url={url}
+      // eslint-disable-next-line react/no-array-index-key
+      onHover={onHover}
+      index={index}
+      activePhotoIndex={activePhotoIndex}
+    />
+  ) : (
+    <PhotoThumb
+      url={url}
+      // eslint-disable-next-line react/no-array-index-key
+      onHover={onHover}
+      index={index}
+      activePhotoIndex={activePhotoIndex}
+    />
   )
 }
