@@ -2,7 +2,7 @@ import {FC, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
-import {Send} from 'react-iconly'
+import IcMap from 'icons/FindMap.svg'
 import Button from './Buttons/Button'
 import {getQueryValue} from '../helpers'
 import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
@@ -35,7 +35,7 @@ const Search: FC = () => {
             id='location'
             onClick={() => setLocationModalShow(true)}
             className='text-primary-500 px-5'>
-            <Send size={15} />
+            <IcMap width={17} height={18} />
           </Button>
           <div className='hidden s:block absolute top-14 -right-20'>
             <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
