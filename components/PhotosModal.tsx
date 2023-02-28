@@ -2,7 +2,7 @@ import {FC, useEffect, useRef, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
 import useEmblaCarousel from 'embla-carousel-react'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
@@ -71,6 +71,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
   if (isEmpty(items)) {
     return null
   }
+  const showSlider = size(items) > 5
   return (
     <ReactModal
       isOpen={isOpen}
@@ -126,11 +127,9 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
           </div>
         </div>
         {items.length > 1 && (
-          <div className='block absolute right-1/2 left-1/2 bottom-24 s:hidden'>
-            <span className='text-greyscale-900 text-body-18 whitespace-nowrap'>
-              {activePhotoIndex + 1} / {items.length}
-            </span>
-          </div>
+          <span className='absolute text-center w-full bottom-12 s:hidden text-greyscale-900 text-body-18 whitespace-nowrap'>
+            {activePhotoIndex + 1} / {items.length}
+          </span>
         )}
         <div className='hidden s:flex self-center h-full relative my-8'>
           <FullHeightSliderButton
@@ -144,8 +143,8 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
           />
           <div
             className='overflow-hidden s:w-[464px] m:w-[664px] l:w-[936px]'
-            ref={previewViewportRef}>
-            <div className='flex'>
+            ref={showSlider ? previewViewportRef : null}>
+            <div className={`flex ${showSlider ? '' : 'justify-center'}`}>
               {items.map((item, index) => (
                 <div className='ml-4'>
                   <Thumb
