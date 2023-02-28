@@ -1,15 +1,7 @@
 import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {ChatData, ChatStore, globalChatsStore} from 'chats'
-import {toJS} from 'mobx'
-import {
-  ArrowLeft,
-  CloseSquare,
-  Delete,
-  MoreCircle,
-  Send,
-  User,
-} from 'react-iconly'
+import {ArrowLeft, Delete, Send} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import {groupBy, size, isEmpty} from 'lodash'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -23,19 +15,20 @@ import Message from './Chat/Message'
 import EmptyProductImage from './EmptyProductImage'
 import LinkWrapper from './Buttons/LinkWrapper'
 import EmptyTab from './EmptyTab'
+import {robustShallowUpdateQuery} from '../helpers'
 
 const ChatList: FC = observer(() => {
   const {t} = useTranslation()
-  const {query, push} = useRouter()
+  const router = useRouter()
   const {chats} = globalChatsStore
   useEffect(() => {
-    if (query.chatId && size(chats)) {
-      const selected = chats.find((c) => c.id === query.chatId)
+    if (router.query.chatId && size(chats)) {
+      const selected = chats.find((c) => c.id === router.query.chatId)
       if (selected) {
         setSelectedChat(selected)
       }
     }
-  }, [chats, query.chatId])
+  }, [chats, router.query.chatId])
   const [selectedChat, setSelectedChat] = useState<ChatData>(null)
   if (selectedChat) {
     return (
@@ -44,9 +37,7 @@ const ChatList: FC = observer(() => {
           chat={selectedChat}
           onClose={() => {
             setSelectedChat(null)
-            push(`/user/${query.id}`, undefined, {
-              shallow: true,
-            })
+            robustShallowUpdateQuery(router, {page: 'chat'})
           }}
         />
       </div>
@@ -81,9 +72,13 @@ const ChatList: FC = observer(() => {
               className='w-full'
               onClick={() => {
                 setSelectedChat(chat)
-                push(`/user/${query.id}?chatId=${chat.id}`, undefined, {
-                  shallow: true,
-                })
+                router.push(
+                  `/user/${router.query.id}?chatId=${chat.id}`,
+                  undefined,
+                  {
+                    shallow: true,
+                  },
+                )
               }}>
               <div className='bg-white rounded-3xl p-4 s:p-6 flex w-full flex-col s:flex-row'>
                 <div className='flex w-full'>

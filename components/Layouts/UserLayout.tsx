@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber, isEmpty, toNumber} from 'lodash'
+import {isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,
@@ -12,7 +12,6 @@ import {
 } from 'react-iconly'
 import {useWindowSize} from 'react-use'
 import {DraftModel} from 'front-api/src/models'
-import ScrollableCardGroup from '../Cards/ScrollableCardGroup'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -20,10 +19,10 @@ import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import Card from '../Cards/Card'
 import ChatList from '../ChatList'
-import EmptyTab from '../EmptyTab'
 import {makeRequest} from '../../api'
+import {PagesType} from '../../stores/GeneralStore'
+import {getQueryValue, robustShallowUpdateQuery} from '../../helpers'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -35,19 +34,9 @@ const getTabs = (t: TFunction, sizes) => [
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
-  const [activeTab, setActiveTab] = useState(
-    query.activeTab ? toNumber(query.activeTab) : 2,
-  )
+  const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
   const router = useRouter()
-  useEffect(() => {
-    if (query.chatId) {
-      setActiveUserPage('chat')
-    } else {
-      router.push(`/user/${query.id}?activeTab=${activeTab}`, undefined, {
-        shallow: true,
-      })
-    }
-  }, [activeTab])
+  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const {width} = useWindowSize()
   const {
     userSale,
@@ -60,8 +49,16 @@ const UserLayout: FC = observer(() => {
     userArchive,
     drafts,
   } = useUserStore()
-  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const isCurrentUser = userHash === user.hash
+  useEffect(() => {
+    if (query.chatId) {
+      setActiveUserPage('chat')
+    } else if (query.page) {
+      setActiveUserPage(query.page as PagesType)
+    }
+    return () => setActiveUserPage('adverts')
+  }, [query])
+
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
@@ -71,8 +68,7 @@ const UserLayout: FC = observer(() => {
       fetchProducts({page: 1, path: 'userFavorite'})
       fetchProducts({page: 1, path: 'drafts', limit: 20})
     }
-    return () => setActiveUserPage('adverts')
-  }, [fetchProducts, fetchRatings, isCurrentUser, setActiveUserPage])
+  }, [fetchProducts, fetchRatings, isCurrentUser])
   const tabs = getTabs(t, {
     1: isNumber(userOnModeration.count) ? userOnModeration.count : '',
     2: userSale.count,
@@ -217,7 +213,12 @@ const UserLayout: FC = observer(() => {
                   <div className='z-10 relative mb-10'>
                     <Tabs
                       items={isCurrentUser ? tabs : tabs.slice(1, 3)}
-                      onChange={(id) => setActiveTab(id)}
+                      onChange={(id) => {
+                        robustShallowUpdateQuery(router, {
+                          page: 'adverts',
+                          activeTab: id,
+                        })
+                      }}
                       value={activeTab}
                     />
                   </div>
