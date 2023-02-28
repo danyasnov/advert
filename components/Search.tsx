@@ -35,7 +35,7 @@ const Search: FC = () => {
             id='location'
             onClick={() => setLocationModalShow(true)}
             className='text-primary-500 px-5'>
-            <IcMap width={17} height={18} />
+            <IcMap width={20} height={20} />
           </Button>
           <div className='hidden s:block absolute top-14 -right-20'>
             <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
