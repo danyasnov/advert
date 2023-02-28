@@ -184,12 +184,12 @@ const SuccessModal: FC<{isOpen: boolean; onClose: () => void}> = ({
           </Button>
         </div>
         <div className='relative flex flex-col items-center'>
-          <div className='relative pb-6'>
+          <div className='relative'>
             <ImageWrapper
-              type='/img/empty-tab.svg'
+              type='/img/congrats.svg'
               alt='thank you'
-              width={124}
-              height={124}
+              width={200}
+              height={200}
               quality={100}
             />
           </div>
