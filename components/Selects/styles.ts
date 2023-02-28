@@ -24,6 +24,8 @@ export const getDefaultStyles = (isInvalid) => ({
     lineHeight: '22px',
     margin: 0,
     padding: 0,
+    paddingLeft: '10px',
+    paddingRight: '10px',
   }),
   option: (provided, state) => {
     const isDisabled = !!state.data.disabled
@@ -31,15 +33,17 @@ export const getDefaultStyles = (isInvalid) => ({
       ...provided,
       fontSize: '14px',
       lineHeight: '20px',
-      paddingTop: '16px',
-      paddingBottom: '16px',
+      /* paddingTop: '16px',
+      paddingBottom: '16px', */
+      paddingTop: 0,
+      paddingBottom: 0,
       color: '#212121',
-      ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
+      /* ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
       backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
       '&:hover ': {
         backgroundColor: '#fff',
         color: '#7210FF',
-      },
+      }, */
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',
@@ -81,11 +85,17 @@ export const getDefaultStyles = (isInvalid) => ({
   }),
   menu: (provided) => ({
     ...provided,
+    marginTop: '16px',
     borderRadius: 16,
+    padding: '10px',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
     overflow: 'hidden',
   }),
   placeholder: (provided) => ({
     ...provided,
+    paddingLeft: '10px',
+    paddingRight: '10px',
     fontSize: '16px',
     lineHeight: '22px',
     color: '#9E9E9E',
@@ -153,6 +163,8 @@ export const FilterStyles = {
   }),
   placeholder: (provided) => ({
     ...provided,
+    paddingLeft: '10px',
+    paddingRight: '10px',
     fontSize: '12px',
     lineHeight: '12px',
     color: '#9E9E9E',
