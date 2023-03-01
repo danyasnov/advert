@@ -683,7 +683,9 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
+      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit ${
+        show ? 'border border-primary-500' : ''
+      }`}
       ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
         <div className='flex justify-between w-full text-body-12'>
@@ -708,7 +710,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         </div>
       </Button>
       {show && (
-        <div className='absolute flex flex-col p-5 rounded-2xl shadow-md w-full top-16 bg-white z-10'>
+        <div className='absolute flex flex-col p-5 rounded-2xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)] w-full top-14 bg-white z-10'>
           <span className='font-semibold text-body-14 text-greyscale-900 mb-1'>
             {t('FROM')}
           </span>
