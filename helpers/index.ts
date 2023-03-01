@@ -18,6 +18,7 @@ import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
+import {NextRouter} from 'next/router'
 import {
   API_URL,
   getAddressByGPS,
@@ -659,6 +660,17 @@ export const shallowUpdateQuery = (queryString?: string): void => {
   window.history.pushState({path: newurl}, '', newurl)
 }
 
+export const robustShallowUpdateQuery = (router: NextRouter, query) => {
+  router.replace(
+    {
+      pathname: router.asPath.split('?')[0],
+      query,
+    },
+    undefined,
+    {shallow: true},
+  )
+}
+
 export const getCategoriesSlugsPathFromIds = (
   ids: string[],
   categories: Array<CACategoryModel>,
@@ -743,6 +755,7 @@ export const refreshToken = async ({
   }
   const date = new Date().valueOf()
   const exp = decoded.exp * 1000
+  // refresh before 24h
   const gap = 1000 * 60 * 60 * 24
   if (exp - gap > date) {
     return {

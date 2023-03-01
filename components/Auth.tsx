@@ -53,6 +53,18 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
         router.push(`/user/${user.hash}`)
       },
     },
+    {
+      title: t('MESSAGES'),
+      onClick: () => {
+        router.push(`/user/${user.hash}?page=chat`)
+      },
+    },
+    {
+      title: t('FAVORITE'),
+      onClick: () => {
+        router.push(`/user/${user.hash}?page=favorites`)
+      },
+    },
   ]
   const buttonClassName =
     'px-5 text-greyscale-900 hover:text-primary-500 w-full rounded-lg'
