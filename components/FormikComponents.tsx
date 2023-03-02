@@ -710,7 +710,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         </div>
       </Button>
       {show && (
-        <div className='absolute flex flex-col p-5 rounded-2xl shadow-[0px_4px_60px_rgba(4,6,15,0.08)] w-full top-14 bg-white z-10'>
+        <div className='absolute flex flex-col p-5 rounded-2xl shadow-1 w-full top-14 bg-white z-10'>
           <span className='font-semibold text-body-14 text-greyscale-900 mb-1'>
             {t('FROM')}
           </span>
