@@ -176,6 +176,7 @@ module.exports = {
       },
       boxShadow: {
         popup: '4px 8px 24px rgba(114, 16, 255, 0.25)',
+        1: '0px 4px 60px rgba(4,6,15,0.08)',
       },
       inset: {
         '89px': '89px',
