@@ -95,7 +95,7 @@ export const fetchCategoryData = async (
   editFields?: FieldsModel,
   excludeDependentFields?: boolean,
 ): Promise<RestResponse<CACategoryDataModel>> => {
-  const key = `category-data-${id}-${storage.language}`
+  const key = `category-data-${id}-${storage.language}-${excludeDependentFields}`
   const cached: RestResponse<CACategoryDataModel> = await cache.get(key)
   if (cached) return cached
 
@@ -105,7 +105,7 @@ export const fetchCategoryData = async (
     editFields,
     excludeDependentFields,
   })
-  if (categoryData.status === 200) cache.set(key, categoryData)
+  if (categoryData.status === 200 && !editFields) cache.set(key, categoryData)
   return categoryData
 }
 
