@@ -18,6 +18,7 @@ import {pick, omit, toNumber, isEmpty, toString} from 'lodash'
 import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
+import NodeCache from 'node-cache'
 import {
   API_URL,
   getAddressByGPS,
@@ -38,6 +39,8 @@ import PublicKey from '../PublicKey'
 import Storage from '../stores/Storage'
 
 const PIXEL_ID = '678216410546433'
+
+const sessionCache = new NodeCache()
 
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
@@ -737,8 +740,9 @@ export const refreshToken = async ({
     console.error(e)
   }
   if (!decoded) {
+    // DECODE_FAILED
     return {
-      err: 'DECODE_FAILED',
+      err: 'LOGIN_REDIRECT',
     }
   }
   const date = new Date().valueOf()
@@ -755,18 +759,28 @@ export const refreshToken = async ({
     }
   }
   let refreshData
-  try {
-    refreshData = await makeRequest({
-      url: `${API_URL}/v2/auth/token/refresh`,
-      method: 'post',
-      data: {
+
+  const sessionAuth = sessionCache.get(authNewRefreshToken)
+
+  if (sessionAuth) {
+    refreshData = sessionAuth
+  } else {
+    try {
+      refreshData = await makeRequest({
+        url: `${API_URL}/v2/auth/token/refresh`,
+        method: 'post',
         data: {
-          token: authNewRefreshToken,
+          data: {
+            token: authNewRefreshToken,
+          },
         },
-      },
-    })
-  } catch (e) {
-    console.error(e)
+      })
+      if (refreshData?.data?.newAuth) {
+        sessionCache.set(authNewRefreshToken, refreshData)
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
   if (refreshData?.data?.newAuth) {
     return {
