@@ -93,6 +93,10 @@ export const mapOriginalFields = (rawFields = {}, fieldsById = {}) => {
       .map(([key, value]) => {
         const field = getFields(fieldsById)[key]
         let mappedValue
+
+        if (!field) {
+          return [key, mappedValue]
+        }
         switch (field.fieldType) {
           case 'select':
           case 'iconselect': {
