@@ -155,13 +155,13 @@ const Card: FC<Props> = ({
               title={product.title}
               images={product.images}
               listRender={(options, setShowPopup) => (
-                <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200 px-5'>
+                <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200'>
                   {/* eslint-disable-next-line no-shadow */}
                   {options.map(({title, onClick, icon}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
-                      className='py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      className='py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal px-5'
                       onClick={(e) => {
                         e.preventDefault()
                         onClick()
