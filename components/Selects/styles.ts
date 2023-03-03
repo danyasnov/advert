@@ -81,7 +81,11 @@ export const getDefaultStyles = (isInvalid) => ({
   }),
   menu: (provided) => ({
     ...provided,
+    marginTop: '16px',
     borderRadius: 16,
+    padding: '5px 10px 5px',
+    border: 'none',
+    boxShadow: '0px 4px 60px rgba(4, 6, 15, 0.08)',
     overflow: 'hidden',
   }),
   placeholder: (provided) => ({
