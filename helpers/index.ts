@@ -744,7 +744,7 @@ export const checkToken = async (authNewToken: string): Promise<string> => {
   const date = new Date().valueOf()
   const exp = decoded.exp * 1000
   // refresh before 24h
-  const gap = 1000 * 60 * 60 * 24
+  const gap = 1000 * 60 * 60 * 3
   if (exp - gap > date) {
     return 'STILL_VALID'
   }
