@@ -1,11 +1,11 @@
 import {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {
+  checkToken,
   getLocationCodes,
   processCookies,
   redirectToLogin,
-  refreshToken,
-  setCookiesObject,
+  redirectToRefresh,
 } from '../../helpers'
 import {fetchCategories} from '../../api/v2'
 import {fetchDocuments} from '../../api/db'
@@ -26,18 +26,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     userHash: state.hash,
     location: state.searchLocation,
   })
-  const newAuth = await refreshToken({
-    authNewToken: state.authNewToken,
-    authNewRefreshToken: state.authNewRefreshToken,
-  })
-  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
-    storage.saveNewTokens({
-      accessToken: newAuth.authNewToken,
-      refreshToken: newAuth.authNewRefreshToken,
-    })
-    setCookiesObject(newAuth, ctx)
-  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
+  }
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
   }
   const publicDocs = [
     'terms-and-conditions',

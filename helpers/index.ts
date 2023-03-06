@@ -41,8 +41,6 @@ import Storage from '../stores/Storage'
 
 const PIXEL_ID = '678216410546433'
 
-const sessionCache = new NodeCache()
-
 export const notImplementedAlert = () => {
   // eslint-disable-next-line no-alert
   window.alert('NotImplemented')
@@ -729,21 +727,9 @@ export const getStorageFromCookies = (
   })
 }
 
-export const refreshToken = async ({
-  authNewToken,
-  authNewRefreshToken,
-}: {
-  authNewRefreshToken?: string
-  authNewToken?: string
-}): Promise<{
-  err?: string
-  authNewRefreshToken?: string
-  authNewToken?: string
-}> => {
+export const checkToken = async (authNewToken: string): Promise<string> => {
   if (!authNewToken) {
-    return {
-      err: 'NOT_AUTHORIZED',
-    }
+    return 'NOT_AUTHORIZED'
   }
   let decoded
   try {
@@ -753,57 +739,16 @@ export const refreshToken = async ({
   }
   if (!decoded) {
     // DECODE_FAILED
-    return {
-      err: 'LOGIN_REDIRECT',
-    }
+    return 'LOGIN_REDIRECT'
   }
   const date = new Date().valueOf()
   const exp = decoded.exp * 1000
   // refresh before 24h
-  const gap = 1000 * 60 * 60 * 24
+  const gap = 1000 * 60 * 60 * 3
   if (exp - gap > date) {
-    return {
-      err: 'STILL_VALID',
-    }
+    return 'STILL_VALID'
   }
-  if (!authNewRefreshToken) {
-    return {
-      err: 'LOGIN_REDIRECT',
-    }
-  }
-  let refreshData
-
-  const sessionAuth = sessionCache.get(authNewRefreshToken)
-
-  if (sessionAuth) {
-    refreshData = sessionAuth
-  } else {
-    try {
-      refreshData = await makeRequest({
-        url: `${API_URL}/v2/auth/token/refresh`,
-        method: 'post',
-        data: {
-          data: {
-            token: authNewRefreshToken,
-          },
-        },
-      })
-      if (refreshData?.data?.newAuth) {
-        sessionCache.set(authNewRefreshToken, refreshData)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  if (refreshData?.data?.newAuth) {
-    return {
-      authNewToken: refreshData.data.newAuth.access,
-      authNewRefreshToken: refreshData.data.newAuth.refresh,
-    }
-  }
-  return {
-    err: 'LOGIN_REDIRECT',
-  }
+  return 'REFRESH_REDIRECT'
 }
 
 export const deserializeCookies = (
@@ -870,6 +815,16 @@ export const redirectToLogin = (fallbackUrl) => {
   return {
     redirect: {
       destination: `/login${param}`,
+      permanent: false,
+    },
+  }
+}
+
+export const redirectToRefresh = (fallbackUrl) => {
+  const param = fallbackUrl === '/' ? '' : `?from=${fallbackUrl}`
+  return {
+    redirect: {
+      destination: `/refresh${param}`,
       permanent: false,
     },
   }
