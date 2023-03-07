@@ -28,6 +28,8 @@ export default function Home() {
           authNewRefreshToken: newAuth.refresh,
         })
         push((query.from as string) || '/')
+      } else {
+        console.log('error refresh', state.authNewRefreshToken)
       }
     })
   }, [])
