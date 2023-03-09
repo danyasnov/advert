@@ -3,10 +3,10 @@ import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {useTranslation} from 'next-i18next'
 import {Chats, globalChatsStore} from 'chats'
-import {SerializedCookiesState} from '../types'
-import {getRest, NEXT_PUBLIC_CHAT_URL} from '../api'
-import {useGeneralStore} from '../providers/RootStoreProvider'
-import {getStorageFromCookies} from '../helpers'
+import {SerializedCookiesState} from '../../types'
+import {getRest, NEXT_PUBLIC_CHAT_URL} from '../../api'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {getStorageFromCookies} from '../../helpers'
 
 const ChatListener: FC = observer(() => {
   const {user} = useGeneralStore()

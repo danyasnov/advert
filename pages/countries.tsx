@@ -5,10 +5,10 @@ import {useTranslation} from 'next-i18next'
 import {CountryModel} from 'front-api'
 import LocationContents from '../components/Layouts/LocationContents'
 import {
+  checkToken,
   processCookies,
   redirectToLogin,
-  refreshToken,
-  setCookiesObject,
+  redirectToRefresh,
 } from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
@@ -27,18 +27,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     userHash: state.hash,
     location: state.searchLocation,
   })
-  const newAuth = await refreshToken({
-    authNewToken: state.authNewToken,
-    authNewRefreshToken: state.authNewRefreshToken,
-  })
-  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
-    storage.saveNewTokens({
-      accessToken: newAuth.authNewToken,
-      refreshToken: newAuth.authNewRefreshToken,
-    })
-    setCookiesObject(newAuth, ctx)
-  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
+  }
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
   }
   const promises = [fetchCategories(storage), fetchCountries(state.language)]
   const [categoriesData, countries] = await Promise.allSettled(promises).then(

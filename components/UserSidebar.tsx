@@ -5,18 +5,21 @@ import {useTranslation} from 'next-i18next'
 import IcAds from 'icons/material/Ads.svg'
 import IcCreate from 'icons/material/Create.svg'
 import {useWindowSize} from 'react-use'
+import {useRouter} from 'next/router'
 import UserProfile from './UserProfile'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
-import {PagesType} from '../stores/GeneralStore'
 import LogoutButton from './Auth/LogoutButton'
+import {robustShallowUpdateQuery} from '../helpers'
 
 const UserSidebar: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
-  const {setActiveUserPage, activeUserPage, userHash} = useGeneralStore()
+  const {activeUserPage, userHash} = useGeneralStore()
   const {user} = useUserStore()
+  const router = useRouter()
   const isCurrentUser = userHash === user?.hash
+
   return (
     <div>
       <UserProfile />
@@ -29,7 +32,7 @@ const UserSidebar: FC = observer(() => {
               : 'text-greyscale-900'
           } space-x-4`}
           onClick={() => {
-            setActiveUserPage('adverts' as PagesType)
+            robustShallowUpdateQuery(router, {page: 'adverts'})
           }}>
           <IcAds className='w-7 h-7 fill-current' />
           <span className='text-body-16'>
@@ -40,7 +43,7 @@ const UserSidebar: FC = observer(() => {
           <>
             <Button
               onClick={() => {
-                setActiveUserPage('drafts' as PagesType)
+                robustShallowUpdateQuery(router, {page: 'drafts'})
               }}
               className={`${
                 activeUserPage === 'drafts'
@@ -52,7 +55,7 @@ const UserSidebar: FC = observer(() => {
             </Button>
             <Button
               onClick={() => {
-                setActiveUserPage('favorites' as PagesType)
+                robustShallowUpdateQuery(router, {page: 'favorites'})
               }}
               className={`${
                 activeUserPage === 'favorites'
@@ -64,7 +67,7 @@ const UserSidebar: FC = observer(() => {
             </Button>
             <Button
               onClick={() => {
-                setActiveUserPage('chat' as PagesType)
+                robustShallowUpdateQuery(router, {page: 'chat'})
               }}
               className={`${
                 activeUserPage === 'chat'

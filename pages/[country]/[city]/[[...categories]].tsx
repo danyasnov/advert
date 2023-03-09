@@ -3,14 +3,14 @@ import {GetServerSideProps} from 'next'
 import {isEmpty, last} from 'lodash'
 import CategoriesLayout from '../../../components/Layouts/CategoriesLayout'
 import {
+  checkToken,
   findCategoryByQuery,
   getFilterFromQuery,
   getLocationCodes,
   getQueryValue,
   processCookies,
   redirectToLogin,
-  refreshToken,
-  setCookiesObject,
+  redirectToRefresh,
   withLocationQuery,
 } from '../../../helpers'
 import {
@@ -39,18 +39,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     userHash: state.hash,
     location: state.searchLocation,
   })
-  const newAuth = await refreshToken({
-    authNewToken: state.authNewToken,
-    authNewRefreshToken: state.authNewRefreshToken,
-  })
-  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
-    storage.saveNewTokens({
-      accessToken: newAuth.authNewToken,
-      refreshToken: newAuth.authNewRefreshToken,
-    })
-    setCookiesObject(newAuth, ctx)
-  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
+  }
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
   }
   const countryCode = getQueryValue(query, 'country')
   const sortBy = getQueryValue(query, 'sortBy') ?? null

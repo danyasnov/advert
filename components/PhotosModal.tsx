@@ -2,13 +2,13 @@ import {FC, useEffect, useRef, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
 import useEmblaCarousel from 'embla-carousel-react'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
 import Button from './Buttons/Button'
 import ImageWrapper from './ImageWrapper'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
-import {Thumb, VideoThumb} from './Thumb'
+import {Thumb} from './Thumb'
 import {ThumbObject} from '../types'
 
 interface Props {
@@ -23,7 +23,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
   const [activePhotoIndex, setActivePhotoIndex] = useState(currentIndex)
   const videosRef = useRef([])
 
-  const [viewportRef, embla] = useEmblaCarousel({
+  const [photoViewportRef, photoEmbla] = useEmblaCarousel({
     loop: true,
     align: 'start',
     containScroll: 'trimSnaps',
@@ -31,10 +31,18 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
     speed: 30,
     startIndex: currentIndex,
   })
+  const [previewViewportRef, previewEmbla] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps',
+    draggable: items.length > 1,
+    speed: 30,
+    dragFree: true,
+    loop: true,
+  })
 
   const onHover = (index) => {
     setActivePhotoIndex(index)
-    embla.scrollTo(index)
+    photoEmbla.scrollTo(index)
     if (
       index !== activePhotoIndex &&
       items[activePhotoIndex].type === 'video'
@@ -42,40 +50,46 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       videosRef.current[activePhotoIndex].pause()
     }
   }
-  const {scrollNext, scrollPrev, prevBtnEnabled, nextBtnEnabled} =
-    useSliderButtons(embla)
+  const photoSlider = useSliderButtons(photoEmbla)
+  const previewSlider = useSliderButtons(previewEmbla)
   useEffect(() => {
-    if (embla)
-      embla.on('select', () => {
-        const newIndex = embla.selectedScrollSnap() ?? 0
+    if (photoEmbla)
+      photoEmbla.on('select', () => {
+        const newIndex = photoEmbla.selectedScrollSnap() ?? 0
         setActivePhotoIndex((prevIndex) => {
           if (newIndex !== prevIndex && items[prevIndex].type === 'video') {
             videosRef.current[prevIndex].pause()
           }
           return newIndex
         })
+        if (previewEmbla && previewEmbla.slidesNotInView().includes(newIndex)) {
+          previewEmbla.scrollTo(newIndex)
+        }
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [embla])
+  }, [photoEmbla])
   if (isEmpty(items)) {
     return null
   }
+  const showSlider = size(items) > 5
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
       shouldCloseOnOverlayClick
       ariaHideApp={false}
-      className='absolute w-full h-full l:w-5/6 l:h-95% l:top-5 inset-x-0 mx-auto flex outline-none flex flex-col'
+      className='absolute h-full s:h-auto inset-x-0 mx-auto s:inset-x-8 m:inset-x-12 l:inset-x-24 s:top-14 m:top-20 l:top-14 flex outline-none flex flex-col'
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-30'>
       <Button
         onClick={onClose}
-        className='absolute top-5 right-5 cursor-pointer z-10'>
-        <IcClear className='fill-current text-greyscale-900 h-10 w-10' />
+        className='absolute top-14 s:top-5 right-5 cursor-pointer z-10'>
+        <IcClear className='fill-current text-greyscale-400 h-5 w-5 s:h-8 s:w-8' />
       </Button>
-      <div className='flex flex-col w-full h-full bg-image-placeholder overflow-hidden'>
-        <div className='overflow-hidden relative h-full' ref={viewportRef}>
-          <div className='flex h-full'>
+      <div className='flex flex-col w-full flex-1 overflow-hidden bg-white s:rounded-3xl'>
+        <div
+          className='overflow-hidden h-full s:h-auto relative s:mx-16'
+          ref={photoViewportRef}>
+          <div className='flex h-full s:h-[364px] m:h-[504px] l:h-[746px]'>
             {/* @ts-ignore */}
             {items.map((item, index) => {
               if (item.type === 'video') {
@@ -111,50 +125,64 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
               )
             })}
           </div>
-          <FullHeightSliderButton
-            onClick={scrollPrev}
-            enabled={prevBtnEnabled}
-            direction='left'
-            className='absolute inset-y-0 left-0'
-          />
-          <FullHeightSliderButton
-            onClick={scrollNext}
-            enabled={nextBtnEnabled}
-            direction='right'
-            className='absolute inset-y-0 right-0'
-          />
         </div>
-      </div>
-      {items.length > 1 && (
-        <div className='block  absolute right-1/2 left-1/2 bottom-5 l:bottom-24'>
-          <span className='text-white bg-shadow-overlay rounded p-1 text-body-14 whitespace-nowrap'>
+        {items.length > 1 && (
+          <span className='absolute text-center w-full bottom-12 s:hidden text-greyscale-900 text-body-18 whitespace-nowrap'>
             {activePhotoIndex + 1} / {items.length}
           </span>
-        </div>
-      )}
-      <div className='mt-4 flex-row -mx-1 flex-wrap justify-center hidden l:flex'>
-        {items.map((item, index) =>
-          item.type === 'video' ? (
-            <VideoThumb
-              url={item.src}
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${item.src}-${index}`}
-              onHover={onHover}
-              index={index}
-              activePhotoIndex={activePhotoIndex}
-            />
-          ) : (
-            <Thumb
-              url={item.src}
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${item.src}-${index}`}
-              onHover={onHover}
-              index={index}
-              activePhotoIndex={activePhotoIndex}
-            />
-          ),
         )}
+        <div className='hidden s:flex self-center h-full relative my-8'>
+          <FullHeightSliderButton
+            onClick={() => {
+              previewEmbla.scrollTo(previewEmbla.selectedScrollSnap() - 3)
+            }}
+            enabled={previewSlider.prevBtnEnabled}
+            direction='left'
+            size={25}
+            className='absolute inset-y-0 -left-20'
+          />
+          <div
+            className='overflow-hidden s:w-[464px] m:w-[664px] l:w-[936px]'
+            ref={showSlider ? previewViewportRef : null}>
+            <div className={`flex ${showSlider ? '' : 'justify-center'}`}>
+              {items.map((item, index) => (
+                <div className='ml-4'>
+                  <Thumb
+                    url={item.src}
+                    onHover={onHover}
+                    index={index}
+                    activePhotoIndex={activePhotoIndex}
+                    type={item.type}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <FullHeightSliderButton
+            onClick={() => {
+              previewEmbla.scrollTo(previewEmbla.selectedScrollSnap() + 3)
+            }}
+            enabled={previewSlider.nextBtnEnabled}
+            direction='right'
+            size={25}
+            className='absolute inset-y-0 -right-20'
+          />
+        </div>
       </div>
+      <FullHeightSliderButton
+        onClick={photoSlider.scrollPrev}
+        enabled={photoSlider.prevBtnEnabled}
+        direction='left'
+        size={40}
+        className='absolute inset-y-0 left-0'
+      />
+      <FullHeightSliderButton
+        onClick={photoSlider.scrollNext}
+        enabled={photoSlider.nextBtnEnabled}
+        direction='right'
+        size={40}
+        className='absolute inset-y-0 right-0'
+      />
     </ReactModal>
   )
 }

@@ -122,16 +122,14 @@ const CategoryPage: FC = observer(() => {
             </span>
           )}
         </h5>
-        {isEmpty(selected) && (
-          <div className='w-1/2'>
-            <SearchCategories
-              handleSelectedItemChange={(item) => {
-                if (!item.id) return
-                onSubmit(toNumber(item.id))
-              }}
-            />
-          </div>
-        )}
+        <div className='w-1/2'>
+          <SearchCategories
+            handleSelectedItemChange={(item) => {
+              if (!item.id) return
+              onSubmit(toNumber(item.id))
+            }}
+          />
+        </div>
       </div>
       <div className='s:hidden'>
         <MobileCategoriesHeader

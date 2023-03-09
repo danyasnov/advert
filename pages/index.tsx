@@ -3,11 +3,11 @@ import {GetServerSideProps} from 'next'
 import {AuthType} from 'front-api/src/models'
 import {VerifyMode} from 'front-api/src/models/auth'
 import {
+  checkToken,
   getLocationCodes,
   processCookies,
   redirectToLogin,
-  refreshToken,
-  setCookiesObject,
+  redirectToRefresh,
 } from '../helpers'
 import {fetchCountries} from '../api/v1'
 import {checkCode, fetchCategories} from '../api/v2'
@@ -20,25 +20,19 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
+  const {query} = ctx
   const storage = new Storage({
     ...state,
     userHash: state.hash,
     location: state.searchLocation,
   })
-  const newAuth = await refreshToken({
-    authNewToken: state.authNewToken,
-    authNewRefreshToken: state.authNewRefreshToken,
-  })
-  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
-    storage.saveNewTokens({
-      accessToken: newAuth.authNewToken,
-      refreshToken: newAuth.authNewRefreshToken,
-    })
-    setCookiesObject(newAuth, ctx)
-  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
   }
-  const {query} = ctx
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
+  }
   const {action, id, email, code, success} = query
   let showSuccessAlert = ''
   let showErrorAlert = ''

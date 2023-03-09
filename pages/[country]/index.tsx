@@ -1,10 +1,10 @@
 import {GetServerSideProps} from 'next'
 import {
+  checkToken,
   getQueryValue,
   processCookies,
   redirectToLogin,
-  refreshToken,
-  setCookiesObject,
+  redirectToRefresh,
 } from '../../helpers'
 import {fetchProductDetails} from '../../api/v2'
 import Storage from '../../stores/Storage'
@@ -23,18 +23,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     userHash: state.hash,
     location: state.searchLocation,
   })
-  const newAuth = await refreshToken({
-    authNewToken: state.authNewToken,
-    authNewRefreshToken: state.authNewRefreshToken,
-  })
-  if (newAuth.authNewToken && newAuth.authNewRefreshToken) {
-    storage.saveNewTokens({
-      accessToken: newAuth.authNewToken,
-      refreshToken: newAuth.authNewRefreshToken,
-    })
-    setCookiesObject(newAuth, ctx)
-  } else if (newAuth.err === 'LOGIN_REDIRECT') {
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
+  }
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
   }
   // redirect from short url
   const response = await fetchProductDetails(storage, param)
