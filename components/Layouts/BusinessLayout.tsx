@@ -19,6 +19,7 @@ import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {handleMetrics, trackSingle} from '../../helpers'
+import {window} from '../../types'
 
 const features = [
   {
@@ -80,7 +81,7 @@ const BusinessLayout: FC = observer(() => {
   const [showSuccess, setShowSuccess] = useState(false)
   const formRef = useRef<HTMLDivElement>()
   useEffect(() => {
-    handleMetrics('visitBusiness_paged')
+    handleMetrics(window.dataLayer.push('visitBusiness_paged'))
   }, [])
 
   const formik = useFormik({
@@ -116,7 +117,7 @@ const BusinessLayout: FC = observer(() => {
         url: '/api/landing-submit',
         data: omit(values, ['privacy', 'token']),
       })
-      handleMetrics('creationBussiness_sccess')
+      handleMetrics(window.dataLayer.push('creationBussiness_sccess'))
 
       trackSingle('CompleteRegistration')
       trackSingle('BusinessRegistration')
@@ -127,7 +128,7 @@ const BusinessLayout: FC = observer(() => {
     <Button
       className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white'
       onClick={() => {
-        handleMetrics('clickStart_now', {index})
+        handleMetrics(window.dataLayer.push('clickStart_now', {index}))
         formRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',

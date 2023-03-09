@@ -7,7 +7,7 @@ import {useTranslation} from 'next-i18next'
 import {Heart2} from 'react-iconly'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
-import {SerializedCookiesState} from '../types'
+import {SerializedCookiesState, window} from '../types'
 import {handleMetrics, trackSingle} from '../helpers'
 
 interface Props {
@@ -58,7 +58,7 @@ const ProductLike: FC<Props> = ({
       onClick={(e) => {
         e.preventDefault()
         if (!like) {
-          handleMetrics('addTo_favorite')
+          handleMetrics(window.dataLayer.push('addTo_favorite'))
           trackSingle('AddToWishlist', {hash})
         }
         makeRequest({

@@ -58,7 +58,7 @@ import {
   getCreateSelectOptions,
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
-import {NavItem} from '../../types'
+import {NavItem, window} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -170,7 +170,7 @@ const FormPage: FC = observer(() => {
               hash: data.hash,
             },
           })
-          handleMetrics('advt_success')
+          handleMetrics(window.dataLayer.push('advt_success'))
           trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
         } else if (res.data.error) {
@@ -949,7 +949,9 @@ const FormPage: FC = observer(() => {
                         }
                       }
                     } else if (!isSubmitting) {
-                      handleMetrics('addAdvt_clickPublish')
+                      handleMetrics(
+                        window.dataLayer.push('addAdvt_clickPublish'),
+                      )
                       submitForm()
                     }
                     scrollToFirstError()

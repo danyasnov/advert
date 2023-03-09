@@ -10,6 +10,7 @@ import {PageProps} from '../utils'
 import OutlineButton from '../../Buttons/OutlineButton'
 import {handleClickHouse} from '../../../api/v2'
 import {handleMetrics} from '../../../helpers'
+import {window} from '../../../types'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
@@ -28,7 +29,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.phone,
           })
-          handleMetrics('clickLogin_tel')
+          handleMetrics(window.dataLayer.push('clickLogin_tel'))
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Call size={24} />
@@ -47,7 +48,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.email,
           })
-          handleMetrics('clickLogin_email')
+          handleMetrics(window.dataLayer.push('clickLogin_email'))
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Message />

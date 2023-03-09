@@ -12,6 +12,7 @@ import {FormikSwitch} from '../FormikComponents'
 import Tip from './Tip'
 import ImageWrapper from '../ImageWrapper'
 import {handleMetrics} from '../../helpers'
+import {window} from '../../types'
 
 interface Props {
   user: OwnerModel
@@ -132,7 +133,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
-            handleMetrics('addAdvt_title', {title})
+            handleMetrics(window.dataLayer.push('addAdvt_title', title))
           }}
         />
 

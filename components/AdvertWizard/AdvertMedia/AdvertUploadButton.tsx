@@ -7,6 +7,7 @@ import IcAddPhoto from 'icons/material/AddPhoto.svg'
 import IcAddVideo from 'icons/material/AddVideo.svg'
 import {Camera} from 'react-iconly'
 import {handleMetrics} from '../../../helpers'
+import {window} from '../../../types'
 
 const AdvertUploadButton: FC<{
   onDrop: (acceptedFiles: any, rejectedFiles: any) => void
@@ -46,9 +47,13 @@ const AdvertUploadButton: FC<{
             {...getInputProps()}
             onClick={() => {
               handleMetrics(
-                `${
-                  type === 'photo' ? 'addAdvt_photoItems' : 'addAdvt_videoItems'
-                }`,
+                window.dataLayer.push(
+                  `${
+                    type === 'photo'
+                      ? 'addAdvt_photoItems'
+                      : 'addAdvt_videoItems'
+                  }`,
+                ),
               )
             }}
           />

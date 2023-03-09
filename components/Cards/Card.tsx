@@ -23,7 +23,7 @@ import ProductLike from '../ProductLike'
 import {handleMetrics} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
-import {SerializedCookiesState} from '../../types'
+import {SerializedCookiesState, window} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
 import EmptyProductImage from '../EmptyProductImage'
@@ -128,7 +128,7 @@ const Card: FC<Props> = ({
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
         onClick={() => {
-          handleMetrics('clickTo_advt')
+          handleMetrics(window.dataLayer.push('clickTo_advt'))
         }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${

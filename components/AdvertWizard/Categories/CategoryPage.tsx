@@ -17,6 +17,7 @@ import CategoriesDesktop from './CategoriesDesktop'
 import CategoriesMobile from './CategoriesMobile'
 import MobileCategoriesHeader from './MobileCategoriesHeader'
 import {handleMetrics} from '../../../helpers'
+import {window} from '../../../types'
 
 const CategoryPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
@@ -86,7 +87,7 @@ const CategoryPage: FC = observer(() => {
             router.query.hash = [res.data.result.hash]
             router.push(router)
           }
-          handleMetrics('addAdvt_category', {id})
+          handleMetrics(window.dataLayer.push('addAdvt_category', id))
 
           dispatch({
             type: 'setPage',

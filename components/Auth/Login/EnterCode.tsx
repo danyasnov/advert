@@ -12,6 +12,7 @@ import {handleMetrics, setCookiesObject, trackSingle} from '../../../helpers'
 import LinkButton from '../../Buttons/LinkButton'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
+import {window} from '../../../types'
 
 const getCharacters = (verifyMode) => {
   switch (verifyMode) {
@@ -42,7 +43,7 @@ const EnterCode: FC<PageProps> = observer(
     const AuthInputRef = useRef<AuthCodeRef>(null)
 
     const sendCode = () => {
-      handleMetrics('sendAutorization_code')
+      handleMetrics(window.dataLayer.push('sendAutorization_code'))
 
       return makeRequest({
         url: '/api/send-code',
@@ -114,7 +115,7 @@ const EnterCode: FC<PageProps> = observer(
           authNewRefreshToken: refresh,
           promo,
         })
-        handleMetrics('autorizationSuccess')
+        handleMetrics(window.dataLayer.push('autorizationSuccess'))
         if (state.isNew) {
           trackSingle('CompleteRegistration')
           dispatch({type: 'setPage', page: AuthPages.success})

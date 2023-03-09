@@ -11,7 +11,7 @@ import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import localforage from 'localforage'
 import {isAndroid} from 'react-device-detect'
-import {SerializedCookiesState} from '../../types'
+import {SerializedCookiesState, window} from '../../types'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import Button from '../Buttons/Button'
 import {getPosition} from '../../utils'
@@ -161,7 +161,7 @@ const MapPage: FC = () => {
         type: 'setDraft',
         draft: newDraft,
       })
-      handleMetrics('addAdvt_adress')
+      handleMetrics(window.dataLayer.push('addAdvt_adress'))
       if (hash) {
         return makeRequest({
           url: '/api/save-draft',
