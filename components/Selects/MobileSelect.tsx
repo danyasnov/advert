@@ -180,7 +180,7 @@ const MobileSelect: FC<SelectProps> = ({
               ))}
           </div>
           {isMulti && (
-            <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white'>
+            <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white drop-shadow-card'>
               <SecondaryButton
                 className='w-full h-full'
                 disabled={!size(value as unknown as object)}
