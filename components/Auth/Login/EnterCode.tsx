@@ -12,7 +12,6 @@ import {handleMetrics, setCookiesObject, trackSingle} from '../../../helpers'
 import LinkButton from '../../Buttons/LinkButton'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
-import {window} from '../../../types'
 
 const getCharacters = (verifyMode) => {
   switch (verifyMode) {

@@ -12,7 +12,6 @@ import {FormikSwitch} from '../FormikComponents'
 import Tip from './Tip'
 import ImageWrapper from '../ImageWrapper'
 import {handleMetrics} from '../../helpers'
-import {window} from '../../types'
 
 interface Props {
   user: OwnerModel

@@ -13,7 +13,6 @@ import {
   trackSingle,
 } from '../../helpers'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
-import {window} from '../../types'
 
 interface Props {
   selectedItem: string

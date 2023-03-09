@@ -10,7 +10,6 @@ import {PageProps} from '../utils'
 import OutlineButton from '../../Buttons/OutlineButton'
 import {handleClickHouse} from '../../../api/v2'
 import {handleMetrics} from '../../../helpers'
-import {window} from '../../../types'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()

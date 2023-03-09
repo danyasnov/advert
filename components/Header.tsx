@@ -15,7 +15,6 @@ import Button from './Buttons/Button'
 import {handleMetrics} from '../helpers'
 import BusinessButton from './BusinessButton'
 import SafetyButton from './SafetyButton'
-import {window} from '../types'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()

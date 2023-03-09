@@ -58,7 +58,7 @@ import {
   getCreateSelectOptions,
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
-import {NavItem, window} from '../../types'
+import {NavItem} from '../../types'
 import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
 import SecondaryButton from '../Buttons/SecondaryButton'

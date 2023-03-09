@@ -7,7 +7,6 @@ import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
 import {handleMetrics} from '../../helpers'
-import {window} from '../../types'
 
 interface Props {
   category: CACategoryModel

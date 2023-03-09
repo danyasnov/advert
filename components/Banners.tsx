@@ -10,7 +10,6 @@ import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import {handleMetrics} from '../helpers'
-import {window} from '../types'
 
 const Banners: FC = observer(() => {
   const {t} = useTranslation()

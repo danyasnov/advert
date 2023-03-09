@@ -17,7 +17,6 @@ import CategoriesDesktop from './CategoriesDesktop'
 import CategoriesMobile from './CategoriesMobile'
 import MobileCategoriesHeader from './MobileCategoriesHeader'
 import {handleMetrics} from '../../../helpers'
-import {window} from '../../../types'
 
 const CategoryPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)

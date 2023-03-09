@@ -148,9 +148,3 @@ export interface NavItem {
   filled?: boolean
   state?: FormikErrors<any>
 }
-
-export interface CustomWindow extends Window {
-  dataLayer: any[]
-}
-declare const window: CustomWindow
-export {window}

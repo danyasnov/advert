@@ -7,7 +7,7 @@ import {useTranslation} from 'next-i18next'
 import {Heart2} from 'react-iconly'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
-import {SerializedCookiesState, window} from '../types'
+import {SerializedCookiesState} from '../types'
 import {handleMetrics, trackSingle} from '../helpers'
 
 interface Props {
