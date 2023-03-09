@@ -42,7 +42,11 @@ const ProductMap: FC = observer(() => {
           <span>{advert.location.description}</span>
         </div>
         <Button onClick={() => setMapVisible(!mapVisible)} id='map'>
-          <IcArrowDown className='w-5 h-5 fill-current text-greyscale-900' />
+          <IcArrowDown
+            className={`w-5 h-5 fill-current text-greyscale-900 hover:text-primary-500 ${
+              mapVisible ? 'rotate-180' : ''
+            }`}
+          />
         </Button>
       </div>
       {mapVisible && (
