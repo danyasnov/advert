@@ -19,19 +19,20 @@ export default function Home() {
       data: {
         authNewRefreshToken: state.authNewRefreshToken,
       },
-    }).then((res) => {
-      const {newAuth} = res.data
-      console.log(newAuth)
-      if (newAuth) {
-        setCookiesObject({
-          authNewToken: newAuth.access,
-          authNewRefreshToken: newAuth.refresh,
-        })
-        push((query.from as string) || '/')
-      } else {
-        console.log('error refresh', state.authNewRefreshToken)
-      }
     })
+      .then((res) => {
+        const {newAuth} = res.data
+        if (newAuth) {
+          setCookiesObject({
+            authNewToken: newAuth.access,
+            authNewRefreshToken: newAuth.refresh,
+          })
+          push((query.from as string) || '/')
+        }
+      })
+      .catch(() => {
+        push('/login')
+      })
   }, [])
   return null
 }
