@@ -8,13 +8,12 @@ import {useFormik, FormikProvider, Field, Form} from 'formik'
 import {object, string} from 'yup'
 import {isEqual} from 'lodash'
 import {useLockBodyScroll} from 'react-use'
-import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
+import {useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
 import {FormikSelect, FormikText} from './FormikComponents'
 import SecondaryButton from './Buttons/SecondaryButton'
 import PrimaryButton from './Buttons/PrimaryButton'
-import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
 
 const EditProfilePopup: FC = observer(() => {
   const [show, setShow] = useState(false)
