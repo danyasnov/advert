@@ -43,16 +43,18 @@ export interface State {
 
 export const Controls: FC<{
   onNext: () => void
-  onBack: () => void
+  onBack?: () => void
   nextLabel?: string
   nextDisabled?: boolean
 }> = ({onNext, onBack, nextLabel, nextDisabled}) => {
   const {t} = useTranslation()
   return (
     <div className='pb-6 flex justify-between space-x-3 w-full'>
-      <SecondaryButton id='login-back' className='w-1/2' onClick={onBack}>
-        {t('BACK')}
-      </SecondaryButton>
+      {onBack && (
+        <SecondaryButton id='login-back' className='w-1/2' onClick={onBack}>
+          {t('BACK')}
+        </SecondaryButton>
+      )}
       <PrimaryButton
         id='login-next'
         className='w-1/2'

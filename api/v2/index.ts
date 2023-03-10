@@ -125,6 +125,23 @@ export const fetchDependentFields = (
   )
 }
 
+export const resetPassword = async (
+  email: string,
+): Promise<RestResponse<unknown>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.auth.resetPassword(email)
+}
+
+export const remindPasswordConfirm = async (
+  password: string,
+  token: string,
+): Promise<RestResponse<unknown>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.auth.resetPasswordConfirm(password, token)
+}
+
 export const fetchProductDetails = (
   storage: Storage,
   hash: string,
