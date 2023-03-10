@@ -170,7 +170,7 @@ const FormPage: FC = observer(() => {
               hash: data.hash,
             },
           })
-          handleMetrics(window.dataLayer.push('advt_success'))
+          handleMetrics('advt_success')
           trackSingle('AddNewContent')
           push(`/user/${user.hash}?activeTab=1`)
         } else if (res.data.error) {
@@ -949,9 +949,7 @@ const FormPage: FC = observer(() => {
                         }
                       }
                     } else if (!isSubmitting) {
-                      handleMetrics(
-                        window.dataLayer.push('addAdvt_clickPublish'),
-                      )
+                      handleMetrics('addAdvt_clickPublish')
                       submitForm()
                     }
                     scrollToFirstError()

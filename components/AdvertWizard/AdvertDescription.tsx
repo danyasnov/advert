@@ -132,7 +132,7 @@ const AdvertDescription: FC<Props & FieldProps> = ({
 
             setFieldValue(name, updatedValue)
             if (error) setFieldError(name, undefined)
-            handleMetrics(window.dataLayer.push('addAdvt_title', title))
+            handleMetrics('addAdvt_title', title)
           }}
         />
 

@@ -93,8 +93,7 @@ const SearchAutocomplete: FC<Props> = observer(
       if (query) {
         trackSingle('Search', {search_string: query})
       }
-      if (query)
-        handleMetrics(window.dataLayer.push('searchCategory', {q: query}))
+      if (query) handleMetrics('searchCategory', {q: query})
       router.push({
         pathname,
         query: {

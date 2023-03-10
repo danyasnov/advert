@@ -42,7 +42,7 @@ const EnterCode: FC<PageProps> = observer(
     const AuthInputRef = useRef<AuthCodeRef>(null)
 
     const sendCode = () => {
-      handleMetrics(window.dataLayer.push('sendAutorization_code'))
+      handleMetrics('sendAutorization_code')
 
       return makeRequest({
         url: '/api/send-code',
@@ -114,7 +114,7 @@ const EnterCode: FC<PageProps> = observer(
           authNewRefreshToken: refresh,
           promo,
         })
-        handleMetrics(window.dataLayer.push('autorizationSuccess'))
+        handleMetrics('autorizationSuccess')
         if (state.isNew) {
           trackSingle('CompleteRegistration')
           dispatch({type: 'setPage', page: AuthPages.success})

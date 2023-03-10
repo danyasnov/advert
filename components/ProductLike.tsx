@@ -58,7 +58,7 @@ const ProductLike: FC<Props> = ({
       onClick={(e) => {
         e.preventDefault()
         if (!like) {
-          handleMetrics(window.dataLayer.push('addTo_favorite'))
+          handleMetrics('addTo_favorite')
           trackSingle('AddToWishlist', {hash})
         }
         makeRequest({

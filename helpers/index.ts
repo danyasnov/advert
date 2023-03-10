@@ -843,6 +843,7 @@ export const flatArrayFields = (fields) => {
 }
 export const handleMetrics = (eventType, data?) => {
   trackSingle(eventType, data)
+  window.dataLayer.push({eventType, data})
   makeRequest({
     url: '/api/clickhouse',
     method: 'post',

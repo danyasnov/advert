@@ -52,7 +52,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       href={href}
       preventDefault={width <= 768 ? false : isMobile && !isActive}
       handleClick={() => {
-        handleMetrics(window.dataLayer.push('clickCategory', id))
+        handleMetrics('clickCategory', id)
       }}>
       {elBody}
     </LinkWrapper>

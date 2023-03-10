@@ -54,7 +54,7 @@ const CategoriesSlider: FC = observer(() => {
                 href={`/${locationCodes}/${c.slug}`}
                 className='relative cursor-pointer mr-4 '
                 handleClick={() => {
-                  handleMetrics(window.dataLayer.push('clickCategory', c.id))
+                  handleMetrics('clickCategory', c.id)
                 }}>
                 <div className='hover:text-primary-500 text-greyscale-900'>
                   <ImageWrapper

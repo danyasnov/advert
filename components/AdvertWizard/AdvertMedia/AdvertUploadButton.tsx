@@ -46,13 +46,9 @@ const AdvertUploadButton: FC<{
             {...getInputProps()}
             onClick={() => {
               handleMetrics(
-                window.dataLayer.push(
-                  `${
-                    type === 'photo'
-                      ? 'addAdvt_photoItems'
-                      : 'addAdvt_videoItems'
-                  }`,
-                ),
+                `${
+                  type === 'photo' ? 'addAdvt_photoItems' : 'addAdvt_videoItems'
+                }`,
               )
             }}
           />

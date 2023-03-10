@@ -128,7 +128,7 @@ const Card: FC<Props> = ({
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       <div
         onClick={() => {
-          handleMetrics(window.dataLayer.push('clickTo_advt'))
+          handleMetrics('clickTo_advt')
         }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${

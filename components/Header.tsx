@@ -48,7 +48,7 @@ const Header: FC = observer(() => {
           <Button
             className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
             onClick={async () => {
-              handleMetrics(window.dataLayer.push('click_addNew_advt'))
+              handleMetrics('click_addNew_advt')
 
               if (!user) {
                 return setShowLogin(true)
@@ -67,7 +67,7 @@ const Header: FC = observer(() => {
           <Auth
             onLogin={() => {
               setShowLogin(true)
-              handleMetrics(window.dataLayer.push('clickLogin'))
+              handleMetrics('clickLogin')
             }}
           />
         </div>

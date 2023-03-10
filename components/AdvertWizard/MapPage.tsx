@@ -161,7 +161,7 @@ const MapPage: FC = () => {
         type: 'setDraft',
         draft: newDraft,
       })
-      handleMetrics(window.dataLayer.push('addAdvt_adress'))
+      handleMetrics('addAdvt_adress')
       if (hash) {
         return makeRequest({
           url: '/api/save-draft',

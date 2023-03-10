@@ -49,7 +49,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
       <NumberFormat
         onValueChange={({value: inputValue}) => {
           onChange(inputValue)
-          handleMetrics(window.dataLayer.push('addAdvt_priceItems'))
+          handleMetrics('addAdvt_priceItems')
         }}
         value={value}
         mask='_'

@@ -28,7 +28,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.phone,
           })
-          handleMetrics(window.dataLayer.push('clickLogin_tel'))
+          handleMetrics('clickLogin_tel')
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Call size={24} />
@@ -47,7 +47,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.email,
           })
-          handleMetrics(window.dataLayer.push('clickLogin_email'))
+          handleMetrics('clickLogin_email')
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Message />
