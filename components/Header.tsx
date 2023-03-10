@@ -49,7 +49,6 @@ const Header: FC = observer(() => {
             className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
             onClick={async () => {
               handleMetrics('click_addNew_advt')
-
               if (!user) {
                 return setShowLogin(true)
               }

@@ -86,7 +86,7 @@ const CategoryPage: FC = observer(() => {
             router.query.hash = [res.data.result.hash]
             router.push(router)
           }
-          handleMetrics('addAdvt_category', id)
+          handleMetrics('addAdvt_category', {id})
 
           dispatch({
             type: 'setPage',
