@@ -141,6 +141,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isMulti = true
       props.filterStyle = true
       props.isClearable = false
+
       break
     }
     case 'int': {

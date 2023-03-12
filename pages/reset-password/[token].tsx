@@ -15,6 +15,7 @@ import Button from '../../components/Buttons/Button'
 import {getQueryValue} from '../../helpers'
 import ImageWrapper from '../../components/ImageWrapper'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
+import MetaTags from '../../components/MetaTags'
 
 export default function Home() {
   const {t} = useTranslation()
@@ -133,31 +134,34 @@ export default function Home() {
   )
 
   return (
-    <ReactModal
-      isOpen
-      shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
-      className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0 mx-auto top-1/3 s:top-[162px] flex outline-none drop-shadow-2xl'
-      overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
-      <div className='flex flex-col w-full'>
-        <div className='px-6 pt-6 pb-4 flex justify-between'>
-          <span className='text-h-5 text-grayscale-900 font-bold'>
-            {showSuccess ? null : t('ENTER_NEW_PASSWORD')}
-          </span>
-          <Button
-            onClick={() => {
-              push('/')
-            }}>
-            <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
-          </Button>
-        </div>
-        <FormikProvider value={formik}>
-          <div className='px-4 pt-4 flex flex-col justify-between h-full'>
-            {body}
+    <>
+      <MetaTags title={t('ENTER_PASSWORD')} />
+      <ReactModal
+        isOpen
+        shouldCloseOnOverlayClick={false}
+        ariaHideApp={false}
+        className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0 mx-auto top-1/3 s:top-[162px] flex outline-none drop-shadow-2xl'
+        overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
+        <div className='flex flex-col w-full'>
+          <div className='px-6 pt-6 pb-4 flex justify-between'>
+            <span className='text-h-5 text-grayscale-900 font-bold'>
+              {showSuccess ? null : t('ENTER_NEW_PASSWORD')}
+            </span>
+            <Button
+              onClick={() => {
+                push('/')
+              }}>
+              <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
+            </Button>
           </div>
-        </FormikProvider>
-      </div>
-    </ReactModal>
+          <FormikProvider value={formik}>
+            <div className='px-4 pt-4 flex flex-col justify-between h-full'>
+              {body}
+            </div>
+          </FormikProvider>
+        </div>
+      </ReactModal>
+    </>
   )
 }
 
