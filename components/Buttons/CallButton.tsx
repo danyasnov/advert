@@ -4,7 +4,6 @@ import {useLockBodyScroll} from 'react-use'
 import IcClear from 'icons/material/Clear.svg'
 import ReactModal from 'react-modal'
 import {observer} from 'mobx-react-lite'
-import {Call} from 'react-iconly'
 import {OwnerModel} from 'front-api/src/models'
 import Button from './Button'
 import {makeRequest} from '../../api'
@@ -18,16 +17,9 @@ interface Props {
   hash: string
   ownerHash: string
   className: string
-  rootCategoryId: number
   icon?: ReactNode
 }
-const CallButton: FC<Props> = ({
-  hash,
-  rootCategoryId,
-  ownerHash,
-  icon,
-  className,
-}) => {
+const CallButton: FC<Props> = ({hash, ownerHash, icon, className}) => {
   const [phone, setPhone] = useState()
   const [user, setUser] = useState<OwnerModel>()
   const [showModal, setShowModal] = useState(false)

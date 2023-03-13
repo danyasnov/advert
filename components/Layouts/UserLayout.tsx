@@ -90,73 +90,77 @@ const UserLayout: FC = observer(() => {
       }
     },
   )
-  const getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
-    const remove = {
-      title: 'REMOVE',
-      icon: <Delete size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/delete-adv`,
-          method: 'post',
-          data: {
-            hash,
-          },
-        }).then(() => {
-          router.reload()
-        })
-      },
-    }
-    const publish = {
-      title: 'PUBLISH',
-      icon: <TickSquare size={16} filled />,
-      onClick: () => {
-        makeRequest({
-          url: `/api/publish-adv`,
-          method: 'post',
-          data: {
-            hash,
-          },
-        }).then(() => {
-          router.reload()
-        })
-      },
-    }
-    const deactivate = {
-      title: 'REMOVE_FROM_SALE',
-      icon: <ArrowLeftSquare size={16} filled />,
-      onClick: () => {
-        setShowDeactivateModal(true)
-      },
-      cb: () => {
-        router.reload()
-      },
-    }
-    const edit = {
-      title: 'EDIT_AD',
-      icon: <Edit size={16} filled />,
-      onClick: () => {
-        router.push(`/advert/edit/${hash}`)
-      },
-    }
-    const items = []
 
-    if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
-      items.push(edit)
-    }
-    if (
-      ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
-        state,
-      )
-    ) {
-      if (state === 'archived') {
-        items.push(publish)
+  let getAdvertOptions
+  if (isCurrentUser) {
+    getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
+      const remove = {
+        title: 'REMOVE',
+        icon: <Delete size={16} filled />,
+        onClick: () => {
+          makeRequest({
+            url: `/api/delete-adv`,
+            method: 'post',
+            data: {
+              hash,
+            },
+          }).then(() => {
+            router.reload()
+          })
+        },
       }
-      items.push(remove)
+      const publish = {
+        title: 'PUBLISH',
+        icon: <TickSquare size={16} filled />,
+        onClick: () => {
+          makeRequest({
+            url: `/api/publish-adv`,
+            method: 'post',
+            data: {
+              hash,
+            },
+          }).then(() => {
+            router.reload()
+          })
+        },
+      }
+      const deactivate = {
+        title: 'REMOVE_FROM_SALE',
+        icon: <ArrowLeftSquare size={16} filled />,
+        onClick: () => {
+          setShowDeactivateModal(true)
+        },
+        cb: () => {
+          router.reload()
+        },
+      }
+      const edit = {
+        title: 'EDIT_AD',
+        icon: <Edit size={16} filled />,
+        onClick: () => {
+          router.push(`/advert/edit/${hash}`)
+        },
+      }
+      const items = []
+
+      if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
+        items.push(edit)
+      }
+      if (
+        ['archived', 'sold', 'blockedPermanently', 'blocked', 'draft'].includes(
+          state,
+        )
+      ) {
+        if (state === 'archived') {
+          items.push(publish)
+        }
+        items.push(remove)
+      }
+      if (state === 'active') {
+        items.push(deactivate)
+      }
+      return items
     }
-    if (state === 'active') {
-      items.push(deactivate)
-    }
-    return items
   }
 
   const getDraftOptions = ({hash}) => {

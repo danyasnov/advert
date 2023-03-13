@@ -871,7 +871,7 @@
   "DELETE_CHAT": "Удалить чат",
   "DELETE_CURRENT_PHOTO": "DELETE_CURRENT_PHOTO",
   "DELETE_MASSAGE_ONE_TEXT": "Вы уверены, что хотите удалить это сообщение у всех?",
-  "DELETE_MASSAGES_TEXT": "Вы уверены, что хотите удалить сообщения у всех?",
+  "DELETE_MASSAGE_TEXT": "Вы уверены, что хотите удалить сообщения у всех?",
   "DELETE_MESSAGES": "Удалить сообщения",
   "DELIVERY_METHOD": "Delivery method",
   "DELIVERY_POSTAMAT": "Delivery to postamat",

@@ -51,7 +51,6 @@ const Card: FC<Props> = ({
     owner,
     hash,
     isFavorite,
-    rootCategoryId,
     url,
     isTop,
     isVip,
@@ -270,7 +269,6 @@ const Card: FC<Props> = ({
                 icon={<Call size={20} filled />}
                 hash={hash}
                 ownerHash={owner.hash}
-                rootCategoryId={rootCategoryId}
               />
             ) : (
               <IcArrowRight className='w-5 h-5 self-end' />

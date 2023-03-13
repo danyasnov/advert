@@ -22,7 +22,6 @@ const ProductCommunication: FC = observer(() => {
           className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[52px] mb-4'
           hash={advert.hash}
           ownerHash={owner.hash}
-          rootCategoryId={advert.rootCategoryId}
         />
       )}
       <ChatButton product={product} />

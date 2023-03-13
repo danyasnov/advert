@@ -17,30 +17,27 @@ const ChatButton: FC<Props> = observer(({product}) => {
   const {t} = useTranslation()
   const {push} = useRouter()
   const {owner, advert} = product
+  const {user, setShowLogin} = useGeneralStore()
 
-  const {user} = useGeneralStore()
-  const [showChat, setShowChat] = useState(false)
-
-  useEffect(() => {
-    const state: SerializedCookiesState = parseCookies()
-    setShowChat(!!state.hash)
-  }, [])
   return (
     <div className='w-full mb-4'>
-      {showChat && (
-        <SecondaryButton
-          id='chat'
-          className='w-full h-13'
-          onClick={async () => {
+      <SecondaryButton
+        id='chat'
+        className='w-full h-[52px] text-body-16'
+        onClick={async () => {
+          const state: SerializedCookiesState = parseCookies()
+          if (!state.hash) {
+            setShowLogin(true)
+          } else {
             const chat = await globalChatsStore.createChat({
               productHash: advert.hash,
               userHash: owner.hash,
             })
             push(`/user/${user.hash}?chatId=${chat.id}`)
-          }}>
-          {t('SEND_A_MESSAGE')}
-        </SecondaryButton>
-      )}
+          }
+        }}>
+        {t('SEND_A_MESSAGE')}
+      </SecondaryButton>
     </div>
   )
 })
