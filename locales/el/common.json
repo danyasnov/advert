@@ -871,7 +871,7 @@
   "DELETE_CHAT": "Διαγραφή συνομιλίας;",
   "DELETE_CURRENT_PHOTO": "DELETE_CURRENT_PHOTO",
   "DELETE_MASSAGE_ONE_TEXT": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το μήνυμα;",
-  "DELETE_MASSAGES_TEXT": "Είστε σίγουροι ότι θέλετε να διαγράψετε τα μηνύματα;",
+  "DELETE_MASSAGE_TEXT": "Είστε σίγουροι ότι θέλετε να διαγράψετε τα μηνύματα;",
   "DELETE_MESSAGES": "Διαγραφή μηνυμάτων",
   "DELIVERY_METHOD": "Delivery method",
   "DELIVERY_POSTAMAT": "Delivery to postamat",
