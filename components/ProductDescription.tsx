@@ -94,7 +94,7 @@ const DescriptionTab: FC = observer(() => {
           ? product.advert.description
           : product.advert.descriptionOriginal}
       </div>
-      {!isEmpty(product.advert.descriptionOriginal) && (
+      {!!product.advert.descriptionOriginal && (
         <div className='flex justify-start mb-6 s:mb-10'>
           <Button
             onClick={() => {
