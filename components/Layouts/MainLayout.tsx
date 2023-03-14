@@ -94,14 +94,6 @@ const MainLayout: FC = observer(() => {
   ])
   return (
     <HeaderFooterWrapper>
-      <Button
-        onClick={() => {
-          // @ts-ignore
-          undefined.map()
-          throw new Error()
-        }}>
-        error
-      </Button>
       <MetaTags
         title={t('SITE_MAIN_PAGE_META_TITLE')}
         description={t('MAIN_PAGE_DESCRIPTION')}

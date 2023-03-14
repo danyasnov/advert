@@ -33,7 +33,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (message === 'REFRESH_REDIRECT') {
     return redirectToRefresh(ctx.resolvedUrl)
   }
-  throw Error()
   const {action, id, email, code, success} = query
   let showSuccessAlert = ''
   let showErrorAlert = ''
