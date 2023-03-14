@@ -94,19 +94,21 @@ const DescriptionTab: FC = observer(() => {
           ? product.advert.description
           : product.advert.descriptionOriginal}
       </div>
-      <div className='flex justify-start mb-6 s:mb-10'>
-        <Button
-          onClick={() => {
-            setTranslate(!translate)
-          }}>
-          <div className='flex items-center space-x-2'>
-            <IcTranslate className='h-[18px] w-[18px]' />
-            <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-bold underline'>
-              {t(translate ? 'SHOW_ORIGINAL' : 'TRANSLATE')}
-            </span>
-          </div>
-        </Button>
-      </div>
+      {!!product.advert.descriptionOriginal && (
+        <div className='flex justify-start mb-6 s:mb-10'>
+          <Button
+            onClick={() => {
+              setTranslate(!translate)
+            }}>
+            <div className='flex items-center space-x-2'>
+              <IcTranslate className='h-[18px] w-[18px]' />
+              <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-bold underline'>
+                {t(translate ? 'SHOW_ORIGINAL' : 'TRANSLATE')}
+              </span>
+            </div>
+          </Button>
+        </div>
+      )}
     </>
   )
 })
