@@ -27,13 +27,13 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
       // eslint-disable-next-line consistent-return
       onSubmit={async (values) => {
         const result = await makeRequest({
-          url: '/api/remind-password',
+          url: '/api/reset-password',
           data: {
             email: values.email,
           },
           method: 'post',
         })
-        if (result.data.result === 'OK') {
+        if (result.data.status === 200) {
           setShowHint(true)
         } else if (result.data.error) {
           toast.error(t(result.data.error))
