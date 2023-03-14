@@ -96,6 +96,7 @@ const MainLayout: FC = observer(() => {
     <HeaderFooterWrapper>
       <Button
         onClick={() => {
+          // @ts-ignore
           undefined.map()
           throw new Error()
         }}>
