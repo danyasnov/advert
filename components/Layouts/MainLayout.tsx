@@ -21,6 +21,7 @@ import OutlineButton from '../Buttons/OutlineButton'
 import Banners from '../Banners'
 import CardsLoader from '../CardsLoader'
 import MainBanner from '../MainBanner'
+import Button from '../Buttons/Button'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
@@ -93,6 +94,13 @@ const MainLayout: FC = observer(() => {
   ])
   return (
     <HeaderFooterWrapper>
+      <Button
+        onClick={() => {
+          undefined.map()
+          throw new Error()
+        }}>
+        error
+      </Button>
       <MetaTags
         title={t('SITE_MAIN_PAGE_META_TITLE')}
         description={t('MAIN_PAGE_DESCRIPTION')}
