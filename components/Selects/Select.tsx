@@ -18,6 +18,7 @@ export interface SelectProps {
   isMulti?: boolean
   isInvalid?: boolean
   menuIsOpen?: boolean
+  isIconSelect?: boolean
   id?: string
   styles?
   components?

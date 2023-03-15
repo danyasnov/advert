@@ -75,6 +75,7 @@ interface FieldOptions {
   maxLength?: number
   maxValue?: number
   filterStyle?: boolean
+  isIconSelect?: boolean
   minValue?: number
   validate?: (value: any) => string
 }
@@ -141,6 +142,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isMulti = true
       props.filterStyle = true
       props.isClearable = false
+      props.isIconSelect = fieldType === 'iconselect'
 
       break
     }
