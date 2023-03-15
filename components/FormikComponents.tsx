@@ -38,6 +38,7 @@ interface IFormikSelect {
   isClearable: boolean
   isMulti: boolean
   filterStyle?: boolean
+  isIconSelect?: boolean
   styles?: Record<any, any>
 }
 interface IFormikRange {
@@ -75,6 +76,7 @@ interface FieldOptions {
   maxLength?: number
   maxValue?: number
   filterStyle?: boolean
+  isIconSelect?: boolean
   minValue?: number
   validate?: (value: any) => string
 }
@@ -93,6 +95,7 @@ export const getSelectOptions = (multiselects = {}) => {
     .map((o) => ({
       value: o.id,
       label: o.value,
+      icon: o.icon,
       disabled: o.itemType === 'title',
     }))
 }
@@ -141,7 +144,9 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isMulti = true
       props.filterStyle = true
       props.isClearable = false
+      props.isIconSelect = fieldType === 'iconselect'
 
+      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
@@ -685,8 +690,8 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit ${
-        show ? 'border border-primary-500' : ''
+      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
+        show ? 'border-primary-500' : 'border-transparent'
       }`}
       ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
@@ -997,6 +1002,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isMulti,
   isClearable,
   filterStyle,
+  isIconSelect,
 }) => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -1031,6 +1037,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     styles: {},
     classNameOpt: {},
     isInvalid: !!error,
+    isIconSelect,
     onChange: (item) => {
       if (item?.value === 'other_value_button') {
         setCurrentOptions([

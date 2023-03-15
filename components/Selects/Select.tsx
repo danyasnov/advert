@@ -18,6 +18,7 @@ export interface SelectProps {
   isMulti?: boolean
   isInvalid?: boolean
   menuIsOpen?: boolean
+  isIconSelect?: boolean
   id?: string
   styles?
   components?
@@ -28,6 +29,7 @@ export interface SelectItem {
   value: string | number
   label: string
   disabled?: boolean
+  icon?: string
 }
 
 const OPTION_HEIGHT = 52
