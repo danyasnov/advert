@@ -116,27 +116,29 @@ const DescriptionTab: FC = observer(() => {
 const CharacteristicsTab: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
-  const titleClassName = 'text-h-5 font-bold text-greyscale-900 block'
+
   if (isEmpty(product.advert.fields)) return null
   return (
     <div>
-      <div className='space-y-4'>
+      <div className='space-y-4 l:flex l:flex-wrap l:justify-between'>
         {product.advert.fields.map((field) => {
           return (
             <div
-              className='flex justify-between font-normal text-body-16'
+              className={`flex justify-between font-normal text-body-16 text-left ${
+                field.fieldType === 'title' ? `w-full` : 's:w-[364px]'
+              }`}
               key={field.fieldNameText}>
               <span
                 className={`${
                   field.fieldType === 'title'
-                    ? `${titleClassName} my-4`
+                    ? `text-h-5 font-bold text-greyscale-900 block my-4 `
                     : 'text-greyscale-600'
                 }`}>
                 {field.fieldNameText}
               </span>
-              <div>
+              <div className='text-right'>
                 {field.fieldValueText.map((fieldValue, index, array) => (
-                  <span key={fieldValue} className='text-greyscale-900'>
+                  <span key={fieldValue} className='text-greyscale-900 '>
                     {fieldValue === 'true' ? t('YES') : fieldValue}
                     {array.length !== index + 1 ? ', ' : ''}
                   </span>
