@@ -5,6 +5,7 @@ import {debounce, isObject, isString, last} from 'lodash'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
+import {parseCookies} from 'nookies'
 import {makeRequest} from '../../api'
 import {
   getCategoriesSlugsPathFromIds,
@@ -12,6 +13,7 @@ import {
   handleMetrics,
   trackSingle,
 } from '../../helpers'
+import {SerializedCookiesState} from '../../types'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 
 interface Props {
@@ -25,6 +27,7 @@ const SearchAutocomplete: FC<Props> = observer(
     const {t} = useTranslation()
     const [inputItems, setInputItems] = useState([])
     const router = useRouter()
+    const cookies: SerializedCookiesState = parseCookies()
     const onInputValueChange = useCallback(
       debounce(({inputValue}) => {
         handleSelectedItemChange(inputValue)
@@ -117,7 +120,15 @@ const SearchAutocomplete: FC<Props> = observer(
                 }
               },
             })}
-            placeholder={t('SEARCH')}
+            placeholder={
+              cookies.cookieAccepted === 'true' &&
+              cookies.address !== 'undefined' &&
+              cookies.searchRadius !== 'undefined'
+                ? `${t('SEARCH_IN')} ${cookies.address}, ${
+                    cookies.searchRadius
+                  }${t('N_KM')}`
+                : t('SEARCH')
+            }
             className='pl-6 pl-3.5 pr-12 py-2.5 text-greyscale-900 max-h-[38px] text-body-14 rounded-2 w-full h-full -my-1px manual-outline outline-none'
             id='search-autocomplete'
           />
