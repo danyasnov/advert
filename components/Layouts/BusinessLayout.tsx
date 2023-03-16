@@ -165,7 +165,7 @@ const BusinessLayout: FC = observer(() => {
           <div className='relative w-[222px] h-[243px] s:w-[312px] s:h-[290px] m:w-[420px] m:h-[400px] l:w-[550px] l:h-[551px] shrink-0 mb-6 m:mr-12'>
             <ImageWrapper
               quality={100}
-              type='/img/with-vooxee.png'
+              type='/img/with-vooxee.svg'
               alt='with vooxee'
               layout='fill'
               objectFit='contain'
