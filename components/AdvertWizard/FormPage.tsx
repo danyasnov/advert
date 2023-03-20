@@ -111,6 +111,7 @@ const FormPage: FC = observer(() => {
       isFastSale: draft.isFastSale ?? false,
       price: draft.price ?? '',
       currency: state.draft.currencies[0],
+      category: mapCategoryData(state.draft.data),
     }
   })
 
@@ -125,7 +126,7 @@ const FormPage: FC = observer(() => {
   }) => {
     const {fields, condition, content} = values
 
-    const mappedFields = mapFormikFields(fields, category.fieldsById)
+    const mappedFields = mapFormikFields(fields, values.category.fieldsById)
 
     const data = {
       ...state.draft,
@@ -147,7 +148,7 @@ const FormPage: FC = observer(() => {
         method: 'post',
         data: {
           hash,
-          draft: {...data, data: category.data},
+          draft: {...data, data: values.category.data},
         },
       }).then(() => {
         helpers.setSubmitting(false)
@@ -701,8 +702,12 @@ const FormPage: FC = observer(() => {
                               setFieldValue(`fields.${lastField.id}`, opts[0])
                             })
                           }
-
                           setCategoryData(mapCategoryData(newCategory))
+                          setFieldValue(
+                            'category',
+                            mapCategoryData(newCategory),
+                            false,
+                          )
                         }}
                       />
                     </div>
