@@ -118,7 +118,7 @@ const Card: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
   const isFree = price === '0'
-  let widthClassname = 'w-40 min-w-40 s:w-56 m:w-[194px] l:w-53'
+  let widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
