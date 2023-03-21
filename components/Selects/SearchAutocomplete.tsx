@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {FC, useCallback, useState} from 'react'
+import {FC, useCallback, useState, useEffect} from 'react'
 import {useCombobox} from 'downshift'
 import {debounce, isObject, isString, last} from 'lodash'
 import {useRouter} from 'next/router'
@@ -27,7 +27,19 @@ const SearchAutocomplete: FC<Props> = observer(
     const {t} = useTranslation()
     const [inputItems, setInputItems] = useState([])
     const router = useRouter()
-    const cookies: SerializedCookiesState = parseCookies()
+    const [placeholder, setPlaceholder] = useState('')
+    useEffect(() => {
+      const cookies: SerializedCookiesState = parseCookies()
+      setPlaceholder(
+        cookies.cookieAccepted === 'true' &&
+          cookies.address !== 'undefined' &&
+          cookies.searchRadius !== 'undefined'
+          ? `${t('SEARCH_IN')} ${cookies.address}, ${cookies.searchRadius}${t(
+              'N_KM',
+            )}`
+          : t('SEARCH'),
+      )
+    }, [])
     const onInputValueChange = useCallback(
       debounce(({inputValue}) => {
         handleSelectedItemChange(inputValue)
@@ -120,15 +132,7 @@ const SearchAutocomplete: FC<Props> = observer(
                 }
               },
             })}
-            placeholder={
-              cookies.cookieAccepted === 'true' &&
-              cookies.address !== 'undefined' &&
-              cookies.searchRadius !== 'undefined'
-                ? `${t('SEARCH_IN')} ${cookies.address}, ${
-                    cookies.searchRadius
-                  }${t('N_KM')}`
-                : t('SEARCH')
-            }
+            placeholder={placeholder}
             className='pl-6 pl-3.5 pr-12 py-2.5 text-greyscale-900 max-h-[38px] text-body-14 rounded-2 w-full h-full -my-1px manual-outline outline-none'
             id='search-autocomplete'
           />
