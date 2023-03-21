@@ -263,15 +263,13 @@ const Card: FC<Props> = ({
             <span className='text-body-14 text-greyscale-600'>
               {location?.distance && location.distance}
             </span>
-            {isVip && showCallButton && !hideConnect ? (
+            {isVip && showCallButton && !hideConnect && (
               <CallButton
                 className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'
                 icon={<Call size={20} filled />}
                 hash={hash}
                 ownerHash={owner.hash}
               />
-            ) : (
-              <IcArrowRight className='w-5 h-5 self-end' />
             )}
           </div>
         </div>
