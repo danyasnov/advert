@@ -271,6 +271,7 @@ export const FormikCreateFields: FC<
       if (f.dependenceSequenceId) {
         return (
           <FormikDependentFields
+            key={f.id}
             field={f}
             allFields={fields}
             onFieldsChange={onFieldsChange}
@@ -297,7 +298,7 @@ export const FormikCreateFields: FC<
       )
     }
     if (f.itemType === 'title') {
-      return <FormikTitle label={f.name} />
+      return <FormikTitle key={f.id} label={f.name} />
     }
     return null
   })
