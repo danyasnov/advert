@@ -144,6 +144,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isClearable = false
       props.isIconSelect = fieldType === 'iconselect'
 
+      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
@@ -999,6 +1000,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isMulti,
   isClearable,
   filterStyle,
+  isIconSelect,
 }) => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -1033,6 +1035,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     styles: {},
     classNameOpt: {},
     isInvalid: !!error,
+    isIconSelect,
     onChange: (item) => {
       if (item?.value === 'other_value_button') {
         setCurrentOptions([

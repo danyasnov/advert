@@ -43,8 +43,66 @@ const MobileSelect: FC<SelectProps> = ({
 
   let body
 
+  if (isIconSelect) console.log('filtered', filtered)
   if (isIconSelect) {
-    body = null
+    body = (
+      <div
+        className={`w-full flex flex-wrap mt-10 ${
+          isMulti ? 'mb-20' : 'mb-10'
+        }`}>
+        {open &&
+          filtered.map((f, index) => (
+            <Button
+              // @ts-ignore
+              disabled={f.disabled}
+              key={f.value}
+              className={`w-full px-4  w-[104px] h-[104px] ${
+                // @ts-ignore
+                f.disabled ? 'text-greyscale-900' : ''
+              }`}
+              onClick={() => {
+                if (isMulti) {
+                  // @ts-ignore
+                  const newFiltered = value.filter((v) => v.value !== f.value)
+                  if (size(value) !== size(newFiltered)) {
+                    onChange(newFiltered)
+                  } else {
+                    // @ts-ignore
+                    onChange([...value, f])
+                  }
+                } else {
+                  onChange(f)
+                  onClose()
+                }
+              }}>
+              {/* <div className='w-full flex items-center justify-between py-4'> */}
+              {/*  <span className='text-body-16 text-nc-text-primary'> */}
+              {/*    {f.label} */}
+              {/*  </span> */}
+              {/*  {isMulti && !f.disabled && ( */}
+              {/*    <> */}
+              {/*      <input */}
+              {/*        type='checkbox' */}
+              {/*        readOnly */}
+              {/*        checked={ */}
+              {/*          // @ts-ignore */}
+              {/*          !!value.find((v) => v.value === f.value) */}
+              {/*        } */}
+              {/*        className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer' */}
+              {/*      /> */}
+              {/*      <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'> */}
+              {/*        <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' /> */}
+              {/*      </div> */}
+              {/*    </> */}
+              {/*  )} */}
+              {/*  {f.value === value?.value && !isMulti && ( */}
+              {/*    <IcCheck className='fill-current text-primary-500 h-4 w-4' /> */}
+              {/*  )} */}
+              {/* </div> */}
+            </Button>
+          ))}
+      </div>
+    )
   } else {
     body = (
       <div
