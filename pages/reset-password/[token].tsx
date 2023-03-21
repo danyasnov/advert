@@ -20,7 +20,7 @@ import MetaTags from '../../components/MetaTags'
 export default function Home() {
   const {t} = useTranslation()
   const {push, query} = useRouter()
-  const [showSuccess, setShowSuccess] = useState(true)
+  const [showSuccess, setShowSuccess] = useState(false)
   const token = getQueryValue(query, 'token')
   const schema = object().shape({
     pass: string()
@@ -92,7 +92,7 @@ export default function Home() {
       </PrimaryButton>
     </div>
   ) : (
-    <Form className='pb-8 space-y-4'>
+    <Form className='space-y-4'>
       <Field
         name='pass'
         component={FormikPassword}
@@ -121,6 +121,7 @@ export default function Home() {
           </div>
         }
       />
+      <div className='h-5' />
       <Controls
         nextLabel={t('SAVE')}
         onBack={() => {

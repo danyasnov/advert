@@ -645,7 +645,7 @@ export const FormikPassword: FC<
           )}
         </div>
       </div>
-      <span className='text-body-12 text-error pt-3'>{error}</span>
+      {!!error && <span className='text-body-12 text-error pt-3'>{error}</span>}
     </div>
   )
 }
