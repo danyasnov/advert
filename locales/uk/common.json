@@ -1439,11 +1439,7 @@
   "YOUR_NOTE_WITHOUT_DATE": "Ваш нотаток:",
   "YOUR_SAVE_DRAFT": "У вас збережена чернетка",
   "YOUR_SAVE_DRAFT_TEXT": "Ви вже почали створювати оголошення в категорії \"{{categoryName}}\". Бажаєте повернутися до чернетки?",
-<<<<<<< HEAD
-  "ABOUT_AGENCY": "About agency",
-=======
   "ABOUT_AGENCY": "Про агенцію",
->>>>>>> develop
   "ADD_MORE_PHOTO": "Додати ще",
   "ADD_PHOTO_AND_VIDEO": "Додати фото та відео",
   "ADD_TO_FAVS": "Додати до Обраного",
@@ -1490,13 +1486,8 @@
   "DELETE_CHAT_TEXT": "Чи дійсно ви бажаєте видалити цей чат?",
   "DELETE_MESSAGE_ONE": "Видалити повідомлення",
   "DELETE_PHOTO": "Видалити фото",
-<<<<<<< HEAD
-  "DETAILED_INFORMATION": "Detailed information",
-  "DRAFT_TIP": "You can start to make an ad on your phone and finish on the computer, and vice versa) using Drafts",
-=======
   "DETAILED_INFORMATION": "Детальна інформація",
   "DRAFT_TIP": "Почати створювати оголошення можна на телефоні, а завершити на комп'ютері і навпаки, за допомогою Чернеток",
->>>>>>> develop
   "DRAWINGS_EMPTY_APP": "Тут відображатимуться всі ваші оголошення",
   "EDITING_ADS": "Редагування оголошення",
   "fast_rent": "Швидка оренда",
@@ -1512,11 +1503,7 @@
   "HINT_OK": "Ок, зрозуміло",
   "HINT_SUBSCRIBE": "Рекомендуємо підписатися на користувача, щоб першими бачити його нові оголошення",
   "HOME": "Головна",
-<<<<<<< HEAD
-  "HOT_RENT": "Hot Rent",
-=======
   "HOT_RENT": "Швидка оренда",
->>>>>>> develop
   "HOT_SALES": "Додати в гарячі продажі",
   "HOT_SALES_INFO": "Оголошення потрапляє до розділу розпродажу на головному екрані",
   "INCORRECT_EMAIL_OR_PASSWORD": "E-mail або пароль вказаний неправильно",
@@ -1646,22 +1633,14 @@
   "PROMOTION_TITLE1": "ПРОСУВАЙТЕ",
   "PROMOTION_TITLE2": "Розмістіть\nсвій бізнес",
   "PUBLISH_FREE": "Опублікувати безкоштовно",
-<<<<<<< HEAD
-  "REALTY": "Realty",
-=======
   "REALTY": "Нерухомість",
->>>>>>> develop
   "RELOAD_PHOTO": "Перезавантажити фото",
   "REMOVE_FROM_FAVS": "Видалити з обраного",
   "REQUIRED_FIELDS_NOT_FILLED": "Не всі обов'язкові поля заповнені",
   "RESET_FILTERS": "Скинути фільтри",
   "ROYAL_REALTY": "Royal Realty",
   "SALE_FASTER": "Продай скоріше",
-<<<<<<< HEAD
-  "SCHEDULE_FOR_EACH_DAY": "Every day",
-=======
   "SCHEDULE_FOR_EACH_DAY": "Кожен день",
->>>>>>> develop
   "SEARCH": "Пошук",
   "SECURITY": "Безпека",
   "SELECT_MESSAGES": "Обрати повідомлення",
@@ -1677,13 +1656,8 @@
   "UNBLOCK_USER": "Розблокувати користувача",
   "VIEW_ALL_OBJECTS": "Подивитися усі обʼєкти",
   "VIP": "VIP",
-<<<<<<< HEAD
-  "WEBSITE": "website",
-  "WED": "wed",
-=======
   "WEBSITE": "веб-сайт",
   "WED": "середа",
->>>>>>> develop
   "YES": "Так",
   "YOUR_COMMENT": "Ваш коментар"
 }
