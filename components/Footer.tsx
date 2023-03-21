@@ -75,9 +75,16 @@ const Footer: FC = observer(() => {
             }
           />
           <Section
-            title={t('SOCIAL_NETWORK')}
+            title={t('STAY_IN_TOUCH')}
             className='m:col-span-3 l:col-span-2'
-            body={<Socials />}
+            body={
+              <>
+                <div className='text-body-16 text-greyscale-800 capitalize-first mb-5 l:mb-6'>
+                  {t('SOCIAL_NETWORK')}
+                </div>
+                <Socials />
+              </>
+            }
           />
         </div>
         <div className='border-t border-shadow-b pt-2'>

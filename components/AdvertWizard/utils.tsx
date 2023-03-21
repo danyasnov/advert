@@ -49,10 +49,11 @@ export const getFields = (
 }
 
 export const mapFormikFields = (rawFields = [], fieldsById = {}) => {
+  const fields = getFields(fieldsById)
   return Object.fromEntries(
     Object.entries(rawFields)
       .map(([key, value]) => {
-        const field = getFields(fieldsById)[key]
+        const field = fields[key]
         let mappedValue
         if (!field) return [key]
         switch (field.fieldType) {

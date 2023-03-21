@@ -47,7 +47,7 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
           onClick()
           onOpenLocation()
         }}
-        className='text-greyscale-900 w-full'>
+        className='w-full'>
         {t('LOCATION_CHANGE')}
       </SecondaryButton>
     </div>

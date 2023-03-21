@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {isEmpty} from 'lodash'
+import {toJS} from 'mobx'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -28,7 +29,7 @@ const MainLayout: FC = observer(() => {
   const {locationCodes} = useGeneralStore()
   const {categoriesById} = useCategoriesStore()
   const cookies: SerializedCookiesState = parseCookies()
-  const {otherProducts, products, setProducts} = useProductsStore()
+  const {otherProducts, setProducts} = useProductsStore()
   const {t} = useTranslation()
   const [showBanners, setShowBanners] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -62,9 +63,6 @@ const MainLayout: FC = observer(() => {
   ]
   useEffect(() => {
     const initProducts = async () => {
-      // resetFilter()
-      // setFilter({categoryId: null})
-      // fetchProducts().then(applyFilter)
       const url = '/api/products'
 
       const promises = productsArr.map((p) =>
@@ -141,7 +139,7 @@ const MainLayout: FC = observer(() => {
                       state={isLoading ? 'pending' : 'done'}
                       disableScroll
                     />
-                    {!isEmpty(products) && (
+                    {!isEmpty(otherProducts.all) && (
                       <LinkWrapper
                         title={t('SEE_ALL')}
                         className='text-body-16 text-primary-500 font-bold relative z-10'
