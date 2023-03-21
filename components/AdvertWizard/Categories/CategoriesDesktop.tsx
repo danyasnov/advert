@@ -23,8 +23,8 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
           <Button
             key={c.id}
             id={`category-item-${c.id}`}
-            className={`min-h-10  hover:text-primary-500 text-greyscale-900 rounded-lg py-2 px-4 ${
-              clickedItem === index ? 'text-primary-500' : ''
+            className={`min-h-10 hover:text-primary-500 rounded-lg py-2 px-4 ${
+              clickedItem === index ? 'text-primary-500' : 'text-greyscale-900'
             }`}
             onClick={() => {
               setSelected([c])
@@ -48,8 +48,10 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
                   <Button
                     key={c.id}
                     id={`parent-category-item-${c.id}`}
-                    className={`min-h-10 hover:text-primary-500 text-greyscale-900 rounded-lg py-2 px-4 ${
-                      selected[index + 1]?.id === c.id ? 'text-primary-500' : ''
+                    className={`min-h-10 hover:text-primary-500 rounded-lg py-2 px-4 ${
+                      selected[index + 1]?.id === c.id
+                        ? 'text-primary-500'
+                        : 'text-greyscale-900'
                     }`}
                     onClick={() => {
                       if (selected.length - 1 === index) {

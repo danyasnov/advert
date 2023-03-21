@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect} from 'react'
 import {FormikHelpers, FormikValues, useFormikContext} from 'formik'
-import {debounce, throttle} from 'lodash'
+import {debounce} from 'lodash'
 
 interface Props {
   onSubmit: ({

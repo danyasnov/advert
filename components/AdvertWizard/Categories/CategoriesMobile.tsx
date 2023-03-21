@@ -50,6 +50,7 @@ const CategoriesMobile: FC<Props> = ({
     <div className='divide-y divide-solid divide-greyscale-200 px-4'>
       {source.map((c) => (
         <CategoryButton
+          key={c.id}
           category={c}
           onClick={(category) => {
             if (isEmpty(selected)) {

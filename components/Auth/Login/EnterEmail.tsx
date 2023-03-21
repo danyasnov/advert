@@ -132,13 +132,13 @@ const EnterEmail: FC<PageProps> = observer(
               placeholder={t('FORM_EMAIL')}
               leftIcon={
                 <div
-                  className={`text-greyscale-900 ${
+                  className={`${
                     /* eslint-disable-next-line no-nested-ternary */
                     formik.errors.email
                       ? 'text-error'
                       : !values.showPass
                       ? 'text-greyscale-500'
-                      : ''
+                      : 'text-greyscale-900'
                   } 
                   `}>
                   <Message set='bold' size={21} />
