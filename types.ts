@@ -46,6 +46,10 @@ export interface CookiesState {
   aup?: string
   showCreateAdvMapHint?: boolean
   showBottomSheet?: boolean
+  visitMainPageCount?: number
+  visitProductTourCount?: number
+  visitCurrentUserTourCount?: number
+  visitUserTourCount?: number
 }
 
 export type ProductFetchState = 'done' | 'pending' | 'error' | 'pending-scroll'
@@ -77,6 +81,10 @@ export interface SerializedCookiesState {
   aup?: string
   showCreateAdvMapHint?: string
   showBottomSheet?: string
+  visitMainPageCount?: string
+  visitProductTourCount?: string
+  visitCurrentUserTourCount?: string
+  visitUserTourCount?: string
 }
 
 export interface Filter {

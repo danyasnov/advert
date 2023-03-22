@@ -1,9 +1,10 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useState, useRef} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
+import Joyride, {Step} from 'react-joyride'
 import {isEmpty} from 'lodash'
-import {toJS} from 'mobx'
+import {setCookiesObject} from '../../helpers'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -20,19 +21,19 @@ import {SerializedCookiesState} from '../../types'
 import {makeRequest} from '../../api'
 import OutlineButton from '../Buttons/OutlineButton'
 import Banners from '../Banners'
-import CardsLoader from '../CardsLoader'
 import MainBanner from '../MainBanner'
-import Button from '../Buttons/Button'
+import useTourVisibility from '../../hooks/useTourVisibility'
 
 const MainLayout: FC = observer(() => {
   // keep showCookiesWarn to force rerender layout
   const {locationCodes} = useGeneralStore()
   const {categoriesById} = useCategoriesStore()
-  const cookies: SerializedCookiesState = parseCookies()
   const {otherProducts, setProducts} = useProductsStore()
   const {t} = useTranslation()
   const [showBanners, setShowBanners] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const cookies: SerializedCookiesState = parseCookies()
+  const showTour = useTourVisibility('visitMainPageCount')
   useEffect(() => {
     setShowBanners(true)
   }, [])
@@ -90,6 +91,17 @@ const MainLayout: FC = observer(() => {
     cookies.cityId,
     cookies.regionId,
   ])
+
+  const steps: Step[] = [
+    {
+      target: '#header-search',
+      content: t('HINT_LOCATION'),
+      disableBeacon: true,
+      placement: 'bottom-end',
+      offset: 5,
+    },
+  ]
+
   return (
     <HeaderFooterWrapper>
       <MetaTags
@@ -97,6 +109,33 @@ const MainLayout: FC = observer(() => {
         description={t('MAIN_PAGE_DESCRIPTION')}
       />
       <div className='py-8 flex flex-col min-h-1/2'>
+        {showTour && (
+          <Joyride
+            steps={steps}
+            hideCloseButton
+            floaterProps={{hideArrow: true}}
+            styles={{
+              tooltip: {
+                paddingTop: '0',
+              },
+              buttonNext: {
+                backgroundColor: 'transparent',
+                padding: '0px 20px 10px 20px',
+                fontSize: '12px',
+                fontWeight: '700',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0',
+                outline: 'none',
+              },
+              tooltipContainer: {
+                textAlign: 'left',
+              },
+            }}
+            locale={{close: t('HINT_OK')}}
+          />
+        )}
+
         {showBanners && <Banners />}
         <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>

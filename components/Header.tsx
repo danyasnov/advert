@@ -39,7 +39,7 @@ const Header: FC = observer(() => {
           <LanguageSelect />
         </div>
         <div className='flex pt-5 pb-5 px-4 s:px-0 space-x-4 s:space-x-6 m:space-x-8'>
-          <div className='flex w-full'>
+          <div id='header-search' className='flex w-full'>
             <div className='-mr-3 z-10'>
               <CategoriesSelector />
             </div>
