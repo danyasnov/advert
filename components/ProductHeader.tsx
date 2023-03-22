@@ -30,7 +30,7 @@ const ProductHeader: FC = observer(() => {
   if (!product) return null
   const {advert, owner} = product
   const isUserAdv = userHash === owner.hash
-  const getOptions = ({setShowDeactivateModal, }) => {
+  const getOptions = ({setShowDeactivateModal}) => {
     const remove = {
       title: 'REMOVE',
       icon: <Delete size={16} filled />,
@@ -101,7 +101,7 @@ const ProductHeader: FC = observer(() => {
 
   return (
     <div className='mb-6'>
-      <div className='flex justify-between w-full items-center mb-6'>
+      <div className='flex flex-col justify-between w-full mb-6'>
         <div className='flex flex-wrap'>
           {path.map((p, index) => {
             const itemClassName =

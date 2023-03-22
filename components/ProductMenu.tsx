@@ -27,7 +27,6 @@ const ProductMenu: FC<Props> = ({
 }) => {
   const [showPopup, setShowPopup] = useState(false)
   const [showDeactivateModal, setShowDeactivateModal] = useState(false)
-  const {t} = useTranslation()
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShowPopup(false)
