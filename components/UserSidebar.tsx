@@ -41,7 +41,7 @@ const UserSidebar: FC = observer(() => {
         </Button>
         {isCurrentUser && (
           <>
-            <div id='drafts-tour' className='rounded-[20px]'>
+            <div id='drafts-tour' className='rounded-2xl'>
               <Button
                 onClick={() => {
                   robustShallowUpdateQuery(router, {page: 'drafts'})

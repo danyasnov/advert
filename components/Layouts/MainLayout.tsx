@@ -120,7 +120,7 @@ const MainLayout: FC = observer(() => {
               },
               buttonNext: {
                 backgroundColor: 'transparent',
-                padding: '0px 20px 10px 20px',
+                padding: '0px 10px 10px 20px',
                 fontSize: '12px',
                 fontWeight: '700',
                 color: 'white',
