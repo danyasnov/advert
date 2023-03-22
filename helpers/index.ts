@@ -781,6 +781,18 @@ export const deserializeCookies = (
     showCreateAdvMapHint: state.showCreateAdvMapHint !== 'false',
     showBottomSheet: state.showBottomSheet !== 'false',
     authType: state.authType ? toNumber(state.authType) : null,
+    visitMainPageCount: state.visitMainPageCount
+      ? toNumber(state.visitMainPageCount)
+      : null,
+    visitProductTourCount: state.visitProductTourCount
+      ? toNumber(state.visitProductTourCount)
+      : null,
+    visitCurrentUserTourCount: state.visitCurrentUserTourCount
+      ? toNumber(state.visitCurrentUserTourCount)
+      : null,
+    visitUserTourCount: state.visitUserTourCount
+      ? toNumber(state.visitUserTourCount)
+      : null,
   }
 }
 
