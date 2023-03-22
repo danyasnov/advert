@@ -33,7 +33,7 @@ const ProductHeader: FC = observer(() => {
   const getOptions = ({setShowDeactivateModal}) => {
     const remove = {
       title: 'REMOVE',
-      icon: <Delete size={16} filled />,
+      icon: <Delete size={16} />,
       onClick: () => {
         makeRequest({
           url: `/api/delete-adv`,
@@ -48,7 +48,7 @@ const ProductHeader: FC = observer(() => {
     }
     const publish = {
       title: 'PUBLISH',
-      icon: <TickSquare size={16} filled />,
+      icon: <TickSquare size={16} />,
       onClick: () => {
         makeRequest({
           url: `/api/publish-adv`,
@@ -63,7 +63,7 @@ const ProductHeader: FC = observer(() => {
     }
     const deactivate = {
       title: 'REMOVE_FROM_SALE',
-      icon: <ArrowLeftSquare size={16} filled />,
+      icon: <ArrowLeftSquare size={16} />,
       onClick: () => {
         setShowDeactivateModal(true)
       },
@@ -73,7 +73,7 @@ const ProductHeader: FC = observer(() => {
     }
     const edit = {
       title: 'EDIT_AD',
-      icon: <Edit size={16} filled />,
+      icon: <Edit size={16} />,
       onClick: () => {
         router.push(`/advert/edit/${advert.hash}`)
       },
@@ -100,13 +100,12 @@ const ProductHeader: FC = observer(() => {
   }
 
   return (
-    <div className='mb-6'>
-      <div className='flex flex-col justify-between w-full mb-6'>
-        <div className='flex flex-wrap'>
+    <div className='mb-5'>
+      <div className='flex flex-col justify-between w-full'>
+        <div className='flex flex-wrap mb-5'>
           {path.map((p, index) => {
             const itemClassName =
               'text-body-14 font-normal text-greyscale-900 last:font-bold last:text-primary-500 whitespace-nowrap mr-1 last:mr-0 '
-
             return (
               <LinkWrapper
                 key={p.id}
@@ -124,20 +123,20 @@ const ProductHeader: FC = observer(() => {
             )
           })}
         </div>
-        <div className='flex ml-4 space-x-2 relative'>
+        <div className='flex'>
           {isUserAdv && (
             <ProductMenu
               getOptions={getOptions}
               hash={advert.hash}
               title={advert.title}
               listRender={(options, setShowPopup) => (
-                <div className='absolute right-0 top-8 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10'>
+                <div className='flex w-full flex-wrap justify-around'>
                   {/* eslint-disable-next-line no-shadow */}
                   {options.map(({title, onClick, icon}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
-                      className='px-5 py-4 text-greyscale-900 hover:text-primary-500 w-full text-body-12 font-normal'
+                      className='text-greyscale-900 hover:text-primary-500 text-body-14 font-normal mr-5 mb-1'
                       onClick={(e) => {
                         e.preventDefault()
                         onClick()
@@ -150,13 +149,6 @@ const ProductHeader: FC = observer(() => {
                     </Button>
                   ))}
                 </div>
-              )}
-              iconRender={() => (
-                <IcMoreHoriz
-                  className='fill-current text-black-c'
-                  width={24}
-                  height={24}
-                />
               )}
               images={advert.images}
             />
