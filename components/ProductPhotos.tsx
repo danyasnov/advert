@@ -11,6 +11,7 @@ import PhotosModal from './PhotosModal'
 import {ThumbObject} from '../types'
 import {Thumb} from './Thumb'
 import ProductBadge from './ProductBadge'
+import SliderButton from './Buttons/SliderButton'
 
 const getItems = (items = [], type) => items.map((i) => ({src: i, type}))
 
@@ -39,7 +40,15 @@ const ProductPhotos: FC = observer(() => {
     draggable: items.length > 1,
     speed: 30,
   })
-
+  const [viewportThumbRef, emblaThumb] = useEmblaCarousel({
+    loop: true,
+    draggable: items.length > 1,
+    speed: 30,
+    align: 'start',
+    containScroll: 'trimSnaps',
+    slidesToScroll: 1,
+  })
+  const thumbControls = useSliderButtons(emblaThumb)
   const onHover = (index) => {
     setActivePhotoIndex(index)
     embla.scrollTo(index)
@@ -145,19 +154,40 @@ const ProductPhotos: FC = observer(() => {
         />
       </div>
 
-      <div className='flex mt-3 s:mt-4 flex-row -mx-1 s:-mx-2 m:-mx-3 l:-mx-2 flex-wrap'>
-        {items.map((item, index) => (
-          <div className='mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4'>
-            <Thumb
-              url={item.src}
-              onHover={onHover}
-              index={index}
-              activePhotoIndex={activePhotoIndex}
-              type={item.type}
-            />
+      <div className='flex items-center'>
+        <SliderButton
+          onClick={thumbControls.scrollPrev}
+          hide={!thumbControls.prevBtnEnabled}
+          direction='left'
+          // className='slider-button left-1 s:left-5 m:left-1 m:-left-4'
+        />
+        <div className='overflow-hidden ' ref={viewportThumbRef}>
+          {/* <div className='flex'> */}
+
+          <div className='flex space-x-[7px] s:space-x-[14px] m:space-x-[15px]'>
+            {items.map((item, index) => (
+              <div className=''>
+                <Thumb
+                  url={item.src}
+                  onHover={onHover}
+                  index={index}
+                  activePhotoIndex={activePhotoIndex}
+                  type={item.type}
+                />
+              </div>
+            ))}
           </div>
-        ))}
+
+          {/* </div> */}
+        </div>
+        <SliderButton
+          onClick={thumbControls.scrollNext}
+          hide={!thumbControls.nextBtnEnabled}
+          direction='right'
+          // className='slider-button right-1 s:right-5 m:-right-4'
+        />
       </div>
+
       {showModal && (
         <PhotosModal
           isOpen={showModal}
