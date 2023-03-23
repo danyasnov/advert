@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import IcMoreHoriz from 'icons/material/MoreHoriz.svg'
 import {ArrowLeftSquare, Delete, Edit, TickSquare} from 'react-iconly'
+import {size} from 'lodash'
 import {
   useCategoriesStore,
   useGeneralStore,
@@ -123,20 +124,22 @@ const ProductHeader: FC = observer(() => {
             )
           })}
         </div>
-        <div className='flex'>
+        <div className='flex w-full'>
           {isUserAdv && (
             <ProductMenu
               getOptions={getOptions}
               hash={advert.hash}
               title={advert.title}
               listRender={(options, setShowPopup) => (
-                <div className='flex w-full flex-wrap justify-around'>
+                <div className='flex w-full'>
                   {/* eslint-disable-next-line no-shadow */}
                   {options.map(({title, onClick, icon}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
-                      className='text-greyscale-900 hover:text-primary-500 text-body-14 font-normal mr-5 mb-1'
+                      className={`text-greyscale-900 hover:text-primary-500 text-body-14 font-normal mr-2 xs:mr-5 ${
+                        size(options) > 2 ? 'max-w-[115px]' : 'max-w-[150px]'
+                      } xs:max-w-full`}
                       onClick={(e) => {
                         e.preventDefault()
                         onClick()
