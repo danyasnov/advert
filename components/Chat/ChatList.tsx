@@ -51,7 +51,7 @@ const ChatList: FC = observer(() => {
           />
         </div>
       )}
-      {!isEmpty(chats) && (
+      {!isEmpty(chats) && !selectedChat && (
         <div className='flex flex-col space-y-4'>
           {chats.map((chat) => {
             const hasNewMessages = !!chat.newMessagesCount
