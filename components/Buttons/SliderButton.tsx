@@ -22,7 +22,7 @@ const SliderButton: FC<Props> = ({
     <Button
       disabled={disabled}
       onClick={onClick}
-      className={`w-8 h-8 bg-primary-500 rounded-full shadow-xl ${
+      className={`w-8 h-8 shrink-0 bg-primary-500 rounded-full shadow-xl ${
         className || ''
       }`}>
       {direction === 'left' ? (
