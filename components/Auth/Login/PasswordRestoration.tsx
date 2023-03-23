@@ -27,19 +27,19 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
       // eslint-disable-next-line consistent-return
       onSubmit={async (values) => {
         const result = await makeRequest({
-          url: '/api/remind-password',
+          url: '/api/reset-password',
           data: {
             email: values.email,
           },
           method: 'post',
         })
-        if (result.data.result === 'OK') {
+        if (result.data.status === 200) {
           setShowHint(true)
         } else if (result.data.error) {
           toast.error(t(result.data.error))
         }
       }}>
-      {({submitForm, errors}) => (
+      {({submitForm, errors, isSubmitting}) => (
         <div className='px-4 pt-4 flex flex-col justify-between h-full'>
           <Form className='pb-8 space-y-2  flex flex-col'>
             <Field
@@ -66,7 +66,7 @@ const PasswordRestoration: FC<PageProps> = observer(({dispatch, state}) => {
             onNext={() => {
               submitForm()
             }}
-            nextDisabled={!!errors.email || showHint}
+            nextDisabled={!!errors.email || showHint || isSubmitting}
           />
         </div>
       )}

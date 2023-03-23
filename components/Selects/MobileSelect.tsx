@@ -1,10 +1,11 @@
 import {FC, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
-import {get, isArray, isEmpty, size} from 'lodash'
+import {isArray, isEmpty, size} from 'lodash'
 import IcCheck from 'icons/material/Check.svg'
 import IcSearch from 'icons/material/Search.svg'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import {CloseSquare} from 'react-iconly'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -81,10 +82,20 @@ const MobileSelect: FC<SelectProps> = ({
           return height
         }}>
         <div className='flex flex-col items-center justify-center w-full'>
-          <div className='fixed top-5 bg-white w-full flex flex-col items-center'>
-            <h3 className='text-h-6 font-medium text-greyscale-900 mb-2 px-4'>
-              {placeholder}
-            </h3>
+          <div className='fixed top-5 bg-white w-full flex flex-col pt-5'>
+            <div className='flex w-full mb-2 px-4 text-center relative'>
+              <h3 className='text-h-6 font-medium text-greyscale-900 w-full'>
+                {placeholder}
+              </h3>
+              <Button
+                className='text-primary-500 absolute inset-y-0 right-4'
+                onClick={() => {
+                  setOpen(false)
+                }}>
+                <CloseSquare size={24} />
+              </Button>
+            </div>
+
             {isSearchable && (
               <div className='w-full px-4 relative'>
                 <IcSearch className='w-6 h-6 absolute top-3 left-5 text-greyscale-800' />
@@ -108,15 +119,19 @@ const MobileSelect: FC<SelectProps> = ({
           </div>
           <div
             className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
-              isSearchable ? 'mt-20' : 'mt-10'
+              isSearchable ? 'mt-25' : 'mt-10'
             }`}>
             {open &&
-              filtered.map((f) => (
+              filtered.map((f, index) => (
                 <Button
                   // @ts-ignore
                   disabled={f.disabled}
                   key={f.value}
-                  className={`w-full px-4 border-b border-nc-border h-12 ${
+                  className={`w-full px-4 border-b ${
+                    index === filtered.length - 1
+                      ? 'border-transparent'
+                      : 'border-nc-border'
+                  } ${
                     // @ts-ignore
                     f.disabled ? 'text-greyscale-900' : ''
                   }`}
@@ -137,7 +152,7 @@ const MobileSelect: FC<SelectProps> = ({
                       onClose()
                     }
                   }}>
-                  <div className='w-full flex items-center justify-between'>
+                  <div className='w-full flex items-center justify-between py-4'>
                     <span className='text-body-16 text-nc-text-primary'>
                       {f.label}
                     </span>
@@ -165,9 +180,10 @@ const MobileSelect: FC<SelectProps> = ({
               ))}
           </div>
           {isMulti && (
-            <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white'>
+            <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white drop-shadow-card'>
               <SecondaryButton
                 className='w-full h-full'
+                disabled={!size(value as unknown as object)}
                 onClick={() => {
                   setFilter('')
                   setFiltered(options)

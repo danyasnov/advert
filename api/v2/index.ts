@@ -97,7 +97,7 @@ export const fetchCategoryData = async (
 ): Promise<RestResponse<CACategoryDataModel>> => {
   const key = `category-data-${id}-${
     storage.language
-  }-${!!excludeDependentFields}`
+  }-${!!excludeDependentFields}-${!!editFields}`
   const cached: RestResponse<CACategoryDataModel> = await cache.get(key)
   if (cached) return cached
 
@@ -123,6 +123,23 @@ export const fetchDependentFields = (
     dependenceSequence,
     otherValueWasSelected,
   )
+}
+
+export const resetPassword = async (
+  email: string,
+): Promise<RestResponse<unknown>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.auth.resetPassword(email)
+}
+
+export const remindPasswordConfirm = async (
+  password: string,
+  token: string,
+): Promise<RestResponse<unknown>> => {
+  const storage = new Storage({})
+  const rest = getRest(storage)
+  return rest.auth.resetPasswordConfirm(password, token)
 }
 
 export const fetchProductDetails = (

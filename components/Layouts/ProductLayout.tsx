@@ -1,6 +1,10 @@
-import {FC, useEffect} from 'react'
+import {FC, useEffect, useState, useRef} from 'react'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
+import Joyride, {Step} from 'react-joyride'
+import {parseCookies} from 'nookies'
+import {SerializedCookiesState} from '../../types'
+import {trackSingle, setCookiesObject} from '../../helpers'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import ProductHeader from '../ProductHeader'
 import ProductDescription from '../ProductDescription'
@@ -10,7 +14,7 @@ import ProductsSlider from '../Cards/ProductsSlider'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import {unixToDate} from '../../utils'
 import MetaTags from '../MetaTags'
-import {trackSingle} from '../../helpers'
+import useTourVisibility from '../../hooks/useTourVisibility'
 
 const ProductLayout: FC = observer(() => {
   const {t} = useTranslation()
@@ -23,6 +27,20 @@ const ProductLayout: FC = observer(() => {
   useEffect(() => {
     trackSingle('ViewContent')
   }, [])
+
+  const showTour = useTourVisibility('visitProductTourCount')
+
+  const steps: Step[] = [
+    {
+      target: '#owner',
+      content: t('HINT_SUBSCRIBE'),
+      disableBeacon: true,
+      isFixed: true,
+      placement: 'bottom',
+      offset: 5,
+    },
+  ]
+
   return (
     <HeaderFooterWrapper>
       <MetaTags title={seoString} product={product} />
@@ -53,6 +71,32 @@ const ProductLayout: FC = observer(() => {
             </div>
           </div>
         </div>
+        {/* {showTour && (
+          <Joyride
+            steps={steps}
+            hideCloseButton
+            floaterProps={{hideArrow: true, disableFlip: true}}
+            styles={{
+              tooltip: {
+                paddingTop: '0',
+              },
+              buttonNext: {
+                backgroundColor: 'transparent',
+                padding: '0px 20px 10px 20px',
+                fontSize: '12px',
+                fontWeight: '700',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0',
+                outline: 'none',
+              },
+              tooltipContainer: {
+                textAlign: 'left',
+              },
+            }}
+            locale={{close: t('HINT_OK')}}
+          />
+        )} */}
       </div>
     </HeaderFooterWrapper>
   )

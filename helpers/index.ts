@@ -780,6 +780,18 @@ export const deserializeCookies = (
     showCreateAdvMapHint: state.showCreateAdvMapHint !== 'false',
     showBottomSheet: state.showBottomSheet !== 'false',
     authType: state.authType ? toNumber(state.authType) : null,
+    visitMainPageCount: state.visitMainPageCount
+      ? toNumber(state.visitMainPageCount)
+      : null,
+    visitProductTourCount: state.visitProductTourCount
+      ? toNumber(state.visitProductTourCount)
+      : null,
+    visitCurrentUserTourCount: state.visitCurrentUserTourCount
+      ? toNumber(state.visitCurrentUserTourCount)
+      : null,
+    visitUserTourCount: state.visitUserTourCount
+      ? toNumber(state.visitUserTourCount)
+      : null,
   }
 }
 
@@ -842,6 +854,11 @@ export const flatArrayFields = (fields) => {
 }
 export const handleMetrics = (eventType, data?) => {
   trackSingle(eventType, data)
+  if (window.dataLayer) {
+    window.dataLayer.push({eventType, data})
+  } else {
+    window.dataLayer = [{eventType, data}]
+  }
   makeRequest({
     url: '/api/clickhouse',
     method: 'post',

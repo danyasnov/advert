@@ -41,18 +41,20 @@ const UserSidebar: FC = observer(() => {
         </Button>
         {isCurrentUser && (
           <>
-            <Button
-              onClick={() => {
-                robustShallowUpdateQuery(router, {page: 'drafts'})
-              }}
-              className={`${
-                activeUserPage === 'drafts'
-                  ? 'text-primary-500'
-                  : 'text-greyscale-900'
-              } space-x-4`}>
-              <IcCreate className='fill-current h-7 w-7' />
-              <span className='text-body-16'>{t('DRAFTS')}</span>
-            </Button>
+            <div id='drafts-tour' className='rounded-2xl'>
+              <Button
+                onClick={() => {
+                  robustShallowUpdateQuery(router, {page: 'drafts'})
+                }}
+                className={`${
+                  activeUserPage === 'drafts'
+                    ? 'text-primary-500'
+                    : 'text-greyscale-900'
+                } space-x-4`}>
+                <IcCreate className='fill-current h-7 w-7' />
+                <span className='text-body-16'>{t('DRAFTS')}</span>
+              </Button>
+            </div>
             <Button
               onClick={() => {
                 robustShallowUpdateQuery(router, {page: 'favorites'})

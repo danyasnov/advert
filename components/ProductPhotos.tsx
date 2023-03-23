@@ -1,7 +1,7 @@
 import {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import useEmblaCarousel from 'embla-carousel-react'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import ImageWrapper from './ImageWrapper'
 import useSliderButtons from '../hooks/useSliderButtons'
@@ -116,14 +116,17 @@ const ProductPhotos: FC = observer(() => {
         </div>
         {!!items.length && (
           <div className='absolute bottom-4 w-full flex justify-center space-x-2'>
-            {items.map((i, index) => (
-              <div
-                key={i.src}
-                className={`w-2 h-2 rounded-full ${
-                  currentIndex === index ? 'bg-primary-500' : 'bg-greyscale-100'
-                }`}
-              />
-            ))}
+            {size(items) > 1 &&
+              items.map((i, index) => (
+                <div
+                  key={i.src}
+                  className={`w-2 h-2 rounded-full ${
+                    currentIndex === index
+                      ? 'bg-primary-500'
+                      : 'bg-greyscale-100'
+                  }`}
+                />
+              ))}
           </div>
         )}
         <FullHeightSliderButton

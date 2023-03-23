@@ -141,6 +141,7 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isMulti = true
       props.filterStyle = true
       props.isClearable = false
+
       break
     }
     case 'int': {
@@ -270,6 +271,7 @@ export const FormikCreateFields: FC<
       if (f.dependenceSequenceId) {
         return (
           <FormikDependentFields
+            key={f.id}
             field={f}
             allFields={fields}
             onFieldsChange={onFieldsChange}
@@ -296,7 +298,7 @@ export const FormikCreateFields: FC<
       )
     }
     if (f.itemType === 'title') {
-      return <FormikTitle label={f.name} />
+      return <FormikTitle key={f.id} label={f.name} />
     }
     return null
   })
@@ -643,7 +645,7 @@ export const FormikPassword: FC<
           )}
         </div>
       </div>
-      <span className='text-body-12 text-error pt-3'>{error}</span>
+      {!!error && <span className='text-body-12 text-error pt-3'>{error}</span>}
     </div>
   )
 }
@@ -888,6 +890,7 @@ export const FormikDependentFields: FC<
 > = ({field, onFieldsChange, allFields}) => {
   const {values, setFieldValue} = useFormikContext()
   const prevValues = useRef(values)
+  const [isInited, setIsInited] = useState(false)
   const {width} = useWindowSize()
   // @ts-ignore
   const nextFields = values.fields
@@ -922,7 +925,8 @@ export const FormikDependentFields: FC<
 
         if (shouldClearNext) {
           setFieldValue(`fields.${current.id}`, undefined)
-        } else if (nextValue !== prevValue) {
+        } else if (nextValue !== prevValue || !isInited) {
+          setIsInited(true)
           // @todo fix multiple requests
           if (nextValue) {
             newFields.push({...current, value: nextValue})
@@ -950,7 +954,7 @@ export const FormikDependentFields: FC<
             if (size(resultFields) > 1) {
               onFieldsChange(resultFields)
             }
-            shouldClearNext = true
+            if (isInited) shouldClearNext = true
           }
         } else {
           newFields.push({...current, value: nextValue})

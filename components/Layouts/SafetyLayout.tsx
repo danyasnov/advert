@@ -388,9 +388,9 @@ const SafetyLayout: FC = observer(() => {
             />
           </div>
           <div
-            className='flex flex-col mt-6 s:mt-10 px-4 py-8 bg-gradient-to-r from-[#A4B3FF1A] to-[#FFABBC1A] 
+            className='flex flex-col mt-10 px-4 py-8 bg-gradient-to-r from-[#A4B3FF1A] to-[#FFABBC1A] 
                   shadow-[inset_0px_-10px_10px_rgba(164,179,255,0.15)] rounded-2xl  w-full h-[314px] s:w-[344px] s:h-[306px] m:w-[464px] m:h-[400px] l:w-[580px] l:h-[448px]'>
-            <div className='relative mx-auto w-[78px] h-[80px] m:w-[108px] m:h-[110px]'>
+            <div className='relative mx-auto w-[78px] h-[80px] m:w-[108px] m:h-[88px] l:h-[110px]'>
               <ImageWrapper
                 quality={100}
                 type='/img/fake-site.png'

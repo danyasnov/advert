@@ -35,7 +35,9 @@ const ProductSidebar: FC = observer(() => {
             ? 'shadow-xl rounded-2xl'
             : 'drop-shadow-card'
         }`}>
-        <UserCard />
+        <div id='owner'>
+          <UserCard />
+        </div>
       </div>
 
       <div className='flex flex-col items-center space-y-5'>

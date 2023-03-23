@@ -103,7 +103,7 @@ const CategoryPage: FC = observer(() => {
   const header = (
     <>
       <div className='mb-8 hidden s:block'>
-        <h5 className='text-h-5 text-greyscale-900 font-normal mb-8 mt-8'>
+        <h5 className='text-h-5 text-greyscale-900 font-normal mb-8 mt-8 h-7'>
           {rootCategory ? (
             <div className='flex space-x-3'>
               <Button
