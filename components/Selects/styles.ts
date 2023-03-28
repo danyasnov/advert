@@ -167,4 +167,13 @@ export const FilterStyles = {
     fontSize: '12px',
     lineHeight: '14px',
   }),
+  menu: (provided) => ({
+    ...provided,
+    width: '200px',
+    borderRadius: '16px',
+    padding: '5px',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+    overflow: 'hidden',
+  }),
 }
