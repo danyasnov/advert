@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import Joyride, {Step} from 'react-joyride'
 import {parseCookies} from 'nookies'
 import {TFunction, useTranslation} from 'next-i18next'
-import {divide, isNumber, toNumber} from 'lodash'
+import {isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,

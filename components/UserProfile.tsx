@@ -16,7 +16,7 @@ const UserProfile: FC = observer(() => {
   return (
     <div className='flex flex-col items-center rounded-2xl bg-white py-5 px-7'>
       <div className='flex s:flex-col justify-start s:items-center w-full'>
-        <div className='hidden s:flex mb-3'>
+        <div className='hidden s:block mb-3'>
           <UserAvatar
             url={user.imageUrl}
             name={user.name}
