@@ -62,7 +62,7 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
           {t(loading ? 'LOADING_LO' : 'SHARE')}
         </span>
       </Button>
-      <div className='absolute w-[280px] s:w-[224px] m:w-[280px] top-12 left-1/2 right-1/2 -translate-x-1/2 z-10'>
+      <div className='absolute w-[280px] s:w-[224px] m:w-[280px] top-12 left-1/2 right-1/2 -translate-x-1/2 z-20'>
         {show && link && (
           <div
             className='flex flex-col bg-white shadow-popup rounded-2xl py-4 px-6'

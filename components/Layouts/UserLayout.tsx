@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import Joyride, {Step} from 'react-joyride'
 import {parseCookies} from 'nookies'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber, toNumber} from 'lodash'
+import {divide, isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,
@@ -268,15 +268,25 @@ const UserLayout: FC = observer(() => {
               <UserSidebar />
             </aside>
             <main className='w-full s:w-[464px] m:w-[614px] l:w-896px relative drop-shadow-card'>
-              <div className='s:hidden'>
-                {!activeUserPage && <UserSidebar />}
-              </div>
+              {isCurrentUser ? (
+                <div className='s:hidden'>
+                  {!activeUserPage && <UserSidebar />}
+                </div>
+              ) : (
+                <div className='s:hidden'>
+                  <UserSidebar />
+                </div>
+              )}
+
               {((width >= 768 && activeUserPage === null) ||
-                activeUserPage === 'adverts') && (
+                activeUserPage === 'adverts' ||
+                (width < 768 && !isCurrentUser)) && (
                 <div>
-                  <SectionTitle
-                    title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
-                  />
+                  <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
+                    <SectionTitle
+                      title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+                    />
+                  </div>
 
                   <div className='z-10 relative mb-10'>
                     <Tabs
