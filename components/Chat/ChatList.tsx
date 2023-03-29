@@ -172,14 +172,16 @@ const ChatList: FC = observer(() => {
           />
         </div>
       )}
-      <RequestNotificationModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onAccept={() => {
-          setShowModal(false)
-          Notification.requestPermission().then()
-        }}
-      />
+      {showModal && (
+        <RequestNotificationModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onAccept={() => {
+            setShowModal(false)
+            Notification.requestPermission().then()
+          }}
+        />
+      )}
     </>
   )
 })
