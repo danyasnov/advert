@@ -2,7 +2,7 @@ import {FC, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {useTranslation} from 'next-i18next'
-import {Chats, globalChatsStore} from 'chats'
+import {chatEventEmitter, Chats, globalChatsStore} from 'chats'
 import {SerializedCookiesState} from '../../types'
 import {getRest, NEXT_PUBLIC_CHAT_URL} from '../../api'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
@@ -72,7 +72,22 @@ const ChatListener: FC = observer(() => {
       const error = await globalChatsStore.startConnection()
     }
     startConnection()
+    const cb = (message) => {
+      if (message.ownerId === user.hash) return
+      const notification = new Notification(t('NEW_MESSAGE'), {
+        body: message.text,
+        icon: '/img/logo/ShortLogo.svg',
+        tag: message.id,
+      })
+      notification.onclick = (event) => {
+        event.preventDefault()
+        notification.close()
+        window.open(`/user/${user.hash}?chatId=${message.chatId}`)
+      }
+    }
+    chatEventEmitter.on('newMessage', cb)
     return () => {
+      chatEventEmitter.off('newMessage', cb)
       globalChatsStore.closeConnection()
     }
   }, [user, state.authNewToken])
