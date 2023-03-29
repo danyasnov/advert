@@ -9,7 +9,7 @@ import {useRouter} from 'next/router'
 import Button from '../Buttons/Button'
 import ImageWrapper from '../ImageWrapper'
 import UserAvatar from '../UserAvatar'
-import {unixMlToDate, unixToDate} from '../../utils'
+import {unixMlToDate} from '../../utils'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import Message from './Message'
 import EmptyProductImage from '../EmptyProductImage'
@@ -122,7 +122,7 @@ const ChatList: FC = observer(() => {
                                   ? 'text-greyscale-700'
                                   : 'text-greyscale-500'
                               }`}>
-                              {unixToDate(chat.lastMessage.date)}
+                              {unixMlToDate(chat.lastMessage.date)}
                             </span>
                           )}
                           <Button
@@ -183,7 +183,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
         .map((m) => {
           return {
             ...m,
-            day: unixToDate(m.date),
+            day: unixMlToDate(m.date),
           }
         })
       setMessagesByDay(Object.entries(groupBy(messagesByDate, 'day')))
