@@ -8,11 +8,12 @@ import {Lock} from 'react-iconly'
 import React, {useState} from 'react'
 import {toast} from 'react-toastify'
 import {object, ref, string} from 'yup'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {makeRequest} from '../../api'
 import {Controls} from '../../components/Auth/utils'
 import {FormikPassword} from '../../components/FormikComponents'
 import Button from '../../components/Buttons/Button'
-import {getQueryValue} from '../../helpers'
+import {getQueryValue, processCookies} from '../../helpers'
 import ImageWrapper from '../../components/ImageWrapper'
 import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import MetaTags from '../../components/MetaTags'
@@ -166,8 +167,12 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const state = await processCookies(ctx)
+
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(state.language)),
+    },
   }
 }
