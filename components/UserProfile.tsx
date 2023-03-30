@@ -6,6 +6,7 @@ import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
 import EditProfilePopup from './EditProfilePopup'
+import SubscribeOnUser from './SubscribeOnUser'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -26,11 +27,17 @@ const UserProfile: FC = observer(() => {
       <span className='mb-3 text-body-14 text-green text-center'>
         {t('ONLINE')}
       </span>
-
-      <span className='text-h-5 text-greyscale-900 font-bold mb-8 break-words text-center w-full'>
+      <span className='text-h-5 text-greyscale-900 font-bold mb-3 break-words text-center w-full'>
         {/* @ts-ignore */}
         {user.name} {user.surname}
       </span>
+      <div className='mb-6'>
+        <SubscribeOnUser
+          isSubscribed={user.isSubscribed}
+          ownerId={user.hash}
+          type='profile'
+        />
+      </div>
       <div className='flex justify-between mb-8 w-full'>
         <div className='flex s:flex-col s:text-center w-1/2 justify-center'>
           <span className='text-body-14 m:text-body-18 text-greyscale-900 font-semibold mr-2'>
