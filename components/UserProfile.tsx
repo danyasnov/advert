@@ -75,7 +75,15 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
+
       <div className='flex flex-col space-y-4 items-center'>
+        <div className='s:hidden items-center'>
+          <SubscribeOnUser
+            isSubscribed={user.isSubscribed}
+            ownerId={user.hash}
+            type='profileSmall'
+          />
+        </div>
         <SharePopup userHash={user.hash} />
         {isCurrentUser && <EditProfilePopup />}
       </div>

@@ -20,6 +20,10 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
+    setLocalSubscribed(isSubscribed)
+  }, [isSubscribed])
+
+  useEffect(() => {
     const cookies: SerializedCookiesState = parseCookies()
     setShow(cookies.hash && cookies.hash !== ownerId)
   }, [ownerId])
@@ -43,7 +47,7 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
     )
   } else if (type === 'profile') {
     body = localSubscribed ? (
-      <div className='flex justify-between space-x-1.5 text-body-14'>
+      <div className='flex justify-between space-x-1.5 text-body-14 text-primary-500'>
         <IcDeleteUser className='fill-current text-primary-500 h-5 w-5' />
         <span className='font-normal'>{t('UNSUBSCRIBE')}</span>
       </div>
@@ -55,12 +59,12 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
     )
   } else {
     body = localSubscribed ? (
-      <div className='flex justify-between space-x-1.5 text-body-14 text-greyscale-500'>
+      <div className='flex justify-between space-x-1.5 items-center text-body-14 text-greyscale-500'>
         <IcDeleteUser className='fill-current h-4 w-4' />
         <span className='font-normal'>{t('UNSUBSCRIBE')}</span>
       </div>
     ) : (
-      <div className='flex justify-between space-x-1.5 text-body-14 text-greyscale-500'>
+      <div className='flex justify-between space-x-1.5 items-center text-body-14 text-greyscale-500'>
         <AddUser size={16} filled />
         <span className='text-body-14 font-normal'>{t('SUBSCRIBE')}</span>
       </div>
