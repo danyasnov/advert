@@ -62,6 +62,8 @@ const UserLayout: FC = observer(() => {
   const [showUserTour, setUserShowTour] = useState(false)
 
   const isCurrentUser = userHash === user.hash
+  const desktopUser = width >= 768 && activeUserPage === null
+  const mobileUser = width < 768 && !isCurrentUser
   useEffect(() => {
     if (query.chatId) {
       setActiveUserPage('chat')
@@ -268,15 +270,19 @@ const UserLayout: FC = observer(() => {
               <UserSidebar />
             </aside>
             <main className='w-full s:w-[464px] m:w-[614px] l:w-896px relative drop-shadow-card'>
-              <div className='s:hidden'>
-                {!activeUserPage && <UserSidebar />}
-              </div>
-              {((width >= 768 && activeUserPage === null) ||
-                activeUserPage === 'adverts') && (
+              {((isCurrentUser && !activeUserPage) || !isCurrentUser) && (
+                <div className='s:hidden'>
+                  <UserSidebar />
+                </div>
+              )}
+
+              {(desktopUser || activeUserPage === 'adverts' || mobileUser) && (
                 <div>
-                  <SectionTitle
-                    title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
-                  />
+                  <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
+                    <SectionTitle
+                      title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+                    />
+                  </div>
 
                   <div className='z-10 relative mb-10'>
                     <Tabs
