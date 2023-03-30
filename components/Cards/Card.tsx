@@ -207,8 +207,7 @@ const Card: FC<Props> = ({
           {['blocked', 'blockedPermanently', 'sold'].includes(state) && (
             <div className='absolute inset-0 bg-greyscale-900 opacity-50 z-10' />
           )}
-
-          <div className='flex h-50 l:h-50 bg-image-placeholder '>
+          <div className='flex h-36 s:h-50 l:h-50 bg-image-placeholder'>
             {inView && (
               <>
                 {isEmpty(images) ? (
