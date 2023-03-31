@@ -94,6 +94,7 @@ export const getSelectOptions = (multiselects = {}) => {
     .map((o) => ({
       value: o.id,
       label: o.value,
+      icon: o.icon,
       disabled: o.itemType === 'title',
     }))
 }

@@ -10,6 +10,7 @@ import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import ImageWrapper from '../ImageWrapper'
 
 const MobileSelect: FC<SelectProps> = ({
   options,
@@ -47,7 +48,7 @@ const MobileSelect: FC<SelectProps> = ({
   if (isIconSelect) {
     body = (
       <div
-        className={`w-full flex flex-wrap mt-10 ${
+        className={`w-full grid grid-cols-3 mt-15 ${
           isMulti ? 'mb-20' : 'mb-10'
         }`}>
         {open &&
@@ -56,7 +57,7 @@ const MobileSelect: FC<SelectProps> = ({
               // @ts-ignore
               disabled={f.disabled}
               key={f.value}
-              className={`w-full px-4  w-[104px] h-[104px] ${
+              className={`w-full w-[104px] h-[104px] ${
                 // @ts-ignore
                 f.disabled ? 'text-greyscale-900' : ''
               }`}
@@ -75,6 +76,13 @@ const MobileSelect: FC<SelectProps> = ({
                   onClose()
                 }
               }}>
+              <div className='w-[102px] h-[102px] border-2  border-primary-500 rounded-3xl flex flex-col items-center justify-center'>
+                <img src={f.icon} alt={f.label} width={64} height={64} />
+                <span className='truncate w-full font-medium text-body-14 px-4'>
+                  {f.label}
+                </span>
+              </div>
+
               {/* <div className='w-full flex items-center justify-between py-4'> */}
               {/*  <span className='text-body-16 text-nc-text-primary'> */}
               {/*    {f.label} */}
