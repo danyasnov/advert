@@ -1,6 +1,8 @@
 import {FC, useEffect, useState} from 'react'
 import {AddUser} from 'react-iconly'
-import IcDeleteUser from 'icons/material/DeleteUser.svg'
+import IcDeleteUserBlack from 'icons/material/DeleteUserBlack.svg'
+import IcDeleteUserPurple from 'icons/material/DeleteUserPurple.svg'
+import IcDeleteUserGrey from 'icons/material/DeleteUserGrey.svg'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import Button from './Buttons/Button'
@@ -34,7 +36,7 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
   if (type === 'card') {
     body = localSubscribed ? (
       <div className='flex justify-between space-x-1.5 text-body-14'>
-        <IcDeleteUser className='fill-current text-primary-500 h-5 w-5' />
+        <IcDeleteUserBlack className='fill-current text-primary-500 h-5 w-5' />
         <span className='text-greyscale-900 font-normal'>
           {t('UNSUBSCRIBE')}
         </span>
@@ -48,7 +50,7 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
   } else if (type === 'profile') {
     body = localSubscribed ? (
       <div className='flex justify-between space-x-1.5 text-body-14 text-primary-500'>
-        <IcDeleteUser className='fill-current text-primary-500 h-5 w-5' />
+        <IcDeleteUserPurple className='fill-current text-primary-500 h-5 w-5' />
         <span className='font-normal'>{t('UNSUBSCRIBE')}</span>
       </div>
     ) : (
@@ -60,7 +62,7 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
   } else {
     body = localSubscribed ? (
       <div className='flex justify-between space-x-1.5 items-center text-body-14 text-greyscale-500'>
-        <IcDeleteUser className='fill-current h-4 w-4' />
+        <IcDeleteUserGrey className='fill-current h-4 w-4' />
         <span className='font-normal'>{t('UNSUBSCRIBE')}</span>
       </div>
     ) : (
