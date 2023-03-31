@@ -30,15 +30,16 @@ const SearchAutocomplete: FC<Props> = observer(
     const [placeholder, setPlaceholder] = useState('')
     useEffect(() => {
       const cookies: SerializedCookiesState = parseCookies()
+      const radius = `, ${cookies.searchRadius}${t('N_KM')}`
       if (
         cookies.cookieAccepted === 'true' &&
         cookies.address !== 'undefined' &&
         cookies.searchRadius !== 'undefined'
       ) {
         setPlaceholder(
-          `${t('SEARCH_IN')} ${cookies.address}, ${cookies.searchRadius}${t(
-            'N_KM',
-          )}`,
+          `${t('SEARCH_IN')} ${cookies.address}${
+            cookies.searchBy === 'coords' ? radius : ''
+          }`,
         )
       } else {
         setPlaceholder(t('SEARCH'))
