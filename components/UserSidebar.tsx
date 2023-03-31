@@ -24,35 +24,39 @@ const UserSidebar: FC = observer(() => {
     <div>
       <UserProfile />
       <div className='space-y-9 my-10'>
-        <Button
-          className={`${
-            activeUserPage === 'adverts' ||
-            (width >= 768 && activeUserPage === null)
-              ? 'text-primary-500'
-              : 'text-greyscale-900'
-          } space-x-4`}
-          onClick={() => {
-            robustShallowUpdateQuery(router, {page: 'adverts'})
-          }}>
-          <IcAds className='w-7 h-7 fill-current' />
-          <span className='text-body-16'>
-            {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
-          </span>
-        </Button>
         {isCurrentUser && (
           <>
             <Button
-              onClick={() => {
-                robustShallowUpdateQuery(router, {page: 'drafts'})
-              }}
               className={`${
-                activeUserPage === 'drafts'
+                activeUserPage === 'adverts' ||
+                (width >= 768 && activeUserPage === null)
                   ? 'text-primary-500'
                   : 'text-greyscale-900'
-              } space-x-4`}>
-              <IcCreate className='fill-current h-7 w-7' />
-              <span className='text-body-16'>{t('DRAFTS')}</span>
+              } space-x-4`}
+              onClick={() => {
+                robustShallowUpdateQuery(router, {page: 'adverts'})
+              }}>
+              <IcAds className='w-7 h-7 fill-current' />
+              <span className='text-body-14 s:text-body-16'>
+                {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+              </span>
             </Button>
+            <div id='drafts-tour' className='rounded-2xl'>
+              <Button
+                onClick={() => {
+                  robustShallowUpdateQuery(router, {page: 'drafts'})
+                }}
+                className={`${
+                  activeUserPage === 'drafts'
+                    ? 'text-primary-500'
+                    : 'text-greyscale-900'
+                } space-x-4`}>
+                <IcCreate className='fill-current h-7 w-7' />
+                <span className='text-body-14 s:text-body-16'>
+                  {t('DRAFTS')}
+                </span>
+              </Button>
+            </div>
             <Button
               onClick={() => {
                 robustShallowUpdateQuery(router, {page: 'favorites'})
@@ -63,7 +67,9 @@ const UserSidebar: FC = observer(() => {
                   : 'text-greyscale-900'
               } space-x-4`}>
               <Heart2 filled size={28} />
-              <span className='text-body-16'>{t('FAVORITE')}</span>
+              <span className='text-body-14 s:text-body-16'>
+                {t('FAVORITE')}
+              </span>
             </Button>
             <Button
               onClick={() => {
@@ -75,12 +81,14 @@ const UserSidebar: FC = observer(() => {
                   : 'text-greyscale-900'
               } space-x-4`}>
               <Message filled size={28} />
-              <span className='text-body-16'>{t('MESSAGES')}</span>
+              <span className='text-body-14 s:text-body-16'>
+                {t('MESSAGES')}
+              </span>
             </Button>
             <LogoutButton className='text-greyscale-500 space-x-4'>
               <>
                 <Logout filled size={28} />
-                <span className='text-body-16'>{t('EXIT')}</span>
+                <span className='text-body-14 s:text-body-16'>{t('EXIT')}</span>
               </>
             </LogoutButton>
           </>

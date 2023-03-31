@@ -13,7 +13,7 @@ interface Props {
   state?: string
   images: string[]
   getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
-  iconRender
+  iconRender?
   listRender
 }
 const ProductMenu: FC<Props> = ({
@@ -27,7 +27,6 @@ const ProductMenu: FC<Props> = ({
 }) => {
   const [showPopup, setShowPopup] = useState(false)
   const [showDeactivateModal, setShowDeactivateModal] = useState(false)
-  const {t} = useTranslation()
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShowPopup(false)
@@ -35,18 +34,24 @@ const ProductMenu: FC<Props> = ({
 
   const options = getOptions({setShowDeactivateModal, hash, state})
   if (isEmpty(options)) return null
+
+  const body = iconRender
+    ? showPopup && listRender(options, setShowPopup)
+    : listRender(options, setShowPopup)
   return (
     <>
       <div ref={ref}>
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            setShowPopup(!showPopup)
-          }}
-          className='relative'>
-          {iconRender(showPopup)}
-        </Button>
-        {showPopup && listRender(options, setShowPopup)}
+        {iconRender && (
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              setShowPopup(!showPopup)
+            }}
+            className='relative'>
+            {iconRender(showPopup)}
+          </Button>
+        )}
+        {body}
       </div>
       {showDeactivateModal && (
         <DeactivateAdvModal
