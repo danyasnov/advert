@@ -38,6 +38,7 @@ interface IFormikSelect {
   isClearable: boolean
   isMulti: boolean
   filterStyle?: boolean
+  isIconSelect?: boolean
   styles?: Record<any, any>
 }
 interface IFormikRange {
@@ -689,8 +690,8 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit ${
-        show ? 'border border-primary-500' : ''
+      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
+        show ? 'border-primary-500' : 'border-transparent'
       }`}
       ref={ref}>
       <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>

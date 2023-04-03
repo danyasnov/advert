@@ -29,6 +29,7 @@ export interface SelectItem {
   value: string | number
   label: string
   disabled?: boolean
+  icon?: string
 }
 
 const OPTION_HEIGHT = 52

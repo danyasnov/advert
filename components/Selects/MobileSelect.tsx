@@ -10,7 +10,6 @@ import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import ImageWrapper from '../ImageWrapper'
 
 const MobileSelect: FC<SelectProps> = ({
   options,
@@ -44,71 +43,58 @@ const MobileSelect: FC<SelectProps> = ({
 
   let body
 
-  if (isIconSelect) console.log('filtered', filtered)
   if (isIconSelect) {
     body = (
       <div
-        className={`w-full grid grid-cols-3 mt-15 ${
+        className={`w-full grid grid-cols-3 gap-2 px-4 ${
           isMulti ? 'mb-20' : 'mb-10'
-        }`}>
+        }  ${isSearchable ? 'mt-25' : 'mt-15'}`}>
         {open &&
-          filtered.map((f, index) => (
-            <Button
-              // @ts-ignore
-              disabled={f.disabled}
-              key={f.value}
-              className={`w-full w-[104px] h-[104px] ${
+          filtered.map((f) => {
+            // @ts-ignore
+            const isSelected = value.some((v) => v.value === f.value)
+            return (
+              <Button
                 // @ts-ignore
-                f.disabled ? 'text-greyscale-900' : ''
-              }`}
-              onClick={() => {
-                if (isMulti) {
+                disabled={f.disabled}
+                key={f.value}
+                className={`w-full w-[104px] h-[104px] ${
                   // @ts-ignore
-                  const newFiltered = value.filter((v) => v.value !== f.value)
-                  if (size(value) !== size(newFiltered)) {
-                    onChange(newFiltered)
-                  } else {
+                  f.disabled ? 'text-greyscale-900' : ''
+                }`}
+                onClick={() => {
+                  if (isMulti) {
                     // @ts-ignore
-                    onChange([...value, f])
+                    const newFiltered = value.filter((v) => v.value !== f.value)
+                    if (size(value) !== size(newFiltered)) {
+                      onChange(newFiltered)
+                    } else {
+                      // @ts-ignore
+                      onChange([...value, f])
+                    }
+                  } else {
+                    onChange(f)
+                    onClose()
                   }
-                } else {
-                  onChange(f)
-                  onClose()
-                }
-              }}>
-              <div className='w-[102px] h-[102px] border-2  border-primary-500 rounded-3xl flex flex-col items-center justify-center'>
-                <img src={f.icon} alt={f.label} width={64} height={64} />
-                <span className='truncate w-full font-medium text-body-14 px-4'>
-                  {f.label}
-                </span>
-              </div>
-
-              {/* <div className='w-full flex items-center justify-between py-4'> */}
-              {/*  <span className='text-body-16 text-nc-text-primary'> */}
-              {/*    {f.label} */}
-              {/*  </span> */}
-              {/*  {isMulti && !f.disabled && ( */}
-              {/*    <> */}
-              {/*      <input */}
-              {/*        type='checkbox' */}
-              {/*        readOnly */}
-              {/*        checked={ */}
-              {/*          // @ts-ignore */}
-              {/*          !!value.find((v) => v.value === f.value) */}
-              {/*        } */}
-              {/*        className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer' */}
-              {/*      /> */}
-              {/*      <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'> */}
-              {/*        <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' /> */}
-              {/*      </div> */}
-              {/*    </> */}
-              {/*  )} */}
-              {/*  {f.value === value?.value && !isMulti && ( */}
-              {/*    <IcCheck className='fill-current text-primary-500 h-4 w-4' /> */}
-              {/*  )} */}
-              {/* </div> */}
-            </Button>
-          ))}
+                }}>
+                <div
+                  className={`w-[102px] h-[102px] border-2 border-primary-500 rounded-3xl flex flex-col items-center justify-center ${
+                    isSelected ? 'bg-primary-500 text-white' : ''
+                  }`}>
+                  <img
+                    src={f.icon}
+                    alt={f.label}
+                    width={64}
+                    height={64}
+                    className={`${isSelected ? 'invert brightness-0' : ''}`}
+                  />
+                  <span className='truncate w-full font-medium text-body-14 px-4'>
+                    {f.label}
+                  </span>
+                </div>
+              </Button>
+            )
+          })}
       </div>
     )
   } else {
@@ -147,9 +133,14 @@ const MobileSelect: FC<SelectProps> = ({
                 }
               }}>
               <div className='w-full flex items-center justify-between py-4'>
-                <span className='text-body-16 text-nc-text-primary'>
-                  {f.label}
-                </span>
+                <div className='flex space-x-3'>
+                  {!!f.icon && (
+                    <img src={f.icon} alt={f.label} width={20} height={20} />
+                  )}
+                  <span className='text-body-16 text-nc-text-primary'>
+                    {f.label}
+                  </span>
+                </div>
                 {isMulti && !f.disabled && (
                   <>
                     <input
@@ -157,7 +148,7 @@ const MobileSelect: FC<SelectProps> = ({
                       readOnly
                       checked={
                         // @ts-ignore
-                        !!value.find((v) => v.value === f.value)
+                        value.some((v) => v.value === f.value)
                       }
                       className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
                     />
