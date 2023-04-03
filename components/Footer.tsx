@@ -76,7 +76,7 @@ const Footer: FC = observer(() => {
           />
           <Section
             title={t('STAY_IN_TOUCH')}
-            className='m:col-span-3 l:col-span-2'
+            className='m:col-span-3'
             body={
               <>
                 <div className='text-body-16 text-greyscale-800 capitalize-first mb-5 l:mb-6'>
