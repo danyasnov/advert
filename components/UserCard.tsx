@@ -2,9 +2,7 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import IcAds from 'icons/material/Ads.svg'
-import IcPersonAdd from 'icons/material/PersonAdd.svg'
 import {toJS} from 'mobx'
-import {AddUser} from 'react-iconly'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDate} from '../utils'
 import ImageWrapper from './ImageWrapper'
@@ -14,6 +12,7 @@ import LinkWrapper from './Buttons/LinkWrapper'
 import Button from './Buttons/Button'
 import PrimaryButton from './Buttons/PrimaryButton'
 import OutlineButton from './Buttons/OutlineButton'
+import SubscribeOnUser from './SubscribeOnUser'
 
 const UserCard: FC = observer(() => {
   const {product} = useProductsStore()
@@ -58,10 +57,14 @@ const UserCard: FC = observer(() => {
         <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40 text-center'>
           {product.owner.name}
         </h3>
-        {/* <Button className='text-primary-500 space-x-1.5 mb-2'> */}
-        {/*  <AddUser size={16} filled /> */}
-        {/*  <span className='text-body-16 font-normal'>{t('SUBSCRIBE')}</span> */}
-        {/* </Button> */}
+        <div className='mb-6'>
+          <SubscribeOnUser
+            isSubscribed={product.owner.isSubscribed}
+            ownerId={product.owner.hash}
+            type='card'
+          />
+        </div>
+
         <div className='flex justify-between mb-8 s:mb-6'>
           <div>{langs}</div>
         </div>

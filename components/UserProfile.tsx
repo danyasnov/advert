@@ -6,6 +6,7 @@ import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
 import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
 import EditProfilePopup from './EditProfilePopup'
+import SubscribeOnUser from './SubscribeOnUser'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -37,13 +38,20 @@ const UserProfile: FC = observer(() => {
             {t('ONLINE')}
           </span>
 
-          <span className='text-body-16 s:text-h-5 text-greyscale-900 font-bold mb-1 s:mb-8 break-words text-left s:text-center w-full'>
+          <span className='text-body-16 s:text-h-5 text-greyscale-900 font-bold mb-1 s:mb-3 break-words text-left s:text-center w-full'>
             {/* @ts-ignore */}
             {user.name} {user.surname}
           </span>
           <span className='s:hidden mb-4 text-body-14 text-green text-center'>
             {t('ONLINE')}
           </span>
+          <div className='hidden s:block mb-6'>
+            <SubscribeOnUser
+              isSubscribed={user.isSubscribed}
+              ownerId={user.hash}
+              type='profile'
+            />
+          </div>
         </div>
       </div>
 
@@ -67,7 +75,15 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
+
       <div className='flex flex-col space-y-4 items-center'>
+        <div className='s:hidden items-center'>
+          <SubscribeOnUser
+            isSubscribed={user.isSubscribed}
+            ownerId={user.hash}
+            type='profileSmall'
+          />
+        </div>
         <SharePopup userHash={user.hash} />
         {isCurrentUser && <EditProfilePopup />}
       </div>
