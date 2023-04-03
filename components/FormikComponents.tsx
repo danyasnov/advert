@@ -146,7 +146,6 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isClearable = false
       props.isIconSelect = fieldType === 'iconselect'
 
-      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
