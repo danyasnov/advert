@@ -138,7 +138,7 @@ const SearchAutocomplete: FC<Props> = observer(
               },
             })}
             placeholder={placeholder}
-            className='pl-6 pl-3.5 pr-12 py-2.5 text-greyscale-900 max-h-[38px] text-body-14 rounded-2 w-full h-full -my-1px manual-outline outline-none'
+            className='pl-6 pr-12 py-2.5 text-greyscale-900 max-h-[38px] text-body-14 rounded-2 w-full -my-1px manual-outline outline-none'
             id='search-autocomplete'
           />
         </div>
