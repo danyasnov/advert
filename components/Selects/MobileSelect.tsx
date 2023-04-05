@@ -10,6 +10,7 @@ import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {IconItem} from './IconSelect'
 
 const MobileSelect: FC<SelectProps> = ({
   options,
@@ -54,46 +55,16 @@ const MobileSelect: FC<SelectProps> = ({
             // @ts-ignore
             const isSelected = value.some((v) => v.value === f.value)
             return (
-              <Button
-                // @ts-ignore
-                disabled={f.disabled}
-                key={f.value}
-                className={`w-full w-[104px] h-[104px] ${
-                  // @ts-ignore
-                  f.disabled ? 'text-greyscale-900' : ''
-                }`}
-                onClick={() => {
-                  if (isMulti) {
-                    // @ts-ignore
-                    const newFiltered = value.filter((v) => v.value !== f.value)
-                    if (size(value) !== size(newFiltered)) {
-                      onChange(newFiltered)
-                    } else {
-                      // @ts-ignore
-                      onChange([...value, f])
-                    }
-                  } else {
-                    onChange(f)
-                    onClose()
-                  }
-                }}>
-                <div
-                  className={`w-[102px] h-[102px] border-2 border-primary-500 rounded-3xl flex flex-col items-center justify-center ${
-                    isSelected ? 'bg-primary-500 text-white' : ''
-                  }`}>
-                  <img
-                    src={f.icon}
-                    alt={f.label}
-                    width={64}
-                    height={64}
-                    className={`${isSelected ? 'invert brightness-0' : ''}`}
-                  />
-                  <span className='truncate w-full font-medium text-body-14 px-4'>
-                    {f.label}
-                  </span>
-                </div>
-              </Button>
+              <IconItem
+                item={f}
+                value={value}
+                isSelected={isSelected}
+                isMulti={isMulti}
+                onChange={onChange}
+                onClose={onClose}
+              />
             )
+            // @ts-ignore
           })}
       </div>
     )

@@ -19,6 +19,7 @@ import {makeRequest} from '../api'
 import {FilterStyles} from './Selects/styles'
 import PrimaryButton from './Buttons/PrimaryButton'
 import useOnClickOutside from '../hooks/useOnClickOutside'
+import IconSelect from './Selects/IconSelect'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -1060,15 +1061,21 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
       }
     }
   }
+
+  let component
+  if (width >= 768) {
+    if (isIconSelect) {
+      component = <IconSelect {...props} />
+    } else {
+      component = <Select {...props} />
+    }
+  } else {
+    component = <MobileSelect {...props} />
+  }
+
   return (
     <div>
-      {width >= 768 ? (
-        //  eslint-disable-next-line react/jsx-props-no-spreading
-        <Select {...props} />
-      ) : (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        <MobileSelect {...props} />
-      )}
+      {component}
       <span className='text-body-12 text-error'>{error}</span>
     </div>
   )
