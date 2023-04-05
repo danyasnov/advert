@@ -16,3 +16,11 @@ export default async (
     },
   )
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '2mb',
+    },
+  },
+}
