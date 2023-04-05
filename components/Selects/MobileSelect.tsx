@@ -55,16 +55,17 @@ const MobileSelect: FC<SelectProps> = ({
             // @ts-ignore
             const isSelected = value.some((v) => v.value === f.value)
             return (
-              <IconItem
-                item={f}
-                value={value}
-                isSelected={isSelected}
-                isMulti={isMulti}
-                onChange={onChange}
-                onClose={onClose}
-              />
+              <div className='flex justify-center'>
+                <IconItem
+                  item={f}
+                  value={value}
+                  isSelected={isSelected}
+                  isMulti={isMulti}
+                  onChange={onChange}
+                  onClose={onClose}
+                />
+              </div>
             )
-            // @ts-ignore
           })}
       </div>
     )
