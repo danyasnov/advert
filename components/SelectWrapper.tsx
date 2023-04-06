@@ -18,6 +18,7 @@ const SelectWrapper: FC<SelectProps> = ({
   isInvalid,
   components,
   classNameOpt,
+  filterStyle,
 }) => {
   const {width} = useWindowSize()
   if (isEmpty(options)) return null
@@ -37,6 +38,7 @@ const SelectWrapper: FC<SelectProps> = ({
         components={components}
         classNameOpt={classNameOpt}
         onChange={onChange}
+        filterStyle={filterStyle}
       />
     )
   }

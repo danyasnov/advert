@@ -446,18 +446,20 @@ export const getFilterFromQuery = (
           case 'iconselect':
           case 'multiselect': {
             // @ts-ignore
-            parsedValue = parsedValue.map(
-              (valueId) =>
-                [
-                  // @ts-ignore
-                  ...currentField.multiselects.top,
-                  // @ts-ignore
-                  ...(currentField.multiselects.other
-                    ? // @ts-ignore
-                      currentField.multiselects.other
-                    : []),
-                ].find((m) => m.value === valueId)?.id,
-            )
+            parsedValue = parsedValue
+              .map(
+                (valueId) =>
+                  [
+                    // @ts-ignore
+                    ...currentField.multiselects.top,
+                    // @ts-ignore
+                    ...(currentField.multiselects.other
+                      ? // @ts-ignore
+                        currentField.multiselects.other
+                      : []),
+                  ].find((m) => m.value === valueId)?.id,
+              )
+              .filter((v) => !!v)
             break
           }
           case 'checkbox': {

@@ -1039,6 +1039,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     classNameOpt: {},
     isInvalid: !!error,
     isIconSelect,
+    filterStyle,
     onChange: (item) => {
       if (item?.value === 'other_value_button') {
         setCurrentOptions([
