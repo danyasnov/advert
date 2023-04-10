@@ -39,6 +39,11 @@ const getTabs = (t: TFunction, sizes) => [
   {title: `${t('ARCHIVE')}`, id: 4, count: sizes[4]},
 ]
 
+const getSubscribeTabs = (t: TFunction, sizes) => [
+  {title: `${t('SUBSCRIBERS')}`, id: 1, count: sizes[1]},
+  {title: `${t('SUBSCRIPTIONS')}`, id: 2, count: sizes[2]},
+]
+
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
@@ -107,6 +112,10 @@ const UserLayout: FC = observer(() => {
     2: userSale.count,
     3: isNumber(userSold.count) ? userSold.count : '',
     4: isNumber(userArchive.count) ? userArchive.count : '',
+  })
+  const subscribeTabs = getSubscribeTabs(t, {
+    1: isNumber(user.subscribers) ? user.subscribers : '',
+    2: isNumber(user.subscribs) ? user.subscribs : '',
   })
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
     (d) => {
@@ -275,7 +284,29 @@ const UserLayout: FC = observer(() => {
                   <UserSidebar />
                 </div>
               )}
-
+              {(desktopUser ||
+                activeUserPage === 'subscribers' ||
+                mobileUser) && (
+                <div>
+                  <SectionTitle
+                    title={t(
+                      isCurrentUser ? 'MY_PROFILE' : 'Followers & Follows',
+                    )}
+                  />
+                  <div className='z-10 relative mb-10'>
+                    <Tabs
+                      items={subscribeTabs}
+                      onChange={(id) => {
+                        robustShallowUpdateQuery(router, {
+                          page: 'subscribers',
+                          activeTab: id,
+                        })
+                      }}
+                      value={activeTab}
+                    />
+                  </div>
+                </div>
+              )}
               {(desktopUser || activeUserPage === 'adverts' || mobileUser) && (
                 <div>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
