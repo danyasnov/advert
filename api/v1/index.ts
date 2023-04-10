@@ -8,6 +8,7 @@ import {
   AuthType,
   AuthUserResponse,
   CurrencyModel,
+  UserModel,
 } from 'front-api/src/models'
 import {SettingsLanguageModel, LocationModel} from 'front-api'
 import NodeCache from 'node-cache'
@@ -235,4 +236,13 @@ export const fetchCurrenciesByGPS = async (
   const storage = new Storage({language})
   const rest = getRest(storage)
   return rest.geo.fetchCurrencyByLocation(location)
+}
+
+export const subscribeOnUser = async (
+  storage: Storage,
+  userId: string,
+  isAlreadySubscribed: boolean,
+): Promise<RestResponse<UserModel[]>> => {
+  const rest = getRest(storage)
+  return rest.user.restToggleSubscription(userId, isAlreadySubscribed)
 }

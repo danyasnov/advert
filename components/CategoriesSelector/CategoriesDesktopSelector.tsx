@@ -2,11 +2,9 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
-import {isEmpty} from 'lodash'
 import {useCategoriesStore} from '../../providers/RootStoreProvider'
 import {FirstColItem, Col} from './columns'
 import {getLocationCodes} from '../../helpers'
-import ImageWrapper from '../ImageWrapper'
 
 const CategoriesDesktopSelector: FC = observer(() => {
   const {t} = useTranslation()

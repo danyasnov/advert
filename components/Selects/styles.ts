@@ -167,4 +167,39 @@ export const FilterStyles = {
     fontSize: '12px',
     lineHeight: '14px',
   }),
+  menu: (provided) => ({
+    ...provided,
+    width: '220px',
+    padding: '10px 20px',
+    borderRadius: '16px',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+    overflow: 'hidden',
+  }),
+  option: (provided, state) => {
+    const isDisabled = !!state.data.disabled
+    return {
+      ...provided,
+      fontSize: '12px',
+      lineHeight: '14px',
+      height: '100%',
+      padding: 0,
+      paddingTop: '0',
+      paddingBottom: '0',
+      color: '#212121',
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+      alignItems: 'center',
+      ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
+      backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
+      '&:hover ': {
+        backgroundColor: '#fff',
+        color: '#7210FF',
+      },
+      ...(isDisabled
+        ? {'&:hover': {}, color: 'hsl(0, 0%, 80%)', backgroundColor: '#FFFFFF'}
+        : {}),
+    }
+  },
 }

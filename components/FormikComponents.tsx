@@ -19,6 +19,7 @@ import {makeRequest} from '../api'
 import {FilterStyles} from './Selects/styles'
 import PrimaryButton from './Buttons/PrimaryButton'
 import useOnClickOutside from '../hooks/useOnClickOutside'
+import IconSelect from './Selects/IconSelect'
 
 interface IFormikSegmented {
   options: SelectItem[]
@@ -38,6 +39,7 @@ interface IFormikSelect {
   isClearable: boolean
   isMulti: boolean
   filterStyle?: boolean
+  isIconSelect?: boolean
   styles?: Record<any, any>
 }
 interface IFormikRange {
@@ -75,6 +77,7 @@ interface FieldOptions {
   maxLength?: number
   maxValue?: number
   filterStyle?: boolean
+  isIconSelect?: boolean
   minValue?: number
   validate?: (value: any) => string
 }
@@ -93,6 +96,7 @@ export const getSelectOptions = (multiselects = {}) => {
     .map((o) => ({
       value: o.id,
       label: o.value,
+      icon: o.icon,
       disabled: o.itemType === 'title',
     }))
 }
@@ -141,7 +145,9 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.isMulti = true
       props.filterStyle = true
       props.isClearable = false
+      props.isIconSelect = fieldType === 'iconselect'
 
+      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
@@ -685,11 +691,13 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit ${
-        show ? 'border border-primary-500' : ''
+      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
+        show ? 'border-primary-500' : 'border-transparent'
       }`}
       ref={ref}>
-      <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
+      <Button
+        onClick={() => setShow(!show)}
+        className='w-full pl-3 pr-6 s:pr-7'>
         <div className='flex justify-between w-full text-body-12'>
           {displayValue ? (
             <span className='text-greyscale-900 flex items-center'>
@@ -705,7 +713,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           )}
 
           <IcArrowDown
-            className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 ${
+            className={`fill-current text-greyscale-900 h-5 w-5 shrink-0 -mr-2 ${
               show ? 'rotate-180 text-primary-500' : ''
             }`}
           />
@@ -997,6 +1005,7 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isMulti,
   isClearable,
   filterStyle,
+  isIconSelect,
 }) => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -1031,6 +1040,8 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     styles: {},
     classNameOpt: {},
     isInvalid: !!error,
+    isIconSelect,
+    filterStyle,
     onChange: (item) => {
       if (item?.value === 'other_value_button') {
         setCurrentOptions([
@@ -1053,15 +1064,21 @@ export const FormikSelect: FC<IFormikSelect & FieldProps> = ({
       }
     }
   }
+
+  let component
+  if (width >= 768) {
+    if (isIconSelect) {
+      component = <IconSelect {...props} />
+    } else {
+      component = <Select {...props} />
+    }
+  } else {
+    component = <MobileSelect {...props} />
+  }
+
   return (
     <div>
-      {width >= 768 ? (
-        //  eslint-disable-next-line react/jsx-props-no-spreading
-        <Select {...props} />
-      ) : (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        <MobileSelect {...props} />
-      )}
+      {component}
       <span className='text-body-12 text-error'>{error}</span>
     </div>
   )

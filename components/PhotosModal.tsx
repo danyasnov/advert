@@ -139,7 +139,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
             enabled={previewSlider.prevBtnEnabled}
             direction='left'
             size={25}
-            className='absolute inset-y-0 -left-20'
+            className='absolute inset-y-0 -left-20 l:w-24'
           />
           <div
             className='overflow-hidden s:w-[464px] m:w-[664px] l:w-[936px]'
@@ -153,6 +153,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
                     index={index}
                     activePhotoIndex={activePhotoIndex}
                     type={item.type}
+                    className='w-[104px] m:w-[135px] h-15 m:h-[72px]'
                   />
                 </div>
               ))}
@@ -165,7 +166,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
             enabled={previewSlider.nextBtnEnabled}
             direction='right'
             size={25}
-            className='absolute inset-y-0 -right-20'
+            className='absolute inset-y-0 -right-20 l:w-24'
           />
         </div>
       </div>
@@ -174,14 +175,14 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
         enabled={photoSlider.prevBtnEnabled}
         direction='left'
         size={40}
-        className='absolute inset-y-0 left-0'
+        className='absolute inset-y-0 left-0 l:w-24'
       />
       <FullHeightSliderButton
         onClick={photoSlider.scrollNext}
         enabled={photoSlider.nextBtnEnabled}
         direction='right'
         size={40}
-        className='absolute inset-y-0 right-0'
+        className='absolute inset-y-0 right-0 l:w-24'
       />
     </ReactModal>
   )

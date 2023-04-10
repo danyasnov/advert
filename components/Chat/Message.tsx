@@ -20,7 +20,7 @@ const Message: FC<Props> = ({message, user}) => {
       }`}>
       <div className={`mb-2 flex ${isMyMessage ? 'self-end' : 'self-start'}`}>
         <span className='text-body-12 font-normal text-gray-500'>
-          {unixToTime(message.date)}
+          {unixMlToTime(message.date)}
         </span>
         {isMyMessage && (
           <div className='ml-2'>

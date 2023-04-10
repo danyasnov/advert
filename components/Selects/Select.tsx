@@ -18,7 +18,9 @@ export interface SelectProps {
   isMulti?: boolean
   isInvalid?: boolean
   menuIsOpen?: boolean
+  isIconSelect?: boolean
   id?: string
+  filterStyle?: boolean
   styles?
   components?
   classNameOpt?
@@ -28,42 +30,48 @@ export interface SelectItem {
   value: string | number
   label: string
   disabled?: boolean
+  icon?: string
 }
 
-const OPTION_HEIGHT = 52
 const ROWS = 10
 
-const MenuList = ({options, children, getValue}) => {
-  const [value] = getValue()
-  let initialOffset
-  if (
-    options.indexOf(value) !== -1 &&
-    Array.isArray(children) &&
-    children.length >= ROWS &&
-    options.indexOf(value) >= ROWS
-  ) {
-    initialOffset = options.indexOf(value) * OPTION_HEIGHT - OPTION_HEIGHT * 5
-  } else {
-    initialOffset = 0
-  }
+const MenuList = (optionHeight) => {
+  return ({options, children, getValue}) => {
+    const [value] = getValue()
+    let initialOffset
+    if (
+      options.indexOf(value) !== -1 &&
+      Array.isArray(children) &&
+      children.length >= ROWS &&
+      options.indexOf(value) >= ROWS
+    ) {
+      initialOffset = options.indexOf(value) * optionHeight - optionHeight * 5
+    } else {
+      initialOffset = 0
+    }
 
-  return Array.isArray(children) ? (
-    <List
-      height={
-        children.length >= ROWS
-          ? OPTION_HEIGHT * ROWS
-          : children.length * OPTION_HEIGHT
-      }
-      itemCount={children.length}
-      itemSize={OPTION_HEIGHT}
-      initialScrollOffset={initialOffset}>
-      {({style, index}) => {
-        return <div style={style}>{children[index]}</div>
-      }}
-    </List>
-  ) : (
-    <div>{children}</div>
-  )
+    return Array.isArray(children) ? (
+      <List
+        height={
+          children.length >= ROWS
+            ? optionHeight * ROWS
+            : children.length * optionHeight
+        }
+        itemCount={children.length}
+        itemSize={optionHeight}
+        initialScrollOffset={initialOffset}>
+        {({style, index}) => {
+          return (
+            <div style={style} className='flex items-center'>
+              {children[index]}
+            </div>
+          )
+        }}
+      </List>
+    ) : (
+      <div>{children}</div>
+    )
+  }
 }
 
 const DropdownIndicator = (props) => {
@@ -103,6 +111,7 @@ const Option = (props) => {
 }
 
 const Select: FC<SelectProps> = ({
+  filterStyle,
   options,
   placeholder,
   onChange,
@@ -156,7 +165,7 @@ const Select: FC<SelectProps> = ({
         isOptionDisabled={(option) => option.disabled}
         className='react-select'
         components={{
-          MenuList,
+          MenuList: MenuList(filterStyle ? 30 : 52),
           DropdownIndicator,
           ...(isMulti ? {Option} : {}),
           ...(components || {}),

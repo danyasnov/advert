@@ -83,6 +83,7 @@ const SortSelect: FC<{id?: string}> = observer(({id}) => {
       isSearchable={false}
       placeholder={t('SORTING_ORDER')}
       classNameOpt={mobileStyles}
+      filterStyle
     />
   )
 })

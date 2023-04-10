@@ -10,6 +10,7 @@ import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import {IconItem} from './IconSelect'
 
 const MobileSelect: FC<SelectProps> = ({
   options,
@@ -20,6 +21,7 @@ const MobileSelect: FC<SelectProps> = ({
   isMulti,
   isInvalid,
   classNameOpt,
+  isIconSelect,
 }) => {
   const {t} = useTranslation()
   const [open, setOpen] = useState(false)
@@ -39,6 +41,104 @@ const MobileSelect: FC<SelectProps> = ({
   } else {
     isEmptyValue = !value?.value && value?.value !== 0
   }
+
+  let body
+
+  if (isIconSelect) {
+    body = (
+      <div
+        className={`w-full grid grid-cols-3 gap-2 px-4 ${
+          isMulti ? 'mb-20' : 'mb-10'
+        }  ${isSearchable ? 'mt-25' : 'mt-15'}`}>
+        {open &&
+          filtered.map((f) => {
+            // @ts-ignore
+            const isSelected = value.some((v) => v.value === f.value)
+            return (
+              <div className='flex justify-center'>
+                <IconItem
+                  item={f}
+                  value={value}
+                  isSelected={isSelected}
+                  isMulti={isMulti}
+                  onChange={onChange}
+                  onClose={onClose}
+                />
+              </div>
+            )
+          })}
+      </div>
+    )
+  } else {
+    body = (
+      <div
+        className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
+          isSearchable ? 'mt-25' : 'mt-10'
+        }`}>
+        {open &&
+          filtered.map((f, index) => (
+            <Button
+              // @ts-ignore
+              disabled={f.disabled}
+              key={f.value}
+              className={`w-full px-4 border-b ${
+                index === filtered.length - 1
+                  ? 'border-transparent'
+                  : 'border-nc-border'
+              } ${
+                // @ts-ignore
+                f.disabled ? 'text-greyscale-900' : ''
+              }`}
+              onClick={() => {
+                if (isMulti) {
+                  // @ts-ignore
+                  const newFiltered = value.filter((v) => v.value !== f.value)
+                  if (size(value) !== size(newFiltered)) {
+                    onChange(newFiltered)
+                  } else {
+                    // @ts-ignore
+                    onChange([...value, f])
+                  }
+                } else {
+                  onChange(f)
+                  onClose()
+                }
+              }}>
+              <div className='w-full flex items-center justify-between py-4'>
+                <div className='flex space-x-3'>
+                  {!!f.icon && (
+                    <img src={f.icon} alt={f.label} width={20} height={20} />
+                  )}
+                  <span className='text-body-16 text-nc-text-primary'>
+                    {f.label}
+                  </span>
+                </div>
+                {isMulti && !f.disabled && (
+                  <>
+                    <input
+                      type='checkbox'
+                      readOnly
+                      checked={
+                        // @ts-ignore
+                        value.some((v) => v.value === f.value)
+                      }
+                      className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
+                    />
+                    <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
+                      <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+                    </div>
+                  </>
+                )}
+                {f.value === value?.value && !isMulti && (
+                  <IcCheck className='fill-current text-primary-500 h-4 w-4' />
+                )}
+              </div>
+            </Button>
+          ))}
+      </div>
+    )
+  }
+
   return (
     <div>
       <Button
@@ -65,7 +165,7 @@ const MobileSelect: FC<SelectProps> = ({
                   : value.label}
               </span>
             )}
-            <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
+            <IcArrowDown className='fill-current text-greyscale-900 shrink-0 h-5 w-5 -mr-2' />
           </div>
         </div>
       </Button>
@@ -117,68 +217,7 @@ const MobileSelect: FC<SelectProps> = ({
               </div>
             )}
           </div>
-          <div
-            className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
-              isSearchable ? 'mt-25' : 'mt-10'
-            }`}>
-            {open &&
-              filtered.map((f, index) => (
-                <Button
-                  // @ts-ignore
-                  disabled={f.disabled}
-                  key={f.value}
-                  className={`w-full px-4 border-b ${
-                    index === filtered.length - 1
-                      ? 'border-transparent'
-                      : 'border-nc-border'
-                  } ${
-                    // @ts-ignore
-                    f.disabled ? 'text-greyscale-900' : ''
-                  }`}
-                  onClick={() => {
-                    if (isMulti) {
-                      // @ts-ignore
-                      const newFiltered = value.filter(
-                        (v) => v.value !== f.value,
-                      )
-                      if (size(value) !== size(newFiltered)) {
-                        onChange(newFiltered)
-                      } else {
-                        // @ts-ignore
-                        onChange([...value, f])
-                      }
-                    } else {
-                      onChange(f)
-                      onClose()
-                    }
-                  }}>
-                  <div className='w-full flex items-center justify-between py-4'>
-                    <span className='text-body-16 text-nc-text-primary'>
-                      {f.label}
-                    </span>
-                    {isMulti && !f.disabled && (
-                      <>
-                        <input
-                          type='checkbox'
-                          readOnly
-                          checked={
-                            // @ts-ignore
-                            !!value.find((v) => v.value === f.value)
-                          }
-                          className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-                        />
-                        <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
-                          <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
-                        </div>
-                      </>
-                    )}
-                    {f.value === value?.value && !isMulti && (
-                      <IcCheck className='fill-current text-primary-500 h-4 w-4' />
-                    )}
-                  </div>
-                </Button>
-              ))}
-          </div>
+          {body}
           {isMulti && (
             <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white drop-shadow-card'>
               <SecondaryButton

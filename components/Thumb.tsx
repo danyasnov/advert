@@ -5,19 +5,19 @@ import ImageWrapper from './ImageWrapper'
 
 interface ThumbProps {
   url: string
+  className: string
   onHover: (number) => void
   index: number
   activePhotoIndex: number
 }
-const className =
-  'w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden shrink-0 border-[3px]'
-// 'mx-1 s:mx-2 m:mx-3 l:mx-2 mb-2 s:mb-4 m:mb-6 l:mb-4 w-[104px] h-15 m:w-[135px] m:h-[72px] relative rounded-xl overflow-hidden'
+const styles = 'relative rounded-xl overflow-hidden shrink-0 border-[3px]'
 
 export const PhotoThumb: FC<ThumbProps> = ({
   url,
   onHover,
   index,
   activePhotoIndex,
+  className,
 }) => {
   const ref = useRef()
 
@@ -29,7 +29,7 @@ export const PhotoThumb: FC<ThumbProps> = ({
   }, [index, isHovering, onHover])
   return (
     <div
-      className={`${className} ${
+      className={`${styles} ${className} ${
         isHovering || activePhotoIndex === index
           ? 'border-primary-500'
           : 'border-transparent'
@@ -51,6 +51,7 @@ export const VideoThumb: FC<ThumbProps> = ({
   index,
   onHover,
   activePhotoIndex,
+  className,
 }) => {
   const ref = useRef()
 
@@ -63,7 +64,7 @@ export const VideoThumb: FC<ThumbProps> = ({
   return (
     <div
       ref={ref}
-      className={`${className} bg-black flex justify-center items-center border ${
+      className={`${styles} ${className} bg-black flex justify-center items-center border ${
         isHovering || activePhotoIndex === index
           ? 'border-primary-500'
           : 'border-transparent'
@@ -79,6 +80,7 @@ export const Thumb: FC<ThumbProps & {type: string}> = ({
   index,
   activePhotoIndex,
   type,
+  className,
 }) => {
   return type === 'video' ? (
     <VideoThumb
@@ -87,6 +89,7 @@ export const Thumb: FC<ThumbProps & {type: string}> = ({
       onHover={onHover}
       index={index}
       activePhotoIndex={activePhotoIndex}
+      className={className}
     />
   ) : (
     <PhotoThumb
@@ -95,6 +98,7 @@ export const Thumb: FC<ThumbProps & {type: string}> = ({
       onHover={onHover}
       index={index}
       activePhotoIndex={activePhotoIndex}
+      className={className}
     />
   )
 }

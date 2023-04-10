@@ -34,21 +34,27 @@ const ProductMap: FC = observer(() => {
 
   return (
     <div className='bg-white rounded-2xl text-body-14 text-greyscale-900 flex flex-col shadow-1'>
-      <div className='flex justify-between p-5'>
-        <div className='flex items-center'>
-          <div className='fill-current text-primary-500 mr-2'>
-            <Location size={20} filled />
+      <Button
+        className='group'
+        onClick={() => setMapVisible(!mapVisible)}
+        id='map'>
+        <div className='flex justify-between p-5 w-full'>
+          <div className='flex items-center '>
+            <div className='fill-current text-primary-500 mr-2'>
+              <Location size={20} filled />
+            </div>
+            <span>{advert.location.description}</span>
           </div>
-          <span>{advert.location.description}</span>
+          <div className='flex items-center'>
+            <IcArrowDown
+              className={`w-5 h-5 fill-current text-greyscale-900 group-hover:text-primary-500 ${
+                mapVisible ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
         </div>
-        <Button onClick={() => setMapVisible(!mapVisible)} id='map'>
-          <IcArrowDown
-            className={`w-5 h-5 fill-current text-greyscale-900 hover:text-primary-500 ${
-              mapVisible ? 'rotate-180' : ''
-            }`}
-          />
-        </Button>
-      </div>
+      </Button>
+
       {mapVisible && (
         <div
           className='h-96 overflow-hidden rounded-2xl mb-5 mx-5'

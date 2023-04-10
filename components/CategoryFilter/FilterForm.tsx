@@ -276,6 +276,7 @@ const FilterForm: FC = observer(() => {
           <SelectWrapper
             styles={FilterStyles}
             id='SUBCATEGORY'
+            filterStyle
             placeholder={t('SUBCATEGORY')}
             value={currentOption}
             options={options}
