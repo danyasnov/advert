@@ -43,7 +43,9 @@ const Header: FC = observer(() => {
             <div className='-mr-3 z-10'>
               <CategoriesSelector />
             </div>
-            <Search />
+            <div className='w-full max-h-[38px]'>
+              <Search />
+            </div>
           </div>
           <Button
             className='h-10 w-10 min-w-[40px] m:min-w-fit rounded-full bg-primary-500 text-white'
