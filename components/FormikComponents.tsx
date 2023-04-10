@@ -695,7 +695,9 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
         show ? 'border-primary-500' : 'border-transparent'
       }`}
       ref={ref}>
-      <Button onClick={() => setShow(!show)} className='w-full pl-3 pr-5'>
+      <Button
+        onClick={() => setShow(!show)}
+        className='w-full pl-3 pr-6 s:pr-7'>
         <div className='flex justify-between w-full text-body-12'>
           {displayValue ? (
             <span className='text-greyscale-900 flex items-center'>
@@ -711,7 +713,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           )}
 
           <IcArrowDown
-            className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 ${
+            className={`fill-current text-greyscale-900 h-5 w-5 shrink-0 -mr-2 ${
               show ? 'rotate-180 text-primary-500' : ''
             }`}
           />

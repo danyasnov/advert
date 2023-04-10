@@ -34,7 +34,7 @@ const IconSelect: FC<SelectProps> = ({
         show ? 'border-primary-500 bg-primary-100' : 'border-transparent'
       }`}
       ref={ref}>
-      <Button className='w-full pl-3 pr-5' onClick={() => setShow(!show)}>
+      <Button className='w-full pl-3 pr-7' onClick={() => setShow(!show)}>
         <div className='flex justify-between items-center w-full text-body-12'>
           {isEmptyValue ? (
             <span className='text-greyscale-500 truncate'>{placeholder}</span>

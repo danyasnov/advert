@@ -165,7 +165,7 @@ const MobileSelect: FC<SelectProps> = ({
                   : value.label}
               </span>
             )}
-            <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
+            <IcArrowDown className='fill-current text-greyscale-900 shrink-0 h-5 w-5 -mr-2' />
           </div>
         </div>
       </Button>
