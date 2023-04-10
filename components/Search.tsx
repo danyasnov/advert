@@ -24,36 +24,40 @@ const Search: FC = () => {
 
   return (
     <>
-      <div className='flex w-full border rounded-2 border-greyscale-200 relative'>
-        <SearchAutocomplete
-          selectedItem={selectedItem}
-          handleSelectedItemChange={setSelectedItem}
-        />
-        <div className='flex absolute right-0 inset-y-0'>
-          <Button
-            type='submit'
-            id='location'
-            onClick={() => setLocationModalShow(true)}
-            className='text-primary-500 px-5'>
-            <IcMap width={20} height={20} />
-          </Button>
-          <div className='hidden s:block absolute top-14 -right-20'>
-            <LocationPopup onOpenLocation={() => setLocationModalShow(true)} />
+      <div className='w-full max-h-[38px]'>
+        <div className='flex w-full border rounded-2 border-greyscale-200 relative'>
+          <SearchAutocomplete
+            selectedItem={selectedItem}
+            handleSelectedItemChange={setSelectedItem}
+          />
+          <div className='flex absolute right-0 inset-y-0'>
+            <Button
+              type='submit'
+              id='location'
+              onClick={() => setLocationModalShow(true)}
+              className='text-primary-500 px-5'>
+              <IcMap width={20} height={20} />
+            </Button>
+            <div className='hidden s:block absolute top-14 -right-20'>
+              <LocationPopup
+                onOpenLocation={() => setLocationModalShow(true)}
+              />
+            </div>
           </div>
         </div>
+        {width >= 768 && (
+          <LocationDesktop
+            isOpen={locationModalShow}
+            onClose={() => setLocationModalShow(false)}
+          />
+        )}
+        {width < 768 && (
+          <LocationMobile
+            isOpen={locationModalShow}
+            onClose={() => setLocationModalShow(false)}
+          />
+        )}
       </div>
-      {width >= 768 && (
-        <LocationDesktop
-          isOpen={locationModalShow}
-          onClose={() => setLocationModalShow(false)}
-        />
-      )}
-      {width < 768 && (
-        <LocationMobile
-          isOpen={locationModalShow}
-          onClose={() => setLocationModalShow(false)}
-        />
-      )}
     </>
   )
 }
