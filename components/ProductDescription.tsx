@@ -120,7 +120,7 @@ const CharacteristicsTab: FC = observer(() => {
   if (isEmpty(product.advert.fields)) return null
   return (
     <div>
-      <div className='space-y-4 l:flex l:flex-wrap l:justify-between'>
+      <div className='space-y-4 l:space-y-0 l:flex l:flex-wrap l:justify-between'>
         {product.advert.fields.map((field) => {
           return (
             <div
