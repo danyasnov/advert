@@ -51,7 +51,7 @@ const CardImage: FC<Props> = ({
       fallbackUrl={fallbackUrl}
       layout='fill'
       objectFit='cover'
-      // priority
+      priority
     />
   )
   if (isLast && morePhotosCount) {
