@@ -9,7 +9,6 @@ import {
 } from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
-import IcArrowRight from 'icons/material/ArrowRight.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
