@@ -5,7 +5,6 @@ import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {isEqual} from 'lodash'
 import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
-import Button from '../Buttons/Button'
 
 export interface SelectProps {
   options: Array<SelectItem>
@@ -165,7 +164,7 @@ const Select: FC<SelectProps> = ({
         isOptionDisabled={(option) => option.disabled}
         className='react-select'
         components={{
-          MenuList: MenuList(filterStyle ? 30 : 52),
+          MenuList: MenuList(filterStyle ? 34 : 52),
           DropdownIndicator,
           ...(isMulti ? {Option} : {}),
           ...(components || {}),
