@@ -172,7 +172,7 @@ module.exports = {
         9: 9,
       },
       dropShadow: {
-        card: '0 50px 80px rgba(4, 6, 15, 0.08)',
+        card: '0 45px 80px rgba(4, 6, 15, 0.08)',
       },
       boxShadow: {
         popup: '4px 8px 24px rgba(114, 16, 255, 0.25)',
