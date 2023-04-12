@@ -81,7 +81,7 @@ const ProductHeader: FC = observer(() => {
       },
     }
     const refresh = {
-      title: 'PROMOTE_FOR_FREE',
+      title: 'UPDATE_BEFORE_ARCHIVATION',
       icon: (
         <div className='text-primary-500'>
           <Star size={16} filled />

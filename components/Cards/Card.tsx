@@ -32,7 +32,12 @@ interface Props {
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
   disableVipWidth?: boolean
-  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
+  getOptions?: ({
+    setShowDeactivateModal,
+    hash,
+    state,
+    showRefreshButton,
+  }) => any[]
 }
 const Card: FC<Props> = ({
   product,
@@ -152,6 +157,7 @@ const Card: FC<Props> = ({
               state={product.state}
               title={product.title}
               images={product.images}
+              showRefreshButton={product.showRefreshButton}
               listRender={(options, setShowPopup) => (
                 <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200'>
                   {/* eslint-disable-next-line no-shadow */}
@@ -167,7 +173,7 @@ const Card: FC<Props> = ({
                       }}>
                       <div className='flex items-center justify-start w-full'>
                         <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
-                        <span className='truncate'>{t(title)}</span>
+                        <span className='text-left'>{t(title)}</span>
                       </div>
                     </Button>
                   ))}
