@@ -32,7 +32,9 @@ const ChatList: FC = observer(() => {
     }
   }, [chats, router.query.chatId])
   useEffect(() => {
-    if (Notification.permission !== 'default') return null
+    if ('Notification' in window && Notification.permission !== 'default') {
+      return null
+    }
     setShowModal(true)
   }, [])
 
