@@ -52,7 +52,7 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
           description={t(
             userHash === user.hash
               ? 'SUBSCRIBE_VIA_PROFILE'
-              : 'заведите ключ бля',
+              : 'USER_HAS_NO_SUBSCRIBERS',
           )}
           img='/img/empty-tabs/following.png'
         />
@@ -65,7 +65,9 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
       <div className='flex justify-center'>
         <EmptyTab
           description={t(
-            userHash === user.hash ? 'USERS_SHOWN' : 'USER_HAS_NO_SUBSCRIBERS',
+            userHash === user.hash
+              ? 'USERS_SHOWN'
+              : 'THIS_USER_HAS_NO_FOLLOWERS_YET',
           )}
           img='/img/empty-tabs/followers.png'
         />
