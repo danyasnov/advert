@@ -24,7 +24,6 @@ export interface IUserStore {
   userFavorite: Partial<ProductSummary>
   userOnModeration: Partial<ProductSummary>
   userArchive: Partial<ProductSummary>
-  userSubscribersSubscriptions: (payload: FetchPayload) => Promise<void>
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   setUserPersonalData: (data: {
@@ -47,7 +46,6 @@ const urlMap = {
   userOnModeration: '/api/user-on-moderation',
   userArchive: '/api/user-archive',
   drafts: '/api/fetch-drafts',
-  subscribers: '/api/user-subscribers-subscriptions',
 }
 export class UserStore implements IUserStore {
   root
@@ -128,76 +126,6 @@ export class UserStore implements IUserStore {
       config.data.limit = payload.limit
       config.data.userId = undefined
     }
-
-    return makeRequest(config).then(
-      action('fetchSuccess', (response) => {
-        if (!response.data || isEmpty(response.data) || response?.data?.error) {
-          currentScope.state = 'pending'
-          if (response?.data?.error) {
-            toast.error(response.data.error)
-          }
-          return Promise.reject(
-            !response.data || isEmpty(response.data) || response?.data?.error,
-          )
-        }
-        const {
-          result,
-          headers: {
-            pagination: {count, page, limit},
-            cacheId,
-          },
-        } = response.data
-        if (page === 1) {
-          currentScope.items = result
-        } else {
-          currentScope.items = [...(currentScope.items || []), ...result]
-        }
-        currentScope.cacheId = cacheId
-
-        currentScope.page = page
-        currentScope.limit = limit
-        currentScope.count = count
-
-        currentScope.state = 'done'
-        return Promise.resolve()
-      }),
-      action('fetchError', (error) => {
-        if (error?.message !== 'got_new_request') {
-          toast.error(error.message)
-          currentScope.state = 'error'
-        }
-        return Promise.reject(error)
-      }),
-    )
-  }
-
-  userSubscribersSubscriptions = (payload: FetchPayload): Promise<void> => {
-    const {path} = payload
-    const currentScope = this[path]
-    if (currentScope?.cancelTokenSource) {
-      currentScope.cancelTokenSource.cancel('got_new_request')
-    }
-    currentScope.cancelTokenSource = cancelToken.source()
-
-    currentScope.state = 'pending'
-    const config: AxiosRequestConfig = {
-      url: urlMap[path],
-      method: 'POST',
-      data: {
-        userId: this.user.hash,
-        page: 1,
-      },
-    }
-    config.cancelToken = currentScope.cancelTokenSource.token
-    if (payload.page && payload.page !== 1) {
-      config.data.page = payload.page
-      config.data.cacheId = currentScope.cacheId
-    }
-    // fetch drafts
-    /*  if (payload.limit) {
-      config.data.limit = payload.limit
-      config.data.userId = undefined
-    } */
 
     return makeRequest(config).then(
       action('fetchSuccess', (response) => {

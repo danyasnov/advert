@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import Joyride, {Step} from 'react-joyride'
 import {parseCookies} from 'nookies'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber, toNumber} from 'lodash'
+import {isEmpty, isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,
@@ -31,6 +31,7 @@ import {
   setCookiesObject,
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
+import SubscribersSubscriptionsList from '../SubscribersSubscriptionsList'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -48,6 +49,7 @@ const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
   const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
+  const activeSubscriptionTab = toNumber(getQueryValue(query, 'activeTab')) || 1
   const router = useRouter()
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const {width} = useWindowSize()
@@ -68,7 +70,8 @@ const UserLayout: FC = observer(() => {
 
   const isCurrentUser = userHash === user.hash
   const desktopUser = width >= 768 && activeUserPage === null
-  const mobileUser = width < 768 && !isCurrentUser
+  const mobileUser =
+    width < 768 && !isCurrentUser && activeUserPage !== 'subscribers'
   useEffect(() => {
     if (query.chatId) {
       setActiveUserPage('chat')
@@ -284,13 +287,16 @@ const UserLayout: FC = observer(() => {
                   <UserSidebar />
                 </div>
               )}
-              {(desktopUser ||
-                activeUserPage === 'subscribers' ||
-                mobileUser) && (
-                <div>
+              {activeUserPage === 'subscribers' && (
+                <div
+                  className={`${
+                    activeUserPage !== 'subscribers' ? 'hidden' : ''
+                  }`}>
                   <SectionTitle
                     title={t(
-                      isCurrentUser ? 'MY_PROFILE' : 'Followers & Follows',
+                      isCurrentUser
+                        ? 'MY_PROFILE'
+                        : 'SUBSCRIBERS_AND_SUBSCRIPTIONS',
                     )}
                   />
                   <div className='z-10 relative mb-10'>
@@ -302,9 +308,21 @@ const UserLayout: FC = observer(() => {
                           activeTab: id,
                         })
                       }}
-                      value={activeTab}
+                      value={activeSubscriptionTab}
                     />
                   </div>
+                  {activeSubscriptionTab === 1 && (
+                    <SubscribersSubscriptionsList
+                      ownerHash={user.hash}
+                      typeSub='2'
+                    />
+                  )}
+                  {activeSubscriptionTab === 2 && (
+                    <SubscribersSubscriptionsList
+                      ownerHash={user.hash}
+                      typeSub='1'
+                    />
+                  )}
                 </div>
               )}
               {(desktopUser || activeUserPage === 'adverts' || mobileUser) && (
@@ -550,7 +568,7 @@ const UserLayout: FC = observer(() => {
                   locale={{close: t('HINT_OK')}}
                 />
               )}
-              {/* {!isCurrentUser && showUserTour && (
+              {!isCurrentUser && showUserTour && (
                 <Joyride
                   steps={steps3}
                   hideCloseButton
@@ -575,7 +593,7 @@ const UserLayout: FC = observer(() => {
                   }}
                   locale={{close: t('HINT_OK')}}
                 />
-                )} */}
+              )}
             </main>
           </div>
         </div>
