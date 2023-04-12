@@ -32,8 +32,9 @@ const ChatList: FC = observer(() => {
     }
   }, [chats, router.query.chatId])
   useEffect(() => {
-    if (Notification.permission !== 'default') return null
-    setShowModal(true)
+    if ('Notification' in window && Notification.permission === 'default') {
+      setShowModal(true)
+    }
   }, [])
 
   const [selectedChat, setSelectedChat] = useState<ChatData>(null)

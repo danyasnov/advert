@@ -11,9 +11,11 @@ import {
   Delete,
   Edit,
   TickSquare,
+  TimeCircle,
 } from 'react-iconly'
 import {useWindowSize} from 'react-use'
 import {DraftModel} from 'front-api/src/models'
+import {toast} from 'react-toastify'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -138,7 +140,12 @@ const UserLayout: FC = observer(() => {
 
   let getAdvertOptions
   if (isCurrentUser) {
-    getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
+    getAdvertOptions = ({
+      setShowDeactivateModal,
+      hash,
+      state,
+      showRefreshButton,
+    }) => {
       const remove = {
         title: 'REMOVE',
         icon: <Delete size={16} filled />,
@@ -186,7 +193,27 @@ const UserLayout: FC = observer(() => {
           router.push(`/advert/edit/${hash}`)
         },
       }
+      const refresh = {
+        title: 'UPDATE_BEFORE_ARCHIVATION',
+        icon: <TimeCircle size={16} filled />,
+        onClick: () => {
+          makeRequest({
+            url: '/api/refresh-advert',
+            data: {hash},
+            method: 'post',
+          }).then((data) => {
+            if (data?.data?.status === 200) {
+              toast.success('SUCCESSFULLY_PROMOTED')
+              router.reload()
+            }
+          })
+        },
+      }
       const items = []
+
+      if (showRefreshButton) {
+        items.push(refresh)
+      }
 
       if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
         items.push(edit)

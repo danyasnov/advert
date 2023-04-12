@@ -147,7 +147,7 @@ const MobileSelect: FC<SelectProps> = ({
         } `}
         onClick={() => setOpen(true)}>
         <div
-          className={` w-full pl-3 pr-6 ${
+          className={` w-full pl-5 pr-6 ${
             classNameOpt.valueContainer ? classNameOpt.valueContainer : 'py-4 '
           }`}>
           <div
@@ -165,7 +165,7 @@ const MobileSelect: FC<SelectProps> = ({
                   : value.label}
               </span>
             )}
-            <IcArrowDown className='fill-current text-greyscale-900 h-5 w-5 -mr-2' />
+            <IcArrowDown className='fill-current text-greyscale-900 shrink-0 h-5 w-5 -mr-2' />
           </div>
         </div>
       </Button>
