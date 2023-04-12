@@ -43,7 +43,9 @@ const ProductMap: FC = observer(() => {
             <div className='fill-current text-primary-500 mr-2'>
               <Location size={20} filled />
             </div>
-            <span>{advert.location.description}</span>
+            <span>
+              {advert.location.description}, {advert.location.distance}
+            </span>
           </div>
           <div className='flex items-center'>
             <IcArrowDown
