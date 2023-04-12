@@ -397,6 +397,15 @@ export const checkPhonePermissions = (
   const rest = getRest(storage)
   return rest.advertises.checkPhonePermissions(id, ip)
 }
+
+export const refreshAdvert = (
+  hash: string,
+  storage: Storage,
+): Promise<RestResponse<any>> => {
+  const rest = getRest(storage)
+  return rest.advertises.refreshAdvert(hash)
+}
+
 export const fetchBanners = (): Promise<any> => {
   return makeRequest({method: 'get', url: `${API_URL}/v2/banners`})
 }
