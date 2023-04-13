@@ -44,7 +44,9 @@ const ProductMap: FC = observer(() => {
               <Location size={20} filled />
             </div>
             <span>
-              {advert.location.description}, {advert.location.distance}
+              {advert.location.description}
+              {`${advert.location?.distance ? ', ' : ''}`}
+              {advert.location?.distance}
             </span>
           </div>
           <div className='flex items-center'>
