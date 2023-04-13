@@ -7,6 +7,7 @@ import UserAvatar from './UserAvatar'
 import SharePopup from './SharePopup'
 import EditProfilePopup from './EditProfilePopup'
 import SubscribeOnUser from './SubscribeOnUser'
+import SubscribersSubscriptionsButton from './SubscribersSubscriptionsButton'
 
 const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
@@ -56,7 +57,11 @@ const UserProfile: FC = observer(() => {
       </div>
 
       <div className='s:hidden w-full border-b border-greyscale-100 mb-4' />
+      <div className='w-full'>
+        <SubscribersSubscriptionsButton />
+      </div>
 
+      {/* 
       <div className='flex justify-between mb-8 w-full'>
         <div className='flex s:flex-col s:text-center w-1/2 justify-center'>
           <span className='text-body-14 m:text-body-18 text-greyscale-900 font-semibold mr-2'>
@@ -75,6 +80,7 @@ const UserProfile: FC = observer(() => {
           </span>
         </div>
       </div>
+      */}
 
       <div className='flex flex-col space-y-4 items-center'>
         <div className='s:hidden items-center'>

@@ -1,4 +1,4 @@
-import {FC, useState} from 'react'
+import React, {FC, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
 import {isArray, isEmpty, size} from 'lodash'
@@ -6,12 +6,15 @@ import IcCheck from 'icons/material/Check.svg'
 import IcSearch from 'icons/material/Search.svg'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {CloseSquare} from 'react-iconly'
+import {FixedSizeList} from 'react-window'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {IconItem} from './IconSelect'
 
+const ROWS = 8
+const OPTION_HEIGHT = 55
 const MobileSelect: FC<SelectProps> = ({
   options,
   placeholder,
@@ -27,7 +30,7 @@ const MobileSelect: FC<SelectProps> = ({
   const [open, setOpen] = useState(false)
   const [filtered, setFiltered] = useState(options)
   const [filter, setFilter] = useState('')
-  const [height, setHeight] = useState<number>()
+  const [height, setHeight] = useState<number>(0)
 
   const onClose = () => {
     setFilter('')
@@ -75,66 +78,88 @@ const MobileSelect: FC<SelectProps> = ({
         className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
           isSearchable ? 'mt-25' : 'mt-10'
         }`}>
-        {open &&
-          filtered.map((f, index) => (
-            <Button
-              // @ts-ignore
-              disabled={f.disabled}
-              key={f.value}
-              className={`w-full px-4 border-b ${
-                index === filtered.length - 1
-                  ? 'border-transparent'
-                  : 'border-nc-border'
-              } ${
-                // @ts-ignore
-                f.disabled ? 'text-greyscale-900' : ''
-              }`}
-              onClick={() => {
-                if (isMulti) {
-                  // @ts-ignore
-                  const newFiltered = value.filter((v) => v.value !== f.value)
-                  if (size(value) !== size(newFiltered)) {
-                    onChange(newFiltered)
-                  } else {
+        {open && (
+          <FixedSizeList
+            height={
+              filtered.length >= ROWS
+                ? OPTION_HEIGHT * ROWS
+                : filtered.length * OPTION_HEIGHT
+            }
+            itemCount={filtered.length}
+            itemSize={55}>
+            {({index, style}) => {
+              const f = filtered[index]
+              return (
+                <div style={style}>
+                  <Button
                     // @ts-ignore
-                    onChange([...value, f])
-                  }
-                } else {
-                  onChange(f)
-                  onClose()
-                }
-              }}>
-              <div className='w-full flex items-center justify-between py-4'>
-                <div className='flex space-x-3'>
-                  {!!f.icon && (
-                    <img src={f.icon} alt={f.label} width={20} height={20} />
-                  )}
-                  <span className='text-body-16 text-nc-text-primary'>
-                    {f.label}
-                  </span>
-                </div>
-                {isMulti && !f.disabled && (
-                  <>
-                    <input
-                      type='checkbox'
-                      readOnly
-                      checked={
+                    disabled={f.disabled}
+                    key={f.value}
+                    className={`w-full px-4 border-b ${
+                      index === filtered.length - 1
+                        ? 'border-transparent'
+                        : 'border-nc-border'
+                    } ${
+                      // @ts-ignore
+                      f.disabled ? 'text-greyscale-900' : ''
+                    }`}
+                    onClick={() => {
+                      if (isMulti) {
                         // @ts-ignore
-                        value.some((v) => v.value === f.value)
+                        const newFiltered = value.filter(
+                          (v) => v.value !== f.value,
+                        )
+                        if (size(value) !== size(newFiltered)) {
+                          onChange(newFiltered)
+                        } else {
+                          // @ts-ignore
+                          onChange([...value, f])
+                        }
+                      } else {
+                        onChange(f)
+                        onClose()
                       }
-                      className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-                    />
-                    <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
-                      <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+                    }}>
+                    <div className='w-full flex items-center justify-between py-4'>
+                      <div className='flex space-x-3'>
+                        {!!f.icon && (
+                          <img
+                            src={f.icon}
+                            alt={f.label}
+                            width={20}
+                            height={20}
+                          />
+                        )}
+                        <span className='text-body-16 text-nc-text-primary'>
+                          {f.label}
+                        </span>
+                      </div>
+                      {isMulti && !f.disabled && (
+                        <>
+                          <input
+                            type='checkbox'
+                            readOnly
+                            checked={
+                              // @ts-ignore
+                              value.some((v) => v.value === f.value)
+                            }
+                            className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
+                          />
+                          <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
+                            <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
+                          </div>
+                        </>
+                      )}
+                      {f.value === value?.value && !isMulti && (
+                        <IcCheck className='fill-current text-primary-500 h-4 w-4' />
+                      )}
                     </div>
-                  </>
-                )}
-                {f.value === value?.value && !isMulti && (
-                  <IcCheck className='fill-current text-primary-500 h-4 w-4' />
-                )}
-              </div>
-            </Button>
-          ))}
+                  </Button>
+                </div>
+              )
+            }}
+          </FixedSizeList>
+        )}
       </div>
     )
   }

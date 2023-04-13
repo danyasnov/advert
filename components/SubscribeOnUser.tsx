@@ -3,6 +3,7 @@ import {AddUser} from 'react-iconly'
 import IcDeleteUserBlack from 'icons/material/DeleteUserBlack.svg'
 import IcDeleteUserPurple from 'icons/material/DeleteUserPurple.svg'
 import IcDeleteUserGrey from 'icons/material/DeleteUserGrey.svg'
+import IcDeleteUserWhite from 'icons/material/DeleteUserWhite.svg'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import Button from './Buttons/Button'
@@ -12,7 +13,7 @@ import {SerializedCookiesState} from '../types'
 interface Props {
   isSubscribed: boolean
   ownerId: string
-  type?: 'card' | 'profile' | 'profileSmall'
+  type?: 'card' | 'profile' | 'profileSmall' | 'list'
 }
 
 const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
@@ -57,6 +58,25 @@ const SubscribeOnUser: FC<Props> = ({isSubscribed, ownerId, type = 'card'}) => {
       <div className='flex justify-between space-x-1.5 text-body-14 text-primary-500'>
         <AddUser size={20} filled />
         <span className='text-body-14 font-normal'>{t('SUBSCRIBE')}</span>
+      </div>
+    )
+  } else if (type === 'list') {
+    body = localSubscribed ? (
+      <div className='flex group justify-between space-x-1.5 text-body-14 bg-white py-1.5 px-2 text-primary-500 rounded-full hover:bg-primary-500'>
+        <IcDeleteUserPurple className='fill-current group-hover:hidden h-5 w-5' />
+        <IcDeleteUserWhite className='hidden fill-current group-hover:block h-5 w-5' />
+        <span className='font-normal text-primary-500 group-hover:text-white'>
+          {t('UNSUBSCRIBE')}
+        </span>
+      </div>
+    ) : (
+      <div className='flex group justify-between space-x-1.5 text-body-14 bg-white py-1.5 px-2 text-primary-500 rounded-full hover:bg-primary-500'>
+        <div className='group-hover:text-white'>
+          <AddUser size={20} filled />
+        </div>
+        <span className='font-normal text-primary-500 group-hover:text-white'>
+          {t('SUBSCRIBE')}
+        </span>
       </div>
     )
   } else {
