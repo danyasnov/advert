@@ -3717,9 +3717,9 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.8.1":
-  version "5.8.1"
-  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#069bb559e3131f68335e1ddc6519f85212f336b7"
+"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.8.2":
+  version "5.8.2"
+  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#8d5bbed4251203ddb87c468c5d84952c54a7760a"
   dependencies:
     axios "^0.22.0"
     axios-curlirize lexgorbunov/axios-curlirize#1.4.5
@@ -5792,10 +5792,10 @@ react-sortable-hoc@^2.0.0:
     invariant "^2.2.4"
     prop-types "^15.5.7"
 
-react-spring-bottom-sheet@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-spring-bottom-sheet/-/react-spring-bottom-sheet-3.4.0.tgz#b65e2b46c372b37eefcc686a8ff4736e7dd22d3c"
-  integrity sha512-zKwTymxrTRMHPjfBiMw8reQlWoVqlCGMTefmMYkAlBvR7n3hBe5sntuQJAEjmrAnA+cLSGp44mtmgBtT2ksL5Q==
+react-spring-bottom-sheet@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-spring-bottom-sheet/-/react-spring-bottom-sheet-3.4.1.tgz#9a4f90b1c0af17eb4a22a606a5efc5d6e62c7b0c"
+  integrity sha512-yDFqiPMm/fjefjnOe6Q9zxccbCl6HMUKsK5bWgfGHJIj4zmXVKio5d4icQvmOLuwpuCA2pwv4J6nGWS6fUZidQ==
   dependencies:
     "@juggle/resize-observer" "^3.2.0"
     "@reach/portal" "^0.13.0"

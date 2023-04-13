@@ -2,48 +2,30 @@ import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
-import IcSort from 'icons/material/Sort.svg'
 import {useRouter} from 'next/router'
-import {isEmpty} from 'lodash'
-import {useWindowSize} from 'react-use'
-import MobileSelect from './Selects/MobileSelect'
 import {SerializedCookiesState} from '../types'
-import LinkSelect from './Selects/LinkSelect'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {shallowUpdateQuery} from '../helpers'
-import Select from './Selects/Select'
 import SelectWrapper from './SelectWrapper'
 import {FilterStyles} from './Selects/styles'
 
-const withIcons = (options) => {
-  return options.map((o) => ({
-    ...o,
-    icon: o.value.includes('desc') ? (
-      <IcSort className='fill-current text-black-c w-4 h-4' />
-    ) : (
-      <IcSort className='fill-current text-black-c w-4 h-4 rotate-180	' />
-    ),
-  }))
-}
-
-const getSortOptions = (t: TFunction) =>
-  withIcons([
-    {
-      value: 'date_updated-asc',
-      label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
-    },
-    {
-      value: 'date_updated-desc',
-      label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
-    },
-    {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
-    {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
-    {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
-    {
-      value: 'distance-desc',
-      label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
-    },
-  ])
+const getSortOptions = (t: TFunction) => [
+  {
+    value: 'date_updated-asc',
+    label: t('SORT_DIRECTION_MESSAGE_DATE_ASC'),
+  },
+  {
+    value: 'date_updated-desc',
+    label: t('SORT_DIRECTION_MESSAGE_DATE_DESC'),
+  },
+  {value: 'price-asc', label: t('SORT_BY_PRICE_LOW_TO_HIGH')},
+  {value: 'price-desc', label: t('SORT_BY_PRICE_HIGH_TO_LOW')},
+  {value: 'distance-asc', label: t('SORT_DIRECTION_MESSAGE_DISTANCE_ASC')},
+  {
+    value: 'distance-desc',
+    label: t('SORT_DIRECTION_MESSAGE_DISTANCE_DESC'),
+  },
+]
 const SortSelect: FC<{id?: string}> = observer(({id}) => {
   const {t} = useTranslation()
   const {query} = useRouter()
