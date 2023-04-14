@@ -228,10 +228,24 @@ const MapPage: FC = () => {
   }
 
   const handleSelectLocation = (item) => {
-    if (!item?.geometry?.location) return
-    setLocation(item.geometry.location)
-    circle.current.setCenter(item.geometry.location)
-    marker.current.setPosition(item.geometry.location)
+    if (!item?.placeId) return
+    makeRequest({
+      method: 'post',
+      url: '/api/find-place-id',
+      data: {placeId: item.placeId},
+    }).then((res) => {
+      const loc = res.data?.location
+        ? {lat: res.data.location.latitude, lng: res.data.location.longitude}
+        : null
+      if (loc) {
+        setLocation(loc)
+        circle.current.setCenter(loc)
+        marker.current.setPosition(loc)
+      }
+      if (res.data?.address) {
+        setLabel(res.data.address)
+      }
+    })
   }
 
   const locationButton = (
