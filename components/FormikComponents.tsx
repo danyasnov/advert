@@ -758,7 +758,10 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
               }
               setShow(false)
               setNewValue([])
-              setFieldValue(name, newValue)
+              setFieldValue(name, [
+                isEmpty(newValue[0]) ? 0 : newValue[0],
+                newValue[1],
+              ])
             }}>
             {t('APPLY')}
           </PrimaryButton>
