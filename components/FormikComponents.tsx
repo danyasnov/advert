@@ -750,13 +750,10 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           <span className='text-body-12 text-error mb-1'>{popupError}</span>
           <PrimaryButton
             onClick={() => {
-              // console.log(
-              //   'newValue[0] > newValue[1]',
-              //   newValue[0],
-              //   newValue[1],
-              //   newValue[0] > newValue[1],
-              // )
-              if (toNumber(newValue[0]) > toNumber(newValue[1])) {
+              if (
+                newValue[1]?.length > 0 &&
+                toNumber(newValue[0]) > toNumber(newValue[1])
+              ) {
                 return setPopupError(t('FILTER_PRICE_ERROR'))
               }
               setShow(false)
