@@ -167,6 +167,7 @@ module.exports = {
         pink: '#FFF5F5',
         purple: '#7210FF',
         'input-bg': 'rgba(114, 16, 255, 0.08)',
+        yellow: '#FFFEE0',
       },
       zIndex: {
         9: 9,

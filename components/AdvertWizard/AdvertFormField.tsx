@@ -50,8 +50,8 @@ const AdvertFormField: FC<Props> = ({
           {!!labelTip && <Tip message={labelTip} placement='right' />}
         </div>
         {labelDescription && (
-          <div className='flex items-center rounded-lg bg-greyscale-50 px-4 py-3 mb-6 space-x-4'>
-            <div className='text-greyscale-400'>
+          <div className='flex items-center rounded-lg bg-yellow px-4 py-3 mb-6 space-x-4'>
+            <div className='text-secondary-500'>
               <InfoSquare size={32} filled />
             </div>
             <span className='text-greyscale-900 whitespace-pre-wrap '>
