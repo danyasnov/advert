@@ -133,3 +133,7 @@ export const rotate = async ({degrees, file}): Promise<Blob> => {
     }
   })
 }
+
+export const getDigitsFromString = (string: string) => {
+  return string.replace(/[^0-9]/g, '')
+}
