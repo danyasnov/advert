@@ -94,7 +94,7 @@ const ProductHeader: FC = observer(() => {
           method: 'post',
         }).then((data) => {
           if (data?.data?.status === 200) {
-            toast.success('SUCCESSFULLY_PROMOTED')
+            toast.success(t('SUCCESSFULLY_PROMOTED'))
             router.reload()
           }
         })
@@ -119,7 +119,7 @@ const ProductHeader: FC = observer(() => {
     if (advert.state === 'active') {
       items.push(deactivate)
     }
-    if (advert.showRefreshButton) {
+    if (advert.showRefreshButton || true) {
       items.push(refresh)
     }
     return items
