@@ -763,7 +763,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
               setNewValue([])
               setFieldValue(name, newValue)
             }}>
-            {t('SAVE')}
+            {t('APPLY')}
           </PrimaryButton>
         </div>
       )}
