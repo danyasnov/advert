@@ -682,11 +682,15 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   useEffect(() => {
     setNewValue(value)
   }, [value])
+  const formatMaxValue = (v) => {
+    if (v[0] && (v[1] === 1000000000 || !v[1])) return t('MAX')
+    return v[1]
+  }
   let displayValue = ''
   if (mappedValue[0] && mappedValue[1]) {
     displayValue = `${mappedValue[0]} - ${mappedValue[1]}`
   } else if (mappedValue[0] || mappedValue[1]) {
-    displayValue = `${mappedValue[0] || 0} - ${mappedValue[1] || t('MAX')}`
+    displayValue = `${mappedValue[0] || 0} - ${formatMaxValue(mappedValue)}`
   }
 
   return (
@@ -769,7 +773,6 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
       )}
     </div>
   )
-  return <div className='flex text-greyscale-900 text-body-14' />
 }
 
 export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({

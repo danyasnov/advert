@@ -130,10 +130,6 @@ const Card: FC<Props> = ({
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
-  if (product.discount) {
-    // return null
-    console.log('product', toJS(product))
-  }
   let showOldPrice = false
   if (discount && oldPrice) {
     const digits = getDigitsFromString(price)

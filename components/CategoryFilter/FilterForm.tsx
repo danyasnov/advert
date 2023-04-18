@@ -176,11 +176,12 @@ const FilterForm: FC = observer(() => {
                 mappedValue = []
                 if (Array.isArray(value)) {
                   if (value[0] || value[0] === 0) {
-                    mappedValue[0] = parseInt(value[0], 10)
+                    mappedValue[0] = value[0]
                   }
                   if (value[1] || value[1] === 0) {
-                    mappedValue[1] = parseInt(value[1], 10)
+                    mappedValue[1] = value[1]
                   }
+                  if (!mappedValue[1]) mappedValue[1] = '1000000000'
                 }
                 break
               }
