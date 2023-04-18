@@ -119,7 +119,7 @@ const ProductHeader: FC = observer(() => {
     if (advert.state === 'active') {
       items.push(deactivate)
     }
-    if (advert.showRefreshButton || true) {
+    if (advert.showRefreshButton) {
       items.push(refresh)
     }
     return items
