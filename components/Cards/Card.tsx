@@ -13,10 +13,9 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {Call, Image, Star} from 'react-iconly'
+import {ArrowUp, ArrowDown, Call, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
 import IcMoreVert from 'icons/material/MoreVert.svg'
-import {toJS} from 'mobx'
 import CardImage from '../CardImage'
 import CardBadge from './CardBadge'
 import ProductLike from '../ProductLike'
@@ -132,8 +131,9 @@ const Card: FC<Props> = ({
   }
   let showOldPrice = false
   if (discount && oldPrice) {
-    const digits = getDigitsFromString(price)
-    if (digits && digits.length <= 6) {
+    const priceDigits = getDigitsFromString(price)
+    const oldPriceDigits = getDigitsFromString(oldPrice)
+    if (priceDigits?.length <= 6 && oldPriceDigits?.length <= 6) {
       showOldPrice = true
     }
   }
@@ -269,13 +269,25 @@ const Card: FC<Props> = ({
               <span className='text-body-16 text-greyscale-900 font-semibold'>
                 {isFree ? t('FREE') : price}
               </span>
-              {(showOldPrice || isVip) && (
-                <span
-                  className={`text-body-14 text-greyscale-600 line-through ${
-                    isVip ? 'ml-3' : 'ml-2'
-                  }`}>
-                  {isVip ? oldPrice : oldPrice.slice(0, oldPrice.length - 2)}
-                </span>
+              {(showOldPrice || (isVip && discount)) && (
+                <>
+                  <span
+                    className={`text-body-14 text-greyscale-600 line-through ${
+                      isVip ? 'ml-3' : 'ml-1'
+                    }`}>
+                    {isVip ? oldPrice : oldPrice.slice(0, oldPrice.length - 2)}
+                  </span>
+                  <span
+                    className={`${
+                      discount?.isPriceDown ? 'text-green' : 'text-error'
+                    }`}>
+                    {discount?.isPriceDown ? (
+                      <ArrowDown size={16} style={{display: 'inline'}} />
+                    ) : (
+                      <ArrowUp size={16} style={{display: 'inline'}} />
+                    )}
+                  </span>
+                </>
               )}
             </div>
             <div className='flex items-start'>
