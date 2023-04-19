@@ -171,7 +171,6 @@ export const FilterStyles = {
   }),
   menu: (provided) => ({
     ...provided,
-    width: '220px',
     padding: '10px 20px',
     borderRadius: '16px',
     border: 'none',

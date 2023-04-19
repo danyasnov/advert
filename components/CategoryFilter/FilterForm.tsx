@@ -87,7 +87,11 @@ const FilterForm: FC = observer(() => {
   )
 
   useEffect(() => {
-    setShowReset(isFilterChanged(filter))
+    const show = isFilterChanged(filter)
+    setShowReset(show)
+    if (show) {
+      setShowFilters(true)
+    }
   }, [filter])
 
   const getInitialValues = (reset?: boolean): Values => {
