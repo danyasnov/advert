@@ -10,11 +10,8 @@ const IconSelect: FC<SelectProps> = ({
   placeholder,
   onChange,
   value,
-  isSearchable,
   isMulti,
-  isInvalid,
-  classNameOpt,
-  isIconSelect,
+  filterStyle,
 }) => {
   const ref = useRef()
 
@@ -29,13 +26,14 @@ const IconSelect: FC<SelectProps> = ({
     isEmptyValue = !value?.value && value?.value !== 0
   }
   return (
-    <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
-        show ? 'border-primary-500 bg-primary-100' : 'border-transparent'
-      }`}
-      ref={ref}>
-      <Button className='w-full pl-5 pr-7' onClick={() => setShow(!show)}>
-        <div className='flex justify-between items-center w-full text-body-12'>
+    <div className='relative w-full bg-greyscale-50 rounded-xl h-fit' ref={ref}>
+      <Button
+        className={`w-full pl-5 pr-7 ${filterStyle ? 'py-2.5' : 'py-4'}`}
+        onClick={() => setShow(!show)}>
+        <div
+          className={`flex justify-between items-center w-full  ${
+            filterStyle ? 'text-body-12' : 'text-body-16'
+          }`}>
           {isEmptyValue ? (
             <span className='text-greyscale-500 truncate'>{placeholder}</span>
           ) : (
@@ -47,7 +45,7 @@ const IconSelect: FC<SelectProps> = ({
           )}
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 shrink-0 ${
-              show ? 'rotate-180 text-primary-500' : ''
+              show ? 'rotate-180' : ''
             }`}
           />
         </div>
@@ -63,7 +61,9 @@ const IconSelect: FC<SelectProps> = ({
             }`}>
             {options.map((f) => {
               // @ts-ignore
-              const isSelected = value.some((v) => v.value === f.value)
+              const isSelected = Array.isArray(value)
+                ? value.some((v) => v.value === f.value)
+                : value.value === f.value
               return (
                 <IconItem
                   item={f}
