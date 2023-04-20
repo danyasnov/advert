@@ -1548,7 +1548,7 @@
   "LANDING_REAL_ESTATE_BICYCLE": "bicycle parking",
   "LANDING_REAL_ESTATE_BOOK": "Book a view",
   "LANDING_REAL_ESTATE_CHILLOUT_ZONE": "Chill-out zone",
-  "LANDING_REAL_ESTATE_COMFORT_OF_THE_CITY": "Comfort of the city with an accessible urban environment",
+  "LANDING_REAL_ESTATE_COMFORT_OF_THE_CITY": "Comfort of the city with an accessible <i>urban environment</i>",
   "LANDING_REAL_ESTATE_CONTACT_US": "Contact US",
   "LANDING_REAL_ESTATE_COSY_AREAS": "Cosy areas",
   "LANDING_REAL_ESTATE_DESIGNER_BEDROOM": "Designer bedroom",
@@ -1726,5 +1726,6 @@
   "WEBSITE": "веб-сайт",
   "WED": "Среда",
   "YES": "Ναί",
-  "YOUR_COMMENT": "Your comment"
+  "YOUR_COMMENT": "Your comment",
+  "YOUR_NOTIFICATIONS": "Your notifications"
 }
