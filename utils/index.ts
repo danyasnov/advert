@@ -133,3 +133,19 @@ export const rotate = async ({degrees, file}): Promise<Blob> => {
     }
   })
 }
+
+export const getDigitsFromString = (string: string) => {
+  return string.replace(/[^0-9]/g, '')
+}
+
+export const getTextWidth = (text, font) => {
+  const canvas =
+    // @ts-ignore
+    getTextWidth.canvas ||
+    // @ts-ignore
+    (getTextWidth.canvas = document.createElement('canvas'))
+  const context = canvas.getContext('2d')
+  context.font = font
+  const metrics = context.measureText(text)
+  return metrics.width
+}

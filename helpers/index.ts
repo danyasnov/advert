@@ -471,10 +471,10 @@ export const getFilterFromQuery = (
             const range = parsedValue[0].split('-')
             const parsed = []
             if (range[0]) {
-              parsed.push(toNumber(range[0]))
+              parsed.push(range[0])
             }
             if (range[1]) {
-              parsed.push(toNumber(range[1]))
+              parsed.push(range[1])
             }
             parsedValue = parsed
             break

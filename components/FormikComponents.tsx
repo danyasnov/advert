@@ -146,8 +146,6 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.filterStyle = true
       props.isClearable = false
       props.isIconSelect = fieldType === 'iconselect'
-
-      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
@@ -390,6 +388,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'
+      props.isIconSelect = fieldType === 'iconselect'
       break
     }
     case 'int': {
@@ -569,7 +568,7 @@ export const FormikText: FC<
     placeholder,
     onBlur: () => setActive(false),
     onFocus: () => setActive(true),
-    className: `border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
+    className: `manual-outline outline-none border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
@@ -682,18 +681,20 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
   useEffect(() => {
     setNewValue(value)
   }, [value])
+  const formatMaxValue = (v) => {
+    if (v[0] && (v[1] === 1000000000 || !v[1])) return t('MAX')
+    return v[1]
+  }
   let displayValue = ''
   if (mappedValue[0] && mappedValue[1]) {
     displayValue = `${mappedValue[0]} - ${mappedValue[1]}`
   } else if (mappedValue[0] || mappedValue[1]) {
-    displayValue = `${mappedValue[0] || 0} - ${mappedValue[1] || t('MAX')}`
+    displayValue = `${mappedValue[0] || 0} - ${formatMaxValue(mappedValue)}`
   }
 
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
-        show ? 'border-primary-500' : 'border-transparent'
-      }`}
+      className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
       <Button
         onClick={() => setShow(!show)}
@@ -714,7 +715,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 shrink-0 -mr-2 ${
-              show ? 'rotate-180 text-primary-500' : ''
+              show ? 'rotate-180' : ''
             }`}
           />
         </div>
@@ -750,26 +751,25 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
           <span className='text-body-12 text-error mb-1'>{popupError}</span>
           <PrimaryButton
             onClick={() => {
-              // console.log(
-              //   'newValue[0] > newValue[1]',
-              //   newValue[0],
-              //   newValue[1],
-              //   newValue[0] > newValue[1],
-              // )
-              if (toNumber(newValue[0]) > toNumber(newValue[1])) {
+              if (
+                newValue[1]?.length > 0 &&
+                toNumber(newValue[0]) > toNumber(newValue[1])
+              ) {
                 return setPopupError(t('FILTER_PRICE_ERROR'))
               }
               setShow(false)
               setNewValue([])
-              setFieldValue(name, newValue)
+              setFieldValue(name, [
+                isEmpty(newValue[0]) ? 0 : newValue[0],
+                newValue[1],
+              ])
             }}>
-            {t('SAVE')}
+            {t('APPLY')}
           </PrimaryButton>
         </div>
       )}
     </div>
   )
-  return <div className='flex text-greyscale-900 text-body-14' />
 }
 
 export const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({

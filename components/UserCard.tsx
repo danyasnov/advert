@@ -37,7 +37,7 @@ const UserCard: FC = observer(() => {
   )
 
   return (
-    <div className='flex flex-col mb-11 s:mb-5 m:mb-11 w-full rounded-2xl p-6 bg-white'>
+    <div className='flex flex-col mb-11 s:mb-5 m:mb-11 w-full rounded-2xl p-6 bg-white shadow-1'>
       <div className='flex flex-col'>
         <div className='mb-4 self-center'>
           <UserAvatar

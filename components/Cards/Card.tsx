@@ -13,7 +13,7 @@ import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {Call, Image, Star} from 'react-iconly'
+import {ArrowUp, ArrowDown, Call, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import CardImage from '../CardImage'
@@ -26,6 +26,7 @@ import {SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
 import EmptyProductImage from '../EmptyProductImage'
+import {getDigitsFromString} from '../../utils'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -59,6 +60,8 @@ const Card: FC<Props> = ({
     isTop,
     isVip,
     showCallButton,
+    discount,
+    oldPrice,
   } = product
   const imagesCount = size(product.images)
 
@@ -125,6 +128,14 @@ const Card: FC<Props> = ({
   let widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
+  }
+  let showOldPrice = false
+  if (discount && oldPrice) {
+    const priceDigits = getDigitsFromString(price)
+    const oldPriceDigits = getDigitsFromString(oldPrice)
+    if (priceDigits?.length <= 6 && oldPriceDigits?.length <= 6) {
+      showOldPrice = true
+    }
   }
 
   return (
@@ -254,9 +265,31 @@ const Card: FC<Props> = ({
         </div>
         <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
           <div className='flex flex-col pb-3'>
-            <span className='text-body-16 text-greyscale-900 font-semibold'>
-              {isFree ? t('FREE') : price}
-            </span>
+            <div>
+              <span className='text-body-16 text-greyscale-900 font-semibold'>
+                {isFree ? t('FREE') : price}
+              </span>
+              {(showOldPrice || (isVip && discount)) && (
+                <>
+                  <span
+                    className={`text-body-14 text-greyscale-600 line-through ${
+                      isVip ? 'ml-3' : 'ml-1'
+                    }`}>
+                    {isVip ? oldPrice : oldPrice.slice(0, oldPrice.length - 2)}
+                  </span>
+                  <span
+                    className={`${
+                      discount?.isPriceDown ? 'text-green' : 'text-error'
+                    }`}>
+                    {discount?.isPriceDown ? (
+                      <ArrowDown size={16} style={{display: 'inline'}} />
+                    ) : (
+                      <ArrowUp size={16} style={{display: 'inline'}} />
+                    )}
+                  </span>
+                </>
+              )}
+            </div>
             <div className='flex items-start'>
               <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
                 {title}
@@ -281,4 +314,5 @@ const Card: FC<Props> = ({
     </LinkWrapper>
   )
 }
+
 export default Card

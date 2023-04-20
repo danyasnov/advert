@@ -35,19 +35,13 @@ const MobileMapSearch: FC<Props> = ({
       setSearchResults([])
     } else {
       makeRequest({
-        method: 'get',
+        method: 'post',
         url: '/api/location-text-search',
-        params: {query: text},
+        data: {query: text},
       }).then((res) => {
-        setSearchResults(
-          res.data.results
-            .map((l) => ({
-              label: l.formatted_address,
-              value: l.place_id,
-              geometry: l.geometry,
-            }))
-            .slice(0, 10),
-        )
+        if (res.data.result) {
+          setSearchResults(res.data.result.slice(0, 10))
+        }
       })
     }
   }, [])
@@ -78,7 +72,7 @@ const MobileMapSearch: FC<Props> = ({
       <div className='w-full px-4'>{divider}</div>
       <div className='w-full'>
         {searchResults.map((r, index) => (
-          <div className='px-4'>
+          <div className='px-4' key={r.placeId}>
             <Button
               className='w-full py-4'
               onClick={() => {
@@ -88,7 +82,7 @@ const MobileMapSearch: FC<Props> = ({
               }}>
               <div className='flex w-full items-center justify-start'>
                 <span className='truncate w-full text-left text-body-14 text-greyscale-900'>
-                  {r.label}
+                  {r.description}
                 </span>
               </div>
             </Button>

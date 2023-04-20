@@ -9,9 +9,7 @@ export default async (
   const {body} = req
   const storage = getStorageFromCookies({req, res})
   const rest = getRest(storage)
-  return rest.google
-    .fetchAutocompletePredictions(body.query as string)
-    .then((r) => {
-      res.json(r)
-    })
+  return rest.google.fetchPlaceInfo(body.placeId as string).then((r) => {
+    res.json(r)
+  })
 }

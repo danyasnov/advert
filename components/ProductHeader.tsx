@@ -2,9 +2,14 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import {ArrowLeftSquare, Delete, Edit, Star, TickSquare} from 'react-iconly'
+import {
+  ArrowLeftSquare,
+  Delete,
+  Edit,
+  TickSquare,
+  TimeCircle,
+} from 'react-iconly'
 import {size} from 'lodash'
-import {toJS} from 'mobx'
 import {toast} from 'react-toastify'
 import {
   useCategoriesStore,
@@ -84,7 +89,7 @@ const ProductHeader: FC = observer(() => {
       title: 'UPDATE_BEFORE_ARCHIVATION',
       icon: (
         <div className='text-primary-500'>
-          <Star size={16} filled />
+          <TimeCircle size={16} filled />
         </div>
       ),
       onClick: () => {
@@ -94,7 +99,7 @@ const ProductHeader: FC = observer(() => {
           method: 'post',
         }).then((data) => {
           if (data?.data?.status === 200) {
-            toast.success('SUCCESSFULLY_PROMOTED')
+            toast.success(t('SUCCESSFULLY_PROMOTED'))
             router.reload()
           }
         })

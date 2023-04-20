@@ -1548,7 +1548,7 @@
   "LANDING_REAL_ESTATE_BICYCLE": "парковка для велосипедов",
   "LANDING_REAL_ESTATE_BOOK": "Забронировать просмотр",
   "LANDING_REAL_ESTATE_CHILLOUT_ZONE": "Зона отдыха",
-  "LANDING_REAL_ESTATE_COMFORT_OF_THE_CITY": "Комфорт города с доступной городской средой",
+  "LANDING_REAL_ESTATE_COMFORT_OF_THE_CITY": "Комфорт города с доступной <i>городской средой</i>",
   "LANDING_REAL_ESTATE_CONTACT_US": "Свяжитесь с нами",
   "LANDING_REAL_ESTATE_COSY_AREAS": "Уютные зоны",
   "LANDING_REAL_ESTATE_DESIGNER_BEDROOM": "Дизайнерская спальня",
@@ -1726,5 +1726,6 @@
   "WEBSITE": "веб-сайт",
   "WED": "среда",
   "YES": "Да",
-  "YOUR_COMMENT": "Ваш комментарий"
+  "YOUR_COMMENT": "Ваш комментарий",
+  "YOUR_NOTIFICATIONS": "Ваши уведомления"
 }

@@ -37,19 +37,13 @@ const PlacesTextSearch: FC<Props> = ({
         setInputItems([])
       } else {
         makeRequest({
-          method: 'get',
+          method: 'post',
           url: '/api/location-text-search',
-          params: {query: inputValue},
+          data: {query: inputValue},
         }).then((res) => {
-          setInputItems(
-            res.data.results
-              .map((l) => ({
-                label: l.formatted_address,
-                value: l.place_id,
-                geometry: l.geometry,
-              }))
-              .slice(0, 10),
-          )
+          if (res.data.result) {
+            setInputItems(res.data.result.slice(0, 10))
+          }
         })
       }
     }, 2000),
@@ -106,7 +100,7 @@ const PlacesTextSearch: FC<Props> = ({
       </div>
       <ul
         {...getMenuProps()}
-        className='z-10 w-full bg-white shadow-xl absolute top-14 rounded-lg overflow-hidden w-96'>
+        className='z-10 bg-white shadow-xl absolute top-14 rounded-lg overflow-hidden w-96'>
         {isOpen &&
           inputItems.map((newItem, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
@@ -120,9 +114,9 @@ const PlacesTextSearch: FC<Props> = ({
               className={`flex flex-col h-14 px-4 py-3 justify-center cursor-pointer  ${
                 highlightedIndex === index ? 'bg-greyscale-100' : ''
               }`}
-              key={newItem.value}>
+              key={newItem.placeId}>
               <span className='text-body-14 text-greyscale-900 truncate'>
-                {newItem.label}
+                {newItem.description}
               </span>
             </li>
           ))}
