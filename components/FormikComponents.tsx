@@ -388,6 +388,7 @@ export const FormikCreateField: FC<IFormikField> = ({field}) => {
       props.placeholder = name
       props.isFilterable = isFilterable
       props.isMulti = fieldType === 'multiselect'
+      props.isIconSelect = fieldType === 'iconselect'
       break
     }
     case 'int': {
