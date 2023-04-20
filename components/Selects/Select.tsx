@@ -141,7 +141,7 @@ const Select: FC<SelectProps> = ({
     }
   }, [value, options])
   const menuWidth = useMemo(() => {
-    if (typeof window === 'undefined') return 0
+    if (typeof window === 'undefined' || !filterStyle) return 0
     const arr = options.map((o) => o.label.length)
     const index = arr.indexOf(Math.max(...arr))
     const width = getTextWidth(options[index].label, 'normal 12px Euclid')
@@ -178,7 +178,7 @@ const Select: FC<SelectProps> = ({
           ...(components || {}),
         }}
         // @ts-ignore
-        menuWidth={menuWidth}
+        {...(filterStyle ? {menuWidth} : {})}
       />
       <input
         className={`invisible absolute ${isInvalid ? 'border-error' : ''}`}
