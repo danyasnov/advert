@@ -1,10 +1,11 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useMemo, useState} from 'react'
 import RS, {components as RSComponents} from 'react-select'
 import {FixedSizeList as List} from 'react-window'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {isEqual} from 'lodash'
 import IcCheck from 'icons/Check.svg'
 import {getDefaultStyles} from './styles'
+import {getTextWidth} from '../../utils'
 
 export interface SelectProps {
   options: Array<SelectItem>
@@ -80,7 +81,7 @@ const DropdownIndicator = (props) => {
     <RSComponents.DropdownIndicator {...props}>
       <IcArrowDown
         className={`w-5 h-5 fill-current text-greyscale-900 mr-3 ${
-          menuIsOpen ? 'rotate-180 text-primary-500' : ''
+          menuIsOpen ? 'rotate-180' : ''
         }`}
       />
     </RSComponents.DropdownIndicator>
@@ -139,6 +140,13 @@ const Select: FC<SelectProps> = ({
       setSorted(options)
     }
   }, [value, options])
+  const menuWidth = useMemo(() => {
+    if (typeof window === 'undefined') return 0
+    const arr = options.map((o) => o.label.length)
+    const index = arr.indexOf(Math.max(...arr))
+    const width = getTextWidth(options[index].label, 'normal 12px Euclid')
+    return width
+  }, [options])
   return (
     <>
       <RS
@@ -169,6 +177,8 @@ const Select: FC<SelectProps> = ({
           ...(isMulti ? {Option} : {}),
           ...(components || {}),
         }}
+        // @ts-ignore
+        menuWidth={menuWidth}
       />
       <input
         className={`invisible absolute ${isInvalid ? 'border-error' : ''}`}

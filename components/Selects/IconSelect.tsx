@@ -30,9 +30,7 @@ const IconSelect: FC<SelectProps> = ({
   }
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
-        show ? 'border-primary-500 bg-primary-100' : 'border-transparent'
-      }`}
+      className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
       <Button className='w-full pl-5 pr-7' onClick={() => setShow(!show)}>
         <div className='flex justify-between items-center w-full text-body-12'>
@@ -47,7 +45,7 @@ const IconSelect: FC<SelectProps> = ({
           )}
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 shrink-0 ${
-              show ? 'rotate-180 text-primary-500' : ''
+              show ? 'rotate-180' : ''
             }`}
           />
         </div>

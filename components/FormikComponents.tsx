@@ -146,8 +146,6 @@ export const FormikFilterField: FC<IFormikField> = ({field}) => {
       props.filterStyle = true
       props.isClearable = false
       props.isIconSelect = fieldType === 'iconselect'
-
-      if (props.isIconSelect) console.log('isIconSelect', toJS(field))
       break
     }
     case 'int': {
@@ -569,7 +567,7 @@ export const FormikText: FC<
     placeholder,
     onBlur: () => setActive(false),
     onFocus: () => setActive(true),
-    className: `border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
+    className: `manual-outline outline-none border bg-greyscale-50 rounded-xl w-full text-greyscale-900 ${
       filterStyle ? 'text-body-12 py-[13px] px-5' : 'text-body-16 py-4 px-5'
     } ${disableTrack ? 'ym-disable-keys' : ''} ${
       isValid ? 'border-greyscale-50' : 'border-error'
@@ -695,9 +693,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
   return (
     <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
-        show ? 'border-primary-500' : 'border-transparent'
-      }`}
+      className='relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit'
       ref={ref}>
       <Button
         onClick={() => setShow(!show)}
@@ -718,7 +714,7 @@ export const FormikRange: FC<FieldProps & IFormikRange> = ({
 
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 shrink-0 -mr-2 ${
-              show ? 'rotate-180 text-primary-500' : ''
+              show ? 'rotate-180' : ''
             }`}
           />
         </div>
