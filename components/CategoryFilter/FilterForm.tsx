@@ -180,7 +180,7 @@ const FilterForm: FC = observer(() => {
                 mappedValue = []
                 if (Array.isArray(value)) {
                   if (value[0] || value[0] === 0) {
-                    mappedValue[0] = value[0]
+                    mappedValue[0] = value[0] === 0 ? '0' : value[0]
                   }
                   if (value[1] || value[1] === 0) {
                     mappedValue[1] = value[1]
