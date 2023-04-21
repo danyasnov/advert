@@ -171,7 +171,7 @@ export const FilterStyles = {
   }),
   menu: (provided, state) => {
     const {menuWidth} = state.selectProps
-    const width = menuWidth > 75 ? `${menuWidth + 75}px` : provided.width
+    const width = menuWidth > 75 ? `${menuWidth + 85}px` : provided.width
     return {
       ...provided,
       width,
