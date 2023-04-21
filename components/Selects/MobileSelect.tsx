@@ -56,7 +56,9 @@ const MobileSelect: FC<SelectProps> = ({
         {open &&
           filtered.map((f) => {
             // @ts-ignore
-            const isSelected = value.some((v) => v.value === f.value)
+            const isSelected = Array.isArray(value)
+              ? value.some((v) => v.value === f.value)
+              : value.value === f.value
             return (
               <div className='flex justify-center'>
                 <IconItem
