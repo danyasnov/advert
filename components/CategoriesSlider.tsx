@@ -19,6 +19,7 @@ import {SerializedCookiesState} from '../types'
 import {getLocationCodes, handleMetrics} from '../helpers'
 
 const CategoriesSlider: FC = observer(() => {
+  const {user} = useGeneralStore()
   const {categoriesWithoutAll} = useCategoriesStore()
   const {locationCodes: defaultLocationCodes} = useGeneralStore()
   const [locationCodes, setLocationCodes] = useState(defaultLocationCodes)
@@ -54,7 +55,10 @@ const CategoriesSlider: FC = observer(() => {
                 href={`/${locationCodes}/${c.slug}`}
                 className='relative cursor-pointer mr-4 '
                 handleClick={() => {
-                  handleMetrics('clickCategory', c.id)
+                  handleMetrics('clickCategory', {
+                    categoryID: c.id,
+                    userHash: user?.hash,
+                  })
                 }}>
                 <div className='hover:text-primary-500 text-greyscale-900'>
                   <ImageWrapper

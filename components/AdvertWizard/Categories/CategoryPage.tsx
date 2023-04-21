@@ -8,7 +8,10 @@ import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import Button from '../../Buttons/Button'
 import PrimaryButton from '../../Buttons/PrimaryButton'
-import {useCategoriesStore} from '../../../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useUserStore,
+} from '../../../providers/RootStoreProvider'
 import {AdvertPages, WizardContext} from '../AdvertWizard'
 import OutlineButton from '../../Buttons/OutlineButton'
 import {makeRequest} from '../../../api'
@@ -20,7 +23,7 @@ import {handleMetrics} from '../../../helpers'
 
 const CategoryPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
-
+  const {user} = useUserStore()
   const {t} = useTranslation()
   const router = useRouter()
   const {query} = router
@@ -86,7 +89,10 @@ const CategoryPage: FC = observer(() => {
             router.query.hash = [res.data.result.hash]
             router.push(router)
           }
-          handleMetrics('addAdvt_category', {id})
+          handleMetrics('addAdvt_category', {
+            categoryId: id,
+            userHash: user?.hash,
+          })
 
           dispatch({
             type: 'setPage',

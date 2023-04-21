@@ -8,6 +8,7 @@ import IcSearch from 'icons/material/Search.svg'
 import IcCheck from 'icons/material/Check.svg'
 import {Country} from '../types'
 import {handleMetrics} from '../helpers'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 interface CountryOption {
   label: string
@@ -34,6 +35,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
   value,
   onChangeFormat,
 }) => {
+  const {user} = useGeneralStore()
   return (
     <div className='flex border-2 border-nc-primary rounded-lg h-12 w-full items-center'>
       <FormatSelect
@@ -49,7 +51,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
       <NumberFormat
         onValueChange={({value: inputValue}) => {
           onChange(inputValue)
-          handleMetrics('addAdvt_priceItems')
+          handleMetrics('addAdvt_priceItems', {userHash: user?.hash})
         }}
         value={value}
         mask='_'

@@ -14,7 +14,10 @@ import {
   trackSingle,
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
-import {useCategoriesStore} from '../../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useGeneralStore,
+} from '../../providers/RootStoreProvider'
 
 interface Props {
   selectedItem: string
@@ -24,6 +27,7 @@ interface Props {
 const SearchAutocomplete: FC<Props> = observer(
   ({selectedItem, handleSelectedItemChange}) => {
     const {categories} = useCategoriesStore()
+    const user = useGeneralStore()
     const {t} = useTranslation()
     const [inputItems, setInputItems] = useState([])
     const router = useRouter()
@@ -113,7 +117,8 @@ const SearchAutocomplete: FC<Props> = observer(
       if (query) {
         trackSingle('Search', {search_string: query})
       }
-      if (query) handleMetrics('searchCategory', {q: query})
+      if (query)
+        handleMetrics('searchCategory', {q: query, userHash: user.user?.hash})
       router.push({
         pathname,
         query: {

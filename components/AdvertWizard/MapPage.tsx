@@ -23,6 +23,7 @@ import {makeRequest} from '../../api'
 import MobileMapSearch from './MobileMapSearch'
 import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
 import {handleMetrics, setCookiesObject} from '../../helpers'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const zoomRadiusMap = {
   0: 15,
@@ -33,6 +34,7 @@ const zoomRadiusMap = {
 const MapPage: FC = () => {
   const {state, dispatch} = useContext(WizardContext)
   const {query, push} = useRouter()
+  const {user} = useGeneralStore()
   const hash = first(query.hash)
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
@@ -161,7 +163,7 @@ const MapPage: FC = () => {
         type: 'setDraft',
         draft: newDraft,
       })
-      handleMetrics('addAdvt_adress')
+      handleMetrics('addAdvt_adress', {userHash: user?.hash})
       if (hash) {
         return makeRequest({
           url: '/api/save-draft',
