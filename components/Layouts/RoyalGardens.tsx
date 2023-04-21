@@ -38,69 +38,6 @@ const property = [
   },
 ]
 
-/* const images = [
-  'img/royal-garden/Gallery1.png',
-  'img/royal-garden/Gallery2.png',
-  'img/royal-garden/Gallery3.png',
-]
-
-const OPTIONS: EmblaOptionsType = {dragFree: true}
-const SLIDE_COUNT = 3
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
-
-const imageByIndex = (index: number): string => images[index % images.length]
-
-type PropType = {
-  slides: number[]
-  options?: EmblaOptionsType
-}
-
-const Gallery: FC<PropType> = (props) => {
-  const {slides, options} = props
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
-  const [scrollProgress, setScrollProgress] = useState(0)
-
-  const onScroll = useCallback(() => {
-    if (!emblaApi) return
-    const progress = Math.max(0, Math.min(1, emblaApi.scrollProgress()))
-    setScrollProgress(progress * 100)
-  }, [emblaApi, setScrollProgress])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    onScroll()
-    emblaApi.on('scroll', onScroll)
-    emblaApi.on('reInit', onScroll)
-  }, [emblaApi, onScroll])
-
-  return (
-    <div className='embla'>
-      <div className='embla__viewport' ref={emblaRef}>
-        <div className='embla__container'>
-          {slides.map((index) => (
-            <div className='embla__slide' key={index}>
-              <div className='embla__slide__number'>
-                <span>{index + 1}</span>
-              </div>
-              <img
-                className='embla__slide__img'
-                src={imageByIndex(index)}
-                alt='Your alt text'
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className='embla__progress'>
-        <div
-          className='embla__progress__bar'
-          style={{transform: `translateX(${scrollProgress}%)`}}
-        />
-      </div>
-    </div>
-  )
-} */
-
 const Gallery: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -137,7 +74,7 @@ const Gallery: FC = observer(() => {
     },
     {
       src: '/img/royal-garden/Gallery7.png',
-      title: 'LANDING_REAL_ESTATE_CHILL-OUT_ZONE',
+      title: 'LANDING_REAL_ESTATE_CHILLOUT_ZONE',
       width: 584,
     },
     {
@@ -166,7 +103,7 @@ const Gallery: FC = observer(() => {
     imgHeight = 410
   }
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(10)
 
   const [viewportRef, embla] = useEmblaCarousel(
     {
@@ -178,11 +115,14 @@ const Gallery: FC = observer(() => {
     [Autoplay({delay: 5000}), WheelGesturesPlugin()],
   )
 
-  const onScroll = useCallback(() => {
-    if (!embla) return
-    const progress = Math.max(0, Math.min(1, embla.scrollProgress()))
-    setScrollProgress(progress * 100)
-  }, [embla, setScrollProgress])
+  const onScroll = () => {
+    if (embla) {
+      const progress = Math.round(
+        Math.max(10, Math.min(100, embla.scrollProgress() * 100) + 10),
+      )
+      setScrollProgress(progress)
+    }
+  }
 
   useEffect(() => {
     if (embla) {
@@ -190,8 +130,9 @@ const Gallery: FC = observer(() => {
         const index = embla.selectedScrollSnap() || 0
         setCurrentIndex(index > 9 ? index - 10 : index)
       })
+      embla.on('scroll', onScroll)
     }
-  }, [embla])
+  }, [embla, onScroll])
 
   return (
     <div className='overflow-hidden mt-6 m:mt-12 mb-8' ref={viewportRef}>
@@ -209,6 +150,7 @@ const Gallery: FC = observer(() => {
                 height={imgHeight}
                 objectFit='contain'
               />
+
               <span className='mt-3 m:mt-6 font-light text-greyscale-900 text-body-14 m:text-body-18 '>
                 {t(photo.title)}
               </span>
@@ -216,23 +158,8 @@ const Gallery: FC = observer(() => {
           </div>
         ))}
       </div>
-      {/* <div className='w-full flex justify-center space-x-1.5 mt-4 xxl:hidden'>
-        {photos.map((photo, index) => (
-          <Button
-            onClick={() => {
-              embla.scrollTo(index)
-            }}>
-            <div
-              key={photo.title}
-              className={`w-2 h-2 rounded-full ${
-                currentIndex === index ? 'bg-primary-500' : 'bg-greyscale-300'
-              }`}
-            />
-          </Button>
-        ))}
-      </div> */}
       <div className='w-full flex mt-3 s:mt-[18px] m:mt-10'>
-        <div className='flex space-x-2 s:space-x-4 l:space-x-6'>
+        <div className='flex space-x-2 s:space-x-4 l:space-x-6 mr-4'>
           <Button onClick={() => embla.scrollPrev()}>
             <IcArrow className='fill-current text-greyscale-900 h-6 w-6 shrink-0 ' />
           </Button>
@@ -243,8 +170,11 @@ const Gallery: FC = observer(() => {
             <IcArrow className='fill-current text-greyscale-900 rotate-180 h-6 w-6 shrink-0 ' />
           </Button>
         </div>
-        <div className='h-[1px] w-full bg-greyscale-400 '>
-          <div className='h-[2px]'></div>
+        <div className='self-center h-[2px] z-10 bg-greyscale-900 w-full'>
+          <div
+            className='h-[2px] bg-greyscale-400'
+            style={{transform: `translateX(${scrollProgress}%)`}}
+          />
         </div>
       </div>
     </div>
@@ -398,7 +328,7 @@ const RoyalGardens: FC = observer(() => {
                   setShowModal(true)
                 }}>
                 <ImageWrapper
-                  type='/img/RoyalGardens.png'
+                  type='/img/royal-garden/RoyalGardens.png'
                   layout='fill'
                   alt='Royal Gardens'
                   objectFit='contain'
@@ -421,7 +351,7 @@ const RoyalGardens: FC = observer(() => {
                     <div className='overflow-hidden h-full s:h-auto relative s:mx-16'>
                       <div className='flex h-full s:h-[364px] m:h-[504px] l:h-[746px]'>
                         <video
-                          src='img/ROYAL_GARDENS.mp4'
+                          src='img/royal-garden/ROYAL_GARDENS.mp4'
                           // eslint-disable-next-line react/no-array-index-key
                           controls
                           disablePictureInPicture
