@@ -134,7 +134,6 @@ const AdvertDescription: FC<Props & FieldProps> = ({
             if (error) setFieldError(name, undefined)
             handleMetrics('addAdvt_title', {
               adTitle: title,
-              userHash: user?.hash,
             })
           }}
         />
