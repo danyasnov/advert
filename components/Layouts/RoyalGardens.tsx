@@ -14,6 +14,7 @@ import BusinessButton from '../BusinessButton'
 import SafetyButton from '../SafetyButton'
 import ImageWrapper from '../ImageWrapper'
 import PhotosModal from '../PhotosModal'
+import {ThumbObject} from '../../types'
 import Auth from '../Auth'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
@@ -44,51 +45,61 @@ const Gallery: FC = observer(() => {
   const photos = [
     {
       src: '/img/royal-garden/Gallery1.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_AMAZING_TERRACE',
       width: 615,
     },
     {
       src: '/img/royal-garden/Gallery2.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_LIVING_ROOM',
       width: 528,
     },
     {
       src: '/img/royal-garden/Gallery3.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_MODERN_DESIGN',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery4.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_JACUZZI',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery5.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_BEAUTIFUL_VIEWS',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery6.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_COSY_AREAS',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery7.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_CHILLOUT_ZONE',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery8.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_KITCHEN',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery9.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_DESIGNER_BEDROOM',
       width: 584,
     },
     {
       src: '/img/royal-garden/Gallery10.png',
+      type: 'image',
       title: 'LANDING_REAL_ESTATE_BBQ_AREA',
       width: 584,
     },
@@ -102,6 +113,7 @@ const Gallery: FC = observer(() => {
   } else {
     imgHeight = 410
   }
+  const [showModal, setShowModal] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(10)
 
@@ -136,21 +148,34 @@ const Gallery: FC = observer(() => {
 
   return (
     <div className='overflow-hidden mt-6 m:mt-12 mb-8' ref={viewportRef}>
-      <div className='flex shrink-0'>
-        {[...photos].map((photo) => (
+      <div className='relative flex shrink-0'>
+        {[...photos].map((photo, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div className='mr-4'>
             <div className='flex flex-col relative'>
-              <ImageWrapper
-                quality={100}
-                type={photo.src}
-                alt={t(photo.title)}
-                layout='fixed'
-                width={(photo.width * imgHeight) / 410}
-                height={imgHeight}
-                objectFit='contain'
-              />
-
+              <Button
+                onClick={() => {
+                  setShowModal(true)
+                  setCurrentIndex(index)
+                }}>
+                <ImageWrapper
+                  quality={100}
+                  type={photo.src}
+                  alt={t(photo.title)}
+                  layout='fixed'
+                  width={(photo.width * imgHeight) / 410}
+                  height={imgHeight}
+                  objectFit='contain'
+                />
+              </Button>
+              {showModal && (
+                <PhotosModal
+                  isOpen={showModal}
+                  onClose={() => setShowModal(false)}
+                  items={photos as ThumbObject[]}
+                  currentIndex={currentIndex}
+                />
+              )}
               <span className='mt-3 m:mt-6 font-light text-greyscale-900 text-body-14 m:text-body-18 '>
                 {t(photo.title)}
               </span>
