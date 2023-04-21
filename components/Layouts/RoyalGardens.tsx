@@ -39,6 +39,42 @@ const property = [
   },
 ]
 
+const facilities = [
+  {
+    title: 'LANDING_REAL_ESTATE_SWIMMING_POOL',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_KIDS_POOL',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_SURVEILLANCE',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_SEATING_AREA',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_PLAYGROUND',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_SAUNA',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_GYM',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_STORAGE',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_BAR',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_RECEPTION',
+  },
+  {
+    title: 'LANDING_REAL_ESTATE_BICYCLE',
+  },
+]
+
 const Gallery: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -168,14 +204,7 @@ const Gallery: FC = observer(() => {
                   objectFit='contain'
                 />
               </Button>
-              {showModal && (
-                <PhotosModal
-                  isOpen={showModal}
-                  onClose={() => setShowModal(false)}
-                  items={photos as ThumbObject[]}
-                  currentIndex={currentIndex}
-                />
-              )}
+
               <span className='mt-3 m:mt-6 font-light text-greyscale-900 text-body-14 m:text-body-18 '>
                 {t(photo.title)}
               </span>
@@ -202,6 +231,14 @@ const Gallery: FC = observer(() => {
           />
         </div>
       </div>
+      {showModal && (
+        <PhotosModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          items={photos as ThumbObject[]}
+          currentIndex={currentIndex}
+        />
+      )}
     </div>
   )
 })
@@ -431,6 +468,63 @@ const RoyalGardens: FC = observer(() => {
           </div>
           <div>
             <Gallery />
+          </div>
+          <div className='mt-6 m:mt-20 l:mt-35' id='facilities'>
+            <span className='text-body-12 s:text-body-16 m:text-h-5 text-greyscale-500 font-light'>
+              {t('LANDING_REAL_ESTATE_FACILITIES')}
+            </span>
+            <h1
+              className='s:mt-2 l:mt-5 font-light max-w-[798px] leading-10 text-h-4 s:text-h-3 m:text-h-1 text-greyscale-900'
+              dangerouslySetInnerHTML={{
+                __html: t('LANDING_REAL_ESTATE_RESORT_COMPLEX_IDEA'),
+              }}
+            />
+            <div className='flex flex-col s:flex-row s:space-x-10 m:space-x-15 l:space-x-25 s:items-center'>
+              <div className='mt-6 m:mt-12'>
+                <div className='relative w-[328px] h-[230px] s:hidden'>
+                  <ImageWrapper
+                    type='/img/royal-garden/facilitiesXS.png'
+                    layout='fill'
+                    alt='facilities'
+                    objectFit='contain'
+                  />
+                </div>
+                <div className='relative s:w-[410px] s:h-[414px] m:hidden'>
+                  <ImageWrapper
+                    type='/img/royal-garden/facilitiesS.png'
+                    layout='fill'
+                    alt='facilities'
+                    objectFit='contain'
+                  />
+                </div>
+                <div className='relative m:w-[560px] m:h-[436px] l:hidden'>
+                  <ImageWrapper
+                    type='/img/royal-garden/facilitiesM.png'
+                    layout='fill'
+                    alt='facilities'
+                    objectFit='contain'
+                  />
+                </div>
+                <div className='relative l:w-[801px] l:h-[623px]'>
+                  <ImageWrapper
+                    type='/img/royal-garden/facilities.png'
+                    layout='fill'
+                    alt='facilities'
+                    objectFit='contain'
+                  />
+                </div>
+              </div>
+              <ul className='list-disc font-light mx-4 mt-4 m:mt-16 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+                {facilities.map((facilitie) => (
+                  <li
+                    className='mb-2 m:mb-4'
+                    dangerouslySetInnerHTML={{
+                      __html: t(facilitie.title),
+                    }}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
         {/* <div className={`ml-[${marginGallery}px]`}> */}
