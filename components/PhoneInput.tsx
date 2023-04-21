@@ -35,7 +35,6 @@ const PhoneInput: FC<PhoneInputProps> = ({
   value,
   onChangeFormat,
 }) => {
-  const {user} = useGeneralStore()
   return (
     <div className='flex border-2 border-nc-primary rounded-lg h-12 w-full items-center'>
       <FormatSelect
@@ -51,7 +50,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
       <NumberFormat
         onValueChange={({value: inputValue}) => {
           onChange(inputValue)
-          handleMetrics('addAdvt_priceItems', {userHash: user?.hash})
+          handleMetrics('addAdvt_priceItems')
         }}
         value={value}
         mask='_'

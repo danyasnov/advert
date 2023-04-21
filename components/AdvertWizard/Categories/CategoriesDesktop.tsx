@@ -14,7 +14,6 @@ interface Props {
 
 const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
   const [clickedItem, setClickedItem] = useState(null)
-  const {user} = useGeneralStore()
   return (
     <div className='flex mb-15'>
       <div
@@ -34,7 +33,6 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
               setClickedItem(index)
               handleMetrics('addAdvt_subCategory', {
                 categoryId: c.id,
-                userHash: user?.hash,
               })
             }}>
             <span className={`text-body-14 font-normal w-full text-left `}>
@@ -69,7 +67,6 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
                       handleMetrics('addAdvt_subCategory', {
                         categoryId: parentCategory.id,
                         subcategoryId: c.id,
-                        userHash: user.user?.hash,
                       })
                     }}>
                     <span className='text-body-14 font-normal w-full text-left'>

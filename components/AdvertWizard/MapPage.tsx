@@ -34,7 +34,6 @@ const zoomRadiusMap = {
 const MapPage: FC = () => {
   const {state, dispatch} = useContext(WizardContext)
   const {query, push} = useRouter()
-  const {user} = useGeneralStore()
   const hash = first(query.hash)
   const {width} = useWindowSize()
   const [location, setLocation] = useState<{lat: number; lng: number}>(() => {
@@ -163,7 +162,7 @@ const MapPage: FC = () => {
         type: 'setDraft',
         draft: newDraft,
       })
-      handleMetrics('addAdvt_adress', {userHash: user?.hash})
+      handleMetrics('addAdvt_adress')
       if (hash) {
         return makeRequest({
           url: '/api/save-draft',

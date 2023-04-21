@@ -22,7 +22,7 @@ const Banners: FC = observer(() => {
       title: 'BANNER1_TITLE',
       color: 'text-[#F75555]',
       onClick: () => {
-        handleMetrics('clickPromo', {banner: 'auto', userHash: user?.hash})
+        handleMetrics('clickPromo', {banner: 'auto'})
 
         router.push(`/${locationCodes}/vehicles/vehicles-cars`)
       },
@@ -32,7 +32,7 @@ const Banners: FC = observer(() => {
       title: 'BANNER2_TITLE',
       color: 'text-[#009689]',
       onClick: () => {
-        handleMetrics('clickPromo', {banner: 'business', userHash: user?.hash})
+        handleMetrics('clickPromo', {banner: 'business'})
 
         router.push(`/business`)
       },
@@ -42,7 +42,7 @@ const Banners: FC = observer(() => {
       title: 'BANNER3_TITLE',
       color: 'text-[#7210FF]',
       onClick: () => {
-        handleMetrics('clickPromo', {banner: 'community', userHash: user?.hash})
+        handleMetrics('clickPromo', {banner: 'community'})
 
         if (user) {
           router.push(`/advert/create`)
@@ -58,7 +58,6 @@ const Banners: FC = observer(() => {
       onClick: () => {
         handleMetrics('clickPromo', {
           banner: 'property-rent',
-          userHash: user?.hash,
         })
 
         router.push(`/${locationCodes}/property/property-rent?priceMax=1000`)
@@ -71,7 +70,6 @@ const Banners: FC = observer(() => {
       onClick: () => {
         handleMetrics('clickPromo', {
           banner: 'property-sales-land',
-          userHash: user?.hash,
         })
 
         router.push(
@@ -84,7 +82,7 @@ const Banners: FC = observer(() => {
       title: 'BANNER6_TITLE',
       color: 'text-[#F75555]',
       onClick: () => {
-        handleMetrics('clickPromo', {banner: 'beauty', userHash: user?.hash})
+        handleMetrics('clickPromo', {banner: 'beauty'})
 
         router.push(`/${locationCodes}/health-and-beauty`)
       },
@@ -96,7 +94,6 @@ const Banners: FC = observer(() => {
       onClick: () => {
         handleMetrics('clickPromo', {
           banner: 'electronics',
-          userHash: user?.hash,
         })
 
         router.push(`/${locationCodes}/electronics`)
@@ -107,7 +104,7 @@ const Banners: FC = observer(() => {
       title: 'BANNER8_TITLE',
       color: 'text-[#7A5548]',
       onClick: () => {
-        handleMetrics('clickPromo', {banner: 'autoparts', userHash: user?.hash})
+        handleMetrics('clickPromo', {banner: 'autoparts'})
 
         router.push(
           `/${locationCodes}/vehicles/vehicles-autoparts-autoaccessories`,

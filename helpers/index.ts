@@ -855,7 +855,9 @@ export const flatArrayFields = (fields) => {
   })
   return newFields
 }
-export const handleMetrics = (event, data?) => {
+export const handleMetrics = (event, eventData?) => {
+  const cookies: SerializedCookiesState = parseCookies()
+  const data = {...eventData, userHash: cookies.hash}
   trackSingle(event, data)
   if (window.dataLayer) {
     window.dataLayer.push({event, data})

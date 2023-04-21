@@ -23,7 +23,6 @@ import {handleMetrics} from '../../../helpers'
 
 const CategoryPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
-  const {user} = useUserStore()
   const {t} = useTranslation()
   const router = useRouter()
   const {query} = router
@@ -91,7 +90,6 @@ const CategoryPage: FC = observer(() => {
           }
           handleMetrics('addAdvt_category', {
             categoryId: id,
-            userHash: user?.hash,
           })
 
           dispatch({

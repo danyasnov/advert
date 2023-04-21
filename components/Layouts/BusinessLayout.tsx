@@ -19,7 +19,6 @@ import ImageWrapper from '../ImageWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {handleMetrics, trackSingle} from '../../helpers'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const features = [
   {
@@ -77,12 +76,11 @@ const whyUs = [
 ]
 const BusinessLayout: FC = observer(() => {
   const {t} = useTranslation()
-  const user = useGeneralStore()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const formRef = useRef<HTMLDivElement>()
   useEffect(() => {
-    handleMetrics('visitBusiness_paged', {userHash: user.user?.hash})
+    handleMetrics('visitBusiness_paged')
   }, [])
 
   const formik = useFormik({
@@ -118,7 +116,7 @@ const BusinessLayout: FC = observer(() => {
         url: '/api/landing-submit',
         data: omit(values, ['privacy', 'token']),
       })
-      handleMetrics('creationBussiness_sccess', {userHash: user?.userHash})
+      handleMetrics('creationBussiness_sccess')
 
       trackSingle('CompleteRegistration')
       trackSingle('BusinessRegistration')
@@ -131,7 +129,6 @@ const BusinessLayout: FC = observer(() => {
       onClick={() => {
         handleMetrics('clickStart_now', {
           startNow: index,
-          userHash: user.user?.hash,
         })
         formRef.current.scrollIntoView({
           behavior: 'smooth',

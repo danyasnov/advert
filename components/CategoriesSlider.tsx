@@ -19,7 +19,6 @@ import {SerializedCookiesState} from '../types'
 import {getLocationCodes, handleMetrics} from '../helpers'
 
 const CategoriesSlider: FC = observer(() => {
-  const {user} = useGeneralStore()
   const {categoriesWithoutAll} = useCategoriesStore()
   const {locationCodes: defaultLocationCodes} = useGeneralStore()
   const [locationCodes, setLocationCodes] = useState(defaultLocationCodes)
@@ -57,7 +56,6 @@ const CategoriesSlider: FC = observer(() => {
                 handleClick={() => {
                   handleMetrics('clickCategory', {
                     categoryID: c.id,
-                    userHash: user?.hash,
                   })
                 }}>
                 <div className='hover:text-primary-500 text-greyscale-900'>
