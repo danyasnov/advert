@@ -8,6 +8,7 @@ import IcSearch from 'icons/material/Search.svg'
 import IcCheck from 'icons/material/Check.svg'
 import {Country} from '../types'
 import {handleMetrics} from '../helpers'
+import {useGeneralStore} from '../providers/RootStoreProvider'
 
 interface CountryOption {
   label: string

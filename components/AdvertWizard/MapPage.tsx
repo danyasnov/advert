@@ -23,6 +23,7 @@ import {makeRequest} from '../../api'
 import MobileMapSearch from './MobileMapSearch'
 import InlineMapRadiusSelector from '../InlineMapRadiusSelector'
 import {handleMetrics, setCookiesObject} from '../../helpers'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const zoomRadiusMap = {
   0: 15,

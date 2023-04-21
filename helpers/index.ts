@@ -855,16 +855,18 @@ export const flatArrayFields = (fields) => {
   })
   return newFields
 }
-export const handleMetrics = (eventType, data?) => {
-  trackSingle(eventType, data)
+export const handleMetrics = (event, eventData?) => {
+  const cookies: SerializedCookiesState = parseCookies()
+  const data = {...eventData, userHash: cookies.hash}
+  trackSingle(event, data)
   if (window.dataLayer) {
-    window.dataLayer.push({eventType, data})
+    window.dataLayer.push({event, data})
   } else {
-    window.dataLayer = [{eventType, data}]
+    window.dataLayer = [{event, data}]
   }
   makeRequest({
     url: '/api/clickhouse',
     method: 'post',
-    data: {eventType, data},
+    data: {event, data},
   })
 }

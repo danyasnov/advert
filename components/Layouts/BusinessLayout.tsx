@@ -127,7 +127,9 @@ const BusinessLayout: FC = observer(() => {
     <Button
       className='rounded-full bg-primary-500 text-body-18 w-[246px] h-[62px] text-white'
       onClick={() => {
-        handleMetrics('clickStart_now', {index})
+        handleMetrics('clickStart_now', {
+          startNow: index,
+        })
         formRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',

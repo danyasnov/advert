@@ -140,9 +140,13 @@ const Card: FC<Props> = ({
 
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
+      {/* eslint-disable-next-line */}
       <div
         onClick={() => {
-          handleMetrics('clickTo_advt')
+          handleMetrics('clickTo_advt', {
+            categoryId: product.rootCategoryId,
+            subcategoryId: product.categoryId,
+          })
         }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
