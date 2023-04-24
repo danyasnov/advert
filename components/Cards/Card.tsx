@@ -39,6 +39,7 @@ interface Props {
     state,
     showRefreshButton,
   }) => any[]
+  renderFooter?: (product: AdvertiseListItemModel) => Element
 }
 const Card: FC<Props> = ({
   product,
@@ -46,6 +47,7 @@ const Card: FC<Props> = ({
   href,
   disableVipWidth,
   getOptions,
+  renderFooter,
 }) => {
   const {t} = useTranslation()
   const {
@@ -313,6 +315,7 @@ const Card: FC<Props> = ({
               />
             )}
           </div>
+          {!!renderFooter && renderFooter(product)}
         </div>
       </div>
     </LinkWrapper>
