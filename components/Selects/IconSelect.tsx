@@ -1,6 +1,7 @@
 import React, {FC, useRef, useState} from 'react'
 import {isArray, isEmpty, size} from 'lodash'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import IcCarViewFront from 'icons/CarViewFront.svg'
 import {SelectItem, SelectProps} from './Select'
 import useOnClickOutside from '../../hooks/useOnClickOutside'
 import Button from '../Buttons/Button'
@@ -10,11 +11,8 @@ const IconSelect: FC<SelectProps> = ({
   placeholder,
   onChange,
   value,
-  isSearchable,
   isMulti,
-  isInvalid,
-  classNameOpt,
-  isIconSelect,
+  filterStyle,
 }) => {
   const ref = useRef()
 
@@ -29,13 +27,14 @@ const IconSelect: FC<SelectProps> = ({
     isEmptyValue = !value?.value && value?.value !== 0
   }
   return (
-    <div
-      className={`relative w-full bg-greyscale-50 rounded-xl py-2.5 h-fit border ${
-        show ? 'border-primary-500 bg-primary-100' : 'border-transparent'
-      }`}
-      ref={ref}>
-      <Button className='w-full pl-3 pr-7' onClick={() => setShow(!show)}>
-        <div className='flex justify-between items-center w-full text-body-12'>
+    <div className='relative w-full bg-greyscale-50 rounded-xl h-fit' ref={ref}>
+      <Button
+        className={`w-full pl-5 pr-7 ${filterStyle ? 'py-2.5' : 'py-4'}`}
+        onClick={() => setShow(!show)}>
+        <div
+          className={`flex justify-between items-center w-full  ${
+            filterStyle ? 'text-body-12' : 'text-body-16'
+          }`}>
           {isEmptyValue ? (
             <span className='text-greyscale-500 truncate'>{placeholder}</span>
           ) : (
@@ -47,7 +46,7 @@ const IconSelect: FC<SelectProps> = ({
           )}
           <IcArrowDown
             className={`fill-current text-greyscale-900 h-5 w-5 -mr-2 shrink-0 ${
-              show ? 'rotate-180 text-primary-500' : ''
+              show ? 'rotate-180' : ''
             }`}
           />
         </div>
@@ -63,7 +62,9 @@ const IconSelect: FC<SelectProps> = ({
             }`}>
             {options.map((f) => {
               // @ts-ignore
-              const isSelected = value.some((v) => v.value === f.value)
+              const isSelected = Array.isArray(value)
+                ? value.some((v) => v.value === f.value)
+                : value.value === f.value
               return (
                 <IconItem
                   item={f}
@@ -99,6 +100,7 @@ export const IconItem: FC<IconItemProps> = ({
   onChange,
   onClose,
 }) => {
+  const isOtherValueButton = item.value === 'other_value_button'
   return (
     <Button
       // @ts-ignore
@@ -124,13 +126,20 @@ export const IconItem: FC<IconItemProps> = ({
         className={`w-[102px] h-[102px] s:w-[71px] s:h-[71px] border-2 s:border border-primary-500 rounded-3xl s:rounded-xl flex flex-col items-center justify-center ${
           isSelected ? 'bg-primary-500 text-white' : ''
         }`}>
-        <img
-          src={item.icon}
-          alt={item.label}
-          className={`${
-            isSelected ? 'invert brightness-0' : ''
-          } w-16 h-16 s:w-12 s:h-12`}
-        />
+        {isOtherValueButton ? (
+          <div className='w-16 h-16 s:w-12 s:h-12`'>
+            <IcCarViewFront />
+          </div>
+        ) : (
+          <img
+            src={item.icon}
+            alt={item.label}
+            className={`${
+              isSelected ? 'invert brightness-0' : ''
+            } w-16 h-16 s:w-12 s:h-12`}
+          />
+        )}
+
         <span className='truncate w-full font-medium text-body-10 px-1 pb-2'>
           {item.label}
         </span>

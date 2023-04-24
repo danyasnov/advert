@@ -3,17 +3,20 @@ import {observer} from 'mobx-react-lite'
 import Joyride, {Step} from 'react-joyride'
 import {parseCookies} from 'nookies'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isNumber, toNumber} from 'lodash'
+import {isEmpty, isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,
   ArrowLeftSquare,
+  ArrowRight,
   Delete,
   Edit,
   TickSquare,
+  TimeCircle,
 } from 'react-iconly'
 import {useWindowSize} from 'react-use'
 import {DraftModel} from 'front-api/src/models'
+import {toast} from 'react-toastify'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
@@ -31,6 +34,7 @@ import {
   setCookiesObject,
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
+import SubscribersSubscriptionsList from '../SubscribersSubscriptionsList'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -39,10 +43,16 @@ const getTabs = (t: TFunction, sizes) => [
   {title: `${t('ARCHIVE')}`, id: 4, count: sizes[4]},
 ]
 
+const getSubscribeTabs = (t: TFunction, sizes) => [
+  {title: `${t('SUBSCRIBERS')}`, id: 1, count: sizes[1]},
+  {title: `${t('SUBSCRIPTIONS')}`, id: 2, count: sizes[2]},
+]
+
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
   const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
+  const activeSubscriptionTab = toNumber(getQueryValue(query, 'activeTab')) || 1
   const router = useRouter()
   const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const {width} = useWindowSize()
@@ -63,7 +73,8 @@ const UserLayout: FC = observer(() => {
 
   const isCurrentUser = userHash === user.hash
   const desktopUser = width >= 768 && activeUserPage === null
-  const mobileUser = width < 768 && !isCurrentUser
+  const mobileUser =
+    width < 768 && !isCurrentUser && activeUserPage !== 'subscribers'
   useEffect(() => {
     if (query.chatId) {
       setActiveUserPage('chat')
@@ -108,6 +119,10 @@ const UserLayout: FC = observer(() => {
     3: isNumber(userSold.count) ? userSold.count : '',
     4: isNumber(userArchive.count) ? userArchive.count : '',
   })
+  const subscribeTabs = getSubscribeTabs(t, {
+    1: isNumber(user.subscribers) ? user.subscribers : '',
+    2: isNumber(user.subscribs) ? user.subscribs : '',
+  })
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
     (d) => {
       const title =
@@ -124,9 +139,27 @@ const UserLayout: FC = observer(() => {
     },
   )
 
+  const refreshAdvert = (hash) => {
+    makeRequest({
+      url: '/api/refresh-advert',
+      data: {hash},
+      method: 'post',
+    }).then((data) => {
+      if (data?.data?.status === 200) {
+        toast.success(t('SUCCESSFULLY_PROMOTED'))
+        router.reload()
+      }
+    })
+  }
+
   let getAdvertOptions
   if (isCurrentUser) {
-    getAdvertOptions = ({setShowDeactivateModal, hash, state}) => {
+    getAdvertOptions = ({
+      setShowDeactivateModal,
+      hash,
+      state,
+      showRefreshButton,
+    }) => {
       const remove = {
         title: 'REMOVE',
         icon: <Delete size={16} filled />,
@@ -174,7 +207,16 @@ const UserLayout: FC = observer(() => {
           router.push(`/advert/edit/${hash}`)
         },
       }
+      const refresh = {
+        title: 'UPDATE_BEFORE_ARCHIVATION',
+        icon: <TimeCircle size={16} filled />,
+        onClick: () => refreshAdvert(hash),
+      }
       const items = []
+
+      if (showRefreshButton) {
+        items.push(refresh)
+      }
 
       if (['active', 'archived', 'blocked', 'draft'].includes(state)) {
         items.push(edit)
@@ -275,7 +317,44 @@ const UserLayout: FC = observer(() => {
                   <UserSidebar />
                 </div>
               )}
-
+              {activeUserPage === 'subscribers' && (
+                <div
+                  className={`${
+                    activeUserPage !== 'subscribers' ? 'hidden' : ''
+                  }`}>
+                  <SectionTitle
+                    title={t(
+                      isCurrentUser
+                        ? 'MY_PROFILE'
+                        : 'SUBSCRIBERS_AND_SUBSCRIPTIONS',
+                    )}
+                  />
+                  <div className='z-10 relative mb-10'>
+                    <Tabs
+                      items={subscribeTabs}
+                      onChange={(id) => {
+                        robustShallowUpdateQuery(router, {
+                          page: 'subscribers',
+                          activeTab: id,
+                        })
+                      }}
+                      value={activeSubscriptionTab}
+                    />
+                  </div>
+                  {activeSubscriptionTab === 1 && (
+                    <SubscribersSubscriptionsList
+                      ownerHash={user.hash}
+                      typeSub='2'
+                    />
+                  )}
+                  {activeSubscriptionTab === 2 && (
+                    <SubscribersSubscriptionsList
+                      ownerHash={user.hash}
+                      typeSub='1'
+                    />
+                  )}
+                </div>
+              )}
               {(desktopUser || activeUserPage === 'adverts' || mobileUser) && (
                 <div>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
@@ -315,7 +394,7 @@ const UserLayout: FC = observer(() => {
                       tab='moderation'
                     />
                   )}
-                  {isCurrentUser && activeTab === 2 && (
+                  {activeTab === 2 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSale.items}
@@ -331,29 +410,26 @@ const UserLayout: FC = observer(() => {
                           path: 'userSale',
                         })
                       }}
-                      tab='sale'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 2 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSale.items}
-                      page={userSale.page}
-                      count={userSale.count}
-                      state={userSale.state}
-                      limit={userSale.limit}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSale.page + 1,
-                          path: 'userSale',
-                        })
+                      tab={isCurrentUser ? 'sale' : 'other-sale'}
+                      renderFooter={(product) => {
+                        if (!product.showCallButton) return null
+                        return (
+                          <Button
+                            className='flex justify-between w-full'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              refreshAdvert(product.hash)
+                            }}>
+                            <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
+                              {t('UPDATE_BEFORE_ARCHIVATION')}
+                            </span>
+                            <ArrowRight size={16} />
+                          </Button>
+                        )
                       }}
-                      tab='other-sale'
                     />
                   )}
-                  {isCurrentUser && activeTab === 3 && (
+                  {activeTab === 3 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSold.items}
@@ -369,26 +445,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSold',
                         })
                       }}
-                      tab='sold'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 3 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSold.items}
-                      page={userSold.page}
-                      count={userSold.count}
-                      state={userSold.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={userSold.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSold.page + 1,
-                          path: 'userSold',
-                        })
-                      }}
-                      tab='other-sold'
+                      tab={isCurrentUser ? 'sold' : 'other-sold'}
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
@@ -519,7 +576,7 @@ const UserLayout: FC = observer(() => {
                   locale={{close: t('HINT_OK')}}
                 />
               )}
-              {/* {!isCurrentUser && showUserTour && (
+              {!isCurrentUser && showUserTour && (
                 <Joyride
                   steps={steps3}
                   hideCloseButton
@@ -544,7 +601,7 @@ const UserLayout: FC = observer(() => {
                   }}
                   locale={{close: t('HINT_OK')}}
                 />
-                )} */}
+              )}
             </main>
           </div>
         </div>

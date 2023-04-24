@@ -11,8 +11,14 @@ interface Props {
   hash: string
   title: string
   state?: string
+  showRefreshButton?: boolean
   images: string[]
-  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
+  getOptions?: ({
+    setShowDeactivateModal,
+    hash,
+    state,
+    showRefreshButton,
+  }) => any[]
   iconRender?
   listRender
 }
@@ -24,6 +30,7 @@ const ProductMenu: FC<Props> = ({
   state,
   iconRender,
   listRender,
+  showRefreshButton,
 }) => {
   const [showPopup, setShowPopup] = useState(false)
   const [showDeactivateModal, setShowDeactivateModal] = useState(false)
@@ -32,7 +39,12 @@ const ProductMenu: FC<Props> = ({
     setShowPopup(false)
   })
 
-  const options = getOptions({setShowDeactivateModal, hash, state})
+  const options = getOptions({
+    setShowDeactivateModal,
+    hash,
+    state,
+    showRefreshButton,
+  })
   if (isEmpty(options)) return null
 
   const body = iconRender

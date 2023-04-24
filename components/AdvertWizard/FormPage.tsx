@@ -19,7 +19,6 @@ import {first, get, size, isEmpty, trim, merge, last} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
-
 import {useWindowSize} from 'react-use'
 import {ArrowLeft} from 'react-iconly'
 import {AdvertPages, WizardContext} from './AdvertWizard'
@@ -511,6 +510,7 @@ const FormPage: FC = observer(() => {
                 <AdvertFormField
                   id='form-field-content'
                   orientation='vertical'
+                  labelDescription={t('FILL_TITLE_LANGUAGE')}
                   body={
                     <Field
                       name='content'

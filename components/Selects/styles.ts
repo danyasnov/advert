@@ -153,10 +153,12 @@ export const FilterStyles = {
     marginBottom: '0',
     paddingTop: '0',
     paddingRight: '0',
+    paddingLeft: '20px',
     height: '24px',
   }),
   placeholder: (provided) => ({
     ...provided,
+    margin: '0',
     fontSize: '12px',
     lineHeight: '12px',
     color: '#9E9E9E',
@@ -167,15 +169,19 @@ export const FilterStyles = {
     fontSize: '12px',
     lineHeight: '14px',
   }),
-  menu: (provided) => ({
-    ...provided,
-    width: '220px',
-    padding: '10px 20px',
-    borderRadius: '16px',
-    border: 'none',
-    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
-    overflow: 'hidden',
-  }),
+  menu: (provided, state) => {
+    const {menuWidth} = state.selectProps
+    const width = menuWidth > 75 ? `${menuWidth + 95}px` : provided.width
+    return {
+      ...provided,
+      width,
+      padding: '10px 20px',
+      borderRadius: '16px',
+      border: 'none',
+      boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+      overflow: 'hidden',
+    }
+  },
   option: (provided, state) => {
     const isDisabled = !!state.data.disabled
     return {
@@ -202,4 +208,14 @@ export const FilterStyles = {
         : {}),
     }
   },
+  control: (provided) => ({
+    ...provided,
+    borderRadius: 12,
+    backgroundColor: '#FAFAFA',
+    boxShadow: 'none',
+    borderColor: 'transparent',
+    '&:hover': {
+      borderColor: 'transparent',
+    },
+  }),
 }

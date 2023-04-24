@@ -3,6 +3,8 @@ import {CACategoryModel} from 'front-api/src/index'
 import {isEmpty, size} from 'lodash'
 import Button from '../../Buttons/Button'
 import ImageWrapper from '../../ImageWrapper'
+import {useGeneralStore} from '../../../providers/RootStoreProvider'
+import {handleMetrics} from '../../../helpers'
 
 interface Props {
   selected: CACategoryModel[]
@@ -29,6 +31,9 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
             onClick={() => {
               setSelected([c])
               setClickedItem(index)
+              handleMetrics('addAdvt_subCategory', {
+                categoryId: c.id,
+              })
             }}>
             <span className={`text-body-14 font-normal w-full text-left `}>
               {c.name}
@@ -59,6 +64,10 @@ const CategoriesDesktop: FC<Props> = ({selected, setSelected, categories}) => {
                       } else {
                         setSelected([...selected.slice(0, index + 1), c])
                       }
+                      handleMetrics('addAdvt_subCategory', {
+                        categoryId: parentCategory.id,
+                        subcategoryId: c.id,
+                      })
                     }}>
                     <span className='text-body-14 font-normal w-full text-left'>
                       {c.name}

@@ -9,6 +9,7 @@ import {
   AuthUserResponse,
   CurrencyModel,
   UserModel,
+  SubscriptionOperationType,
 } from 'front-api/src/models'
 import {SettingsLanguageModel, LocationModel} from 'front-api'
 import NodeCache from 'node-cache'
@@ -245,4 +246,14 @@ export const subscribeOnUser = async (
 ): Promise<RestResponse<UserModel[]>> => {
   const rest = getRest(storage)
   return rest.user.restToggleSubscription(userId, isAlreadySubscribed)
+}
+
+export const subscribersSubscriptions = async (
+  storage: Storage,
+  hash: string,
+  type: SubscriptionOperationType,
+  page: number,
+): Promise<RestResponse<UserModel[]>> => {
+  const rest = getRest(storage)
+  return rest.user.restUserSubscribersSubscriptions(hash, type, page)
 }

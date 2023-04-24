@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {getRest} from '../../api'
+import {subscribersSubscriptions} from '../../api/v1'
 import {getStorageFromCookies} from '../../helpers'
 
 export default async (
@@ -7,11 +7,14 @@ export default async (
   res: NextApiResponse,
 ): Promise<void> => {
   const {body} = req
+  const {hash, type, page} = body
   const storage = getStorageFromCookies({req, res})
-  const rest = getRest(storage)
-  return rest.google
-    .fetchAutocompletePredictions(body.query as string)
-    .then((r) => {
-      res.json(r)
+
+  return subscribersSubscriptions(storage, hash, type, page)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((e) => {
+      res.json(e)
     })
 }

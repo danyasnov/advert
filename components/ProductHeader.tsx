@@ -2,9 +2,15 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
-import IcMoreHoriz from 'icons/material/MoreHoriz.svg'
-import {ArrowLeftSquare, Delete, Edit, TickSquare} from 'react-iconly'
+import {
+  ArrowLeftSquare,
+  Delete,
+  Edit,
+  TickSquare,
+  TimeCircle,
+} from 'react-iconly'
 import {size} from 'lodash'
+import {toast} from 'react-toastify'
 import {
   useCategoriesStore,
   useGeneralStore,
@@ -79,6 +85,27 @@ const ProductHeader: FC = observer(() => {
         router.push(`/advert/edit/${advert.hash}`)
       },
     }
+    const refresh = {
+      title: 'UPDATE_BEFORE_ARCHIVATION',
+      icon: (
+        <div className='text-primary-500'>
+          <TimeCircle size={16} filled />
+        </div>
+      ),
+      onClick: () => {
+        makeRequest({
+          url: '/api/refresh-advert',
+          data: {hash: advert.hash},
+          method: 'post',
+        }).then((data) => {
+          if (data?.data?.status === 200) {
+            toast.success(t('SUCCESSFULLY_PROMOTED'))
+            router.reload()
+          }
+        })
+      },
+      className: 'underline font-bold',
+    }
     const items = []
 
     if (['active', 'archived', 'blocked', 'draft'].includes(advert.state)) {
@@ -96,6 +123,9 @@ const ProductHeader: FC = observer(() => {
     }
     if (advert.state === 'active') {
       items.push(deactivate)
+    }
+    if (advert.showRefreshButton) {
+      items.push(refresh)
     }
     return items
   }
@@ -133,7 +163,7 @@ const ProductHeader: FC = observer(() => {
               listRender={(options, setShowPopup) => (
                 <div className='flex w-full'>
                   {/* eslint-disable-next-line no-shadow */}
-                  {options.map(({title, onClick, icon}, index) => (
+                  {options.map(({title, onClick, icon, className}, index) => (
                     <Button
                       // eslint-disable-next-line react/no-array-index-key
                       key={index}
@@ -147,7 +177,9 @@ const ProductHeader: FC = observer(() => {
                       }}>
                       <div className='flex items-center justify-start w-full'>
                         <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
-                        <span className='truncate'>{t(title)}</span>
+                        <span className={`truncate ${className || ''}`}>
+                          {t(title)}
+                        </span>
                       </div>
                     </Button>
                   ))}

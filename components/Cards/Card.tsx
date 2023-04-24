@@ -9,12 +9,11 @@ import {
 } from 'react'
 import {AdvertiseListItemModel} from 'front-api/src/index'
 import useEmblaCarousel from 'embla-carousel-react'
-import IcArrowRight from 'icons/material/ArrowRight.svg'
 import {useMouseHovered} from 'react-use'
 import {isEmpty, size} from 'lodash'
 import {useInView} from 'react-intersection-observer'
 import {useTranslation} from 'next-i18next'
-import {Call, Image, Star} from 'react-iconly'
+import {ArrowUp, ArrowDown, Call, Star} from 'react-iconly'
 import {parseCookies} from 'nookies'
 import IcMoreVert from 'icons/material/MoreVert.svg'
 import CardImage from '../CardImage'
@@ -27,13 +26,20 @@ import {SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
 import EmptyProductImage from '../EmptyProductImage'
+import {getDigitsFromString} from '../../utils'
 
 interface Props {
   product: AdvertiseListItemModel
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
   disableVipWidth?: boolean
-  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
+  getOptions?: ({
+    setShowDeactivateModal,
+    hash,
+    state,
+    showRefreshButton,
+  }) => any[]
+  renderFooter?: (product: AdvertiseListItemModel) => Element
 }
 const Card: FC<Props> = ({
   product,
@@ -41,6 +47,7 @@ const Card: FC<Props> = ({
   href,
   disableVipWidth,
   getOptions,
+  renderFooter,
 }) => {
   const {t} = useTranslation()
   const {
@@ -55,6 +62,8 @@ const Card: FC<Props> = ({
     isTop,
     isVip,
     showCallButton,
+    discount,
+    oldPrice,
   } = product
   const imagesCount = size(product.images)
 
@@ -122,12 +131,24 @@ const Card: FC<Props> = ({
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
+  let showOldPrice = false
+  if (discount && oldPrice) {
+    const priceDigits = getDigitsFromString(price)
+    const oldPriceDigits = getDigitsFromString(oldPrice)
+    if (priceDigits?.length <= 6 && oldPriceDigits?.length <= 6) {
+      showOldPrice = true
+    }
+  }
 
   return (
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
+      {/* eslint-disable-next-line */}
       <div
         onClick={() => {
-          handleMetrics('clickTo_advt')
+          handleMetrics('clickTo_advt', {
+            categoryId: product.rootCategoryId,
+            subcategoryId: product.categoryId,
+          })
         }}
         className={`text-left rounded-2xl overflow-hidden flex flex-col relative h-full border-2 [-webkit-mask-image:-webkit-radial-gradient(white,black)]
         ${
@@ -153,6 +174,7 @@ const Card: FC<Props> = ({
               state={product.state}
               title={product.title}
               images={product.images}
+              showRefreshButton={product.showRefreshButton}
               listRender={(options, setShowPopup) => (
                 <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200'>
                   {/* eslint-disable-next-line no-shadow */}
@@ -168,7 +190,7 @@ const Card: FC<Props> = ({
                       }}>
                       <div className='flex items-center justify-start w-full'>
                         <div className='w-4 h-4 mr-2'>{!!icon && icon}</div>
-                        <span className='truncate'>{t(title)}</span>
+                        <span className='text-left'>{t(title)}</span>
                       </div>
                     </Button>
                   ))}
@@ -249,9 +271,31 @@ const Card: FC<Props> = ({
         </div>
         <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
           <div className='flex flex-col pb-3'>
-            <span className='text-body-16 text-greyscale-900 font-semibold'>
-              {isFree ? t('FREE') : price}
-            </span>
+            <div>
+              <span className='text-body-16 text-greyscale-900 font-semibold'>
+                {isFree ? t('FREE') : price}
+              </span>
+              {(showOldPrice || (isVip && discount)) && (
+                <>
+                  <span
+                    className={`text-body-14 text-greyscale-600 line-through ${
+                      isVip ? 'ml-3' : 'ml-1'
+                    }`}>
+                    {isVip ? oldPrice : oldPrice.slice(0, oldPrice.length - 2)}
+                  </span>
+                  <span
+                    className={`${
+                      discount?.isPriceDown ? 'text-green' : 'text-error'
+                    }`}>
+                    {discount?.isPriceDown ? (
+                      <ArrowDown size={16} style={{display: 'inline'}} />
+                    ) : (
+                      <ArrowUp size={16} style={{display: 'inline'}} />
+                    )}
+                  </span>
+                </>
+              )}
+            </div>
             <div className='flex items-start'>
               <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
                 {title}
@@ -271,9 +315,11 @@ const Card: FC<Props> = ({
               />
             )}
           </div>
+          {!!renderFooter && renderFooter(product)}
         </div>
       </div>
     </LinkWrapper>
   )
 }
+
 export default Card

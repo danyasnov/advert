@@ -38,11 +38,17 @@ const EnterCode: FC<PageProps> = observer(
         return VerifyMode.Call
       }
     })
+    let auth
+    if (AuthType.email) {
+      auth = 'email'
+    } else if (AuthType.phone) {
+      auth = 'phone'
+    }
     const characters = getCharacters(verifyMode)
     const AuthInputRef = useRef<AuthCodeRef>(null)
 
     const sendCode = () => {
-      handleMetrics('sendAutorization_code')
+      handleMetrics('sendAutorization_code', {authType: auth})
 
       return makeRequest({
         url: '/api/send-code',
@@ -114,7 +120,7 @@ const EnterCode: FC<PageProps> = observer(
           authNewRefreshToken: refresh,
           promo,
         })
-        handleMetrics('autorizationSuccess')
+        handleMetrics('autorizationSuccess', {authType: auth})
         if (state.isNew) {
           trackSingle('CompleteRegistration')
           dispatch({type: 'setPage', page: AuthPages.success})

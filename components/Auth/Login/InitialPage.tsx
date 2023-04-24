@@ -13,6 +13,12 @@ import {handleMetrics} from '../../../helpers'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
+  let auth
+  if (AuthType.email) {
+    auth = 'email'
+  } else if (AuthType.phone) {
+    auth = 'phone'
+  }
 
   return (
     <div className='flex flex-col px-6 pb-6 pt-4 space-y-4'>
@@ -28,7 +34,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.phone,
           })
-          handleMetrics('clickLogin_tel')
+          handleMetrics('clickLogin_tel', {authType: auth})
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Call size={24} />
@@ -47,7 +53,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
             type: 'setAuthType',
             authType: AuthType.email,
           })
-          handleMetrics('clickLogin_email')
+          handleMetrics('clickLogin_email', {authType: auth})
         }}>
         <div className='fill-current text-greyscale-900 mr-3'>
           <Message />

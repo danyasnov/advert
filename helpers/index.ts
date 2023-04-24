@@ -470,10 +470,10 @@ export const getFilterFromQuery = (
             const range = parsedValue[0].split('-')
             const parsed = []
             if (range[0]) {
-              parsed.push(toNumber(range[0]))
+              parsed.push(range[0])
             }
             if (range[1]) {
-              parsed.push(toNumber(range[1]))
+              parsed.push(range[1])
             }
             parsedValue = parsed
             break
@@ -854,16 +854,18 @@ export const flatArrayFields = (fields) => {
   })
   return newFields
 }
-export const handleMetrics = (eventType, data?) => {
-  trackSingle(eventType, data)
+export const handleMetrics = (event, eventData?) => {
+  const cookies: SerializedCookiesState = parseCookies()
+  const data = {...eventData, userHash: cookies.hash}
+  trackSingle(event, data)
   if (window.dataLayer) {
-    window.dataLayer.push({eventType, data})
+    window.dataLayer.push({event, data})
   } else {
-    window.dataLayer = [{eventType, data}]
+    window.dataLayer = [{event, data}]
   }
   makeRequest({
     url: '/api/clickhouse',
     method: 'post',
-    data: {eventType, data},
+    data: {event, data},
   })
 }
