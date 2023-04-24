@@ -410,7 +410,7 @@ const UserLayout: FC = observer(() => {
                       tab={isCurrentUser ? 'sale' : 'other-sale'}
                     />
                   )}
-                  {isCurrentUser && activeTab === 3 && (
+                  {activeTab === 3 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSold.items}
