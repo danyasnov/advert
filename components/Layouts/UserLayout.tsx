@@ -391,7 +391,7 @@ const UserLayout: FC = observer(() => {
                       tab='moderation'
                     />
                   )}
-                  {isCurrentUser && activeTab === 2 && (
+                  {activeTab === 2 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSale.items}
@@ -407,26 +407,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSale',
                         })
                       }}
-                      tab='sale'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 2 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSale.items}
-                      page={userSale.page}
-                      count={userSale.count}
-                      state={userSale.state}
-                      limit={userSale.limit}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSale.page + 1,
-                          path: 'userSale',
-                        })
-                      }}
-                      tab='other-sale'
+                      tab={isCurrentUser ? 'sale' : 'other-sale'}
                     />
                   )}
                   {isCurrentUser && activeTab === 3 && (
@@ -445,26 +426,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSold',
                         })
                       }}
-                      tab='sold'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 3 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSold.items}
-                      page={userSold.page}
-                      count={userSold.count}
-                      state={userSold.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={userSold.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSold.page + 1,
-                          path: 'userSold',
-                        })
-                      }}
-                      tab='other-sold'
+                      tab={isCurrentUser ? 'sold' : 'other-sold'}
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (
