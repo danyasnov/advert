@@ -24,6 +24,7 @@ const UserTabWrapper: FC<Props> = ({
   limit = PAGE_LIMIT,
   tab,
   getOptions,
+  renderFooter,
 }) => {
   if (isEmpty(products) && tab === 'drafts') {
     return (
@@ -131,6 +132,7 @@ const UserTabWrapper: FC<Props> = ({
       disableVipWidth={disableVipWidth}
       limit={limit}
       fetchProducts={fetchProducts}
+      renderFooter={renderFooter}
     />
   )
 }

@@ -8,6 +8,7 @@ import {useRouter} from 'next/router'
 import {
   ArrowLeft,
   ArrowLeftSquare,
+  ArrowRight,
   Delete,
   Edit,
   TickSquare,
@@ -138,6 +139,19 @@ const UserLayout: FC = observer(() => {
     },
   )
 
+  const refreshAdvert = (hash) => {
+    makeRequest({
+      url: '/api/refresh-advert',
+      data: {hash},
+      method: 'post',
+    }).then((data) => {
+      if (data?.data?.status === 200) {
+        toast.success(t('SUCCESSFULLY_PROMOTED'))
+        router.reload()
+      }
+    })
+  }
+
   let getAdvertOptions
   if (isCurrentUser) {
     getAdvertOptions = ({
@@ -196,18 +210,7 @@ const UserLayout: FC = observer(() => {
       const refresh = {
         title: 'UPDATE_BEFORE_ARCHIVATION',
         icon: <TimeCircle size={16} filled />,
-        onClick: () => {
-          makeRequest({
-            url: '/api/refresh-advert',
-            data: {hash},
-            method: 'post',
-          }).then((data) => {
-            if (data?.data?.status === 200) {
-              toast.success('SUCCESSFULLY_PROMOTED')
-              router.reload()
-            }
-          })
-        },
+        onClick: () => refreshAdvert(hash),
       }
       const items = []
 
@@ -391,7 +394,7 @@ const UserLayout: FC = observer(() => {
                       tab='moderation'
                     />
                   )}
-                  {isCurrentUser && activeTab === 2 && (
+                  {activeTab === 2 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSale.items}
@@ -407,29 +410,26 @@ const UserLayout: FC = observer(() => {
                           path: 'userSale',
                         })
                       }}
-                      tab='sale'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 2 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSale.items}
-                      page={userSale.page}
-                      count={userSale.count}
-                      state={userSale.state}
-                      limit={userSale.limit}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSale.page + 1,
-                          path: 'userSale',
-                        })
+                      tab={isCurrentUser ? 'sale' : 'other-sale'}
+                      renderFooter={(product) => {
+                        if (!product.showCallButton) return null
+                        return (
+                          <Button
+                            className='flex justify-between w-full'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              refreshAdvert(product.hash)
+                            }}>
+                            <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
+                              {t('UPDATE_BEFORE_ARCHIVATION')}
+                            </span>
+                            <ArrowRight size={16} />
+                          </Button>
+                        )
                       }}
-                      tab='other-sale'
                     />
                   )}
-                  {isCurrentUser && activeTab === 3 && (
+                  {activeTab === 3 && (
                     <UserTabWrapper
                       getOptions={getAdvertOptions}
                       products={userSold.items}
@@ -445,26 +445,7 @@ const UserLayout: FC = observer(() => {
                           path: 'userSold',
                         })
                       }}
-                      tab='sold'
-                    />
-                  )}
-                  {!isCurrentUser && activeTab === 3 && (
-                    <UserTabWrapper
-                      getOptions={getAdvertOptions}
-                      products={userSold.items}
-                      page={userSold.page}
-                      count={userSold.count}
-                      state={userSold.state}
-                      enableTwoColumnsForS
-                      disableVipWidth
-                      limit={userSold.limit}
-                      fetchProducts={() => {
-                        fetchProducts({
-                          page: userSold.page + 1,
-                          path: 'userSold',
-                        })
-                      }}
-                      tab='other-sold'
+                      tab={isCurrentUser ? 'sold' : 'other-sold'}
                     />
                   )}
                   {isCurrentUser && activeTab === 4 && (

@@ -204,9 +204,18 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
       const messagesByDate = store.messages
         .slice()
         .reverse()
+        .filter((m) => m.type === 'text')
         .map((m) => {
+          let isLink
+          try {
+            const url = new URL(m.text)
+            isLink = url.hostname.endsWith('vooxee.com')
+          } catch (e) {
+            isLink = false
+          }
           return {
             ...m,
+            isLink,
             day: unixMlToDate(m.date),
           }
         })

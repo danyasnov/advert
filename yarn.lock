@@ -2526,9 +2526,9 @@ charenc@0.0.2:
   resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
   integrity sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==
 
-"chats@ssh://git@gitlab.venera.city/vooxee/chat-lib#3.0.19":
-  version "3.0.19"
-  resolved "ssh://git@gitlab.venera.city/vooxee/chat-lib#ff780aeabc2d388764ec632383c4b3fa82ccd604"
+"chats@ssh://git@gitlab.venera.city/vooxee/chat-lib#3.0.21":
+  version "3.0.21"
+  resolved "ssh://git@gitlab.venera.city/vooxee/chat-lib#ad0d844a6e522886bba2d30e3e57a426220cc431"
 
 chokidar@^3.5.3:
   version "3.5.3"

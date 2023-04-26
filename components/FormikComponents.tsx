@@ -117,6 +117,7 @@ export const getCreateSelectOptions = (multiselects = {}) => {
         label: val.value,
         isVisible: val.isVisible,
         disabled: val.itemType === 'title',
+        icon: val.icon,
       }
       if (val.isVisible) {
         acc.visible.push(item)

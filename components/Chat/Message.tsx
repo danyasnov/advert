@@ -3,15 +3,17 @@ import {ChatMessage} from 'chats/src/models/internal'
 import {OwnerModel} from 'front-api/src/models'
 import IcChatDelivered from 'icons/material/ChatDelivered.svg'
 import IcChatRead from 'icons/material/ChatRead.svg'
-import {unixMlToTime, unixToTime} from '../../utils'
+import {unixMlToTime} from '../../utils'
+import LinkWrapper from '../Buttons/LinkWrapper'
 
 interface Props {
-  message: ChatMessage
+  message: ChatMessage & {isLink: boolean}
   user: OwnerModel
 }
 
 const Message: FC<Props> = ({message, user}) => {
   const isMyMessage = message.ownerId === user.hash
+  const {isLink} = message
 
   return (
     <div
@@ -42,7 +44,17 @@ const Message: FC<Props> = ({message, user}) => {
             : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900'
         } rounded-b-2xl`}>
         <div className='p-3 text-body-14'>
-          <span className='break-words'>{message.text}</span>
+          {isLink ? (
+            <LinkWrapper
+              className='underline'
+              title={message.text}
+              href={message.text}
+              target='_blank'>
+              {message.text}
+            </LinkWrapper>
+          ) : (
+            <span className='break-words'>{message.text}</span>
+          )}
         </div>
       </div>
     </div>

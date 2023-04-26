@@ -7,23 +7,25 @@ const MainBanner: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col space-y-4'>
-      <Banner
-        id='main-banner-1'
-        title={t('PROMOTION_TITLE2')}
-        titleColor='text-primary-500'
-        description={t('PROMOTION_DESCRIPTION2')}
-        descriptionColor='text-primary-500'
-        link='/business'
-      />
-      <Banner
-        id='main-banner-2'
-        title={t('PROMOTION_TITLE1')}
-        titleColor='text-secondary-500'
-        description={t('PROMOTION_DESCRIPTION1')}
-        descriptionColor='text-white'
-        link='/business'
-      />
+    <div className='flex flex-col'>
+      <div className='flex flex-col space-y-4 sticky top-[32px]'>
+        <Banner
+          id='main-banner-1'
+          title={t('PROMOTION_TITLE2')}
+          titleColor='text-primary-500'
+          description={t('PROMOTION_DESCRIPTION2')}
+          descriptionColor='text-primary-500'
+          link='/business'
+        />
+        <Banner
+          id='main-banner-2'
+          title={t('PROMOTION_TITLE1')}
+          titleColor='text-secondary-500'
+          description={t('PROMOTION_DESCRIPTION1')}
+          descriptionColor='text-white'
+          link='/business'
+        />
+      </div>
     </div>
   )
 }

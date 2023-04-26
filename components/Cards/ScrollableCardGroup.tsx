@@ -20,6 +20,7 @@ export interface ScrollableCardGroupInterface {
   disableVipWidth?: boolean
   fetchProducts?: () => void
   getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
+  renderFooter?: (product: AdvertiseListItemModel) => any
 }
 const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   products = [],
@@ -34,6 +35,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   disableVipWidth,
   limit = PAGE_LIMIT,
   getOptions,
+  renderFooter,
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
@@ -85,6 +87,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
                 product={p}
                 disableVipWidth={disableVipWidth}
                 getOptions={getOptions}
+                renderFooter={renderFooter}
               />
             </div>
           ))}

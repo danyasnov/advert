@@ -1,6 +1,7 @@
 import React, {FC, useRef, useState} from 'react'
 import {isArray, isEmpty, size} from 'lodash'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import IcCarViewFront from 'icons/CarViewFront.svg'
 import {SelectItem, SelectProps} from './Select'
 import useOnClickOutside from '../../hooks/useOnClickOutside'
 import Button from '../Buttons/Button'
@@ -99,6 +100,7 @@ export const IconItem: FC<IconItemProps> = ({
   onChange,
   onClose,
 }) => {
+  const isOtherValueButton = item.value === 'other_value_button'
   return (
     <Button
       // @ts-ignore
@@ -124,13 +126,20 @@ export const IconItem: FC<IconItemProps> = ({
         className={`w-[102px] h-[102px] s:w-[71px] s:h-[71px] border-2 s:border border-primary-500 rounded-3xl s:rounded-xl flex flex-col items-center justify-center ${
           isSelected ? 'bg-primary-500 text-white' : ''
         }`}>
-        <img
-          src={item.icon}
-          alt={item.label}
-          className={`${
-            isSelected ? 'invert brightness-0' : ''
-          } w-16 h-16 s:w-12 s:h-12`}
-        />
+        {isOtherValueButton ? (
+          <div className='w-16 h-16 s:w-12 s:h-12`'>
+            <IcCarViewFront />
+          </div>
+        ) : (
+          <img
+            src={item.icon}
+            alt={item.label}
+            className={`${
+              isSelected ? 'invert brightness-0' : ''
+            } w-16 h-16 s:w-12 s:h-12`}
+          />
+        )}
+
         <span className='truncate w-full font-medium text-body-10 px-1 pb-2'>
           {item.label}
         </span>
