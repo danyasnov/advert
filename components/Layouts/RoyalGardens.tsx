@@ -361,6 +361,7 @@ const RoyalGardens: FC = observer(() => {
 
   return (
     <>
+      <MetaTags title='Royal Gardens' />
       <div className='sticky top-0 z-20 s:hidden bg-greyscale-50'>
         <div className='mx-4 pt-5 s:hidden pb-4 flex justify-between items-center'>
           <Burger />
@@ -416,7 +417,6 @@ const RoyalGardens: FC = observer(() => {
         </div>
       </div>
       <div className='bg-greyscale-50'>
-        <MetaTags title='Royal Gardens' />
         <div className='flex flex-col mx-4 s:pt-8 s:mx-auto s:w-[704px] m:w-[944px] l:w-[1210px]'>
           <div className='hidden s:flex items-start s:flex-row s:justify-between s:items-center s:mb-14 m:mb-12 l:mb-16'>
             <Logo />
@@ -427,7 +427,7 @@ const RoyalGardens: FC = observer(() => {
               <Auth />
             </div>
           </div>
-          <div className='hidden s:block s:static w-full pb-3 s:pb-0 s:h-[28px] bg-greyscale-50 z-20'>
+          <div className='hidden s:block s:static w-full pb-3 s:pb-0 s:h-[28px] bg-greyscale-50'>
             <nav className='flex justify-between items-center'>
               <ul className='flex space-x-3 s:space-x-8 font-light text-body-12 s:text-body-16 l:text-body-18 text-greyscale-900'>
                 <li className='flex flex-col'>
