@@ -21,13 +21,13 @@ import LanguageSelect from '../LanguageSelect'
 import BusinessButton from '../BusinessButton'
 import SafetyButton from '../SafetyButton'
 import ImageWrapper from '../ImageWrapper'
-import PhotosModal from '../PhotosModal'
 import {ThumbObject} from '../../types'
 import Auth from '../Auth'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import PhotosModal from '../Modals/PhotosModal'
 
 const property = [
   {
