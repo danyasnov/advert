@@ -1,49 +1,41 @@
 import {FC, useRef, useState} from 'react'
 import {useClickAway} from 'react-use'
-import {get, isEmpty} from 'lodash'
-import {RemoveFromSaleType} from 'front-api/src/models'
-import {useTranslation} from 'next-i18next'
+import {isEmpty} from 'lodash'
 import Button from './Buttons/Button'
-import {makeRequest} from '../api'
-import DeactivateAdvModal from './DeactivateAdvModal'
+import {TGetOptions} from '../types'
 
 interface Props {
   hash: string
-  title: string
   state?: string
-  showRefreshButton?: boolean
+  title: string
   images: string[]
-  getOptions?: ({
-    setShowDeactivateModal,
-    hash,
-    state,
-    showRefreshButton,
-  }) => any[]
+  showRefreshButton?: boolean
+  getOptions: TGetOptions
   iconRender?
   listRender
 }
 const ProductMenu: FC<Props> = ({
   hash,
-  images,
-  title,
   getOptions,
   state,
   iconRender,
   listRender,
   showRefreshButton,
+  images,
+  title,
 }) => {
   const [showPopup, setShowPopup] = useState(false)
-  const [showDeactivateModal, setShowDeactivateModal] = useState(false)
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShowPopup(false)
   })
 
   const options = getOptions({
-    setShowDeactivateModal,
     hash,
     state,
     showRefreshButton,
+    images,
+    title,
   })
   if (isEmpty(options)) return null
 
@@ -65,31 +57,6 @@ const ProductMenu: FC<Props> = ({
         )}
         {body}
       </div>
-      {showDeactivateModal && (
-        <DeactivateAdvModal
-          isOpen={showDeactivateModal}
-          onClose={() => setShowDeactivateModal(false)}
-          onSelect={(value: RemoveFromSaleType) => {
-            makeRequest({
-              url: `/api/deactivate-adv`,
-              method: 'post',
-              data: {
-                hash,
-                soldMode: value,
-              },
-            }).then(() => {
-              get(
-                options.find((o) => o.title === 'REMOVE_FROM_SALE'),
-                'cb',
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                () => {},
-              )()
-            })
-          }}
-          title={title}
-          images={images}
-        />
-      )}
     </>
   )
 }

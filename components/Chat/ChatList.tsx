@@ -16,7 +16,7 @@ import EmptyProductImage from '../EmptyProductImage'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import EmptyTab from '../EmptyTab'
 import {robustShallowUpdateQuery} from '../../helpers'
-import RequestNotificationModal from '../RequestNotificationModal'
+import RequestNotificationModal from '../Modals/RequestNotificationModal'
 
 const ChatList: FC = observer(() => {
   const [showModal, setShowModal] = useState(false)

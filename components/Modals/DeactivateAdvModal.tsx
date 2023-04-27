@@ -2,15 +2,12 @@ import {FC} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
 import IcClear from 'icons/material/Clear.svg'
-import {
-  AdvertiseFullModel,
-  RemoveFromSaleType,
-} from 'front-api/src/models/index'
 import {useTranslation} from 'next-i18next'
-import Button from './Buttons/Button'
-import ImageWrapper from './ImageWrapper'
-import PrimaryButton from './Buttons/PrimaryButton'
-import SecondaryButton from './Buttons/SecondaryButton'
+import {RemoveFromSaleType} from 'front-api/src/models'
+import Button from '../Buttons/Button'
+import ImageWrapper from '../ImageWrapper'
+import PrimaryButton from '../Buttons/PrimaryButton'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 interface Props {
   isOpen: boolean
@@ -62,17 +59,26 @@ const DeactivateAdvModal: FC<Props> = ({
           <div className='space-y-2 my-2'>
             <PrimaryButton
               className='w-full'
-              onClick={() => onSelect('soldAdverto')}>
+              onClick={() => {
+                onSelect('soldAdverto')
+                onClose()
+              }}>
               {t('SOLD_IN_VOOXEE')}
             </PrimaryButton>
             <SecondaryButton
               className='w-full'
-              onClick={() => onSelect('soldOther')}>
+              onClick={() => {
+                onSelect('soldOther')
+                onClose()
+              }}>
               {t('SOLD_IN_ANOTHER_SERVICE')}
             </SecondaryButton>
             <SecondaryButton
               className='w-full'
-              onClick={() => onSelect('changedMind')}>
+              onClick={() => {
+                onSelect('changedMind')
+                onClose()
+              }}>
               {t('CHANGE_MIND_TO_SELL')}
             </SecondaryButton>
           </div>

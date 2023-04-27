@@ -6,6 +6,7 @@ import Card from './Card'
 import {PAGE_LIMIT} from '../../stores/ProductsStore'
 import {AdvertNotFoundWithDescription} from '../AdvertNotFound'
 import CardsLoader from '../CardsLoader'
+import {TGetOptions} from '../../types'
 
 export interface ScrollableCardGroupInterface {
   products: AdvertiseListItemModel[]
@@ -19,8 +20,8 @@ export interface ScrollableCardGroupInterface {
   enableTwoColumnsForS?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
-  getOptions?: ({setShowDeactivateModal, hash, state}) => any[]
   renderFooter?: (product: AdvertiseListItemModel) => any
+  getOptions?: TGetOptions
 }
 const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   products = [],

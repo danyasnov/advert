@@ -156,3 +156,10 @@ export interface NavItem {
   filled?: boolean
   state?: FormikErrors<any>
 }
+export type TGetOptions = ({
+  hash,
+  state,
+  showRefreshButton,
+  title,
+  images,
+}) => any[]

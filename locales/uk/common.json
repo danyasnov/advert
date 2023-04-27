@@ -1677,6 +1677,7 @@
   "NO_SOLD_ADS": "Немає проданих оголошень",
   "NOT_MORE_2000_SYMBOLS": "Не більше 2000 символів",
   "NOT_NOW": "Не зараз",
+  "NUMBER_ALREADY_EXISTS": "The entered number already exists.",
   "NUMBER_INFO": "Ваш номер телефону за замовчуванням. Якщо ви зміните номер, він зміниться для вашого облікового запису",
   "OBJECTS": "Об'єкти",
   "ONBOARDING_AUTO_TRANSLATION": "Оголошення зі всього Кіпру вашою мовою",

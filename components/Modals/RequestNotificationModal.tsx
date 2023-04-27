@@ -3,10 +3,10 @@ import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
 import IcClear from 'icons/material/Clear.svg'
 import {useTranslation} from 'next-i18next'
-import Button from './Buttons/Button'
-import ImageWrapper from './ImageWrapper'
-import PrimaryButton from './Buttons/PrimaryButton'
-import SecondaryButton from './Buttons/SecondaryButton'
+import Button from '../Buttons/Button'
+import ImageWrapper from '../ImageWrapper'
+import PrimaryButton from '../Buttons/PrimaryButton'
+import SecondaryButton from '../Buttons/SecondaryButton'
 
 interface Props {
   isOpen: boolean

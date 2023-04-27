@@ -4,12 +4,12 @@ import {useLockBodyScroll} from 'react-use'
 import useEmblaCarousel from 'embla-carousel-react'
 import {isEmpty, size} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
-import Button from './Buttons/Button'
-import ImageWrapper from './ImageWrapper'
-import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
-import useSliderButtons from '../hooks/useSliderButtons'
-import {Thumb} from './Thumb'
-import {ThumbObject} from '../types'
+import Button from '../Buttons/Button'
+import ImageWrapper from '../ImageWrapper'
+import FullHeightSliderButton from '../Buttons/FullHeightSliderButton'
+import useSliderButtons from '../../hooks/useSliderButtons'
+import {Thumb} from '../Thumb'
+import {ThumbObject} from '../../types'
 
 interface Props {
   isOpen: boolean
