@@ -66,9 +66,6 @@ const ProductLayout: FC = observer(() => {
           },
         })
       },
-      cb: () => {
-        router.push(`/user/${owner.hash}`)
-      },
     }
     const publish = {
       title: 'PUBLISH',
