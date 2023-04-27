@@ -6,6 +6,7 @@ import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import Autoplay from 'embla-carousel-autoplay'
 import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
+import IcRoyal from 'icons/Royal.svg'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
 import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
@@ -17,6 +18,28 @@ const Banners: FC = observer(() => {
   const {width} = useWindowSize()
   const router = useRouter()
   const banners = [
+    {
+      id: 'royalgarden',
+      title: () => {
+        return (
+          <div className='flex flex-col absolute z-10 inset-0 my-auto font-semibold text-white whitespace-pre-line h-full justify-center items-center'>
+            <div className='w-[37px] h-[37px]'>
+              <IcRoyal />
+            </div>
+            <p className='text-body-18 font-semibold mb-4 whitespace-pre-line'>
+              {t('BANNER9_TITLE')}
+            </p>
+            <p className='text-body-12 font-medium'>
+              {t('BANNER9_DESCRIPTION')}
+            </p>
+          </div>
+        )
+      },
+      onClick: () => {
+        handleMetrics('clickPromo', {banner: 'royalgarden'})
+        router.push(`/royal-gardens`)
+      },
+    },
     {
       id: 'auto',
       title: 'BANNER1_TITLE',
@@ -132,7 +155,7 @@ const Banners: FC = observer(() => {
         },
       },
     },
-    [Autoplay({delay: 5000}), WheelGesturesPlugin()],
+    [Autoplay({delay: 500000}), WheelGesturesPlugin()],
   )
   useEffect(() => {
     if (embla) {
@@ -173,7 +196,7 @@ const Banners: FC = observer(() => {
               }}
               key={`${c.id}-${imgSize}-${imgWidth}`}>
               <BannerItem
-                title={t(c.title)}
+                title={c.title}
                 id={c.id}
                 imgWidth={imgWidth}
                 imgSize={imgSize}
@@ -203,22 +226,37 @@ const Banners: FC = observer(() => {
 })
 
 const BannerItem: FC<{
-  title: string
+  title: string | (() => JSX.Element)
   id: string
   imgWidth: number
   imgSize: string
   color: string
 }> = ({title, id, imgWidth, imgSize, color}) => {
-  // console.log(imgWidth)
+  const {t} = useTranslation()
+  let displayTitle
+  switch (typeof title) {
+    case 'string': {
+      displayTitle = (
+        <span
+          className={`absolute z-10 top-[54px] left-[23px] s:top-[49px] m:left-[35px] text-body-16 font-semibold ${color} whitespace-pre-line`}>
+          {t(title)}
+        </span>
+      )
+      break
+    }
+    case 'function': {
+      displayTitle = title()
+      break
+    }
+    default: {
+      displayTitle = null
+    }
+  }
   return (
     <div className='w-[328px] s:w-[344px] m:w-[464px] l:w-[440px] h-[180px] shrink-0 rounded-[32px] overflow-hidden flex relative'>
-      <span
-        className={`absolute z-10 top-[54px] left-[23px] s:top-[49px] m:left-[35px] text-body-16 font-semibold ${color} whitespace-pre-line`}>
-        {title}
-      </span>
-      <div className='flex flex-1 '>
+      {displayTitle}
+      <div className='flex flex-1'>
         <ImageWrapper
-          // style={{width: '100%'}}
           type={`/img/banners/${id}-${imgSize}.png`}
           alt={id}
           width={imgWidth}
