@@ -114,7 +114,10 @@ const BusinessLayout: FC = observer(() => {
       makeRequest({
         method: 'post',
         url: '/api/landing-submit',
-        data: omit(values, ['privacy', 'token']),
+        data: {
+          ...omit(values, ['privacy', 'token']),
+          parameter: 'Business Layout',
+        },
       })
       handleMetrics('creationBussiness_sccess')
 
