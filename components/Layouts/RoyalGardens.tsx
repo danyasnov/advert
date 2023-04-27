@@ -4,7 +4,6 @@ import {useWindowSize} from 'react-use'
 import {Field, FormikProvider, useFormik} from 'formik'
 import ReactModal from 'react-modal'
 import {omit} from 'lodash'
-import {useRouter} from 'next/router'
 import {object, string} from 'yup'
 import {observer} from 'mobx-react-lite'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -27,8 +26,9 @@ import Auth from '../Auth'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
-import PrimaryButton from '../Buttons/PrimaryButton'
 import PhotosModal from '../Modals/PhotosModal'
+import VideoModal from '../Modals/VideoModal'
+import SuccessModal from '../Modals/SuccessModal'
 import {download} from '../../utils'
 
 const property = [
@@ -342,7 +342,7 @@ const RoyalGardens: FC = observer(() => {
     />
   )
 
-  const {handleSubmit, errors} = formik
+  const {submitForm, isSubmitting, handleSubmit, errors} = formik
 
   return (
     <>
@@ -508,37 +508,6 @@ const RoyalGardens: FC = observer(() => {
                   objectFit='contain'
                 />
               </Button>
-              {showModal && (
-                <ReactModal
-                  isOpen={showModal}
-                  onRequestClose={() => setShowModal(false)}
-                  shouldCloseOnOverlayClick
-                  ariaHideApp={false}
-                  className='absolute h-full s:h-auto inset-x-0 mx-auto s:inset-x-8 m:inset-x-12 l:inset-x-24 s:top-14 m:top-20 l:top-14 flex outline-none flex flex-col'
-                  overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-30'>
-                  <Button
-                    onClick={() => setShowModal(false)}
-                    className='absolute top-14 s:top-5 right-5 cursor-pointer z-10'>
-                    <IcClear className='fill-current text-greyscale-400 h-5 w-5 s:h-8 s:w-8' />
-                  </Button>
-                  <div className='flex flex-col w-full flex-1 overflow-hidden bg-white s:rounded-3xl'>
-                    <div className='overflow-hidden h-full s:h-auto relative s:mx-16'>
-                      <div className='flex h-full s:h-[364px] m:h-[504px] l:h-[746px]'>
-                        <video
-                          src='img/royal-garden/ROYAL_GARDENS.mp4'
-                          // eslint-disable-next-line react/no-array-index-key
-                          controls
-                          disablePictureInPicture
-                          muted
-                          autoPlay
-                          controlsList='nodownload noremoteplayback noplaybackrate'
-                          className='min-w-full h-full px-16 '
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </ReactModal>
-              )}
             </div>
           </div>
           <div className='s:hidden self-center mt-4'>{startButton}</div>
@@ -724,17 +693,16 @@ const RoyalGardens: FC = observer(() => {
                   <Button
                     className='w-6 h-6 border border-greyscale-900 rounded-full'
                     onClick={() => {
-                      {
-                        tab === 0
-                          ? download(
-                              'RoyalGardens first-floor',
-                              '/img/royal-garden/first-floor.png',
-                            )
-                          : download(
-                              'RoyalGardens second-floor',
-                              '/img/royal-garden/second-floor.png',
-                            )
-                      }
+                      // eslint-disable-next-line no-unused-expressions
+                      tab === 0
+                        ? download(
+                            'RoyalGardens first-floor',
+                            '/img/royal-garden/first-floor.png',
+                          )
+                        : download(
+                            'RoyalGardens second-floor',
+                            '/img/royal-garden/second-floor.png',
+                          )
                     }}>
                     <div className='fill-current text-greyscale-900'>
                       <Download set='light' size={16} />
@@ -1002,57 +970,21 @@ const RoyalGardens: FC = observer(() => {
           </div>
         </div>
       </div>
+
+      <VideoModal
+        src='img/royal-garden/ROYAL_GARDENS.mp4'
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      />
+
       <SuccessModal
+        imageSrc='/img/congrats.svg'
+        title='LANDING_MESSAGE'
         isOpen={showSuccess}
         onClose={() => setShowSuccess(false)}
       />
     </>
   )
 })
-
-const SuccessModal: FC<{isOpen: boolean; onClose: () => void}> = ({
-  isOpen,
-  onClose,
-}) => {
-  const {t} = useTranslation()
-  const {push} = useRouter()
-  return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
-      className='absolute rounded-6 w-[328px] s:w-480px bg-white-a inset-x-0 mx-auto top-1/3 s:top-[162px] flex outline-none drop-shadow-2xl'
-      overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
-      <div className='flex flex-col w-full p-8'>
-        <div className='pb-4 hidden s:flex justify-end'>
-          <Button onClick={onClose}>
-            <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
-          </Button>
-        </div>
-        <div className='relative flex flex-col items-center'>
-          <div className='relative'>
-            <ImageWrapper
-              type='/img/congrats.svg'
-              alt='thank you'
-              width={200}
-              height={200}
-              quality={100}
-            />
-          </div>
-          <span className='text-h-4 text-primary-500 font-bold pb-4'>
-            {t('THANKS')}
-          </span>
-          <span className='text-body-16 text-greyscale-900 font-normal pb-8'>
-            {t('LANDING_MESSAGE')}
-          </span>
-          <PrimaryButton onClick={() => push('/')}>
-            {t('LANDING_TO_MAIN_PAGE')}
-          </PrimaryButton>
-        </div>
-      </div>
-    </ReactModal>
-  )
-}
 
 export default RoyalGardens
