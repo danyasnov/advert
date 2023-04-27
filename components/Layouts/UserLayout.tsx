@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite'
 import Joyride, {Step} from 'react-joyride'
 import {parseCookies} from 'nookies'
 import {TFunction, useTranslation} from 'next-i18next'
-import {isEmpty, isNumber, toNumber} from 'lodash'
+import {isNumber, toNumber} from 'lodash'
 import {useRouter} from 'next/router'
 import {
   ArrowLeft,
@@ -15,11 +15,15 @@ import {
   TimeCircle,
 } from 'react-iconly'
 import {useWindowSize} from 'react-use'
-import {DraftModel} from 'front-api/src/models'
+import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
-import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
+import {
+  useGeneralStore,
+  useModalsStore,
+  useUserStore,
+} from '../../providers/RootStoreProvider'
 import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
@@ -30,7 +34,6 @@ import {PagesType} from '../../stores/GeneralStore'
 import {
   getQueryValue,
   robustShallowUpdateQuery,
-  trackSingle,
   setCookiesObject,
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
@@ -51,6 +54,7 @@ const getSubscribeTabs = (t: TFunction, sizes) => [
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
+  const {setModal} = useModalsStore()
   const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
   const activeSubscriptionTab = toNumber(getQueryValue(query, 'activeTab')) || 1
   const router = useRouter()
@@ -154,24 +158,23 @@ const UserLayout: FC = observer(() => {
 
   let getAdvertOptions
   if (isCurrentUser) {
-    getAdvertOptions = ({
-      setShowDeactivateModal,
-      hash,
-      state,
-      showRefreshButton,
-    }) => {
+    getAdvertOptions = ({hash, state, showRefreshButton, title, images}) => {
       const remove = {
         title: 'REMOVE',
         icon: <Delete size={16} filled />,
         onClick: () => {
-          makeRequest({
-            url: `/api/delete-adv`,
-            method: 'post',
-            data: {
-              hash,
+          setModal('REMOVE_ADV', {
+            onRemove: () => {
+              makeRequest({
+                url: `/api/delete-adv`,
+                method: 'post',
+                data: {
+                  hash,
+                },
+              }).then(() => {
+                router.reload()
+              })
             },
-          }).then(() => {
-            router.reload()
           })
         },
       }
@@ -193,11 +196,21 @@ const UserLayout: FC = observer(() => {
       const deactivate = {
         title: 'REMOVE_FROM_SALE',
         icon: <ArrowLeftSquare size={16} filled />,
-        onClick: () => {
-          setShowDeactivateModal(true)
-        },
-        cb: () => {
-          router.reload()
+        onClick: (value: RemoveFromSaleType) => {
+          setModal('DEACTIVATE_ADV', {
+            onRemove: makeRequest({
+              url: `/api/deactivate-adv`,
+              method: 'post',
+              data: {
+                hash,
+                soldMode: value,
+              },
+            }).then(() => {
+              router.reload()
+            }),
+            title,
+            images,
+          })
         },
       }
       const edit = {

@@ -7,6 +7,7 @@ import {ICountriesStore} from '../stores/CountriesStore'
 import {ILanguagesStore} from '../stores/LanguagesStore'
 import {IGeneralStore} from '../stores/GeneralStore'
 import {IUserStore} from '../stores/UserStore'
+import {IModalsStore} from '../stores/ModalsStore'
 
 enableStaticRendering(typeof window === 'undefined')
 
@@ -51,6 +52,10 @@ export const useUserStore = (): IUserStore => {
 export const useGeneralStore = (): IGeneralStore => {
   const {generalStore} = useRootStore()
   return generalStore
+}
+export const useModalsStore = (): IModalsStore => {
+  const {modalsStore} = useRootStore()
+  return modalsStore
 }
 
 export const RootStoreProvider: FC = ({
