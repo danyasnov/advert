@@ -74,9 +74,7 @@ const ProductHeader: FC = observer(() => {
       onClick: () => {
         setShowDeactivateModal(true)
       },
-      cb: () => {
-        router.push(`/user/${owner.hash}`)
-      },
+
     }
     const edit = {
       title: 'EDIT_AD',
