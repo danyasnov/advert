@@ -24,9 +24,7 @@ const CustomSingleValue = (props) => {
     // eslint-disable-next-line react/jsx-props-no-spreading
     <SingleValue {...props} className='flex items-center justify-end'>
       {!!icon && <span className='flex mr-2 w-5 h-5'>{icon}</span>}
-      <span className='text-body-12 text-greyscale-800 font-medium'>
-        {label}
-      </span>
+      <span className='text-body-12 text-greyscale-800'>{label}</span>
     </SingleValue>
   )
 }

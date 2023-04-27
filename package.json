@@ -49,6 +49,7 @@
     "react": "^17.0.2",
     "react-aim": "^0.2.3",
     "react-auth-code-input": "^3.1.1",
+    "react-burger-menu": "^3.0.9",
     "react-cssfx-loading": "1.1.1",
     "react-device-detect": "^2.1.2",
     "react-dom": "^17.0.2",

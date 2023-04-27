@@ -9,9 +9,7 @@ const SafetyButton: FC = () => {
       title='security'
       href='/security'
       className='flex justify-center items-center'>
-      <div className='text-greyscale-800 text-body-12 font-medium'>
-        {t('SECURITY')}
-      </div>
+      <div className='text-greyscale-800 text-body-12'>{t('SECURITY')}</div>
     </LinkWrapper>
   )
 }
