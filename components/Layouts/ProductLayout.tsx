@@ -14,6 +14,7 @@ import {
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 import {get} from 'lodash'
+import {RemoveFromSaleType} from 'front-api'
 import {SerializedCookiesState} from '../../types'
 import {trackSingle, setCookiesObject} from '../../helpers'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -30,7 +31,6 @@ import {unixToDate} from '../../utils'
 import MetaTags from '../MetaTags'
 import useTourVisibility from '../../hooks/useTourVisibility'
 import {makeRequest} from '../../api'
-import {RemoveFromSaleType} from '../../../front-api'
 
 const ProductLayout: FC = observer(() => {
   const {t} = useTranslation()
