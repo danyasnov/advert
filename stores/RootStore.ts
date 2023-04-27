@@ -20,6 +20,7 @@ import {
 } from './LanguagesStore'
 import {GeneralStore, IGeneralsHydration, IGeneralStore} from './GeneralStore'
 import {IUserHydration, IUserStore, UserStore} from './UserStore'
+import {IModalsStore, ModalsStore} from './ModalsStore'
 
 export interface IRootStoreHydration {
   categoriesStore: ICategoriesHydration
@@ -28,6 +29,7 @@ export interface IRootStoreHydration {
   languagesStore: ILanguagesHydration
   generalStore: IGeneralsHydration
   userStore: IUserHydration
+  modalsStore: IModalsStore
 }
 
 export interface IRootStore {
@@ -37,6 +39,7 @@ export interface IRootStore {
   userStore: IUserStore
   languagesStore: ILanguagesStore
   generalStore: IGeneralStore
+  modalsStore: IModalsStore
   hydrate(data: IRootStoreHydration): void
 }
 
@@ -53,6 +56,8 @@ export class RootStore implements IRootStore {
 
   userStore
 
+  modalsStore
+
   constructor() {
     this.categoriesStore = new CategoriesStore(this)
     this.productsStore = new ProductsStore(this)
@@ -60,6 +65,7 @@ export class RootStore implements IRootStore {
     this.languagesStore = new LanguagesStore(this)
     this.generalStore = new GeneralStore(this)
     this.userStore = new UserStore(this)
+    this.modalsStore = new ModalsStore(this)
   }
 
   hydrate(data: IRootStoreHydration): void {
@@ -80,6 +86,9 @@ export class RootStore implements IRootStore {
     }
     if (data.userStore) {
       this.userStore.hydrate(data.userStore)
+    }
+    if (data.modalsStore) {
+      this.modalsStore.hydrate(data.modalsStore)
     }
   }
 }

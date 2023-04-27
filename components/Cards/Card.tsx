@@ -22,7 +22,7 @@ import ProductLike from '../ProductLike'
 import {handleMetrics} from '../../helpers'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import CallButton from '../Buttons/CallButton'
-import {SerializedCookiesState} from '../../types'
+import {TGetOptions, SerializedCookiesState} from '../../types'
 import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
 import EmptyProductImage from '../EmptyProductImage'
@@ -33,13 +33,8 @@ interface Props {
   href?: string
   setLockParentScroll?: Dispatch<SetStateAction<boolean>>
   disableVipWidth?: boolean
-  getOptions?: ({
-    setShowDeactivateModal,
-    hash,
-    state,
-    showRefreshButton,
-  }) => any[]
   renderFooter?: (product: AdvertiseListItemModel) => Element
+  getOptions?: TGetOptions
 }
 const Card: FC<Props> = ({
   product,
@@ -172,9 +167,9 @@ const Card: FC<Props> = ({
               getOptions={getOptions}
               hash={product.hash}
               state={product.state}
+              showRefreshButton={product.showRefreshButton}
               title={product.title}
               images={product.images}
-              showRefreshButton={product.showRefreshButton}
               listRender={(options, setShowPopup) => (
                 <div className='absolute right-0 top-10 bg-white shadow-2xl rounded-lg w-40 overflow-hidden z-10 divide-y divide-greyscale-200'>
                   {/* eslint-disable-next-line no-shadow */}
