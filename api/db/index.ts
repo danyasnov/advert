@@ -22,6 +22,9 @@ const sequelize = new Sequelize(
 )
 const langs = {
   en: 2,
+  ru: 1,
+  el: 25,
+  uk: 67,
 }
 const cache = new NodeCache({stdTTL: 60 * 60 * 24})
 
