@@ -37,7 +37,7 @@ const Banners: FC = observer(() => {
       },
       onClick: () => {
         handleMetrics('clickPromo', {banner: 'royalgarden'})
-        router.push(`/royal-garden`)
+        router.push(`/royal-gardens`)
       },
     },
     {
