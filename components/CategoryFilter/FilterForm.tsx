@@ -68,7 +68,6 @@ const FilterForm: FC = observer(() => {
     router.query.categories,
     categories,
   )
-  console.log('currentCategory', toJS(currentCategory))
   const conditionOptions = useMemo(
     () => [
       {
@@ -90,9 +89,6 @@ const FilterForm: FC = observer(() => {
   useEffect(() => {
     const show = isFilterChanged(filter)
     setShowReset(show)
-    if (show) {
-      setShowFilters(true)
-    }
   }, [filter])
 
   const getInitialValues = (reset?: boolean): Values => {
