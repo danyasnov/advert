@@ -78,7 +78,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       onRequestClose={onClose}
       shouldCloseOnOverlayClick
       ariaHideApp={false}
-      className='absolute h-full s:h-auto inset-x-0 mx-auto s:inset-x-8 m:inset-x-12 l:inset-x-24 s:top-14 m:top-20 l:top-14 flex outline-none flex flex-col'
+      className='absolute h-full s:h-auto inset-x-0 mx-auto s:inset-x-8 m:inset-x-12 l:inset-x-24 s:top-14 m:top-20 l:top-14 outline-none flex flex-col'
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-30'>
       <Button
         onClick={onClose}
