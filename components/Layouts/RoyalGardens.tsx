@@ -28,8 +28,10 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
 import PhotosModal from '../Modals/PhotosModal'
 import VideoModal from '../Modals/VideoModal'
+import LoginModal from '../Auth/Login/LoginModal'
 import SuccessModal from '../Modals/SuccessModal'
 import {download} from '../../utils'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 const property = [
   {
@@ -263,6 +265,7 @@ const Gallery: FC = observer(() => {
 
 const RoyalGardens: FC = observer(() => {
   const {t} = useTranslation()
+  const {showLogin, setShowLogin} = useGeneralStore()
   const [showModal, setShowModal] = useState(false)
   const [tab, setTab] = useState(0)
   const [showMapModal, setShowMapModal] = useState(false)
@@ -409,7 +412,11 @@ const RoyalGardens: FC = observer(() => {
               <BusinessButton />
               <SafetyButton />
               <LanguageSelect />
-              <Auth />
+              <Auth
+                onLogin={() => {
+                  setShowLogin(true)
+                }}
+              />
             </div>
           </div>
           <div className='hidden s:block s:static w-full pb-3 s:pb-0 s:h-[28px] bg-greyscale-50'>
@@ -970,6 +977,8 @@ const RoyalGardens: FC = observer(() => {
           </div>
         </div>
       </div>
+
+      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
       <VideoModal
         src='img/royal-garden/ROYAL_GARDENS.mp4'
