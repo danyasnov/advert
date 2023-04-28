@@ -149,3 +149,10 @@ export const getTextWidth = (text, font) => {
   const metrics = context.measureText(text)
   return metrics.width
 }
+
+export const download = (title, href) => {
+  const link = document.createElement('a')
+  link.download = title
+  link.href = href
+  link.click()
+}

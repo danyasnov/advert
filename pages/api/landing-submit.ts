@@ -8,6 +8,35 @@ export default async (
 ): Promise<any> => {
   const {body} = req
 
+  const sendingContent = {
+    from: {
+      email: 'info@vooxee.com',
+      name: 'info@vooxee.com',
+    },
+    subject: '',
+    html: '',
+  }
+  if (body.parameter === 'Royal Gardens') {
+    sendingContent.subject = 'New application from Royal Gardens Landing'
+    sendingContent.html = `<html>
+                      <body>
+                      Name: ${body.name}<br>
+                      Email: ${body.email}<br>
+                      Phone: ${body.phone}<br>
+                      Text: ${body.message}<br>
+                      </body>
+                      </html>`
+  } else {
+    sendingContent.subject = 'New application from Business Landing'
+    sendingContent.html = `<html>
+                      <body>
+                      Name: ${body.name}<br>
+                      Business name: ${body.business_name}<br>
+                      Email: ${body.email}<br>
+                      Phone: ${body.phone}<br>
+                      </body>
+                      </html>`
+  }
   makeRequest({
     url: 'https://api.sparkpost.com/api/v1/transmissions?num_rcpt_errors=3',
     method: 'post',
@@ -26,22 +55,7 @@ export default async (
           address: 'marketing@vooxee.com',
         },
       ],
-      content: {
-        from: {
-          email: 'info@vooxee.com',
-          name: 'info@vooxee.com',
-        },
-
-        subject: 'New application from Business Landing',
-        html: `<html>
-              <body>
-              Name: ${body.name}<br>
-              Business name: ${body.business_name}<br>
-              Email: ${body.email}<br>
-              Phone: ${body.phone}<br>
-              </body>
-              </html>`,
-      },
+      content: sendingContent,
     },
   }).then((data) => {
     console.log(data)

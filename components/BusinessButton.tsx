@@ -9,9 +9,7 @@ const BusinessButton: FC = () => {
       title='business'
       href='/business'
       className='flex justify-center items-center'>
-      <div className='text-greyscale-800 text-body-12 font-medium'>
-        {t('FOR_BUSINESS')}
-      </div>
+      <div className='text-greyscale-800 text-body-12'>{t('FOR_BUSINESS')}</div>
     </LinkWrapper>
   )
 }

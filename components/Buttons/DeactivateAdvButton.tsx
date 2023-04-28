@@ -3,7 +3,7 @@ import {useTranslation} from 'next-i18next'
 import {AdvertiseDetail} from 'front-api'
 import {RemoveFromSaleType} from 'front-api/src/models/index'
 import {useRouter} from 'next/router'
-import DeactivateAdvModal from '../DeactivateAdvModal'
+import DeactivateAdvModal from '../Modals/DeactivateAdvModal'
 import {makeRequest} from '../../api'
 import OutlineButton from './OutlineButton'
 

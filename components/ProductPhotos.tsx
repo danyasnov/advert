@@ -7,7 +7,7 @@ import ImageWrapper from './ImageWrapper'
 import useSliderButtons from '../hooks/useSliderButtons'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import Button from './Buttons/Button'
-import PhotosModal from './PhotosModal'
+import PhotosModal from './Modals/PhotosModal'
 import {ThumbObject} from '../types'
 import {Thumb} from './Thumb'
 import ProductBadge from './ProductBadge'
@@ -167,22 +167,24 @@ const ProductPhotos: FC = observer(() => {
           size={25}
           className='text-greyscale-400'
         />
-        <div className='overflow-hidden mx-2 l:mx-0' ref={previewViewportRef}>
-          <div className='flex w-full'>
-            {items.map((item, index) => (
-              <div className='mr-1.5 s:mr-2.5 m:mr-3 l:mr-2.5'>
-                <Thumb
-                  url={item.src}
-                  onHover={onHover}
-                  index={index}
-                  activePhotoIndex={activePhotoIndex}
-                  type={item.type}
-                  className='w-[88px] h-[48px] s:w-[91px] s:h-[54px] m:w-[129px] m:h-16'
-                />
-              </div>
-            ))}
+        {size(items) > 1 && (
+          <div className='overflow-hidden mx-2 l:mx-0' ref={previewViewportRef}>
+            <div className='flex w-full'>
+              {items.map((item, index) => (
+                <div className='mr-1.5 s:mr-2.5 m:mr-3 l:mr-2.5'>
+                  <Thumb
+                    url={item.src}
+                    onHover={onHover}
+                    index={index}
+                    activePhotoIndex={activePhotoIndex}
+                    type={item.type}
+                    className='w-[88px] h-[48px] s:w-[91px] s:h-[54px] m:w-[129px] m:h-16'
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         <FullHeightSliderButton
           onClick={() => {
             previewEmbla.scrollTo(previewEmbla.selectedScrollSnap() + 3)

@@ -2,84 +2,144 @@ import {FC, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import IcVisibility from 'icons/material/Visibility.svg'
 import IcTranslate from 'icons/Translate.svg'
-import {isEmpty} from 'lodash'
+import {isEmpty, size} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import {Calendar, Heart} from 'react-iconly'
+import {
+  ArrowLeftSquare,
+  Calendar,
+  Delete,
+  Edit,
+  Heart,
+  Setting,
+} from 'react-iconly'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
 import ProductMap from './ProductMap'
 import UserCard from './UserCard'
-
 import ProductPrice from './ProductPrice'
 import ProductCommunication from './ProductCommunication'
 import ProductLike from './ProductLike'
 import SharePopup from './SharePopup'
 import ProductBadges from './ProductBadges'
 import Button from './Buttons/Button'
+import BottomSheetDropdown from './BottomSheetDropdown'
+import {TGetOptions} from '../types'
+import ProductMenu from './ProductMenu'
 
-const ProductDescription: FC = observer(() => {
-  const {product} = useProductsStore()
-  const {userHash} = useGeneralStore()
-  const {t} = useTranslation()
-  if (!product) return null
-  const {advert, owner} = product
-  const {favoriteCounter, views, dateUpdated} = advert
-  return (
-    <div className='mt-4 mb-4 flex flex-col'>
-      <div className='flex space-x-1 s:space-x-7 font-normal mb-6 text-center'>
-        <div className='text-greyscale-500 flex space-x-1 s:space-x-3'>
-          <Calendar filled />
-          <span
-            suppressHydrationWarning
-            className='text-body-12 text-greyscale-900 font-normal whitespace-nowrap flex items-center'>
-            {unixToDateTime(dateUpdated)}
-          </span>
-        </div>
-        <div className='flex items-center space-x-1 s:space-x-3'>
-          <IcVisibility className='fill-current text-greyscale-500 w-6 h-6' />
-          <span className='text-body-12 text-greyscale-900'>
-            {t('VIEWED', {count: views})}
-          </span>
-        </div>
-        <div className='flex items-center space-x-1 s:space-x-3 text-greyscale-500'>
-          <Heart size={16} filled />
-          <span className='text-greyscale-900 text-body-12'>
-            {t('FAVORITED', {count: favoriteCounter})}
-          </span>
-        </div>
-      </div>
-      <ProductBadges />
-      <div className='s:hidden mb-6'>
-        <ProductPrice />
-      </div>
-      <div className='s:hidden mb-6'>
-        <ProductCommunication />
-      </div>
+const ProductDescription: FC<{getOptions: TGetOptions}> = observer(
+  ({getOptions}) => {
+    const {product} = useProductsStore()
+    const {userHash} = useGeneralStore()
+    const {t} = useTranslation()
+    if (!product) return null
+    const {advert, owner} = product
+    const {favoriteCounter, views, dateUpdated} = advert
 
-      <DescriptionTab />
-
-      <div className='mb-10'>
-        <ProductMap />
-      </div>
-      <div className='mb-10 s:mb-25'>
-        <CharacteristicsTab />
-      </div>
-      <div className='s:hidden'>
-        <UserCard />
-        <div className='flex flex-col items-center space-y-5 mt-6 '>
-          <ProductLike
-            userHash={owner.hash}
-            isFavorite={advert.isFavorite}
-            hash={advert.hash}
-            state={advert.state}
-            type='page'
+    return (
+      <div className='mt-4 mb-4 flex flex-col'>
+        <div className='flex font-normal mb-4 text-center flex-wrap'>
+          <div className='text-greyscale-500 flex space-x-3 mr-3 s:mr-7 mb-2'>
+            <Calendar filled />
+            <span
+              suppressHydrationWarning
+              className='text-body-12 text-greyscale-900 font-normal whitespace-nowrap flex items-center'>
+              {unixToDateTime(dateUpdated)}
+            </span>
+          </div>
+          <div className='flex items-center space-x-3 mr-3 s:mr-7 mb-2'>
+            <IcVisibility className='fill-current text-greyscale-500 w-6 h-6' />
+            <span className='text-body-12 text-greyscale-900'>
+              {t('VIEWED', {count: views})}
+            </span>
+          </div>
+          <div className='flex items-center space-x-3 text-greyscale-500 mr-3 s:mr-7 mb-2'>
+            <div className='w-6 h-6 flex items-center justify-center'>
+              <Heart size={20} filled />
+            </div>
+            <span className='text-greyscale-900 text-body-12'>
+              {t('FAVORITED', {count: favoriteCounter})}
+            </span>
+          </div>
+        </div>
+        <div className='block s:hidden mb-6'>
+          <BottomSheetDropdown
+            label={t('MANAGE_AD')}
+            labelIcon={<Setting size={16} filled />}
+            renderOptions={(setOpen) => (
+              <ProductMenu
+                getOptions={getOptions}
+                hash={advert.hash}
+                title={advert.title}
+                images={advert.images}
+                listRender={(innerOptions) => (
+                  <div className='flex flex-col w-full'>
+                    {/* eslint-disable-next-line no-shadow */}
+                    {innerOptions.map(({title, onClick, icon}, index) => (
+                      <Button
+                        key={title}
+                        className='w-full px-5'
+                        onClick={() => {
+                          onClick()
+                          setOpen(false)
+                        }}>
+                        <div
+                          className={`w-full flex items-center justify-between py-4 border-b ${
+                            index === innerOptions.length - 1
+                              ? 'border-transparent'
+                              : 'border-nc-border'
+                          }`}>
+                          <div className='flex space-x-3'>
+                            {!!icon && icon}
+                            <span className='text-body-16 text-nc-text-primary'>
+                              {t(title)}
+                            </span>
+                          </div>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              />
+            )}
           />
-          <SharePopup userHash={userHash} productHash={advert.hash} size={24} />
+        </div>
+        <ProductBadges />
+        <div className='s:hidden mb-6'>
+          <ProductPrice />
+        </div>
+        <div className='s:hidden mb-6'>
+          <ProductCommunication />
+        </div>
+
+        <DescriptionTab />
+
+        <div className='mb-10'>
+          <ProductMap />
+        </div>
+        <div className='mb-10 s:mb-25'>
+          <CharacteristicsTab />
+        </div>
+        <div className='s:hidden'>
+          <UserCard />
+          <div className='flex flex-col items-center space-y-5 mt-6 '>
+            <ProductLike
+              userHash={owner.hash}
+              isFavorite={advert.isFavorite}
+              hash={advert.hash}
+              state={advert.state}
+              type='page'
+            />
+            <SharePopup
+              userHash={userHash}
+              productHash={advert.hash}
+              size={24}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  )
-})
+    )
+  },
+)
 
 const DescriptionTab: FC = observer(() => {
   const {t} = useTranslation()
