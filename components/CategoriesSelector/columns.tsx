@@ -59,11 +59,9 @@ class ColItem extends PureComponent<ColItemProps> {
       <LinkWrapper
         preventDefault={isMobile && !isActive && category.id !== 0}
         title={name}
-        className={`${isActive ? 'text-primary-500' : ''} ${
-          name.length > 20 ? 'my-3' : 'my-0'
-        } ${
-          name.length > 30 ? 'my-[24px]' : ''
-        }  categories-selector-item text-greyscale-900 first:font-bold`}
+        className={`${
+          isActive ? 'text-primary-500' : ''
+        } categories-selector-item py-3 text-greyscale-900 first:font-bold`}
         href={href}>
         {name}
       </LinkWrapper>
@@ -85,7 +83,7 @@ class ButtonColItem extends PureComponent<ColItemProps> {
       <Button
         className={`${
           isActive ? 'bg-nc-accent' : ''
-        } categories-selector-item text-greyscale-900`}
+        } categories-selector-item py-3 text-greyscale-900`}
         onClick={onClick}>
         {name}
       </Button>
