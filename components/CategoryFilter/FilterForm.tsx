@@ -307,7 +307,7 @@ const FilterForm: FC = observer(() => {
 
           <SortSelect id='mobile-sort' />
 
-          {currentCategory.extras.allowUsed && (
+          {currentCategory?.extras?.allowUsed && (
             <Field
               name='condition'
               placeholder={t('PROD_CONDITION')}
