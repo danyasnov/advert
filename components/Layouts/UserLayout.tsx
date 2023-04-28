@@ -196,9 +196,9 @@ const UserLayout: FC = observer(() => {
       const deactivate = {
         title: 'REMOVE_FROM_SALE',
         icon: <ArrowLeftSquare size={16} filled />,
-        onClick: (value: RemoveFromSaleType) => {
+        onClick: () => {
           setModal('DEACTIVATE_ADV', {
-            onSelect: () =>
+            onSelect: (value: RemoveFromSaleType) =>
               makeRequest({
                 url: `/api/deactivate-adv`,
                 method: 'post',

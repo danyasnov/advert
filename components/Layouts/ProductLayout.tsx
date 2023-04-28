@@ -85,18 +85,19 @@ const ProductLayout: FC = observer(() => {
     const deactivate = {
       title: 'REMOVE_FROM_SALE',
       icon: <ArrowLeftSquare size={iconSize} />,
-      onClick: (value: RemoveFromSaleType) => {
+      onClick: () => {
         setModal('DEACTIVATE_ADV', {
-          onRemove: makeRequest({
-            url: `/api/deactivate-adv`,
-            method: 'post',
-            data: {
-              hash: advert.hash,
-              soldMode: value,
-            },
-          }).then(() => {
-            router.push(`/user/${owner.hash}`)
-          }),
+          onSelect: (value: RemoveFromSaleType) =>
+            makeRequest({
+              url: `/api/deactivate-adv`,
+              method: 'post',
+              data: {
+                hash: advert.hash,
+                soldMode: value,
+              },
+            }).then(() => {
+              router.push(`/user/${owner.hash}`)
+            }),
           title: advert.title,
           images: advert.images,
         })
