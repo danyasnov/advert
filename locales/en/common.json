@@ -1661,6 +1661,7 @@
   "LENDING_SECURITY_UNWANTED_LINKS": "Never enter your PIN when receiving a payment. If you are being asked for it, this is definitely scam. Stop communicating.",
   "LOAD_MORE": "Load more",
   "LOG_IN_ICON": "Log In",
+  "MANAGE_AD": "Manage ad",
   "MANY_PHOTOS": "{{count}} photos",
   "MASSAGES_EMPTY": "<b>No messages</b>\nAll active chats will be displayed here.",
   "MESSAGE_TO_SUPPORT_TITLE": "Successfully sent",
