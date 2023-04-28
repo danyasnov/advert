@@ -884,7 +884,7 @@ const RoyalGardens: FC = observer(() => {
               }}
             />
             <FormikProvider value={formik}>
-              <div className='flex flex-col space-y-4 self-center w-full mt-4 m:mt-12 font-light'>
+              <div className='flex flex-col space-y-4 self-center w-full my-4 m:mt-12 font-light'>
                 <Field
                   component={FormikText}
                   name='name'
