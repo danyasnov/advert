@@ -5,14 +5,12 @@
     --rsbs-max-w: 768px;
     --rsbs-ml: auto;
     --rsbs-mr: auto;
-    --rsbs-overlay-rounded: 16px;
 }
 
 [data-rsbs-overlay] {
-    border-top-left-radius: 16px;
-    border-top-left-radius: var(--rsbs-overlay-rounded, 16px);
-    border-top-right-radius: 16px;
-    border-top-right-radius: var(--rsbs-overlay-rounded, 16px);
+    overflow: hidden;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
     display: flex;
     background: #fff;
     background: var(--rsbs-bg, #fff);

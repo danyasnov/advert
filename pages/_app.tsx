@@ -21,6 +21,7 @@ import WithYandexMetrika from '../components/WithYandexMetrika'
 import {startTracking} from '../helpers'
 import Loading from '../components/Loading'
 import ChatListener from '../components/Chat/ChatListener'
+import Modals from '../components/Modals/Modals'
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
@@ -82,6 +83,7 @@ function MyApp({Component, pageProps}: AppProps) {
           />
           <CookiesWarning />
           <ChatListener />
+          <Modals />
         </div>
       </RootStoreProvider>
     </WithYandexMetrika>
