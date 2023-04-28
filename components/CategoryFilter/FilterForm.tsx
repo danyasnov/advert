@@ -68,6 +68,7 @@ const FilterForm: FC = observer(() => {
     router.query.categories,
     categories,
   )
+  console.log('currentCategory', toJS(currentCategory))
   const conditionOptions = useMemo(
     () => [
       {
@@ -300,14 +301,16 @@ const FilterForm: FC = observer(() => {
 
           <SortSelect id='mobile-sort' />
 
-          <Field
-            name='condition'
-            placeholder={t('PROD_CONDITION')}
-            options={conditionOptions}
-            component={FormikSelect}
-            filterStyle
-            isFilterable={false}
-          />
+          {currentCategory.extras.allowUsed && (
+            <Field
+              name='condition'
+              placeholder={t('PROD_CONDITION')}
+              options={conditionOptions}
+              component={FormikSelect}
+              filterStyle
+              isFilterable={false}
+            />
+          )}
           <Field
             name='priceRange'
             component={FormikRange}
