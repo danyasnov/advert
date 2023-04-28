@@ -198,16 +198,17 @@ const UserLayout: FC = observer(() => {
         icon: <ArrowLeftSquare size={16} filled />,
         onClick: (value: RemoveFromSaleType) => {
           setModal('DEACTIVATE_ADV', {
-            onRemove: makeRequest({
-              url: `/api/deactivate-adv`,
-              method: 'post',
-              data: {
-                hash,
-                soldMode: value,
-              },
-            }).then(() => {
-              router.reload()
-            }),
+            onSelect: () =>
+              makeRequest({
+                url: `/api/deactivate-adv`,
+                method: 'post',
+                data: {
+                  hash,
+                  soldMode: value,
+                },
+              }).then(() => {
+                router.reload()
+              }),
             title,
             images,
           })
