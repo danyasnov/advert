@@ -161,7 +161,7 @@ const Banners: FC = observer(() => {
     if (embla) {
       embla.on('select', () => {
         const index = embla.selectedScrollSnap() || 0
-        setCurrentIndex(index > 7 ? index - 8 : index)
+        setCurrentIndex(index > 8 ? index - 9 : index)
       })
     }
   }, [embla])
