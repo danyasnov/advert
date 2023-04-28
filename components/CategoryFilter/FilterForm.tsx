@@ -201,14 +201,24 @@ const FilterForm: FC = observer(() => {
       let condition = ''
       if (values.condition.value === 1) condition = '1'
       if (values.condition.value === 2) condition = '2'
+      const getPrice = (value) => {
+        const result = parseInt(value, 10)
+        if (result === undefined || result === null || Number.isNaN(result)) {
+          return undefined
+        }
+        return result
+      }
+
+      const priceMin = getPrice(priceRange[0])
+      const priceMax = getPrice(priceRange[1])
 
       const filterResult = {
         condition,
-        priceMin: parseInt(priceRange[0], 10) ?? undefined,
-        priceMax: parseInt(priceRange[1], 10) ?? undefined,
         withPhoto,
         onlyDiscounted,
         fields: mappedFields,
+        ...(priceMin !== undefined ? {priceMin} : {}),
+        ...(priceMax !== undefined ? {priceMax} : {}),
       }
 
       const updatedFilter = setFilter(filterResult)
