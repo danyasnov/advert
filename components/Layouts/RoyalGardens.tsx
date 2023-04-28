@@ -4,9 +4,9 @@ import {useWindowSize} from 'react-use'
 import {Field, FormikProvider, useFormik} from 'formik'
 import ReactModal from 'react-modal'
 import {omit} from 'lodash'
-import {useRouter} from 'next/router'
 import {object, string} from 'yup'
 import {observer} from 'mobx-react-lite'
+import ReCAPTCHA from 'react-google-recaptcha'
 import IcArrow from 'icons/material/ArrowBack.svg'
 import IcClear from 'icons/material/Clear.svg'
 import {Search, Download, Call, Message} from 'react-iconly'
@@ -26,13 +26,15 @@ import Auth from '../Auth'
 import MetaTags from '../MetaTags'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
-import PrimaryButton from '../Buttons/PrimaryButton'
 import PhotosModal from '../Modals/PhotosModal'
+import VideoModal from '../Modals/VideoModal'
+import SuccessModal from '../Modals/SuccessModal'
+import {download} from '../../utils'
 
 const property = [
   {
     title: 'LANDING_REAL_ESTATE_FLOORS',
-    text: '3',
+    text: '5',
   },
   {
     title: 'LANDING_REAL_ESTATE_APARTMENTS',
@@ -49,39 +51,17 @@ const property = [
 ]
 
 const facilities = [
-  {
-    title: 'LANDING_REAL_ESTATE_SWIMMING_POOL',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_KIDS_POOL',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_SURVEILLANCE',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_SEATING_AREA',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_PLAYGROUND',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_SAUNA',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_GYM',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_STORAGE',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_BAR',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_RECEPTION',
-  },
-  {
-    title: 'LANDING_REAL_ESTATE_BICYCLE',
-  },
+  'LANDING_REAL_ESTATE_SWIMMING_POOL',
+  'LANDING_REAL_ESTATE_KIDS_POOL',
+  'LANDING_REAL_ESTATE_SURVEILLANCE',
+  'LANDING_REAL_ESTATE_SEATING_AREA',
+  'LANDING_REAL_ESTATE_PLAYGROUND',
+  'LANDING_REAL_ESTATE_SAUNA',
+  'LANDING_REAL_ESTATE_GYM',
+  'LANDING_REAL_ESTATE_STORAGE',
+  'LANDING_REAL_ESTATE_BAR',
+  'LANDING_REAL_ESTATE_RECEPTION',
+  'LANDING_REAL_ESTATE_BICYCLE',
 ]
 
 const tabs = [
@@ -96,11 +76,11 @@ const tabs = [
 ]
 
 const headers = [
-  {label: 'LANDING_REAL_ESTATE_RESIDENCE'},
-  {label: 'LANDING_REAL_ESTATE_BEDROOMS'},
-  {label: 'LANDING_REAL_ESTATE_NET'},
-  {label: 'LANDING_REAL_ESTATE_GROSS'},
-  {label: 'LANDING_REAL_ESTATE_AVAILABILITY'},
+  'LANDING_REAL_ESTATE_RESIDENCE',
+  'LANDING_REAL_ESTATE_BEDROOMS',
+  'LANDING_REAL_ESTATE_NET',
+  'LANDING_REAL_ESTATE_GROSS',
+  'LANDING_REAL_ESTATE_AVAILABILITY',
 ]
 
 const rows = [
@@ -109,77 +89,78 @@ const rows = [
 ]
 
 const areas = [
-  {title: 'LANDING_REAL_ESTATE_WALKING_DISTANCE'},
-  {title: 'LANDING_REAL_ESTATE_PARK'},
-  {title: 'LANDING_REAL_ESTATE_QUIET_AREA'},
-  {title: 'LANDING_REAL_ESTATE_BEACH'},
+  'LANDING_REAL_ESTATE_WALKING_DISTANCE',
+  'LANDING_REAL_ESTATE_PARK',
+  'LANDING_REAL_ESTATE_QUIET_AREA',
+  'LANDING_REAL_ESTATE_BEACH',
+]
+
+const photos = [
+  {
+    src: '/img/royal-garden/Gallery1.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_AMAZING_TERRACE',
+    width: 615,
+  },
+  {
+    src: '/img/royal-garden/Gallery2.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_LIVING_ROOM',
+    width: 528,
+  },
+  {
+    src: '/img/royal-garden/Gallery3.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_MODERN_DESIGN',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery4.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_JACUZZI',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery5.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_BEAUTIFUL_VIEWS',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery6.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_COSY_AREAS',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery7.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_CHILLOUT_ZONE',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery8.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_KITCHEN',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery9.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_DESIGNER_BEDROOM',
+    width: 584,
+  },
+  {
+    src: '/img/royal-garden/Gallery10.png',
+    type: 'image',
+    title: 'LANDING_REAL_ESTATE_BBQ_AREA',
+    width: 584,
+  },
 ]
 
 const Gallery: FC = observer(() => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
-  const photos = [
-    {
-      src: '/img/royal-garden/Gallery1.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_AMAZING_TERRACE',
-      width: 615,
-    },
-    {
-      src: '/img/royal-garden/Gallery2.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_LIVING_ROOM',
-      width: 528,
-    },
-    {
-      src: '/img/royal-garden/Gallery3.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_MODERN_DESIGN',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery4.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_JACUZZI',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery5.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_BEAUTIFUL_VIEWS',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery6.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_COSY_AREAS',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery7.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_CHILLOUT_ZONE',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery8.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_KITCHEN',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery9.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_DESIGNER_BEDROOM',
-      width: 584,
-    },
-    {
-      src: '/img/royal-garden/Gallery10.png',
-      type: 'image',
-      title: 'LANDING_REAL_ESTATE_BBQ_AREA',
-      width: 584,
-    },
-  ]
 
   let imgHeight
   if (width < 768) {
@@ -215,13 +196,14 @@ const Gallery: FC = observer(() => {
     <div className='overflow-hidden mt-6 m:mt-12 mb-8' ref={viewportRef}>
       <div className='relative flex shrink-0'>
         {[...photos].map((photo, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className='mr-4'>
+          <div key={photo.src} className='mr-4'>
             <div className='flex flex-col relative'>
               <Button
                 onClick={() => {
-                  setShowModal(true)
-                  setCurrentIndex(index)
+                  if (embla.clickAllowed()) {
+                    setShowModal(true)
+                    setCurrentIndex(index)
+                  }
                 }}>
                 <ImageWrapper
                   quality={100}
@@ -256,6 +238,8 @@ const Gallery: FC = observer(() => {
         <div className='w-full flex self-center '>
           {photos.map((photoEmbla, index) => (
             <div
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               className={`w-[10%] h-[2px] ${
                 currentIndex === index
                   ? 'bg-greyscale-900 '
@@ -282,15 +266,12 @@ const RoyalGardens: FC = observer(() => {
   const [showModal, setShowModal] = useState(false)
   const [tab, setTab] = useState(0)
   const [showMapModal, setShowMapModal] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const formRef = useRef<HTMLDivElement>()
   const galleryRef = useRef<HTMLDivElement>()
   const facilitiesRef = useRef<HTMLDivElement>()
   const floorplanRef = useRef<HTMLDivElement>()
   const locationRef = useRef<HTMLDivElement>()
-
-  const {width} = useWindowSize()
 
   const formik = useFormik({
     validateOnBlur: false,
@@ -302,22 +283,26 @@ const RoyalGardens: FC = observer(() => {
         .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
         .required(t('EMAIL_REQUIRED_FIELD')),
       message: string(),
-      token: string(),
+      token: process.env.NEXT_PUBLIC_RECAPTCHA_KEY
+        ? string().required(t('EMPTY_FIELD'))
+        : string(),
     }),
     initialValues: {
       name: '',
       phone: '',
       email: '',
-      string: '',
+      message: '',
       token: '',
     },
     onSubmit: (values) => {
-      setIsSubmitted(true)
       setShowSuccess(true)
-      makeRequest({
+      return makeRequest({
         method: 'post',
         url: '/api/landing-submit',
-        data: omit(values, ['token']),
+        data: {
+          ...omit(values, ['token']),
+          parameter: 'Royal Gardens',
+        },
       })
     },
   })
@@ -357,7 +342,7 @@ const RoyalGardens: FC = observer(() => {
     />
   )
 
-  const {handleSubmit, errors} = formik
+  const {submitForm, isSubmitting, handleSubmit, errors} = formik
 
   return (
     <>
@@ -477,12 +462,9 @@ const RoyalGardens: FC = observer(() => {
               <h4 className='font-light text-greyscale-500 text-body-12 s:text-h-5 l:text-h-4 mt-8 s:mt-11 m:mt-14 l:mt-16'>
                 {t('LANDING_REAL_ESTATE_PERFECT_HEALING')}
               </h4>
-              <span
-                className='py-2 s:py-3 l:py-8 s:mt-4 font-light leading-10 text-h-3 s:text-[60px] l:text-[90px] text-greyscale-900'
-                dangerouslySetInnerHTML={{
-                  __html: 'ROYAL <i>GARDENS</i>',
-                }}
-              />
+              <span className='py-2 s:py-3 l:py-8 s:mt-4 font-light leading-10 text-h-3 s:text-[60px] l:text-[90px] text-greyscale-900'>
+                ROYAL <i>GARDENS</i>
+              </span>
             </div>
 
             <div className='hidden s:block self-end'>{startButton}</div>
@@ -499,8 +481,9 @@ const RoyalGardens: FC = observer(() => {
               </span>
             </div>
             <div className='s:hidden mb-6 grid grid-cols-2 grid-rows-2 gap-x-12 gap-y-1 items-end place-items-center'>
-              {property.map((feature) => (
-                <div className='flex flex-col max-w-[104px]'>
+              {property.map((feature, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <div key={index} className='flex flex-col max-w-[104px]'>
                   <span className='text-body-10 font-medium text-greyscale-900 self-start'>
                     {t(feature.title)}
                   </span>
@@ -525,44 +508,14 @@ const RoyalGardens: FC = observer(() => {
                   objectFit='contain'
                 />
               </Button>
-              {showModal && (
-                <ReactModal
-                  isOpen={showModal}
-                  onRequestClose={() => setShowModal(false)}
-                  shouldCloseOnOverlayClick
-                  ariaHideApp={false}
-                  className='absolute h-full s:h-auto inset-x-0 mx-auto s:inset-x-8 m:inset-x-12 l:inset-x-24 s:top-14 m:top-20 l:top-14 flex outline-none flex flex-col'
-                  overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-30'>
-                  <Button
-                    onClick={() => setShowModal(false)}
-                    className='absolute top-14 s:top-5 right-5 cursor-pointer z-10'>
-                    <IcClear className='fill-current text-greyscale-400 h-5 w-5 s:h-8 s:w-8' />
-                  </Button>
-                  <div className='flex flex-col w-full flex-1 overflow-hidden bg-white s:rounded-3xl'>
-                    <div className='overflow-hidden h-full s:h-auto relative s:mx-16'>
-                      <div className='flex h-full s:h-[364px] m:h-[504px] l:h-[746px]'>
-                        <video
-                          src='img/royal-garden/ROYAL_GARDENS.mp4'
-                          // eslint-disable-next-line react/no-array-index-key
-                          controls
-                          disablePictureInPicture
-                          muted
-                          autoPlay
-                          controlsList='nodownload noremoteplayback noplaybackrate'
-                          className='min-w-full h-full px-16 '
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </ReactModal>
-              )}
             </div>
           </div>
           <div className='s:hidden self-center mt-4'>{startButton}</div>
           <div className='hidden s:self-center s:flex s:mt-4 m:absolute m:top-[820px] l:top-[935px] s:w-[704px] m:w-[874px] bg-white'>
             <div className='flex s:space-x-8 m:space-x-10 py-8 s:px-3 m:px-8 items-end'>
-              {property.map((feature) => (
-                <div className='flex flex-col'>
+              {property.map((feature, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <div key={index} className='flex flex-col'>
                   <span className='s:text-body-14 m:text-body-16 font-medium text-greyscale-900 self-start'>
                     {t(feature.title)}
                   </span>
@@ -636,11 +589,13 @@ const RoyalGardens: FC = observer(() => {
                 </div>
               </div>
               <ul className='list-disc font-light mx-4 mt-4 m:mt-16 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
-                {facilities.map((facilitie) => (
+                {facilities.map((facilitie, index) => (
                   <li
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
                     className='mb-2 m:mb-4'
                     dangerouslySetInnerHTML={{
-                      __html: t(facilitie.title),
+                      __html: t(facilitie),
                     }}
                   />
                 ))}
@@ -738,18 +693,16 @@ const RoyalGardens: FC = observer(() => {
                   <Button
                     className='w-6 h-6 border border-greyscale-900 rounded-full'
                     onClick={() => {
-                      const link = document.createElement('a')
-                      link.download = `${
-                        tab === 0
-                          ? 'RoyalGardens first-floor'
-                          : 'RoyalGardens second-floor'
-                      }`
-                      link.href = `${
-                        tab === 0
-                          ? '/img/royal-garden/first-floor.png'
-                          : '/img/royal-garden/second-floor.png'
-                      }`
-                      link.click()
+                      // eslint-disable-next-line no-unused-expressions
+                      tab === 0
+                        ? download(
+                            'RoyalGardens first-floor',
+                            '/img/royal-garden/first-floor.png',
+                          )
+                        : download(
+                            'RoyalGardens second-floor',
+                            '/img/royal-garden/second-floor.png',
+                          )
                     }}>
                     <div className='fill-current text-greyscale-900'>
                       <Download set='light' size={16} />
@@ -792,13 +745,17 @@ const RoyalGardens: FC = observer(() => {
               <thead className='text-left'>
                 {headers.map((header, index) => (
                   <tr
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
                     className={
-                      index !== 4 ? 'border-b border-greyscale-300' : ''
+                      headers.indexOf(header) !== headers.length - 1
+                        ? 'border-b border-greyscale-300'
+                        : ''
                     }>
                     <td
                       className='py-5 text-greyscale-900 s:text-body-16 m:text-[20px]'
                       dangerouslySetInnerHTML={{
-                        __html: t(header.label),
+                        __html: t(header),
                       }}
                     />
                     {rows.map((row) => (
@@ -817,11 +774,13 @@ const RoyalGardens: FC = observer(() => {
             <table className='hidden s:block w-full mt-8 m:mt-12 l:mt-20'>
               <thead className='text-center align-top'>
                 <tr className='border-b border-greyscale-300'>
-                  {headers.map((header) => (
+                  {headers.map((header, index) => (
                     <td
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
                       className='s:p-6 m:p-8 text-greyscale-900 s:text-body-16 m:text-[20px]'
                       dangerouslySetInnerHTML={{
-                        __html: t(header.label),
+                        __html: t(header),
                       }}
                     />
                   ))}
@@ -830,11 +789,17 @@ const RoyalGardens: FC = observer(() => {
               <tbody className='text-center'>
                 {rows.map((row, index) => (
                   <tr
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
                     className={
-                      index === 0 ? 'border-b border-greyscale-300' : ''
+                      rows.indexOf(row) !== rows.length - 1
+                        ? 'border-b border-greyscale-300'
+                        : ''
                     }>
                     {row.map((cell) => (
                       <td
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={index}
                         className='s:p-6 m:p-8 text-greyscale-900 s:text-body-16 m:text-[20px] font-light'
                         dangerouslySetInnerHTML={{
                           __html: t(cell),
@@ -863,12 +828,14 @@ const RoyalGardens: FC = observer(() => {
                 <span className='text-body-16 text-greyscale-900  mb-4 m:mb-6'>
                   {t('LANDING_REAL_ESTATE_RIGHT_LOCATION_AREA')}
                 </span>
-                <ul className='list-disc font-light mx-4 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
-                  {areas.map((area) => (
+                <ul className='list-disc font-light l:font-normal mx-4 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+                  {areas.map((area, index) => (
                     <li
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
                       className='ml-5 mb-2 m:mb-4'
                       dangerouslySetInnerHTML={{
-                        __html: t(area.title),
+                        __html: t(area),
                       }}
                     />
                   ))}
@@ -877,8 +844,9 @@ const RoyalGardens: FC = observer(() => {
                   <div className='fill-current text-greyscale-900'>
                     <Call set='bold' size={16} />
                   </div>
+
                   <span className='text-greyscale-900 text-body-14 m:text-body-18'>
-                    +357 95 959919
+                    <a href='tel:+35795959919'>+357 95 959919</a>
                   </span>
                 </div>
                 <div className='flex space-x-4 items-center mt-2  ml-2'>
@@ -886,7 +854,7 @@ const RoyalGardens: FC = observer(() => {
                     <Message set='bold' size={16} />
                   </div>
                   <span className='text-greyscale-900 text-body-14 m:text-body-18'>
-                    sales@vooxee.com
+                    <a href='mailto:sales@vooxee.com'>sales@vooxee.com</a>
                   </span>
                 </div>
               </div>
@@ -941,15 +909,22 @@ const RoyalGardens: FC = observer(() => {
                   isTextarea
                   rows={10}
                   component={FormikText}
-                  disableTrack
                   placeholder={t('LANDING_REAL_ESTATE_ENTER_MESSAGE')}
                 />
               </div>
+              {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+                  onChange={(val) => {
+                    formik.setFieldValue('token', val)
+                    formik.setFieldError('token', undefined)
+                  }}
+                />
+              )}
               {errors.token && (
                 <span className='text-error text-body-12'>{errors.token}</span>
               )}
               <Button
-                disabled={isSubmitted}
                 onClick={() => handleSubmit()}
                 className='flex justify-between mt-6 px-6 m:px-8 py-4 border border-greyscale-800 rounded-[32px] h-[56px] text-body-14 text-greyscale-800 font-light self-center'>
                 {t('LANDING_BUSINESS_START_TODAY')}
@@ -995,57 +970,21 @@ const RoyalGardens: FC = observer(() => {
           </div>
         </div>
       </div>
+
+      <VideoModal
+        src='img/royal-garden/ROYAL_GARDENS.mp4'
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      />
+
       <SuccessModal
+        imageSrc='/img/congrats.svg'
+        title='LANDING_MESSAGE'
         isOpen={showSuccess}
         onClose={() => setShowSuccess(false)}
       />
     </>
   )
 })
-
-const SuccessModal: FC<{isOpen: boolean; onClose: () => void}> = ({
-  isOpen,
-  onClose,
-}) => {
-  const {t} = useTranslation()
-  const {push} = useRouter()
-  return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
-      className='absolute rounded-6 w-[328px] s:w-480px bg-white-a inset-x-0 mx-auto top-1/3 s:top-[162px] flex outline-none drop-shadow-2xl'
-      overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
-      <div className='flex flex-col w-full p-8'>
-        <div className='pb-4 hidden s:flex justify-end'>
-          <Button onClick={onClose}>
-            <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
-          </Button>
-        </div>
-        <div className='relative flex flex-col items-center'>
-          <div className='relative'>
-            <ImageWrapper
-              type='/img/congrats.svg'
-              alt='thank you'
-              width={200}
-              height={200}
-              quality={100}
-            />
-          </div>
-          <span className='text-h-4 text-primary-500 font-bold pb-4'>
-            {t('THANKS')}
-          </span>
-          <span className='text-body-16 text-greyscale-900 font-normal pb-8'>
-            {t('LANDING_MESSAGE')}
-          </span>
-          <PrimaryButton onClick={() => push('/')}>
-            {t('LANDING_TO_MAIN_PAGE')}
-          </PrimaryButton>
-        </div>
-      </div>
-    </ReactModal>
-  )
-}
 
 export default RoyalGardens
