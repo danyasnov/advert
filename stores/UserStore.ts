@@ -31,6 +31,7 @@ export interface IUserStore {
     surname: string
     sex: string
   }) => void
+  setUserLanguages: (data: {isoCode: string}[]) => void
   ratings: ReviewModel[]
 }
 
@@ -173,6 +174,10 @@ export class UserStore implements IUserStore {
     this.user.settings.personal = {...this.user.settings.personal, ...data}
     this.user.name = data.name
     this.user.surname = data.surname
+  }
+
+  setUserLanguages = (data) => {
+    this.user.additionalLanguages = data
   }
 
   constructor(root: RootStore) {
