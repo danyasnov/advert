@@ -439,7 +439,9 @@ const UserLayout: FC = observer(() => {
                                 refreshAdvert(product.hash)
                               }}>
                               <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
-                                {t('DAYS_TO_ARCHIVE', {days: 3})}
+                                {t('DAYS_TO_ARCHIVE', {
+                                  days: product.daysBeforeArchive,
+                                })}
                               </span>
                               <ArrowRight size={16} />
                             </Button>
