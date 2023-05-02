@@ -34,7 +34,7 @@
 }
 
 .categories-selector-item {
-  @apply flex w-full pl-4 pr-8 py-3 items-center justify-start text-body-12 m:text-body-14 h-10 text-left whitespace-normal;
+  @apply flex w-full pl-4 pr-8 items-center justify-start text-body-12 m:text-body-14 text-left whitespace-normal;
 }
 .categories-bg {
   background: linear-gradient(90deg, #fafafa 0, #fafafa 25%, #fff 26%, #fff);

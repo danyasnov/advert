@@ -34,14 +34,14 @@ const CategoriesMobileSelector: FC = observer(() => {
         <>
           <Button
             onClick={() => setHistory(history.slice(0, -1))}
-            className='categories-selector-item'>
+            className='categories-selector-item py-3'>
             <IcArrowBack className='w-6 h-6 fill-current text-black-c mr-2' />
             {t('BACK')}
           </Button>
           <LinkWrapper
             title={t('SHOW_ALL_ADVERTS')}
             href={`/${locationCodes}/${getSlugs(history)}`}
-            className='text-brand-b1 categories-selector-item'>
+            className='text-brand-b1 categories-selector-item py-3'>
             {t('SHOW_ALL_ADVERTS')}
           </LinkWrapper>
           {last(history).items.map((value) => (

@@ -54,7 +54,7 @@ const UserCard: FC = observer(() => {
       </div>
 
       <div className='w-full flex flex-col items-center'>
-        <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-40 text-center'>
+        <h3 className='text-greyscale-900 text-body-18 font-semibold mb-2 truncate w-full text-center whitespace-pre-line'>
           {product.owner.name}
         </h3>
         <div className='mb-6'>
