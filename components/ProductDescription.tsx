@@ -61,48 +61,51 @@ const ProductDescription: FC<{getOptions: TGetOptions}> = observer(
             </span>
           </div>
         </div>
-        <div className='block s:hidden mb-6'>
-          <BottomSheetDropdown
-            label={t('MANAGE_AD')}
-            labelIcon={<Setting size={16} filled />}
-            renderOptions={(setOpen) => (
-              <ProductMenu
-                getOptions={getOptions}
-                hash={advert.hash}
-                title={advert.title}
-                images={advert.images}
-                listRender={(innerOptions) => (
-                  <div className='flex flex-col w-full'>
-                    {/* eslint-disable-next-line no-shadow */}
-                    {innerOptions.map(({title, onClick, icon}, index) => (
-                      <Button
-                        key={title}
-                        className='w-full px-5'
-                        onClick={() => {
-                          onClick()
-                          setOpen(false)
-                        }}>
-                        <div
-                          className={`w-full flex items-center justify-between py-4 border-b ${
-                            index === innerOptions.length - 1
-                              ? 'border-transparent'
-                              : 'border-nc-border'
-                          }`}>
-                          <div className='flex space-x-3'>
-                            {!!icon && icon}
-                            <span className='text-body-16 text-nc-text-primary'>
-                              {t(title)}
-                            </span>
+        {userHash === owner.hash && (
+          <div className='block s:hidden mb-6'>
+            <BottomSheetDropdown
+              label={t('MANAGE_AD')}
+              labelIcon={<Setting size={16} filled />}
+              renderOptions={(setOpen) => (
+                <ProductMenu
+                  getOptions={getOptions}
+                  hash={advert.hash}
+                  title={advert.title}
+                  images={advert.images}
+                  listRender={(innerOptions) => (
+                    <div className='flex flex-col w-full'>
+                      {/* eslint-disable-next-line no-shadow */}
+                      {innerOptions.map(({title, onClick, icon}, index) => (
+                        <Button
+                          key={title}
+                          className='w-full px-5'
+                          onClick={() => {
+                            onClick()
+                            setOpen(false)
+                          }}>
+                          <div
+                            className={`w-full flex items-center justify-between py-4 border-b ${
+                              index === innerOptions.length - 1
+                                ? 'border-transparent'
+                                : 'border-nc-border'
+                            }`}>
+                            <div className='flex space-x-3'>
+                              {!!icon && icon}
+                              <span className='text-body-16 text-nc-text-primary'>
+                                {t(title)}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </Button>
-                    ))}
-                  </div>
-                )}
-              />
-            )}
-          />
-        </div>
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                />
+              )}
+            />
+          </div>
+        )}
+
         <ProductBadges />
         <div className='s:hidden mb-6'>
           <ProductPrice />

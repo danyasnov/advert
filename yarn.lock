@@ -3783,9 +3783,9 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.8.3":
-  version "5.8.3"
-  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#0819b0518d0541fca814d928e965ed87616a862e"
+"front-api@ssh://git@gitlab.venera.city/vooxee/front-api#5.8.5":
+  version "5.8.5"
+  resolved "ssh://git@gitlab.venera.city/vooxee/front-api#f5c825475e684ebf4eb1b055adfc8e9c5e56c867"
   dependencies:
     axios "^0.22.0"
     axios-curlirize lexgorbunov/axios-curlirize#1.4.5
