@@ -379,8 +379,7 @@ const FormPage: FC = observer(() => {
   )
 
   const conditionComponent = (
-    <div
-      className={`w-full s:w-1/2  ${hasArrayType ? 'l:w-full' : 'l:w-5/12'}`}>
+    <div className={`w-full s:w-1/2 ${hasArrayType ? 'l:w-72' : 'l:w-5/12'}`}>
       <Field
         component={FormikSelect}
         name='condition'
@@ -784,7 +783,7 @@ const FormPage: FC = observer(() => {
                     body={
                       <div
                         className={`w-full s:w-1/3 ${
-                          hasArrayType ? 'l:w-full' : ''
+                          hasArrayType ? 'l:w-72' : ''
                         }`}>
                         <Field
                           name='price'
@@ -873,7 +872,7 @@ const FormPage: FC = observer(() => {
                     body={
                       <div
                         className={`w-full s:w-1/3 ${
-                          hasArrayType ? 'l:w-full' : ''
+                          hasArrayType ? 'l:w-72' : ''
                         }`}>
                         <Field
                           name='phone'
