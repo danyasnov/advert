@@ -82,7 +82,7 @@ const PhotosModal: FC<Props> = ({isOpen, onClose, items, currentIndex}) => {
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-30'>
       <Button
         onClick={onClose}
-        className='absolute top-14 s:top-5 right-5 cursor-pointer z-10'>
+        className='absolute top-14 w-10 h-10 s:top-5 right-5 cursor-pointer z-10'>
         <IcClear className='fill-current text-greyscale-400 h-5 w-5 s:h-8 s:w-8' />
       </Button>
       <div className='flex flex-col w-full flex-1 overflow-hidden bg-white s:rounded-3xl'>
