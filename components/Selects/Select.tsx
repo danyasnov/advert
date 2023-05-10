@@ -125,21 +125,6 @@ const Select: FC<SelectProps> = ({
   isInvalid,
   components,
 }) => {
-  const [sorted, setSorted] = useState(options)
-  useEffect(() => {
-    if (isMulti && Array.isArray(value)) {
-      const tempOptions = [...options]
-      const selected = value.map((v) => {
-        const currentIndex = tempOptions.findIndex((o) => o.value === v.value)
-        const currentOption = tempOptions[currentIndex]
-        tempOptions.splice(currentIndex, 1)
-        return currentOption
-      })
-      setSorted([...selected, ...tempOptions])
-    } else if (!isEqual(sorted, options)) {
-      setSorted(options)
-    }
-  }, [value, options])
   const menuWidth = useMemo(() => {
     if (typeof window === 'undefined' || !filterStyle) return 0
     const arr = options.map((o) => o.label.length)
@@ -153,7 +138,7 @@ const Select: FC<SelectProps> = ({
         inputId={id}
         id={id}
         value={value}
-        options={sorted}
+        options={options}
         placeholder={placeholder}
         isSearchable={isSearchable}
         isDisabled={isDisabled}
@@ -161,6 +146,7 @@ const Select: FC<SelectProps> = ({
         isClearable={isClearable}
         isMulti={isMulti}
         closeMenuOnSelect={!isMulti}
+        hideSelectedOptions={false}
         menuPortalTarget={
           typeof document !== 'undefined' ? document.body : null
         }
