@@ -290,7 +290,7 @@ export const FormikCreateFields: FC<
           body={
             <div
               className={`w-full s:w-1/2 ${
-                hasArrayType ? 'l:w-full' : 'l:w-5/12'
+                hasArrayType ? 'l:w-72' : 'l:w-5/12'
               }`}>
               <FormikCreateField field={f} />
             </div>
@@ -983,7 +983,7 @@ export const FormikDependentFields: FC<
           key={f.id}
           id={`form-field-${f.fieldType}-${f.slug}`}
           body={
-            <div className='w-full s:w-1/2 l:w-full'>
+            <div className='w-full s:w-1/2 l:w-72'>
               <FormikCreateField field={f} />
             </div>
           }
