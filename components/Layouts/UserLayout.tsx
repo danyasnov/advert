@@ -17,6 +17,7 @@ import {
 import {useWindowSize} from 'react-use'
 import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
+import {toJS} from 'mobx'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {
@@ -426,20 +427,26 @@ const UserLayout: FC = observer(() => {
                       }}
                       tab={isCurrentUser ? 'sale' : 'other-sale'}
                       renderFooter={(product) => {
-                        if (!product.showCallButton) return null
-                        return (
-                          <Button
-                            className='flex justify-between w-full'
-                            onClick={(e) => {
-                              e.preventDefault()
-                              refreshAdvert(product.hash)
-                            }}>
-                            <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
-                              {t('UPDATE_BEFORE_ARCHIVATION')}
-                            </span>
-                            <ArrowRight size={16} />
-                          </Button>
-                        )
+                        if (
+                          product.showCallButton &&
+                          product.daysBeforeArchive
+                        ) {
+                          return (
+                            <Button
+                              className='flex justify-between w-full'
+                              onClick={(e) => {
+                                e.preventDefault()
+                                refreshAdvert(product.hash)
+                              }}>
+                              <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
+                                {t('DAYS_TO_ARCHIVE', {
+                                  days: product.daysBeforeArchive,
+                                })}
+                              </span>
+                              <ArrowRight size={16} />
+                            </Button>
+                          )
+                        }
                       }}
                     />
                   )}

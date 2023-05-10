@@ -139,6 +139,11 @@ const Card: FC<Props> = ({
     <LinkWrapper title={title} href={href || url} key={hash} target='_blank'>
       {/* eslint-disable-next-line */}
       <div
+        onMouseLeave={() => {
+          if (embla) {
+            embla.scrollTo(0)
+          }
+        }}
         onClick={() => {
           handleMetrics('clickTo_advt', {
             categoryId: product.rootCategoryId,
