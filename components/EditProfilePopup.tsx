@@ -75,7 +75,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     gender: sexOptionsRef.current.find(
       (o) => o.value === (sex as unknown as string),
     ),
-    additional: user.additionalLanguages,
+    additional: user.additionalLanguages || [],
   })
   useEffect(() => {
     makeRequest({url: '/api/languages'}).then((res) => {
