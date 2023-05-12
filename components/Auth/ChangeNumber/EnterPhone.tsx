@@ -5,9 +5,8 @@ import {Form, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {object, string} from 'yup'
 import {useCountriesStore} from '../../../providers/RootStoreProvider'
-import {AuthPages} from './AddNumberWizard'
+import AuthPages from './AuthPages'
 import {Controls, PageProps} from '../utils'
-
 import PhoneInput from '../../PhoneInput'
 import {Country} from '../../../types'
 

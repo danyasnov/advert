@@ -30,6 +30,7 @@ export interface PageProps {
   dispatch: Dispatch<Partial<State & {type: string; title: string}>>
   onClose: () => void
   onFinish: (phoneNum?: string) => void
+  skipSuccessScreen?: boolean
 }
 
 export interface State {

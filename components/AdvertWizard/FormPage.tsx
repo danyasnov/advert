@@ -57,7 +57,7 @@ import {
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
-import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
+import ChangeNumberModal from '../Auth/ChangeNumber/ChangeNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
 import SecondaryButton from '../Buttons/SecondaryButton'
 
@@ -965,7 +965,7 @@ const FormPage: FC = observer(() => {
             {query.action === 'create' && (
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
-            <AddNumberModal
+            <ChangeNumberModal
               onFinish={(phoneNum) => {
                 setShowAddNumber(false)
                 const change = {

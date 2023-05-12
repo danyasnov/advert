@@ -1,24 +1,8 @@
 import React, {Dispatch, FC, SetStateAction, useEffect, useReducer} from 'react'
 import {useTranslation} from 'next-i18next'
-import EnterCode from './EnterCode'
-import EnterPhone from './EnterPhone'
-import Success from '../Success'
 import {reducer, State} from '../utils'
+import AuthPages from './AuthPages'
 
-export const AuthPages = {
-  enterPhone: {
-    title: 'LOGIN_WITH_PHONE',
-    component: EnterPhone,
-  },
-  enterCode: {
-    title: 'CODE',
-    component: EnterCode,
-  },
-  success: {
-    title: 'CONGRATULATIONS',
-    component: Success,
-  },
-}
 const initialState: State = {
   incoming: null,
   isNew: null,
@@ -28,11 +12,12 @@ const initialState: State = {
   page: AuthPages.enterPhone,
 }
 
-const AddNumberWizard: FC<{
+const ChangeNumberWizard: FC<{
   setTitle: Dispatch<SetStateAction<() => never>>
   onClose: () => void
   onFinish: (phoneNum: string) => void
-}> = ({setTitle, onClose, onFinish}) => {
+  skipSuccessScreen?: boolean
+}> = ({setTitle, onClose, onFinish, skipSuccessScreen}) => {
   const {t} = useTranslation()
   const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -47,8 +32,9 @@ const AddNumberWizard: FC<{
       dispatch={dispatch}
       onClose={onClose}
       onFinish={onFinish}
+      skipSuccessScreen={skipSuccessScreen}
     />
   )
 }
 
-export default AddNumberWizard
+export default ChangeNumberWizard

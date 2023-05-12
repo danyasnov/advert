@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
 import Button from '../../Buttons/Button'
 import useDisableBodyScroll from '../../../hooks/useDisableBodyScroll'
-import AddNumberWizard from './AddNumberWizard'
+import ChangeNumberWizard from './ChangeNumberWizard'
 
 interface Props {
   isOpen: boolean
@@ -12,7 +12,7 @@ interface Props {
   onFinish: (phoneNum: string) => void
 }
 
-const AddNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
+const ChangeNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
   useDisableBodyScroll(isOpen)
@@ -34,7 +34,7 @@ const AddNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
             <IcClear className='fill-current text-black-d h-6 w-6' />
           </Button>
         </div>
-        <AddNumberWizard
+        <ChangeNumberWizard
           setTitle={setTitle}
           onClose={onClose}
           onFinish={onFinish}
@@ -43,4 +43,4 @@ const AddNumberModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
     </ReactModal>
   )
 }
-export default AddNumberModal
+export default ChangeNumberModal

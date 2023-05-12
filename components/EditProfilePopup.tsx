@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {CloseSquare, Edit, Search, User} from 'react-iconly'
+import {Call, CloseSquare, Edit, Search, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
@@ -20,15 +20,19 @@ import SecondaryButton from './Buttons/SecondaryButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import {SelectItem} from './Selects/Select'
 import {List} from './Selects/MobileSelect'
+import ChangeNumberWizard from './Auth/ChangeNumber/ChangeNumberWizard'
 
-type PageType = 'form' | 'language'
+type PageType = 'form' | 'language' | 'phone'
 
-const getHeader = (page: PageType) => {
+const getHeader = (page: PageType, customTitle: string) => {
+  if (customTitle && page === 'phone') return customTitle
   switch (page) {
     case 'form':
       return 'EDIT_PROFILE'
     case 'language':
       return 'SPEAK_IN_LANGUAGES'
+    case 'phone':
+      return 'SET_NEW_PHONE_NUMBER'
     default:
       return ''
   }
@@ -57,7 +61,7 @@ const EditProfilePopup: FC = observer(() => {
 const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
   const {user, setUserPersonalData, setUserLanguages} = useUserStore()
   const [page, setPage] = useState<PageType>('form')
-
+  const [changePhoneTitle, setChangePhoneTitle] = useState()
   const {settings, additionalLanguages, mainLanguage} = user
   const {name, surname, sex} = settings.personal
   const {t} = useTranslation()
@@ -75,7 +79,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     gender: sexOptionsRef.current.find(
       (o) => o.value === (sex as unknown as string),
     ),
-    additional: user.additionalLanguages || [],
+    additional: additionalLanguages || [],
   })
   useEffect(() => {
     makeRequest({url: '/api/languages'}).then((res) => {
@@ -125,7 +129,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       const langs = await makeRequest({
         url: '/api/update-languages',
         data: {
-          main: user.mainLanguage.isoCode,
+          main: mainLanguage.isoCode,
           additional: values.additional.map((l) => l.isoCode),
         },
         method: 'POST',
@@ -144,6 +148,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     },
   })
   const {handleSubmit, setFieldValue, values} = formik
+  console.log(toJS(user))
 
   const form = (
     <div
@@ -180,12 +185,20 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 </div>
               }
             />
-            <Field
-              component={FormikSelect}
-              name='gender'
-              options={sexOptionsRef.current}
-              placeholder={t('SEX')}
-            />
+            <Button
+              className='w-full'
+              onClick={() => {
+                setPage('phone')
+              }}>
+              <div className='px-6 py-4 bg-greyscale-50 rounded-xl flex  w-full'>
+                <div>
+                  <Call set='bold' size={20} />
+                </div>
+                <span className='text-body-16 pl-2'>
+                  +{settings.personal.phoneNum}
+                </span>
+              </div>
+            </Button>
             <Button
               className='w-full'
               onClick={() => {
@@ -196,6 +209,12 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 <IcArrowDown className='fill-current text-greyscale-900 shrink-0 h-5 w-5' />
               </div>
             </Button>
+            <Field
+              component={FormikSelect}
+              name='gender'
+              options={sexOptionsRef.current}
+              placeholder={t('SEX')}
+            />
           </Form>
         </FormikProvider>
         <div className='flex w-full mt-8 mb-6'>
@@ -238,6 +257,19 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       </div>
     </div>
   )
+  const phone = (
+    <ChangeNumberWizard
+      setTitle={setChangePhoneTitle}
+      onFinish={(phoneNum) => {
+        setPage('form')
+        setUserPersonalData({phoneNum})
+      }}
+      onClose={() => {
+        setPage('form')
+      }}
+      skipSuccessScreen
+    />
+  )
 
   return (
     <ReactModal
@@ -248,10 +280,10 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       contentLabel='Personal Data'
       className='absolute w-full bg-white-a inset-x-0 mx-auto s:w-[480px] s:top-20 flex outline-none'
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto '>
-      <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl s:overflow-hidden '>
+      <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl  '>
         <div className='px-6 mt-6 pb-4 flex justify-between'>
           <span className='text-h-5 text-greyscale-900 font-bold'>
-            {t(getHeader(page))}
+            {t(getHeader(page, changePhoneTitle))}
           </span>
           <Button onClick={onClose}>
             <IcClear className='fill-current text-black-d h-6 w-6' />
@@ -259,6 +291,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
         </div>
         {page === 'form' && form}
         {page === 'language' && language}
+        {page === 'phone' && phone}
       </div>
     </ReactModal>
   )
