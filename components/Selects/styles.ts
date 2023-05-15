@@ -65,20 +65,29 @@ export const getDefaultStyles = (isInvalid) => ({
     color: '#fff',
     overflow: 'hidden',
   }),
-  multiValueLabel: (provided) => ({
+  multiValueLabel: (provided, state) => ({
     ...provided,
     color: '#fff',
     fontSize: '16px',
     lineHeight: '22px',
+    ...(state.data.isRemovable === false ? {paddingRight: '6px'} : {}),
   }),
-  multiValueRemove: (provided) => ({
-    ...provided,
-    '&:hover': {
-      color: '#fff',
-      backgroundColor: 'inherit',
-      borderColor: 'inherit',
-    },
-  }),
+  multiValueRemove: (provided, state) => {
+    if (state.data.isRemovable === false) {
+      return {
+        ...provided,
+        display: 'none',
+      }
+    }
+    return {
+      ...provided,
+      '&:hover': {
+        color: '#fff',
+        backgroundColor: 'inherit',
+        borderColor: 'inherit',
+      },
+    }
+  },
   menu: (provided) => ({
     ...provided,
     marginTop: '16px',

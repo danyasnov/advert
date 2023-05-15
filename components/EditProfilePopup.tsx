@@ -6,12 +6,10 @@ import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
 import {useFormik, FormikProvider, Field, Form} from 'formik'
 import {array, object, string} from 'yup'
-import {isEqual} from 'lodash'
+import {isEqual, toArray} from 'lodash'
 import {useLockBodyScroll} from 'react-use'
 import {toJS} from 'mobx'
-import IcArrowDown from 'icons/material/ArrowDown.svg'
-import IcClose from 'icons/material/Close.svg'
-import type {LanguageModel, SettingsLanguageModel} from 'front-api'
+import type {SettingsLanguageModel} from 'front-api'
 import {useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
 import {makeRequest} from '../api'
@@ -79,11 +77,24 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     gender: sexOptionsRef.current.find(
       (o) => o.value === (sex as unknown as string),
     ),
-    additional: additionalLanguages || [],
+    additional: [],
   })
   useEffect(() => {
     makeRequest({url: '/api/languages'}).then((res) => {
-      setLanguages(res.data.result)
+      const langs = res.data.result
+      setLanguages(langs)
+      const formatted = [
+        {isoCode: mainLanguage.isoCode},
+        ...toArray(additionalLanguages),
+      ].map((v) => {
+        const l = langs.find((i) => i.code === v.isoCode)
+        return {
+          isRemovable: l.code !== mainLanguage.isoCode,
+          value: l.code,
+          label: l.name,
+        }
+      })
+      setFieldValue('additional', formatted)
     })
   }, [])
   const schema = object().shape({
@@ -93,7 +104,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       .max(100, t('NAME_NOT_CORRECT'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
     surname: string().trim().max(100, t('SURNAME_NOT_CORRECT')),
-    additional: array().of(object({isoCode: string()})),
+    additional: array().of(object({value: string(), label: string()})),
   })
   const formik = useFormik({
     initialValues: personalDataRef.current,
@@ -126,16 +137,19 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
         data: payload,
         method: 'POST',
       })
+      const formattedLangs = values.additional
+        .filter((l) => l.value !== mainLanguage.isoCode)
+        .map((l) => l.value)
       const langs = await makeRequest({
         url: '/api/update-languages',
         data: {
           main: mainLanguage.isoCode,
-          additional: values.additional.map((l) => l.isoCode),
+          additional: formattedLangs,
         },
         method: 'POST',
       })
       if (langs.status === 200) {
-        setUserLanguages(values.additional)
+        setUserLanguages(formattedLangs.map((l) => ({isoCode: l})))
       }
       if (result.data.status === 200) {
         setUserPersonalData({
@@ -148,7 +162,6 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     },
   })
   const {handleSubmit, setFieldValue, values} = formik
-  console.log(toJS(user))
 
   const form = (
     <div
@@ -190,7 +203,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
               onClick={() => {
                 setPage('phone')
               }}>
-              <div className='px-6 py-4 bg-greyscale-50 rounded-xl flex  w-full'>
+              <div className='px-6 py-4 bg-greyscale-50 rounded-xl flex w-full'>
                 <div>
                   <Call set='bold' size={20} />
                 </div>
@@ -199,16 +212,21 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 </span>
               </div>
             </Button>
-            <Button
-              className='w-full'
-              onClick={() => {
-                setPage('language')
-              }}>
-              <div className='px-5 py-4 bg-greyscale-50 rounded-xl flex justify-between w-full'>
-                <span className='text-body-16'>{t('SPEAK_IN_LANGUAGES')}</span>
-                <IcArrowDown className='fill-current text-greyscale-900 shrink-0 h-5 w-5' />
-              </div>
-            </Button>
+            <Field
+              name='additional'
+              component={FormikSelect}
+              placeholder={t('SPEAK_IN_LANGUAGES')}
+              isMulti
+              isFilterable
+              options={[
+                ...languages.map((i) => ({
+                  label: i.name,
+                  value: i.code,
+                  disabled: i.code === mainLanguage.isoCode,
+                })),
+              ]}
+            />
+
             <Field
               component={FormikSelect}
               name='gender'
@@ -237,26 +255,6 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     </div>
   )
 
-  const language = (
-    <div className='flex flex-col w-full bg-white z-10 left-0 h-full'>
-      <div className='h-full flex flex-col px-6 pt-4'>
-        <LanguageSelect
-          items={languages}
-          value={values.additional}
-          mainLanguage={mainLanguage}
-          onSelect={(value) => {
-            if (value !== null) {
-              setFieldValue(
-                'additional',
-                value.map((v) => ({isoCode: v.value})),
-              )
-            }
-            setPage('form')
-          }}
-        />
-      </div>
-    </div>
-  )
   const phone = (
     <ChangeNumberWizard
       setTitle={setChangePhoneTitle}
@@ -290,88 +288,10 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
           </Button>
         </div>
         {page === 'form' && form}
-        {page === 'language' && language}
         {page === 'phone' && phone}
       </div>
     </ReactModal>
   )
 })
-
-const LanguageSelect: FC<{
-  items: SettingsLanguageModel[]
-  mainLanguage: LanguageModel
-  value: LanguageModel[]
-  onSelect: (value: SelectItem[] | null) => void
-}> = ({items, value, onSelect, mainLanguage}) => {
-  const {t} = useTranslation()
-  const [search, setSearch] = useState('')
-  const [focused, setFocused] = useState(false)
-
-  const formattedItems = useRef(
-    items.map((i) => ({
-      label: i.name,
-      value: i.code,
-      disabled: i.code === mainLanguage.isoCode,
-    })),
-  )
-  const [filtered, setFiltered] = useState(formattedItems.current)
-  const [selected, setSelected] = useState(
-    value.map((v) => formattedItems.current.find((i) => i.value === v.isoCode)),
-  )
-  useEffect(() => {
-    setFiltered(
-      formattedItems.current.filter((item) =>
-        item.label.toLowerCase().includes(search.toLowerCase()),
-      ),
-    )
-  }, [search])
-  return (
-    <div className='flex flex-col'>
-      <div className='relative mb-4'>
-        <div
-          className={`absolute inset-y-0 flex items-center left-4 ${
-            focused ? 'text-primary-500' : 'text-greyscale-400'
-          }`}>
-          <Search size={20} />
-        </div>
-        <input
-          placeholder={t('SEARCH')}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className='w-full text-body-16 py-2.5 px-13 rounded-xl bg-greyscale-100'
-        />
-        {search && (
-          <Button
-            className='text-greyscale-900 absolute inset-y-0 right-4'
-            onClick={() => {
-              setSearch('')
-            }}>
-            <IcClose className='fill-current h-2 w-2' />
-          </Button>
-        )}
-      </div>
-      <List
-        items={filtered}
-        value={selected}
-        isMulti
-        onChange={(v) => setSelected(v)}
-      />
-      <div className='flex w-full mt-4 mb-6'>
-        <SecondaryButton className='w-full' onClick={() => onSelect(null)}>
-          {t('CANCEL')}
-        </SecondaryButton>
-        <PrimaryButton
-          className='ml-2 w-full'
-          onClick={() => {
-            onSelect(selected)
-          }}>
-          {t('APPLY')}
-        </PrimaryButton>
-      </div>
-    </div>
-  )
-}
 
 export default EditProfilePopup
