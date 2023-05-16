@@ -26,8 +26,6 @@ const getHeader = (page: PageType, customTitle: string) => {
       return 'EDIT_PROFILE'
     case 'language':
       return 'SPEAK_IN_LANGUAGES'
-    case 'phone':
-      return 'SET_NEW_PHONE_NUMBER'
     default:
       return ''
   }
@@ -56,7 +54,7 @@ const EditProfilePopup: FC = observer(() => {
 const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
   const {user, setUserPersonalData, setUserLanguages} = useUserStore()
   const [page, setPage] = useState<PageType>('form')
-  const [changePhoneTitle, setChangePhoneTitle] = useState()
+  const [customTitle, setCustomTitle] = useState()
   const {settings, additionalLanguages, mainLanguage} = user
   const {name, surname, sex} = settings.personal
   const {t} = useTranslation()
@@ -158,7 +156,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       }
     },
   })
-  const {handleSubmit, setFieldValue, values} = formik
+  const {handleSubmit, setFieldValue} = formik
   const languageOptions = languages.map((i) => ({
     label: i.name,
     value: i.code,
@@ -270,7 +268,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
   const phone = (
     <ChangeContactWizard
       type={page === 'phone' ? 'phone' : 'email'}
-      setTitle={setChangePhoneTitle}
+      setTitle={setCustomTitle}
       onFinish={(incoming) => {
         setPage('form')
         setUserPersonalData({
@@ -293,10 +291,10 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
       contentLabel='Personal Data'
       className='absolute w-full bg-white-a inset-x-0 mx-auto s:w-[480px] s:top-20 flex outline-none'
       overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto '>
-      <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl  '>
+      <div className='flex flex-col w-full absolute bg-white z-10 s:rounded-3xl overflow-hidden'>
         <div className='px-6 mt-6 pb-4 flex justify-between'>
           <span className='text-h-5 text-greyscale-900 font-bold'>
-            {t(getHeader(page, changePhoneTitle))}
+            {t(getHeader(page, customTitle))}
           </span>
           <Button onClick={onClose}>
             <IcClear className='fill-current text-black-d h-6 w-6' />
