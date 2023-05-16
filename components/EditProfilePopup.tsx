@@ -223,6 +223,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 placeholder={t('SPEAK_IN_LANGUAGES')}
                 isMulti
                 isFilterable
+                isClearable={false}
                 options={languageOptions}
               />
             )}
