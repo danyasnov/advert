@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Call, CloseSquare, Edit, Search, User} from 'react-iconly'
+import {Call, Edit, Message, User} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
@@ -8,7 +8,6 @@ import {useFormik, FormikProvider, Field, Form} from 'formik'
 import {array, object, string} from 'yup'
 import {isEmpty, isEqual, toArray} from 'lodash'
 import {useLockBodyScroll} from 'react-use'
-import {toJS} from 'mobx'
 import type {SettingsLanguageModel} from 'front-api'
 import {useUserStore} from '../providers/RootStoreProvider'
 import Button from './Buttons/Button'
@@ -16,14 +15,12 @@ import {makeRequest} from '../api'
 import {FormikSelect, FormikText} from './FormikComponents'
 import SecondaryButton from './Buttons/SecondaryButton'
 import PrimaryButton from './Buttons/PrimaryButton'
-import {SelectItem} from './Selects/Select'
-import {List} from './Selects/MobileSelect'
-import ChangeNumberWizard from './Auth/ChangeNumber/ChangeNumberWizard'
+import ChangeContactWizard from './Auth/ChangeContact/ChangeContactWizard'
 
-type PageType = 'form' | 'language' | 'phone'
+type PageType = 'form' | 'language' | 'phone' | 'email'
 
 const getHeader = (page: PageType, customTitle: string) => {
-  if (customTitle && page === 'phone') return customTitle
+  if (customTitle && ['phone', 'email'].includes(page)) return customTitle
   switch (page) {
     case 'form':
       return 'EDIT_PROFILE'
@@ -212,7 +209,22 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                   <Call set='bold' size={20} />
                 </div>
                 <span className='text-body-16 pl-2'>
-                  +{settings.personal.phoneNum}
+                  {settings.personal.phoneNum &&
+                    `+${settings.personal.phoneNum}`}
+                </span>
+              </div>
+            </Button>
+            <Button
+              className='w-full'
+              onClick={() => {
+                setPage('email')
+              }}>
+              <div className='px-6 py-4 bg-greyscale-50 rounded-xl flex w-full'>
+                <div>
+                  <Message set='bold' size={20} />
+                </div>
+                <span className='text-body-16 pl-2'>
+                  {settings.personal.email}
                 </span>
               </div>
             </Button>
@@ -227,7 +239,6 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 options={languageOptions}
               />
             )}
-
             <Field
               component={FormikSelect}
               name='gender'
@@ -257,11 +268,14 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
   )
 
   const phone = (
-    <ChangeNumberWizard
+    <ChangeContactWizard
+      type={page === 'phone' ? 'phone' : 'email'}
       setTitle={setChangePhoneTitle}
-      onFinish={(phoneNum) => {
+      onFinish={(incoming) => {
         setPage('form')
-        setUserPersonalData({phoneNum})
+        setUserPersonalData({
+          [page === 'phone' ? 'phoneNum' : 'email']: incoming,
+        })
       }}
       onClose={() => {
         setPage('form')
@@ -289,7 +303,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
           </Button>
         </div>
         {page === 'form' && form}
-        {page === 'phone' && phone}
+        {['phone', 'email'].includes(page) && phone}
       </div>
     </ReactModal>
   )

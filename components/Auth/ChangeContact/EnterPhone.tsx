@@ -31,55 +31,26 @@ const EnterPhone: FC<PageProps> = observer(({dispatch, onClose}) => {
   const format = country.phoneMask.replaceAll('X', '#').replaceAll('-', ' ')
 
   const minLength = (format.match(/#/g) || []).length
-  const schema = object().shape({
-    phone: string().min(minLength, t('ADD_PHONE_NUMBER')),
-  })
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       phone: '',
     },
-    validate: (values) => {
-      const errors = {}
-
-      try {
-        schema.validateSync(values, {
-          abortEarly: false,
-        })
-      } catch (e) {
-        e.inner.forEach(({path, message}) => {
-          errors[path] = message
-        })
-      }
-
-      return errors
-    },
+    validationSchema: object().shape({
+      phone: string().min(minLength, t('ADD_PHONE_NUMBER')),
+    }),
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
       const incoming = `${
         country.phonePrefix
       }${values.phone.toLocaleLowerCase()}`
-      // const result = await makeRequest({
-      //   url: '/api/check-existing',
-      //   data: {
-      //     phone: incoming,
-      //   },
-      //   method: 'POST',
-      // })
-      // if (result?.data.status !== 200) {
-      //   return toast.error(t(result.data.error))
-      // }
+
       dispatch({
         type: 'setIncoming',
         incoming,
       })
-      // if (!result?.data.result.exists) {
-      // return dispatch({
-      //   type: 'setPage',
-      //   page: AuthPages.enterPersonalData,
-      // })
-      // }
+
       return dispatch({
         type: 'setPage',
         page: AuthPages.enterCode,

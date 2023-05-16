@@ -27,11 +27,13 @@ const getCharacters = (verifyMode) => {
   }
 }
 const EnterCode: FC<PageProps> = observer(
-  ({state, dispatch, skipSuccessScreen, onFinish}) => {
+  ({state, dispatch, skipSuccessScreen, onFinish, type}) => {
     const {t} = useTranslation()
     const [counter, setCounter] = useState(60)
     const [disabled, setDisabled] = useState(true)
-    const [verifyMode, setVerifyMode] = useState(VerifyMode.Call)
+    const [verifyMode, setVerifyMode] = useState(
+      type === 'phone' ? VerifyMode.Call : VerifyMode.Email,
+    )
     const characters = getCharacters(verifyMode)
     const AuthInputRef = useRef<AuthCodeRef>(null)
 
@@ -41,7 +43,7 @@ const EnterCode: FC<PageProps> = observer(
         data: {
           incoming: {
             type: state.authType,
-            phone: state.incoming,
+            [type === 'phone' ? 'phone' : 'email']: state.incoming,
           },
           verifyMode,
         },
@@ -102,7 +104,7 @@ const EnterCode: FC<PageProps> = observer(
           data: {
             incoming: {
               type: state.authType,
-              phone: state.incoming,
+              [type === 'phone' ? 'phone' : 'email']: state.incoming,
             },
             verifyMode,
             code: values.code,
@@ -213,7 +215,8 @@ const EnterCode: FC<PageProps> = observer(
           onBack={() => {
             dispatch({
               type: 'setPage',
-              page: AuthPages.enterPhone,
+              page:
+                type === 'phone' ? AuthPages.enterPhone : AuthPages.enterEmail,
             })
           }}
           onNext={() => {

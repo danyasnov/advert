@@ -31,15 +31,16 @@ export interface PageProps {
   onClose: () => void
   onFinish: (phoneNum?: string) => void
   skipSuccessScreen?: boolean
+  type?: 'phone' | 'email'
 }
 
 export interface State {
   incoming: string | null
   authType: AuthType | null
-  userId: number | null
-  isNew: boolean | null
-  password: string | null
   page: {title: string; component: FC}
+  userId?: number | null
+  isNew?: boolean | null
+  password?: string | null
 }
 
 export const Controls: FC<{
