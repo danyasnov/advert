@@ -6,7 +6,7 @@ import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
 import {useFormik, FormikProvider, Field, Form} from 'formik'
 import {array, object, string} from 'yup'
-import {isEqual, toArray} from 'lodash'
+import {isEmpty, isEqual, toArray} from 'lodash'
 import {useLockBodyScroll} from 'react-use'
 import {toJS} from 'mobx'
 import type {SettingsLanguageModel} from 'front-api'
@@ -162,7 +162,11 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
     },
   })
   const {handleSubmit, setFieldValue, values} = formik
-
+  const languageOptions = languages.map((i) => ({
+    label: i.name,
+    value: i.code,
+    disabled: i.code === mainLanguage.isoCode,
+  }))
   const form = (
     <div
       className='flex flex-col w-full bg-white z-10 left-0 h-full'
@@ -212,20 +216,16 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 </span>
               </div>
             </Button>
-            <Field
-              name='additional'
-              component={FormikSelect}
-              placeholder={t('SPEAK_IN_LANGUAGES')}
-              isMulti
-              isFilterable
-              options={[
-                ...languages.map((i) => ({
-                  label: i.name,
-                  value: i.code,
-                  disabled: i.code === mainLanguage.isoCode,
-                })),
-              ]}
-            />
+            {!isEmpty(languageOptions) && (
+              <Field
+                name='additional'
+                component={FormikSelect}
+                placeholder={t('SPEAK_IN_LANGUAGES')}
+                isMulti
+                isFilterable
+                options={languageOptions}
+              />
+            )}
 
             <Field
               component={FormikSelect}
