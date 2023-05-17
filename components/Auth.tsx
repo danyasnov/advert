@@ -5,12 +5,14 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {useClickAway, useWindowSize} from 'react-use'
 import IcProfile from 'icons/material/Profile.svg'
+import localforage from 'localforage'
 import {SerializedCookiesState} from '../types'
 import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
 import Button from './Buttons/Button'
 import UserAvatar from './UserAvatar'
 import LogoutButton from './Auth/LogoutButton'
+import {destroyCookiesWrapper} from '../helpers'
 
 interface Props {
   onLogin?: () => void
@@ -35,7 +37,19 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
       method: 'post',
       data: {hash},
     })
-    if (userData.data?.result) setUser(userData.data?.result)
+    if (userData.data?.status === 200) {
+      setUser(userData.data?.result)
+    } else {
+      destroyCookiesWrapper('hash')
+      destroyCookiesWrapper('promo')
+      destroyCookiesWrapper('authType')
+      destroyCookiesWrapper('aup')
+      destroyCookiesWrapper('authNewRefreshToken')
+      destroyCookiesWrapper('authNewToken')
+      destroyCookiesWrapper('sessionId')
+      localforage.clear()
+      router.reload()
+    }
   }
   useEffect(() => {
     if (cookies.hash) {
