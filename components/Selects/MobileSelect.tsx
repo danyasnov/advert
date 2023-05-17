@@ -151,7 +151,7 @@ const MobileSelect: FC<SelectProps> = ({
             </div>
 
             {isSearchable && (
-              <div className='w-full px-4 relative'>
+              <div className='w-full px-4 relative mt-5'>
                 <IcSearch className='w-6 h-6 absolute top-3 left-5 text-greyscale-800' />
                 <input
                   className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-greyscale-900'
