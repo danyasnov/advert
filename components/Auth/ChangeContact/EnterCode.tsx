@@ -179,7 +179,11 @@ const EnterCode: FC<PageProps> = observer(
         <LinkButton
           className='mb-2'
           onClick={() => {
-            dispatch({type: 'setPage', page: AuthPages.enterPhone})
+            dispatch({
+              type: 'setPage',
+              page:
+                type === 'phone' ? AuthPages.enterPhone : AuthPages.enterEmail,
+            })
           }}
           label={t(
             state.authType === AuthType.phone
