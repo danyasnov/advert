@@ -127,7 +127,7 @@ const ProductPhotos: FC = observer(() => {
           })}
         </div>
         {!!items.length && (
-          <div className='absolute bottom-4 w-full flex justify-center space-x-2'>
+          <div className='absolute bottom-2 w-full flex justify-center space-x-2'>
             {size(items) > 1 &&
               items.map((i, index) => (
                 <div
