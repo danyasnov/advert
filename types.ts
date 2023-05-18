@@ -1,6 +1,11 @@
-import {AdvertiseListItemModel, LocationModel} from 'front-api/src/index'
+import {
+  AdvertiseListItemModel,
+  CACategoryDataFieldModel,
+  LocationModel,
+} from 'front-api'
 import {CancelTokenSource} from 'axios'
 import {FormikErrors} from 'formik'
+import {SelectItem} from './components/Selects/Select'
 
 export interface LocationIdFilter {
   cityId?: number
@@ -163,3 +168,64 @@ export type TGetOptions = ({
   title,
   images,
 }) => any[]
+
+export interface IFormikSegmented {
+  options: SelectItem[]
+}
+export interface IFormikCheckbox {
+  label: string
+  labelClassname: string
+  hideLabel?: boolean
+  labelPosition?: 'left' | 'right'
+}
+export interface IFormikSelect {
+  label: string
+  options: SelectItem[]
+  other?: SelectItem[]
+  placeholder: string
+  isFilterable: boolean
+  isClearable: boolean
+  isMulti: boolean
+  filterStyle?: boolean
+  isIconSelect?: boolean
+  styles?: Record<any, any>
+}
+export interface IFormikRange {
+  placeholder: string
+  minValue?: number
+  maxValue?: number
+}
+export interface IFormikNumber {
+  placeholder: string
+  value: number
+  mask?: string
+  maxLength?: number
+  format?: string
+  thousandSeparator?: string
+  allowEmptyFormatting?: boolean
+  disableTrack?: boolean
+}
+export interface IFormikField {
+  field: CACategoryDataFieldModel
+}
+export interface IFormikDependentField {
+  onFieldsChange?: (fields: CACategoryDataFieldModel[]) => void
+  allFields?: CACategoryDataFieldModel[]
+}
+
+export interface FieldOptions {
+  options?: SelectItem[]
+  other?: SelectItem[]
+  placeholder?: string
+  label?: string
+  isFilterable?: boolean
+  isClearable?: boolean
+  isMulti?: boolean
+  hideLabel?: boolean
+  maxLength?: number
+  maxValue?: number
+  filterStyle?: boolean
+  isIconSelect?: boolean
+  minValue?: number
+  validate?: (value: any) => string
+}

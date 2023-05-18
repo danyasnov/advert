@@ -353,7 +353,6 @@ export const getUrlQueryFromFilter = (
     Object.entries(fieldValues).map(([key, value]) => {
       let stringValue = ''
       const currentField = fieldById[key]
-      // debugger
       switch (currentField?.fieldType) {
         case 'select':
         case 'iconselect':
@@ -589,7 +588,11 @@ export const getFormikInitialFromQuery = (
 export const getLocationCodes = (ctx?): string => {
   const cookies: SerializedCookiesState = parseCookies(ctx)
   const result = []
-  result.push(cookies.countryCode || 'all')
+  const countryCode =
+    cookies.countryCode === 'null' || !cookies.countryCode
+      ? 'all'
+      : cookies.countryCode
+  result.push(countryCode)
   result.push(cookies.regionOrCityCode || 'all')
   return result.join('/')
 }

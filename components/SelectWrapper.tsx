@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import {useWindowSize} from 'react-use'
 import {isEmpty} from 'lodash'
-import Select, {SelectItem, SelectProps} from './Selects/Select'
+import Select, {SelectProps} from './Selects/Select'
 import MobileSelect from './Selects/MobileSelect'
 
 const SelectWrapper: FC<SelectProps> = ({

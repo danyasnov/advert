@@ -32,6 +32,7 @@ const CategoriesLayout: FC = observer(() => {
     ? // @ts-ignore
       categoryData.metaDescription.replace('#LOCATION#', cityTitle || '')
     : t('MAIN_PAGE_DESCRIPTION')
+
   return (
     <HeaderFooterWrapper>
       <MetaTags title={title} description={description} />
@@ -39,6 +40,7 @@ const CategoriesLayout: FC = observer(() => {
         <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
             <CategoryHeader />
+
             <FilterForm />
             <div className='drop-shadow-card'>
               <ScrollableCardGroup

@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
+import {toJS} from 'mobx'
 import {useCategoriesStore} from '../providers/RootStoreProvider'
 import LinkWrapper from './Buttons/LinkWrapper'
 

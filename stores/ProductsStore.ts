@@ -130,7 +130,7 @@ export class ProductsStore implements IProductsStore {
   }
 
   setFilter = (data: Partial<Filter>): Partial<Filter> => {
-    this.filter = {...this.filter, ...data}
+    this.filter = {...this.filter, ...data, priceMax: data.priceMax}
     return this.filter
   }
 

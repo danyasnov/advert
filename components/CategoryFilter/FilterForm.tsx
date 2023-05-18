@@ -1,21 +1,12 @@
-import {FC, useEffect, useMemo, useRef, useState} from 'react'
-import {Field, Form, FormikHelpers, useFormik, FormikProvider} from 'formik'
+import React, {FC, useEffect, useMemo, useRef, useState} from 'react'
+import {Form, FormikHelpers, useFormik, FormikProvider} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {CloseSquare, Filter} from 'react-iconly'
-import {toJS} from 'mobx'
-import {
-  FormikChips,
-  FormikFilterChips,
-  FormikFilterFields,
-  FormikRange,
-  FormikSelect,
-} from '../FormikComponents'
+import {useWindowSize} from 'react-use'
 import FormikAutoSave from '../FormikAutoSave'
-import Select, {SelectItem} from '../Selects/Select'
-import SelectWrapper from '../SelectWrapper'
+import {SelectItem} from '../Selects/Select'
 import {
   useCategoriesStore,
   useProductsStore,
@@ -28,13 +19,12 @@ import {
   shallowUpdateQuery,
   getMappedFieldsByKey,
 } from '../../helpers'
-import {clearUrlFromQuery} from '../../utils'
-import SortSelect from '../SortSelect'
-import {FilterStyles} from '../Selects/styles'
-import Button from '../Buttons/Button'
 import {defaultFilter} from '../../stores/ProductsStore'
+import GeneralFilterForm from './GeneralFilterForm'
+import TransportFilterForm from './TransportFilterForm'
+import {clearUrlFromQuery} from '../../utils'
 
-interface Values {
+export interface Values {
   condition: SelectItem
   priceRange: string[]
   withPhoto: boolean
@@ -48,7 +38,22 @@ const isFilterChanged = (filter) => {
     defaultFilter,
   )
 }
+const findRootCategory = (items, id) => {
+  if (!items) {
+    return
+  }
 
+  for (const item of items) {
+    if (item.id === id) {
+      return item
+    }
+
+    const child = findRootCategory(item.items, id)
+    if (child) {
+      return item
+    }
+  }
+}
 const FilterForm: FC = observer(() => {
   const {t} = useTranslation()
   const router = useRouter()
@@ -60,10 +65,12 @@ const FilterForm: FC = observer(() => {
     applyFilter,
     filter,
   } = useProductsStore()
+  const {width} = useWindowSize()
   const [showFilters, setShowFilters] = useState(false)
   const [showReset, setShowReset] = useState(false)
   const prevCategoryQueryRef = useRef('')
-  const {categoryDataFieldsById, categories} = useCategoriesStore()
+  const {categoryDataFieldsById, categories, categoryData} =
+    useCategoriesStore()
   const currentCategory = findCategoryByQuery(
     router.query.categories,
     categories,
@@ -92,7 +99,6 @@ const FilterForm: FC = observer(() => {
   }, [filter])
 
   const getInitialValues = (reset?: boolean): Values => {
-    // #todo it was hotfix, needs to be refactored
     const onlyDiscounted = reset
       ? false
       : router.query.onlyDiscounted === 'true'
@@ -143,13 +149,13 @@ const FilterForm: FC = observer(() => {
     findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
     []
 
-  const options = currentCategoriesOptions.map((i) => ({
+  const categoriesOptions = currentCategoriesOptions.map((i) => ({
     value: i.id,
     label: i.name,
     slug: i.slug,
   }))
-  const currentOption =
-    options.find((o) => o.value === currentCategory.id) ?? null
+  const currentCategoryOption =
+    categoriesOptions.find((o) => o.value === currentCategory.id) ?? null
   const formik = useFormik({
     validateOnChange: false,
     enableReinitialize: true,
@@ -239,9 +245,23 @@ const FilterForm: FC = observer(() => {
     },
   })
   const {resetForm} = formik
-  const mobileStyles = {
-    singleValue: 'text-body-12',
-    valueContainer: 'py-[10px] h-10',
+  const isTransport = categoryData.id === 23
+  const onReset = () => {
+    resetForm({values: getInitialValues(true)})
+    shallowUpdateQuery()
+    resetFilter()
+    fetchProducts({query: router.query}).then(() => applyFilter())
+  }
+
+  const onChangeCategory = (opt: SelectItem & {slug: string}) => {
+    if (opt?.value) setFilter({categoryId: opt.value as number})
+    if (currentCategory.items.length) {
+      router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
+    } else {
+      const pathArray = clearUrlFromQuery(router.asPath).split('/')
+      pathArray[pathArray.length - 1] = opt.slug
+      router.push(pathArray.join('/'))
+    }
   }
   useEffect(() => {
     if (prevCategoryQueryRef.current) {
@@ -255,104 +275,34 @@ const FilterForm: FC = observer(() => {
   return (
     <FormikProvider value={formik}>
       <Form className='w-full'>
-        <div className='mb-4 flex space-x-6'>
-          {!isEmpty(aggregatedFields) && (
-            <Button
-              onClick={() => {
-                setShowFilters(!showFilters)
-              }}
-              className='text-primary-500 space-x-2'>
-              <Filter size={16} filled />
-              <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-medium'>
-                {t(showFilters ? 'CLOSE_FILTERS' : 'SHOW_ALL_FILTERS')}
-              </span>
-            </Button>
-          )}
-          {showReset && (
-            <Button
-              onClick={() => {
-                resetForm({values: getInitialValues(true)})
-                shallowUpdateQuery()
-                resetFilter()
-                fetchProducts({query: router.query}).then(() => applyFilter())
-              }}
-              className='text-primary-500 space-x-2'>
-              <CloseSquare size={16} filled />
-              <span className='text-body-12 text-greyscale-900 hover:text-primary-500 font-medium'>
-                {t('RESET_FILTER')}
-              </span>
-            </Button>
-          )}
-        </div>
-        <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
-          <SelectWrapper
-            styles={FilterStyles}
-            id='SUBCATEGORY'
-            filterStyle
-            placeholder={t('SUBCATEGORY')}
-            value={currentOption}
-            options={options}
-            onChange={(opt: SelectItem & {slug: string}) => {
-              if (opt?.value) setFilter({categoryId: opt.value as number})
-              if (currentCategory.items.length) {
-                router.push(`${clearUrlFromQuery(router.asPath)}/${opt.slug}`)
-              } else {
-                const pathArray = clearUrlFromQuery(router.asPath).split('/')
-                pathArray[pathArray.length - 1] = opt.slug
-                router.push(pathArray.join('/'))
-              }
-            }}
-            classNameOpt={mobileStyles}
+        {isTransport && width <= 768 ? (
+          <TransportFilterForm
+            categoriesOptions={categoriesOptions}
+            conditionOptions={conditionOptions}
+            currentCategoryOption={currentCategoryOption}
+            currentCategory={currentCategory}
+            setShowFilters={setShowFilters}
+            showFilters={showFilters}
+            getInitialValues={getInitialValues}
+            showReset={showReset}
+            onChangeCategory={onChangeCategory}
+            onReset={onReset}
           />
+        ) : (
+          <GeneralFilterForm
+            categoriesOptions={categoriesOptions}
+            conditionOptions={conditionOptions}
+            currentCategoryOption={currentCategoryOption}
+            currentCategory={currentCategory}
+            setShowFilters={setShowFilters}
+            showFilters={showFilters}
+            getInitialValues={getInitialValues}
+            showReset={showReset}
+            onChangeCategory={onChangeCategory}
+            onReset={onReset}
+          />
+        )}
 
-          <SortSelect id='mobile-sort' />
-
-          {currentCategory?.extras?.allowUsed && (
-            <Field
-              name='condition'
-              placeholder={t('PROD_CONDITION')}
-              options={conditionOptions}
-              component={FormikSelect}
-              filterStyle
-              isFilterable={false}
-            />
-          )}
-          <Field
-            name='priceRange'
-            component={FormikRange}
-            placeholder={t('PRICE')}
-            validate={(value) => {
-              const [priceMin, priceMax] = value
-              let error
-              if (priceMin && priceMax) {
-                const parsedMin = parseFloat(priceMin)
-                const parsedMax = parseFloat(priceMax)
-                if (parsedMin > parsedMax) {
-                  error = 'priceMin should be lesser than priceMax'
-                }
-              }
-              return error
-            }}
-          />
-          {!isEmpty(aggregatedFields) && showFilters && (
-            <FormikFilterFields fieldsArray={aggregatedFields} />
-          )}
-        </div>
-        <div className='flex flex-wrap mb-10 z-[1] relative'>
-          <Field
-            name='withPhoto'
-            component={FormikChips}
-            label={t('WITH_PHOTO')}
-          />
-          <Field
-            name='onlyDiscounted'
-            component={FormikChips}
-            label={t('ONLY_WITH_DISCOUNT')}
-          />
-          {!isEmpty(aggregatedFields) && showFilters && (
-            <FormikFilterChips fieldsArray={aggregatedFields} />
-          )}
-        </div>
         <FormikAutoSave />
       </Form>
     </FormikProvider>
