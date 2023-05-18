@@ -25,7 +25,7 @@ const ChangeContactModal: FC<Props> = ({isOpen, onClose, onFinish, type}) => {
       ariaHideApp={false}
       contentLabel={title}
       className='absolute rounded-6 w-11/12 s:w-[460px] bg-white-a inset-x-0  mx-auto top-1/3 s:top-24 flex outline-none drop-shadow-2xl'
-      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-20'>
+      overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen overflow-y-auto z-50'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex justify-between'>
           <span className='text-h-5 text-greyscale-900 font-bold leading-8	'>
