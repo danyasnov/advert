@@ -33,6 +33,7 @@ const Success: FC<PageProps> = observer(({onClose, onFinish, state}) => {
           onClick={() => {
             if (onFinish) {
               onFinish(state.incoming)
+              onClose()
             } else {
               onClose()
               reload()

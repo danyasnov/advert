@@ -24,7 +24,10 @@ import {ArrowLeft} from 'react-iconly'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import AdvertDescription from './AdvertDescription'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {
+  useGeneralStore,
+  useModalsStore,
+} from '../../providers/RootStoreProvider'
 import AdvertPhotos from './AdvertMedia/AdvertPhotos'
 import AdvertVideos from './AdvertMedia/AdvertVideos'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -57,7 +60,6 @@ import {
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
-import ChangeContactModal from '../Auth/ChangeContact/ChangeContactModal'
 import {handleMetrics, trackSingle} from '../../helpers'
 import SecondaryButton from '../Buttons/SecondaryButton'
 
@@ -65,11 +67,10 @@ const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
   const {push, query} = useRouter()
   const hash = first(query.hash)
-
+  const {setModal} = useModalsStore()
   const {width} = useWindowSize()
 
   const {languagesByIsoCode, user, setUser} = useGeneralStore()
-  const [showAddNumber, setShowAddNumber] = useState(false)
   const phoneNumber = user?.settings.personal.phoneNum
 
   const {t} = useTranslation()
@@ -244,7 +245,20 @@ const FormPage: FC = observer(() => {
       <>
         <Button
           onClick={() => {
-            setShowAddNumber(true)
+            setModal('CHANGE_CONTACT', {
+              type: 'phone',
+              onFinish: (phoneNum) => {
+                const change = {
+                  settings: {
+                    personal: {
+                      phoneNum,
+                    },
+                  },
+                }
+
+                setUser(merge(user, change))
+              },
+            })
           }}
           disabled={!!phoneNumber}
           className={`w-full text-body-16 px-4 py-2.5 border bg-nc-back rounded-lg h-10  ${
@@ -965,23 +979,6 @@ const FormPage: FC = observer(() => {
             {query.action === 'create' && (
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
-            <ChangeContactModal
-              type='phone'
-              onFinish={(phoneNum) => {
-                setShowAddNumber(false)
-                const change = {
-                  settings: {
-                    personal: {
-                      phoneNum,
-                    },
-                  },
-                }
-
-                setUser(merge(user, change))
-              }}
-              isOpen={showAddNumber}
-              onClose={() => setShowAddNumber(false)}
-            />
           </Form>
         </div>
       </FormikProvider>

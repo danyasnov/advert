@@ -83,6 +83,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch, onClose}) => {
             <Field
               name='country'
               disableTrack
+              isFilterable
               component={FormikSelect}
               options={countriesOptions}
             />
