@@ -26,7 +26,7 @@ const VideoModal: FC<Props> = ({src, isOpen, onClose}) => {
         className='absolute top-14 s:top-5 right-5 cursor-pointer z-10'>
         <IcClear className='fill-current text-greyscale-400 h-5 w-5 s:h-8 s:w-8' />
       </Button>
-      <div className='flex flex-col w-full flex-1 overflow-hidden bg-white s:rounded-3xl'>
+      <div className='flex flex-col w-full flex-1 overflow-hidden bg-black s:bg-white s:rounded-3xl'>
         <div className='overflow-hidden h-full s:h-auto relative s:mx-16'>
           <div className='flex h-full s:h-[364px] m:h-[504px] l:h-[746px]'>
             <video
@@ -37,7 +37,7 @@ const VideoModal: FC<Props> = ({src, isOpen, onClose}) => {
               muted
               autoPlay
               controlsList='nodownload noremoteplayback noplaybackrate'
-              className='min-w-full h-full px-16 '
+              className='min-w-full h-full s:px-16'
             />
           </div>
         </div>
