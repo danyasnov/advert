@@ -393,7 +393,7 @@ const FormPage: FC = observer(() => {
   )
 
   const conditionComponent = (
-    <div className={`w-full s:w-1/2 ${hasArrayType ? 'l:w-72' : 'l:w-5/12'}`}>
+    <div className='w-full s:w-1/2 l:w-72'>
       <Field
         component={FormikSelect}
         name='condition'
