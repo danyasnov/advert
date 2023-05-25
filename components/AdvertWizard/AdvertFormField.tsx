@@ -31,7 +31,7 @@ const AdvertFormField: FC<Props> = ({
     <div
       data-test-id={id}
       className={`flex w-full ${
-        orientation === 'vertical' ? 'flex-col' : 'flex-row'
+        orientation === 'vertical' ? 'flex-col' : 'flex-row items-center'
       }  ${className || ''}`}>
       <div
         className={`flex flex-col ${
