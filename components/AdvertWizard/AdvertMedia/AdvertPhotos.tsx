@@ -1,6 +1,7 @@
 import {FC, useCallback, useEffect, useState} from 'react'
 import {FieldProps} from 'formik'
 import move from 'lodash-move'
+import {useWindowSize} from 'react-use'
 import AdvertPhotosContainer from './AdvertPhotosContainer'
 import {PhotoFile} from '../../../types'
 
@@ -9,6 +10,7 @@ const AdvertPhotos: FC<
     maxPhotos: number
   } & FieldProps
 > = ({maxPhotos, field, form}) => {
+  const {width} = useWindowSize()
   const {name, value} = field
   const {setFieldValue, errors, setFieldError} = form
   const [photos, setPhotos] = useState<PhotoFile[]>(value || [])
@@ -29,15 +31,30 @@ const AdvertPhotos: FC<
   }, [value])
 
   return (
-    <AdvertPhotosContainer
-      distance={1}
-      onSortEnd={onSortEnd}
-      axis='xy'
-      maxPhotos={maxPhotos}
-      photos={photos}
-      setPhotos={setPhotos}
-      error={!!errors[name]}
-    />
+    <>
+      {width >= 768 && (
+        <AdvertPhotosContainer
+          distance={1}
+          onSortEnd={onSortEnd}
+          axis='xy'
+          maxPhotos={maxPhotos}
+          photos={photos}
+          setPhotos={setPhotos}
+          error={!!errors[name]}
+        />
+      )}
+      {width < 768 && (
+        <AdvertPhotosContainer
+          distance={1}
+          onSortEnd={onSortEnd}
+          axis='y'
+          maxPhotos={maxPhotos}
+          photos={photos}
+          setPhotos={setPhotos}
+          error={!!errors[name]}
+        />
+      )}
+    </>
   )
 }
 
