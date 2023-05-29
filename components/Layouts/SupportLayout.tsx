@@ -44,12 +44,6 @@ const SupportLayout: FC = observer(() => {
     },
     validateOnBlur: false,
     validateOnChange: false,
-    /* validate: (values) => {
-      if (!values.token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) {
-        return {token: t('EMPTY_FIELD')}
-      }
-      return {}
-    }, */
     onSubmit: (values) => {
       makeRequest({
         method: 'post',
