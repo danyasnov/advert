@@ -5,6 +5,7 @@ import {useRouter} from 'next/router'
 import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {useWindowSize} from 'react-use'
+import {toJS} from 'mobx'
 import FormikAutoSave from '../FormikAutoSave'
 import {SelectItem} from '../Selects/Select'
 import {
@@ -245,7 +246,7 @@ const FilterForm: FC = observer(() => {
     },
   })
   const {resetForm} = formik
-  const isTransport = categoryData.id === 23
+  const isTransport = findRootCategory(categories, categoryData.id)?.id === 1
   const onReset = () => {
     resetForm({values: getInitialValues(true)})
     shallowUpdateQuery()
