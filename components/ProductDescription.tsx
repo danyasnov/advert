@@ -11,6 +11,7 @@ import {
   Edit,
   Heart,
   Setting,
+  TickSquare,
 } from 'react-iconly'
 import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {unixToDateTime} from '../utils'
@@ -29,6 +30,7 @@ import ProductMenu from './ProductMenu'
 const ProductDescription: FC<{getOptions: TGetOptions}> = observer(
   ({getOptions}) => {
     const {product} = useProductsStore()
+    const isTransport = product.advert.categoryId === 23
     const {userHash} = useGeneralStore()
     const {t} = useTranslation()
     if (!product) return null
@@ -114,14 +116,30 @@ const ProductDescription: FC<{getOptions: TGetOptions}> = observer(
           <ProductCommunication />
         </div>
 
-        <DescriptionTab />
+        {isTransport ? (
+          <>
+            <div>
+              <CharacteristicsTab />
+            </div>
+            <div>
+              <DescriptionTab />
+            </div>
+            <div className='mb-10 s:mb-25'>
+              <ProductMap />
+            </div>
+          </>
+        ) : (
+          <>
+            <DescriptionTab />
+            <div className='mb-10'>
+              <ProductMap />
+            </div>
+            <div className='mb-10 s:mb-25'>
+              <CharacteristicsTab />
+            </div>
+          </>
+        )}
 
-        <div className='mb-10'>
-          <ProductMap />
-        </div>
-        <div className='mb-10 s:mb-25'>
-          <CharacteristicsTab />
-        </div>
         <div className='s:hidden'>
           <UserCard />
           <div className='flex flex-col items-center space-y-5 mt-6 '>
@@ -152,6 +170,11 @@ const DescriptionTab: FC = observer(() => {
   if (!product.advert.description) return null
   return (
     <>
+      {product.advert.categoryId === 23 && (
+        <span className='text-h-5 font-bold text-greyscale-900 block my-4 mb-6'>
+          {t('DESCRIPTION_AD')}
+        </span>
+      )}
       <div className='text-greyscale-900 text-body-14 font-normal break-words whitespace-pre-wrap mb-3'>
         {translate
           ? product.advert.description
@@ -191,14 +214,23 @@ const CharacteristicsTab: FC = observer(() => {
                 field.fieldType === 'title' ? `w-full` : 's:w-[364px]'
               }`}
               key={field.fieldNameText}>
-              <span
-                className={`${
-                  field.fieldType === 'title'
-                    ? `text-h-5 font-bold text-greyscale-900 block my-4 `
-                    : 'text-greyscale-600'
-                }`}>
-                {field.fieldNameText}
-              </span>
+              <div className='flex'>
+                {field.fieldType !== 'title' &&
+                  product.advert.categoryId === 23 && (
+                    <div className='text-green mr-2.5'>
+                      <TickSquare set='bold' />
+                    </div>
+                  )}
+                <span
+                  className={`${
+                    field.fieldType === 'title'
+                      ? `text-h-5 font-bold text-greyscale-900 block my-4 `
+                      : 'text-greyscale-600'
+                  }`}>
+                  {field.fieldNameText}
+                </span>
+              </div>
+
               <div className='text-right'>
                 {field.fieldValueText.map((fieldValue, index, array) => (
                   <span key={fieldValue} className='text-greyscale-900 '>
