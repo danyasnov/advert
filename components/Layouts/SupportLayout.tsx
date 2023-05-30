@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {useFormik, FormikProvider, Field} from 'formik'
+import {string, object} from 'yup'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -22,6 +23,17 @@ const SupportLayout: FC = observer(() => {
   const [showSuccess, setShowSuccess] = useState(false)
 
   const formik = useFormik({
+    validationSchema: object().shape({
+      name: string().required(t('EMPTY_FIELD')),
+      phone: string().required(t('EMPTY_FIELD')),
+      email: string()
+        .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
+        .required(t('EMAIL_REQUIRED_FIELD')),
+      message: string().required(t('EMPTY_FIELD')),
+      token: process.env.NEXT_PUBLIC_RECAPTCHA_KEY
+        ? string().required(t('EMPTY_FIELD'))
+        : string(),
+    }),
     initialValues: {
       name: '',
       phone: '',
@@ -32,12 +44,6 @@ const SupportLayout: FC = observer(() => {
     },
     validateOnBlur: false,
     validateOnChange: false,
-    validate: (values) => {
-      if (!values.token && process.env.NEXT_PUBLIC_RECAPTCHA_KEY) {
-        return {token: t('EMPTY_FIELD')}
-      }
-      return {}
-    },
     onSubmit: (values) => {
       makeRequest({
         method: 'post',
