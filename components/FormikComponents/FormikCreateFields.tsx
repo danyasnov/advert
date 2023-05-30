@@ -52,10 +52,7 @@ const FormikCreateFields: FC<
           key={f.id}
           id={`form-field-${f.fieldType}-${f.slug}`}
           body={
-            <div
-              className={`w-full s:w-1/2 ${
-                hasArrayType ? 'l:w-72' : 'l:w-5/12'
-              }`}>
+            <div className='w-full s:w-1/2 l:w-72'>
               <FormikCreateField field={f} />
             </div>
           }
