@@ -5,6 +5,7 @@ import {Field, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import ReactModal from 'react-modal'
+import {CACategoryModel} from 'front-api'
 import {SelectItem} from '../Selects/Select'
 import {
   FormikChips,
@@ -14,7 +15,6 @@ import {
   getSelectOptions,
 } from '../FormikComponents'
 import {useProductsStore} from '../../providers/RootStoreProvider'
-import {CACategoryModel} from '../../../front-api'
 import {Values} from './FilterForm'
 import ListWithFilter from '../Selects/ListWithFilter'
 import ChipButton from '../Buttons/ChipButton'

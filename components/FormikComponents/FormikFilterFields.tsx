@@ -1,7 +1,7 @@
 import React, {FC} from 'react'
 import {isEmpty} from 'lodash'
+import {CACategoryDataFieldModel} from 'front-api'
 import {getSelectOptions} from './utils'
-import {CACategoryDataFieldModel} from '../../../front-api'
 import FormikFilterField from './FormikFilterField'
 
 const FormikFilterFields: FC<{

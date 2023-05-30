@@ -2,8 +2,8 @@ import React, {FC} from 'react'
 import {useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {get} from 'lodash'
+import {CACategoryDataFieldModel} from 'front-api'
 import Button from '../Buttons/Button'
-import {CACategoryDataFieldModel} from '../../../front-api'
 
 const FormikCheckboxesGroup: FC<{
   fields: CACategoryDataFieldModel[]

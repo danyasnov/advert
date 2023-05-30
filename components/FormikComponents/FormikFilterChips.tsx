@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
+import {CACategoryDataFieldModel} from 'front-api'
 import {FormikFilterField} from './index'
-import {CACategoryDataFieldModel} from '../../../front-api'
 
 const FormikFilterChips: FC<{
   fieldsArray: CACategoryDataFieldModel[]

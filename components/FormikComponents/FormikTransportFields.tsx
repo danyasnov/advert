@@ -1,7 +1,7 @@
 import React, {FC} from 'react'
 import {isEmpty} from 'lodash'
+import {CACategoryDataFieldModel} from 'front-api'
 import {getSelectOptions} from './utils'
-import {CACategoryDataFieldModel} from '../../../front-api'
 import FormikTransportField from './FormikTransportField'
 
 const FormikTransportFields: FC<{

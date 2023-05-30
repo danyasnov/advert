@@ -5,6 +5,7 @@ import {Field, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
+import {CACategoryModel} from 'front-api'
 import Button from '../Buttons/Button'
 import {shallowUpdateQuery} from '../../helpers'
 import SelectWrapper from '../SelectWrapper'
@@ -19,7 +20,6 @@ import {
   FormikSelect,
 } from '../FormikComponents'
 import {useProductsStore} from '../../providers/RootStoreProvider'
-import {CACategoryModel} from '../../../front-api'
 import {Values} from './FilterForm'
 
 interface Props {
