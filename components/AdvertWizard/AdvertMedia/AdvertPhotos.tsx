@@ -31,30 +31,15 @@ const AdvertPhotos: FC<
   }, [value])
 
   return (
-    <>
-      {width >= 768 && (
-        <AdvertPhotosContainer
-          distance={1}
-          onSortEnd={onSortEnd}
-          axis='xy'
-          maxPhotos={maxPhotos}
-          photos={photos}
-          setPhotos={setPhotos}
-          error={!!errors[name]}
-        />
-      )}
-      {width < 768 && (
-        <AdvertPhotosContainer
-          distance={1}
-          onSortEnd={onSortEnd}
-          axis='y'
-          maxPhotos={maxPhotos}
-          photos={photos}
-          setPhotos={setPhotos}
-          error={!!errors[name]}
-        />
-      )}
-    </>
+    <AdvertPhotosContainer
+      distance={1}
+      onSortEnd={onSortEnd}
+      axis={`${width >= 768 ? 'xy' : 'y'}`}
+      maxPhotos={maxPhotos}
+      photos={photos}
+      setPhotos={setPhotos}
+      error={!!errors[name]}
+    />
   )
 }
 
