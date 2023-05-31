@@ -1,15 +1,21 @@
 import React, {Dispatch, FC, SetStateAction} from 'react'
 import {isEmpty} from 'lodash'
 import {ArrowLeft, Filter} from 'react-iconly'
+import IcCaretDown from 'icons/material/CarretDown.svg'
 import {Field, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import ReactModal from 'react-modal'
 import {CACategoryModel} from 'front-api'
+import {useWindowSize} from 'react-use'
+import IcClose from 'icons/material/Close.svg'
 import {SelectItem} from '../Selects/Select'
+
 import {
-  FormikChips,
+  FormikFilterChips,
   FormikFilterFields,
+  FormikRange,
+  FormikSegmented,
   FormikSelect,
   FormikSwitch,
   getSelectOptions,
@@ -20,15 +26,16 @@ import ListWithFilter from '../Selects/ListWithFilter'
 import ChipButton from '../Buttons/ChipButton'
 import {getChipTitle, getPriceChipTitle} from './utils'
 import Chip from './Chip'
-import Range from './Range'
+import Range from '../Range'
 import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import Button from '../Buttons/Button'
 import FormikTransportFields from '../FormikComponents/FormikTransportFields'
 import SelectWrapper from '../SelectWrapper'
-import {FilterStyles} from '../Selects/styles'
 import SortSelect from '../SortSelect'
 import FormikRangeInline from '../FormikComponents/FormikRangeInline'
 import PrimaryButton from '../Buttons/PrimaryButton'
+import HeaderButtonColumn from './HeaderButtonColumn'
+import LinkButton from '../Buttons/LinkButton'
 
 interface Props {
   setShowFilters: Dispatch<SetStateAction<boolean>>
@@ -42,7 +49,15 @@ interface Props {
   onChangeCategory: (opt: SelectItem & {slug: string}) => void
   onReset: () => void
 }
-const TransportFilterForm: FC<Props> = observer(
+const TransportFilterForm: FC<Props> = (props) => {
+  const {width} = useWindowSize()
+  if (width < 768) {
+    return <MobileForm {...props} />
+  }
+  return <DesktopForm {...props} />
+}
+
+const MobileForm: FC<Props> = observer(
   ({
     setShowFilters,
     showFilters,
@@ -59,9 +74,8 @@ const TransportFilterForm: FC<Props> = observer(
     const hasPrice = !!(values.priceRange[0] || values.priceRange[1])
     const {t} = useTranslation()
     useDisableBodyScroll(showFilters)
-    const mobileStyles = {}
     return (
-      <>
+      <div className='flex'>
         <div className='mb-4'>
           <div className='flex overflow-y-scroll -mx-4'>
             <div className='mr-2 ml-4'>
@@ -244,7 +258,105 @@ const TransportFilterForm: FC<Props> = observer(
             </PrimaryButton>
           </div>
         </ReactModal>
-      </>
+      </div>
+    )
+  },
+)
+
+const DesktopForm: FC<Props> = observer(
+  ({
+    setShowFilters,
+    showFilters,
+    showReset,
+    onReset,
+    currentCategoryOption,
+    categoriesOptions,
+    currentCategory,
+    conditionOptions,
+    onChangeCategory,
+  }) => {
+    const {aggregatedFields, count} = useProductsStore()
+    const {t} = useTranslation()
+
+    const mainFields = aggregatedFields.filter((f) =>
+      [1991, 17, 1992].includes(f.id),
+    )
+    const restFields = aggregatedFields.filter(
+      (f) => ![1991, 17, 1992].includes(f.id),
+    )
+    return (
+      <div className='hidden s:flex flex-col mb-4'>
+        {/* {brands && ( */}
+        {/*  <HeaderButtonColumn */}
+        {/*    title={brands.name} */}
+        {/*    items={brands.multiselects.top} */}
+        {/*    onClick={} */}
+        {/*  /> */}
+        {/* )} */}
+        <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'>
+          <Field
+            component={FormikSegmented}
+            name='condition'
+            options={conditionOptions}
+          />
+          <SortSelect id='mobile-sort' filterStyle />
+        </div>
+
+        <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4'>
+          {!isEmpty(mainFields) && (
+            <FormikFilterFields fieldsArray={mainFields} />
+          )}
+          <Field
+            name='priceRange'
+            component={FormikRange}
+            placeholder={t('PRICE')}
+            validate={(value) => {
+              const [priceMin, priceMax] = value
+              let error
+              if (priceMin && priceMax) {
+                const parsedMin = parseFloat(priceMin)
+                const parsedMax = parseFloat(priceMax)
+                if (parsedMin > parsedMax) {
+                  error = 'priceMin should be lesser than priceMax'
+                }
+              }
+              return error
+            }}
+          />
+          {!isEmpty(restFields) && showFilters && (
+            <>
+              <FormikFilterFields fieldsArray={restFields} />
+              <div className='flex col-span-3 m:col-span-4'>
+                <FormikFilterChips fieldsArray={aggregatedFields} />
+              </div>
+            </>
+          )}
+        </div>
+        <div className='flex space-x-5'>
+          <LinkButton
+            className='self-start font-normal whitespace-nowrap'
+            onClick={() => {
+              setShowFilters(!showFilters)
+            }}>
+            <div className='flex items-center space-x-2'>
+              <span>
+                {t(showFilters ? 'CLOSE_ALL_PARAMETERS' : 'ALL_PARAMETERS')}
+              </span>
+              <div className={`w-4 h-4 ${showFilters ? 'rotate-180' : ''}`}>
+                <IcCaretDown />
+              </div>
+            </div>
+          </LinkButton>
+          {showReset && (
+            <Button
+              onClick={onReset}
+              className='text-greyscale-500 space-x-2 flex items-center'>
+              <span className='text-body-14'>{t('RESET')}</span>
+              <IcClose className='w-2.5 h-2.5 fill-current' />
+            </Button>
+          )}
+        </div>
+      </div>
     )
   },
 )

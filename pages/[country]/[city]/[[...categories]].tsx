@@ -181,7 +181,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       filter,
       sortBy,
     }
-    // debugger
     if (isEmpty(products)) {
       res.statusCode = 404
     }

@@ -3,7 +3,7 @@ import {FieldProps} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {get} from 'lodash'
 import {IFormikRange} from '../../types'
-import Range from '../CategoryFilter/Range'
+import Range from '../Range'
 
 const FormikRangeInline: FC<FieldProps & IFormikRange> = ({
   field,
