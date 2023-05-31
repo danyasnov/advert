@@ -246,7 +246,7 @@ const FilterForm: FC = observer(() => {
     },
   })
   const {resetForm} = formik
-  const isTransport = findRootCategory(categories, categoryData.id)?.id === 1
+  const isTransport = findRootCategory(categories, categoryData?.id)?.id === 1
   const onReset = () => {
     resetForm({values: getInitialValues(true)})
     shallowUpdateQuery()
@@ -276,7 +276,7 @@ const FilterForm: FC = observer(() => {
   return (
     <FormikProvider value={formik}>
       <Form className='w-full'>
-        {isTransport && width <= 768 ? (
+        {isTransport ? (
           <TransportFilterForm
             categoriesOptions={categoriesOptions}
             conditionOptions={conditionOptions}
