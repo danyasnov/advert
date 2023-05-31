@@ -78,6 +78,7 @@ const GeneralFilterForm: FC<Props> = observer(
         </div>
         <div className='grid grid-cols-2 s:grid-cols-4 m:grid-cols-6 gap-x-2 s:gap-x-4 gap-y-4 s:gap-y-3 mb-6'>
           <SelectWrapper
+            key={currentCategory.id}
             styles={FilterStyles}
             id='SUBCATEGORY'
             filterStyle
