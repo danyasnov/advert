@@ -151,7 +151,7 @@ const AdvertPhotosContainer: ComponentClass<
         />
       </div>
       <div
-        className={`flex flex-wrap gap-2 ${
+        className={`flex flex-wrap gap-2 touch-none s:touch-auto ${
           isDragging && canAddMore ? 'invisible' : ''
         }`}>
         {photos.map((p, index) => (
