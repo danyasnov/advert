@@ -61,7 +61,7 @@ const List: FC<IList> = ({items, isMulti, onChange, value, onClose}) => {
                   {!!f.icon && (
                     <img src={f.icon} alt={f.label} width={20} height={20} />
                   )}
-                  <span className='text-body-16 text-nc-text-primary text-left'>
+                  <span className='text-body-16 text-nc-text-primary text-left line-clamp-1'>
                     {f.label}
                   </span>
                 </div>
