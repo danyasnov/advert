@@ -74,6 +74,19 @@ const MobileForm: FC<Props> = observer(
     const hasPrice = !!(values.priceRange[0] || values.priceRange[1])
     const {t} = useTranslation()
     useDisableBodyScroll(showFilters)
+    const showCategoriesSlider = !isEmpty(currentCategory.items)
+
+    if (showCategoriesSlider) {
+      return (
+        <div className='flex overflow-y-scroll -mx-4 mb-4'>
+          <CategoriesSlider
+            aroundMargin
+            categoriesOptions={categoriesOptions}
+            onChangeCategory={onChangeCategory}
+          />
+        </div>
+      )
+    }
     return (
       <div className='flex'>
         <div className='mb-4'>
@@ -284,6 +297,18 @@ const DesktopForm: FC<Props> = observer(
     const restFields = aggregatedFields.filter(
       (f) => ![1991, 17, 1992].includes(f.id),
     )
+    const showCategoriesSlider = !isEmpty(currentCategory.items)
+
+    if (showCategoriesSlider) {
+      return (
+        <div className='flex overflow-y-scroll mb-4'>
+          <CategoriesSlider
+            categoriesOptions={categoriesOptions}
+            onChangeCategory={onChangeCategory}
+          />
+        </div>
+      )
+    }
     return (
       <div className='hidden s:flex flex-col mb-4'>
         {/* {brands && ( */}
@@ -360,5 +385,21 @@ const DesktopForm: FC<Props> = observer(
     )
   },
 )
+
+const CategoriesSlider: FC<{
+  categoriesOptions: {value: number; label: string; slug: string}[]
+  onChangeCategory: (opt: SelectItem & {slug: string}) => void
+  aroundMargin?: boolean
+}> = ({categoriesOptions, onChangeCategory, aroundMargin}) => {
+  return (
+    <>
+      {categoriesOptions.map((c) => (
+        <div className={`mr-2 ${aroundMargin ? 'first:ml-4 last:mr-4' : ''}`}>
+          <ChipButton onClick={() => onChangeCategory(c)}>{c.label}</ChipButton>
+        </div>
+      ))}
+    </>
+  )
+}
 
 export default TransportFilterForm
