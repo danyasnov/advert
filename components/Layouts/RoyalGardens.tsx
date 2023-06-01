@@ -494,7 +494,7 @@ const RoyalGardens: FC = observer(() => {
                 {t('LANDING_REAL_ESTATE_SALES_AGREEMENT')}
               </span>
             </div>
-            <div className='s:hidden mb-6 grid grid-cols-2 grid-rows-2 gap-x-12 gap-y-1 items-end place-items-center'>
+            <div className='s:hidden mx-auto mb-6 grid grid-cols-2 grid-rows-2 gap-x-12 gap-y-1  items-end place-items-center'>
               {property.map((feature, index) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <div key={index} className='flex flex-col max-w-[104px]'>
@@ -509,7 +509,7 @@ const RoyalGardens: FC = observer(() => {
               ))}
             </div>
 
-            <div>
+            <div className='mx-auto'>
               <Button
                 className='flex self-start relative w-[328px] h-[457px] s:w-[344px] s:h-[468px] m:w-[400px] m:h-[508px] l:w-[510px] l:h-[644px]'
                 onClick={() => {
@@ -842,7 +842,7 @@ const RoyalGardens: FC = observer(() => {
                 <span className='text-body-16 text-greyscale-900  mb-4 m:mb-6'>
                   {t('LANDING_REAL_ESTATE_RIGHT_LOCATION_AREA')}
                 </span>
-                <ul className='list-disc font-light l:font-normal mx-4 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+                <ul className='list-disc font-normal mx-4 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
                   {areas.map((area, index) => (
                     <li
                       // eslint-disable-next-line react/no-array-index-key
