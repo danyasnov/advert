@@ -428,7 +428,7 @@ const UserLayout: FC = observer(() => {
                       tab={isCurrentUser ? 'sale' : 'other-sale'}
                       renderFooter={(product) => {
                         if (
-                          product.showCallButton &&
+                          product.showRefreshButton &&
                           product.daysBeforeArchive
                         ) {
                           return (
