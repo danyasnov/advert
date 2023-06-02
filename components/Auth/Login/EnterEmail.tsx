@@ -89,7 +89,6 @@ const EnterEmail: FC<PageProps> = observer(
         promo,
       })
       if (state.isNew) {
-        console.log('isNew: ', state.isNew)
         dispatch({type: 'setPage', page: AuthPages.success})
       } else if (onFinish) {
         onFinish()
