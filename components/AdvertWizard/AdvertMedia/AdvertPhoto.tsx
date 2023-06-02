@@ -16,7 +16,9 @@ const AdvertPhoto: ComponentClass<
     isMain: boolean
     loading: boolean
     error: boolean
-    onRotate: (size: {naturalWidth: number; naturalHeight: number}) => void
+    onRotate:
+      | ((size: {naturalWidth: number; naturalHeight: number}) => void)
+      | null
     onRemove: () => void
   } & SortableElementProps
 > = SortableElement(({onRemove, onRotate, url, loading, id, error, isMain}) => {
@@ -55,14 +57,19 @@ const AdvertPhoto: ComponentClass<
       </Button>
       {!loading && !error && (
         <>
-          <Button
-            disabled={loading}
-            className={`${buttonClassname} left-0 ml-2 `}
-            onClick={() => onRotate(id)}>
-            <IcRotate className={iconClassname} />
-          </Button>
+          {onRotate ? (
+            <Button
+              disabled={loading}
+              className={`${buttonClassname} left-0 ml-2 `}
+              onClick={() => onRotate(id)}>
+              <IcRotate className={iconClassname} />
+            </Button>
+          ) : null}
           {isMain && (
-            <span className='bg-greyscale-900/50 px-2 py-1 rounded-2xl text-white absolute left-10 top-2.5 z-10 text-body-10'>
+            <span
+              className={`bg-greyscale-900/50 px-2 py-1 rounded-2xl text-white absolute ${
+                onRotate ? 'left-10' : 'left-2'
+              } top-2.5 z-10 text-body-10`}>
               {t('MAIN_PHOTO')}
             </span>
           )}
