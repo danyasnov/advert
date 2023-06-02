@@ -1,34 +1,67 @@
-import {FC} from 'react'
+import {FC, useMemo} from 'react'
 import {observer} from 'mobx-react-lite'
-import IcFilter from 'icons/material/Filter.svg'
-import IcClear from 'icons/material/Clear.svg'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
+import {get, size} from 'lodash'
+import {toJS} from 'mobx'
 import {
   useCategoriesStore,
-  useGeneralStore,
   useProductsStore,
 } from '../providers/RootStoreProvider'
-import SortSelect from './SortSelect'
 import Breadcrumbs from './Breadcrumbs'
-import Button from './Buttons/Button'
-import {getQueryValue, shallowUpdateQuery} from '../helpers'
+import {getQueryValue} from '../helpers'
+import {getSelectOptions} from './FormikComponents'
 
 const CategoryHeader: FC = observer(() => {
   const {categoryData} = useCategoriesStore()
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
-  let header = ''
-  if (categoryData?.name) {
-    header = categoryData?.name
-  } else if (search) {
-    header = t('SEARCH_RESULTS_BY_QUERY', {query: search})
+  const {filter, aggregatedFields} = useProductsStore()
+  const brand = get(filter, 'fields.1991')
+  const model = get(filter, 'fields.1992')
+  const getFieldValue = (id, filterValue) => {
+    if (!filterValue) return
+    const options = getSelectOptions(
+      aggregatedFields.find((f) => f.id === id)?.multiselects,
+    )
+
+    return options.find((o) => o.value === filterValue)?.label
   }
+  const brandLabel = useMemo(() => {
+    return getFieldValue(1991, brand?.[0])
+  }, [brand])
+  const modelLabel = useMemo(() => {
+    return getFieldValue(1992, model?.[0])
+  }, [model])
+
+  const getHeader = () => {
+    if (size(brand) === 1) {
+      let result = ''
+
+      if (brandLabel) {
+        result = `${t('BUY')} ${brandLabel}`
+        if (size(model) === 1) {
+          if (modelLabel) {
+            return `${result} ${modelLabel}`
+          }
+          return result
+        }
+        return result
+      }
+    } else if (categoryData?.name) {
+      return categoryData?.name
+    } else if (search) {
+      return t('SEARCH_RESULTS_BY_QUERY', {query: search})
+    }
+  }
+
   return (
     <div className='flex flex-col my-8'>
-      <Breadcrumbs />
-      <h1 className='text-h-4 font-bold text-greyscale-900 pt-8'>{header}</h1>
+      <Breadcrumbs brandLabel={brandLabel} modelLabel={modelLabel} />
+      <h1 className='text-h-4 font-bold text-greyscale-900 pt-8'>
+        {getHeader()}
+      </h1>
     </div>
   )
 })

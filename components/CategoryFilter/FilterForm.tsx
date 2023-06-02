@@ -4,8 +4,6 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
-import {useWindowSize} from 'react-use'
-import {toJS} from 'mobx'
 import FormikAutoSave from '../FormikAutoSave'
 import {SelectItem} from '../Selects/Select'
 import {
@@ -66,7 +64,6 @@ const FilterForm: FC = observer(() => {
     applyFilter,
     filter,
   } = useProductsStore()
-  const {width} = useWindowSize()
   const [showFilters, setShowFilters] = useState(false)
   const [showReset, setShowReset] = useState(false)
   const prevCategoryQueryRef = useRef('')

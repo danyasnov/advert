@@ -178,7 +178,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       aggregatedFields: productsResponse?.result?.aggregatedFields ?? null,
       // @ts-ignore
       hideDistanceSort: state.modified || false,
-      filter,
+      // @ts-ignore
+      filter: {...filter, fields: filter.fieldValues},
       sortBy,
     }
     if (isEmpty(products)) {

@@ -428,18 +428,14 @@ export const getFilterFromQuery = (
   if (!isEmpty(fieldsFilter) && category) {
     result.fieldValues = Object.fromEntries(
       Object.entries(fieldsFilter).map(([key, value]) => {
-        // if (key === 'vin-number0') debugger
-        const parsedKey = key
         const fieldsDict = getFieldsDictByParam(
           flatArrayFields(category.fields),
           'slug',
         )
 
-        // const currentField = category.fields.find((f) => f.slug === parsedKey)
         const currentField = fieldsDict[key]
 
         let parsedValue = decodeURIComponent(value as string).split(',')
-        // eslint-disable-next-line default-case
         switch (currentField?.fieldType) {
           case 'select':
           case 'iconselect':
@@ -449,12 +445,9 @@ export const getFilterFromQuery = (
               .map(
                 (valueId) =>
                   [
-                    // @ts-ignore
                     ...currentField.multiselects.top,
-                    // @ts-ignore
                     ...(currentField.multiselects.other
-                      ? // @ts-ignore
-                        currentField.multiselects.other
+                      ? currentField.multiselects.other
                       : []),
                   ].find((m) => m.value === valueId)?.id,
               )
@@ -476,6 +469,9 @@ export const getFilterFromQuery = (
               parsed.push(range[1])
             }
             parsedValue = parsed
+            break
+          }
+          default: {
             break
           }
         }
