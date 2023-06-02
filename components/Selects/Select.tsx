@@ -132,13 +132,28 @@ const Select: FC<SelectProps> = ({
     const width = getTextWidth(options[index].label, 'normal 12px Euclid')
     return width
   }, [options])
+  const [sorted, setSorted] = useState(options)
+  useEffect(() => {
+    if (isMulti && Array.isArray(value)) {
+      const tempOptions = [...options]
+      const selected = value.map((v) => {
+        const currentIndex = tempOptions.findIndex((o) => o.value === v.value)
+        const currentOption = tempOptions[currentIndex]
+        tempOptions.splice(currentIndex, 1)
+        return currentOption
+      })
+      setSorted([...selected, ...tempOptions])
+    } else if (!isEqual(sorted, options)) {
+      setSorted(options)
+    }
+  }, [value, options])
   return (
     <>
       <RS
         inputId={id}
         id={id}
         value={value}
-        options={options}
+        options={sorted}
         placeholder={placeholder}
         isSearchable={isSearchable}
         isDisabled={isDisabled}
