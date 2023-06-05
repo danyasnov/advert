@@ -54,6 +54,11 @@ const EnterEmail: FC<PageProps> = observer(
 
         return
       }
+      dispatch({
+        type: 'setIsNew',
+        isNew: false,
+      })
+
       if (!result?.data.result.verified) {
         dispatch({
           type: 'setPage',
