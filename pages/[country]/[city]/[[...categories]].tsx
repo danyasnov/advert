@@ -176,11 +176,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       cacheId: productsResponse?.headers?.cacheId ?? null,
       // @ts-ignore
       aggregatedFields: productsResponse?.result?.aggregatedFields ?? null,
-      // @ts-ignore
-      hideDistanceSort: state.modified || false,
-      // @ts-ignore
-      filter: {...filter, fields: filter.fieldValues},
+      filter,
       sortBy,
+    }
+    // @ts-ignore
+    if (filter.fieldValues) {
+      // @ts-ignore
+      productsStore.filter.fields = filter.fieldValues
     }
     if (isEmpty(products)) {
       res.statusCode = 404
