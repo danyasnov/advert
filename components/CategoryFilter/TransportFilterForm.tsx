@@ -90,7 +90,7 @@ const MobileForm: FC<Props> = observer(
     return (
       <div className='flex'>
         <div className='mb-4'>
-          <div className='flex overflow-y-scroll -mx-4'>
+          <div className='flex overflow-x-scroll -mx-4'>
             <div className='mr-2 ml-4'>
               <Chip
                 hasValue
@@ -301,7 +301,7 @@ const DesktopForm: FC<Props> = observer(
 
     if (showCategoriesSlider) {
       return (
-        <div className='flex overflow-y-scroll mb-4'>
+        <div className='flex overflow-x-scroll mb-4'>
           <CategoriesSlider
             categoriesOptions={categoriesOptions}
             onChangeCategory={onChangeCategory}
