@@ -9,6 +9,7 @@ import ReactModal from 'react-modal'
 import {CACategoryModel} from 'front-api'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
+import {toJS} from 'mobx'
 import {SelectItem} from '../Selects/Select'
 
 import {
@@ -50,11 +51,16 @@ interface Props {
   onReset: () => void
 }
 const TransportFilterForm: FC<Props> = (props) => {
-  const {width} = useWindowSize()
-  if (width < 768) {
-    return <MobileForm {...props} />
-  }
-  return <DesktopForm {...props} />
+  return (
+    <>
+      <div className='hidden s:flex' key='desktop'>
+        <DesktopForm {...props} />
+      </div>
+      <div className='flex s:hidden overflow-x-scroll -mx-4' key='mobile'>
+        <MobileForm {...props} />
+      </div>
+    </>
+  )
 }
 
 const MobileForm: FC<Props> = observer(
@@ -78,7 +84,7 @@ const MobileForm: FC<Props> = observer(
 
     if (showCategoriesSlider) {
       return (
-        <div className='flex overflow-y-scroll -mx-4 mb-4'>
+        <div className='flex mb-4'>
           <CategoriesSlider
             aroundMargin
             categoriesOptions={categoriesOptions}
@@ -87,10 +93,11 @@ const MobileForm: FC<Props> = observer(
         </div>
       )
     }
+
     return (
       <div className='flex'>
         <div className='mb-4'>
-          <div className='flex overflow-x-scroll -mx-4'>
+          <div className='flex'>
             <div className='mr-2 ml-4'>
               <Chip
                 hasValue
@@ -212,7 +219,7 @@ const MobileForm: FC<Props> = observer(
           ariaHideApp={false}
           contentLabel='Filters'
           className='absolute w-full bg-white-a inset-x-0 mx-auto flex outline-none'
-          overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-20 overflow-y-auto flex flex-col'>
+          overlayClassName='fixed inset-0 bg-shadow-overlay max-h-screen z-10 overflow-y-auto flex flex-col'>
           <div className='space-y-6 mx-4 w-full py-8'>
             <div className='flex'>
               <Button onClick={() => setShowFilters(false)}>
@@ -310,7 +317,7 @@ const DesktopForm: FC<Props> = observer(
       )
     }
     return (
-      <div className='hidden s:flex flex-col mb-4'>
+      <div className='flex flex-col mb-4'>
         {/* {brands && ( */}
         {/*  <HeaderButtonColumn */}
         {/*    title={brands.name} */}
