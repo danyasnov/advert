@@ -44,10 +44,7 @@ const MobileSelect: FC<SelectProps> = ({
 
   if (isIconSelect) {
     body = (
-      <div
-        className={`w-full grid grid-cols-3 gap-2 px-4 ${
-          isSearchable ? 'mt-25' : 'mt-15'
-        }`}>
+      <div className='w-full grid grid-cols-3 gap-2 px-4'>
         {open &&
           options.map((f) => {
             // @ts-ignore
