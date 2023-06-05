@@ -4,6 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
+import {toJS} from 'mobx'
 import FormikAutoSave from '../FormikAutoSave'
 import {SelectItem} from '../Selects/Select'
 import {
@@ -33,7 +34,9 @@ export interface Values {
 
 const isFilterChanged = (filter) => {
   return !isEqual(
-    {...defaultFilter, ...omit(filter, ['categoryId'])},
+    JSON.parse(
+      JSON.stringify({...defaultFilter, ...omit(filter, ['categoryId'])}),
+    ),
     defaultFilter,
   )
 }
@@ -92,6 +95,7 @@ const FilterForm: FC = observer(() => {
   )
 
   useEffect(() => {
+    console.log(toJS(filter))
     const show = isFilterChanged(filter)
     setShowReset(show)
   }, [filter])
