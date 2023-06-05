@@ -3,6 +3,7 @@ import {observer} from 'mobx-react-lite'
 import {TFunction, useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
+import {useWindowSize} from 'react-use'
 import {SerializedCookiesState} from '../types'
 import {useProductsStore} from '../providers/RootStoreProvider'
 import {shallowUpdateQuery} from '../helpers'
@@ -28,6 +29,7 @@ const getSortOptions = (t: TFunction) => [
 ]
 const SortSelect: FC<{id?: string; filterStyle?: boolean}> = observer(
   ({id, filterStyle}) => {
+    const {width} = useWindowSize()
     const {t} = useTranslation()
     const {query} = useRouter()
     const mobileStyles = {
@@ -49,9 +51,23 @@ const SortSelect: FC<{id?: string; filterStyle?: boolean}> = observer(
       )
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.searchBy])
+    const props = {
+      styles: undefined,
+      classNameOpt: undefined,
+    }
+    if (filterStyle) {
+      if (width >= 768) {
+        props.styles = FilterStyles
+      } else {
+        props.classNameOpt = {
+          singleValue: 'text-body-12',
+          valueContainer: 'py-[10px] h-10',
+        }
+      }
+    }
     return (
       <SelectWrapper
-        styles={FilterStyles}
+        filterStyle={filterStyle}
         id={id}
         onChange={({value}) => {
           const params = new URLSearchParams(window.location.search)
@@ -66,6 +82,7 @@ const SortSelect: FC<{id?: string; filterStyle?: boolean}> = observer(
         isSearchable={false}
         placeholder={t('SORTING_ORDER')}
         classNameOpt={filterStyle ? mobileStyles : {}}
+        {...props}
       />
     )
   },
