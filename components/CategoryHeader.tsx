@@ -17,7 +17,7 @@ const CategoryHeader: FC = observer(() => {
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
   const {t} = useTranslation()
-  const {filter, aggregatedFields} = useProductsStore()
+  const {filter, aggregatedFields, count} = useProductsStore()
   const brand = get(filter, 'fields.1991')
   const model = get(filter, 'fields.1992')
   const getFieldValue = (id, filterValue) => {
@@ -59,9 +59,14 @@ const CategoryHeader: FC = observer(() => {
   return (
     <div className='flex flex-col my-8'>
       <Breadcrumbs brandLabel={brandLabel} modelLabel={modelLabel} />
-      <h1 className='text-h-4 font-bold text-greyscale-900 pt-8'>
-        {getHeader()}
-      </h1>
+      <div className='flex justify-between items-center pt-8'>
+        <h1 className='text-h-4 font-bold text-greyscale-900 '>
+          {getHeader()}
+        </h1>
+        <span className='text-body-12 text-greyscale-700'>
+          {t('RESULTS_COUNT', {count})}
+        </span>
+      </div>
     </div>
   )
 })
