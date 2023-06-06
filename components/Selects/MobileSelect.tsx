@@ -110,7 +110,7 @@ const MobileSelect: FC<SelectProps> = ({
             {isEmptyValue ? (
               <span className='text-greyscale-500 truncate'>{placeholder}</span>
             ) : (
-              <span className='text-greyscale-900 truncate max-w-[270px]'>
+              <span className='text-greyscale-900 line-clamp-1 text-left'>
                 {isArray(value)
                   ? value.map((v) => v.label).join(', ')
                   : value.label}
