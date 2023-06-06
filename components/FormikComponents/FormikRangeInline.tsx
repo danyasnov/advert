@@ -21,8 +21,14 @@ const FormikRangeInline: FC<FieldProps & IFormikRange> = ({
       <span className='font-bold text-body-16 text-greyscale-900 mb-2'>
         {placeholder}
       </span>
-      {/* @ts-ignore */}
-      <Range value={mappedValue} onChange={(v) => setFieldValue(name, v)} />
+      <Range
+        // @ts-ignore
+        value={mappedValue}
+        onChange={(v) => {
+          if (!v[0]) v[0] = 0
+          setFieldValue(name, v)
+        }}
+      />
     </div>
   )
 }

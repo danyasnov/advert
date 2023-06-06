@@ -39,7 +39,7 @@ const CategoriesLayout: FC = observer(() => {
       <div className='bg-white pb-20 px-4 s:px-8 m:flex min-h-1/2'>
         <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
-            <CategoryHeader />
+            <CategoryHeader showCount={categoryData.id === 23} />
 
             <FilterForm />
             <div className='drop-shadow-card'>

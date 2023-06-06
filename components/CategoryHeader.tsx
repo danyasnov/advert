@@ -12,7 +12,7 @@ import Breadcrumbs from './Breadcrumbs'
 import {getQueryValue} from '../helpers'
 import {getSelectOptions} from './FormikComponents'
 
-const CategoryHeader: FC = observer(() => {
+const CategoryHeader: FC<{showCount: boolean}> = observer(({showCount}) => {
   const {categoryData} = useCategoriesStore()
   const {query} = useRouter()
   const search = getQueryValue(query, 'q')
@@ -63,9 +63,11 @@ const CategoryHeader: FC = observer(() => {
         <h1 className='text-h-4 font-bold text-greyscale-900 '>
           {getHeader()}
         </h1>
-        <span className='text-body-12 text-greyscale-700'>
-          {t('RESULTS_COUNT', {count})}
-        </span>
+        {showCount && (
+          <span className='text-body-12 text-greyscale-700'>
+            {t('RESULTS_COUNT', {count})}
+          </span>
+        )}
       </div>
     </div>
   )
