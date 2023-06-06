@@ -15,7 +15,6 @@ export interface IList {
   onClose?: () => void
 }
 const List: FC<IList> = ({items, isMulti, onChange, value, onClose}) => {
-  // console.log(value)
   return (
     <FixedSizeList
       height={

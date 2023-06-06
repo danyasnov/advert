@@ -1715,7 +1715,7 @@
   "RESET_FILTERS": "Reset filters",
   "RESIDENCE_ROYAL_GARDENS": "Royal Gardens Residence is situated in Yermasoyia which is close to the tourist area with only few minutes away from the beach, shopping malls, restaurants and city life! Its location gives you the opportunity to be close to the action but at the same time away from the crowds when needed.",
   "RESIDENTIAL_COMPLEX": "Royal Gardens is a luxurious and spacious residential apartment complex. It is a 5-floor building with 2-3-4-bedroom flats. It has a multitude of conveniences including a concierge , an impressive swimming pool, both for adults and children, a sauna, outdoor bar area, outdoor playground, and an outdoor gym.",
-  "RESULTS_COUNT": "RESULTS_COUNT",
+  "RESULTS_COUNT": "{{count}} Results",
   "SALE_FASTER": "Sell faster",
   "SCHEDULE_FOR_EACH_DAY": "Every day",
   "SEARCH": "Search",

@@ -65,7 +65,7 @@ const Chip: FC<IChip> = ({
           return minHeight
         }}
         header={
-          <div className='bg-white w-full flex flex-col py-5'>
+          <div className='bg-white w-full flex flex-col pt-5 pb-2'>
             <div className='flex w-full mb-2 px-4 text-center relative'>
               <h3 className='text-h-6 font-medium text-greyscale-900 w-full'>
                 {name}

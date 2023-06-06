@@ -95,7 +95,6 @@ const FilterForm: FC = observer(() => {
   )
 
   useEffect(() => {
-    console.log(toJS(filter))
     const show = isFilterChanged(filter)
     setShowReset(show)
   }, [filter])

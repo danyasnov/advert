@@ -2,9 +2,9 @@ import React, {FC, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
 import {isArray, isEmpty, size} from 'lodash'
-import IcSearch from 'icons/material/Search.svg'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {CloseSquare} from 'react-iconly'
+import {useWindowSize} from 'react-use'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -24,6 +24,7 @@ const MobileSelect: FC<SelectProps> = ({
   classNameOpt,
   isIconSelect,
 }) => {
+  const {width} = useWindowSize()
   const {t} = useTranslation()
   const [open, setOpen] = useState(false)
 
@@ -43,8 +44,14 @@ const MobileSelect: FC<SelectProps> = ({
   let body
 
   if (isIconSelect) {
+    const itemSize = width < 768 ? 102 : 72
+    const columnLength =
+      options.length / 3 > 4 ? 4 : Math.ceil(options.length / 4)
+    const bodyHeight = columnLength * itemSize + (columnLength - 1) * 8
     body = (
-      <div className='w-full grid grid-cols-3 gap-2 px-4'>
+      <div
+        style={{height: `${bodyHeight}px`}}
+        className='w-full grid grid-cols-3 gap-2 px-4 h-full overflow-y-scroll'>
         {open &&
           options.map((f) => {
             // @ts-ignore
@@ -103,7 +110,7 @@ const MobileSelect: FC<SelectProps> = ({
             {isEmptyValue ? (
               <span className='text-greyscale-500 truncate'>{placeholder}</span>
             ) : (
-              <span className='text-greyscale-900 truncate'>
+              <span className='text-greyscale-900 truncate max-w-xs'>
                 {isArray(value)
                   ? value.map((v) => v.label).join(', ')
                   : value.label}
@@ -126,7 +133,7 @@ const MobileSelect: FC<SelectProps> = ({
           return height
         }}
         header={
-          <div className='bg-white w-full flex flex-col pt-5 '>
+          <div className='bg-white w-full flex flex-col pt-5 pb-2'>
             <div className='flex w-full mb-2 px-4 text-center relative'>
               <h3 className='text-h-6 font-medium text-greyscale-900 w-full'>
                 {placeholder}
