@@ -27,10 +27,12 @@ export interface IUserStore {
   fetchProducts: (payload: FetchPayload) => Promise<void>
   fetchRatings: () => Promise<void>
   setUserPersonalData: (data: {
-    name: string
-    surname: string
-    sex: string
+    name?: string
+    surname?: string
+    sex?: string
+    phoneNum?: string
   }) => void
+  setUserLanguages: (data: {isoCode: string}[]) => void
   ratings: ReviewModel[]
 }
 
@@ -171,8 +173,12 @@ export class UserStore implements IUserStore {
 
   setUserPersonalData = (data) => {
     this.user.settings.personal = {...this.user.settings.personal, ...data}
-    this.user.name = data.name
-    this.user.surname = data.surname
+    if (data.name) this.user.name = data.name
+    if (data.surname) this.user.surname = data.surname
+  }
+
+  setUserLanguages = (data) => {
+    this.user.additionalLanguages = data
   }
 
   constructor(root: RootStore) {

@@ -44,7 +44,7 @@ const SuccessModal: FC<Props> = ({imageSrc, title, isOpen, onClose}) => {
           <span className='text-h-4 text-primary-500 font-bold pb-4'>
             {t('THANKS')}
           </span>
-          <span className='text-body-16 text-greyscale-900 font-normal pb-8'>
+          <span className='text-body-16 text-center text-greyscale-900 font-normal pb-8'>
             {t(title)}
           </span>
           <PrimaryButton onClick={() => push('/')}>

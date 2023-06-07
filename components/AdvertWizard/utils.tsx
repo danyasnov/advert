@@ -317,7 +317,7 @@ export const FormGroup: FC<{
             onRequestClose={() => setIsOpen(false)}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
-            overlayClassName='z-30 fixed inset-0 '
+            overlayClassName='z-10 fixed inset-0'
             className='w-full h-full bg-white overflow-y-scroll'>
             <div className='flex flex-col w-full'>
               <div className='flex items-center h-14 px-4 s:px-8 space-x-2'>

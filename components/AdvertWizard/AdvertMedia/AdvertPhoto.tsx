@@ -16,7 +16,9 @@ const AdvertPhoto: ComponentClass<
     isMain: boolean
     loading: boolean
     error: boolean
-    onRotate: (size: {naturalWidth: number; naturalHeight: number}) => void
+    onRotate:
+      | ((size: {naturalWidth: number; naturalHeight: number}) => void)
+      | null
     onRemove: () => void
   } & SortableElementProps
 > = SortableElement(({onRemove, onRotate, url, loading, id, error, isMain}) => {
@@ -25,7 +27,7 @@ const AdvertPhoto: ComponentClass<
     'w-6 h-6 flex items-center justify-center absolute top-0 mt-2 z-10 rounded-full text-primary-500 bg-white'
   const iconClassname = 'h-3 w-3 fill-current text-primary-500'
   return (
-    <div className='h-[140px] w-[212px] flex rounded-3xl overflow-hidden relative cursor-pointer items-center justify-center after:content-[""] after:absolute after:top-0 after:bottom-0 after:right-0 after:left-0'>
+    <div className='z-1 h-[140px] w-[212px] flex rounded-3xl overflow-hidden opacity-1 relative cursor-pointer items-center justify-center after:content-[""] after:absolute after:top-0 after:bottom-0 after:right-0 after:left-0'>
       {loading && (
         <div className='absolute z-10 inset-0 flex justify-center items-center bg-pink rounded-3xl px-4'>
           <div className='flex justify-center items-center'>
@@ -55,14 +57,19 @@ const AdvertPhoto: ComponentClass<
       </Button>
       {!loading && !error && (
         <>
-          <Button
-            disabled={loading}
-            className={`${buttonClassname} left-0 ml-2 `}
-            onClick={() => onRotate(id)}>
-            <IcRotate className={iconClassname} />
-          </Button>
+          {onRotate ? (
+            <Button
+              disabled={loading}
+              className={`${buttonClassname} left-0 ml-2 `}
+              onClick={() => onRotate(id)}>
+              <IcRotate className={iconClassname} />
+            </Button>
+          ) : null}
           {isMain && (
-            <span className='bg-greyscale-900/50 px-2 py-1 rounded-2xl text-white absolute left-10 top-2.5 z-10 text-body-10'>
+            <span
+              className={`bg-greyscale-900/50 px-2 py-1 rounded-2xl text-white absolute ${
+                onRotate ? 'left-10' : 'left-2'
+              } top-2.5 z-10 text-body-10`}>
               {t('MAIN_PHOTO')}
             </span>
           )}

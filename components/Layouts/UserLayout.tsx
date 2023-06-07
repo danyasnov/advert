@@ -427,10 +427,16 @@ const UserLayout: FC = observer(() => {
                       }}
                       tab={isCurrentUser ? 'sale' : 'other-sale'}
                       renderFooter={(product) => {
-                        if (
-                          product.showCallButton &&
-                          product.daysBeforeArchive
-                        ) {
+                        let title
+                        if (product.showRefreshButton) {
+                          if (product.daysBeforeArchive) {
+                            title = t('DAYS_TO_ARCHIVE', {
+                              days: product.daysBeforeArchive,
+                            })
+                          } else {
+                            title = t('LAST_DAY_BEFORE_ARCHIVE')
+                          }
+
                           return (
                             <Button
                               className='flex justify-between w-full'
@@ -439,9 +445,7 @@ const UserLayout: FC = observer(() => {
                                 refreshAdvert(product.hash)
                               }}>
                               <span className='text-body-12 font-bold text-error whitespace-nowrap truncate'>
-                                {t('DAYS_TO_ARCHIVE', {
-                                  days: product.daysBeforeArchive,
-                                })}
+                                {title}
                               </span>
                               <ArrowRight size={16} />
                             </Button>

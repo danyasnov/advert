@@ -166,40 +166,44 @@ const AdvertPhotosContainer: ComponentClass<
             onRemove={() => {
               setPhotos(photos.filter((v) => v.hash !== p.hash))
             }}
-            onRotate={async () => {
-              const dict = originalPhotos.current
-              if (dict[p.id]?.file) {
-                const nextDegrees = getNextDegree(dict[p.id].degree)
-                const blob = await rotate({
-                  degrees: nextDegrees,
-                  file: dict[p.id].file,
-                })
-                if (!blob) return
-                const formData = new FormData()
-                formData.append('image', blob)
-                setPhotos((prevState) =>
-                  prevState.map((v) =>
-                    v.hash === p.hash ? {...v, loading: true} : v,
-                  ),
-                )
-                makeRequest({
-                  headers: {'Content-Type': 'multipart/form-data'},
-                  method: 'post',
-                  data: formData,
-                  url: '/upload/image',
-                }).then((res) => {
-                  dict[p.id].degree = nextDegrees
-                  setPhotos(
-                    photos.map((v) => {
-                      if (v.hash === p.hash) {
-                        return {...res.data.items[0], id: p.id}
-                      }
-                      return v
-                    }),
-                  )
-                })
-              }
-            }}
+            onRotate={
+              originalPhotos.current[p.id]
+                ? async () => {
+                    const dict = originalPhotos.current
+                    if (dict[p.id]?.file) {
+                      const nextDegrees = getNextDegree(dict[p.id].degree)
+                      const blob = await rotate({
+                        degrees: nextDegrees,
+                        file: dict[p.id].file,
+                      })
+                      if (!blob) return
+                      const formData = new FormData()
+                      formData.append('image', blob)
+                      setPhotos((prevState) =>
+                        prevState.map((v) =>
+                          v.hash === p.hash ? {...v, loading: true} : v,
+                        ),
+                      )
+                      makeRequest({
+                        headers: {'Content-Type': 'multipart/form-data'},
+                        method: 'post',
+                        data: formData,
+                        url: '/upload/image',
+                      }).then((res) => {
+                        dict[p.id].degree = nextDegrees
+                        setPhotos(
+                          photos.map((v) => {
+                            if (v.hash === p.hash) {
+                              return {...res.data.items[0], id: p.id}
+                            }
+                            return v
+                          }),
+                        )
+                      })
+                    }
+                  }
+                : null
+            }
           />
         ))}
         {canAddMore && (

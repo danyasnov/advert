@@ -4,6 +4,7 @@ import {useWindowSize} from 'react-use'
 import {Field, FormikProvider, useFormik} from 'formik'
 import ReactModal from 'react-modal'
 import {omit} from 'lodash'
+import GoogleMapReact from 'google-map-react'
 import {object, string} from 'yup'
 import {observer} from 'mobx-react-lite'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -14,6 +15,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import Burger from '../Burger'
+import SvgMapMarker from '../../assets/icons/SvgMapMarker'
 import {FormikNumber, FormikText} from '../FormikComponents'
 import {makeRequest} from '../../api'
 import Logo from '../Logo'
@@ -345,7 +347,12 @@ const RoyalGardens: FC = observer(() => {
     />
   )
 
-  const {submitForm, isSubmitting, handleSubmit, errors} = formik
+  const location = {
+    lat: 34.703801296457385,
+    lng: 33.0930107117758,
+  }
+
+  const {handleSubmit, errors} = formik
 
   return (
     <>
@@ -476,8 +483,8 @@ const RoyalGardens: FC = observer(() => {
 
             <div className='hidden s:block self-end'>{startButton}</div>
           </div>
-          <div className='flex flex-col-reverse s:flex-row s:mt-6 s:space-x-4 m:space-x-12 l:space-x-25 items-center justify-between'>
-            <div className='flex flex-col text-body-14 m:text-body-16 space-y-2 s:space-y-4 l:space-y-6 text-greyscale-900 font-light'>
+          <div className='flex flex-col-reverse s:flex-row s:mt-6 s:space-x-4 m:space-x-12 l:space-x-25 items-start justify-between'>
+            <div className='flex flex-col text-body-14 self-start m:text-body-16 space-y-2 s:space-y-4 l:space-y-6 text-greyscale-900 font-light'>
               <span className='block'>{t('RESIDENCE_ROYAL_GARDENS')}</span>
               <span className='block'>{t('RESIDENTIAL_COMPLEX')}</span>
               <span className='block'>
@@ -487,7 +494,7 @@ const RoyalGardens: FC = observer(() => {
                 {t('LANDING_REAL_ESTATE_SALES_AGREEMENT')}
               </span>
             </div>
-            <div className='s:hidden mb-6 grid grid-cols-2 grid-rows-2 gap-x-12 gap-y-1 items-end place-items-center'>
+            <div className='s:hidden mx-auto mb-6 grid grid-cols-2 grid-rows-2 gap-x-12 gap-y-1  items-end place-items-center'>
               {property.map((feature, index) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <div key={index} className='flex flex-col max-w-[104px]'>
@@ -502,9 +509,9 @@ const RoyalGardens: FC = observer(() => {
               ))}
             </div>
 
-            <div>
+            <div className='mx-auto'>
               <Button
-                className='flex self-start relative w-[328px] h-[457px] s:w-[344px] s:h-[468px] m:w-[400px] m:h-[538px] l:w-[510px] l:h-[644px]'
+                className='flex self-start relative w-[328px] h-[457px] s:w-[344px] s:h-[468px] m:w-[400px] m:h-[508px] l:w-[510px] l:h-[644px]'
                 onClick={() => {
                   setShowModal(true)
                 }}>
@@ -518,7 +525,7 @@ const RoyalGardens: FC = observer(() => {
             </div>
           </div>
           <div className='s:hidden self-center mt-4'>{startButton}</div>
-          <div className='hidden s:self-center s:flex s:mt-4 m:absolute m:top-[820px] l:top-[935px] s:w-[704px] m:w-[874px] bg-white'>
+          <div className='hidden s:self-center s:flex s:mt-4 m:absolute m:top-[810px] l:top-[935px] s:w-[704px] m:w-[874px] bg-white'>
             <div className='flex s:space-x-8 m:space-x-10 py-8 s:px-3 m:px-8 items-end'>
               {property.map((feature, index) => (
                 // eslint-disable-next-line react/no-array-index-key
@@ -595,7 +602,7 @@ const RoyalGardens: FC = observer(() => {
                   />
                 </div>
               </div>
-              <ul className='list-disc font-light mx-4 mt-4 m:mt-16 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+              <ul className='list-disc font-light m:font-normal mx-4 mt-4 m:mt-16 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
                 {facilities.map((facilitie, index) => (
                   <li
                     // eslint-disable-next-line react/no-array-index-key
@@ -831,11 +838,11 @@ const RoyalGardens: FC = observer(() => {
               }}
             />
             <div className='flex flex-col-reverse s:flex-row s:items-center s:mt-8 m:mt-12'>
-              <div className='flex flex-col'>
+              <div className='flex flex-col self-start'>
                 <span className='text-body-16 text-greyscale-900  mb-4 m:mb-6'>
                   {t('LANDING_REAL_ESTATE_RIGHT_LOCATION_AREA')}
                 </span>
-                <ul className='list-disc font-light l:font-normal mx-4 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+                <ul className='list-disc font-light m:font-normal mx-4 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
                   {areas.map((area, index) => (
                     <li
                       // eslint-disable-next-line react/no-array-index-key
@@ -866,11 +873,27 @@ const RoyalGardens: FC = observer(() => {
                 </div>
               </div>
               <div className='relative mx-auto my-6 s:m-0 w-[328px] h-[190px] s:w-[464px] s:h-[276px] m:w-[640px] m:h-[380px] l:w-[886px] l:h-[500px]'>
-                <ImageWrapper
-                  type='/img/royal-garden/map.png'
-                  layout='fill'
-                  alt='map'
-                  objectFit='contain'
+                <GoogleMapReact
+                  bootstrapURLKeys={{key: process.env.NEXT_PUBLIC_GOOGLE_API}}
+                  center={location}
+                  yesIWantToUseGoogleMapApiInternals
+                  defaultZoom={14}
+                  onGoogleApiLoaded={({map, maps}) => {
+                    const svgMarker = {
+                      path: SvgMapMarker,
+                      fillColor: '#7210FF',
+                      fillOpacity: 1,
+                      strokeColor: '#FFFFFF',
+                      strokeOpacity: 1,
+                      anchor: new maps.Point(14, 35),
+                    }
+                    // eslint-disable-next-line no-new
+                    new maps.Marker({
+                      position: map.getCenter(),
+                      icon: svgMarker,
+                      map,
+                    })
+                  }}
                 />
               </div>
             </div>

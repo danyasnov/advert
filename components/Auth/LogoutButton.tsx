@@ -28,7 +28,7 @@ const LogoutButton: FC<{
         {children}
       </Button>
       {show && (
-        <DeactivateAdvModal
+        <LogoutModal
           isOpen={show}
           onClose={() => {
             setShow(false)
@@ -40,7 +40,7 @@ const LogoutButton: FC<{
   )
 })
 
-const DeactivateAdvModal: FC<{isOpen: boolean; onClose: () => void}> = ({
+const LogoutModal: FC<{isOpen: boolean; onClose: () => void}> = ({
   isOpen,
   onClose,
 }) => {

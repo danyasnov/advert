@@ -24,7 +24,10 @@ import {ArrowLeft} from 'react-iconly'
 import {AdvertPages, WizardContext} from './AdvertWizard'
 import {makeRequest} from '../../api'
 import AdvertDescription from './AdvertDescription'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {
+  useGeneralStore,
+  useModalsStore,
+} from '../../providers/RootStoreProvider'
 import AdvertPhotos from './AdvertMedia/AdvertPhotos'
 import AdvertVideos from './AdvertMedia/AdvertVideos'
 import PrimaryButton from '../Buttons/PrimaryButton'
@@ -57,7 +60,6 @@ import {
 } from '../FormikComponents'
 import FormProgressBar from './FormProgressBar'
 import {NavItem} from '../../types'
-import AddNumberModal from '../Auth/AddNumber/AddNumberModal'
 import {handleMetrics, trackSingle} from '../../helpers'
 import SecondaryButton from '../Buttons/SecondaryButton'
 
@@ -65,11 +67,10 @@ const FormPage: FC = observer(() => {
   const {state, dispatch} = useContext(WizardContext)
   const {push, query} = useRouter()
   const hash = first(query.hash)
-
+  const {setModal} = useModalsStore()
   const {width} = useWindowSize()
 
   const {languagesByIsoCode, user, setUser} = useGeneralStore()
-  const [showAddNumber, setShowAddNumber] = useState(false)
   const phoneNumber = user?.settings.personal.phoneNum
 
   const {t} = useTranslation()
@@ -244,7 +245,20 @@ const FormPage: FC = observer(() => {
       <>
         <Button
           onClick={() => {
-            setShowAddNumber(true)
+            setModal('CHANGE_CONTACT', {
+              type: 'phone',
+              onFinish: (phoneNum) => {
+                const change = {
+                  settings: {
+                    personal: {
+                      phoneNum,
+                    },
+                  },
+                }
+
+                setUser(merge(user, change))
+              },
+            })
           }}
           disabled={!!phoneNumber}
           className={`w-full text-body-16 px-4 py-2.5 border bg-nc-back rounded-lg h-10  ${
@@ -379,7 +393,7 @@ const FormPage: FC = observer(() => {
   )
 
   const conditionComponent = (
-    <div className={`w-full s:w-1/2 ${hasArrayType ? 'l:w-72' : 'l:w-5/12'}`}>
+    <div className='w-full s:w-1/2 l:w-72'>
       <Field
         component={FormikSelect}
         name='condition'
@@ -419,7 +433,7 @@ const FormPage: FC = observer(() => {
       </div>
       <FormikProvider value={formik}>
         <div className='mb-6 px-4 s:px-0'>
-          <div className='hidden s:flex m:hidden mb-6 flex items-center space-x-2'>
+          <div className='hidden s:flex m:hidden mb-6 items-center space-x-2'>
             <Button
               id='ad-back-button'
               onClick={() => {
@@ -907,7 +921,7 @@ const FormPage: FC = observer(() => {
               }}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5 z-10 justify-around'>
+            <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5 z-10'>
               <div className='w-full l:w-1208px flex justify-between flex-col s:flex-row space-y-4 s:space-y-0'>
                 <SecondaryButton
                   id='ad-back-button'
@@ -965,22 +979,6 @@ const FormPage: FC = observer(() => {
             {query.action === 'create' && (
               <FormikAdvertAutoSave onSubmit={onSubmit} />
             )}
-            <AddNumberModal
-              onFinish={(phoneNum) => {
-                setShowAddNumber(false)
-                const change = {
-                  settings: {
-                    personal: {
-                      phoneNum,
-                    },
-                  },
-                }
-
-                setUser(merge(user, change))
-              }}
-              isOpen={showAddNumber}
-              onClose={() => setShowAddNumber(false)}
-            />
           </Form>
         </div>
       </FormikProvider>

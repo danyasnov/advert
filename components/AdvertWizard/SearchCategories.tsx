@@ -3,7 +3,6 @@ import {FC, useCallback, useState} from 'react'
 import {useCombobox} from 'downshift'
 import {debounce, isEmpty, isObject, last} from 'lodash'
 import {useTranslation} from 'next-i18next'
-import IcSearch from 'icons/material/Search.svg'
 import {Search} from 'react-iconly'
 import {makeRequest} from '../../api'
 

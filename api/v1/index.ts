@@ -257,3 +257,11 @@ export const subscribersSubscriptions = async (
   const rest = getRest(storage)
   return rest.user.restUserSubscribersSubscriptions(hash, type, page)
 }
+export const restUpdateLanguages = async (
+  storage: Storage,
+  main: string,
+  additional: Array<string>,
+): Promise<void> => {
+  const rest = getRest(storage)
+  return rest.user.restUpdateLanguages(main, additional)
+}

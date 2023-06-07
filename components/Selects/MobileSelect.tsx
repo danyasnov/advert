@@ -2,19 +2,17 @@ import React, {FC, useState} from 'react'
 import {BottomSheet} from 'react-spring-bottom-sheet'
 import {useTranslation} from 'next-i18next'
 import {isArray, isEmpty, size} from 'lodash'
-import IcCheck from 'icons/material/Check.svg'
-import IcSearch from 'icons/material/Search.svg'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
 import {CloseSquare} from 'react-iconly'
-import {FixedSizeList} from 'react-window'
+import {useWindowSize} from 'react-use'
 import {SelectProps} from './Select'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {IconItem} from './IconSelect'
+import List from './List'
+import ListWithFilter from './ListWithFilter'
 
-const ROWS = 8
-const OPTION_HEIGHT = 55
 const MobileSelect: FC<SelectProps> = ({
   options,
   placeholder,
@@ -26,15 +24,13 @@ const MobileSelect: FC<SelectProps> = ({
   classNameOpt,
   isIconSelect,
 }) => {
+  const {width} = useWindowSize()
   const {t} = useTranslation()
   const [open, setOpen] = useState(false)
-  const [filtered, setFiltered] = useState(options)
-  const [filter, setFilter] = useState('')
+
   const [height, setHeight] = useState<number>(0)
 
   const onClose = () => {
-    setFilter('')
-    setFiltered(options)
     setOpen(false)
   }
 
@@ -48,13 +44,16 @@ const MobileSelect: FC<SelectProps> = ({
   let body
 
   if (isIconSelect) {
+    const itemSize = width < 768 ? 102 : 72
+    const columnLength =
+      options.length / 3 > 4 ? 4 : Math.ceil(options.length / 4)
+    const bodyHeight = columnLength * itemSize + (columnLength - 1) * 8
     body = (
       <div
-        className={`w-full grid grid-cols-3 gap-2 px-4 ${
-          isMulti ? 'mb-20' : 'mb-10'
-        }  ${isSearchable ? 'mt-25' : 'mt-15'}`}>
+        style={{height: `${bodyHeight}px`}}
+        className='w-full grid grid-cols-3 gap-2 px-4 h-full overflow-y-scroll'>
         {open &&
-          filtered.map((f) => {
+          options.map((f) => {
             // @ts-ignore
             const isSelected = Array.isArray(value)
               ? value.some((v) => v.value === f.value)
@@ -76,91 +75,16 @@ const MobileSelect: FC<SelectProps> = ({
     )
   } else {
     body = (
-      <div
-        className={`w-full flex flex-col ${isMulti ? 'mb-20' : 'mb-10'} ${
-          isSearchable ? 'mt-25' : 'mt-10'
-        }`}>
+      <div className='w-full flex flex-col h-full'>
         {open && (
-          <FixedSizeList
-            height={
-              filtered.length >= ROWS
-                ? OPTION_HEIGHT * ROWS
-                : filtered.length * OPTION_HEIGHT
-            }
-            itemCount={filtered.length}
-            itemSize={55}>
-            {({index, style}) => {
-              const f = filtered[index]
-              return (
-                <div style={style}>
-                  <Button
-                    // @ts-ignore
-                    disabled={f.disabled}
-                    key={f.value}
-                    className={`w-full px-4 border-b ${
-                      index === filtered.length - 1
-                        ? 'border-transparent'
-                        : 'border-nc-border'
-                    } ${
-                      // @ts-ignore
-                      f.disabled ? 'text-greyscale-900' : ''
-                    }`}
-                    onClick={() => {
-                      if (isMulti) {
-                        // @ts-ignore
-                        const newFiltered = value.filter(
-                          (v) => v.value !== f.value,
-                        )
-                        if (size(value) !== size(newFiltered)) {
-                          onChange(newFiltered)
-                        } else {
-                          // @ts-ignore
-                          onChange([...value, f])
-                        }
-                      } else {
-                        onChange(f)
-                        onClose()
-                      }
-                    }}>
-                    <div className='w-full flex items-center justify-between py-4'>
-                      <div className='flex space-x-3'>
-                        {!!f.icon && (
-                          <img
-                            src={f.icon}
-                            alt={f.label}
-                            width={20}
-                            height={20}
-                          />
-                        )}
-                        <span className='text-body-16 text-nc-text-primary'>
-                          {f.label}
-                        </span>
-                      </div>
-                      {isMulti && !f.disabled && (
-                        <>
-                          <input
-                            type='checkbox'
-                            readOnly
-                            checked={
-                              // @ts-ignore
-                              value.some((v) => v.value === f.value)
-                            }
-                            className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
-                          />
-                          <div className='bg-white border-2 rounded border-black-d h-4.5 w-4.5 flex shrink-0 justify-center items-center mr-2'>
-                            <IcCheck className='fill-current text-black-c h-4.5 w-4.5 hidden' />
-                          </div>
-                        </>
-                      )}
-                      {f.value === value?.value && !isMulti && (
-                        <IcCheck className='fill-current text-primary-500 h-4 w-4' />
-                      )}
-                    </div>
-                  </Button>
-                </div>
-              )
-            }}
-          </FixedSizeList>
+          <ListWithFilter
+            isMulti={isMulti}
+            items={options}
+            value={value}
+            onChange={onChange}
+            onClose={onClose}
+            isSearchable={isSearchable}
+          />
         )}
       </div>
     )
@@ -174,19 +98,19 @@ const MobileSelect: FC<SelectProps> = ({
         } `}
         onClick={() => setOpen(true)}>
         <div
-          className={` w-full pl-5 pr-6 ${
-            classNameOpt.valueContainer ? classNameOpt.valueContainer : 'py-4 '
+          className={`w-full pl-5 pr-6 ${
+            classNameOpt?.valueContainer ? classNameOpt.valueContainer : 'py-4 '
           }`}>
           <div
             className={`flex justify-between items-center ${
-              classNameOpt.singleValue
+              classNameOpt?.singleValue
                 ? classNameOpt.singleValue
                 : 'text-body-16'
             }`}>
             {isEmptyValue ? (
               <span className='text-greyscale-500 truncate'>{placeholder}</span>
             ) : (
-              <span className='text-greyscale-900 truncate'>
+              <span className='text-greyscale-900 line-clamp-1 text-left'>
                 {isArray(value)
                   ? value.map((v) => v.label).join(', ')
                   : value.label}
@@ -207,9 +131,9 @@ const MobileSelect: FC<SelectProps> = ({
             return minHeight
           }
           return height
-        }}>
-        <div className='flex flex-col items-center justify-center w-full'>
-          <div className='fixed top-5 bg-white w-full flex flex-col pt-5'>
+        }}
+        header={
+          <div className='bg-white w-full flex flex-col pt-5 pb-2'>
             <div className='flex w-full mb-2 px-4 text-center relative'>
               <h3 className='text-h-6 font-medium text-greyscale-900 w-full'>
                 {placeholder}
@@ -222,37 +146,15 @@ const MobileSelect: FC<SelectProps> = ({
                 <CloseSquare size={24} />
               </Button>
             </div>
-
-            {isSearchable && (
-              <div className='w-full px-4 relative'>
-                <IcSearch className='w-6 h-6 absolute top-3 left-5 text-greyscale-800' />
-                <input
-                  className='w-full h-12 border border-nc-border flex rounded-lg py-4 pr-4 pl-8 text-greyscale-900'
-                  placeholder={t('SEARCH')}
-                  value={filter}
-                  onChange={({target}) => {
-                    setFilter(target.value)
-                    setFiltered(
-                      options.filter((o) => {
-                        return o.label
-                          .toLowerCase()
-                          .includes(target.value.toLowerCase())
-                      }),
-                    )
-                  }}
-                />
-              </div>
-            )}
           </div>
-          {body}
-          {isMulti && (
-            <div className='h-20 flex w-full fixed bottom-0 p-4 space-x-2 bg-white drop-shadow-card'>
+        }
+        footer={
+          isMulti && (
+            <div className='h-20 flex w-full p-4 space-x-2 bg-white drop-shadow-card'>
               <SecondaryButton
                 className='w-full h-full'
                 disabled={!size(value as unknown as object)}
                 onClick={() => {
-                  setFilter('')
-                  setFiltered(options)
                   // @ts-ignore
                   onChange([])
                 }}>
@@ -262,7 +164,10 @@ const MobileSelect: FC<SelectProps> = ({
                 {t('DONE')}
               </PrimaryButton>
             </div>
-          )}
+          )
+        }>
+        <div className='flex flex-col items-center justify-center w-full'>
+          {body}
         </div>
       </BottomSheet>
     </div>

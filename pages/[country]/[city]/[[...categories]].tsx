@@ -181,7 +181,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       filter,
       sortBy,
     }
-    // debugger
+    // @ts-ignore
+    if (filter.fieldValues) {
+      // @ts-ignore
+      productsStore.filter.fields = filter.fieldValues
+    }
     if (isEmpty(products)) {
       res.statusCode = 404
     }

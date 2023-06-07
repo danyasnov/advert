@@ -103,6 +103,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
               name='country'
               disableTrack
               component={FormikSelect}
+              isFilterable
               options={countriesOptions}
             />
             <div className='h-4' />

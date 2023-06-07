@@ -20,13 +20,13 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
   const url = icon?.icon?.url
   const className = `${
     isActive ? 'bg-white text-primary-500' : ''
-  } categories-selector-item py-2 h-10 text-greyscale-900 s:rounded-l-lg`
+  } categories-selector-item py-2 h-10 text-greyscale-900 s:rounded-l-lg group`
   const {width} = useWindowSize()
 
   const elBody = (
     <>
       {!!url && (
-        <div className='mr-2'>
+        <div className='mr-2 transition ease-in-out delay-150 group-hover:scale-125 duration-300'>
           <ImageWrapper
             type={url}
             width={24}

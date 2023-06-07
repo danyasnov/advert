@@ -21,12 +21,14 @@ const LinkButton: FC<Props> = ({
       onClick={onClick}
       className={`text-body-14 text-primary-500 font-bold ${className || ''}`}>
       {children}
-      <span
-        className={`capitalize-first ${
-          nowrap ? 'whitespace-nowrap' : 'whitespace-normal'
-        }`}>
-        {label}
-      </span>
+      {label && (
+        <span
+          className={`capitalize-first ${
+            nowrap ? 'whitespace-nowrap' : 'whitespace-normal'
+          }`}>
+          {label}
+        </span>
+      )}
     </Button>
   )
 }
