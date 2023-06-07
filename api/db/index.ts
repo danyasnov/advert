@@ -5,10 +5,10 @@ import NodeCache from 'node-cache'
 import {City} from '../../types'
 
 const config = {
-  username: 'adv_user',
-  password: 'aKjh76aa915BN',
-  database: 'adv',
-  host: '10.0.0.3',
+  database: 'advretoapi_db1',
+  username: 'advretoapi_usr',
+  password: 'o~6?!5drsp)+',
+  host: '78.47.78.163',
 }
 
 const sequelize = new Sequelize(
