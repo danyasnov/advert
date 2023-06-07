@@ -51,16 +51,25 @@ interface Props {
   onReset: () => void
 }
 const TransportFilterForm: FC<Props> = (props) => {
+  const {currentCategory, categoriesOptions, onChangeCategory} = props
   const {width} = useWindowSize()
-  return (
-    <>
-      {width < 768 ? (
-        <MobileForm {...props} key='mobile' />
-      ) : (
-        <DesktopForm {...props} key='desktop' />
-      )}
-    </>
-  )
+  const showCategoriesSlider = !isEmpty(currentCategory.items)
+  if (typeof window === 'undefined') return null
+  if (showCategoriesSlider) {
+    return (
+      <div className='flex overflow-x-auto mb-4 -mx-4' key={currentCategory.id}>
+        <CategoriesSlider
+          aroundMargin={width < 768}
+          categoriesOptions={categoriesOptions}
+          onChangeCategory={onChangeCategory}
+        />
+      </div>
+    )
+  }
+  if (width >= 768) {
+    return <DesktopForm {...props} key='desktop' />
+  }
+  return <MobileForm {...props} key='mobile' />
 }
 
 const MobileForm: FC<Props> = observer(
@@ -80,21 +89,6 @@ const MobileForm: FC<Props> = observer(
     const hasPrice = !!(values.priceRange[0] || values.priceRange[1])
     const {t} = useTranslation()
     useDisableBodyScroll(showFilters)
-    const showCategoriesSlider = !isEmpty(currentCategory.items)
-
-    if (showCategoriesSlider) {
-      return (
-        <div
-          className='flex overflow-x-auto mb-4 -mx-4'
-          key={currentCategory.id}>
-          <CategoriesSlider
-            aroundMargin
-            categoriesOptions={categoriesOptions}
-            onChangeCategory={onChangeCategory}
-          />
-        </div>
-      )
-    }
 
     return (
       <div className='flex'>
@@ -284,18 +278,8 @@ const MobileForm: FC<Props> = observer(
 )
 
 const DesktopForm: FC<Props> = observer(
-  ({
-    setShowFilters,
-    showFilters,
-    showReset,
-    onReset,
-    currentCategoryOption,
-    categoriesOptions,
-    currentCategory,
-    conditionOptions,
-    onChangeCategory,
-  }) => {
-    const {aggregatedFields, count} = useProductsStore()
+  ({setShowFilters, showFilters, showReset, onReset, conditionOptions}) => {
+    const {aggregatedFields} = useProductsStore()
     const {t} = useTranslation()
 
     const mainFields = aggregatedFields.filter((f) =>
@@ -304,18 +288,7 @@ const DesktopForm: FC<Props> = observer(
     const restFields = aggregatedFields.filter(
       (f) => ![1991, 17, 1992].includes(f.id),
     )
-    const showCategoriesSlider = !isEmpty(currentCategory.items)
 
-    if (showCategoriesSlider) {
-      return (
-        <div className='flex overflow-x-auto mb-4'>
-          <CategoriesSlider
-            categoriesOptions={categoriesOptions}
-            onChangeCategory={onChangeCategory}
-          />
-        </div>
-      )
-    }
     return (
       <div className='flex flex-col mb-4'>
         {/* {brands && ( */}
@@ -325,7 +298,9 @@ const DesktopForm: FC<Props> = observer(
         {/*    onClick={} */}
         {/*  /> */}
         {/* )} */}
-        <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'>
+        <div
+          className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'
+          key={66456}>
           <Field
             component={FormikSegmented}
             name='condition'
