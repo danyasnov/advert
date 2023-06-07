@@ -32,7 +32,7 @@ const LocationPopup: FC<Props> = ({onOpenLocation}) => {
 
   if (!show) return null
   return (
-    <div className='flex flex-col w-[280px] rounded-2xl p-6 shadow-2xl bg-white break-words items-center'>
+    <div className='flex flex-col w-[280px] rounded-2xl p-6 shadow-2xl bg-white break-words items-center z-20'>
       <span className='text-primary-500 mb-4 text-h-4 font-bold text-center'>
         {address}
       </span>
