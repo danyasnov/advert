@@ -51,14 +51,14 @@ interface Props {
   onReset: () => void
 }
 const TransportFilterForm: FC<Props> = (props) => {
+  const {width} = useWindowSize()
   return (
     <>
-      <div className='hidden s:flex' key='desktop'>
-        <DesktopForm {...props} />
-      </div>
-      <div className='flex s:hidden overflow-x-scroll -mx-4' key='mobile'>
-        <MobileForm {...props} />
-      </div>
+      {width < 768 ? (
+        <MobileForm {...props} key='mobile' />
+      ) : (
+        <DesktopForm {...props} key='desktop' />
+      )}
     </>
   )
 }
@@ -84,7 +84,9 @@ const MobileForm: FC<Props> = observer(
 
     if (showCategoriesSlider) {
       return (
-        <div className='flex mb-4'>
+        <div
+          className='flex overflow-x-auto mb-4 -mx-4'
+          key={currentCategory.id}>
           <CategoriesSlider
             aroundMargin
             categoriesOptions={categoriesOptions}
@@ -96,121 +98,119 @@ const MobileForm: FC<Props> = observer(
 
     return (
       <div className='flex'>
-        <div className='mb-4'>
-          <div className='flex'>
-            <div className='mr-2 ml-4'>
+        <div className='flex overflow-x-auto mb-4 -mx-4'>
+          <div className='mr-2 ml-4'>
+            <Chip
+              hasValue
+              name={t('SUBCATEGORY')}
+              chipTitle={currentCategory.name}
+              value={currentCategoryOption}
+              fixHeight
+              onChange={onChangeCategory}>
+              {(props) => (
+                <ListWithFilter
+                  value={props.value}
+                  onChange={props.onChange}
+                  items={categoriesOptions}
+                />
+              )}
+            </Chip>
+          </div>
+          {aggregatedFields.map((f) => {
+            const {name, multiselects, isFilterable, fieldType, id} = f
+            const isEmptyOptions =
+              isEmpty(getSelectOptions(multiselects)) &&
+              ['select', 'multiselect', 'iconselect'].includes(fieldType)
+            const value = values.fields[id] || []
+            const items = getSelectOptions(multiselects)
+            const onChange = (v) => setFieldValue(`fields.${id}`, v || [])
+
+            if (!isEmptyOptions && [1991, 1992, 17].includes(id)) {
+              return (
+                <div className='mr-2' key={id}>
+                  <Chip
+                    // @ts-ignore
+                    hasValue={!!value.length}
+                    name={name}
+                    chipTitle={getChipTitle(value, name)}
+                    value={value}
+                    fixHeight
+                    onChange={onChange}>
+                    {(props) => (
+                      <ListWithFilter
+                        value={props.value}
+                        onChange={props.onChange}
+                        items={items}
+                        isMulti
+                        isSearchable={isFilterable}
+                      />
+                    )}
+                  </Chip>
+                </div>
+              )
+            }
+            return null
+          })}
+          <div className='mr-2'>
+            <Chip
+              onChange={(v) => {
+                setFieldValue('priceRange', v)
+              }}
+              value={values.priceRange}
+              name={t('PRICE')}
+              chipTitle={getPriceChipTitle(values.priceRange, t)}
+              validate={(value) => {
+                const [priceMin, priceMax] = value
+                let error
+                if (priceMin && priceMax) {
+                  const parsedMin = parseFloat(priceMin)
+                  const parsedMax = parseFloat(priceMax)
+                  if (parsedMin > parsedMax) {
+                    error = t('FILTER_PRICE_ERROR')
+                  }
+                }
+                return error
+              }}
+              hasValue={hasPrice}>
+              {(props) => (
+                <div className='mx-4 mb-4'>
+                  <Range value={props.value} onChange={props.onChange} />
+                </div>
+              )}
+            </Chip>
+          </div>
+          {currentCategory?.extras?.allowUsed && (
+            <div className='mr-2'>
               <Chip
-                hasValue
-                name={t('SUBCATEGORY')}
-                chipTitle={currentCategory.name}
-                value={currentCategoryOption}
-                fixHeight
-                onChange={onChangeCategory}>
+                onChange={(v) => {
+                  setFieldValue('condition', v)
+                }}
+                value={values.condition}
+                name={t('PROD_CONDITION')}
+                chipTitle={
+                  values.condition.value !== 0
+                    ? values.condition.label
+                    : t('PROD_CONDITION')
+                }
+                hasValue={values.condition.value !== 0}>
                 {(props) => (
                   <ListWithFilter
                     value={props.value}
                     onChange={props.onChange}
-                    items={categoriesOptions}
+                    items={conditionOptions}
                   />
                 )}
               </Chip>
             </div>
-            {aggregatedFields.map((f) => {
-              const {name, multiselects, isFilterable, fieldType, id} = f
-              const isEmptyOptions =
-                isEmpty(getSelectOptions(multiselects)) &&
-                ['select', 'multiselect', 'iconselect'].includes(fieldType)
-              const value = values.fields[id] || []
-              const items = getSelectOptions(multiselects)
-              const onChange = (v) => setFieldValue(`fields.${id}`, v || [])
-
-              if (!isEmptyOptions && [1991, 1992, 17].includes(id)) {
-                return (
-                  <div className='mr-2' key={id}>
-                    <Chip
-                      // @ts-ignore
-                      hasValue={!!value.length}
-                      name={name}
-                      chipTitle={getChipTitle(value, name)}
-                      value={value}
-                      fixHeight
-                      onChange={onChange}>
-                      {(props) => (
-                        <ListWithFilter
-                          value={props.value}
-                          onChange={props.onChange}
-                          items={items}
-                          isMulti
-                          isSearchable={isFilterable}
-                        />
-                      )}
-                    </Chip>
-                  </div>
-                )
-              }
-              return null
-            })}
-            <div className='mr-2'>
-              <Chip
-                onChange={(v) => {
-                  setFieldValue('priceRange', v)
-                }}
-                value={values.priceRange}
-                name={t('PRICE')}
-                chipTitle={getPriceChipTitle(values.priceRange, t)}
-                validate={(value) => {
-                  const [priceMin, priceMax] = value
-                  let error
-                  if (priceMin && priceMax) {
-                    const parsedMin = parseFloat(priceMin)
-                    const parsedMax = parseFloat(priceMax)
-                    if (parsedMin > parsedMax) {
-                      error = t('FILTER_PRICE_ERROR')
-                    }
-                  }
-                  return error
-                }}
-                hasValue={hasPrice}>
-                {(props) => (
-                  <div className='mx-4 mb-4'>
-                    <Range value={props.value} onChange={props.onChange} />
-                  </div>
-                )}
-              </Chip>
+          )}
+          {!isEmpty(aggregatedFields) && (
+            <div className='mr-4'>
+              <ChipButton onClick={() => setShowFilters(!showFilters)}>
+                <Filter size={12} filled />
+                <span className='ml-1'>{t('MORE_FILTERS')}</span>
+              </ChipButton>
             </div>
-            {currentCategory?.extras?.allowUsed && (
-              <div className='mr-2'>
-                <Chip
-                  onChange={(v) => {
-                    setFieldValue('condition', v)
-                  }}
-                  value={values.condition}
-                  name={t('PROD_CONDITION')}
-                  chipTitle={
-                    values.condition.value !== 0
-                      ? values.condition.label
-                      : t('PROD_CONDITION')
-                  }
-                  hasValue={values.condition.value !== 0}>
-                  {(props) => (
-                    <ListWithFilter
-                      value={props.value}
-                      onChange={props.onChange}
-                      items={conditionOptions}
-                    />
-                  )}
-                </Chip>
-              </div>
-            )}
-            {!isEmpty(aggregatedFields) && (
-              <div className='mr-4'>
-                <ChipButton onClick={() => setShowFilters(!showFilters)}>
-                  <Filter size={12} filled />
-                  <span className='ml-1'>{t('MORE_FILTERS')}</span>
-                </ChipButton>
-              </div>
-            )}
-          </div>
+          )}
         </div>
         <ReactModal
           isOpen={showFilters}
@@ -308,7 +308,7 @@ const DesktopForm: FC<Props> = observer(
 
     if (showCategoriesSlider) {
       return (
-        <div className='flex overflow-x-scroll mb-4'>
+        <div className='flex overflow-x-auto mb-4'>
           <CategoriesSlider
             categoriesOptions={categoriesOptions}
             onChangeCategory={onChangeCategory}

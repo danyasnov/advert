@@ -84,7 +84,6 @@ const Chip: FC<IChip> = ({
           <div className='h-20 flex w-full p-4 space-x-2 bg-white drop-shadow-card'>
             <SecondaryButton
               className='w-full h-full'
-              disabled={!hasValue}
               onClick={() => {
                 setOpen(false)
                 setTemp(value)

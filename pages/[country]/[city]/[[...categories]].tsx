@@ -176,6 +176,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       cacheId: productsResponse?.headers?.cacheId ?? null,
       // @ts-ignore
       aggregatedFields: productsResponse?.result?.aggregatedFields ?? null,
+      // @ts-ignore
+      hideDistanceSort: state.modified || false,
       filter,
       sortBy,
     }
