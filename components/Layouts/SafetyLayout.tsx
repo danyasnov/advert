@@ -466,7 +466,7 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex flex-col mx-4 s:mx-auto s:mt-20 items-center mx-4 s:mx-auto mt-8 '>
+      <div className='flex flex-col mx-4 s:mx-auto s:mt-20 items-center mt-8 '>
         <h1 className='mb-6 m:mb-[72px] text-h-4 m:text-h-2 l:text-h-1 text-center text-greyscale-900 font-semibold s:w-[704px] m:w-[944px] l:w-[1208px]'>
           {t('LENDING_SECURITY_FRAUDSTERS_CAN_BE')}
         </h1>

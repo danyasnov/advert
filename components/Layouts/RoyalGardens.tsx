@@ -602,7 +602,7 @@ const RoyalGardens: FC = observer(() => {
                   />
                 </div>
               </div>
-              <ul className='list-disc font-light mx-4 mt-4 m:mt-16 s:mx-0  text-greyscale-900 text-body-14 m:text-body-16'>
+              <ul className='list-disc font-light m:font-normal mx-4 mt-4 m:mt-16 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
                 {facilities.map((facilitie, index) => (
                   <li
                     // eslint-disable-next-line react/no-array-index-key
@@ -842,7 +842,7 @@ const RoyalGardens: FC = observer(() => {
                 <span className='text-body-16 text-greyscale-900  mb-4 m:mb-6'>
                   {t('LANDING_REAL_ESTATE_RIGHT_LOCATION_AREA')}
                 </span>
-                <ul className='list-disc font-normal mx-4 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
+                <ul className='list-disc font-light m:font-normal mx-4 s:mx-0 text-greyscale-900 text-body-14 m:text-body-16'>
                   {areas.map((area, index) => (
                     <li
                       // eslint-disable-next-line react/no-array-index-key
