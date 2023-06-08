@@ -19,7 +19,6 @@ import {NextApiRequestCookies} from 'next/dist/server/api-utils'
 import crypto from 'crypto'
 import jwtDecode from 'jwt-decode'
 import {NextRouter} from 'next/router'
-import NodeCache from 'node-cache'
 import {
   API_URL,
   getAddressByGPS,

@@ -155,7 +155,7 @@ const Banners: FC = observer(() => {
         },
       },
     },
-    [Autoplay({delay: 500000}), WheelGesturesPlugin()],
+    [Autoplay({delay: 5000}), WheelGesturesPlugin()],
   )
   useEffect(() => {
     if (embla) {
