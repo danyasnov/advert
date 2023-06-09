@@ -7,7 +7,6 @@ import LinkWrapper from './Buttons/LinkWrapper'
 
 const MainBanner: FC = () => {
   const {t} = useTranslation()
-  const OPTIONS: EmblaOptionsType = {}
 
   return (
     <div className='flex flex-col'>
@@ -71,21 +70,27 @@ const Banner: FC<{
   )
 }
 
-const photos = ['/img/vip-banner-1.png', '/img/vip-banner-2.png']
+const photos = [
+  '/img/vip-banner-1.png',
+  '/img/vip-banner-2.png',
+  '/img/vip-banner-3.png',
+  '/img/vip-banner-4.png',
+  '/img/vip-banner-5.png',
+  '/img/vip-banner-6.png',
+]
 
 const VipBanner: FC<{
   title: string
   description: string
   link: string
 }> = ({title, description, link}) => {
-  // const imageByIndex = (index: number): string => photos[index % photos.length]
-  // const slides = Array.from(Array(photos.length).keys())
-  const [viewportRef, embla] = useEmblaCarousel(
+  const {t} = useTranslation()
+  const [viewportRef] = useEmblaCarousel(
     {
       loop: true,
       containScroll: 'trimSnaps',
     },
-    [Autoplay({delay: 1000})],
+    [Autoplay({delay: 10000})],
   )
 
   return (
@@ -93,8 +98,8 @@ const VipBanner: FC<{
       <div
         className='bg-white hidden m:block w-[280px] h-[380px] rounded-[32px] overflow-hidden relative'
         ref={viewportRef}>
-        <div className='overflow-hidden flex relative'>
-          {photos.map((photo, index) => (
+        <div className='flex relative'>
+          {photos.map((photo) => (
             <div className='w-full' key={photo}>
               <ImageWrapper
                 type={photo}
@@ -108,16 +113,16 @@ const VipBanner: FC<{
           ))}
         </div>
 
-        {/* <div className='absolute left-0 top-8 bg-error skew-y-[-45deg] py-3'>
-          <span className='text-body-18 text-white font-extrabold'>
-            BEST OFFER
+        <div className='absolute flex -left-16 top-7 bg-error w-[230px] py-3 overflow-hidden -rotate-45'>
+          <span className='mx-auto text-body-18 text-white font-extrabold text-center'>
+            {t('BEST_OFFER')}
           </span>
-        </div> */}
+        </div>
         <div className='flex flex-col mt-2 px-6'>
           <span className='text-body-18 text-black font-semibold'>{title}</span>
           <span className='text-body-14 text-greyscale-600'>{description}</span>
           <span className='text-body-14 text-greyscale-600 font-medium mt-3'>
-            View now
+            {t('VIEW_NOW')}
           </span>
         </div>
       </div>
