@@ -1,6 +1,6 @@
 import {FC, ReactNode, useEffect, useRef} from 'react'
 import {useTranslation} from 'next-i18next'
-import useEmblaCarousel, {EmblaOptionsType} from 'embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import ImageWrapper from './ImageWrapper'
 import LinkWrapper from './Buttons/LinkWrapper'
@@ -12,11 +12,9 @@ const MainBanner: FC = () => {
     <div className='flex flex-col'>
       <div className='flex flex-col space-y-4 sticky top-[32px]'>
         <VipBanner
-          // id='vip-banner-1'
-          title='Royal Gardens Residence'
-          description='Luxurious and spacious residential apartment complex'
+          title={t('ROYAL_GARDENS_RESIDENCE')}
+          description={t('SPACIOUS_COMPLEX')}
           link='/royal-gardens'
-          // options={OPTIONS}
         />
         <Banner
           id='main-banner-1'
@@ -26,14 +24,6 @@ const MainBanner: FC = () => {
           descriptionColor='text-primary-500'
           link='/business'
         />
-        {/* <Banner
-          id='main-banner-2'
-          title={t('PROMOTION_TITLE1')}
-          titleColor='text-secondary-500'
-          description={t('PROMOTION_DESCRIPTION1')}
-          descriptionColor='text-white'
-          link='/business'
-        /> */}
       </div>
     </div>
   )
