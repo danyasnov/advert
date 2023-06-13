@@ -43,7 +43,7 @@ const Message: FC<Props> = ({message, user}) => {
             ? 'bg-primary-500 rounded-l-2xl text-white'
             : 'bg-greyscale-100 rounded-r-2xl text-greyscale-900'
         } rounded-b-2xl`}>
-        <div className='p-3 text-body-14'>
+        <div className='p-3 text-body-12 s:text-body-14'>
           {isLink ? (
             <LinkWrapper
               className='underline'

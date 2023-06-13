@@ -72,6 +72,7 @@ const ChatListener: FC = observer(() => {
       const error = await globalChatsStore.startConnection()
     }
     startConnection()
+    globalChatsStore.subscribeOnEvents()
     const cb = (message) => {
       if (message.ownerId === user.hash) return
       const notification = new Notification(t('NEW_MESSAGE'), {
@@ -89,6 +90,7 @@ const ChatListener: FC = observer(() => {
     return () => {
       chatEventEmitter.off('newMessage', cb)
       globalChatsStore.closeConnection()
+      globalChatsStore.unsubscribeFromEvents()
     }
   }, [user, state.authNewToken])
 
