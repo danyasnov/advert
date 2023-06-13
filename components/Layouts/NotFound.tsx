@@ -14,7 +14,7 @@ const NotFound: FC = observer(() => {
 
   return (
     <>
-      <MetaTags title='Page Not Found' />
+      <MetaTags title={t('PAGE_ERROR')} />
       <div className='bg-[#B8D5FF]'>
         <Header />
         <div className='flex flex-col s:flex-row s:justify-between items-center mx-4 s:pt-8 s:mx-auto s:w-[704px] m:w-[944px] l:w-[1210px]'>

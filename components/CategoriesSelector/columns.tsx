@@ -32,7 +32,6 @@ class FirstColItem extends PureComponent<ColItemProps> {
   render(): ReactNode {
     const {category, isActive, href, onClick} = this.props
     const {name} = category
-    console.log('cat', name)
 
     return (
       <CategoryItem
