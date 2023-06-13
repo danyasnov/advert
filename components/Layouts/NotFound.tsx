@@ -20,10 +20,10 @@ const NotFound: FC = observer(() => {
         <div className='flex flex-col s:flex-row s:justify-between items-center mx-4 s:pt-8 s:mx-auto s:w-[704px] m:w-[944px] l:w-[1210px]'>
           <div className='flex flex-col items-center s:items-start mt-10'>
             <h1 className='text-greyscale-900 font-bold text-[48px] m:text-[86px] l:text-[120px]'>
-              Oops
+              {t('OOPS_ERROR')}
             </h1>
             <h5 className='text-greyscale-800 font-bold text-[20px] m:text-[32px] l:text-[40px]'>
-              Sorry, page not found...
+              {t('PAGE_ERROR')}
             </h5>
             <div className='relative s:hidden w-[177px] h-[213px]'>
               <ImageWrapper
@@ -39,7 +39,7 @@ const NotFound: FC = observer(() => {
                 return push(`/`)
               }}>
               <span className='text-body-14 font-bold px-4 py-2.5'>
-                Go back
+                {t('BACK_ERROR')}
               </span>
             </Button>
           </div>
