@@ -13,7 +13,9 @@ import {
   Edit,
   TickSquare,
   TimeCircle,
+  ChevronLeft,
 } from 'react-iconly'
+import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
 import {useWindowSize} from 'react-use'
 import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
@@ -27,6 +29,7 @@ import {
 } from '../../providers/RootStoreProvider'
 import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
+import UserProfile from '../UserProfile'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
 import ChatList from '../Chat/ChatList'
@@ -39,6 +42,12 @@ import {
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
 import SubscribersSubscriptionsList from '../SubscribersSubscriptionsList'
+import Header from '../Header'
+import Footer from '../Footer'
+import MobileAppBottomSheet from '../MobileAppBottomSheet'
+import Logo from '../Logo'
+import LinkWrapper from '../Buttons/LinkWrapper'
+import UserBurger from '../UserBurger'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -80,6 +89,7 @@ const UserLayout: FC = observer(() => {
   const desktopUser = width >= 768 && activeUserPage === null
   const mobileUser =
     width < 768 && !isCurrentUser && activeUserPage !== 'subscribers'
+  const tablet = width >= 768 && width < 1024
   useEffect(() => {
     if (query.chatId) {
       setActiveUserPage('chat')
@@ -314,19 +324,36 @@ const UserLayout: FC = observer(() => {
   ]
 
   return (
-    <HeaderFooterWrapper>
+    // <HeaderFooterWrapper>
+    <>
+      <div className='s:hidden m:block'>
+        <Header />
+      </div>
+      <div className='hidden s:flex m:hidden justify-between items-center mt-7 mx-8'>
+        <Button
+          onClick={() => {
+            router.back()
+          }}>
+          <ChevronLeft set='light' size={24} />
+        </Button>
+        <Logo />
+        <UserBurger />
+      </div>
       <MetaTags
         title={t('USER_PAGE_TITLE', {hash: user.hash})}
         description={t('USER_PAGE_DESCRIPTION', {hash: user.hash})}
         user={user}
       />
-      <div className='py-8 m:flex min-h-1/2'>
+      <div className='py-8 s:py-4 m:py-8 m:flex min-h-1/2'>
         <div className='m:flex m:mx-12 m:justify-center m:w-full'>
           <div className='m:w-944px l:w-[1208px] mx-4 s:mx-8 m:mx-0 flex justify-between'>
-            <aside className='hidden s:block s:w-[224px] m:w-[280px] drop-shadow-card'>
+            <aside className='hidden m:block s:w-[224px] m:w-[280px] drop-shadow-card'>
               <UserSidebar />
             </aside>
-            <main className='w-full s:w-[464px] m:w-[614px] l:w-896px relative drop-shadow-card'>
+            <main className='w-full s:w-[704px] m:w-[614px] l:w-896px relative drop-shadow-card'>
+              <div className='hidden s:block m:hidden'>
+                <UserProfile />
+              </div>
               {((isCurrentUser && !activeUserPage) || !isCurrentUser) && (
                 <div className='s:hidden'>
                   <UserSidebar />
@@ -631,13 +658,16 @@ const UserLayout: FC = observer(() => {
           </div>
         </div>
       </div>
-    </HeaderFooterWrapper>
+      <Footer />
+      <MobileAppBottomSheet />
+    </>
+    // </HeaderFooterWrapper>
   )
 })
 
 const SectionTitle: FC<{title: string}> = observer(({title}) => {
   const {setActiveUserPage} = useGeneralStore()
-  const className = 'text-h-5 font-bold text-greyscale-900'
+  const className = 's:hidden m:block text-h-5 font-bold text-greyscale-900'
   return (
     <div className='mb-8 z-10 relative'>
       <Button onClick={() => setActiveUserPage(null)} className='s:hidden'>
