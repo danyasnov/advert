@@ -89,7 +89,10 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
               onClick={() => {
                 router.push(`/user/${subscription.id}`)
               }}>
-              <span className='break-words line-clamp-2 text-left w-[71px] text-body-14 s:text-body-16  text-greyscale-900 hover:text-primary-500'>
+              <span
+                className={`break-words line-clamp-2 text-left ${
+                  userHash ? 'w-[71px]' : ''
+                }  text-body-14 s:text-body-16  text-greyscale-900 hover:text-primary-500`}>
                 {subscription.name} {subscription.surname}
               </span>
             </Button>
