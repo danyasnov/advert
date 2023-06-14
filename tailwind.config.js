@@ -169,6 +169,7 @@ module.exports = {
         purple: '#7210FF',
         'input-bg': 'rgba(114, 16, 255, 0.08)',
         yellow: '#FFFEE0',
+        blue: '#B8D5FF',
       },
       zIndex: {
         9: 9,

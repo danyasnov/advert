@@ -77,7 +77,7 @@ module.exports = {
     return [
       {
         source: '/404',
-        destination: '/page-not-found',
+        destination: '/not-found',
         permanent: true,
       },
     ]

@@ -20,6 +20,7 @@ import Button from '../Buttons/Button'
 import SuccessModal from '../Modals/SuccessModal'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import {handleMetrics, trackSingle} from '../../helpers'
+import SimpleFooter from '../SimpleFooter'
 
 const features = [
   {
@@ -335,39 +336,7 @@ const BusinessLayout: FC = observer(() => {
             </div>
           </div>
         </div>
-        <div className='border-t border-greyscale-200 mt-12 s:mt-25 m:mt-[150px] mb-8 -mx-4 s:-mx-8 m:-mx-10'>
-          <div className='flex flex-col s:flex-row s:items-center mx-4 s:mx-8 m:mx-10 s:mt-8'>
-            <div className='flex flex-col s:flex-row space-y-10 s:space-y-0 s:space-x-10 text-greyscale-900 text-body-16 font-semibold text-left my-8 s:my-0 s:justify-between w-full'>
-              <LinkWrapper
-                title={t('TERMS_AND_CONDITIONS')}
-                className='flex items-center whitespace-nowrap'
-                href='/p/terms-and-conditions'>
-                {t('TERMS_AND_CONDITIONS')}
-              </LinkWrapper>
-              <LinkWrapper
-                title={t('PRIVACY_POLICY')}
-                className='flex items-center whitespace-nowrap'
-                href='/p/privacy-policy'>
-                {t('PRIVACY_POLICY')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex items-center whitespace-nowrap'
-                title={t('COOKIES_POLICY')}
-                href='/p/cookies-policy'>
-                {t('COOKIES_POLICY')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex items-center w-full'
-                title={t('SUPPORT')}
-                href='/support'>
-                {t('SUPPORT')}
-              </LinkWrapper>
-            </div>
-            <div className='text-body-14 font-normal text-greyscale-900 self-start whitespace-nowrap'>
-              © {new Date().getFullYear()} VooXee
-            </div>
-          </div>
-        </div>
+        <SimpleFooter />
       </div>
       <SuccessModal
         imageSrc='/img/business-success.png'
