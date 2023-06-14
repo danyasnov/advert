@@ -76,7 +76,7 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
   }
 
   return (
-    <div className='grid  m:grid-cols-2 gap-5 mb-20'>
+    <div className='grid  s:grid-cols-2 gap-5 mb-20'>
       {subscriptions.map((subscription) => (
         <div className='flex bg-white shrink-0 rounded-3xl w-full shadow-1 py-[18px] px-[13px] s:px-3 justify-between'>
           <div className='flex items-center shrink-0 space-x-4'>

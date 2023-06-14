@@ -61,6 +61,13 @@ const getSubscribeTabs = (t: TFunction, sizes) => [
   {title: `${t('SUBSCRIPTIONS')}`, id: 2, count: sizes[2]},
 ]
 
+const getFavoriteTab = (t: TFunction, sizes) => [
+  {title: `${t('FAVORITE')}`, id: 1, count: sizes[1]},
+]
+
+const getDraftTab = (t: TFunction, sizes) => [
+  {title: `${t('DRAFTS')}`, id: 1, count: sizes[1]},
+]
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
@@ -137,6 +144,12 @@ const UserLayout: FC = observer(() => {
   const subscribeTabs = getSubscribeTabs(t, {
     1: isNumber(user.subscribers) ? user.subscribers : '',
     2: isNumber(user.subscribs) ? user.subscribs : '',
+  })
+  const favoriteTab = getFavoriteTab(t, {
+    1: isNumber(userFavorite.count) ? userFavorite.count : '',
+  })
+  const draftTab = getDraftTab(t, {
+    1: isNumber(user.draftsProductCount) ? user.draftsProductCount : '',
   })
   const mappedDrafts = ((drafts.items as unknown as DraftModel[]) || []).map(
     (d) => {
@@ -336,7 +349,26 @@ const UserLayout: FC = observer(() => {
           }}>
           <ChevronLeft set='light' size={24} />
         </Button>
-        <Logo />
+        <div
+          className={`${
+            activeUserPage === 'chat' || activeUserPage === 'subscribers'
+              ? 'hidden'
+              : 'block'
+          } `}>
+          <Logo />
+        </div>
+        <span
+          className={`${
+            activeUserPage !== 'chat' ? 'hidden' : 'block'
+          } text-body-16`}>
+          {t('MESSAGES')}
+        </span>
+        <span
+          className={`${
+            activeUserPage !== 'subscribers' ? 'hidden' : 'block'
+          } text-body-16`}>
+          {t('SUBSCRIBERS_AND_SUBSCRIPTIONS')}
+        </span>
         <UserBurger />
       </div>
       <MetaTags
@@ -350,8 +382,13 @@ const UserLayout: FC = observer(() => {
             <aside className='hidden m:block s:w-[224px] m:w-[280px] drop-shadow-card'>
               <UserSidebar />
             </aside>
-            <main className='w-full s:w-[704px] m:w-[614px] l:w-896px relative drop-shadow-card'>
-              <div className='hidden s:block m:hidden'>
+            <main className='w-full m:w-[614px] l:w-896px relative drop-shadow-card'>
+              <div
+                className={`${
+                  activeUserPage === 'chat' || activeUserPage === 'subscribers'
+                    ? 's:hidden'
+                    : 's:block'
+                } hidden m:hidden `}>
                 <UserProfile />
               </div>
               {((isCurrentUser && !activeUserPage) || !isCurrentUser) && (
@@ -524,7 +561,20 @@ const UserLayout: FC = observer(() => {
               {activeUserPage === 'drafts' && (
                 <div>
                   <SectionTitle title={t('DRAFTS')} />
-
+                  {tablet && (
+                    <div className='z-10 relative mt-8 mb-10'>
+                      <Tabs
+                        items={isCurrentUser ? draftTab : null}
+                        onChange={(id) => {
+                          robustShallowUpdateQuery(router, {
+                            page: 'drafts',
+                            activeTab: id,
+                          })
+                        }}
+                        value={1}
+                      />
+                    </div>
+                  )}
                   <UserTabWrapper
                     getOptions={getDraftOptions}
                     // @ts-ignore
@@ -549,6 +599,20 @@ const UserLayout: FC = observer(() => {
               {activeUserPage === 'favorites' && (
                 <div>
                   <SectionTitle title={t('FAVORITE')} />
+                  {tablet && (
+                    <div className='z-10 relative mt-8 mb-10'>
+                      <Tabs
+                        items={isCurrentUser ? favoriteTab : null}
+                        onChange={(id) => {
+                          robustShallowUpdateQuery(router, {
+                            page: 'favorites',
+                            activeTab: id,
+                          })
+                        }}
+                        value={1}
+                      />
+                    </div>
+                  )}
                   <UserTabWrapper
                     products={userFavorite.items}
                     page={userFavorite.page}

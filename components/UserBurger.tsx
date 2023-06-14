@@ -116,20 +116,70 @@ const UserBurger: FC<Props> = observer(({onLogin, hide}) => {
               className='absolute right-0 top-14 bg-white shadow-2xl rounded-lg w-[320px] z-10'
               data-test-id='user-menu-body'>
               <div className='space-y-8 py-8'>
-                {options.map(({title, icon, onClick}) => (
-                  <Button
-                    className='px-8 text-greyscale-900 hover:text-primary-500 w-full rounded-lg'
-                    onClick={() => {
-                      onClick()
-                      setShowPopup(false)
-                      setActive(true)
-                    }}>
-                    {icon}
-                    <span className='w-full ml-4 text-left text-body-16 font-medium'>
-                      {title}
-                    </span>
-                  </Button>
-                ))}
+                <Button
+                  className={`${
+                    activeUserPage === 'adverts' || activeUserPage === null
+                      ? 'text-primary-500'
+                      : 'text-greyscale-900'
+                  } px-8 hover:text-primary-500 w-full rounded-lg`}
+                  onClick={() => {
+                    router.push(`/user/${user.hash}`)
+                    setShowPopup(false)
+                    setActive(true)
+                  }}>
+                  <IcAds className='w-7 h-7 fill-current' />
+                  <span className='w-full ml-4 text-left text-body-16 font-medium'>
+                    {t('MY_ADVERTISIMENT')}
+                  </span>
+                </Button>
+                <Button
+                  className={`${
+                    activeUserPage === 'favorites'
+                      ? 'text-primary-500'
+                      : 'text-greyscale-900'
+                  } px-8 hover:text-primary-500 w-full rounded-lg`}
+                  onClick={() => {
+                    router.push(`/user/${user.hash}?page=favorites`)
+                    setShowPopup(false)
+                    setActive(true)
+                  }}>
+                  <Heart2 filled size={28} />
+                  <span className='w-full ml-4 text-left text-body-16 font-medium'>
+                    {t('FAVORITE')}
+                  </span>
+                </Button>
+                <Button
+                  className={`${
+                    activeUserPage === 'drafts'
+                      ? 'text-primary-500'
+                      : 'text-greyscale-900'
+                  } px-8 hover:text-primary-500 w-full rounded-lg`}
+                  onClick={() => {
+                    router.push(`/user/${user.hash}?page=drafts`)
+                    setShowPopup(false)
+                    setActive(true)
+                  }}>
+                  <IcCreate className='fill-current h-7 w-7' />
+                  <span className='w-full ml-4 text-left text-body-16 font-medium'>
+                    {t('DRAFTS')}
+                  </span>
+                </Button>
+                <Button
+                  className={`${
+                    activeUserPage === 'chat'
+                      ? 'text-primary-500'
+                      : 'text-greyscale-900'
+                  } px-8 hover:text-primary-500 w-full rounded-lg`}
+                  onClick={() => {
+                    router.push(`/user/${user.hash}?page=chat`)
+                    setShowPopup(false)
+                    setActive(true)
+                  }}>
+                  <Message filled size={28} />
+                  <span className='w-full ml-4 text-left text-body-16 font-medium'>
+                    {t('MESSAGES')}
+                  </span>
+                </Button>
 
                 <LogoutButton
                   className='px-8 text-greyscale-500 hover:text-primary-500 w-full rounded-lg'
