@@ -15,7 +15,6 @@ import {
   TimeCircle,
   ChevronLeft,
 } from 'react-iconly'
-import IcArrowDropDown from 'icons/material/ArrowDropDown.svg'
 import {useWindowSize} from 'react-use'
 import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
@@ -337,7 +336,6 @@ const UserLayout: FC = observer(() => {
   ]
 
   return (
-    // <HeaderFooterWrapper>
     <>
       <div className='s:hidden m:block'>
         <Header />
@@ -725,7 +723,6 @@ const UserLayout: FC = observer(() => {
       <Footer />
       <MobileAppBottomSheet />
     </>
-    // </HeaderFooterWrapper>
   )
 })
 
