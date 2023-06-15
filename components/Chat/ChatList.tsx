@@ -62,11 +62,10 @@ const ChatList: FC = observer(() => {
   return (
     <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white'>
       <div className='flex flex-col py-4 px-3 m:pl-0 m:pr-6'>
-        <input
-          className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6'
-          placeholder='SEARCH_MESSAGES'
-        />
-        <div />
+        {/* <input */}
+        {/*  className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6' */}
+        {/*  placeholder='SEARCH_MESSAGES' */}
+        {/* /> */}
         {!isEmpty(chats) && (
           <div className='flex flex-col max-h-[calc(100vh-300px)] overflow-y-auto overflow-x-hidden  m:border-r m:border-greyscale-100'>
             {chats.map((chat, index, array) => {
