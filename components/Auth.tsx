@@ -70,7 +70,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
     {
       title: t('MESSAGES'),
       onClick: () => {
-        router.push(`/user/${user.hash}?page=chat`)
+        router.push(`/chat`)
       },
     },
     {
@@ -102,7 +102,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
           </Button>
           {showPopup && (
             <div
-              className='absolute right-0 top-14 bg-white shadow-2xl rounded-lg w-[186px]'
+              className='absolute z-[1] right-0 top-14 bg-white shadow-2xl rounded-lg w-[186px]'
               data-test-id='user-menu-body'>
               <div className='space-y-5 py-4'>
                 {options.map(({title, onClick}) => (

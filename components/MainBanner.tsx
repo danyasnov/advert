@@ -1,5 +1,7 @@
-import {FC, ReactNode} from 'react'
+import {FC, ReactNode, useEffect, useRef} from 'react'
 import {useTranslation} from 'next-i18next'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import ImageWrapper from './ImageWrapper'
 import LinkWrapper from './Buttons/LinkWrapper'
 
@@ -9,20 +11,17 @@ const MainBanner: FC = () => {
   return (
     <div className='flex flex-col'>
       <div className='flex flex-col space-y-4 sticky top-[32px]'>
+        <VipBanner
+          title={t('ROYAL_GARDENS_RESIDENCE')}
+          description={t('SPACIOUS_COMPLEX')}
+          link='/royal-gardens'
+        />
         <Banner
           id='main-banner-1'
           title={t('PROMOTION_TITLE2')}
           titleColor='text-primary-500'
           description={t('PROMOTION_DESCRIPTION2')}
           descriptionColor='text-primary-500'
-          link='/business'
-        />
-        <Banner
-          id='main-banner-2'
-          title={t('PROMOTION_TITLE1')}
-          titleColor='text-secondary-500'
-          description={t('PROMOTION_DESCRIPTION1')}
-          descriptionColor='text-white'
           link='/business'
         />
       </div>
@@ -56,6 +55,66 @@ const Banner: FC<{
           width={280}
           height={380}
         />
+      </div>
+    </LinkWrapper>
+  )
+}
+
+const photos = [
+  '/img/vip-banner-1.png',
+  '/img/vip-banner-2.png',
+  '/img/vip-banner-3.png',
+  '/img/vip-banner-4.png',
+  '/img/vip-banner-5.png',
+  '/img/vip-banner-6.png',
+]
+
+const VipBanner: FC<{
+  title: string
+  description: string
+  link: string
+}> = ({title, description, link}) => {
+  const {t} = useTranslation()
+  const [viewportRef] = useEmblaCarousel(
+    {
+      loop: true,
+      containScroll: 'trimSnaps',
+    },
+    [Autoplay({delay: 10000})],
+  )
+
+  return (
+    <LinkWrapper href={link} title={title}>
+      <div
+        className='bg-white hidden m:block w-[280px] h-[380px] rounded-[32px] overflow-hidden relative'
+        ref={viewportRef}>
+        <div className='flex relative'>
+          {photos.map((photo) => (
+            <div className='w-full rounded-t-[32px]' key={photo}>
+              <ImageWrapper
+                type={photo}
+                layout='fixed'
+                alt='vip-promo'
+                width={280}
+                height={254}
+                objectFit='contain'
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className='absolute flex -left-16 top-7 bg-error w-[230px] py-3 overflow-hidden -rotate-45'>
+          <span className='mx-auto text-body-18 text-white font-extrabold text-center'>
+            {t('BEST_OFFER')}
+          </span>
+        </div>
+        <div className='flex flex-col mt-2 px-6'>
+          <span className='text-body-18 text-black font-semibold'>{title}</span>
+          <span className='text-body-14 text-greyscale-600'>{description}</span>
+          <span className='text-body-14 text-greyscale-600 font-medium mt-3'>
+            {t('VIEW_NOW')}
+          </span>
+        </div>
       </div>
     </LinkWrapper>
   )

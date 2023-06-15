@@ -18,7 +18,6 @@ import {
 import {useWindowSize} from 'react-use'
 import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
-import {toJS} from 'mobx'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {
@@ -31,9 +30,7 @@ import UserSidebar from '../UserSidebar'
 import UserProfile from '../UserProfile'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import ChatList from '../Chat/ChatList'
 import {makeRequest} from '../../api'
-import {PagesType} from '../../stores/GeneralStore'
 import {
   getQueryValue,
   robustShallowUpdateQuery,
@@ -45,8 +42,8 @@ import Header from '../Header'
 import Footer from '../Footer'
 import MobileAppBottomSheet from '../MobileAppBottomSheet'
 import Logo from '../Logo'
-import LinkWrapper from '../Buttons/LinkWrapper'
 import UserBurger from '../UserBurger'
+import {PagesType} from '../../stores/GeneralStore'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -104,7 +101,6 @@ const UserLayout: FC = observer(() => {
     }
     return () => setActiveUserPage('adverts')
   }, [query])
-
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
@@ -627,12 +623,6 @@ const UserLayout: FC = observer(() => {
                     }}
                     tab='favorites'
                   />
-                </div>
-              )}
-              {activeUserPage === 'chat' && (
-                <div>
-                  <SectionTitle title={t('MESSAGES')} />
-                  <ChatList />
                 </div>
               )}
               {isCurrentUser && showTour && (
