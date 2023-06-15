@@ -44,6 +44,8 @@ import MobileAppBottomSheet from '../MobileAppBottomSheet'
 import Logo from '../Logo'
 import UserBurger from '../UserBurger'
 import {PagesType} from '../../stores/GeneralStore'
+import UserAdverts from '../UserAdverts'
+import UserDrafts from '../UserDrafts'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -428,8 +430,14 @@ const UserLayout: FC = observer(() => {
                   )}
                 </div>
               )}
-              {(desktopUser || activeUserPage === 'adverts' || mobileUser) && (
-                <div>
+
+              {
+                (desktopUser || activeUserPage === 'adverts' || mobileUser) && (
+                  <UserAdverts />
+                )
+
+                /*  {
+                   <div>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
                     <SectionTitle
                       title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
@@ -550,10 +558,14 @@ const UserLayout: FC = observer(() => {
                       tab='archive'
                     />
                   )}
-                </div>
-              )}
-              {activeUserPage === 'drafts' && (
-                <div>
+                </div> 
+                } */
+              }
+
+              {
+                activeUserPage === 'drafts' && <UserDrafts />
+
+                /* <div>
                   <SectionTitle title={t('DRAFTS')} />
                   {tablet && (
                     <div className='z-10 relative mt-8 mb-10'>
@@ -588,8 +600,8 @@ const UserLayout: FC = observer(() => {
                     }}
                     tab='drafts'
                   />
-                </div>
-              )}
+                </div> */
+              }
               {activeUserPage === 'favorites' && (
                 <div>
                   <SectionTitle title={t('FAVORITE')} />
