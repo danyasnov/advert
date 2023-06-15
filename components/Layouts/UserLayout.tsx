@@ -36,6 +36,7 @@ import {
 } from '../../helpers'
 import {SerializedCookiesState} from '../../types'
 import SubscribersSubscriptionsList from '../SubscribersSubscriptionsList'
+import {PagesType} from '../../stores/GeneralStore'
 
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
@@ -56,7 +57,7 @@ const UserLayout: FC = observer(() => {
   const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
   const activeSubscriptionTab = toNumber(getQueryValue(query, 'activeTab')) || 1
   const router = useRouter()
-  const {userHash, activeUserPage} = useGeneralStore()
+  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
   const {width} = useWindowSize()
   const {
     userSale,
@@ -77,7 +78,14 @@ const UserLayout: FC = observer(() => {
   const desktopUser = width >= 768 && activeUserPage === null
   const mobileUser =
     width < 768 && !isCurrentUser && activeUserPage !== 'subscribers'
-
+  useEffect(() => {
+    if (query.chatId) {
+      setActiveUserPage('chat')
+    } else if (query.page) {
+      setActiveUserPage(query.page as PagesType)
+    }
+    return () => setActiveUserPage('adverts')
+  }, [query])
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
     fetchRatings()
