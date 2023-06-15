@@ -91,8 +91,10 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
               }}>
               <span
                 className={`break-words line-clamp-2 text-left ${
-                  userHash ? 'w-[71px]' : ''
-                }  text-body-14 s:text-body-16  text-greyscale-900 hover:text-primary-500`}>
+                  userHash
+                    ? 'w-[85px] s:w-[220px] m:w-[80px] l:w-[220px]'
+                    : 's:w-[320px] m:w-[200px] l:w-[320px]'
+                }  text-body-14 s:text-body-16  text-greyscale-900 hover:text-primary-500 overflow-hidden`}>
                 {subscription.name} {subscription.surname}
               </span>
             </Button>
