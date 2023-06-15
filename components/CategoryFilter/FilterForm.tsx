@@ -203,7 +203,6 @@ const FilterForm: FC = observer(() => {
           })
           .filter(([, value]) => !!value),
       )
-      console.log(mappedFields)
 
       setInitialValue(values)
       let condition = ''

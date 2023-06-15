@@ -70,7 +70,7 @@ const Auth: FC<Props> = observer(({onLogin, hide}) => {
     {
       title: t('MESSAGES'),
       onClick: () => {
-        router.push(`/user/${user.hash}?page=chat`)
+        router.push(`/chat`)
       },
     },
     {

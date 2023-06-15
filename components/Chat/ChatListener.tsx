@@ -83,7 +83,7 @@ const ChatListener: FC = observer(() => {
       notification.onclick = (event) => {
         event.preventDefault()
         notification.close()
-        window.open(`/user/${user.hash}?chatId=${message.chatId}`)
+        window.open(`/chat?chatId=${message.chatId}`)
       }
     }
     chatEventEmitter.on('newMessage', cb)

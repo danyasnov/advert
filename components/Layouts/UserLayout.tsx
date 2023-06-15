@@ -17,7 +17,6 @@ import {
 import {useWindowSize} from 'react-use'
 import {DraftModel, RemoveFromSaleType} from 'front-api/src/models'
 import {toast} from 'react-toastify'
-import {toJS} from 'mobx'
 import UserTabWrapper from '../UserTabWrapper'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {
@@ -29,9 +28,7 @@ import Tabs from '../Tabs'
 import UserSidebar from '../UserSidebar'
 import Button from '../Buttons/Button'
 import MetaTags from '../MetaTags'
-import ChatList from '../Chat/ChatList'
 import {makeRequest} from '../../api'
-import {PagesType} from '../../stores/GeneralStore'
 import {
   getQueryValue,
   robustShallowUpdateQuery,
@@ -59,7 +56,7 @@ const UserLayout: FC = observer(() => {
   const activeTab = toNumber(getQueryValue(query, 'activeTab')) || 2
   const activeSubscriptionTab = toNumber(getQueryValue(query, 'activeTab')) || 1
   const router = useRouter()
-  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
+  const {userHash, activeUserPage} = useGeneralStore()
   const {width} = useWindowSize()
   const {
     userSale,
@@ -80,14 +77,6 @@ const UserLayout: FC = observer(() => {
   const desktopUser = width >= 768 && activeUserPage === null
   const mobileUser =
     width < 768 && !isCurrentUser && activeUserPage !== 'subscribers'
-  useEffect(() => {
-    if (query.chatId) {
-      setActiveUserPage('chat')
-    } else if (query.page) {
-      setActiveUserPage(query.page as PagesType)
-    }
-    return () => setActiveUserPage('adverts')
-  }, [query])
 
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})
@@ -538,12 +527,6 @@ const UserLayout: FC = observer(() => {
                     }}
                     tab='favorites'
                   />
-                </div>
-              )}
-              {activeUserPage === 'chat' && (
-                <div>
-                  <SectionTitle title={t('MESSAGES')} />
-                  <ChatList />
                 </div>
               )}
               {isCurrentUser && showTour && (
