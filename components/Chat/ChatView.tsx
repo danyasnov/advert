@@ -5,6 +5,7 @@ import {useTranslation} from 'next-i18next'
 import {groupBy} from 'lodash'
 import {ArrowLeft, Send} from 'react-iconly'
 import TextareaAutosize from 'react-textarea-autosize'
+import {useRouter} from 'next/router'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import {unixMlToDate} from '../../utils'
 import Button from '../Buttons/Button'
@@ -20,6 +21,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     const {user} = useGeneralStore()
     const messagesRef = useRef<HTMLDivElement>()
 
+    const router = useRouter()
     const storeCreator = useCallback(
       () => new ChatStore(chat, user.hash),
       [chat],
@@ -78,7 +80,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             {t('BACK_TO_ALL_CHATS')}
           </span>
         </Button>
-        <div className='flex items-center mb-6'>
+        <Button
+          onClick={() => {
+            router.push(`/user/${interlocutor.id}`)
+          }}
+          className='self-start mb-6'>
           <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
             <UserAvatar
               size={10}
@@ -86,7 +92,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               url={interlocutor.avatarSrc}
             />
           </div>
-          <div className='flex flex-col'>
+          <div className='flex flex-col text-left'>
             <span className='text-body-16 font-semibold text-greyscale-900 w-[160px] s:w-[276px] truncate'>
               {interlocutor.name}
             </span>
@@ -97,10 +103,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
             </span>
           </div>
-          {/* <Button className='ml-4'> */}
-          {/*  <MoreCircle size={24} /> */}
-          {/* </Button> */}
-        </div>
+        </Button>
         <LinkWrapper
           href={`/b/${product.id}`}
           title='product link'
