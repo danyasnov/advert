@@ -80,11 +80,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             {t('BACK_TO_ALL_CHATS')}
           </span>
         </Button>
-        <Button
-          onClick={() => {
-            router.push(`/user/${interlocutor.id}`)
-          }}
-          className='self-start mb-6'>
+        <LinkWrapper
+          href={`/user/${interlocutor.id}`}
+          title={interlocutor.name}
+          target='_blank'
+          className='self-start mb-6 flex w-full'>
           <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
             <UserAvatar
               size={10}
@@ -92,8 +92,8 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               url={interlocutor.avatarSrc}
             />
           </div>
-          <div className='flex flex-col text-left'>
-            <span className='text-body-16 font-semibold text-greyscale-900 w-[160px] s:w-[276px] truncate'>
+          <div className='flex flex-col text-left w-full'>
+            <span className='text-body-16 font-semibold text-greyscale-900 line-clamp-1 w-full'>
               {interlocutor.name}
             </span>
             <span
@@ -103,7 +103,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
             </span>
           </div>
-        </Button>
+        </LinkWrapper>
         <LinkWrapper
           href={`/b/${product.id}`}
           title='product link'
@@ -111,7 +111,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
           <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
             <div className='mr-4'>
               {product.image ? (
-                <div className='rounded-2xl relative overflow-hidden w-[56px] h-[56px]'>
+                <div className='rounded-xl relative overflow-hidden w-[40px] h-[40px] s:w-[56px] s:h-[56px]'>
                   <ImageWrapper
                     type={product.image}
                     alt='product'
