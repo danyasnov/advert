@@ -156,3 +156,10 @@ export const download = (title, href) => {
   link.href = href
   link.click()
 }
+
+export const normalizeString = (string: string) => {
+  if (typeof string === 'string') {
+    return string.toLowerCase().trim()
+  }
+  return ''
+}

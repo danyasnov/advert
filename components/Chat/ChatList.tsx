@@ -1,30 +1,41 @@
-import {FC, useCallback, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {ChatData, ChatStore, globalChatsStore} from 'chats'
-import {ArrowLeft, Delete, Send} from 'react-iconly'
+import {ChatData, globalChatsStore} from 'chats'
 import {useTranslation} from 'next-i18next'
-import {groupBy, size, isEmpty} from 'lodash'
-import TextareaAutosize from 'react-textarea-autosize'
+import {size, isEmpty} from 'lodash'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
-import Button from '../Buttons/Button'
 import ImageWrapper from '../ImageWrapper'
-import UserAvatar from '../UserAvatar'
-import {unixMlToDate} from '../../utils'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
-import Message from './Message'
+import {normalizeString, unixMlToDate} from '../../utils'
 import EmptyProductImage from '../EmptyProductImage'
-import LinkWrapper from '../Buttons/LinkWrapper'
 import EmptyTab from '../EmptyTab'
-import {robustShallowUpdateQuery} from '../../helpers'
 import RequestNotificationModal from '../Modals/RequestNotificationModal'
 import ChatView from './ChatView'
 import SelectChatPlaceholder from './SelectChatPlaceholder'
+
+const filterChats = (chats: ChatData[], query: string) => {
+  const normalizedQuery = normalizeString(query)
+
+  if (!normalizedQuery) {
+    return chats
+  }
+  return chats.filter((chat) => {
+    const productTitle = normalizeString(chat.product.title)
+    const ownerName = normalizeString(chat.interlocutor.name)
+    const lastMessageText = normalizeString(chat.lastMessage.text)
+    return (
+      productTitle.includes(normalizedQuery) ||
+      ownerName.includes(normalizedQuery) ||
+      lastMessageText.includes(normalizedQuery)
+    )
+  })
+}
 
 const ChatList: FC = observer(() => {
   const [showModal, setShowModal] = useState(false)
   const {width} = useWindowSize()
   const {t} = useTranslation()
+  const [query, setQuery] = useState('')
   const router = useRouter()
   const {chats} = globalChatsStore
   useEffect(() => {
@@ -40,6 +51,10 @@ const ChatList: FC = observer(() => {
       setShowModal(true)
     }
   }, [])
+
+  const filteredChats = useMemo(() => {
+    return filterChats(chats, query)
+  }, [chats, query])
 
   const [selectedChat, setSelectedChat] = useState<ChatData>(null)
 
@@ -62,13 +77,17 @@ const ChatList: FC = observer(() => {
   return (
     <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white'>
       <div className='flex flex-col py-4 px-3 m:pl-0 m:pr-6'>
-        {/* <input */}
-        {/*  className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6' */}
-        {/*  placeholder='SEARCH_MESSAGES' */}
-        {/* /> */}
-        {!isEmpty(chats) && (
+        <input
+          className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6'
+          placeholder='SEARCH_MESSAGES'
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value)
+          }}
+        />
+        {!isEmpty(filteredChats) && (
           <div className='flex flex-col max-h-[calc(100vh-300px)] overflow-y-auto overflow-x-hidden  m:border-r m:border-greyscale-100'>
-            {chats.map((chat, index, array) => {
+            {filteredChats.map((chat, index, array) => {
               const hasNewMessages = !!chat.newMessagesCount
               if (!chat.lastMessage.id) return null
               const lastMsg = (
@@ -179,7 +198,7 @@ const ChatList: FC = observer(() => {
             })}
           </div>
         )}
-        {isEmpty(chats) && !selectedChat && (
+        {isEmpty(filteredChats) && !selectedChat && (
           <div className='flex justify-center'>
             <EmptyTab
               description='MASSAGES_EMPTY'
