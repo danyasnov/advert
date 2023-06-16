@@ -16,6 +16,15 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const state = await processCookies(ctx)
 
+  if (!state.authNewToken) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    }
+  }
+
   const message = await checkToken(state.authNewToken)
   if (message === 'LOGIN_REDIRECT') {
     return redirectToLogin(ctx.resolvedUrl)
