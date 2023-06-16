@@ -101,7 +101,7 @@ const ChatList: FC = observer(() => {
                     {chat.lastMessage.text}
                   </span>
                   {hasNewMessages && (
-                    <span className='text-body-12 s:text-body-14 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
+                    <span className='text-body-12 s:text-body-14 font-semibold text-white bg-error rounded-full w-5 h-5 flex items-center justify-center'>
                       {chat.newMessagesCount}
                     </span>
                   )}
