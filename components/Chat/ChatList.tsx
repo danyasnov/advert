@@ -60,7 +60,7 @@ const ChatList: FC = observer(() => {
 
   if (selectedChat && width < 1024) {
     return (
-      <div className='flex flex-col s:px-8 s:py-6 s:bg-white s:drop-shadow-card s:rounded-3xl'>
+      <div className='flex flex-col s:px-8 s:py-6 s:bg-white s:drop-shadow-card s:rounded-3xl h-full'>
         <ChatView
           chat={selectedChat}
           onClose={() => {
@@ -75,7 +75,7 @@ const ChatList: FC = observer(() => {
   }
 
   return (
-    <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white'>
+    <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white h-full'>
       <div className='flex flex-col py-4 px-3 m:pl-0 m:pr-6'>
         <input
           className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6'
@@ -86,7 +86,7 @@ const ChatList: FC = observer(() => {
           }}
         />
         {!isEmpty(filteredChats) && (
-          <div className='flex flex-col max-h-[calc(100vh-300px)] overflow-y-auto overflow-x-hidden  m:border-r m:border-greyscale-100'>
+          <div className='flex flex-col max-h-[calc(100vh-270px)] s:max-h-[calc(100vh-250px)] overflow-y-auto overflow-x-hidden  m:border-r m:border-greyscale-100'>
             {filteredChats.map((chat, index, array) => {
               const hasNewMessages = !!chat.newMessagesCount
               if (!chat.lastMessage.id) return null

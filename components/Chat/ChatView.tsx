@@ -71,7 +71,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     )
 
     return (
-      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5'>
+      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5 h-full max-h-[calc(100vh-150px)] s:max-h-[calc(100vh-150px)] m:max-h-[calc(100vh-180px)]'>
         <Button
           onClick={onClose}
           className='self-start space-x-2 mb-5 m:hidden'>
@@ -131,7 +131,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
 
         <div
           ref={messagesRef}
-          className='flex flex-col h-[calc(100vh-400px)] s:h-[calc(100vh-450px)] m:h-[calc(100vh-370px)] w-full overflow-y-scroll'>
+          className='flex flex-col h-full flex-shrink basis-full max-h-full w-full overflow-y-scroll'>
           {messagesByDay.map((messagesGroup) => {
             const [title, messages] = messagesGroup
             const today = unixMlToDate(+new Date())
@@ -151,7 +151,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             )
           })}
         </div>
-        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2'>
+        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2 shrink-0'>
           <TextareaAutosize
             maxRows={5}
             minRows={1}
