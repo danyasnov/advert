@@ -64,37 +64,6 @@ const UserBurger: FC<Props> = observer(({onLogin, hide}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.hash])
 
-  const options = [
-    {
-      title: t('MY_ADVERTISIMENT'),
-      onClick: () => {
-        router.push(`/user/${user.hash}`)
-        setActive(true)
-      },
-      icon: <IcAds className='w-7 h-7 fill-current' />,
-    },
-    {
-      title: t('FAVORITE'),
-      onClick: () => {
-        router.push(`/user/${user.hash}?page=favorites`)
-      },
-      icon: <Heart2 filled size={28} />,
-    },
-    {
-      title: t('DRAFTS'),
-      onClick: () => {
-        router.push(`/user/${user.hash}?page=drafts`)
-      },
-      icon: <IcCreate className='fill-current h-7 w-7' />,
-    },
-    {
-      title: t('MESSAGES'),
-      onClick: () => {
-        router.push(`/user/${user.hash}?page=chat`)
-      },
-      icon: <Message filled size={28} />,
-    },
-  ]
   if (hide) return null
   return (
     <div ref={ref}>
@@ -202,12 +171,14 @@ const UserBurger: FC<Props> = observer(({onLogin, hide}) => {
       ) : (
         <>
           {showLogin && (
-            <Button className='flex flex-col h-10' onClick={onLogin}>
-              <IcProfile className='h-6 w-6 mb-1' />
-              <span className='text-body-12 text-greyscale-900 hidden l:block whitespace-nowrap'>
-                {t('LOG_IN_ICON')}
-              </span>
-            </Button>
+            <div>
+              <Button className='flex flex-col h-10' onClick={onLogin}>
+                <IcProfile className='h-6 w-6 mb-1' />
+                <span className='text-body-12 text-greyscale-900 hidden l:block whitespace-nowrap'>
+                  {t('LOG_IN_ICON')}
+                </span>
+              </Button>
+            </div>
           )}
         </>
       )}

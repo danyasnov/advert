@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react'
+import React, {FC} from 'react'
 import {TFunction, useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import {isNumber, toNumber} from 'lodash'
@@ -10,7 +10,6 @@ import {
   TickSquare,
   TimeCircle,
 } from 'react-iconly'
-import {useWindowSize} from 'react-use'
 import {useRouter} from 'next/router'
 import {toast} from 'react-toastify'
 import {RemoveFromSaleType} from 'front-api'
@@ -25,8 +24,6 @@ import Tabs from './Tabs'
 import {getQueryValue, robustShallowUpdateQuery} from '../helpers'
 import {makeRequest} from '../api'
 
-// interface Props {}
-
 const getTabs = (t: TFunction, sizes) => [
   {title: `${t('MODERATION')}`, id: 1, count: sizes[1]},
   {title: `${t('SALE')}`, id: 2, count: sizes[2]},
@@ -36,15 +33,13 @@ const getTabs = (t: TFunction, sizes) => [
 
 const UserAdverts: FC = observer(() => {
   const {t} = useTranslation()
-  const {width} = useWindowSize()
-  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
+  const {userHash} = useGeneralStore()
   const {setModal} = useModalsStore()
   const {
     userSale,
     userSold,
     user,
     fetchProducts,
-    fetchRatings,
     userOnModeration,
     userArchive,
   } = useUserStore()
@@ -171,10 +166,6 @@ const UserAdverts: FC = observer(() => {
 
   return (
     <div>
-      {/*  <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
-        <SectionTitle title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')} />
-      </div> */}
-
       <div className='z-10 relative mb-10'>
         <Tabs
           items={isCurrentUser ? tabs : tabs.slice(1, 3)}

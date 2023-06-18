@@ -1,29 +1,10 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react'
-import {TFunction, useTranslation} from 'next-i18next'
+import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {isNumber, toNumber} from 'lodash'
-import {
-  ArrowLeftSquare,
-  ArrowRight,
-  Delete,
-  Edit,
-  TickSquare,
-  TimeCircle,
-} from 'react-iconly'
-import {useWindowSize} from 'react-use'
+import {Delete, Edit} from 'react-iconly'
 import {useRouter} from 'next/router'
-import {toast} from 'react-toastify'
 import {DraftModel} from 'front-api'
-
-import {
-  useGeneralStore,
-  useModalsStore,
-  useUserStore,
-} from '../providers/RootStoreProvider'
+import {useUserStore} from '../providers/RootStoreProvider'
 import UserTabWrapper from './UserTabWrapper'
-import Button from './Buttons/Button'
-import Tabs from './Tabs'
-import {getQueryValue, robustShallowUpdateQuery} from '../helpers'
 import {makeRequest} from '../api'
 
 const UserDrafts: FC = observer(() => {
@@ -73,21 +54,6 @@ const UserDrafts: FC = observer(() => {
   )
   return (
     <div>
-      {/* <SectionTitle title={t('DRAFTS')} />
-      {tablet && (
-        <div className='z-10 relative mt-8 mb-10'>
-          <Tabs
-            items={isCurrentUser ? draftTab : null}
-            onChange={(id) => {
-              robustShallowUpdateQuery(router, {
-                page: 'drafts',
-                activeTab: id,
-              })
-            }}
-            value={1}
-          />
-        </div>
-      )} */}
       <UserTabWrapper
         getOptions={getDraftOptions}
         // @ts-ignore

@@ -64,7 +64,7 @@ const UserProfile: FC = observer(() => {
         <SubscribersSubscriptionsButton />
       </div>
 
-      <div className='flex flex-col s:flex-row m:flex-col s:space-x-6 m:space-x-0 space-y-4 items-center'>
+      <div className='flex flex-col space-y-4 items-center'>
         <div className='s:hidden items-center'>
           <SubscribeOnUser
             isSubscribed={user.isSubscribed}
