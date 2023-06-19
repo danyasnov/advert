@@ -17,11 +17,7 @@ interface Props {
 
 const UserDesktop: FC<Props> = observer(({isCurrentUser}) => {
   const {t} = useTranslation()
-  const {activeUserPage, setActiveUserPage} = useGeneralStore()
-  const {query} = useRouter()
-
-  useEffect(() => setActiveUserPage('adverts'), [query])
-
+  const {activeUserPage} = useGeneralStore()
   return (
     <>
       <HeaderFooterWrapper>
@@ -48,7 +44,7 @@ const UserDesktop: FC<Props> = observer(({isCurrentUser}) => {
                   </div>
                 )}
 
-                {activeUserPage === 'adverts' && (
+                {(activeUserPage === 'adverts' || !activeUserPage) && (
                   <div>
                     <SectionTitle
                       title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}

@@ -23,12 +23,10 @@ const UserLayout: FC = observer(() => {
   const [showUserTour, setUserShowTour] = useState(false)
   const isCurrentUser = userHash === user.hash
   useEffect(() => {
-    if (query.chatId) {
-      setActiveUserPage('chat')
-    } else if (query.page) {
+    if (query.page) {
       setActiveUserPage(query.page as PagesType)
     }
-    // return () => setActiveUserPage('adverts')
+    return () => setActiveUserPage('adverts')
   }, [query])
   useEffect(() => {
     fetchProducts({page: 1, path: 'userSold'})

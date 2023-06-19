@@ -35,9 +35,8 @@ interface Props {
 const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
   const {t} = useTranslation()
   const router = useRouter()
-  const {query} = useRouter()
   const {showLogin, setShowLogin} = useGeneralStore()
-  const {activeUserPage, setActiveUserPage} = useGeneralStore()
+  const {activeUserPage} = useGeneralStore()
   const {user, userFavorite} = useUserStore()
 
   const favoriteTab = getFavoriteTab(t, {
@@ -46,8 +45,6 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
   const draftTab = getDraftTab(t, {
     1: isNumber(user.draftsProductCount) ? user.draftsProductCount : '',
   })
-
-  useEffect(() => setActiveUserPage('adverts'), [query])
 
   return (
     <>

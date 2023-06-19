@@ -17,9 +17,7 @@ interface Props {
 
 const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
   const {t} = useTranslation()
-  const {query} = useRouter()
-  const {activeUserPage, setActiveUserPage} = useGeneralStore()
-  useEffect(() => setActiveUserPage('adverts'), [query])
+  const {activeUserPage} = useGeneralStore()
 
   return (
     <>
