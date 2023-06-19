@@ -1,8 +1,9 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import {CACategoryModel} from 'front-api'
+import {parseCookies} from 'nookies'
 import {toJS} from 'mobx'
 import {
   useCategoriesStore,
@@ -11,9 +12,22 @@ import {
 import LinkWrapper from './Buttons/LinkWrapper'
 import LinkButton from './Buttons/LinkButton'
 import {getUrlQueryFromFilter, shallowUpdateQuery} from '../helpers'
+import {SerializedCookiesState} from '../types'
 
 const Breadcrumbs: FC<{brandLabel?: string; modelLabel?: string}> = observer(
   ({brandLabel, modelLabel}) => {
+    const [location, setLocation] = useState('')
+    useEffect(() => {
+      const cookies: SerializedCookiesState = parseCookies()
+      if (
+        cookies.cookieAccepted === 'true' &&
+        cookies.address !== 'undefined'
+      ) {
+        setLocation(`: ${cookies.address}`)
+      } else {
+        setLocation('')
+      }
+    }, [])
     const {query} = useRouter()
     const {categories} = useCategoriesStore()
     const {setFilter, filter, aggregatedFields, fetchProducts, applyFilter} =
@@ -86,6 +100,15 @@ const Breadcrumbs: FC<{brandLabel?: string; modelLabel?: string}> = observer(
       ...categoriesBreadcrumbs,
       ...transportBreadcrumbs,
     ]
+
+    if (breadcrumbs.length === 1) {
+      return (
+        <span className='text-body-14 text-greyscale-900'>
+          {t('SHOW_ALL_ADVERTS')}
+          {location}
+        </span>
+      )
+    }
 
     return (
       <div className='text-body-14 space-x-1'>
