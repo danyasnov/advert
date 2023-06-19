@@ -15,7 +15,7 @@ import {useGeneralStore} from '../providers/RootStoreProvider'
 import {makeRequest} from '../api'
 import LogoutButton from './Auth/LogoutButton'
 import Button from './Buttons/Button'
-import {destroyCookiesWrapper} from '../helpers'
+import {clearCookies, destroyCookiesWrapper} from '../helpers'
 
 interface Props {
   onLogin?: () => void
@@ -44,13 +44,7 @@ const UserBurger: FC<Props> = observer(({onLogin, hide}) => {
     if (userData.data?.status === 200) {
       setUser(userData.data?.result)
     } else {
-      destroyCookiesWrapper('hash')
-      destroyCookiesWrapper('promo')
-      destroyCookiesWrapper('authType')
-      destroyCookiesWrapper('aup')
-      destroyCookiesWrapper('authNewRefreshToken')
-      destroyCookiesWrapper('authNewToken')
-      destroyCookiesWrapper('sessionId')
+      clearCookies()
       localforage.clear()
       router.reload()
     }

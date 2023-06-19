@@ -15,7 +15,7 @@ const UserProfile: FC = observer(() => {
   const {userHash} = useGeneralStore()
   const isCurrentUser = userHash === user?.hash
   const {width} = useWindowSize()
-  const tablet = width >= 768 && width < 1024
+  const isTablet = width >= 768 && width < 1024
 
   const {t} = useTranslation()
   return (
@@ -26,7 +26,7 @@ const UserProfile: FC = observer(() => {
             url={user.imageUrl}
             name={user.name}
             key={user.imageUrl}
-            size={tablet ? 15 : 30}
+            size={isTablet ? 15 : 30}
           />
         </div>
         <div className='s:hidden mb-4'>
