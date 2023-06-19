@@ -104,7 +104,7 @@ const Breadcrumbs: FC<{brandLabel?: string; modelLabel?: string}> = observer(
     if (breadcrumbs.length === 1) {
       return (
         <span className='text-body-14 text-greyscale-900'>
-          {t('SHOW_ALL_ADVERTS')}
+          {t('ALL_ADS')}
           {location}
         </span>
       )
