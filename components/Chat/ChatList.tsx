@@ -82,6 +82,13 @@ const ChatList: FC = observer(() => {
     )
   }
 
+  let height
+  if (showBanner) {
+    height = `max-h-[calc(100vh-350px)] m:max-h-[calc(100vh-340px)]`
+  } else {
+    height = `max-h-[calc(100vh-270px)] s:max-h-[calc(100vh-250px)] m:max-h-[calc(100vh-250px)]`
+  }
+
   return (
     <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white h-full'>
       <div className='flex flex-col py-4 px-3 m:pl-0 m:pr-6'>
@@ -95,11 +102,12 @@ const ChatList: FC = observer(() => {
         />
         {showBanner && (
           <Button
+            className='m:border-r m:border-greyscale-100 w-full m:w-[316px] l:w-[364px]'
             onClick={() => {
               Notification.requestPermission().then()
               setShowBanner(false)
             }}>
-            <div className='flex p-4 bg-blue rounded-xl mb-4 items-center w-full'>
+            <div className='flex p-4 bg-blue rounded-xl mb-4 items-center w-full m:ml-6 m:mr-2'>
               <div className='text-info mr-4'>
                 <VolumeUp size={24} filled />
               </div>
@@ -118,7 +126,8 @@ const ChatList: FC = observer(() => {
           </Button>
         )}
         {!isEmpty(filteredChats) && (
-          <div className='flex flex-col max-h-[calc(100vh-270px)] s:max-h-[calc(100vh-250px)] overflow-y-auto overflow-x-hidden  m:border-r m:border-greyscale-100'>
+          <div
+            className={`flex flex-col overflow-y-auto overflow-x-hidden m:border-r m:border-greyscale-100 ${height}`}>
             {filteredChats.map((chat, index, array) => {
               const hasNewMessages = !!chat.newMessagesCount
               if (!chat.lastMessage.id) return null
@@ -263,6 +272,7 @@ const ChatList: FC = observer(() => {
           onClose={() => setShowModal(false)}
           onAccept={() => {
             setShowModal(false)
+            setShowBanner(false)
             Notification.requestPermission().then()
           }}
         />
