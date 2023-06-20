@@ -107,7 +107,7 @@ const ChatList: FC = observer(() => {
               Notification.requestPermission().then()
               setShowBanner(false)
             }}>
-            <div className='flex p-4 bg-blue rounded-xl mb-4 items-center w-full m:ml-6 m:mr-2'>
+            <div className='flex p-4 bg-blue rounded-xl mb-4 items-center w-full m:ml-6 m:mr-2 text-left'>
               <div className='text-info mr-4'>
                 <VolumeUp size={24} filled />
               </div>
