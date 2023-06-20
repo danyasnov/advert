@@ -22,6 +22,10 @@ const UserCard: FC = observer(() => {
     userType = t('SHOW_ADS')
   } else if (product.owner.userType === 'shops') {
     userType = t('VISIT_STORE')
+  } else if (product.owner.userType === 'estate-agencies') {
+    userType = t('SHOW_REAL_ESTATE')
+  } else if (product.owner.userType === 'car-dealers') {
+    userType = t('SHOW_CARS')
   }
 
   const langs = (
