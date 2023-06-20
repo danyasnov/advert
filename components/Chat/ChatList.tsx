@@ -103,7 +103,7 @@ const ChatList: FC = observer(() => {
               <div className='text-info mr-4'>
                 <VolumeUp size={24} filled />
               </div>
-              <div className='flex flex-col '>
+              <div className='flex flex-col items-start'>
                 <span className='text-body-14 font-semibold text-greyscale-900'>
                   {t('RECEIVE_NOTIFICATIONS')}
                 </span>
