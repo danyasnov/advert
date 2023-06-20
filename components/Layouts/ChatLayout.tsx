@@ -10,7 +10,7 @@ const ChatLayout: FC = observer(() => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col py-6 px-4 s:px-8'>
+    <div className='flex flex-col py-6 px-4 s:px-8 h-screen max-w-[1208px] mx-auto'>
       <MetaTags title={t('MESSAGES')} />
       <div className='flex pb-2 s:pb-8 w-full justify-between'>
         <Logo />
