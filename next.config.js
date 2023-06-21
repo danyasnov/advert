@@ -71,15 +71,3 @@ const config = plugins.reduce((acc, next) => {
   return next(acc)
 }, nextConfig)
 module.exports = config
-
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/404',
-        destination: '/not-found',
-        permanent: true,
-      },
-    ]
-  },
-}
