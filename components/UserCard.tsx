@@ -17,6 +17,16 @@ import SubscribeOnUser from './SubscribeOnUser'
 const UserCard: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
+  let buttonLabel
+  if (product.owner.userType === 'simple') {
+    buttonLabel = t('SHOW_ADS')
+  } else if (product.owner.userType === 'shops') {
+    buttonLabel = t('VISIT_STORE')
+  } else if (product.owner.userType === 'estate-agencies') {
+    buttonLabel = t('SHOW_REAL_ESTATE')
+  } else if (product.owner.userType === 'car-dealers') {
+    buttonLabel = t('SHOW_CARS')
+  }
 
   const langs = (
     <div className='flex text-greyscale-900 text-body-14 items-center'>
@@ -76,7 +86,7 @@ const UserCard: FC = observer(() => {
             className='hover:bg-primary-100 hover:text-primary-500 font-medium space-x-1.5 py-3.5 px-6'
             isSmall>
             <IcAds className='w-5 h-5 fill-current' />
-            <span className='text-body-16 s:text-body-14'>{t('SHOW_ADS')}</span>
+            <span className='text-body-16 s:text-body-14'>{buttonLabel}</span>
           </OutlineButton>
         </LinkWrapper>
       </div>

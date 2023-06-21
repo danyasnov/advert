@@ -1444,13 +1444,14 @@
   "ADVERT_ARCHIVED": "Ваше оголошення знято з публікації та переміщено до архіву",
   "ADVERT_MODERATION_CHANGED": "Змінений статус вашого оголошення на модерації",
   "AGENTS": "Агенти",
+  "ALL_ADS": "Всі оголошення",
   "ARCHIVE_EMPTY": "<b>У вас найчистіший архів - тут ще нічого немає!</b>\nТут ви побачите оголошення, які забули продовжити. Відновити їх або видалити вирішувати вам.",
   "ARCHIVE_EMPTY_APP": "Тут відображатимуться всі ваші оголошення",
   "AUTOUP": "Автопідняття",
   "AUTOUP_INFO": "Оголошення автоматично підіймається 3 рази на день",
   "BACK_ERROR": "Назад",
   "BACK_TO": "Повернутися до {{category}}",
-  "BACK_TO_CHATS": "Back to all chats",
+  "BACK_TO_ALL_CHATS": "Назад до чатів",
   "BANNER1": "30%",
   "BANNER6_TITLE": "Отримати найкраще\nпродукти краси\nна Vooxee!",
   "BANNER7_TITLE": "Потрібен гаджет \nоновити?\nVooxee є все!",
@@ -1716,7 +1717,11 @@
   "PUSH_SUCCESSFUL_MODERATION": "Ваше оголошення успішно пройшло модерацію",
   "PUSH_TEMPORARY_BLOCKED": "Ваше оголошення не пройшло модерацію, потребує виправлення",
   "REALTY": "Нерухомість",
+<<<<<<< HEAD
   "RECEIVE_NOTIFICATIONS": "Receive notifications",
+=======
+  "RECEIVE_NOTIFICATIONS": "Отримувати сповіщення",
+>>>>>>> develop
   "RECOVERY_PASSWORD_TEXT": "Введіть адресу електронної пошти, за якою ві реєструвались",
   "RELOAD_PHOTO": "Перезавантажити фото",
   "REMOVE_FROM_FAVS": "Видалити з обраного",
@@ -1729,12 +1734,20 @@
   "SALE_FASTER": "Продай скоріше",
   "SCHEDULE_FOR_EACH_DAY": "Кожен день",
   "SEARCH": "Пошук",
+<<<<<<< HEAD
   "SEARCH_MESSAGES": "Search messages",
   "SECURITY": "Безпека",
   "SELECT_CHAT": "Please, select chat\nto start conversation",
+=======
+  "SEARCH_MESSAGES": "Пошук повідомлень",
+  "SECURITY": "Безпека",
+  "SELECT_CHAT": "Будь ласка, оберіть чат,\nщоб розпочати розмову",
+>>>>>>> develop
   "SELECT_MESSAGES": "Обрати повідомлення",
   "SHOW_ALL_FILTERS": "Показати усі фільтри",
+  "SHOW_CARS": "Показати машини",
   "SHOW_NUMBER": "Показати номер телефону",
+  "SHOW_REAL_ESTATE": "Показати нерухомість",
   "SIGN_UP": "Увійти",
   "SPACIOUS_COMPLEX": "Розкішний і просторий житловий комплекс",
   "SPECIAL_OFFERS": "Спецпропозиції",
@@ -1746,7 +1759,11 @@
   "SUGGESTED": "Запропоновані",
   "SUPPORT_CONTACT_INFO": "Щоб зв'язатися з нами, заповніть цю форму та опишіть вашу проблему. Ми зв'яжемося з вами якнайшвидше!",
   "TOP": "TOP",
+<<<<<<< HEAD
   "TURN_ON_NOTIFICATIONS": "Turn on notifications in Messages",
+=======
+  "TURN_ON_NOTIFICATIONS": "Увімкнути сповіщення у повідомленнях",
+>>>>>>> develop
   "UNBLOCK_USER": "Розблокувати користувача",
   "UPDATE_BEFORE_ARCHIVATION": "Оновити до\nархівації",
   "USER_HAS_NO_SUBSCRIBERS": "У цього користувача поки немає підписників.",
