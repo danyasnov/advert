@@ -28,7 +28,7 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                 <UserSidebar />
               </aside>
 
-              <main className='w-full m:w-[614px] l:w-896px relative drop-shadow-card'>
+              <main className='w-full s:w-[464px] m:w-[614px] l:w-896px relative drop-shadow-card'>
                 {activeUserPage === 'subscribers' && (
                   <div
                     className={`${

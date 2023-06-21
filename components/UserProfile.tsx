@@ -14,19 +14,17 @@ const UserProfile: FC = observer(() => {
   const {user} = useUserStore()
   const {userHash} = useGeneralStore()
   const isCurrentUser = userHash === user?.hash
-  const {width} = useWindowSize()
-  const isTablet = width >= 768 && width < 1024
 
   const {t} = useTranslation()
   return (
-    <div className='flex flex-col items-center rounded-2xl bg-white s:bg-inherit m:bg-white py-5 px-7'>
+    <div className='flex flex-col items-center rounded-2xl bg-white py-5 px-7'>
       <div className='flex s:flex-col justify-start s:items-center w-full'>
         <div className='hidden s:block mb-3'>
           <UserAvatar
             url={user.imageUrl}
             name={user.name}
             key={user.imageUrl}
-            size={isTablet ? 15 : 30}
+            size={30}
           />
         </div>
         <div className='s:hidden mb-4'>
@@ -38,18 +36,18 @@ const UserProfile: FC = observer(() => {
           />
         </div>
         <div className='flex flex-col items-start s:items-center ml-3 s:ml-0'>
-          <span className='hidden s:flex mb-3 s:mb-2 m:mb-3 text-body-14 text-green text-center'>
+          <span className='hidden s:flex mb-3 text-body-14 text-green text-center'>
             {t('ONLINE')}
           </span>
 
-          <span className='text-body-16 m:text-h-5 text-greyscale-900 font-bold mb-1 m:mb-3 break-words text-left s:text-center w-full'>
+          <span className='text-body-16 s:text-h-5 text-greyscale-900 font-bold mb-1 m:mb-3 break-words text-left s:text-center w-full'>
             {/* @ts-ignore */}
             {user.name} {user.surname}
           </span>
           <span className='s:hidden mb-4 text-body-14 text-green text-center'>
             {t('ONLINE')}
           </span>
-          <div className='hidden s:block mb-6 s:mb-4 m:mb-6'>
+          <div className='hidden s:block mb-6'>
             <SubscribeOnUser
               isSubscribed={user.isSubscribed}
               ownerId={user.hash}
@@ -60,7 +58,7 @@ const UserProfile: FC = observer(() => {
       </div>
 
       <div className='s:hidden w-full border-b border-greyscale-100 mb-4' />
-      <div className='w-full s:w-[193px] m:w-full'>
+      <div className='w-full '>
         <SubscribersSubscriptionsButton />
       </div>
 
