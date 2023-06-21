@@ -1478,7 +1478,11 @@
   "CHOOSE_ONE": "Обери одно",
   "CLOSE_ALL_PARAMETERS": "Сховати всі фільтри",
   "CLOSE_FILTERS": "Сховати фільтри",
+<<<<<<< HEAD
+  "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "Я даю згоду на збір, використання та обробку моїх персональних даних та підтверджую, що мені виповнилося 18 років, ви погоджуєтесь з <a target=\"_blank\" href=\"https://ua.vooxee.com/p/terms-and-conditions/\"><font color=\"#7210FF\">умовами, правилами публікації</font></a> та <a href=\"https://ua.vooxee.com/p/privacy-policy/\"><font color=\"#7210FF\">політикою конфіденційності</font></a>\"",
+=======
   "CONSENT_TO_PROCESSING_OF_PERSONAL_DATA": "Я даю згоду на збір, використання та обробку моїх персональних даних та підтверджую, що мені виповнилося 18 років, ви погоджуєтесь з <a target=\"_blank\" href=\"https://uk.vooxee.com/p/terms-and-conditions/\"><font color=\"#7210FF\">умовами, правилами публікації</font></a> та <a href=\"https://uk.vooxee.com/p/privacy-policy/\"><font color=\"#7210FF\">політикою конфіденційності</font></a>\"",
+>>>>>>> develop
   "CONTACT": "Контакти",
   "CONTACT_INFORMATION": "Контакти",
   "CONTINUE_WITH": "або продовжити з",
