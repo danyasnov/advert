@@ -33,7 +33,7 @@ const ChatButton: FC<Props> = observer(({product}) => {
               productHash: advert.hash,
               userHash: owner.hash,
             })
-            push(`/user/${user.hash}?chatId=${chat.id}`)
+            push(`/chat?chatId=${chat.id}`)
           }
         }}>
         {t('SEND_A_MESSAGE')}

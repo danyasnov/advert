@@ -1,26 +1,44 @@
-import {FC, useCallback, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useMemo, useState} from 'react'
 import {observer} from 'mobx-react-lite'
-import {ChatData, ChatStore, globalChatsStore} from 'chats'
-import {ArrowLeft, Delete, Send} from 'react-iconly'
+import {ChatData, globalChatsStore} from 'chats'
 import {useTranslation} from 'next-i18next'
-import {groupBy, size, isEmpty} from 'lodash'
-import TextareaAutosize from 'react-textarea-autosize'
+import {size, isEmpty} from 'lodash'
 import {useRouter} from 'next/router'
-import Button from '../Buttons/Button'
+import {useWindowSize} from 'react-use'
+import {ArrowRight, VolumeUp} from 'react-iconly'
 import ImageWrapper from '../ImageWrapper'
-import UserAvatar from '../UserAvatar'
-import {unixMlToDate} from '../../utils'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
-import Message from './Message'
+import {normalizeString, unixMlToDate} from '../../utils'
 import EmptyProductImage from '../EmptyProductImage'
-import LinkWrapper from '../Buttons/LinkWrapper'
 import EmptyTab from '../EmptyTab'
-import {robustShallowUpdateQuery} from '../../helpers'
 import RequestNotificationModal from '../Modals/RequestNotificationModal'
+import ChatView from './ChatView'
+import SelectChatPlaceholder from './SelectChatPlaceholder'
+import Button from '../Buttons/Button'
+
+const filterChats = (chats: ChatData[], query: string) => {
+  const normalizedQuery = normalizeString(query)
+
+  if (!normalizedQuery) {
+    return chats
+  }
+  return chats.filter((chat) => {
+    const productTitle = normalizeString(chat.product.title)
+    const ownerName = normalizeString(chat.interlocutor.name)
+    const lastMessageText = normalizeString(chat.lastMessage.text)
+    return (
+      productTitle.includes(normalizedQuery) ||
+      ownerName.includes(normalizedQuery) ||
+      lastMessageText.includes(normalizedQuery)
+    )
+  })
+}
 
 const ChatList: FC = observer(() => {
   const [showModal, setShowModal] = useState(false)
+  const [showBanner, setShowBanner] = useState(false)
+  const {width} = useWindowSize()
   const {t} = useTranslation()
+  const [query, setQuery] = useState('')
   const router = useRouter()
   const {chats} = globalChatsStore
   useEffect(() => {
@@ -32,100 +50,149 @@ const ChatList: FC = observer(() => {
     }
   }, [chats, router.query.chatId])
   useEffect(() => {
-    if ('Notification' in window && Notification.permission === 'default') {
-      setShowModal(true)
+    if ('Notification' in window) {
+      if (Notification.permission === 'default') {
+        setShowModal(true)
+      }
+      if (Notification.permission !== 'granted') {
+        setShowBanner(true)
+      }
     }
   }, [])
 
+  const filteredChats = useMemo(() => {
+    return filterChats(chats, query)
+  }, [chats, query])
+
   const [selectedChat, setSelectedChat] = useState<ChatData>(null)
 
+  if (selectedChat && width < 1024) {
+    return (
+      <div className='flex flex-col s:px-8 s:py-6 s:bg-white s:drop-shadow-card s:rounded-3xl h-full'>
+        <ChatView
+          chat={selectedChat}
+          onClose={() => {
+            setSelectedChat(null)
+            router.push(`/chat`, undefined, {
+              shallow: true,
+            })
+          }}
+        />
+      </div>
+    )
+  }
+
+  let height
+  if (showBanner) {
+    height = `max-h-[calc(100vh-350px)] m:max-h-[calc(100vh-340px)]`
+  } else {
+    height = `max-h-[calc(100vh-270px)] s:max-h-[calc(100vh-250px)] m:max-h-[calc(100vh-250px)]`
+  }
+
   return (
-    <>
-      {!!selectedChat && (
-        <div className='flex flex-col'>
-          <ChatView
-            chat={selectedChat}
-            onClose={() => {
-              setSelectedChat(null)
-              robustShallowUpdateQuery(router, {page: 'chat'})
-            }}
-          />
-        </div>
-      )}
-      {!isEmpty(chats) && !selectedChat && (
-        <div className='flex flex-col space-y-4'>
-          {chats.map((chat) => {
-            const hasNewMessages = !!chat.newMessagesCount
-            const lastMsg = (
-              <div className='flex justify-between w-full items-center mt-2 s:mt-0'>
-                <span
-                  className={`text-body-14 s:text-body-16 font-normal truncate w-[264px] s:w-[236px] m:w-[370px] ${
-                    hasNewMessages ? 'text-greyscale-700' : 'text-greyscale-500'
-                  }`}>
-                  {chat.lastMessage.text}
-                </span>
-                {hasNewMessages && (
-                  <span className='text-body-12 s:text-body-16 font-semibold text-primary-500 bg-primary-100 rounded-full w-6 h-6 s:w-8 s:h-8 flex items-center justify-center'>
-                    {chat.newMessagesCount}
-                  </span>
-                )}
+    <div className='flex flex-col m:flex-row drop-shadow-card rounded-3xl py-4 px-3 m:pl-0 bg-white h-full'>
+      <div className='flex flex-col py-4 px-3 m:pl-0 m:pr-6'>
+        <input
+          className='bg-greyscale-100 rounded-xl py-3 px-5 mb-5 m:ml-6'
+          placeholder={t('SEARCH_MESSAGES')}
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value)
+          }}
+        />
+        {showBanner && (
+          <Button
+            className='m:border-r m:border-greyscale-100 w-full m:w-[316px] l:w-[364px]'
+            onClick={() => {
+              Notification.requestPermission().then()
+              setShowBanner(false)
+            }}>
+            <div className='flex p-4 bg-blue rounded-xl mb-4 items-center w-full m:ml-6 m:mr-2 text-left'>
+              <div className='text-info mr-4'>
+                <VolumeUp size={24} filled />
               </div>
-            )
-            return (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-              <div
-                tabIndex={0}
-                role='button'
-                key={chat.id}
-                className='w-full'
-                onClick={() => {
-                  setSelectedChat(chat)
-                  router.push(
-                    `/user/${router.query.id}?chatId=${chat.id}`,
-                    undefined,
-                    {
-                      shallow: true,
-                    },
-                  )
-                }}>
-                <div className='bg-white rounded-3xl p-4 s:p-6 flex w-full flex-col s:flex-row'>
-                  <div className='flex w-full'>
-                    <div className='relative  mr-4 flex items-center justify-center'>
-                      {chat.product.image ? (
-                        <div className='rounded-[19px] overflow-hidden w-[52px] h-[52px] s:w-20 s:h-20'>
-                          <ImageWrapper
-                            type={chat.product.image}
-                            alt='image'
-                            layout='fill'
-                            objectFit='cover'
-                          />
-                        </div>
-                      ) : (
-                        <>
-                          <div className='s:hidden'>
-                            <EmptyProductImage size={52} />
+              <div className='flex flex-col items-start'>
+                <span className='text-body-14 font-semibold text-greyscale-900'>
+                  {t('RECEIVE_NOTIFICATIONS')}
+                </span>
+                <div className='flex'>
+                  <span className='text-body-12 text-greyscale-900 mr-1'>
+                    {t('TURN_ON_NOTIFICATIONS')}
+                  </span>
+                  <ArrowRight size={16} />
+                </div>
+              </div>
+            </div>
+          </Button>
+        )}
+        {!isEmpty(filteredChats) && (
+          <div
+            className={`flex flex-col overflow-y-auto overflow-x-hidden m:border-r m:border-greyscale-100 ${height}`}>
+            {filteredChats.map((chat, index, array) => {
+              const hasNewMessages = !!chat.newMessagesCount
+              if (!chat.lastMessage.id) return null
+              const lastMsg = (
+                <div className='flex justify-between w-full items-center'>
+                  <span
+                    className={`text-body-14 s:text-body-16 font-normal line-clamp-1 ${
+                      hasNewMessages
+                        ? 'text-greyscale-700'
+                        : 'text-greyscale-500'
+                    }`}>
+                    {chat.lastMessage.text}
+                  </span>
+                  {hasNewMessages && (
+                    <span className='shrink-0 text-body-12 s:text-body-14 font-semibold text-white bg-error rounded-full px-1.5 min-w-[20px] h-5 flex items-center justify-center'>
+                      {chat.newMessagesCount}
+                    </span>
+                  )}
+                </div>
+              )
+              const isSelected = selectedChat?.id === chat.id
+              return (
+                <>
+                  <div
+                    tabIndex={0}
+                    role='button'
+                    key={chat.id}
+                    className={`w-full m:w-[316px] l:w-[364px] m:pl-6 m:pr-4 ${
+                      isSelected ? 'm:bg-greyscale-100 m:pt-3 m:-mt-3' : ''
+                    }`}
+                    onClick={() => {
+                      setSelectedChat(chat)
+                      router.push(`/chat?chatId=${chat.id}`, undefined, {
+                        shallow: true,
+                      })
+                    }}>
+                    <div className='rounded-3xl flex w-full flex-row'>
+                      <div className='relative  mr-4 flex items-center justify-center'>
+                        {chat.product.image ? (
+                          <div className='rounded-2xl overflow-hidden w-[52px] h-[52px] relative'>
+                            <ImageWrapper
+                              type={chat.product.image}
+                              alt='image'
+                              layout='fill'
+                              objectFit='cover'
+                            />
                           </div>
-                          <div className='hidden s:block'>
-                            <EmptyProductImage size={80} />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <div className='flex flex-col s:flex-row w-full'>
-                      <div className='flex flex-col w-full items-start'>
-                        <div className='flex justify-between w-full items-center'>
+                        ) : (
+                          <EmptyProductImage size={52} />
+                        )}
+                      </div>
+                      <div className='flex flex-col  w-full'>
+                        <div className='flex w-full justify-between'>
                           <span
-                            className={`text-body-14 s:text-body-18 text-left w-[137px] s:w-[240px] truncate font-medium ${
+                            className={`text-body-12 s:text-body-14 text-left line-clamp-1 font-medium m:font-normal ${
                               hasNewMessages
                                 ? 'text-greyscale-900'
                                 : 'text-greyscale-500'
                             }`}>
                             {chat.title}
                           </span>
-                          <div className='flex justify-between'>
-                            {!!chat.lastMessage.date && (
+                          <div className='flex justify-between items-center'>
+                            {!!chat.lastMessage.date && chat.lastMessage.id && (
                               <span
-                                className={`text-body-14 s:text-body-16 ${
+                                className={`text-body-12 s:text-body-14 m:text-body-12 ${
                                   hasNewMessages
                                     ? 'text-greyscale-700'
                                     : 'text-greyscale-500'
@@ -133,222 +200,85 @@ const ChatList: FC = observer(() => {
                                 {unixMlToDate(chat.lastMessage.date)}
                               </span>
                             )}
-                            <Button
-                              className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6 hidden m:flex'
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                globalChatsStore.deleteChat(chat.id)
-                              }}>
-                              <Delete filled size={20} />
-                              <span className='text-body-14'>
-                                {t('DELETE')}
-                              </span>
-                            </Button>
+                            {/* <Button */}
+                            {/*  className='space-x-1 text-greyscale-500 hover:text-primary-500 ml-6 hidden m:flex' */}
+                            {/*  onClick={(e) => { */}
+                            {/*    e.stopPropagation() */}
+                            {/*    globalChatsStore.deleteChat(chat.id) */}
+                            {/*  }}> */}
+                            {/*  <Delete filled size={20} /> */}
+                            {/*  <span className='text-body-14'> */}
+                            {/*    {t('DELETE')} */}
+                            {/*  </span> */}
+                            {/* </Button> */}
                           </div>
                         </div>
                         <span
-                          className={`text-body-18 font-semibold pb-2 ${
+                          className={`text-body-12 s:text-body-14 font-semibold line-clamp-1 ${
                             hasNewMessages
                               ? 'text-greyscale-900'
                               : 'text-greyscale-500'
                           }`}>
                           {chat.product.title}
                         </span>
-                        <div className='hidden s:block w-full'>{lastMsg}</div>
+                        <div className='w-full'>{lastMsg}</div>
                       </div>
                     </div>
                   </div>
-                  <div className='block s:hidden w-full'>{lastMsg}</div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      )}
-      {isEmpty(chats) && !selectedChat && (
-        <div className='flex justify-center'>
-          <EmptyTab
-            description='MASSAGES_EMPTY'
-            img='/img/empty-tabs/chat.png'
+                  {index !== array.length - 1 && (
+                    <div
+                      style={{marginBottom: '12px'}}
+                      className={`shrink-0 bg-greyscale-100 self-end w-full  mr-4 s:mr-0 ${
+                        isSelected ? 'pt-3 bg-greyscale-100' : 'mt-3'
+                      }`}>
+                      <div className='h-px w-[calc(100%-32px)]' />
+                    </div>
+                  )}
+                </>
+              )
+            })}
+          </div>
+        )}
+        {isEmpty(filteredChats) && !selectedChat && (
+          <div className='flex justify-center'>
+            <EmptyTab
+              description='MASSAGES_EMPTY'
+              img='/img/empty-tabs/chat.png'
+            />
+          </div>
+        )}
+      </div>
+      <div className='hidden m:flex w-full'>
+        {selectedChat ? (
+          <ChatView
+            key={selectedChat.id}
+            chat={selectedChat}
+            onClose={() => {
+              setSelectedChat(null)
+              router.push(`/chat`, undefined, {
+                shallow: true,
+              })
+            }}
           />
-        </div>
-      )}
+        ) : (
+          <div className='flex items-center justify-center w-full'>
+            <SelectChatPlaceholder />
+          </div>
+        )}
+      </div>
       {showModal && (
         <RequestNotificationModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onAccept={() => {
             setShowModal(false)
+            setShowBanner(false)
             Notification.requestPermission().then()
           }}
         />
       )}
-    </>
+    </div>
   )
 })
-
-const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
-  ({chat, onClose}) => {
-    const {t} = useTranslation()
-    const {user} = useGeneralStore()
-    const messagesRef = useRef<HTMLDivElement>()
-
-    const storeCreator = useCallback(
-      () => new ChatStore(chat, user.hash),
-      [chat],
-    )
-    const [messagesByDay, setMessagesByDay] = useState([])
-    const [store] = useState(storeCreator)
-
-    useEffect(() => {
-      const messagesByDate = store.messages
-        .slice()
-        .reverse()
-        .filter((m) => m.type === 'text')
-        .map((m) => {
-          let isLink
-          try {
-            const url = new URL(m.text)
-            isLink = url.hostname.endsWith('vooxee.com')
-          } catch (e) {
-            isLink = false
-          }
-          return {
-            ...m,
-            isLink,
-            day: unixMlToDate(m.date),
-          }
-        })
-      setMessagesByDay(Object.entries(groupBy(messagesByDate, 'day')))
-    }, [store.messages])
-    useEffect(() => {
-      if (messagesRef.current) {
-        messagesRef.current.scrollTop = messagesRef.current.scrollHeight
-      }
-    }, [messagesByDay])
-    const [message, setMessage] = useState('')
-    const {sendMessage} = store
-    useEffect(() => {
-      store.fetchBefore()
-    }, [store])
-    const {interlocutor, product, id} = store.chat
-
-    const submitMessage = useCallback(
-      (text) => {
-        setMessage('')
-        sendMessage(text)
-      },
-      [sendMessage, setMessage],
-    )
-
-    return (
-      <div className='flex flex-col bg-white rounded-3xl p-6 h-[752px] w-full'>
-        <div className='flex items-center mb-6'>
-          <Button onClick={onClose}>
-            <ArrowLeft size={28} />
-          </Button>
-          <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
-            <UserAvatar
-              size={10}
-              name={interlocutor.name}
-              url={interlocutor.avatarSrc}
-            />
-          </div>
-          <div className='flex flex-col'>
-            <span className='text-body-16 font-semibold text-greyscale-900 w-[160px] s:w-[276px] truncate'>
-              {interlocutor.name}
-            </span>
-            <span
-              className={`text-body-14 font-semibold ${
-                interlocutor.online ? 'text-green' : 'text-greyscale-600'
-              }`}>
-              {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
-            </span>
-          </div>
-          {/* <Button className='ml-4'> */}
-          {/*  <MoreCircle size={24} /> */}
-          {/* </Button> */}
-        </div>
-        <LinkWrapper
-          href={`/b/${product.id}`}
-          title='product link'
-          target='_blank'>
-          <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
-            <div className='mr-4'>
-              {product.image ? (
-                <div className='rounded-2xl relative overflow-hidden w-[56px] h-[56px]'>
-                  <ImageWrapper
-                    type={product.image}
-                    alt='product'
-                    layout='fill'
-                    objectFit='cover'
-                  />
-                </div>
-              ) : (
-                <EmptyProductImage size={56} />
-              )}
-            </div>
-            <span className='text-body-16 text-greyscale-900'>
-              {product.title}
-            </span>
-          </div>
-        </LinkWrapper>
-
-        <div
-          ref={messagesRef}
-          className='flex flex-col h-[520px] w-full overflow-y-scroll'>
-          {messagesByDay.map((messagesGroup) => {
-            const [title, messages] = messagesGroup
-            const today = unixMlToDate(+new Date())
-            return (
-              <>
-                <div className='flex items-center mb-5'>
-                  <div className='w-full h-px bg-gray-200' />
-                  <span className='px-2 text-body-14 text-gray-500'>
-                    {title === today ? t('TODAY') : title}
-                  </span>
-                  <div className='w-full h-px bg-gray-200' />
-                </div>
-                {messages.map((m) => {
-                  return <Message message={m} user={user} />
-                })}
-              </>
-            )
-          })}
-        </div>
-        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2'>
-          <TextareaAutosize
-            maxRows={5}
-            minRows={1}
-            placeholder={t('START_TYPE')}
-            maxLength={1000}
-            className='w-full text-body-14 text-grayscale-900 pl-12 overflow-y-scroll bg-greyscale-50 manual-outline outline-none resize-none'
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && e.shiftKey === false) {
-                e.preventDefault()
-                submitMessage(message)
-              }
-            }}
-          />
-          <div className='w-12 flex items-end'>
-            {message && (
-              <Button
-                onClick={() => {
-                  submitMessage(message)
-                }}
-                className='text-primary-500'>
-                <Send size={20} />
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-    )
-  },
-)
 
 export default ChatList
