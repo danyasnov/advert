@@ -17,15 +17,15 @@ import SubscribeOnUser from './SubscribeOnUser'
 const UserCard: FC = observer(() => {
   const {product} = useProductsStore()
   const {t} = useTranslation()
-  let userType
+  let buttonLabel
   if (product.owner.userType === 'simple') {
-    userType = t('SHOW_ADS')
+    buttonLabel = t('SHOW_ADS')
   } else if (product.owner.userType === 'shops') {
-    userType = t('VISIT_STORE')
+    buttonLabel = t('VISIT_STORE')
   } else if (product.owner.userType === 'estate-agencies') {
-    userType = t('SHOW_REAL_ESTATE')
+    buttonLabel = t('SHOW_REAL_ESTATE')
   } else if (product.owner.userType === 'car-dealers') {
-    userType = t('SHOW_CARS')
+    buttonLabel = t('SHOW_CARS')
   }
 
   const langs = (
@@ -86,7 +86,7 @@ const UserCard: FC = observer(() => {
             className='hover:bg-primary-100 hover:text-primary-500 font-medium space-x-1.5 py-3.5 px-6'
             isSmall>
             <IcAds className='w-5 h-5 fill-current' />
-            <span className='text-body-16 s:text-body-14'>{userType}</span>
+            <span className='text-body-16 s:text-body-14'>{buttonLabel}</span>
           </OutlineButton>
         </LinkWrapper>
       </div>
