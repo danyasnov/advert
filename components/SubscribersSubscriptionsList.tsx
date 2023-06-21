@@ -76,7 +76,7 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
   }
 
   return (
-    <div className='grid  s:grid-cols-2 gap-5 mb-20'>
+    <div className='grid  m:grid-cols-2 gap-5 mb-20'>
       {subscriptions.map((subscription) => (
         <div className='flex bg-white shrink-0 rounded-3xl w-full shadow-1 py-[18px] px-[13px] s:px-3 justify-between'>
           <div className='flex items-center shrink-0 space-x-4'>
@@ -92,8 +92,8 @@ const SubscribersSubscriptionsList: FC<Props> = ({ownerHash, typeSub}) => {
               <span
                 className={`break-words line-clamp-2 text-left ${
                   userHash
-                    ? 'w-[85px] s:w-[120px] m:w-[80px] l:w-[220px]'
-                    : 's:w-[200px] l:w-[320px]'
+                    ? 'w-[85px] s:w-[220px] m:w-[80px] l:w-[220px]'
+                    : 's:w-[320px] m:w-[200px] l:w-[320px]'
                 }  text-body-14 s:text-body-16  text-greyscale-900 hover:text-primary-500 overflow-hidden`}>
                 {subscription.name} {subscription.surname}
               </span>

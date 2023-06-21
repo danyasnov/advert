@@ -16,7 +16,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import Burger from '../Burger'
 import SvgMapMarker from '../../assets/icons/SvgMapMarker'
-import {FormikNumber, FormikText} from '../FormikComponents'
+import {FormikNumber, FormikText, FormikCheckbox} from '../FormikComponents'
 import {makeRequest} from '../../api'
 import Logo from '../Logo'
 import LanguageSelect from '../LanguageSelect'
@@ -943,6 +943,12 @@ const RoyalGardens: FC = observer(() => {
                   placeholder={t('LANDING_REAL_ESTATE_ENTER_MESSAGE')}
                 />
               </div>
+              <Field
+                labelClassname='text-body-14 mt-4 text-greyscale-900'
+                name='personal data'
+                component={FormikCheckbox}
+                label={t('LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA')}
+              />
               {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
