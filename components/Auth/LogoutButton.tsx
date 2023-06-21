@@ -6,7 +6,7 @@ import {useTranslation} from 'next-i18next'
 import {useLockBodyScroll} from 'react-use'
 import ReactModal from 'react-modal'
 import IcClear from 'icons/material/Clear.svg'
-import {destroyCookiesWrapper} from '../../helpers'
+import {clearCookies, destroyCookiesWrapper} from '../../helpers'
 import Button from '../Buttons/Button'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -72,13 +72,7 @@ const LogoutModal: FC<{isOpen: boolean; onClose: () => void}> = ({
           <PrimaryButton
             className='w-full'
             onClick={() => {
-              destroyCookiesWrapper('hash')
-              destroyCookiesWrapper('promo')
-              destroyCookiesWrapper('authType')
-              destroyCookiesWrapper('aup')
-              destroyCookiesWrapper('authNewRefreshToken')
-              destroyCookiesWrapper('authNewToken')
-              destroyCookiesWrapper('sessionId')
+              clearCookies()
               localforage.clear()
               router.reload()
               onClose()

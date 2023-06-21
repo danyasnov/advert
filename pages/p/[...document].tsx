@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!document && !publicDocs.includes(param)) {
     return {
       redirect: {
-        destination: '/countries',
+        destination: '/not-found',
         permanent: true,
       },
     }

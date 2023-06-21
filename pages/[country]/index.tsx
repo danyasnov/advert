@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   return {
     redirect: {
-      destination: '/countries',
+      destination: '/not-found',
       permanent: true,
     },
   }
