@@ -130,25 +130,27 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
         </LinkWrapper>
         <div
           ref={messagesRef}
-          className='flex flex-col h-full flex-shrink basis-full max-h-full w-full overflow-y-scroll'>
-          {messagesByDay.map((messagesGroup) => {
-            const [title, messages] = messagesGroup
-            const today = unixMlToDate(+new Date())
-            return (
-              <div className=' flex flex-col w-full'>
-                <div className='flex items-center mb-5'>
-                  <div className='w-full h-px bg-gray-200' />
-                  <span className='px-2 text-body-14 text-gray-500'>
-                    {title === today ? t('TODAY') : title}
-                  </span>
-                  <div className='w-full h-px bg-gray-200' />
+          className='h-full flex-shrink basis-full max-h-full  overflow-y-scroll w-auto -mr-4 m:-mr-4'>
+          <div className='flex flex-col w-full pr-4 m:pr-4'>
+            {messagesByDay.map((messagesGroup) => {
+              const [title, messages] = messagesGroup
+              const today = unixMlToDate(+new Date())
+              return (
+                <div className='flex flex-col w-full'>
+                  <div className='flex items-center mb-5'>
+                    <div className='w-full h-px bg-gray-200' />
+                    <span className='px-2 text-body-14 text-gray-500'>
+                      {title === today ? t('TODAY') : title}
+                    </span>
+                    <div className='w-full h-px bg-gray-200' />
+                  </div>
+                  {messages.map((m) => {
+                    return <Message message={m} user={user} />
+                  })}
                 </div>
-                {messages.map((m) => {
-                  return <Message message={m} user={user} />
-                })}
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
         <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2 shrink-0'>
           <TextareaAutosize
