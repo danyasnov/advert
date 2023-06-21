@@ -10,6 +10,7 @@ import ImageWrapper from '../ImageWrapper'
 import MetaTags from '../MetaTags'
 import Button from '../Buttons/Button'
 import LinkWrapper from '../Buttons/LinkWrapper'
+import SimpleFooter from '../SimpleFooter'
 
 const tabs = [
   {
@@ -702,41 +703,7 @@ const SafetyLayout: FC = observer(() => {
         </div>
       </div>
 
-      <div className='flex flex-col mx-4 s:mx-auto s:w-704px m:w-944px l:w-1208px '>
-        <div className='border-t border-greyscale-200 mt-12  mb-8 -mx-4 s:-mx-8 m:-mx-10'>
-          <div className='flex flex-col m:flex-row m:items-center mx-4 s:mx-8 m:mx-10 s:mt-8'>
-            <div className='flex flex-col s:flex-row space-y-10 s:space-y-0 s:space-x-5 m:space-x-10 text-greyscale-900 text-body-16 font-semibold text-left my-8 s:my-0 s:justify-between w-full'>
-              <LinkWrapper
-                title={t('TERMS_AND_CONDITIONS')}
-                className='flex items-center whitespace-nowrap'
-                href='/p/terms-and-conditions'>
-                {t('TERMS_AND_CONDITIONS')}
-              </LinkWrapper>
-              <LinkWrapper
-                title={t('PRIVACY_POLICY')}
-                className='flex items-center whitespace-nowrap'
-                href='/p/privacy-policy'>
-                {t('PRIVACY_POLICY')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex items-center whitespace-nowrap'
-                title={t('COOKIES_POLICY')}
-                href='/p/cookies-policy'>
-                {t('COOKIES_POLICY')}
-              </LinkWrapper>
-              <LinkWrapper
-                className='flex items-center w-full'
-                title={t('SUPPORT')}
-                href='/support'>
-                {t('SUPPORT')}
-              </LinkWrapper>
-            </div>
-            <div className='s:mt-4 m:mt-0 text-body-14 font-normal text-greyscale-900 self-start whitespace-nowrap'>
-              © {new Date().getFullYear()} VooXee
-            </div>
-          </div>
-        </div>
-      </div>
+      <SimpleFooter />
     </>
   )
 })

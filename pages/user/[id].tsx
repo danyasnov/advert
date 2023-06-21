@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!userData?.result)
     return {
       redirect: {
-        destination: '/countries',
+        destination: '/not-found',
         permanent: true,
       },
     }
