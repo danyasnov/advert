@@ -19,10 +19,7 @@ const Breadcrumbs: FC<{brandLabel?: string; modelLabel?: string}> = observer(
     const [location, setLocation] = useState('')
     useEffect(() => {
       const cookies: SerializedCookiesState = parseCookies()
-      if (
-        cookies.cookieAccepted === 'true' &&
-        cookies.address !== 'undefined'
-      ) {
+      if (cookies.cookieAccepted === 'true') {
         setLocation(`: ${cookies.address}`)
       } else {
         setLocation('')

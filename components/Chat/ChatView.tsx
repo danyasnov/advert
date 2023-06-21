@@ -60,7 +60,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     useEffect(() => {
       store.fetchBefore()
     }, [store])
-    const {interlocutor, product, id} = store.chat
+    const {interlocutor, product} = store.chat
 
     const submitMessage = useCallback(
       (text) => {
@@ -71,7 +71,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     )
 
     return (
-      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5'>
+      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5 h-full max-h-[calc(100vh-150px)] s:max-h-[calc(100vh-150px)] m:max-h-[calc(100vh-180px)]'>
         <Button
           onClick={onClose}
           className='self-start space-x-2 mb-5 m:hidden'>
@@ -80,11 +80,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             {t('BACK_TO_ALL_CHATS')}
           </span>
         </Button>
-        <Button
-          onClick={() => {
-            router.push(`/user/${interlocutor.id}`)
-          }}
-          className='self-start mb-6'>
+        <LinkWrapper
+          href={`/user/${interlocutor.id}`}
+          title={interlocutor.name}
+          target='_blank'
+          className='self-start mb-6 flex w-full'>
           <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
             <UserAvatar
               size={10}
@@ -92,8 +92,8 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               url={interlocutor.avatarSrc}
             />
           </div>
-          <div className='flex flex-col text-left'>
-            <span className='text-body-16 font-semibold text-greyscale-900 w-[160px] s:w-[276px] truncate'>
+          <div className='flex flex-col text-left w-full'>
+            <span className='text-body-16 font-semibold text-greyscale-900 line-clamp-1 w-full'>
               {interlocutor.name}
             </span>
             <span
@@ -103,7 +103,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
               {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
             </span>
           </div>
-        </Button>
+        </LinkWrapper>
         <LinkWrapper
           href={`/b/${product.id}`}
           title='product link'
@@ -111,7 +111,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
           <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
             <div className='mr-4'>
               {product.image ? (
-                <div className='rounded-2xl relative overflow-hidden w-[56px] h-[56px]'>
+                <div className='rounded-xl relative overflow-hidden w-[40px] h-[40px] s:w-[56px] s:h-[56px]'>
                   <ImageWrapper
                     type={product.image}
                     alt='product'
@@ -128,15 +128,14 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             </span>
           </div>
         </LinkWrapper>
-
         <div
           ref={messagesRef}
-          className='flex flex-col h-[calc(100vh-400px)] s:h-[calc(100vh-450px)] m:h-[calc(100vh-370px)] w-full overflow-y-scroll'>
+          className='flex flex-col h-full flex-shrink basis-full max-h-full w-full overflow-y-scroll'>
           {messagesByDay.map((messagesGroup) => {
             const [title, messages] = messagesGroup
             const today = unixMlToDate(+new Date())
             return (
-              <>
+              <div className=' flex flex-col w-full'>
                 <div className='flex items-center mb-5'>
                   <div className='w-full h-px bg-gray-200' />
                   <span className='px-2 text-body-14 text-gray-500'>
@@ -147,11 +146,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
                 {messages.map((m) => {
                   return <Message message={m} user={user} />
                 })}
-              </>
+              </div>
             )
           })}
         </div>
-        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2'>
+        <div className='bg-greyscale-50 rounded-[20px] overflow-hidden flex py-2 shrink-0'>
           <TextareaAutosize
             maxRows={5}
             minRows={1}

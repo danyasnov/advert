@@ -4,6 +4,7 @@ import localforage from 'localforage'
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
 import {
+  clearCookies,
   destroyCookiesWrapper,
   getLocationCodes,
   processCookies,
@@ -14,13 +15,7 @@ import {fetchCountries} from '../api/v1'
 export default function Home() {
   const {query, push} = useRouter()
   useEffect(() => {
-    destroyCookiesWrapper('hash')
-    destroyCookiesWrapper('promo')
-    destroyCookiesWrapper('authType')
-    destroyCookiesWrapper('aup')
-    destroyCookiesWrapper('authNewRefreshToken')
-    destroyCookiesWrapper('authNewToken')
-    destroyCookiesWrapper('sessionId')
+    clearCookies()
     localforage.clear()
   }, [])
   return (

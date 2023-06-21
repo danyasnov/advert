@@ -101,6 +101,16 @@ export const destroyCookiesWrapper = (name: string, ctx?): void => {
   destroyCookie(ctx, name, options)
 }
 
+export const clearCookies = () => {
+  destroyCookiesWrapper('hash')
+  destroyCookiesWrapper('promo')
+  destroyCookiesWrapper('authType')
+  destroyCookiesWrapper('aup')
+  destroyCookiesWrapper('authNewRefreshToken')
+  destroyCookiesWrapper('authNewToken')
+  destroyCookiesWrapper('sessionId')
+}
+
 export const processCookies = async (
   ctx: Partial<GetServerSidePropsContext> & {
     req: IncomingMessage & {cookies: NextApiRequestCookies; locale?: string}
