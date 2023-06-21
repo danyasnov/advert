@@ -11,7 +11,7 @@ const SubscribersSubscriptionsButton: FC = () => {
   const router = useRouter()
 
   return (
-    <div className='flex justify-between mb-8 s:mb-0 m:mb-8 w-full'>
+    <div className='flex justify-between mb-8 w-full'>
       <Button
         className='flex s:flex-col s:text-center group w-1/2 justify-center'
         onClick={() => {

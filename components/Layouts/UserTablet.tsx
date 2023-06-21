@@ -19,14 +19,16 @@ import UserProfile from '../UserProfile'
 import Tabs from '../Tabs'
 import LoginModal from '../Auth/Login/LoginModal'
 import Footer from '../Footer'
+import HeaderFooterWrapper from './HeaderFooterWrapper'
 
+/* 
 const getFavoriteTab = (t: TFunction, sizes) => [
   {title: `${t('FAVORITE')}`, id: 1, count: sizes[1]},
 ]
 
 const getDraftTab = (t: TFunction, sizes) => [
   {title: `${t('DRAFTS')}`, id: 1, count: sizes[1]},
-]
+] */
 
 interface Props {
   isCurrentUser: boolean
@@ -37,7 +39,7 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
   const router = useRouter()
   const {showLogin, setShowLogin} = useGeneralStore()
   const {activeUserPage} = useGeneralStore()
-  const {user, userFavorite} = useUserStore()
+  /* const {user, userFavorite} = useUserStore()
 
   const favoriteTab = getFavoriteTab(t, {
     1: isNumber(userFavorite.count) ? userFavorite.count : '',
@@ -45,9 +47,61 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
   const draftTab = getDraftTab(t, {
     1: isNumber(user.draftsProductCount) ? user.draftsProductCount : '',
   })
-
+*/
   return (
     <>
+      <HeaderFooterWrapper>
+        <div className='py-8 m:flex min-h-1/2'>
+          <div className='m:flex m:mx-12 m:justify-center m:w-full'>
+            <div className='m:w-944px l:w-[1208px] mx-4 s:mx-8 m:mx-0 flex justify-between'>
+              <aside className='hidden s:block s:w-[224px] m:w-[280px] drop-shadow-card'>
+                <UserSidebar />
+              </aside>
+
+              <main className='w-full m:w-[614px] l:w-896px relative drop-shadow-card'>
+                {activeUserPage === 'subscribers' && (
+                  <div
+                    className={`${
+                      activeUserPage !== 'subscribers' ? 'hidden' : ''
+                    }`}>
+                    <SectionTitle
+                      title={t(
+                        isCurrentUser
+                          ? 'MY_PROFILE'
+                          : 'SUBSCRIBERS_AND_SUBSCRIPTIONS',
+                      )}
+                    />
+                    <UserSubscribers />
+                  </div>
+                )}
+
+                {(activeUserPage === 'adverts' || !activeUserPage) && (
+                  <div>
+                    <SectionTitle
+                      title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+                    />
+                    <UserAdverts />
+                  </div>
+                )}
+
+                {activeUserPage === 'drafts' && (
+                  <div>
+                    <SectionTitle title={t('DRAFTS')} />
+                    <UserDrafts />
+                  </div>
+                )}
+                {activeUserPage === 'favorites' && (
+                  <div>
+                    <SectionTitle title={t('FAVORITE')} />
+                    <UserFavorites />
+                  </div>
+                )}
+              </main>
+            </div>
+          </div>
+        </div>
+      </HeaderFooterWrapper>
+      {/*
       <div className='hidden s:flex m:hidden justify-between items-center mt-7 mx-8'>
         <Button
           onClick={() => {
@@ -161,6 +215,7 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
       </div>
       <Footer />
       <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+       */}
     </>
   )
 })
