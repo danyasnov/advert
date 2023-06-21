@@ -86,7 +86,7 @@ const VipBanner: FC<{
   return (
     <LinkWrapper href={link} title={title}>
       <div
-        className='bg-white hidden m:block w-[280px] h-[380px] rounded-[32px] overflow-hidden relative'
+        className='bg-white hidden m:block w-[280px] h-[380px] rounded-[32px] overflow-hidden relative [-webkit-mask-image:-webkit-radial-gradient(white,black)]'
         ref={viewportRef}>
         <div className='flex relative'>
           {photos.map((photo) => (
