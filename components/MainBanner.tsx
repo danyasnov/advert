@@ -90,7 +90,9 @@ const VipBanner: FC<{
         ref={viewportRef}>
         <div className='flex relative'>
           {photos.map((photo) => (
-            <div className='w-full rounded-t-[32px]' key={photo}>
+            <div
+              className='w-full rounded-t-[32px] [-webkit-mask-image:-webkit-radial-gradient(white,black)]'
+              key={photo}>
               <ImageWrapper
                 type={photo}
                 layout='fixed'
