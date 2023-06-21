@@ -3,13 +3,17 @@ import {observer} from 'mobx-react-lite'
 import {parseCookies} from 'nookies'
 import {Form, useFormik, FormikProvider, Field} from 'formik'
 import {useTranslation} from 'next-i18next'
-import {object, string} from 'yup'
+import {bool, boolean, object, string} from 'yup'
 import {toast} from 'react-toastify'
 import {makeRequest} from '../../../api'
 import {useCountriesStore} from '../../../providers/RootStoreProvider'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
-import {FormikNumber, FormikSelect} from '../../FormikComponents'
+import {
+  FormikCheckbox,
+  FormikNumber,
+  FormikSelect,
+} from '../../FormikComponents'
 
 const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
   const {t} = useTranslation()
@@ -30,6 +34,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      terms: false,
       phone: '',
       country: countriesOptions.find(
         (c) => c.value === (cookies.userCountryId || '196'),
@@ -93,6 +98,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
   const minLength = (format.match(/#/g) || []).length
   const schema = object().shape({
     phone: string().min(minLength, t('ADD_PHONE_NUMBER')),
+    terms: bool().oneOf([true], t('FIELD_MUST_BE_CHECKED')),
   })
   return (
     <FormikProvider value={formik}>
@@ -115,6 +121,14 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
               mask='_'
               allowEmptyFormatting
               minLength={country.phoneLength}
+            />
+            <div className='h-3' />
+            <Field
+              name='terms'
+              disableTrack
+              component={FormikCheckbox}
+              label={t('SIGNUP_AGREEMENT')}
+              labelClassname='text-body-14 text-greyscale-600'
             />
           </div>
         </Form>

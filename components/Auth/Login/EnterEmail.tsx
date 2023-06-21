@@ -2,12 +2,16 @@ import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {Message, Lock} from 'react-iconly'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
-import {string, object, boolean} from 'yup'
+import {string, object, boolean, bool} from 'yup'
 import {useTranslation} from 'next-i18next'
 import {size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
-import {FormikPassword, FormikText} from '../../FormikComponents'
+import {
+  FormikCheckbox,
+  FormikPassword,
+  FormikText,
+} from '../../FormikComponents'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
 import {makeRequest} from '../../../api'
@@ -108,11 +112,13 @@ const EnterEmail: FC<PageProps> = observer(
           is: true,
           then: string().required('Must enter email address'),
         }),
+        terms: bool().oneOf([true], t('FIELD_MUST_BE_CHECKED')),
       }),
       initialValues: {
         showPass: false,
         email: '',
         pass: '',
+        terms: false,
       },
       validateOnBlur: false,
       validateOnChange: false,
@@ -181,6 +187,14 @@ const EnterEmail: FC<PageProps> = observer(
                 />
               </>
             )}
+            <div className='h-3' />
+            <Field
+              name='terms'
+              disableTrack
+              component={FormikCheckbox}
+              label={t('SIGNUP_AGREEMENT')}
+              labelClassname='text-body-14 text-greyscale-600'
+            />
           </Form>
           <Controls
             onBack={() => {
