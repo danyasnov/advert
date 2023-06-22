@@ -1,6 +1,7 @@
 import {FC, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useLockBodyScroll} from 'react-use'
+import {isEmpty} from 'lodash'
 import IcClear from 'icons/material/Clear.svg'
 import {useTranslation} from 'next-i18next'
 import {RemoveFromSaleType} from 'front-api/src/models'
@@ -9,6 +10,7 @@ import ImageWrapper from '../ImageWrapper'
 import PrimaryButton from '../Buttons/PrimaryButton'
 import SecondaryButton from '../Buttons/SecondaryButton'
 import RadioButtons from '../RadioButtons'
+import EmptyProductImage from '../EmptyProductImage'
 
 interface Props {
   isOpen: boolean
@@ -42,6 +44,8 @@ const DeactivateAdvModal: FC<Props> = ({
       onClose()
     }
   }
+  console.log('price', price)
+  console.log('images: ', images)
   return (
     <ReactModal
       isOpen={isOpen}
@@ -61,15 +65,22 @@ const DeactivateAdvModal: FC<Props> = ({
         </div>
         <div className='py-4 px-4'>
           <div className='flex space-x-4 mb-4'>
-            <div className='w-[80px] h-[80px] rounded-[10px] overflow-hidden'>
-              <ImageWrapper
-                type={images[0]}
-                alt='Product'
-                objectFit='cover'
-                width={80}
-                height={80}
-              />
-            </div>
+            {isEmpty(images) ? (
+              <div className='w-[40px]'>
+                <EmptyProductImage size={40} />
+              </div>
+            ) : (
+              <div className='w-[80px] h-[80px] rounded-[10px] overflow-hidden'>
+                <ImageWrapper
+                  type={images[0]}
+                  alt='Product'
+                  objectFit='cover'
+                  width={80}
+                  height={80}
+                />
+              </div>
+            )}
+
             <div className='flex flex-col justify-center'>
               <span className='text-greyscale-900 text-body-16 font-semibold'>
                 {price}
@@ -81,7 +92,7 @@ const DeactivateAdvModal: FC<Props> = ({
           </div>
           <div className='space-y-4 my-2'>
             <span className='text-body-16 text-greyscale-900 font-semibold'>
-              Choose reason
+              {t('CHOOSE_REASON')}
             </span>
             <RadioButtons
               options={[
@@ -108,33 +119,6 @@ const DeactivateAdvModal: FC<Props> = ({
                 {t('REMOVE')}
               </PrimaryButton>
             </div>
-
-            {/* 
-            <PrimaryButton
-              className='w-full'
-              onClick={() => {
-                onSelect('soldAdverto')
-                onClose()
-              }}>
-              {t('SOLD_IN_VOOXEE')}
-            </PrimaryButton>
-            <SecondaryButton
-              className='w-full'
-              onClick={() => {
-                onSelect('soldOther')
-                onClose()
-              }}>
-              {t('SOLD_IN_ANOTHER_SERVICE')}
-            </SecondaryButton>
-            <SecondaryButton
-              className='w-full'
-              onClick={() => {
-                onSelect('changedMind')
-                onClose()
-              }}>
-              {t('CHANGE_MIND_TO_SELL')}
-            </SecondaryButton>
-            */}
           </div>
         </div>
       </div>

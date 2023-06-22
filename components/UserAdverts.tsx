@@ -70,7 +70,14 @@ const UserAdverts: FC = observer(() => {
 
   let getAdvertOptions
   if (isCurrentUser) {
-    getAdvertOptions = ({hash, state, showRefreshButton, title, images}) => {
+    getAdvertOptions = ({
+      hash,
+      state,
+      showRefreshButton,
+      title,
+      images,
+      price,
+    }) => {
       const remove = {
         title: 'REMOVE',
         icon: <Delete size={16} filled />,
@@ -123,6 +130,7 @@ const UserAdverts: FC = observer(() => {
               }),
             title,
             images,
+            price,
           })
         },
       }
