@@ -12,9 +12,15 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   onAccept: () => void
+  onReject: () => void
 }
 
-const RequestNotificationModal: FC<Props> = ({isOpen, onClose, onAccept}) => {
+const RequestNotificationModal: FC<Props> = ({
+  isOpen,
+  onClose,
+  onAccept,
+  onReject,
+}) => {
   const {t} = useTranslation()
   useLockBodyScroll()
   return (
@@ -46,10 +52,20 @@ const RequestNotificationModal: FC<Props> = ({isOpen, onClose, onAccept}) => {
           {t('ENABLE_NOTIFICATIONS_DESCRIPTION')}
         </span>
         <div className='space-x-2 flex w-full'>
-          <SecondaryButton className='w-full' onClick={() => onClose()}>
+          <SecondaryButton
+            className='w-full'
+            onClick={() => {
+              onReject()
+              onClose()
+            }}>
             {t('NOT_NOW')}
           </SecondaryButton>
-          <PrimaryButton className='w-full' onClick={() => onAccept()}>
+          <PrimaryButton
+            className='w-full'
+            onClick={() => {
+              onAccept()
+              onClose()
+            }}>
             {t('ENABLE')}
           </PrimaryButton>
         </div>

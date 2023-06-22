@@ -50,6 +50,7 @@ export interface CookiesState {
   authNewRefreshToken?: string
   aup?: string
   showCreateAdvMapHint?: boolean
+  hideNotificationRequest?: boolean
   showBottomSheet?: boolean
   visitMainPageCount?: number
   visitProductTourCount?: number
@@ -90,6 +91,7 @@ export interface SerializedCookiesState {
   visitProductTourCount?: string
   visitCurrentUserTourCount?: string
   visitUserTourCount?: string
+  hideNotificationRequest?: string
 }
 
 export interface Filter {

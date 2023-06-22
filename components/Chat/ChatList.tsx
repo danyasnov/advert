@@ -6,6 +6,7 @@ import {size, isEmpty} from 'lodash'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
 import {ArrowRight, VolumeUp} from 'react-iconly'
+import {parseCookies} from 'nookies'
 import ImageWrapper from '../ImageWrapper'
 import {normalizeString, unixMlToDate} from '../../utils'
 import EmptyProductImage from '../EmptyProductImage'
@@ -14,6 +15,8 @@ import ChatView from './ChatView'
 import SelectChatPlaceholder from './SelectChatPlaceholder'
 import Button from '../Buttons/Button'
 import {useModalsStore} from '../../providers/RootStoreProvider'
+import {setCookiesObject} from '../../helpers'
+import {SerializedCookiesState} from '../../types'
 
 const filterChats = (chats: ChatData[], query: string) => {
   const normalizedQuery = normalizeString(query)
@@ -50,13 +53,19 @@ const ChatList: FC = observer(() => {
     }
   }, [chats, router.query.chatId])
   useEffect(() => {
+    const state: SerializedCookiesState = parseCookies()
     if ('Notification' in window) {
-      if (Notification.permission === 'default') {
+      if (
+        Notification.permission === 'default' &&
+        state.hideNotificationRequest !== 'true'
+      ) {
         setModal('REQUEST_NOTIFICATION', {
           onAccept: () => {
-            setModal(null, {})
             setShowBanner(false)
             Notification.requestPermission().then()
+          },
+          onReject: () => {
+            setCookiesObject({hideNotificationRequest: true})
           },
         })
       }
