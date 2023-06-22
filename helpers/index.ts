@@ -790,6 +790,7 @@ export const deserializeCookies = (
     showLocationPopup: state.showLocationPopup !== 'false',
     showCreateAdvMapHint: state.showCreateAdvMapHint !== 'false',
     showBottomSheet: state.showBottomSheet !== 'false',
+    hideNotificationRequest: state.hideNotificationRequest !== 'false',
     authType: state.authType ? toNumber(state.authType) : null,
     visitMainPageCount: state.visitMainPageCount
       ? toNumber(state.visitMainPageCount)
