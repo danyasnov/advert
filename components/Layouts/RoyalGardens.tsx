@@ -5,7 +5,7 @@ import {Field, FormikProvider, useFormik} from 'formik'
 import ReactModal from 'react-modal'
 import {omit} from 'lodash'
 import GoogleMapReact from 'google-map-react'
-import {object, string} from 'yup'
+import {boolean, object, string} from 'yup'
 import {observer} from 'mobx-react-lite'
 import ReCAPTCHA from 'react-google-recaptcha'
 import IcArrow from 'icons/material/ArrowBack.svg'
@@ -285,6 +285,9 @@ const RoyalGardens: FC = observer(() => {
     validationSchema: object().shape({
       name: string().required(t('EMPTY_FIELD')),
       phone: string().required(t('EMPTY_FIELD')).min(8),
+      privacy: boolean()
+        .required(t('EMPTY_FIELD'))
+        .oneOf([true], t('EMPTY_FIELD')),
       email: string()
         .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
         .required(t('EMAIL_REQUIRED_FIELD')),
@@ -299,6 +302,7 @@ const RoyalGardens: FC = observer(() => {
       email: '',
       message: '',
       token: '',
+      privacy: false,
     },
     onSubmit: (values) => {
       setShowSuccess(true)
@@ -306,7 +310,7 @@ const RoyalGardens: FC = observer(() => {
         method: 'post',
         url: '/api/landing-submit',
         data: {
-          ...omit(values, ['token']),
+          ...omit(values, ['privacy', 'token']),
           parameter: 'Royal Gardens',
         },
       })
@@ -942,13 +946,14 @@ const RoyalGardens: FC = observer(() => {
                   component={FormikText}
                   placeholder={t('LANDING_REAL_ESTATE_ENTER_MESSAGE')}
                 />
+                <Field
+                  labelClassname='text-body-14 mt-4 text-greyscale-900'
+                  name='privacy'
+                  component={FormikCheckbox}
+                  label={t('LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA')}
+                />
               </div>
-              <Field
-                labelClassname='text-body-14 mt-4 text-greyscale-900'
-                name='personal data'
-                component={FormikCheckbox}
-                label={t('LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA')}
-              />
+
               {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
