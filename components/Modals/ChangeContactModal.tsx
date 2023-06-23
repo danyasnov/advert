@@ -16,11 +16,6 @@ interface Props {
 const ChangeContactModal: FC<Props> = ({isOpen, onClose, onFinish, type}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [])
   useDisableBodyScroll(isOpen)
   return (
     <ReactModal

@@ -7,6 +7,9 @@ const useDisableBodyScroll = (open: boolean): void => {
     } else {
       document.body.style.overflow = 'unset'
     }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
   }, [open])
 }
 export default useDisableBodyScroll
