@@ -226,7 +226,9 @@ const ChatList: FC = observer(() => {
                                 ? 'text-greyscale-900'
                                 : 'text-greyscale-500'
                             }`}>
-                            {chat.product.title}
+                            {chat.interlocutor.id === 'support'
+                              ? t('SUPPORT_TEAM')
+                              : chat.product.title}
                           </span>
                           <div className='w-full'>{lastMsg}</div>
                         </div>
