@@ -3,14 +3,27 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {ArrowDown, ArrowUp} from 'react-iconly'
 import {useProductsStore} from '../providers/RootStoreProvider'
+import {getDigitsFromString} from '../utils'
 
 const ProductPrice: FC = observer(() => {
   const {product} = useProductsStore()
   const {advert} = product
-  const {oldPrice, discount} = advert
-  const isFree = advert.price === '0'
+  const {oldPrice, discount, price, isVip} = advert
+  const isFree = price === '0'
   const {t} = useTranslation()
-  const showOldPrice = discount && oldPrice
+  let showOldPrice = false
+  let formattedOldPrice = ''
+  if (discount && oldPrice) {
+    const priceDigits = getDigitsFromString(price)
+    const oldPriceDigits = getDigitsFromString(oldPrice)
+    if (isVip) {
+      showOldPrice = true
+      formattedOldPrice = oldPrice
+    } else if (priceDigits?.length <= 6 && oldPriceDigits?.length <= 6) {
+      showOldPrice = true
+      formattedOldPrice = oldPrice.slice(0, -2)
+    }
+  }
   return (
     <div className='flex flex-col'>
       <span className='text-body-18 font-bold text-greyscale-900 mb-2 break-words'>
@@ -22,10 +35,10 @@ const ProductPrice: FC = observer(() => {
           data-test-id='price'>
           {isFree ? t('FREE') : advert.price}
         </span>
-        {showOldPrice && (
+        {(showOldPrice || (isVip && discount)) && (
           <div className='flex items-center ml-4 s:ml-0 m:ml-4'>
             <span className='text-h-4 text-greyscale-600 line-through '>
-              {oldPrice}
+              {formattedOldPrice}
             </span>
             <span
               className={`${
