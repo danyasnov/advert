@@ -12,6 +12,7 @@ import {handleMetrics, setCookiesObject, trackSingle} from '../../../helpers'
 import LinkButton from '../../Buttons/LinkButton'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
+import LinkWrapper from '../../Buttons/LinkWrapper'
 
 const getCharacters = (verifyMode) => {
   switch (verifyMode) {
@@ -29,13 +30,12 @@ const EnterCode: FC<PageProps> = observer(
     const {t} = useTranslation()
     const {reload} = useRouter()
     const [counter, setCounter] = useState(60)
-    const [disabled, setDisabled] = useState(true)
     const [verifyMode, setVerifyMode] = useState(() => {
       if (state.authType === AuthType.email) {
         return VerifyMode.Email
       }
       if (state.authType === AuthType.phone) {
-        return VerifyMode.Call
+        return state.phoneType === 'phone' ? VerifyMode.Call : VerifyMode.SMS
       }
     })
     let auth
@@ -68,9 +68,7 @@ const EnterCode: FC<PageProps> = observer(
     }, [])
     useEffect(() => {
       if (verifyMode !== VerifyMode.Call) {
-        if (counter === 0) {
-          setDisabled(false)
-        } else {
+        if (counter !== 0) {
           setTimeout(() => {
             setCounter(counter - 1)
           }, 1000)
@@ -78,7 +76,7 @@ const EnterCode: FC<PageProps> = observer(
       }
     }, [counter])
     useEffect(() => {
-      if (verifyMode === 1) {
+      if (verifyMode === VerifyMode.SMS) {
         sendCode()
       }
     }, [verifyMode])
@@ -138,29 +136,6 @@ const EnterCode: FC<PageProps> = observer(
 
     return (
       <div className='flex flex-col items-center px-4'>
-        {/* <div className='mb-8'> */}
-        {/*  {verifyMode === 2 && ( */}
-        {/*    <Lottie */}
-        {/*      options={{animationData: MailAnimation}} */}
-        {/*      height={68} */}
-        {/*      width={68} */}
-        {/*    /> */}
-        {/*  )} */}
-        {/*  {verifyMode === 0 && ( */}
-        {/*    <Lottie */}
-        {/*      options={{animationData: CallAnimation}} */}
-        {/*      height={68} */}
-        {/*      width={68} */}
-        {/*    /> */}
-        {/*  )} */}
-        {/*  {verifyMode === 1 && ( */}
-        {/*    <Lottie */}
-        {/*      options={{animationData: SmsAnimation}} */}
-        {/*      height={68} */}
-        {/*      width={68} */}
-        {/*    /> */}
-        {/*  )} */}
-        {/* </div> */}
         <span className='text-greyscale-900 text-body-16 font-medium mt-8 mb-6 mx-6 text-center w-[304px]'>
           {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
           {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
@@ -173,6 +148,7 @@ const EnterCode: FC<PageProps> = observer(
           allowedCharacters='numeric'
           onChange={(value) => {
             setFieldValue('code', value).then(() => {
+              setFieldError('code', '')
               if (value?.length === characters && !isSubmitting) {
                 submitForm()
               }
@@ -187,28 +163,31 @@ const EnterCode: FC<PageProps> = observer(
           {errors.code}
         </span>
 
-        <LinkButton
-          className='mb-4'
-          onClick={() => {
-            dispatch(
-              state.authType === AuthType.phone
-                ? {type: 'setPage', page: AuthPages.enterPhone}
-                : {type: 'setPage', page: AuthPages.enterEmail},
-            )
-          }}
-          label={t(
-            state.authType === AuthType.phone
-              ? 'ANOTHER_PHONE_NUMBER'
-              : 'EDIT_EMAIL',
-          )}
-        />
-        {verifyMode === 0 && (
+        {verifyMode === VerifyMode.SMS && (
+          <>
+            {counter ? (
+              <span className='text-body-14 text-greyscale-400 mb-4'>
+                {t('SEND_AFTER', {time: counter})}
+              </span>
+            ) : (
+              <LinkButton
+                className='mb-4'
+                onClick={() => {
+                  sendCode()
+                  setCounter(60)
+                }}
+                label={t('SEND_SMS_ONE_MORE_TIME')}
+              />
+            )}
+          </>
+        )}
+
+        {verifyMode === VerifyMode.Call && (
           <LinkButton
-            className='mb-10'
+            className='mb-4'
             onClick={() => {
               setVerifyMode(1)
               dispatch({type: 'setTitle', title: 'ENTER_CODE_FROM_SMS'})
-              setDisabled(true)
               setCounter(59)
               setFieldValue('code', null)
               AuthInputRef.current?.clear()
@@ -216,14 +195,23 @@ const EnterCode: FC<PageProps> = observer(
             label={t('NOT_RECEIVED_CALL')}
           />
         )}
-
-        {verifyMode !== 0 && (
-          <span
-            className={`text-body-12 text-greyscale-900 mb-6 ${
-              counter ? 'visible' : 'invisible'
-            }`}>
-            {t('SEND_AFTER', {time: counter})}
-          </span>
+        {verifyMode === VerifyMode.Email && (
+          <LinkButton
+            className='mb-10'
+            onClick={() => {
+              dispatch({type: 'setPage', page: AuthPages.enterEmail})
+            }}
+            label={t('EDIT_EMAIL')}
+          />
+        )}
+        {verifyMode !== VerifyMode.Email && (
+          <LinkWrapper
+            className='mb-10'
+            href='/support'
+            target='_blank'
+            title={t('SUPPORT_CONTACT')}>
+            <LinkButton label={t('SUPPORT_CONTACT')} />
+          </LinkWrapper>
         )}
         <Controls
           onBack={() => {
@@ -236,14 +224,9 @@ const EnterCode: FC<PageProps> = observer(
             })
           }}
           onNext={() => {
-            sendCode()
-            setDisabled(true)
-            setCounter(60)
+            submitForm()
           }}
-          nextLabel={t(
-            verifyMode === 0 ? 'CONTINUE' : 'SEND_SMS_ONE_MORE_TIME',
-          )}
-          nextDisabled={disabled}
+          nextLabel={t('CONTINUE')}
         />
       </div>
     )

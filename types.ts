@@ -51,6 +51,7 @@ export interface CookiesState {
   aup?: string
   showCreateAdvMapHint?: boolean
   hideNotificationRequest?: boolean
+  isCyprus?: boolean
   showBottomSheet?: boolean
   visitMainPageCount?: number
   visitProductTourCount?: number
@@ -80,6 +81,7 @@ export interface SerializedCookiesState {
   promo?: string
   authType?: string
   phone?: string
+  isCyprus?: string
   sessionId?: string
   token?: string
   authNewToken?: string

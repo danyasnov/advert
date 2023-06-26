@@ -8,6 +8,7 @@ import EnterEmail from './EnterEmail'
 import PasswordRestoration from './PasswordRestoration'
 import Success from '../Success'
 import {reducer, State} from '../utils'
+import SelectPhoneTypeAuth from './SelectPhoneTypeAuth'
 
 export const AuthPages = {
   initialPage: {
@@ -17,6 +18,10 @@ export const AuthPages = {
   enterPhone: {
     title: 'LOGIN_WITH_PHONE',
     component: EnterPhone,
+  },
+  selectPhoneTypeAuth: {
+    title: 'BY_PHONE',
+    component: SelectPhoneTypeAuth,
   },
   enterEmail: {
     title: 'LOGIN_WITH_EMAIL',
@@ -44,6 +49,7 @@ const initialState: State = {
   incoming: null,
   isNew: null,
   authType: null,
+  phoneType: null,
   userId: null,
   password: null,
   page: AuthPages.initialPage,

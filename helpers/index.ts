@@ -122,16 +122,21 @@ export const processCookies = async (
   let locationByIp = null
   let addressByGps = null
   state.language = cookies.language || req.locale || 'en'
-  if (!cookies.userLocation) {
+  if (!cookies.userLocation || !cookies.isCyprus) {
     try {
       const ip = parseIp(req)
       locationByIp = await getLocationByIp(ip)
       if (locationByIp.data?.data) {
         const {latitude, longitude} = locationByIp.data.data
+        const userAddress = await getAddressByGPS(
+          {latitude, longitude},
+          state.language,
+        )
         state.userLocation = {
           latitude: latitude || 34.6841,
           longitude: longitude || 33.0379,
         }
+        state.isCyprus = userAddress.result?.country?.id === '196'
       }
     } catch (e) {
       console.error(e)
@@ -791,6 +796,7 @@ export const deserializeCookies = (
     showCreateAdvMapHint: state.showCreateAdvMapHint !== 'false',
     showBottomSheet: state.showBottomSheet !== 'false',
     hideNotificationRequest: state.hideNotificationRequest !== 'false',
+    isCyprus: state.isCyprus !== 'false',
     authType: state.authType ? toNumber(state.authType) : null,
     visitMainPageCount: state.visitMainPageCount
       ? toNumber(state.visitMainPageCount)

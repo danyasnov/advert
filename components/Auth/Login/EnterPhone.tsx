@@ -34,7 +34,6 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      terms: false,
       phone: '',
       country: countriesOptions.find(
         (c) => c.value === (cookies.userCountryId || '196'),
@@ -98,7 +97,6 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
   const minLength = (format.match(/#/g) || []).length
   const schema = object().shape({
     phone: string().min(minLength, t('ADD_PHONE_NUMBER')),
-    terms: bool().oneOf([true], t('FIELD_MUST_BE_CHECKED')),
   })
   return (
     <FormikProvider value={formik}>
@@ -121,14 +119,6 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
               mask='_'
               allowEmptyFormatting
               minLength={country.phoneLength}
-            />
-            <div className='h-3' />
-            <Field
-              name='terms'
-              disableTrack
-              component={FormikCheckbox}
-              label={t('SIGNUP_AGREEMENT')}
-              labelClassname='text-body-14 text-greyscale-600'
             />
           </div>
         </Form>

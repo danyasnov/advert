@@ -1,15 +1,13 @@
 import React, {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {AuthType} from 'front-api/src/models'
-import IcPhone from 'icons/material/Phone.svg'
-import IcEmail from 'icons/material/Email.svg'
 import {Call, Message} from 'react-iconly'
-import SecondaryButton from '../../Buttons/SecondaryButton'
+import {parseCookies} from 'nookies'
 import {AuthPages} from './LoginWizard'
 import {PageProps} from '../utils'
 import OutlineButton from '../../Buttons/OutlineButton'
-import {handleClickHouse} from '../../../api/v2'
 import {handleMetrics} from '../../../helpers'
+import {SerializedCookiesState} from '../../../types'
 
 const InitialPage: FC<PageProps> = ({dispatch}) => {
   const {t} = useTranslation()
@@ -26,10 +24,27 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
         id='login-by-phone'
         className='h-14'
         onClick={() => {
-          dispatch({
-            type: 'setPage',
-            page: AuthPages.enterPhone,
-          })
+          const state: SerializedCookiesState = parseCookies()
+          const isCyprus = state.isCyprus === 'true'
+          if (isCyprus) {
+            dispatch({
+              type: 'setPage',
+              page: AuthPages.selectPhoneTypeAuth,
+            })
+          } else {
+            dispatch({
+              type: 'setPage',
+              page: AuthPages.enterPhone,
+            })
+            dispatch({
+              type: 'setPhoneType',
+              phoneType: 'phone',
+            })
+            dispatch({
+              type: 'setTitle',
+              title: 'BY_PHONE',
+            })
+          }
           dispatch({
             type: 'setAuthType',
             authType: AuthType.phone,
