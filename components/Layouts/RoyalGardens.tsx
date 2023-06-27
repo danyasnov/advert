@@ -30,10 +30,9 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
 import PhotosModal from '../Modals/PhotosModal'
 import VideoModal from '../Modals/VideoModal'
-import LoginModal from '../Auth/Login/LoginModal'
 import SuccessModal from '../Modals/SuccessModal'
 import {download} from '../../utils'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {useModalsStore} from '../../providers/RootStoreProvider'
 import SimpleFooter from '../SimpleFooter'
 
 const property = [
@@ -268,7 +267,7 @@ const Gallery: FC = observer(() => {
 
 const RoyalGardens: FC = observer(() => {
   const {t} = useTranslation()
-  const {showLogin, setShowLogin} = useGeneralStore()
+  const {setModal} = useModalsStore()
   const [showModal, setShowModal] = useState(false)
   const [tab, setTab] = useState(0)
   const [showMapModal, setShowMapModal] = useState(false)
@@ -426,7 +425,7 @@ const RoyalGardens: FC = observer(() => {
               <LanguageSelect />
               <Auth
                 onLogin={() => {
-                  setShowLogin(true)
+                  setModal('LOGIN')
                 }}
               />
             </div>
@@ -978,8 +977,6 @@ const RoyalGardens: FC = observer(() => {
       </div>
 
       <SimpleFooter />
-
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
       <VideoModal
         src='img/royal-garden/ROYAL_GARDENS.mp4'

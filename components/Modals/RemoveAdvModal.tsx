@@ -15,7 +15,6 @@ interface Props {
 
 const RemoveAdvModal: FC<Props> = ({isOpen, onClose, onRemove}) => {
   const {t} = useTranslation()
-  useLockBodyScroll()
   return (
     <ReactModal
       isOpen={isOpen}

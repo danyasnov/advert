@@ -7,7 +7,10 @@ import {observer} from 'mobx-react-lite'
 import {OwnerModel} from 'front-api/src/models'
 import Button from './Button'
 import {makeRequest} from '../../api'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {
+  useGeneralStore,
+  useModalsStore,
+} from '../../providers/RootStoreProvider'
 import {trackSingle} from '../../helpers'
 import UserAvatar from '../UserAvatar'
 import SecondaryButton from './SecondaryButton'
@@ -82,7 +85,8 @@ const PhoneModal: FC<ModalProps> = observer(
   ({isOpen, onClose, user, displayAllowed, phone}) => {
     const {t} = useTranslation()
     useLockBodyScroll()
-    const {setShowLogin, user: currentUser} = useGeneralStore()
+    const {user: currentUser} = useGeneralStore()
+    const {setModal} = useModalsStore()
 
     let body
     if (displayAllowed) {
@@ -142,7 +146,7 @@ const PhoneModal: FC<ModalProps> = observer(
                   if (displayAllowed) {
                     navigator.clipboard.writeText(`+${phone}`)
                   } else {
-                    setShowLogin(true)
+                    setModal('LOGIN')
                     onClose()
                   }
                 }}

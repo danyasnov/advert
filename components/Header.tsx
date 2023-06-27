@@ -6,10 +6,8 @@ import IcCurvedPlus from 'icons/material/CurvedPlus.svg'
 import Logo from './Logo'
 import Search from './Search'
 import CategoriesSelector from './CategoriesSelector/index'
-import LoginModal from './Auth/Login/LoginModal'
 import Auth from './Auth'
-import {useGeneralStore} from '../providers/RootStoreProvider'
-import useDisableBodyScroll from '../hooks/useDisableBodyScroll'
+import {useGeneralStore, useModalsStore} from '../providers/RootStoreProvider'
 import LanguageSelect from './LanguageSelect'
 import Button from './Buttons/Button'
 import {handleMetrics} from '../helpers'
@@ -18,9 +16,9 @@ import SafetyButton from './SafetyButton'
 
 const Header: FC = observer(() => {
   const {push} = useRouter()
+  const {setModal} = useModalsStore()
   const {t} = useTranslation()
-  const {showLogin, setShowLogin, user} = useGeneralStore()
-  useDisableBodyScroll(showLogin)
+  const {user} = useGeneralStore()
 
   return (
     <header className='flex s:justify-center relative z-10'>
@@ -50,7 +48,7 @@ const Header: FC = observer(() => {
             onClick={async () => {
               handleMetrics('click_addNew_advt')
               if (!user) {
-                return setShowLogin(true)
+                setModal('LOGIN')
               }
               return push(`/advert/create`)
             }}>
@@ -65,15 +63,12 @@ const Header: FC = observer(() => {
           </Button>
           <Auth
             onLogin={() => {
-              setShowLogin(true)
+              setModal('LOGIN')
               handleMetrics('clickLogin')
             }}
           />
         </div>
       </div>
-      {showLogin && (
-        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
-      )}
     </header>
   )
 })

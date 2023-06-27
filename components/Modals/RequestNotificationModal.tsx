@@ -22,7 +22,6 @@ const RequestNotificationModal: FC<Props> = ({
   onReject,
 }) => {
   const {t} = useTranslation()
-  useLockBodyScroll()
   return (
     <ReactModal
       isOpen={isOpen}

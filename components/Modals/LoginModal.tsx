@@ -2,8 +2,8 @@ import {FC, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
-import Button from '../../Buttons/Button'
-import LoginWizard from './LoginWizard'
+import Button from '../Buttons/Button'
+import LoginWizard from '../Auth/Login/LoginWizard'
 
 interface Props {
   isOpen: boolean

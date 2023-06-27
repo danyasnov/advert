@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import ReactModal from 'react-modal'
-import {useLockBodyScroll} from 'react-use'
 import IcClear from 'icons/material/Clear.svg'
 import {useTranslation} from 'next-i18next'
 import {RemoveFromSaleType} from 'front-api/src/models'
@@ -25,7 +24,6 @@ const DeactivateAdvModal: FC<Props> = ({
   title,
 }) => {
   const {t} = useTranslation()
-  useLockBodyScroll()
   return (
     <ReactModal
       isOpen={isOpen}

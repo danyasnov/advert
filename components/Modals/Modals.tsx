@@ -1,16 +1,19 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
+import {useLockBodyScroll} from 'react-use'
 import {useModalsStore} from '../../providers/RootStoreProvider'
 import RemoveAdvModal from './RemoveAdvModal'
 import DeactivateAdvModal from './DeactivateAdvModal'
 import ChangeContactModal from './ChangeContactModal'
 import RequestNotificationModal from './RequestNotificationModal'
+import LoginModal from './LoginModal'
 
 export const MODAL_TYPES = {
   REMOVE_ADV: 'REMOVE_ADV',
   DEACTIVATE_ADV: 'DEACTIVATE_ADV',
   CHANGE_CONTACT: 'CHANGE_CONTACT',
   REQUEST_NOTIFICATION: 'REQUEST_NOTIFICATION',
+  LOGIN: 'LOGIN',
 }
 
 const MODAL_COMPONENTS: any = {
@@ -18,6 +21,7 @@ const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.DEACTIVATE_ADV]: DeactivateAdvModal,
   [MODAL_TYPES.CHANGE_CONTACT]: ChangeContactModal,
   [MODAL_TYPES.REQUEST_NOTIFICATION]: RequestNotificationModal,
+  [MODAL_TYPES.LOGIN]: LoginModal,
 }
 
 const Modals: FC = observer(() => {
@@ -26,6 +30,7 @@ const Modals: FC = observer(() => {
   const hideModal = () => {
     setModal(null, {})
   }
+  useLockBodyScroll(!!ModalComponent)
 
   if (!ModalComponent) return null
 
