@@ -192,6 +192,7 @@ export interface IFormikSelect {
   isMulti: boolean
   filterStyle?: boolean
   isIconSelect?: boolean
+  limit?: number
   styles?: Record<any, any>
 }
 export interface IFormikRange {

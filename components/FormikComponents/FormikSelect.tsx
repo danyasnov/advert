@@ -20,6 +20,7 @@ const FormikSelect: FC<IFormikSelect & FieldProps> = ({
   isClearable,
   filterStyle,
   isIconSelect,
+  limit,
 }) => {
   const {t} = useTranslation()
   const {width} = useWindowSize()
@@ -56,6 +57,7 @@ const FormikSelect: FC<IFormikSelect & FieldProps> = ({
     isInvalid: !!error,
     isIconSelect,
     filterStyle,
+    limit,
     onChange: (item) => {
       if (item?.value === 'other_value_button') {
         setCurrentOptions([
