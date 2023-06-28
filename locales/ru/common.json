@@ -1554,7 +1554,7 @@
   "LANDING_BUSINESS_WHO_WE_ARE": "Кто Мы",
   "LANDING_BUSINESS_WHY_US": "Почему Мы",
   "LANDING_BUSINESS_WHY_US_DESCRIPTION": "Неважно, что вы продаете — Vooxee — это то, что вам нужно",
-  "LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA": "Нажимая кнопку \"Отправить\", я соглашаюсь с <a target=\"_blank\" href=\"https://ru.vooxee.com/p/privacy-policy/\"><b>Политикой обработки персональных данных</b></a>",
+  "LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA": "Нажимая кнопку \"Отправить\", я соглашаюсь с <a target=\"_blank\" href=\"https://ru.vooxee.com/p/privacy-policy/\" style=\"font-weight: 700;\"><b>Политикой обработки персональных данных</b></a>",
   "LANDING_REAL_ESTATE_AMAZING_TERRACE": "Потрясающая терраса",
   "LANDING_REAL_ESTATE_APARTMENTS": "АПАРТАМЕНТЫ",
   "LANDING_REAL_ESTATE_AVAILABILITY": "Доступность",
