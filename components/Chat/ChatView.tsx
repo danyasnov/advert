@@ -28,6 +28,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     const [store] = useState(storeCreator)
 
     useEffect(() => {
+      return () => {
+        store.destroy()
+      }
+    }, [])
+    useEffect(() => {
       const messagesByDate = store.messages
         .slice()
         .reverse()
