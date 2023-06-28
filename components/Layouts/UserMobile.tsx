@@ -44,7 +44,10 @@ const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
               )}
 
               {(activeUserPage === 'adverts' || !activeUserPage) && (
-                <div>
+                <div
+                  className={`${
+                    activeUserPage === null && isCurrentUser ? 'hidden' : ''
+                  }`}>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
                     <SectionTitle
                       title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
