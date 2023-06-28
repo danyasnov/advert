@@ -12,7 +12,7 @@ import {fetchCategories} from '../api/v2'
 import Storage from '../stores/Storage'
 import NotFound from '../components/Layouts/NotFound'
 
-export default function Home() {
+export default function NotFoundPage() {
   return <NotFound />
 }
 
