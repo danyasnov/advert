@@ -3,13 +3,8 @@ import {GetServerSideProps} from 'next'
 import localforage from 'localforage'
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
-import {
-  clearCookies,
-  destroyCookiesWrapper,
-  getLocationCodes,
-  processCookies,
-} from '../helpers'
-import LoginModal from '../components/Auth/Login/LoginModal'
+import {clearCookies, getLocationCodes, processCookies} from '../helpers'
+import LoginModal from '../components/Modals/LoginModal'
 import {fetchCountries} from '../api/v1'
 
 export default function Home() {

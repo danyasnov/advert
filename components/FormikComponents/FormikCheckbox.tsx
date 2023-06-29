@@ -41,7 +41,7 @@ const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
       ) : (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
         <label
-          className={`select-none text-greyscale-900 cursor-pointer flex items-center ${labelClassname}`}>
+          className={`select-none cursor-pointer flex items-center ${labelClassname}`}>
           {input}
           <span
             dangerouslySetInnerHTML={{

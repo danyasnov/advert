@@ -6,6 +6,7 @@ import IcKeyboardArrowLeft from 'icons/material/KeyboardArrowLeft.svg'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
 import IcArrowDown from 'icons/material/ArrowDown.svg'
+import {toast} from 'react-toastify'
 import Button from '../../Buttons/Button'
 import PrimaryButton from '../../Buttons/PrimaryButton'
 import {
@@ -56,6 +57,10 @@ const CategoryPage: FC = observer(() => {
         },
       })
         .then((res) => {
+          if (res.data.status === 500) {
+            toast.error(res.data.error)
+            return null
+          }
           const categoryData = res.data.result
           const newDraft: Partial<CAParamsModel> = {
             currencies: draft.currencies,
@@ -84,6 +89,7 @@ const CategoryPage: FC = observer(() => {
           })
         })
         .then((res) => {
+          if (!res) return
           if (!hash) {
             router.query.hash = [res.data.result.hash]
             router.push(router)
@@ -155,6 +161,7 @@ const CategoryPage: FC = observer(() => {
       <div className='w-full l:w-1208px flex justify-between'>
         <OutlineButton
           id='ad-back-button'
+          className='s:w-[212px] s:h-[48px]'
           onClick={() => {
             dispatch({
               type: 'setPage',
@@ -165,6 +172,7 @@ const CategoryPage: FC = observer(() => {
         </OutlineButton>
         <PrimaryButton
           id='ad-apply-button'
+          className='s:w-[212px] s:h-[48px]'
           onClick={() => {
             const category = last(selected)
             onSubmit(category.id)

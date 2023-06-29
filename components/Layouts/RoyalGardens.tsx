@@ -5,7 +5,7 @@ import {Field, FormikProvider, useFormik} from 'formik'
 import ReactModal from 'react-modal'
 import {omit} from 'lodash'
 import GoogleMapReact from 'google-map-react'
-import {object, string} from 'yup'
+import {boolean, object, string} from 'yup'
 import {observer} from 'mobx-react-lite'
 import ReCAPTCHA from 'react-google-recaptcha'
 import IcArrow from 'icons/material/ArrowBack.svg'
@@ -30,10 +30,9 @@ import LinkWrapper from '../Buttons/LinkWrapper'
 import Button from '../Buttons/Button'
 import PhotosModal from '../Modals/PhotosModal'
 import VideoModal from '../Modals/VideoModal'
-import LoginModal from '../Auth/Login/LoginModal'
 import SuccessModal from '../Modals/SuccessModal'
 import {download} from '../../utils'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {useModalsStore} from '../../providers/RootStoreProvider'
 import SimpleFooter from '../SimpleFooter'
 
 const property = [
@@ -268,7 +267,7 @@ const Gallery: FC = observer(() => {
 
 const RoyalGardens: FC = observer(() => {
   const {t} = useTranslation()
-  const {showLogin, setShowLogin} = useGeneralStore()
+  const {setModal} = useModalsStore()
   const [showModal, setShowModal] = useState(false)
   const [tab, setTab] = useState(0)
   const [showMapModal, setShowMapModal] = useState(false)
@@ -285,6 +284,9 @@ const RoyalGardens: FC = observer(() => {
     validationSchema: object().shape({
       name: string().required(t('EMPTY_FIELD')),
       phone: string().required(t('EMPTY_FIELD')).min(8),
+      privacy: boolean()
+        .required(t('EMPTY_FIELD'))
+        .oneOf([true], t('EMPTY_FIELD')),
       email: string()
         .email(t('EMAIL_MUST_BE_A_VALID_EMAIL'))
         .required(t('EMAIL_REQUIRED_FIELD')),
@@ -299,6 +301,7 @@ const RoyalGardens: FC = observer(() => {
       email: '',
       message: '',
       token: '',
+      privacy: false,
     },
     onSubmit: (values) => {
       setShowSuccess(true)
@@ -306,7 +309,7 @@ const RoyalGardens: FC = observer(() => {
         method: 'post',
         url: '/api/landing-submit',
         data: {
-          ...omit(values, ['token']),
+          ...omit(values, ['privacy', 'token']),
           parameter: 'Royal Gardens',
         },
       })
@@ -422,7 +425,7 @@ const RoyalGardens: FC = observer(() => {
               <LanguageSelect />
               <Auth
                 onLogin={() => {
-                  setShowLogin(true)
+                  setModal('LOGIN')
                 }}
               />
             </div>
@@ -942,13 +945,14 @@ const RoyalGardens: FC = observer(() => {
                   component={FormikText}
                   placeholder={t('LANDING_REAL_ESTATE_ENTER_MESSAGE')}
                 />
+                <Field
+                  labelClassname='text-body-14 mt-4 text-greyscale-900'
+                  name='privacy'
+                  component={FormikCheckbox}
+                  label={t('LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA')}
+                />
               </div>
-              <Field
-                labelClassname='text-body-14 mt-4 text-greyscale-900'
-                name='personal data'
-                component={FormikCheckbox}
-                label={t('LANDING_REAL_ESTATE_AGREE_PERSONAL_DATA')}
-              />
+
               {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
@@ -973,8 +977,6 @@ const RoyalGardens: FC = observer(() => {
       </div>
 
       <SimpleFooter />
-
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
       <VideoModal
         src='img/royal-garden/ROYAL_GARDENS.mp4'

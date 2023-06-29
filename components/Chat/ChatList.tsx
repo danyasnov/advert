@@ -6,6 +6,9 @@ import {size, isEmpty} from 'lodash'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
 import {ArrowRight, VolumeUp} from 'react-iconly'
+import {parseCookies} from 'nookies'
+import {toJS} from 'mobx'
+import SupportInterlocutor from 'icons/SupportInterlocutor.svg'
 import ImageWrapper from '../ImageWrapper'
 import {normalizeString, unixMlToDate} from '../../utils'
 import EmptyProductImage from '../EmptyProductImage'
@@ -14,6 +17,9 @@ import ChatView from './ChatView'
 import SelectChatPlaceholder from './SelectChatPlaceholder'
 import Button from '../Buttons/Button'
 import {useModalsStore} from '../../providers/RootStoreProvider'
+import {setCookiesObject} from '../../helpers'
+import {SerializedCookiesState} from '../../types'
+import ChatListAvatar from './ChatListAvatar'
 
 const filterChats = (chats: ChatData[], query: string) => {
   const normalizedQuery = normalizeString(query)
@@ -50,13 +56,19 @@ const ChatList: FC = observer(() => {
     }
   }, [chats, router.query.chatId])
   useEffect(() => {
+    const state: SerializedCookiesState = parseCookies()
     if ('Notification' in window) {
-      if (Notification.permission === 'default') {
+      if (
+        Notification.permission === 'default' &&
+        state.hideNotificationRequest !== 'true'
+      ) {
         setModal('REQUEST_NOTIFICATION', {
           onAccept: () => {
-            setModal(null, {})
             setShowBanner(false)
             Notification.requestPermission().then()
+          },
+          onReject: () => {
+            setCookiesObject({hideNotificationRequest: true})
           },
         })
       }
@@ -172,20 +184,7 @@ const ChatList: FC = observer(() => {
                         })
                       }}>
                       <div className='rounded-3xl flex w-full flex-row'>
-                        <div className='relative  mr-4 flex items-center justify-center'>
-                          {chat.product.image ? (
-                            <div className='rounded-2xl overflow-hidden w-[52px] h-[52px] relative'>
-                              <ImageWrapper
-                                type={chat.product.image}
-                                alt='image'
-                                layout='fill'
-                                objectFit='cover'
-                              />
-                            </div>
-                          ) : (
-                            <EmptyProductImage size={52} />
-                          )}
-                        </div>
+                        <ChatListAvatar chat={chat} />
                         <div className='flex flex-col  w-full'>
                           <div className='flex w-full justify-between'>
                             <span
@@ -227,7 +226,9 @@ const ChatList: FC = observer(() => {
                                 ? 'text-greyscale-900'
                                 : 'text-greyscale-500'
                             }`}>
-                            {chat.product.title}
+                            {chat.interlocutor.id === 'support'
+                              ? t('SUPPORT_TEAM')
+                              : chat.product.title}
                           </span>
                           <div className='w-full'>{lastMsg}</div>
                         </div>

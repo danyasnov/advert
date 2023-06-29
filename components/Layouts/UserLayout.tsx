@@ -16,7 +16,7 @@ import UserDesktop from './UserDesktop'
 const UserLayout: FC = observer(() => {
   const {t} = useTranslation()
   const {query} = useRouter()
-  const {userHash, activeUserPage, setActiveUserPage} = useGeneralStore()
+  const {userHash, setActiveUserPage} = useGeneralStore()
   const {user, fetchProducts, fetchRatings} = useUserStore()
   const [showTour, setShowTour] = useState(false)
   const [showDraftsTour, setShowDraftsTour] = useState(false)

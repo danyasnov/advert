@@ -1,7 +1,5 @@
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetServerSideProps} from 'next'
-import NotFound from '../components/Layouts/NotFound'
-import Storage from '../stores/Storage'
 import {
   checkToken,
   getLocationCodes,
@@ -9,7 +7,10 @@ import {
   redirectToLogin,
   redirectToRefresh,
 } from '../helpers'
+import {fetchCountries} from '../api/v1'
 import {fetchCategories} from '../api/v2'
+import Storage from '../stores/Storage'
+import NotFound from '../components/Layouts/NotFound'
 
 export default function NotFoundPage() {
   return <NotFound />
@@ -29,18 +30,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (message === 'REFRESH_REDIRECT') {
     return redirectToRefresh(ctx.resolvedUrl)
   }
-  const promises = [fetchCategories(storage)]
+  const promises = [fetchCountries(state.language), fetchCategories(storage)]
 
-  const [categoriesData] = await Promise.allSettled(promises).then((res) =>
+  const [countriesData, categoriesData] = await Promise.allSettled(
+    promises,
+  ).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
   const categories = categoriesData?.result ?? null
 
+  const countries = countriesData ?? null
   return {
     props: {
       hydrationData: {
         categoriesStore: {
           categories,
+        },
+        countriesStore: {
+          countries,
         },
         generalStore: {
           locationCodes: getLocationCodes(ctx),

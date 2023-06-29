@@ -1,7 +1,6 @@
-import {FC, useEffect} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {useRouter} from 'next/router'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import UserSidebar from '../UserSidebar'
@@ -44,8 +43,11 @@ const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
                 </div>
               )}
 
-              {activeUserPage === 'adverts' && (
-                <div>
+              {(activeUserPage === 'adverts' || !activeUserPage) && (
+                <div
+                  className={`${
+                    activeUserPage === null && isCurrentUser ? 'hidden' : ''
+                  }`}>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
                     <SectionTitle
                       title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}

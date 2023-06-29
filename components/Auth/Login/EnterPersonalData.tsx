@@ -4,12 +4,16 @@ import {User, Lock} from 'react-iconly'
 import {AuthType} from 'front-api/src/models'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
 import {toast} from 'react-toastify'
-import {object, string, ref} from 'yup'
+import {object, string, ref, bool} from 'yup'
 import {trim} from 'lodash'
 import ReCAPTCHA from 'react-google-recaptcha'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
-import {FormikPassword, FormikText} from '../../FormikComponents'
+import {
+  FormikCheckbox,
+  FormikPassword,
+  FormikText,
+} from '../../FormikComponents'
 import {makeRequest} from '../../../api'
 
 const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
@@ -22,6 +26,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
       .max(90, t('TOO_SHORT_NAME_OR_SURNAME'))
       .min(2, t('TOO_SHORT_NAME_OR_SURNAME')),
     surname: string().trim().max(90, t('TOO_SHORT_NAME_OR_SURNAME')),
+    terms: bool().oneOf([true], t('FIELD_MUST_BE_CHECKED')),
   })
 
   const emailSchema = baseSchema.concat(
@@ -57,11 +62,14 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
       surname: '',
       pass: '',
       confirmPass: '',
+      terms: false,
     },
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      if (state.authType === 1 && !token) return
+      if (process.env.NEXT_PUBLIC_RECAPTCHA_KEY && !token) {
+        return
+      }
       const registerResponse = await makeRequest({
         url: '/api/register',
         method: 'post',
@@ -122,7 +130,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               </div>
             }
           />
-          {state.authType === 1 && process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+          {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
             <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
               onChange={(val) => {
@@ -164,6 +172,13 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               />
             </>
           )}
+          <Field
+            name='terms'
+            disableTrack
+            component={FormikCheckbox}
+            label={t('SIGNUP_AGREEMENT')}
+            labelClassname='text-body-14 text-greyscale-600'
+          />
         </Form>
         <Controls
           onBack={() => {

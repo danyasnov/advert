@@ -8,6 +8,7 @@ import EnterEmail from './EnterEmail'
 import PasswordRestoration from './PasswordRestoration'
 import Success from '../Success'
 import {reducer, State} from '../utils'
+import SelectPhoneTypeAuth from './SelectPhoneTypeAuth'
 
 export const AuthPages = {
   initialPage: {
@@ -17,6 +18,15 @@ export const AuthPages = {
   enterPhone: {
     title: 'LOGIN_WITH_PHONE',
     component: EnterPhone,
+  },
+  selectPhoneTypeAuth: {
+    title: 'BY_PHONE',
+    component: SelectPhoneTypeAuth,
+    backButtonHandler: (dispatch) =>
+      dispatch({
+        type: 'setPage',
+        page: AuthPages.initialPage,
+      }),
   },
   enterEmail: {
     title: 'LOGIN_WITH_EMAIL',
@@ -44,13 +54,14 @@ const initialState: State = {
   incoming: null,
   isNew: null,
   authType: null,
+  phoneType: null,
   userId: null,
   password: null,
   page: AuthPages.initialPage,
 }
 
 const LoginWizard: FC<{
-  setTitle: Dispatch<SetStateAction<() => never>>
+  setTitle: (newTitle: any, backButton?: any) => void
   onClose: () => void
   onFinish: () => void
 }> = ({setTitle, onClose, onFinish}) => {
@@ -58,7 +69,10 @@ const LoginWizard: FC<{
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    setTitle(t(state.page.title))
+    const handler =
+      state.page.backButtonHandler &&
+      (() => state.page.backButtonHandler(dispatch))
+    setTitle(t(state.page.title), handler)
   }, [state.page.title, setTitle, t])
   const Component = state.page.component
 

@@ -1,14 +1,13 @@
-import {FC, useEffect, useState} from 'react'
+import {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {observer} from 'mobx-react-lite'
 import {AdvertiseDetail} from 'front-api'
 import {globalChatsStore} from 'chats'
-import LinkWrapper from './LinkWrapper'
 import SecondaryButton from './SecondaryButton'
 import {SerializedCookiesState} from '../../types'
-import {useGeneralStore} from '../../providers/RootStoreProvider'
+import {useModalsStore} from '../../providers/RootStoreProvider'
 
 interface Props {
   product: AdvertiseDetail
@@ -17,7 +16,7 @@ const ChatButton: FC<Props> = observer(({product}) => {
   const {t} = useTranslation()
   const {push} = useRouter()
   const {owner, advert} = product
-  const {user, setShowLogin} = useGeneralStore()
+  const {setModal} = useModalsStore()
 
   return (
     <div className='w-full mb-4'>
@@ -27,7 +26,7 @@ const ChatButton: FC<Props> = observer(({product}) => {
         onClick={async () => {
           const state: SerializedCookiesState = parseCookies()
           if (!state.hash) {
-            setShowLogin(true)
+            setModal('LOGIN')
           } else {
             const chat = await globalChatsStore.createChat({
               productHash: advert.hash,

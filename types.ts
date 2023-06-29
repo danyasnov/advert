@@ -50,6 +50,8 @@ export interface CookiesState {
   authNewRefreshToken?: string
   aup?: string
   showCreateAdvMapHint?: boolean
+  hideNotificationRequest?: boolean
+  isCyprus?: boolean
   showBottomSheet?: boolean
   visitMainPageCount?: number
   visitProductTourCount?: number
@@ -79,6 +81,7 @@ export interface SerializedCookiesState {
   promo?: string
   authType?: string
   phone?: string
+  isCyprus?: string
   sessionId?: string
   token?: string
   authNewToken?: string
@@ -90,6 +93,7 @@ export interface SerializedCookiesState {
   visitProductTourCount?: string
   visitCurrentUserTourCount?: string
   visitUserTourCount?: string
+  hideNotificationRequest?: string
 }
 
 export interface Filter {
@@ -188,6 +192,7 @@ export interface IFormikSelect {
   isMulti: boolean
   filterStyle?: boolean
   isIconSelect?: boolean
+  limit?: number
   styles?: Record<any, any>
 }
 export interface IFormikRange {

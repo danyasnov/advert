@@ -2,12 +2,16 @@ import React, {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {Message, Lock} from 'react-iconly'
 import {Field, Form, useFormik, FormikProvider} from 'formik'
-import {string, object, boolean} from 'yup'
+import {string, object, boolean, bool} from 'yup'
 import {useTranslation} from 'next-i18next'
 import {size} from 'lodash'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
-import {FormikPassword, FormikText} from '../../FormikComponents'
+import {
+  FormikCheckbox,
+  FormikPassword,
+  FormikText,
+} from '../../FormikComponents'
 import {AuthPages} from './LoginWizard'
 import {Controls, PageProps} from '../utils'
 import {makeRequest} from '../../../api'

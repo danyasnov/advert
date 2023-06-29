@@ -5,15 +5,14 @@ import {useTranslation} from 'next-i18next'
 import {groupBy} from 'lodash'
 import {ArrowLeft, Send} from 'react-iconly'
 import TextareaAutosize from 'react-textarea-autosize'
-import {useRouter} from 'next/router'
 import {useGeneralStore} from '../../providers/RootStoreProvider'
 import {unixMlToDate} from '../../utils'
 import Button from '../Buttons/Button'
-import UserAvatar from '../UserAvatar'
 import LinkWrapper from '../Buttons/LinkWrapper'
 import ImageWrapper from '../ImageWrapper'
 import EmptyProductImage from '../EmptyProductImage'
 import Message from './Message'
+import Interlocutor from './Interlocutor'
 
 const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
   ({chat, onClose}) => {
@@ -21,7 +20,6 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     const {user} = useGeneralStore()
     const messagesRef = useRef<HTMLDivElement>()
 
-    const router = useRouter()
     const storeCreator = useCallback(
       () => new ChatStore(chat, user.hash),
       [chat],
@@ -29,6 +27,11 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     const [messagesByDay, setMessagesByDay] = useState([])
     const [store] = useState(storeCreator)
 
+    useEffect(() => {
+      return () => {
+        store.destroy()
+      }
+    }, [])
     useEffect(() => {
       const messagesByDate = store.messages
         .slice()
@@ -71,7 +74,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     )
 
     return (
-      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5 h-full max-h-[calc(100vh-150px)] s:max-h-[calc(100vh-150px)] m:max-h-[calc(100vh-180px)]'>
+      <div className='flex flex-col bg-white rounded-3xl w-full m:mt-5 h-full max-h-[calc(100vh-150px)] s:max-h-[calc(100vh-150px)] m:max-h-[calc(100vh-180px)] m:ml-4'>
         <Button
           onClick={onClose}
           className='self-start space-x-2 mb-5 m:hidden'>
@@ -80,57 +83,36 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
             {t('BACK_TO_ALL_CHATS')}
           </span>
         </Button>
-        <LinkWrapper
-          href={`/user/${interlocutor.id}`}
-          title={interlocutor.name}
-          target='_blank'
-          className='self-start mb-6 flex w-full'>
-          <div className='w-10 h-10 rounded-full bg-gray-300 mx-4'>
-            <UserAvatar
-              size={10}
-              name={interlocutor.name}
-              url={interlocutor.avatarSrc}
-            />
-          </div>
-          <div className='flex flex-col text-left w-full'>
-            <span className='text-body-16 font-semibold text-greyscale-900 line-clamp-1 w-full'>
-              {interlocutor.name}
-            </span>
-            <span
-              className={`text-body-14 font-semibold ${
-                interlocutor.online ? 'text-green' : 'text-greyscale-600'
-              }`}>
-              {interlocutor.online ? t('ONLINE') : t('OFFLINE')}
-            </span>
-          </div>
-        </LinkWrapper>
-        <LinkWrapper
-          href={`/b/${product.id}`}
-          title='product link'
-          target='_blank'>
-          <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
-            <div className='mr-4'>
-              {product.image ? (
-                <div className='rounded-xl relative overflow-hidden w-[40px] h-[40px] s:w-[56px] s:h-[56px]'>
-                  <ImageWrapper
-                    type={product.image}
-                    alt='product'
-                    layout='fill'
-                    objectFit='cover'
-                  />
-                </div>
-              ) : (
-                <EmptyProductImage size={56} />
-              )}
+        <Interlocutor chat={chat} />
+        {chat.interlocutor.id !== 'support' && (
+          <LinkWrapper
+            href={`/b/${product.id}`}
+            title='product link'
+            target='_blank'>
+            <div className='border border-greyscale-300 rounded-2xl p-3 bg-greyscale-50 flex items-center'>
+              <div className='mr-4'>
+                {product.image ? (
+                  <div className='rounded-xl relative overflow-hidden w-[40px] h-[40px] s:w-[56px] s:h-[56px]'>
+                    <ImageWrapper
+                      type={product.image}
+                      alt='product'
+                      layout='fill'
+                      objectFit='cover'
+                    />
+                  </div>
+                ) : (
+                  <EmptyProductImage size={56} />
+                )}
+              </div>
+              <span className='text-body-16 text-greyscale-900'>
+                {product.title}
+              </span>
             </div>
-            <span className='text-body-16 text-greyscale-900'>
-              {product.title}
-            </span>
-          </div>
-        </LinkWrapper>
+          </LinkWrapper>
+        )}
         <div
           ref={messagesRef}
-          className='h-full flex-shrink basis-full max-h-full  overflow-y-scroll w-auto -mr-4 m:-mr-4'>
+          className='h-full flex-shrink basis-full max-h-full overflow-y-scroll w-auto -mr-4 m:-mr-4'>
           <div className='flex flex-col w-full pr-4 m:pr-4'>
             {messagesByDay.map((messagesGroup) => {
               const [title, messages] = messagesGroup

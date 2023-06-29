@@ -9,12 +9,13 @@ import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import IcRoyal from 'icons/Royal.svg'
 import ImageWrapper from './ImageWrapper'
 import Button from './Buttons/Button'
-import {useGeneralStore, useUserStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useModalsStore} from '../providers/RootStoreProvider'
 import {handleMetrics} from '../helpers'
 
 const Banners: FC = observer(() => {
   const {t} = useTranslation()
-  const {locationCodes, setShowLogin, user} = useGeneralStore()
+  const {setModal} = useModalsStore()
+  const {locationCodes, user} = useGeneralStore()
   const {width} = useWindowSize()
   const router = useRouter()
   const banners = [
@@ -66,11 +67,10 @@ const Banners: FC = observer(() => {
       color: 'text-[#7210FF]',
       onClick: () => {
         handleMetrics('clickPromo', {banner: 'community'})
-
         if (user) {
           router.push(`/advert/create`)
         } else {
-          setShowLogin(true)
+          setModal('LOGIN')
         }
       },
     },

@@ -33,8 +33,6 @@ export interface IGeneralStore {
   userHash: string
   setFooterVisibility: (visible: boolean) => void
   toggleCookiesWarnVisibility: () => void
-  setShowLogin: (value: boolean) => void
-  showLogin: boolean
   isProduct: boolean
   languages: SettingsLanguageModel[]
   languagesByIsoCode: Record<string, SettingsLanguageModel>
@@ -77,13 +75,7 @@ export class GeneralStore implements IGeneralStore {
 
   userHash = ''
 
-  showLogin = false
-
   isProduct = false
-
-  setShowLogin = (value: boolean): void => {
-    this.showLogin = value
-  }
 
   document
 

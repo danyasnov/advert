@@ -21,6 +21,7 @@ export interface SelectProps {
   isIconSelect?: boolean
   id?: string
   filterStyle?: boolean
+  limit?: number
   styles?
   components?
   classNameOpt?
@@ -35,15 +36,15 @@ export interface SelectItem {
 
 const ROWS = 10
 
-const MenuList = (optionHeight) => {
+const MenuList = (optionHeight, limit = ROWS) => {
   return ({options, children, getValue}) => {
     const [value] = getValue()
     let initialOffset
     if (
       options.indexOf(value) !== -1 &&
       Array.isArray(children) &&
-      children.length >= ROWS &&
-      options.indexOf(value) >= ROWS
+      children.length >= limit &&
+      options.indexOf(value) >= limit
     ) {
       initialOffset = options.indexOf(value) * optionHeight - optionHeight * 5
     } else {
@@ -53,8 +54,8 @@ const MenuList = (optionHeight) => {
     return Array.isArray(children) ? (
       <List
         height={
-          children.length >= ROWS
-            ? optionHeight * ROWS
+          children.length >= limit
+            ? optionHeight * limit
             : children.length * optionHeight
         }
         itemCount={children.length}
@@ -124,6 +125,7 @@ const Select: FC<SelectProps> = ({
   styles: propsStyles,
   isInvalid,
   components,
+  limit,
 }) => {
   const menuWidth = useMemo(() => {
     if (typeof window === 'undefined' || !filterStyle) return 0
@@ -173,7 +175,7 @@ const Select: FC<SelectProps> = ({
         isOptionDisabled={(option) => option.disabled}
         className='react-select'
         components={{
-          MenuList: MenuList(filterStyle ? 34 : 52),
+          MenuList: MenuList(filterStyle ? 34 : 52, limit),
           DropdownIndicator,
           ...(isMulti ? {Option} : {}),
           ...(components || {}),

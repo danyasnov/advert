@@ -20,6 +20,8 @@ export const reducer = (state, action) => {
       return {...state, page: {...state.page, title: action.title}}
     case 'setIsNew':
       return {...state, isNew: action.isNew}
+    case 'setPhoneType':
+      return {...state, phoneType: action.phoneType}
     default:
       throw new Error()
   }
@@ -37,6 +39,7 @@ export interface PageProps {
 export interface State {
   incoming: string | null
   authType: AuthType | null
+  phoneType?: 'phone' | 'sms'
   page: {title: string; component: FC}
   userId?: number | null
   isNew?: boolean | null

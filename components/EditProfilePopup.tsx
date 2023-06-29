@@ -235,6 +235,7 @@ const EditForm: FC<{onClose: () => void}> = observer(({onClose}) => {
                 isFilterable
                 isClearable={false}
                 options={languageOptions}
+                limit={8}
               />
             )}
             <Field

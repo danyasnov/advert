@@ -1,9 +1,8 @@
-import {FC, useState} from 'react'
+import {FC, useEffect, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
 import Button from '../Buttons/Button'
-import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import ChangeContactWizard from '../Auth/ChangeContact/ChangeContactWizard'
 
 interface Props {
@@ -16,7 +15,6 @@ interface Props {
 const ChangeContactModal: FC<Props> = ({isOpen, onClose, onFinish, type}) => {
   const {t} = useTranslation()
   const [title, setTitle] = useState(t('LOG_IN'))
-  useDisableBodyScroll(isOpen)
   return (
     <ReactModal
       isOpen={isOpen}
