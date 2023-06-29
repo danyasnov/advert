@@ -7,6 +7,7 @@ import DeactivateAdvModal from './DeactivateAdvModal'
 import ChangeContactModal from './ChangeContactModal'
 import RequestNotificationModal from './RequestNotificationModal'
 import LoginModal from './LoginModal'
+import PhoneModal from './PhoneModal'
 
 export const MODAL_TYPES = {
   REMOVE_ADV: 'REMOVE_ADV',
@@ -14,6 +15,7 @@ export const MODAL_TYPES = {
   CHANGE_CONTACT: 'CHANGE_CONTACT',
   REQUEST_NOTIFICATION: 'REQUEST_NOTIFICATION',
   LOGIN: 'LOGIN',
+  PHONE_MODAL: 'PHONE_MODAL',
 }
 
 const MODAL_COMPONENTS: any = {
@@ -22,6 +24,7 @@ const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.CHANGE_CONTACT]: ChangeContactModal,
   [MODAL_TYPES.REQUEST_NOTIFICATION]: RequestNotificationModal,
   [MODAL_TYPES.LOGIN]: LoginModal,
+  [MODAL_TYPES.PHONE_MODAL]: PhoneModal,
 }
 
 const Modals: FC = observer(() => {

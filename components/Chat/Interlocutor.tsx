@@ -2,15 +2,17 @@ import {FC} from 'react'
 import {ChatData} from 'chats'
 import {useTranslation} from 'next-i18next'
 import SupportInterlocutor from 'icons/SupportInterlocutor.svg'
-import LinkWrapper from '../Buttons/LinkWrapper'
+import {observer} from 'mobx-react-lite'
 import UserAvatar from '../UserAvatar'
+import {useModalsStore} from '../../providers/RootStoreProvider'
+import CallButton from '../Buttons/CallButton'
 
 interface Props {
   chat: ChatData
 }
-const Interlocutor: FC<Props> = ({chat}) => {
+const Interlocutor: FC<Props> = observer(({chat}) => {
   const {t} = useTranslation()
-  const {interlocutor} = chat
+  const {interlocutor, product} = chat
   if (chat.interlocutor.id === 'support') {
     return (
       <div className='self-start mb-6 flex w-full'>
@@ -30,11 +32,10 @@ const Interlocutor: FC<Props> = ({chat}) => {
   }
 
   return (
-    <LinkWrapper
-      href={`/user/${interlocutor.id}`}
-      title={interlocutor.name}
-      target='_blank'
-      className='self-start mb-6 flex w-full'>
+    <CallButton
+      className='self-start mb-6 flex w-full'
+      hash={product.id}
+      ownerHash={interlocutor.id}>
       <div className='w-10 h-10 rounded-full bg-gray-300 mr-4'>
         <UserAvatar
           size={10}
@@ -57,7 +58,7 @@ const Interlocutor: FC<Props> = ({chat}) => {
             : t('OFFLINE')}
         </span>
       </div>
-    </LinkWrapper>
+    </CallButton>
   )
-}
+})
 export default Interlocutor

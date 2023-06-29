@@ -1771,7 +1771,7 @@
   "USE_PAID_SERVICES": "To use paid services and place ads on favorable terms",
   "USER_HAS_NO_SUBSCRIBERS": "This user don't have any Follows yet.",
   "USERS_SHOWN": "<b>You don't have Followers yet</b>\nUsers who subscribed you will be displayed here.",
-  "VERIFICATION_CODE_SMS": "We have sent an SMS with a verification code to the phone number",
+  "VERIFICATION_CODE_SMS": "We have sent an SMS with a verification code to the phone number {{phone}}",
   "VIEW_ALL_OBJECTS": "View all objects",
   "VIEW_NOW": "View now",
   "VIP": "VIP",
