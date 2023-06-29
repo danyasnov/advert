@@ -1,10 +1,7 @@
 import {FC, useState} from 'react'
 import ReactModal from 'react-modal'
-<<<<<<< HEAD
 import {useLockBodyScroll} from 'react-use'
 import {isEmpty} from 'lodash'
-=======
->>>>>>> develop
 import IcClear from 'icons/material/Clear.svg'
 import {useTranslation} from 'next-i18next'
 import {RemoveFromSaleType} from 'front-api/src/models'
