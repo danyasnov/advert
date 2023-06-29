@@ -130,7 +130,7 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               </div>
             }
           />
-          {state.authType === 1 && process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+          {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
             <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
               onChange={(val) => {

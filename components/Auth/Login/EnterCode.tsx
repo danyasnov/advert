@@ -138,8 +138,9 @@ const EnterCode: FC<PageProps> = observer(
       <div className='flex flex-col items-center px-4'>
         <span className='text-greyscale-900 text-body-16 font-medium mt-8 mb-6 mx-6 text-center w-[304px]'>
           {verifyMode === 0 && t('RECEIVING_AUTHORIZATION_CODE_ON_CALL')}
-          {verifyMode === 1 && t('SENT_SMS_WITH_ACTIVATION_CODE')}
-          {verifyMode === 2 && t('SENT_EMAIL_WITH_ACTIVATION_CODE')}
+          {verifyMode === 1 &&
+            t('VERIFICATION_CODE_SMS', {phone: state.incoming})}
+          {verifyMode === 2 && t('CODE_SENT_TO_EMAIL', {email: state.incoming})}
         </span>
         <AuthCode
           key={characters}

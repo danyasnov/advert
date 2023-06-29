@@ -1,7 +1,8 @@
-import {FC, useState} from 'react'
+import {FC, useCallback, useState} from 'react'
 import ReactModal from 'react-modal'
 import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
+import {ArrowLeft} from 'react-iconly'
 import Button from '../Buttons/Button'
 import LoginWizard from '../Auth/Login/LoginWizard'
 
@@ -13,7 +14,14 @@ interface Props {
 
 const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
   const {t} = useTranslation()
-  const [title, setTitle] = useState(t('LOG_IN'))
+  const [header, setHeader] = useState({
+    title: t('LOG_IN'),
+    backButtonHandler: null,
+  })
+
+  const setTitleWrapper = useCallback((newTitle, backButtonHandler) => {
+    setHeader({title: newTitle, backButtonHandler})
+  }, [])
 
   return (
     <ReactModal
@@ -21,26 +29,33 @@ const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
       onRequestClose={onClose}
       shouldCloseOnOverlayClick={false}
       ariaHideApp={false}
-      contentLabel={title}
+      contentLabel={header.title}
       className='absolute rounded-6 w-11/12 s:w-480px bg-white-a inset-x-0 mx-auto top-1/3 s:top-[162px] flex outline-none drop-shadow-2xl'
       overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex justify-between'>
-          <span
-            className={`${
-              title.toString() !== t('LOG_IN')
-                ? 'text-h-5 text-grayscale-900 font-bold'
-                : 'text-h-3 text-primary-500 font-bold w-1/2'
-            }`}>
-            {title}
-          </span>
+          <div className='flex space-x-2'>
+            {header.backButtonHandler && (
+              <Button onClick={header.backButtonHandler}>
+                <ArrowLeft />
+              </Button>
+            )}
+            <span
+              className={`${
+                header.title.toString() !== t('LOG_IN')
+                  ? 'text-h-5 text-grayscale-900 font-bold'
+                  : 'text-h-3 text-primary-500 font-bold w-1/2'
+              }`}>
+              {header.title}
+            </span>
+          </div>
           <Button onClick={onClose}>
             <IcClear className='fill-current text-greyscale-400 h-6 w-6' />
           </Button>
         </div>
 
         <LoginWizard
-          setTitle={setTitle}
+          setTitle={setTitleWrapper}
           onClose={onClose}
           onFinish={onFinish}
         />

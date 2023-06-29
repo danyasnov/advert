@@ -20,6 +20,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
 
   const {countries} = useCountriesStore()
   const cookies = parseCookies()
+  const isCyprus = cookies.isCyprus === 'true'
   const [countriesOptions] = useState(
     countries.map((c) => ({
       label: `${c.title} (+${c.phonePrefix})`,
@@ -35,8 +36,10 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
     enableReinitialize: true,
     initialValues: {
       phone: '',
-      country: countriesOptions.find(
-        (c) => c.value === (cookies.userCountryId || '196'),
+      country: countriesOptions.find((c) =>
+        isCyprus || !cookies.userCountryId
+          ? c.value === '196'
+          : c.value === cookies.userCountryId,
       ),
     },
     validate: (values) => {
@@ -103,14 +106,18 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
       <div className='px-4 pt-4 flex flex-col justify-between h-full'>
         <Form className='space-y-4 pb-8'>
           <div className='flex flex-col relative'>
-            <Field
-              name='country'
-              disableTrack
-              component={FormikSelect}
-              isFilterable
-              options={countriesOptions}
-            />
-            <div className='h-4' />
+            {!isCyprus && (
+              <>
+                <Field
+                  name='country'
+                  disableTrack
+                  component={FormikSelect}
+                  isFilterable
+                  options={countriesOptions}
+                />
+                <div className='h-4' />
+              </>
+            )}
             <Field
               name='phone'
               disableTrack

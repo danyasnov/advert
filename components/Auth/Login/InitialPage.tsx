@@ -54,7 +54,7 @@ const InitialPage: FC<PageProps> = ({dispatch}) => {
         <div className='fill-current text-greyscale-900 mr-3'>
           <Call size={24} />
         </div>
-        {t('BY_PHONE_NUMBER')}
+        {t('BY_PHONE')}
       </OutlineButton>
       <OutlineButton
         id='login-by-email'
