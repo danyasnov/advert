@@ -161,6 +161,7 @@ const CategoryPage: FC = observer(() => {
       <div className='w-full l:w-1208px flex justify-between'>
         <OutlineButton
           id='ad-back-button'
+          className='s:w-[212px] s:h-[48px]'
           onClick={() => {
             dispatch({
               type: 'setPage',
@@ -171,6 +172,7 @@ const CategoryPage: FC = observer(() => {
         </OutlineButton>
         <PrimaryButton
           id='ad-apply-button'
+          className='s:w-[212px] s:h-[48px]'
           onClick={() => {
             const category = last(selected)
             onSubmit(category.id)

@@ -922,7 +922,7 @@ const FormPage: FC = observer(() => {
               validate={() => validateCommunication(phoneNumber, t)}
             />
             <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5 z-10'>
-              <div className='w-full l:w-1208px flex justify-between flex-col s:flex-row space-y-4 s:space-y-0'>
+              <div className='w-full l:w-1208px l:mx-auto flex justify-between flex-col s:flex-row space-y-4 s:space-y-0'>
                 <SecondaryButton
                   id='ad-back-button'
                   onClick={() => {
@@ -930,7 +930,7 @@ const FormPage: FC = observer(() => {
                   }}
                   className={`${
                     query.action === 'create' ? 'visible' : 'invisible'
-                  }`}>
+                  } s:w-[212px] s:h-[48px]`}>
                   {t('SAVE_AND_EXIT')}
                 </SecondaryButton>
                 <PrimaryButton
@@ -971,7 +971,7 @@ const FormPage: FC = observer(() => {
                     }
                     scrollToFirstError()
                   }}
-                  className='w-full s:w-auto'>
+                  className='w-full s:w-[212px] s:h-[48px]'>
                   {t(!showWholeForm && !canPublish ? 'CONTINUE' : 'PUBLISH')}
                 </PrimaryButton>
               </div>
