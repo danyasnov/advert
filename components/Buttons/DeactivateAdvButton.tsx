@@ -27,6 +27,7 @@ const DeactivateAdvButton: FC<Props> = ({product}) => {
         <DeactivateAdvModal
           images={advert.images}
           title={advert.title}
+          price={advert.price}
           isOpen={showDeactivateModal}
           onClose={() => setShowDeactivateModal(false)}
           onSelect={(value: RemoveFromSaleType) => {

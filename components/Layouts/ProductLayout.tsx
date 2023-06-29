@@ -100,6 +100,7 @@ const ProductLayout: FC = observer(() => {
             }),
           title: advert.title,
           images: advert.images,
+          price: advert.price,
         })
       },
     }
