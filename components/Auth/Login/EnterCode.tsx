@@ -164,7 +164,7 @@ const EnterCode: FC<PageProps> = observer(
           {errors.code}
         </span>
 
-        {verifyMode === VerifyMode.SMS && (
+        {(verifyMode === VerifyMode.SMS || verifyMode === VerifyMode.Email) && (
           <>
             {counter ? (
               <span className='text-body-14 text-greyscale-400 mb-4'>

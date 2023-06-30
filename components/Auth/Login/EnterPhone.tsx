@@ -15,7 +15,7 @@ import {
   FormikSelect,
 } from '../../FormikComponents'
 
-const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
+const EnterPhone: FC<PageProps> = observer(({dispatch, state}) => {
   const {t} = useTranslation()
 
   const {countries} = useCountriesStore()
@@ -106,7 +106,7 @@ const EnterPhone: FC<PageProps> = observer(({dispatch}) => {
       <div className='px-4 pt-4 flex flex-col justify-between h-full'>
         <Form className='space-y-4 pb-8'>
           <div className='flex flex-col relative'>
-            {!isCyprus && (
+            {state.phoneType === 'phone' && (
               <>
                 <Field
                   name='country'

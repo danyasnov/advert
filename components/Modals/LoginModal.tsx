@@ -34,17 +34,17 @@ const LoginModal: FC<Props> = ({isOpen, onClose, onFinish}) => {
       overlayClassName='fixed inset-0 max-h-screen overflow-y-auto z-20 bg-modal-background'>
       <div className='flex flex-col w-full'>
         <div className='px-6 pt-6 pb-4 flex justify-between'>
-          <div className='flex space-x-2'>
+          <div className='flex space-x-2 w-full'>
             {header.backButtonHandler && (
               <Button onClick={header.backButtonHandler}>
                 <ArrowLeft />
               </Button>
             )}
             <span
-              className={`${
+              className={`font-bold ${
                 header.title.toString() !== t('LOG_IN')
-                  ? 'text-h-5 text-grayscale-900 font-bold'
-                  : 'text-h-3 text-primary-500 font-bold w-1/2'
+                  ? 'text-h-5 text-grayscale-900'
+                  : 'text-h-3 text-primary-500'
               }`}>
               {header.title}
             </span>
