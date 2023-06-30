@@ -46,6 +46,7 @@ const CallButton: FC<Props> = observer(
             phone: permissionData.result.num,
             imageUrl: userData.result.imageUrl,
             name: userData.result.name,
+            userHash: ownerHash,
           })
         }}
         className={className}>

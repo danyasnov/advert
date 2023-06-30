@@ -4,10 +4,9 @@ import {useTranslation} from 'next-i18next'
 import IcClear from 'icons/material/Clear.svg'
 import ReactModal from 'react-modal'
 import {toast} from 'react-toastify'
-import {
-  useGeneralStore,
-  useModalsStore,
-} from '../../providers/RootStoreProvider'
+import {useRouter} from 'next/router'
+import IcCopy from 'icons/Copy.svg'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 import UserAvatar from '../UserAvatar'
 import Button from '../Buttons/Button'
 import SecondaryButton from '../Buttons/SecondaryButton'
@@ -19,14 +18,15 @@ interface ModalProps {
   phone: string
   imageUrl: string
   name: string
+  userHash: string
   onClose: () => void
 }
 
 const PhoneModal: FC<ModalProps> = observer(
-  ({isOpen, onClose, imageUrl, name, displayAllowed, phone}) => {
+  ({isOpen, onClose, imageUrl, name, displayAllowed, phone, userHash}) => {
     const {t} = useTranslation()
     const {user} = useGeneralStore()
-    const {setModal} = useModalsStore()
+    const router = useRouter()
 
     let body
     if (displayAllowed) {
@@ -38,6 +38,7 @@ const PhoneModal: FC<ModalProps> = observer(
               {name}
             </span>
             <Button
+              className='space-x-2'
               onClick={() => {
                 navigator.clipboard.writeText(`+${phone}`)
                 toast.success(t('COPIED'))
@@ -45,6 +46,7 @@ const PhoneModal: FC<ModalProps> = observer(
               <span className='text-h-5 font-bold text-primary-500'>
                 {`+${phone}`}
               </span>
+              <IcCopy className='w-6 h-6' />
             </Button>
           </div>
         </div>
@@ -86,20 +88,14 @@ const PhoneModal: FC<ModalProps> = observer(
             <SecondaryButton onClick={onClose} className='w-full'>
               {t('CLOSE')}
             </SecondaryButton>
-            {(displayAllowed || (!displayAllowed && !user)) && (
-              <PrimaryButton
-                onClick={() => {
-                  if (displayAllowed) {
-                    navigator.clipboard.writeText(`+${phone}`)
-                    toast.success(t('COPIED'))
-                  } else {
-                    setModal('LOGIN')
-                  }
-                }}
-                className='w-full'>
-                {t(displayAllowed ? 'COPY_PHONE_NUMBER' : 'LOG_IN')}
-              </PrimaryButton>
-            )}
+            <PrimaryButton
+              onClick={() => {
+                router.push(`/user/${userHash}`)
+                onClose()
+              }}
+              className='w-full'>
+              {t('GO_TO_PROFILE')}
+            </PrimaryButton>
           </div>
         </div>
       </ReactModal>
