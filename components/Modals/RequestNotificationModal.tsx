@@ -47,7 +47,7 @@ const RequestNotificationModal: FC<Props> = ({
         <span className='text-h-4 font-bold text-primary-500 mb-3'>
           {t('ENABLE_NOTIFICATIONS')}
         </span>
-        <span className='text-body-16 text-greyscale-900 mb-10'>
+        <span className='text-body-16 text-greyscale-900 mb-10 text-center'>
           {t('ENABLE_NOTIFICATIONS_DESCRIPTION')}
         </span>
         <div className='space-x-2 flex w-full'>

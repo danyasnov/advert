@@ -120,7 +120,7 @@ const ChatList: FC = observer(() => {
         />
         {showBanner && (
           <Button
-            className='m:border-r m:border-greyscale-100 w-full m:w-[316px] l:w-[364px]'
+            className='m:border-r m:border-greyscale-100 w-full m:w-[317px] l:w-[365px] -mr-4'
             onClick={() => {
               Notification.requestPermission().then()
               setShowBanner(false)
@@ -145,7 +145,7 @@ const ChatList: FC = observer(() => {
         )}
         {!isEmpty(filteredChats) && (
           <div
-            className={`flex flex-col overflow-y-auto overflow-x-hidden m:border-r m:border-greyscale-100 ${height} -mr-4 m:-mr-4`}>
+            className={`flex flex-col overflow-y-auto overflow-x-hidden m:border-r m:border-greyscale-100 ${height} -mr-4`}>
             <div className='flex flex-col pr-4 m:pr-0'>
               {filteredChats.map((chat, index, array) => {
                 const hasNewMessages = !!chat.newMessagesCount
