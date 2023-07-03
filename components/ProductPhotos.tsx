@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useEffect, useLayoutEffect, useRef, useState} from 'react'
 import {observer} from 'mobx-react-lite'
 import useEmblaCarousel from 'embla-carousel-react'
 import {isEmpty, size} from 'lodash'
@@ -48,6 +48,11 @@ const ProductPhotos: FC = observer(() => {
     loop: true,
     inViewThreshold: 0.5,
   })
+  const [dotsViewportRef, dotsEmbla] = useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    loop: true,
+    draggable: false,
+  })
   const onHover = (index) => {
     setActivePhotoIndex(index)
     photoEmbla.scrollTo(index)
@@ -73,6 +78,9 @@ const ProductPhotos: FC = observer(() => {
         })
         if (previewEmbla && previewEmbla.slidesNotInView().includes(newIndex)) {
           previewEmbla.scrollTo(newIndex)
+        }
+        if (dotsEmbla) {
+          dotsEmbla.scrollTo(newIndex)
         }
         setCurrentIndex(newIndex)
       })
@@ -110,7 +118,7 @@ const ProductPhotos: FC = observer(() => {
               <Button
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${item.src}-${index}`}
-                className='relative min-w-full bg-image-placeholder '
+                className='relative min-w-full bg-image-placeholder'
                 onClick={() => {
                   setShowModal(true)
                   setCurrentIndex(index)
@@ -127,18 +135,23 @@ const ProductPhotos: FC = observer(() => {
           })}
         </div>
         {!!items.length && (
-          <div className='absolute bottom-2 w-full flex justify-center space-x-2'>
-            {size(items) > 1 &&
-              items.map((i, index) => (
-                <div
-                  key={i.src}
-                  className={`w-2 h-2 rounded-full ${
-                    currentIndex === index
-                      ? 'bg-primary-500'
-                      : 'bg-greyscale-100'
-                  }`}
-                />
-              ))}
+          <div className='absolute z-10 bottom-2 inset-x-0 flex justify-center '>
+            <div ref={dotsViewportRef} className='overflow-hidden w-[150px]'>
+              <div className='flex'>
+                {items.map((i, index) => {
+                  return (
+                    <div
+                      key={i.src}
+                      className={`rounded-full shrink-0 mx-1 w-2 h-2 ${
+                        currentIndex === index
+                          ? 'bg-primary-500'
+                          : 'bg-greyscale-100'
+                      }`}
+                    />
+                  )
+                })}
+              </div>
+            </div>
           </div>
         )}
         <FullHeightSliderButton
