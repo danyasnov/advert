@@ -15,6 +15,7 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 interface ModalProps {
   isOpen: boolean
   displayAllowed: boolean
+  hideNumber: boolean
   phone: string
   imageUrl: string
   name: string
@@ -23,7 +24,16 @@ interface ModalProps {
 }
 
 const PhoneModal: FC<ModalProps> = observer(
-  ({isOpen, onClose, imageUrl, name, displayAllowed, phone, userHash}) => {
+  ({
+    isOpen,
+    onClose,
+    imageUrl,
+    name,
+    displayAllowed,
+    phone,
+    userHash,
+    hideNumber,
+  }) => {
     const {t} = useTranslation()
     const {user} = useGeneralStore()
     const router = useRouter()
@@ -37,17 +47,23 @@ const PhoneModal: FC<ModalProps> = observer(
             <span className='text-h-5 font-bold text-greyscale-900'>
               {name}
             </span>
-            <Button
-              className='space-x-2'
-              onClick={() => {
-                navigator.clipboard.writeText(`+${phone}`)
-                toast.success(t('COPIED'))
-              }}>
-              <span className='text-h-5 font-bold text-primary-500'>
-                {`+${phone}`}
+            {hideNumber ? (
+              <span className='text-h-5 font-bold text-greyscale-500'>
+                {t('NUMBER_HIDDEN')}
               </span>
-              <IcCopy className='w-6 h-6' />
-            </Button>
+            ) : (
+              <Button
+                className='space-x-2'
+                onClick={() => {
+                  navigator.clipboard.writeText(`+${phone}`)
+                  toast.success(t('COPIED'))
+                }}>
+                <span className='text-h-5 font-bold text-primary-500'>
+                  {`+${phone}`}
+                </span>
+                <IcCopy className='w-6 h-6' />
+              </Button>
+            )}
           </div>
         </div>
       )

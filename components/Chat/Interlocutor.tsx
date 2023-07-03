@@ -1,11 +1,12 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {ChatData} from 'chats'
 import {useTranslation} from 'next-i18next'
 import SupportInterlocutor from 'icons/SupportInterlocutor.svg'
 import {observer} from 'mobx-react-lite'
 import UserAvatar from '../UserAvatar'
-import {useModalsStore} from '../../providers/RootStoreProvider'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 import CallButton from '../Buttons/CallButton'
+import {makeRequest} from '../../api'
 
 interface Props {
   chat: ChatData
@@ -13,6 +14,8 @@ interface Props {
 const Interlocutor: FC<Props> = observer(({chat}) => {
   const {t} = useTranslation()
   const {interlocutor, product} = chat
+  const {user} = useGeneralStore()
+  const [isMyAdvert, setIsMyAdvert] = useState(false)
   if (chat.interlocutor.id === 'support') {
     return (
       <div className='self-start mb-6 flex w-full'>
@@ -31,10 +34,21 @@ const Interlocutor: FC<Props> = observer(({chat}) => {
     )
   }
 
+  useEffect(() => {
+    makeRequest({
+      url: '/api/product',
+      method: 'post',
+      data: {hash: product.id},
+    }).then((productData) => {
+      setIsMyAdvert(productData.data.result.owner.hash === user.hash)
+    })
+  }, [])
+
   return (
     <CallButton
       className='self-start mb-6 flex w-full'
-      hash={product.id}
+      hideNumber={isMyAdvert}
+      productHash={product.id}
       ownerHash={interlocutor.id}>
       <div className='w-10 h-10 rounded-full bg-gray-300 mr-4'>
         <UserAvatar

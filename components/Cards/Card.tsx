@@ -309,7 +309,7 @@ const Card: FC<Props> = ({
             {isVip && showCallButton && !hideConnect && (
               <CallButton
                 className='text-white space-x-2 bg-primary-500 rounded-2xl w-[168px] h-[44px]'
-                hash={hash}
+                productHash={hash}
                 ownerHash={owner.hash}>
                 <Call size={20} filled />
                 <span className='text-body-16 font-bold'>

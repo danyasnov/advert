@@ -8,13 +8,14 @@ import {useModalsStore} from '../../providers/RootStoreProvider'
 import {trackSingle} from '../../helpers'
 
 interface Props {
-  hash: string
+  productHash: string
   ownerHash: string
   className: string
+  hideNumber?: boolean
 }
 
 const CallButton: FC<Props> = observer(
-  ({hash, ownerHash, className, children}) => {
+  ({productHash, ownerHash, className, children, hideNumber}) => {
     const {setModal} = useModalsStore()
     const {t} = useTranslation()
     return (
@@ -27,11 +28,11 @@ const CallButton: FC<Props> = observer(
             method: 'post',
             url: '/api/check-phone-permissions',
             data: {
-              hash,
+              hash: productHash,
             },
           })
 
-          if (permissionData.status !== 200) {
+          if (permissionData.error) {
             return toast.error(t(permissionData.error))
           }
           const {data: userData} = await makeRequest({
@@ -41,7 +42,11 @@ const CallButton: FC<Props> = observer(
               hash: ownerHash,
             },
           })
+          if (userData.error) {
+            return toast.error(t(userData.error))
+          }
           setModal('PHONE_MODAL', {
+            hideNumber,
             displayAllowed: permissionData.result.displayAllowed,
             phone: permissionData.result.num,
             imageUrl: userData.result.imageUrl,

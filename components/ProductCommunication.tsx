@@ -21,7 +21,7 @@ const ProductCommunication: FC = observer(() => {
       {advert.showCallButton && (
         <CallButton
           className='text-white space-x-2 bg-primary-500 rounded-2xl w-full h-[52px] mb-4'
-          hash={advert.hash}
+          productHash={advert.hash}
           ownerHash={owner.hash}>
           <span className='text-body-16 font-bold'>{t('CONTACT_SELLER')}</span>
         </CallButton>
