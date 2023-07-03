@@ -56,7 +56,7 @@ const PhoneModal: FC<ModalProps> = observer(
                 className='space-x-2'
                 onClick={() => {
                   navigator.clipboard.writeText(`+${phone}`)
-                  toast.success(t('COPIED'))
+                  toast.success(t('COPIED_TO_CLIPBOARD'))
                 }}>
                 <span className='text-h-5 font-bold text-primary-500'>
                   {`+${phone}`}
