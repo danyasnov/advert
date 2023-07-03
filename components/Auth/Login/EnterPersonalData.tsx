@@ -130,14 +130,6 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
               </div>
             }
           />
-          {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-              onChange={(val) => {
-                setToken(val)
-              }}
-            />
-          )}
           {state.authType === 2 && (
             <>
               <Field
@@ -171,6 +163,14 @@ const EnterPersonalData: FC<PageProps> = ({state, dispatch}) => {
                 }
               />
             </>
+          )}
+          {process.env.NEXT_PUBLIC_RECAPTCHA_KEY && (
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+              onChange={(val) => {
+                setToken(val)
+              }}
+            />
           )}
           <Field
             name='terms'
