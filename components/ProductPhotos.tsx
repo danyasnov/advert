@@ -134,9 +134,11 @@ const ProductPhotos: FC = observer(() => {
             )
           })}
         </div>
-        {!!items.length && (
+        {size(items) > 1 && (
           <div className='absolute z-10 bottom-2 inset-x-0 flex justify-center '>
-            <div ref={dotsViewportRef} className='overflow-hidden w-[150px]'>
+            <div
+              ref={dotsViewportRef}
+              className='overflow-hidden max-w-[150px]'>
               <div className='flex'>
                 {items.map((i, index) => {
                   return (
