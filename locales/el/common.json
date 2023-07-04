@@ -1773,6 +1773,7 @@
   "USE_PAID_SERVICES": "To use paid services and place ads on favorable terms",
   "USER_HAS_NO_SUBSCRIBERS": "Αυτός ο χρήστης δεν έχει ακόμα ακόλουθους.",
   "USERS_SHOWN": "<b> Δεν έχετε ακόμα ακόλουθους</b>\nΟι χρήστες που σας έχουν εγγραφεί θα εμφανίζονται εδώ.",
+  "VERIFICATION_CODE_CALL": "We call you on the phone number +{{phone}}! Accept the call and enter the numbers that you heard.",
   "VERIFICATION_CODE_SMS": "We have sent an SMS with a verification code to the phone number +{{phone}}",
   "VIEW_ALL_OBJECTS": "Посмотреть все объекты",
   "VIEW_NOW": "Προβολή τώρα",
