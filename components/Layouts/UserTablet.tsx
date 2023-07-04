@@ -1,7 +1,7 @@
-import {FC, useEffect} from 'react'
+import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
-import {useGeneralStore, useUserStore} from '../../providers/RootStoreProvider'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 import UserSidebar from '../UserSidebar'
 import UserAdverts from '../UserAdverts'
 import UserDrafts from '../UserDrafts'
@@ -9,6 +9,7 @@ import UserSubscribers from '../UserSubscribers'
 import UserFavorites from '../UserFavorites'
 import SectionTitle from '../UserSectionTitle'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
+import UserDiscountProgram from '../UserDiscountProgram'
 
 interface Props {
   isCurrentUser: boolean
@@ -51,6 +52,12 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                       title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
                     />
                     <UserAdverts />
+                  </div>
+                )}
+                {activeUserPage === 'discount_program' && (
+                  <div>
+                    <SectionTitle title={t('DISCOUNT_PROGRAM')} />
+                    <UserDiscountProgram />
                   </div>
                 )}
 

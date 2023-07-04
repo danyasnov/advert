@@ -45,6 +45,7 @@ export type PagesType =
   | 'drafts'
   | 'chat'
   | 'subscribers'
+  | 'discount_program'
 
 export class GeneralStore implements IGeneralStore {
   root

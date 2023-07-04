@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
-import {Heart2, Logout, Message} from 'react-iconly'
+import {Discount, Heart2, Logout} from 'react-iconly'
 import {useTranslation} from 'next-i18next'
 import IcAds from 'icons/material/Ads.svg'
 import IcCreate from 'icons/material/Create.svg'
@@ -39,6 +39,20 @@ const UserSidebar: FC = observer(() => {
               <IcAds className='w-7 h-7 fill-current' />
               <span className='text-body-14 s:text-body-16'>
                 {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
+              </span>
+            </Button>
+            <Button
+              className={`${
+                activeUserPage === 'discount_program'
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}
+              onClick={() => {
+                robustShallowUpdateQuery(router, {page: 'discount_program'})
+              }}>
+              <Discount filled size={28} />
+              <span className='text-body-14 s:text-body-16'>
+                {t('DISCOUNT_PROGRAM')}
               </span>
             </Button>
             <div id='drafts-tour' className='rounded-2xl'>

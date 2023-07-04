@@ -9,6 +9,7 @@ import UserDrafts from '../UserDrafts'
 import UserSubscribers from '../UserSubscribers'
 import UserFavorites from '../UserFavorites'
 import SectionTitle from '../UserSectionTitle'
+import UserDiscountProgram from '../UserDiscountProgram'
 
 interface Props {
   isCurrentUser: boolean
@@ -54,6 +55,12 @@ const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
                     />
                   </div>
                   <UserAdverts />
+                </div>
+              )}
+              {activeUserPage === 'discount_program' && (
+                <div>
+                  <SectionTitle title={t('DISCOUNT_PROGRAM')} />
+                  <UserDiscountProgram />
                 </div>
               )}
 
