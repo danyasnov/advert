@@ -153,7 +153,7 @@ const ChatList: FC = observer(() => {
                 const lastMsg = (
                   <div className='flex justify-between w-full items-center'>
                     <span
-                      className={`text-body-14 s:text-body-16 font-normal line-clamp-1 ${
+                      className={`text-body-14 s:text-body-16 font-normal line-clamp-1 max-w-[227px] s:max-w-full m:max-w-[208px] ${
                         hasNewMessages
                           ? 'text-greyscale-700'
                           : 'text-greyscale-500'

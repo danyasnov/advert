@@ -40,7 +40,7 @@ const Interlocutor: FC<Props> = observer(({chat}) => {
       method: 'post',
       data: {hash: product.id},
     }).then((productData) => {
-      setIsMyAdvert(productData.data.result.owner.hash === user.hash)
+      setIsMyAdvert(productData.data.result?.owner.hash === user.hash)
     })
   }, [])
 

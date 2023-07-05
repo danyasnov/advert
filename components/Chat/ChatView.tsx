@@ -63,7 +63,7 @@ const ChatView: FC<{chat: ChatData; onClose: () => void}> = observer(
     useEffect(() => {
       store.fetchBefore()
     }, [store])
-    const {interlocutor, product} = store.chat
+    const {product} = store.chat
 
     const submitMessage = useCallback(
       (text) => {
