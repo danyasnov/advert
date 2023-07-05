@@ -28,13 +28,11 @@ const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
   return (
     <>
       <Header />
-      {!showOnlyHeader && (
-        <>
-          {children}
-          <Footer />
-          <MobileAppBottomSheet />
-        </>
-      )}
+      <div className={showOnlyHeader ? 'hidden' : ''}>
+        {children}
+        <Footer />
+        <MobileAppBottomSheet />
+      </div>
     </>
   )
 })
