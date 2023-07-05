@@ -92,7 +92,7 @@ const ChatListener: FC = observer(() => {
       globalChatsStore.closeConnection()
       globalChatsStore.unsubscribeFromEvents()
     }
-  }, [user, state.authNewToken])
+  }, [user?.hash, state.authNewToken])
 
   return null
 })
