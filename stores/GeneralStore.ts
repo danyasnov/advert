@@ -21,6 +21,7 @@ export interface IGeneralStore {
   root: RootStore
   showFooter: boolean
   showCookiesWarn: boolean
+  showOnlyHeader: boolean
   showSuccessAlert: string
   language: string
   user: OwnerModel
@@ -32,6 +33,7 @@ export interface IGeneralStore {
   locationCodes: string
   userHash: string
   setFooterVisibility: (visible: boolean) => void
+  setShowOnlyHeader: (show: boolean) => void
   toggleCookiesWarnVisibility: () => void
   isProduct: boolean
   languages: SettingsLanguageModel[]
@@ -56,6 +58,8 @@ export class GeneralStore implements IGeneralStore {
 
   showCookiesWarn = false
 
+  showOnlyHeader = false
+
   showSuccessAlert = ''
 
   language = 'en'
@@ -68,6 +72,10 @@ export class GeneralStore implements IGeneralStore {
 
   setActiveUserPage = (page: PagesType): void => {
     this.activeUserPage = page
+  }
+
+  setShowOnlyHeader = (show: boolean): void => {
+    this.showOnlyHeader = show
   }
 
   setUser = (user: OwnerModel): void => {

@@ -21,7 +21,7 @@ const CategoriesMobileSelector: FC = observer(() => {
   const locationCodes = getLocationCodes()
 
   return (
-    <div className='absolute top-[200px] inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start min-h-screen'>
+    <div className='absolute top-[200px] inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start'>
       {isEmpty(history) &&
         categoriesWithoutAll.map((c) => (
           <CategoryItem

@@ -12,7 +12,7 @@ interface Props {
   children: ReactNode
 }
 const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
-  const {showSuccessAlert, showErrorAlert} = useGeneralStore()
+  const {showSuccessAlert, showErrorAlert, showOnlyHeader} = useGeneralStore()
   const {t} = useTranslation()
   const router = useRouter()
   useEffect(() => {
@@ -28,9 +28,13 @@ const HeaderFooterWrapper: FC<Props> = observer(({children}) => {
   return (
     <>
       <Header />
-      {children}
-      <Footer />
-      <MobileAppBottomSheet />
+      {!showOnlyHeader && (
+        <>
+          {children}
+          <Footer />
+          <MobileAppBottomSheet />
+        </>
+      )}
     </>
   )
 })
