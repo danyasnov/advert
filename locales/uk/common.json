@@ -1773,7 +1773,7 @@
   "USE_PAID_SERVICES": "Щоб користуватися платними послугами та розміщувати рекламу на вигідних умовах",
   "USER_HAS_NO_SUBSCRIBERS": "У цього користувача поки немає підписників.",
   "USERS_SHOWN": "<b>У вас ще немає підписників</b>\nТут будуть відображатись користувачі, які підписалися на вас.",
-  "VERIFICATION_CODE_CALL": "We call you on the phone number +{{phone}}! Accept the call and enter the numbers that you heard.",
+  "VERIFICATION_CODE_CALL": "Мы телефонуємо вам за номером телефону +{{phone}}! Прийміть дзвінок і введіть цифри, які ви почули.",
   "VERIFICATION_CODE_SMS": "Ми відправили SMS з кодом підтвердження на номер телефону +{{phone}}",
   "VIEW_ALL_OBJECTS": "Подивитися усі обʼєкти",
   "VIEW_NOW": "Дізнатися детальніше",
