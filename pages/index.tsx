@@ -19,80 +19,74 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // const state = await processCookies(ctx)
+  const state = await processCookies(ctx)
   const {query} = ctx
-  // const storage = new Storage({
-  //   ...state,
-  //   userHash: state.hash,
-  //   location: state.searchLocation,
-  // })
-  // const message = await checkToken(state.authNewToken)
-  // if (message === 'LOGIN_REDIRECT') {
-  //   return redirectToLogin(ctx.resolvedUrl)
-  // }
-  // if (message === 'REFRESH_REDIRECT') {
-  //   return redirectToRefresh(ctx.resolvedUrl)
-  // }
+  const storage = new Storage({
+    ...state,
+    userHash: state.hash,
+    location: state.searchLocation,
+  })
+  const message = await checkToken(state.authNewToken)
+  if (message === 'LOGIN_REDIRECT') {
+    return redirectToLogin(ctx.resolvedUrl)
+  }
+  if (message === 'REFRESH_REDIRECT') {
+    return redirectToRefresh(ctx.resolvedUrl)
+  }
   const {action, id, email, code, success} = query
-  // let showSuccessAlert = ''
-  // let showErrorAlert = ''
-  // if (action && id && email && code) {
-  //   const response =
-  //     (await checkCode(
-  //       {type: AuthType.email, email: email as string},
-  //       VerifyMode.Email,
-  //       code as string,
-  //       storage,
-  //     )) || {}
-  //   // @ts-ignore
-  //   const {access, hash, refresh} = response?.result?.newAuth || {}
-  //   // @ts-ignore
-  //   const {promo} = response?.result?.oldAuth || {}
-  //   // setCookiesObject({access, hash, refresh, promo}, ctx)
-  //   if (access && hash && refresh && promo) {
-  //     showSuccessAlert = 'ACCOUNT_ACTIVATED'
-  //   } else {
-  //     showErrorAlert = 'CODE_NOT_CORRECT'
-  //   }
-  // }
-  // if (success) {
-  //   showSuccessAlert = success as string
-  // }
+  let showSuccessAlert = ''
+  let showErrorAlert = ''
+  if (action && id && email && code) {
+    const response =
+      (await checkCode(
+        {type: AuthType.email, email: email as string},
+        VerifyMode.Email,
+        code as string,
+        storage,
+      )) || {}
+    // @ts-ignore
+    const {access, hash, refresh} = response?.result?.newAuth || {}
+    // @ts-ignore
+    const {promo} = response?.result?.oldAuth || {}
+    // setCookiesObject({access, hash, refresh, promo}, ctx)
+    if (access && hash && refresh && promo) {
+      showSuccessAlert = 'ACCOUNT_ACTIVATED'
+    } else {
+      showErrorAlert = 'CODE_NOT_CORRECT'
+    }
+  }
+  if (success) {
+    showSuccessAlert = success as string
+  }
 
-  // const promises = [
-  //   // fetchCountries(state.language),
-  //   fetchCategories(storage),
-  // ]
+  const promises = [fetchCountries(state.language), fetchCategories(storage)]
 
-  // const [
-  //   // countriesData,
-  //   categoriesData,
-  // ] = await Promise.allSettled(promises).then((res) =>
-  //   res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
-  // )
+  const [countriesData, categoriesData] = await Promise.allSettled(
+    promises,
+  ).then((res) =>
+    res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
+  )
 
-  // const categories = categoriesData?.result ?? null
+  const categories = categoriesData?.result ?? null
 
-  // const countries = countriesData ?? null
-  const countries = []
-
+  const countries = countriesData ?? null
   return {
     props: {
       hydrationData: {
         categoriesStore: {
-          categories: [],
+          categories,
         },
         countriesStore: {
           countries,
         },
         generalStore: {
-          // showSuccessAlert,
-          // showErrorAlert,
+          showSuccessAlert,
+          showErrorAlert,
           locationCodes: getLocationCodes(ctx),
-          // language: state.language,
+          language: state.language,
         },
       },
-      // ...(await serverSideTranslations(state.language)),
+      ...(await serverSideTranslations(state.language)),
     },
   }
 }
