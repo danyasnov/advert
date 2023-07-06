@@ -180,7 +180,9 @@ const ProductPhotos: FC = observer(() => {
           enabled={previewSlider.prevBtnEnabled}
           direction='left'
           size={25}
-          className='text-greyscale-400'
+          className={`text-greyscale-400 ${
+            size(items) >= 10 ? 'w-[100px]' : ''
+          }`}
         />
         {size(items) > 1 && (
           <div className='overflow-hidden mx-2 l:mx-0' ref={previewViewportRef}>
@@ -207,7 +209,9 @@ const ProductPhotos: FC = observer(() => {
           enabled={previewSlider.nextBtnEnabled}
           direction='right'
           size={25}
-          className='text-greyscale-400'
+          className={`text-greyscale-400 ${
+            size(items) > 10 ? 'w-[100px]' : ''
+          }`}
         />
       </div>
 
