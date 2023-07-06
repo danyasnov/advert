@@ -59,17 +59,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     showSuccessAlert = success as string
   }
 
-  const promises = [fetchCountries(state.language), fetchCategories(storage)]
+  const promises = [
+    // fetchCountries(state.language),
+    fetchCategories(storage),
+  ]
 
-  const [countriesData, categoriesData] = await Promise.allSettled(
-    promises,
-  ).then((res) =>
+  const [
+    // countriesData,
+    categoriesData,
+  ] = await Promise.allSettled(promises).then((res) =>
     res.map((p) => (p.status === 'fulfilled' ? p.value : p.reason)),
   )
 
   const categories = categoriesData?.result ?? null
 
-  const countries = countriesData ?? null
+  // const countries = countriesData ?? null
+  const countries = []
+
   return {
     props: {
       hydrationData: {
