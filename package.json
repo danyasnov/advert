@@ -7,6 +7,7 @@
     "dev": "yarn fetch-translations && node server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
+    "analyze": "cross-env ANALYZE=true next build",
     "fetch-translations": "node fetchTranslations.js"
   },
   "dependencies": {
