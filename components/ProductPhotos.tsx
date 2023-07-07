@@ -161,14 +161,14 @@ const ProductPhotos: FC = observer(() => {
           onClick={photoSlider.scrollPrev}
           enabled={photoSlider.prevBtnEnabled}
           direction='left'
-          className='absolute inset-y-0 left-0'
+          className='w-16 absolute inset-y-0 left-0'
         />
         <FullHeightSliderButton
           size={40}
           onClick={photoSlider.scrollNext}
           enabled={photoSlider.nextBtnEnabled}
           direction='right'
-          className='absolute inset-y-0 right-0'
+          className='w-16 absolute inset-y-0 right-0'
         />
       </div>
 
@@ -180,13 +180,11 @@ const ProductPhotos: FC = observer(() => {
           enabled={previewSlider.prevBtnEnabled}
           direction='left'
           size={25}
-          className={`text-greyscale-400 ${
-            size(items) >= 10 ? 'w-[100px]' : ''
-          }`}
+          className='text-greyscale-400'
         />
         {size(items) > 1 && (
           <div className='overflow-hidden mx-2 l:mx-0' ref={previewViewportRef}>
-            <div className='flex w-full'>
+            <div className='flex w-full flex-shrink-0'>
               {items.map((item, index) => (
                 <div className='mr-1.5 s:mr-2.5 m:mr-3 l:mr-2.5'>
                   <Thumb
@@ -209,9 +207,7 @@ const ProductPhotos: FC = observer(() => {
           enabled={previewSlider.nextBtnEnabled}
           direction='right'
           size={25}
-          className={`text-greyscale-400 ${
-            size(items) > 10 ? 'w-[100px]' : ''
-          }`}
+          className='text-greyscale-400'
         />
       </div>
 
