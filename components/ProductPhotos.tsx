@@ -184,7 +184,7 @@ const ProductPhotos: FC = observer(() => {
         />
         {size(items) > 1 && (
           <div className='overflow-hidden mx-2 l:mx-0' ref={previewViewportRef}>
-            <div className='flex w-full flex-shrink-0'>
+            <div className='flex w-full shrink-0'>
               {items.map((item, index) => (
                 <div className='mr-1.5 s:mr-2.5 m:mr-3 l:mr-2.5'>
                   <Thumb
