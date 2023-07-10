@@ -31,6 +31,8 @@ const DeactivateAdvModal: FC<Props> = ({
 }) => {
   const {t} = useTranslation()
   useLockBodyScroll()
+  document.body.style.overflow = 'auto'
+
   const [selectedValue, setSelectedValue] = useState()
 
   const handleRadioChange = (value) => {

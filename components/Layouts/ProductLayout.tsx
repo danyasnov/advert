@@ -199,7 +199,7 @@ const ProductLayout: FC = observer(() => {
             </div>
           </div>
         </div>
-        {/* {showTour && (
+        {showTour && (
           <Joyride
             steps={steps}
             hideCloseButton
@@ -224,7 +224,7 @@ const ProductLayout: FC = observer(() => {
             }}
             locale={{close: t('HINT_OK')}}
           />
-        )} */}
+        )}
       </div>
     </HeaderFooterWrapper>
   )
