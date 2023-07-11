@@ -32,6 +32,7 @@ const CategoriesLayout: FC = observer(() => {
     ? // @ts-ignore
       categoryData.metaDescription.replace('#LOCATION#', cityTitle || '')
     : t('MAIN_PAGE_DESCRIPTION')
+  const isTransportChild = categoryData?.id === 23
 
   return (
     <HeaderFooterWrapper>
@@ -39,17 +40,16 @@ const CategoriesLayout: FC = observer(() => {
       <div className='bg-white pb-20 px-4 s:px-8 m:flex min-h-1/2'>
         <div className='m:flex m:justify-center m:w-full'>
           <main className='m:w-944px l:w-[1208px] '>
-            <CategoryHeader showCount={categoryData?.id === 23} />
+            <CategoryHeader hideTitle={categoryData?.id === 23} />
 
             <FilterForm />
             <div className='drop-shadow-card'>
               <ScrollableCardGroup
-                enableFourthColumnForM
-                enableFiveColumnsForL
+                className='s:grid-cols-4 m:grid-cols-5 l:grid-cols-6'
                 products={products}
                 count={count}
                 page={page}
-                state={state}
+                state={isTransportChild ? 'done' : state}
                 fetchProducts={() => {
                   fetchProducts({page: page + 1, isScroll: true, query}).then(
                     () => applyFilter(),

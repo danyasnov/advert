@@ -11,7 +11,7 @@ import {shallowUpdateQuery} from '../../helpers'
 import SelectWrapper from '../SelectWrapper'
 import {FilterStyles} from '../Selects/styles'
 import {SelectItem} from '../Selects/Select'
-import SortSelect from '../SortSelect'
+import SortSelect from '../Selects/SortSelect'
 import {
   FormikChips,
   FormikFilterChips,
@@ -21,20 +21,9 @@ import {
 } from '../FormikComponents'
 import {useProductsStore} from '../../providers/RootStoreProvider'
 import {Values} from './FilterForm'
+import {FilterProps} from '../../types'
 
-interface Props {
-  setShowFilters: Dispatch<SetStateAction<boolean>>
-  showFilters: boolean
-  showReset: boolean
-  getInitialValues: (reset?: boolean) => Values
-  currentCategoryOption: {value: number; label: string; slug: string}
-  categoriesOptions: {value: number; label: string; slug: string}[]
-  currentCategory: CACategoryModel
-  conditionOptions: {value: number; label: string}[]
-  onChangeCategory: (opt: SelectItem & {slug: string}) => void
-  onReset: () => void
-}
-const GeneralFilterForm: FC<Props> = observer(
+const GeneralFilterForm: FC<FilterProps> = observer(
   ({
     setShowFilters,
     showFilters,

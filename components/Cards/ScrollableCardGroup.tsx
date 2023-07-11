@@ -11,14 +11,11 @@ import {TGetOptions} from '../../types'
 export interface ScrollableCardGroupInterface {
   products: AdvertiseListItemModel[]
   state: string
+  className: string
   count?: number
   page?: number
   limit?: number
   disableScroll?: boolean
-  enableFourthColumnForM?: boolean
-  enableFiveColumnsForL?: boolean
-  enableTwoColumnsForS?: boolean
-  enableThreeColumnsForS?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
   renderFooter?: (product: AdvertiseListItemModel) => any
@@ -31,10 +28,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   page,
   fetchProducts,
   disableScroll,
-  enableFourthColumnForM,
-  enableTwoColumnsForS,
-  enableThreeColumnsForS,
-  enableFiveColumnsForL,
+  className,
   disableVipWidth,
   limit = PAGE_LIMIT,
   getOptions,
@@ -42,15 +36,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
 }) => {
   const hasMore = count > page * limit
   if (isEmpty(products) && state === 'pending') {
-    return (
-      <CardsLoader
-        enableFourthColumnForM={enableFourthColumnForM}
-        enableFiveColumnsForL={enableFiveColumnsForL}
-        enableTwoColumnsForS={enableTwoColumnsForS}
-        enableThreeColumnsForS={enableThreeColumnsForS}
-        show
-      />
-    )
+    return <CardsLoader className={className} show />
   }
 
   if (isEmpty(products)) {
@@ -62,28 +48,16 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   }
 
   return (
-    <div className='flex flex-col m:items-start relative'>
+    <div className='flex flex-col m:items-start relative infinite-scroll-container'>
       <InfiniteScroll
         style={{overflow: 'visible'}}
         dataLength={products?.length}
         next={fetchProducts}
         hasMore={hasMore && !disableScroll}
         scrollThreshold='2000px'
-        loader={
-          <CardsLoader
-            enableFourthColumnForM={enableFourthColumnForM}
-            enableFiveColumnsForL={enableFiveColumnsForL}
-            enableTwoColumnsForS={enableTwoColumnsForS}
-            enableThreeColumnsForS={enableThreeColumnsForS}
-            show
-          />
-        }>
+        loader={<CardsLoader className={className} show />}>
         <div
-          className={`grid grid-cols-2 xs:grid-cols-3 m:gap-y-6 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4 ${
-            enableTwoColumnsForS ? 's:grid-cols-2' : ''
-          } ${enableThreeColumnsForS ? 's:grid-cols-3' : ''} ${
-            enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'
-          } ${enableFiveColumnsForL ? 'l:grid-cols-5' : 'l:grid-cols-4'}`}>
+          className={`grid grid-cols-2 xs:grid-cols-3 gap-2 s:gap-4 m:gap-x-8 m:gap-y-6 l:gap-4 mb-2 s:mb-4 ${className}`}>
           {products.map((p) => (
             <div
               className={p.isVip && !disableVipWidth ? 'col-span-2' : ''}

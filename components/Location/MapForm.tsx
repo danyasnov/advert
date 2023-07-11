@@ -233,6 +233,7 @@ const MapForm: FC<Props> = observer(({onClose}) => {
                 backgroundColor: '#7210FF',
                 border: '1px solid #7210FF',
                 boxShadow: 'none',
+                opacity: 1,
               }}
             />
           </div>

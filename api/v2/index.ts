@@ -42,7 +42,14 @@ export const fetchProducts = (
   payload: FetchAdvertisesPayload = {},
   storage: Storage,
 ): Promise<RestResponse<AdvertiseListResponse>> => {
-  const {limit = PAGE_LIMIT, page = 1, filter = {}, advHash, cacheId} = payload
+  const {
+    limit = PAGE_LIMIT,
+    page = 1,
+    filter = {},
+    advHash,
+    cacheId,
+    onlyAggregation,
+  } = payload
   const rest = getRest(storage)
 
   const payloadFilter = {
@@ -50,6 +57,7 @@ export const fetchProducts = (
     ...getSearchByFilter(state),
     ...filter,
   }
+  // debugger
   if (isObject(payloadFilter.fieldValues)) {
     payloadFilter.fieldValues = new Map(
       Object.entries(payloadFilter.fieldValues),
@@ -66,6 +74,7 @@ export const fetchProducts = (
     page,
     advHash,
     cacheId,
+    onlyAggregation,
     filter: payloadFilter,
   }
 

@@ -4,7 +4,6 @@ import {useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import Joyride, {Step} from 'react-joyride'
 import {isEmpty} from 'lodash'
-import {setCookiesObject} from '../../helpers'
 import CategoriesSlider from '../CategoriesSlider'
 import ProductsSlider from '../Cards/ProductsSlider'
 import HeaderFooterWrapper from './HeaderFooterWrapper'
@@ -141,7 +140,7 @@ const MainLayout: FC = observer(() => {
           <main className='m:w-944px l:w-[1208px] '>
             <CategoriesSlider />
             <div className='flex mt-15 m:grid m:grid-cols-main-m l:grid-cols-main-l m:gap-x-8 drop-shadow-card'>
-              <div className='space-y-15 overflow-hidden m:overflow-visible'>
+              <div className='space-y-15 overflow-hidden m:overflow-visible w-full'>
                 {productsArr
                   .filter((p) => p.url)
                   .map((p) => (
@@ -174,6 +173,7 @@ const MainLayout: FC = observer(() => {
                   )}
                   <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                     <ScrollableCardGroup
+                      className='s:grid-cols-2 m:grid-cols-3 l:grid-cols-4'
                       products={otherProducts.all}
                       state={isLoading ? 'pending' : 'done'}
                       disableScroll

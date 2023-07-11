@@ -2,28 +2,15 @@ import {FC} from 'react'
 import {Placeholder} from './AdvertNotFound'
 
 interface Props {
-  enableFourthColumnForM: boolean
-  enableFiveColumnsForL: boolean
-  enableTwoColumnsForS: boolean
-  enableThreeColumnsForS: boolean
+  className: string
   show: boolean
 }
-const CardsLoader: FC<Props> = ({
-  enableFourthColumnForM,
-  show,
-  enableFiveColumnsForL,
-  enableTwoColumnsForS,
-  enableThreeColumnsForS,
-}) => {
+const CardsLoader: FC<Props> = ({show, className}) => {
   if (!show) return null
 
   return (
     <div
-      className={`grid grid-cols-2 xs:grid-cols-3 m:gap-y-6  gap-2 s:gap-4 l:gap-4 ${
-        enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'
-      } ${enableFiveColumnsForL ? 'l:grid-cols-5' : 'l:grid-cols-4'} ${
-        enableTwoColumnsForS ? 's:grid-cols-2' : ''
-      } ${enableThreeColumnsForS ? 's:grid-cols-3' : ''}`}>
+      className={`grid grid-cols-2 xs:grid-cols-3 w-full gap-2 s:gap-4 m:gap-x-8 m:gap-y-6 l:gap-4 mb-2 s:mb-4 ${className} 132`}>
       {Array(8)
         .fill(0)
         .map((_, index) => (

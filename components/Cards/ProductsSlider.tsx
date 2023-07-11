@@ -37,11 +37,13 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
         <div className='overflow-hidden' ref={viewportRef}>
           <div className='flex space-x-2 s:space-x-4 mx-4 s:mx-8 m:mx-0'>
             {products.map((p) => (
-              <Card
-                key={p.hash}
-                product={p}
-                setLockParentScroll={setLockParentScroll}
-              />
+              <div className='w-40 s:w-56 m:w-[194px] l:w-53 shrink-0'>
+                <Card
+                  key={p.hash}
+                  product={p}
+                  setLockParentScroll={setLockParentScroll}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -49,7 +51,7 @@ const ProductsSlider: FC<Props> = ({products, title, rightContent}) => {
           onClick={scrollPrev}
           hide={!prevBtnEnabled}
           direction='left'
-          className='slider-button left-1 s:left-5 m:left-1 m:-left-4'
+          className='slider-button left-1 s:left-5 m:-left-4'
         />
         <SliderButton
           onClick={scrollNext}

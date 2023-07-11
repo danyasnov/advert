@@ -4,7 +4,7 @@ import ImageWrapper from './ImageWrapper'
 
 export const Placeholder: FC = () => {
   return (
-    <div className='min-w-40 s:w-56 m:w-48 l:w-53 border border-shadow-b rounded-2xl overflow-hidden'>
+    <div className='min-w-40 w-full border border-shadow-b rounded-2xl overflow-hidden'>
       <div className='h-40 s:h-56 m:h-48 l:h-53 bg-shadow-b' />
       <div className='bg-white flex flex-col p-3 space-y-4'>
         <div className='bg-shadow-b h-5 w-1/2 rounded' />

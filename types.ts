@@ -1,11 +1,14 @@
 import {
   AdvertiseListItemModel,
   CACategoryDataFieldModel,
+  CACategoryModel,
   LocationModel,
 } from 'front-api'
 import {CancelTokenSource} from 'axios'
 import {FormikErrors} from 'formik'
+import {Dispatch, SetStateAction} from 'react'
 import {SelectItem} from './components/Selects/Select'
+import {Values} from './components/CategoryFilter/FilterForm'
 
 export interface LocationIdFilter {
   cityId?: number
@@ -121,6 +124,7 @@ export interface FetchAdvertisesPayload {
   filter?: Partial<Filter>
   advHash?: string
   cacheId?: string
+  onlyAggregation?: boolean
 }
 
 export interface City {
@@ -180,6 +184,8 @@ export interface IFormikCheckbox {
   label: string
   labelClassname: string
   hideLabel?: boolean
+  onChange?: (value: boolean) => void
+  customValue?: boolean
   labelPosition?: 'left' | 'right'
 }
 export interface IFormikSelect {
@@ -223,6 +229,8 @@ export interface FieldOptions {
   other?: SelectItem[]
   placeholder?: string
   label?: string
+  labelClassname?: string
+  name?: string
   isFilterable?: boolean
   isClearable?: boolean
   isMulti?: boolean
@@ -233,4 +241,20 @@ export interface FieldOptions {
   isIconSelect?: boolean
   minValue?: number
   validate?: (value: any) => string
+}
+
+export interface FilterProps {
+  setShowFilters: Dispatch<SetStateAction<boolean>>
+  showFilters: boolean
+  showReset: boolean
+  getInitialValues: ({
+    reset,
+    isTransportChild,
+  }: Partial<{reset: boolean; isTransportChild: boolean}>) => Values
+  currentCategoryOption: {value: number; label: string; slug: string}
+  categoriesOptions: {value: number; label: string; slug: string}[]
+  currentCategory: CACategoryModel
+  conditionOptions: {value: number; label: string}[]
+  onChangeCategory: (opt: SelectItem & {slug: string}) => void
+  onReset: () => void
 }

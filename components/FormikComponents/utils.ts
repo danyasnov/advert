@@ -14,6 +14,7 @@ export const getSelectOptions = (multiselects = {}) => {
       label: o.value,
       icon: o.icon,
       disabled: o.itemType === 'title',
+      count: o.count,
     }))
 }
 

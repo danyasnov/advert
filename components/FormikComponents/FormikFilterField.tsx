@@ -1,5 +1,8 @@
 import React, {FC} from 'react'
 import {Field} from 'formik'
+import {useTranslation} from 'next-i18next'
+import {FieldTypeModel} from 'front-api'
+import {toJS} from 'mobx'
 import {getSelectOptions} from './utils'
 import {FieldOptions, IFormikField} from '../../types'
 import FormikSelect from './FormikSelect'
@@ -10,6 +13,7 @@ import FormikChips from './FormikChips'
 const FormikFilterField: FC<IFormikField> = ({field}) => {
   const {fieldType, multiselects, id, name, isFilterable, maxValue, minValue} =
     field
+  const {t} = useTranslation()
   let component
   const props: FieldOptions = {}
   switch (fieldType) {
@@ -57,6 +61,26 @@ const FormikFilterField: FC<IFormikField> = ({field}) => {
     case 'checkbox': {
       component = FormikChips
       props.label = name
+
+      break
+    }
+    case 'price' as FieldTypeModel: {
+      component = FormikRange
+      props.name = 'priceRange'
+      props.placeholder = t('PRICE')
+
+      props.validate = (value) => {
+        const [priceMin, priceMax] = value
+        let error
+        if (priceMin && priceMax) {
+          const parsedMin = parseFloat(priceMin)
+          const parsedMax = parseFloat(priceMax)
+          if (parsedMin > parsedMax) {
+            error = 'priceMin should be lesser than priceMax'
+          }
+        }
+        return error
+      }
       break
     }
     default: {

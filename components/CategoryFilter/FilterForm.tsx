@@ -23,6 +23,7 @@ import {defaultFilter} from '../../stores/ProductsStore'
 import GeneralFilterForm from './GeneralFilterForm'
 import TransportFilterForm from './TransportFilterForm'
 import {clearUrlFromQuery} from '../../utils'
+import TransportMain from '../TransportMain'
 
 export interface Values {
   condition: SelectItem
@@ -80,7 +81,7 @@ const FilterForm: FC = observer(() => {
     () => [
       {
         value: 0,
-        label: t('ALL'),
+        label: t('OTHER_FILTERS'),
       },
       {
         value: 1,
@@ -99,15 +100,20 @@ const FilterForm: FC = observer(() => {
     setShowReset(show)
   }, [filter])
 
-  const getInitialValues = (reset?: boolean): Values => {
+  const getInitialValues = ({
+    reset,
+    isTransportChild,
+  }: Partial<{reset: boolean; isTransportChild: boolean}>): Values => {
     const onlyDiscounted = reset
       ? false
       : router.query.onlyDiscounted === 'true'
-    const priceRange = [
-      '',
-      // eslint-disable-next-line no-nested-ternary
-      reset ? '' : router.query.priceMax === '0' ? '0' : '',
-    ]
+    const priceRange = isTransportChild
+      ? ['1000', '100000']
+      : [
+          '',
+          // eslint-disable-next-line no-nested-ternary
+          reset ? '' : router.query.priceMax === '0' ? '0' : '',
+        ]
     const defaultValues = {
       condition: conditionOptions[0],
       priceRange,
@@ -115,6 +121,7 @@ const FilterForm: FC = observer(() => {
       onlyDiscounted,
       fields: {},
     }
+
     if (reset || isEmpty(aggregatedFields)) return defaultValues
     const queryFilter = getFormikInitialFromQuery(
       router.query,
@@ -144,7 +151,11 @@ const FilterForm: FC = observer(() => {
     }
   }, [currentCategory, setFilter])
 
-  const [initialValues, setInitialValue] = useState<Values>(getInitialValues())
+  const isTransport = categoryData?.id === 1
+  const isTransportChild = categoryData?.id === 23
+  const [initialValues, setInitialValue] = useState<Values>(
+    getInitialValues({isTransportChild}),
+  )
 
   const currentCategoriesOptions =
     findCurrentCategoriesOptionsyByQuery(router.query.categories, categories) ||
@@ -241,14 +252,15 @@ const FilterForm: FC = observer(() => {
       shallowUpdateQuery(newParams.toString())
       fetchProducts({query: router.query}).then(() => {
         setSubmitting(false)
-        applyFilter()
+        if (!isTransportChild) {
+          applyFilter()
+        }
       })
     },
   })
-  const {resetForm} = formik
-  const isTransport = findRootCategory(categories, categoryData?.id)?.id === 1
+  const {resetForm, values} = formik
   const onReset = () => {
-    resetForm({values: getInitialValues(true)})
+    resetForm({values: getInitialValues({reset: true})})
     shallowUpdateQuery()
     resetFilter()
     fetchProducts({query: router.query}).then(() => applyFilter())
@@ -266,44 +278,37 @@ const FilterForm: FC = observer(() => {
   }
   useEffect(() => {
     if (prevCategoryQueryRef.current) {
-      resetForm({values: getInitialValues(true)})
+      resetForm({values: getInitialValues({reset: true})})
       resetFilter()
     } else {
       prevCategoryQueryRef.current = JSON.stringify(router.query.categories)
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [JSON.stringify(router.query.categories)])
+  const filterProps = {
+    categoriesOptions,
+    conditionOptions,
+    currentCategoryOption,
+    currentCategory,
+    setShowFilters,
+    showFilters,
+    getInitialValues,
+    showReset,
+    onChangeCategory,
+    onReset,
+  }
+  let body
+  if (isTransport) {
+    body = <TransportMain {...filterProps} />
+  } else if (isTransportChild) {
+    body = <TransportFilterForm {...filterProps} />
+  } else {
+    body = <GeneralFilterForm {...filterProps} />
+  }
   return (
     <FormikProvider value={formik}>
       <Form className='w-full'>
-        {isTransport ? (
-          <TransportFilterForm
-            categoriesOptions={categoriesOptions}
-            conditionOptions={conditionOptions}
-            currentCategoryOption={currentCategoryOption}
-            currentCategory={currentCategory}
-            setShowFilters={setShowFilters}
-            showFilters={showFilters}
-            getInitialValues={getInitialValues}
-            showReset={showReset}
-            onChangeCategory={onChangeCategory}
-            onReset={onReset}
-          />
-        ) : (
-          <GeneralFilterForm
-            categoriesOptions={categoriesOptions}
-            conditionOptions={conditionOptions}
-            currentCategoryOption={currentCategoryOption}
-            currentCategory={currentCategory}
-            setShowFilters={setShowFilters}
-            showFilters={showFilters}
-            getInitialValues={getInitialValues}
-            showReset={showReset}
-            onChangeCategory={onChangeCategory}
-            onReset={onReset}
-          />
-        )}
-
+        {body}
         <FormikAutoSave />
       </Form>
     </FormikProvider>

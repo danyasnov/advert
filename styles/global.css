@@ -73,3 +73,7 @@ input[type='number'] {
 .cookie-policy:hover {
   text-decoration: underline;
 }
+
+.infinite-scroll-container > div:first-child {
+  width: 100%
+}

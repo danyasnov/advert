@@ -6,7 +6,7 @@ import ScrollableCardGroup, {
 import EmptyTab from './EmptyTab'
 import {PAGE_LIMIT} from '../stores/ProductsStore'
 
-interface Props extends ScrollableCardGroupInterface {
+interface Props extends Omit<ScrollableCardGroupInterface, 'className'> {
   tab?: string
 }
 
@@ -17,10 +17,6 @@ const UserTabWrapper: FC<Props> = ({
   page,
   fetchProducts,
   disableScroll,
-  enableFourthColumnForM,
-  enableTwoColumnsForS,
-  enableThreeColumnsForS,
-  enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
   tab,
@@ -121,16 +117,13 @@ const UserTabWrapper: FC<Props> = ({
 
   return (
     <ScrollableCardGroup
+      className='s:grid-cols-3 l:grid-cols-4'
       getOptions={getOptions}
       products={products}
       page={page}
       count={count}
       state={state}
       disableScroll={disableScroll}
-      enableFourthColumnForM={enableFourthColumnForM}
-      enableTwoColumnsForS={enableTwoColumnsForS}
-      enableFiveColumnsForL={enableFiveColumnsForL}
-      enableThreeColumnsForS={enableThreeColumnsForS}
       disableVipWidth={disableVipWidth}
       limit={limit}
       fetchProducts={fetchProducts}

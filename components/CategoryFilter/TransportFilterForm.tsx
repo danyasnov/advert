@@ -6,13 +6,15 @@ import {Field, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import ReactModal from 'react-modal'
-import {CACategoryModel} from 'front-api'
+import {CACategoryDataFieldModel, CACategoryModel} from 'front-api'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
 import {toJS} from 'mobx'
+import {useRouter} from 'next/router'
 import {SelectItem} from '../Selects/Select'
 
 import {
+  FormikCheckbox,
   FormikFilterChips,
   FormikFilterFields,
   FormikRange,
@@ -32,47 +34,30 @@ import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 import Button from '../Buttons/Button'
 import FormikTransportFields from '../FormikComponents/FormikTransportFields'
 import SelectWrapper from '../SelectWrapper'
-import SortSelect from '../SortSelect'
+import SortSelect from '../Selects/SortSelect'
 import FormikRangeInline from '../FormikComponents/FormikRangeInline'
 import PrimaryButton from '../Buttons/PrimaryButton'
-import HeaderButtonColumn from './HeaderButtonColumn'
 import LinkButton from '../Buttons/LinkButton'
+import {FilterProps} from '../../types'
+import FormikFilterCheckboxes from '../FormikComponents/FormikFilterCheckboxes'
+import AutoSortSelect from '../Selects/AutoSortSelect'
 
-interface Props {
-  setShowFilters: Dispatch<SetStateAction<boolean>>
-  showFilters: boolean
-  showReset: boolean
-  getInitialValues: (reset?: boolean) => Values
-  currentCategoryOption: {value: number; label: string; slug: string}
-  categoriesOptions: {value: number; label: string; slug: string}[]
-  currentCategory: CACategoryModel
-  conditionOptions: {value: number; label: string}[]
-  onChangeCategory: (opt: SelectItem & {slug: string}) => void
-  onReset: () => void
-}
-const TransportFilterForm: FC<Props> = (props) => {
+const TransportFilterForm: FC<FilterProps> = (props) => {
   const {currentCategory, categoriesOptions, onChangeCategory} = props
   const {width} = useWindowSize()
-  const showCategoriesSlider = !isEmpty(currentCategory.items)
   if (typeof window === 'undefined') return null
-  if (showCategoriesSlider) {
-    return (
-      <div className='flex overflow-x-auto mb-4 -mx-4' key={currentCategory.id}>
-        <CategoriesSlider
-          aroundMargin={width < 768}
-          categoriesOptions={categoriesOptions}
-          onChangeCategory={onChangeCategory}
-        />
-      </div>
-    )
-  }
-  if (width >= 768) {
-    return <DesktopForm {...props} key='desktop' />
-  }
-  return <MobileForm {...props} key='mobile' />
+  return (
+    <div className='flex flex-col'>
+      {width >= 768 ? (
+        <DesktopForm {...props} key='desktop' />
+      ) : (
+        <MobileForm {...props} key='mobile' />
+      )}
+    </div>
+  )
 }
 
-const MobileForm: FC<Props> = observer(
+const MobileForm: FC<FilterProps> = observer(
   ({
     setShowFilters,
     showFilters,
@@ -277,111 +262,115 @@ const MobileForm: FC<Props> = observer(
   },
 )
 
-const DesktopForm: FC<Props> = observer(
-  ({setShowFilters, showFilters, showReset, onReset, conditionOptions}) => {
-    const {aggregatedFields} = useProductsStore()
+const DesktopForm: FC<FilterProps> = observer(
+  ({
+    setShowFilters,
+    showFilters,
+    showReset,
+    onReset,
+    conditionOptions,
+    currentCategory,
+  }) => {
+    const {aggregatedFields, newCount, applyFilter, isFilterApplied} =
+      useProductsStore()
     const {t} = useTranslation()
-
-    const mainFields = aggregatedFields.filter((f) =>
-      [1991, 17, 1992].includes(f.id),
-    )
-    const restFields = aggregatedFields.filter(
-      (f) => ![1991, 17, 1992].includes(f.id),
-    )
+    const mainIds = [1991, 1992, 5, 6, 'price', 12, 17, 7, 2071, 10]
+    const {setFieldValue} = useFormikContext()
+    const mainFields = mainIds.map((id) => {
+      if (id === 'price') {
+        return {
+          fieldType: 'price',
+          multiselects: {top: [], other: []},
+        }
+      }
+      return aggregatedFields.find((f) => {
+        return f.id === id
+      })
+    })
+    const restFields = aggregatedFields.filter((f) => !mainIds.includes(f.id))
+    const urlParams = new URLSearchParams(window.location.search)
+    const probeg = urlParams.get('probeg-km0')
 
     return (
-      <div className='flex flex-col mb-4'>
-        {/* {brands && ( */}
-        {/*  <HeaderButtonColumn */}
-        {/*    title={brands.name} */}
-        {/*    items={brands.multiselects.top} */}
-        {/*    onClick={} */}
-        {/*  /> */}
-        {/* )} */}
-        <div
-          className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'
-          key={66456}>
+      <div className='w-full rounded-3xl  flex flex-col py-8 px-6 bg-white mb-6 shadow-[0_45px_80px_rgba(4,6,15,0.08)]'>
+        <span className='text-h-4 font-bold mb-6'>{currentCategory.name}</span>
+        <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'>
           <Field
             component={FormikSegmented}
             name='condition'
             options={conditionOptions}
           />
-          <SortSelect id='mobile-sort' filterStyle />
+          <AutoSortSelect />
+          <div className='col-span-4 l:col-span-1 flex space-x-4'>
+            <Field
+              name='withoutRun'
+              component={FormikCheckbox}
+              label={t('WITHOUT_RUN')}
+              customValue={probeg === '0-0'}
+              onChange={(value) => {
+                const result = value ? ['0', '0'] : undefined
+                setFieldValue('fields.12', result)
+              }}
+              labelClassname='text-body-12 whitespace-nowrap'
+            />
+            <Field
+              name='onlyDiscounted'
+              component={FormikCheckbox}
+              label={t('WITH_DISCOUNT')}
+              labelClassname='text-body-12 whitespace-nowrap'
+            />
+            <FormikFilterCheckboxes fieldsArray={restFields} />
+          </div>
         </div>
 
         <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4'>
           {!isEmpty(mainFields) && (
-            <FormikFilterFields fieldsArray={mainFields} />
+            <FormikFilterFields
+              fieldsArray={mainFields as CACategoryDataFieldModel[]}
+            />
           )}
-          <Field
-            name='priceRange'
-            component={FormikRange}
-            placeholder={t('PRICE')}
-            validate={(value) => {
-              const [priceMin, priceMax] = value
-              let error
-              if (priceMin && priceMax) {
-                const parsedMin = parseFloat(priceMin)
-                const parsedMax = parseFloat(priceMax)
-                if (parsedMin > parsedMax) {
-                  error = 'priceMin should be lesser than priceMax'
-                }
-              }
-              return error
-            }}
-          />
           {!isEmpty(restFields) && showFilters && (
-            <>
-              <FormikFilterFields fieldsArray={restFields} />
-              <div className='flex col-span-3 m:col-span-4'>
-                <FormikFilterChips fieldsArray={aggregatedFields} />
-              </div>
-            </>
+            <FormikFilterFields fieldsArray={restFields} />
           )}
         </div>
-        <div className='flex space-x-5'>
-          <LinkButton
-            className='self-start font-normal whitespace-nowrap'
-            onClick={() => {
-              setShowFilters(!showFilters)
-            }}>
-            <div className='flex items-center space-x-2'>
-              <span>
-                {t(showFilters ? 'CLOSE_ALL_PARAMETERS' : 'ALL_PARAMETERS')}
-              </span>
-              <div className={`w-4 h-4 ${showFilters ? 'rotate-180' : ''}`}>
-                <IcCaretDown />
+        <div className='flex space-x-5 items-center justify-between'>
+          <div className='flex items-center space-x-6'>
+            <LinkButton
+              className='self-start font-normal whitespace-nowrap'
+              onClick={() => {
+                setShowFilters(!showFilters)
+              }}>
+              <div className='flex items-center space-x-2'>
+                <span className='text-body-16 font-medium'>
+                  {t(showFilters ? 'CLOSE_ALL_PARAMETERS' : 'ALL_PARAMETERS')}
+                </span>
+                <div className={`w-4 h-4 ${showFilters ? 'rotate-180' : ''}`}>
+                  <IcCaretDown />
+                </div>
               </div>
-            </div>
-          </LinkButton>
-          {showReset && (
-            <Button
-              onClick={onReset}
-              className='text-greyscale-500 space-x-2 flex items-center'>
-              <span className='text-body-14'>{t('RESET')}</span>
-              <IcClose className='w-2.5 h-2.5 fill-current' />
-            </Button>
+            </LinkButton>
+            {showReset && (
+              <Button
+                onClick={onReset}
+                className='text-greyscale-500 space-x-2 flex items-center'>
+                <span className='text-body-16 font-medium'>{t('CLEAR')}</span>
+                <IcClose className='w-2.5 h-2.5 fill-current' />
+              </Button>
+            )}
+          </div>
+          {!isFilterApplied && (
+            <PrimaryButton
+              className='s:w-[272px] m:w-[240px] h-10'
+              onClick={() => {
+                applyFilter()
+              }}>
+              {t('SHOW_CARS_COUNT', {count: newCount})}
+            </PrimaryButton>
           )}
         </div>
       </div>
     )
   },
 )
-
-const CategoriesSlider: FC<{
-  categoriesOptions: {value: number; label: string; slug: string}[]
-  onChangeCategory: (opt: SelectItem & {slug: string}) => void
-  aroundMargin?: boolean
-}> = ({categoriesOptions, onChangeCategory, aroundMargin}) => {
-  return (
-    <>
-      {categoriesOptions.map((c) => (
-        <div className={`mr-2 ${aroundMargin ? 'first:ml-4 last:mr-4' : ''}`}>
-          <ChipButton onClick={() => onChangeCategory(c)}>{c.label}</ChipButton>
-        </div>
-      ))}
-    </>
-  )
-}
 
 export default TransportFilterForm

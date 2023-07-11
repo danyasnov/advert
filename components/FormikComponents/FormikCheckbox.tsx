@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import {FieldProps} from 'formik'
 import {get} from 'lodash'
 import IcCheck from 'icons/material/Check.svg'
@@ -10,10 +10,19 @@ const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
   label,
   hideLabel,
   labelClassname,
+  onChange,
+  customValue,
 }) => {
-  const {name, value} = field
+  const {name} = field
   const {setFieldValue, errors} = form
   const error = get(errors, name)
+  const useCustomValue = typeof customValue !== 'undefined'
+
+  useEffect(() => {
+    setValue(useCustomValue ? customValue : field.value)
+  }, [customValue, field.value])
+
+  const [value, setValue] = useState(useCustomValue ? customValue : field.value)
 
   const input = (
     <>
@@ -22,7 +31,14 @@ const FormikCheckbox: FC<IFormikCheckbox & FieldProps> = ({
         name={name}
         checked={value}
         id={name}
-        onChange={() => setFieldValue(name, !value)}
+        onChange={() => {
+          if (onChange) {
+            onChange(!value)
+          } else {
+            setFieldValue(name, !value)
+          }
+          setValue(!value)
+        }}
         className='opacity-0 absolute h-4.5 w-4.5 cursor-pointer'
       />
       <div

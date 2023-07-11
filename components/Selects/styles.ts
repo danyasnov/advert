@@ -238,3 +238,59 @@ export const FilterStyles = {
     },
   }),
 }
+
+export const AutoSortStyles = {
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
+    minHeight: '0px',
+  }),
+  indicatorsContainer: () => ({
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    display: 'flex',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    padding: '0px',
+    height: '24px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    width: '200px',
+    borderRadius: '16px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    border: 'none',
+    boxShadow: '0px 20px 100px rgba(4, 6, 15, 0.08)',
+    overflow: 'hidden',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    fontSize: '12px',
+    lineHeight: '14px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    paddingLeft: '0px',
+    paddingRight: '0px',
+    color: '#212121',
+    ...(state.isFocused ? {backgroundColor: '#fff', color: '#7210FF'} : {}),
+    backgroundColor: state.isFocused ? '#fff' : '#FFFFFF',
+    '&:hover ': {
+      backgroundColor: '#fff',
+      color: '#7210FF',
+    },
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'center',
+  }),
+}

@@ -156,6 +156,7 @@ export class ProductsStore implements IProductsStore {
 
     this.state = opts?.isScroll ? 'pending-scroll' : 'pending'
     const [key, direction] = (this.sortBy || 'date_updated-asc').split('-')
+    // debugger
     const config: AxiosRequestConfig = {
       url: '/api/products',
       method: 'POST',

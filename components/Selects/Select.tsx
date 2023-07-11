@@ -89,12 +89,20 @@ const DropdownIndicator = (props) => {
   )
 }
 const Option = (props) => {
-  const {isSelected, label} = props
+  const {isSelected, label, data} = props
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <RSComponents.Option {...props}>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label>{label}</label>
+      <label>
+        {label}
+        {!!data.count && (
+          <span className='text-body-12 text-greyscale-600 pl-2'>
+            {data.count}
+          </span>
+        )}
+      </label>
+
       {/* <input type='checkbox' checked={isSelected} onChange={() => null} /> */}
       <input
         type='checkbox'
@@ -126,6 +134,7 @@ const Select: FC<SelectProps> = ({
   isInvalid,
   components,
   limit,
+  menuIsOpen,
 }) => {
   const menuWidth = useMemo(() => {
     if (typeof window === 'undefined' || !filterStyle) return 0
@@ -152,6 +161,7 @@ const Select: FC<SelectProps> = ({
   return (
     <>
       <RS
+        menuIsOpen={menuIsOpen}
         inputId={id}
         id={id}
         value={value}

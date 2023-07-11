@@ -4,11 +4,11 @@ import {TFunction, useTranslation} from 'next-i18next'
 import {parseCookies} from 'nookies'
 import {useRouter} from 'next/router'
 import {useWindowSize} from 'react-use'
-import {SerializedCookiesState} from '../types'
-import {useProductsStore} from '../providers/RootStoreProvider'
-import {shallowUpdateQuery} from '../helpers'
-import SelectWrapper from './SelectWrapper'
-import {FilterStyles} from './Selects/styles'
+import {SerializedCookiesState} from '../../types'
+import {useProductsStore} from '../../providers/RootStoreProvider'
+import {shallowUpdateQuery} from '../../helpers'
+import SelectWrapper from '../SelectWrapper'
+import {FilterStyles} from './styles'
 
 const getSortOptions = (t: TFunction) => [
   {
