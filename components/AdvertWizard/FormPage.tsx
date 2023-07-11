@@ -921,7 +921,7 @@ const FormPage: FC = observer(() => {
               }}
               validate={() => validateCommunication(phoneNumber, t)}
             />
-            <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5 z-10'>
+            <div className='s:fixed s:inset-x-0 w-full s:bottom-0 flex justify-between s:bg-white s:shadow-2xl s:px-8 m:px-10 l:px-29 pb-12 s:pb-2.5 pt-6 s:pt-2.5'>
               <div className='w-full l:w-1208px l:mx-auto flex justify-between flex-col s:flex-row space-y-4 s:space-y-0'>
                 <SecondaryButton
                   id='ad-back-button'
