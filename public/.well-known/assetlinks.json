@@ -1,12 +1,15 @@
-[{
-  "relation" : ["delegate_permission/common.handle_all_urls"],
-  "target" : {
-    "namespace" : "android_app",
-    "package_name" : "vooxee.com",
-    "sha256_cert_fingerprints" : [
-      "B6:D2:77:B5:06:BC:BE:D8:56:06:A7:E0:73:4A:A2:6A:A6:82:D7:D1:C7:86:9F:49:B4:50:2B:00:E0:0E:A5:1B",
-      "39:0F:58:E2:F4:59:00:52:04:4F:CF:F7:BE:46:70:B0:BA:1D:42:EE:FB:04:02:A6:8E:7D:29:86:9A:8A:9E:48",
-      "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"
-    ]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "vooxee.com",
+      "sha256_cert_fingerprints":
+      [
+        "A3:3C:90:AD:63:93:A0:8F:48:C5:B5:4A:38:A2:0C:07:9E:E9:43:4C:BA:8A:F7:E9:01:89:07:C2:1E:E6:CA:5E",
+        "EF:B3:F3:FB:74:1A:AC:78:52:08:7A:25:38:2D:C6:DB:8F:02:BE:78:5A:85:E6:7A:21:12:14:B7:BF:7B:28:E4",
+        "1B:0B:E3:65:34:BA:DD:1D:0E:07:F9:19:2C:12:80:F4:0F:53:0F:72:A8:C1:F8:10:7A:FB:BC:98:EC:F9:EE:AF"
+      ]
+    }
   }
-}]
+]
