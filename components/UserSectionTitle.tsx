@@ -9,11 +9,13 @@ const SectionTitle: FC<{title: string}> = observer(({title}) => {
   const className = 'text-h-5 font-bold text-greyscale-900'
   return (
     <div className='mb-8 z-10 relative'>
-      <Button onClick={() => setActiveUserPage(null)} className='s:hidden'>
+      <Button
+        onClick={() => setActiveUserPage('user_navigation')}
+        className='m:hidden'>
         <ArrowLeft size={24} />
         <span className={`${className} ml-2`}>{title}</span>
       </Button>
-      <span className={`${className} hidden s:block`}>{title}</span>
+      <span className={`${className} hidden m:block`}>{title}</span>
     </div>
   )
 })

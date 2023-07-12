@@ -25,7 +25,7 @@ const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
         <div className='py-8 min-h-1/2'>
           <div className='mx-4 flex justify-between'>
             <main className='w-full relative drop-shadow-card'>
-              {((isCurrentUser && !activeUserPage) || !isCurrentUser) && (
+              {(activeUserPage === 'user_navigation' || !isCurrentUser) && (
                 <UserSidebar />
               )}
               {activeUserPage === 'subscribers' && (
@@ -44,10 +44,13 @@ const UserMobile: FC<Props> = observer(({isCurrentUser}) => {
                 </div>
               )}
 
-              {(activeUserPage === 'adverts' || !activeUserPage) && (
+              {(activeUserPage === 'adverts' ||
+                (activeUserPage === 'user_navigation' && !isCurrentUser)) && (
                 <div
                   className={`${
-                    activeUserPage === null && isCurrentUser ? 'hidden' : ''
+                    activeUserPage === 'user_navigation' && isCurrentUser
+                      ? 'hidden'
+                      : ''
                   }`}>
                   <div className={`${!isCurrentUser ? 'hidden' : ''}`}>
                     <SectionTitle

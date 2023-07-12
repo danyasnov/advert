@@ -193,7 +193,7 @@ const UserAdverts: FC = observer(() => {
           page={userOnModeration.page}
           count={userOnModeration.count}
           state={userOnModeration.state || 'pending'}
-          enableTwoColumnsForS
+          enableFourColumnsForS
           disableVipWidth
           limit={userOnModeration.limit}
           fetchProducts={() => {
@@ -213,7 +213,7 @@ const UserAdverts: FC = observer(() => {
           count={userSale.count}
           state={userSale.state}
           limit={userSale.limit}
-          enableTwoColumnsForS
+          enableFourColumnsForS
           disableVipWidth
           fetchProducts={() => {
             fetchProducts({
@@ -257,7 +257,7 @@ const UserAdverts: FC = observer(() => {
           page={userSold.page}
           count={userSold.count}
           state={userSold.state}
-          enableTwoColumnsForS
+          enableFourColumnsForS
           disableVipWidth
           limit={userSold.limit}
           fetchProducts={() => {
@@ -276,7 +276,7 @@ const UserAdverts: FC = observer(() => {
           page={userArchive.page}
           count={userArchive.count}
           state={userArchive.state}
-          enableTwoColumnsForS
+          enableFourColumnsForS
           disableVipWidth
           limit={userArchive.limit}
           fetchProducts={() => {

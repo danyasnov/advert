@@ -122,7 +122,7 @@ const Card: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
   const isFree = price === '0'
-  let widthClassname = 'w-full min-w-40 s:w-56 m:w-[194px] l:w-53'
+  let widthClassname = 'w-full min-w-40 s:w-[164px] m:w-[194px] l:w-53'
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
   }
@@ -229,7 +229,7 @@ const Card: FC<Props> = ({
           {['blocked', 'blockedPermanently', 'sold'].includes(state) && (
             <div className='absolute inset-0 bg-greyscale-900 opacity-50 z-10' />
           )}
-          <div className='flex h-36 s:h-50 l:h-50 bg-image-placeholder'>
+          <div className='flex h-36 s:h-[155px] m:h-50 l:h-50 bg-image-placeholder'>
             {inView && (
               <>
                 {isEmpty(images) ? (
