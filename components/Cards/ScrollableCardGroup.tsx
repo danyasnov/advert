@@ -18,7 +18,7 @@ export interface ScrollableCardGroupInterface {
   enableFourthColumnForM?: boolean
   enableFiveColumnsForL?: boolean
   enableTwoColumnsForS?: boolean
-  enableFourColumnsForS?: boolean
+  enableThreeColumnsForS?: boolean
   disableVipWidth?: boolean
   fetchProducts?: () => void
   renderFooter?: (product: AdvertiseListItemModel) => any
@@ -33,7 +33,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
   disableScroll,
   enableFourthColumnForM,
   enableTwoColumnsForS,
-  enableFourColumnsForS,
+  enableThreeColumnsForS,
   enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
@@ -47,7 +47,7 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
         enableFourthColumnForM={enableFourthColumnForM}
         enableFiveColumnsForL={enableFiveColumnsForL}
         enableTwoColumnsForS={enableTwoColumnsForS}
-        enableFourColumnsForS={enableFourColumnsForS}
+        enableThreeColumnsForS={enableThreeColumnsForS}
         show
       />
     )
@@ -74,14 +74,14 @@ const ScrollableCardGroup: FC<ScrollableCardGroupInterface> = ({
             enableFourthColumnForM={enableFourthColumnForM}
             enableFiveColumnsForL={enableFiveColumnsForL}
             enableTwoColumnsForS={enableTwoColumnsForS}
-            enableFourColumnsForS={enableFourColumnsForS}
+            enableThreeColumnsForS={enableThreeColumnsForS}
             show
           />
         }>
         <div
           className={`grid grid-cols-2 xs:grid-cols-3 m:gap-y-6 gap-2 s:gap-4 l:gap-4 mb-2 s:mb-4 ${
             enableTwoColumnsForS ? 's:grid-cols-2' : ''
-          } ${enableFourColumnsForS ? 's:grid-cols-4' : ''} ${
+          } ${enableThreeColumnsForS ? 's:grid-cols-3' : ''} ${
             enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'
           } ${enableFiveColumnsForL ? 'l:grid-cols-5' : 'l:grid-cols-4'}`}>
           {products.map((p) => (

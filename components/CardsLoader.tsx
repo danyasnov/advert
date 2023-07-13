@@ -5,7 +5,7 @@ interface Props {
   enableFourthColumnForM: boolean
   enableFiveColumnsForL: boolean
   enableTwoColumnsForS: boolean
-  enableFourColumnsForS: boolean
+  enableThreeColumnsForS: boolean
   show: boolean
 }
 const CardsLoader: FC<Props> = ({
@@ -13,7 +13,7 @@ const CardsLoader: FC<Props> = ({
   show,
   enableFiveColumnsForL,
   enableTwoColumnsForS,
-  enableFourColumnsForS,
+  enableThreeColumnsForS,
 }) => {
   if (!show) return null
 
@@ -23,7 +23,7 @@ const CardsLoader: FC<Props> = ({
         enableFourthColumnForM ? 'm:grid-cols-4' : 'm:grid-cols-3'
       } ${enableFiveColumnsForL ? 'l:grid-cols-5' : 'l:grid-cols-4'} ${
         enableTwoColumnsForS ? 's:grid-cols-2' : ''
-      } ${enableFourColumnsForS ? 's:grid-cols-4' : ''}`}>
+      } ${enableThreeColumnsForS ? 's:grid-cols-3' : ''}`}>
       {Array(8)
         .fill(0)
         .map((_, index) => (
