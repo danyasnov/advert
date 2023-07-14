@@ -49,7 +49,7 @@ const SearchAutocomplete: FC<Props> = observer(
       } else {
         setPlaceholder(t('SEARCH'))
       }
-    }, [searchRadius])
+    }, [cookies.address, cookies.searchBy, searchRadius])
     const onInputValueChange = useCallback(
       debounce(({inputValue}) => {
         handleSelectedItemChange(inputValue)
