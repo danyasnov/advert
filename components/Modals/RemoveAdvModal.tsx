@@ -14,7 +14,6 @@ interface Props {
 
 const RemoveAdvModal: FC<Props> = ({isOpen, onClose, onRemove}) => {
   const {t} = useTranslation()
-  document.body.style.overflow = 'auto'
 
   return (
     <ReactModal
