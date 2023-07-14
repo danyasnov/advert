@@ -93,6 +93,25 @@ const UserSidebar: FC = observer(() => {
             </LogoutButton>
           </>
         )}
+        {!isCurrentUser && (
+          <>
+            <Button
+              className={`hidden s:block ${
+                activeUserPage === 'adverts' ||
+                (width >= 768 && activeUserPage === null)
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}
+              onClick={() => {
+                robustShallowUpdateQuery(router, {page: 'adverts'})
+              }}>
+              <div className='flex space-x-4 items-center'>
+                <IcAds className='w-7 h-7 fill-current' />
+                <span className='text-body-14 s:text-body-16'>{t('ADS')}</span>
+              </div>
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )
