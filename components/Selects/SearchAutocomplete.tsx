@@ -28,13 +28,18 @@ const SearchAutocomplete: FC<Props> = observer(
     const [inputItems, setInputItems] = useState([])
     const router = useRouter()
     const [placeholder, setPlaceholder] = useState('')
+    const cookies: SerializedCookiesState = parseCookies()
+    const [searchRadius, setSearchRadius] = useState(cookies.searchRadius)
     useEffect(() => {
-      const cookies: SerializedCookiesState = parseCookies()
-      const radius = `, ${cookies.searchRadius}${t('N_KM')}`
+      setSearchRadius(cookies.searchRadius)
+    }, [cookies.searchRadius])
+
+    useEffect(() => {
+      const radius = `, ${searchRadius}${t('N_KM')}`
       if (
         cookies.cookieAccepted === 'true' &&
         cookies.address !== 'undefined' &&
-        cookies.searchRadius !== 'undefined'
+        searchRadius !== 'undefined'
       ) {
         setPlaceholder(
           `${t('SEARCH_IN')} ${cookies.address}${
@@ -44,7 +49,7 @@ const SearchAutocomplete: FC<Props> = observer(
       } else {
         setPlaceholder(t('SEARCH'))
       }
-    }, [])
+    }, [searchRadius])
     const onInputValueChange = useCallback(
       debounce(({inputValue}) => {
         handleSelectedItemChange(inputValue)
