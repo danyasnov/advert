@@ -19,7 +19,7 @@ const UserTabWrapper: FC<Props> = ({
   disableScroll,
   enableFourthColumnForM,
   enableTwoColumnsForS,
-  enableFourColumnsForS,
+  enableThreeColumnsForS,
   enableFiveColumnsForL,
   disableVipWidth,
   limit = PAGE_LIMIT,
@@ -130,7 +130,7 @@ const UserTabWrapper: FC<Props> = ({
       enableFourthColumnForM={enableFourthColumnForM}
       enableTwoColumnsForS={enableTwoColumnsForS}
       enableFiveColumnsForL={enableFiveColumnsForL}
-      enableFourColumnsForS={enableFourColumnsForS}
+      enableThreeColumnsForS={enableThreeColumnsForS}
       disableVipWidth={disableVipWidth}
       limit={limit}
       fetchProducts={fetchProducts}
