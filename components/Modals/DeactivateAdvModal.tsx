@@ -30,7 +30,6 @@ const DeactivateAdvModal: FC<Props> = ({
   price,
 }) => {
   const {t} = useTranslation()
-  useLockBodyScroll()
   const [selectedValue, setSelectedValue] = useState()
 
   const handleRadioChange = (value) => {
