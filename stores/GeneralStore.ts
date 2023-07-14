@@ -48,6 +48,7 @@ export type PagesType =
   | 'chat'
   | 'subscribers'
   | 'discount_program'
+  | 'user_navigation'
 
 export class GeneralStore implements IGeneralStore {
   root

@@ -11,9 +11,9 @@ const SubscribersSubscriptionsButton: FC = () => {
   const router = useRouter()
 
   return (
-    <div className='flex justify-between mb-8 w-full'>
+    <div className='flex s:space-x-4 m:space-x-0 justify-between mb-8 s:mb-0 m:mb-8 w-full'>
       <Button
-        className='flex s:flex-col s:text-center group w-1/2 justify-center'
+        className='flex m:flex-col m:text-center group w-1/2 justify-center'
         onClick={() => {
           robustShallowUpdateQuery(router, {page: 'subscribers', activeTab: 1})
         }}>
@@ -26,7 +26,7 @@ const SubscribersSubscriptionsButton: FC = () => {
       </Button>
 
       <Button
-        className='flex s:flex-col s:text-center group w-1/2 justify-center whitespace-pre'
+        className='flex m:flex-col m:text-center group w-1/2 justify-center whitespace-pre'
         onClick={() => {
           robustShallowUpdateQuery(router, {page: 'subscribers', activeTab: 2})
         }}>

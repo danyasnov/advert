@@ -43,7 +43,9 @@ const UserDesktop: FC<Props> = observer(({isCurrentUser}) => {
                 </div>
               )}
 
-              {(activeUserPage === 'adverts' || !activeUserPage) && (
+              {(activeUserPage === 'adverts' ||
+                !activeUserPage ||
+                activeUserPage === 'user_navigation') && (
                 <div>
                   <SectionTitle
                     title={t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}

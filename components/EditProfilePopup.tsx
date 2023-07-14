@@ -37,11 +37,13 @@ const EditProfilePopup: FC = observer(() => {
     <div>
       <div id='edit-profile' className='bg-white w-full'>
         <Button
-          className='hover:text-primary-500 text-greyscale-500'
+          className='hover:text-primary-500 text-greyscale-500 s:text-greyscale-900 m:text-greyscale-500'
           onClick={() => setShow(true)}>
           <div className='flex justify-center items-center space-x-2'>
             <Edit filled size={16} />
-            <span className='text-body-14'>{t('EDIT_PROFILE_SETTINGS')}</span>
+            <span className='text-body-14 s:hidden m:block'>
+              {t('EDIT_PROFILE_SETTINGS')}
+            </span>
           </div>
         </Button>
       </div>

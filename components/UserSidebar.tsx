@@ -29,7 +29,7 @@ const UserSidebar: FC = observer(() => {
             <Button
               className={`${
                 activeUserPage === 'adverts' ||
-                (width >= 768 && activeUserPage === null)
+                (width >= 768 && activeUserPage === 'user_navigation')
                   ? 'text-primary-500'
                   : 'text-greyscale-900'
               } space-x-4`}
