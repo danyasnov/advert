@@ -8,6 +8,7 @@ import ChangeContactModal from './ChangeContactModal'
 import RequestNotificationModal from './RequestNotificationModal'
 import LoginModal from './LoginModal'
 import PhoneModal from './PhoneModal'
+import useDisableBodyScroll from '../../hooks/useDisableBodyScroll'
 
 export const MODAL_TYPES = {
   REMOVE_ADV: 'REMOVE_ADV',
@@ -33,7 +34,7 @@ const Modals: FC = observer(() => {
   const hideModal = () => {
     setModal(null, {})
   }
-  useLockBodyScroll(!!ModalComponent)
+  useDisableBodyScroll(!!ModalComponent)
 
   if (!ModalComponent) return null
 
