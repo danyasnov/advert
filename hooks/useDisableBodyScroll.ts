@@ -1,15 +1,17 @@
 import {useEffect} from 'react'
 
-const useDisableBodyScroll = (open: boolean): void => {
+const useDisableBodyScroll = (lock: boolean): void => {
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
+    setTimeout(() => {
+      if (lock) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = 'unset'
+      }
+    })
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [open])
+  }, [lock])
 }
 export default useDisableBodyScroll
