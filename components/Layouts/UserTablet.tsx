@@ -43,13 +43,13 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                 activeUserPage === 'user_navigation') && <UserProfileTablet />}
 
               {isCurrentUser && activeUserPage === 'user_navigation' && (
-                <div className='rounded-2xl justify-between bg-white shadow-1 py-6 px-7 space-y-9 my-10'>
+                <div className='rounded-2xl justify-between bg-white shadow-1 py-6 space-y-9 my-10'>
                   <Button
-                    className='hover:text-primary-500 text-greyscale-900'
+                    className='w-full hover:text-primary-500 text-greyscale-900'
                     onClick={() => {
                       robustShallowUpdateQuery(router, {page: 'adverts'})
                     }}>
-                    <div className='w-[640px] flex items-center justify-between'>
+                    <div className='flex justify-between px-7 w-full'>
                       <div className='flex items-center space-x-4'>
                         <IcAds className='w-7 h-7 fill-current' />
                         <span className='text-body-14 s:text-body-16'>
@@ -63,13 +63,13 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                   </Button>
 
                   <Button
-                    className='hover:text-primary-500 text-greyscale-900 space-x-4'
+                    className='w-full hover:text-primary-500 text-greyscale-900 space-x-4'
                     onClick={() => {
                       robustShallowUpdateQuery(router, {
                         page: 'discount_program',
                       })
                     }}>
-                    <div className='w-[640px] flex items-center justify-between'>
+                    <div className='flex justify-between px-7 w-full'>
                       <div className='flex items-center space-x-4'>
                         <Discount filled size={28} />
                         <span className='text-body-14 s:text-body-16'>
@@ -86,8 +86,8 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                       onClick={() => {
                         robustShallowUpdateQuery(router, {page: 'drafts'})
                       }}
-                      className='hover:text-primary-500 text-greyscale-900 space-x-4'>
-                      <div className='w-[640px] flex items-center justify-between'>
+                      className='w-full hover:text-primary-500 text-greyscale-900 space-x-4'>
+                      <div className='flex justify-between px-7 w-full'>
                         <div className='flex items-center space-x-4'>
                           <IcCreate className='fill-current h-7 w-7' />
                           <span className='text-body-14 s:text-body-16'>
@@ -104,8 +104,8 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                     onClick={() => {
                       robustShallowUpdateQuery(router, {page: 'favorites'})
                     }}
-                    className='hover:text-primary-500 text-greyscale-900 space-x-4'>
-                    <div className='w-[640px] flex items-center justify-between'>
+                    className='w-full hover:text-primary-500 text-greyscale-900 space-x-4'>
+                    <div className='flex justify-between px-7 w-full'>
                       <div className='flex items-center space-x-4'>
                         <Heart2 filled size={28} />
                         <span className='text-body-14 s:text-body-16'>
@@ -117,7 +117,7 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                       </div>
                     </div>
                   </Button>
-                  <LogoutButton className='text-greyscale-500 space-x-4'>
+                  <LogoutButton className='text-greyscale-500 space-x-4 px-7'>
                     <>
                       <Logout filled size={28} />
                       <span className='text-body-14 s:text-body-16'>
