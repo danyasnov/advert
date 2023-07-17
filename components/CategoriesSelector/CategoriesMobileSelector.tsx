@@ -46,6 +46,9 @@ const CategoriesMobileSelector: FC = observer(() => {
             {t('BACK')}
           </Button>
           <LinkWrapper
+            handleClick={() => {
+              onLinkClick()
+            }}
             title={t('SHOW_ALL_ADVERTS')}
             href={`/${locationCodes}/${getSlugs(history)}`}
             className='text-brand-b1 categories-selector-item py-3'>
