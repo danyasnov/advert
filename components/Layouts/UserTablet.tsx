@@ -62,25 +62,25 @@ const UserTablet: FC<Props> = observer(({isCurrentUser}) => {
                     </div>
                   </Button>
 
-                  <Button
-                    className='w-full hover:text-primary-500 text-greyscale-900 space-x-4'
-                    onClick={() => {
-                      robustShallowUpdateQuery(router, {
-                        page: 'discount_program',
-                      })
-                    }}>
-                    <div className='flex justify-between px-7 w-full'>
-                      <div className='flex items-center space-x-4'>
-                        <Discount filled size={28} />
-                        <span className='text-body-14 s:text-body-16'>
-                          {t('DISCOUNT_PROGRAM')}
-                        </span>
-                      </div>
-                      <div className='flex'>
-                        <ChevronRight set='light' size={24} />
-                      </div>
-                    </div>
-                  </Button>
+                  {/* <Button */}
+                  {/*  className='w-full hover:text-primary-500 text-greyscale-900 space-x-4' */}
+                  {/*  onClick={() => { */}
+                  {/*    robustShallowUpdateQuery(router, { */}
+                  {/*      page: 'discount_program', */}
+                  {/*    }) */}
+                  {/*  }}> */}
+                  {/*  <div className='flex justify-between px-7 w-full'> */}
+                  {/*    <div className='flex items-center space-x-4'> */}
+                  {/*      <Discount filled size={28} /> */}
+                  {/*      <span className='text-body-14 s:text-body-16'> */}
+                  {/*        {t('DISCOUNT_PROGRAM')} */}
+                  {/*      </span> */}
+                  {/*    </div> */}
+                  {/*    <div className='flex'> */}
+                  {/*      <ChevronRight set='light' size={24} /> */}
+                  {/*    </div> */}
+                  {/*  </div> */}
+                  {/* </Button> */}
                   <div id='drafts-tour' className='rounded-2xl'>
                     <Button
                       onClick={() => {

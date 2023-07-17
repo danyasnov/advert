@@ -41,20 +41,20 @@ const UserSidebar: FC = observer(() => {
                 {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
               </span>
             </Button>
-            <Button
-              className={`${
-                activeUserPage === 'discount_program'
-                  ? 'text-primary-500'
-                  : 'text-greyscale-900'
-              } space-x-4`}
-              onClick={() => {
-                robustShallowUpdateQuery(router, {page: 'discount_program'})
-              }}>
-              <Discount filled size={28} />
-              <span className='text-body-14 s:text-body-16'>
-                {t('DISCOUNT_PROGRAM')}
-              </span>
-            </Button>
+            {/* <Button */}
+            {/*  className={`${ */}
+            {/*    activeUserPage === 'discount_program' */}
+            {/*      ? 'text-primary-500' */}
+            {/*      : 'text-greyscale-900' */}
+            {/*  } space-x-4`} */}
+            {/*  onClick={() => { */}
+            {/*    robustShallowUpdateQuery(router, {page: 'discount_program'}) */}
+            {/*  }}> */}
+            {/*  <Discount filled size={28} /> */}
+            {/*  <span className='text-body-14 s:text-body-16'> */}
+            {/*    {t('DISCOUNT_PROGRAM')} */}
+            {/*  </span> */}
+            {/* </Button> */}
             <div id='drafts-tour' className='rounded-2xl'>
               <Button
                 onClick={() => {
