@@ -12,10 +12,17 @@ interface Props {
   category: CACategoryModel
   href?: string
   onClick?: () => void
+  onLinkClick?: () => void
   isActive?: boolean
 }
 
-const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
+const CategoryItem: FC<Props> = ({
+  category,
+  href,
+  isActive,
+  onClick,
+  onLinkClick,
+}) => {
   const {id, name, icon} = category
   const url = icon?.icon?.url
   const className = `${
@@ -52,6 +59,7 @@ const CategoryItem: FC<Props> = ({category, href, isActive, onClick}) => {
       href={href}
       preventDefault={width <= 768 ? false : isMobile && !isActive}
       handleClick={() => {
+        if (onLinkClick) onLinkClick()
         handleMetrics('clickCategory', {categoryId: id})
       }}>
       {elBody}
