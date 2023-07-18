@@ -20,7 +20,7 @@ const FullHeightSliderButton: FC<Props> = ({
   return (
     <Button
       onClick={onClick}
-      className={`w-16 h-full text-primary-500 overflow-hidden ${
+      className={`h-full text-primary-500 overflow-hidden flex-shrink-0 ${
         direction === 'left' ? 'rounded-l-xl' : 'rounded-r-xl'
       } ${className || ''}`}>
       {direction === 'left' ? (

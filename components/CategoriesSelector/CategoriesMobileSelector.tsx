@@ -7,7 +7,10 @@ import {isEmpty, last} from 'lodash'
 import CategoryItem from './CategoryItem'
 import {getLocationCodes} from '../../helpers'
 import Button from '../Buttons/Button'
-import {useCategoriesStore} from '../../providers/RootStoreProvider'
+import {
+  useCategoriesStore,
+  useGeneralStore,
+} from '../../providers/RootStoreProvider'
 import LinkWrapper from '../Buttons/LinkWrapper'
 
 const getSlugs = (categories: CACategoryModel[]): string => {
@@ -17,9 +20,13 @@ const CategoriesMobileSelector: FC = observer(() => {
   const {categoriesWithoutAll} = useCategoriesStore()
   const {t} = useTranslation()
   const [history, setHistory] = useState<CACategoryModel[]>([])
+  const {setShowOnlyHeader} = useGeneralStore()
 
   const locationCodes = getLocationCodes()
 
+  const onLinkClick = () => {
+    setShowOnlyHeader(false)
+  }
   return (
     <div className='absolute top-[200px] inset-x-0 z-10 bg-white divide-y divide-shadow-b border-t flex flex-col items-start min-h-[95vh]'>
       {isEmpty(history) &&
@@ -39,6 +46,9 @@ const CategoriesMobileSelector: FC = observer(() => {
             {t('BACK')}
           </Button>
           <LinkWrapper
+            handleClick={() => {
+              onLinkClick()
+            }}
             title={t('SHOW_ALL_ADVERTS')}
             href={`/${locationCodes}/${getSlugs(history)}`}
             className='text-brand-b1 categories-selector-item py-3'>
@@ -50,7 +60,12 @@ const CategoriesMobileSelector: FC = observer(() => {
               category={value}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...(isEmpty(value.items)
-                ? {href: `/${locationCodes}/${getSlugs(history)}/${value.slug}`}
+                ? {
+                    href: `/${locationCodes}/${getSlugs(history)}/${
+                      value.slug
+                    }`,
+                    onLinkClick,
+                  }
                 : {
                     onClick: () => setHistory([...history, value]),
                   })}>

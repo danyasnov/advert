@@ -29,7 +29,7 @@ const UserSidebar: FC = observer(() => {
             <Button
               className={`${
                 activeUserPage === 'adverts' ||
-                (width >= 768 && activeUserPage === null)
+                (width >= 768 && activeUserPage === 'user_navigation')
                   ? 'text-primary-500'
                   : 'text-greyscale-900'
               } space-x-4`}
@@ -41,20 +41,20 @@ const UserSidebar: FC = observer(() => {
                 {t(isCurrentUser ? 'MY_ADVERTISIMENT' : 'ADS')}
               </span>
             </Button>
-            <Button
-              className={`${
-                activeUserPage === 'discount_program'
-                  ? 'text-primary-500'
-                  : 'text-greyscale-900'
-              } space-x-4`}
-              onClick={() => {
-                robustShallowUpdateQuery(router, {page: 'discount_program'})
-              }}>
-              <Discount filled size={28} />
-              <span className='text-body-14 s:text-body-16'>
-                {t('DISCOUNT_PROGRAM')}
-              </span>
-            </Button>
+            {/* <Button */}
+            {/*  className={`${ */}
+            {/*    activeUserPage === 'discount_program' */}
+            {/*      ? 'text-primary-500' */}
+            {/*      : 'text-greyscale-900' */}
+            {/*  } space-x-4`} */}
+            {/*  onClick={() => { */}
+            {/*    robustShallowUpdateQuery(router, {page: 'discount_program'}) */}
+            {/*  }}> */}
+            {/*  <Discount filled size={28} /> */}
+            {/*  <span className='text-body-14 s:text-body-16'> */}
+            {/*    {t('DISCOUNT_PROGRAM')} */}
+            {/*  </span> */}
+            {/* </Button> */}
             <div id='drafts-tour' className='rounded-2xl'>
               <Button
                 onClick={() => {
@@ -91,6 +91,25 @@ const UserSidebar: FC = observer(() => {
                 <span className='text-body-14 s:text-body-16'>{t('EXIT')}</span>
               </>
             </LogoutButton>
+          </>
+        )}
+        {!isCurrentUser && (
+          <>
+            <Button
+              className={`hidden s:block ${
+                activeUserPage === 'adverts' ||
+                (width >= 768 && activeUserPage === null)
+                  ? 'text-primary-500'
+                  : 'text-greyscale-900'
+              } space-x-4`}
+              onClick={() => {
+                robustShallowUpdateQuery(router, {page: 'adverts'})
+              }}>
+              <div className='flex space-x-4 items-center'>
+                <IcAds className='w-7 h-7 fill-current' />
+                <span className='text-body-14 s:text-body-16'>{t('ADS')}</span>
+              </div>
+            </Button>
           </>
         )}
       </div>

@@ -61,7 +61,7 @@ const UserDrafts: FC = observer(() => {
         page={drafts.page}
         count={drafts.count}
         state={drafts.state}
-        enableTwoColumnsForS
+        enableThreeColumnsForS
         disableVipWidth
         limit={drafts.limit}
         fetchProducts={() => {

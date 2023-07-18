@@ -54,15 +54,17 @@ const SharePopup: FC<Props> = ({userHash, productHash, size = 16}) => {
           }
         }}
         className={`${
-          show ? 'text-primary-500' : 'text-greyscale-500'
+          show
+            ? 'text-primary-500'
+            : 'text-greyscale-500 s:text-greyscale-900 m:text-greyscale-500'
         } space-x-2 hover:text-primary-500
         `}>
         <Upload size={size} filled />
-        <span className='text-body-14'>
+        <span className='text-body-14 s:hidden m:block'>
           {t(loading ? 'LOADING_LO' : 'SHARE')}
         </span>
       </Button>
-      <div className='absolute w-[280px] s:w-[224px] m:w-[280px] top-12 left-1/2 right-1/2 -translate-x-1/2 z-20'>
+      <div className='absolute w-[280px] s:w-[224px] m:w-[280px] top-12 left-1/2 right-1/2 s:bottom-0 s:-left-20 s:top-8 m:top-12 m:left-1/2 m:right-1/2 -translate-x-1/2 z-20'>
         {show && link && (
           <div
             className='flex flex-col bg-white shadow-popup rounded-2xl py-4 px-6'
