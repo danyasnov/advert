@@ -2,14 +2,16 @@ import {FC} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'next-i18next'
 import {ArrowDown, ArrowUp} from 'react-iconly'
-import {useProductsStore} from '../providers/RootStoreProvider'
+import {useGeneralStore, useProductsStore} from '../providers/RootStoreProvider'
 import {getDigitsFromString} from '../utils'
 
 const ProductPrice: FC = observer(() => {
   const {product} = useProductsStore()
-  const {advert} = product
-  const {oldPrice, discount, price, isVip} = advert
+  const {advert, owner} = product
+  const {userHash} = useGeneralStore()
+  const {oldPrice, discount, price, isVip, state} = advert
   const isFree = price === '0'
+  const isSold = state === 'sold'
   const {t} = useTranslation()
   let showOldPrice = false
   let formattedOldPrice = ''
@@ -24,18 +26,22 @@ const ProductPrice: FC = observer(() => {
       formattedOldPrice = oldPrice.slice(0, -2)
     }
   }
+  const isCurrentUser = userHash === owner?.hash
   return (
     <div className='flex flex-col'>
       <span className='text-body-18 font-bold text-greyscale-900 mb-2 break-words'>
         {advert.title}
       </span>
       <div className='flex s:flex-col m:flex-row'>
-        <span
-          className='text-primary-500 text-h-3 font-bold'
-          data-test-id='price'>
-          {isFree ? t('FREE') : advert.price}
-        </span>
-        {(showOldPrice || (isVip && discount)) && (
+        {!(isSold && !isCurrentUser) && (
+          <span
+            className='text-primary-500 text-h-3 font-bold'
+            data-test-id='price'>
+            {isFree ? t('FREE') : advert.price}
+          </span>
+        )}
+
+        {(showOldPrice || (isVip && discount)) && !(isSold && !isCurrentUser) && (
           <div className='flex items-center ml-4 s:ml-0 m:ml-4'>
             <span className='text-h-4 text-greyscale-600 line-through '>
               {formattedOldPrice}
