@@ -70,14 +70,12 @@ const UserAdverts: FC = observer(() => {
 
   let getAdvertOptions
   if (isCurrentUser) {
-    getAdvertOptions = ({
-      hash,
-      state,
-      showRefreshButton,
-      title,
-      images,
-      price,
-    }) => {
+    getAdvertOptions = ({hash, state, showRefreshButton, title, images}) => {
+      const currentAdIndex = userSale.items.findIndex(
+        (item) => item.hash === hash,
+      )
+      const price =
+        currentAdIndex !== -1 ? userSale.items[currentAdIndex].price : ''
       const remove = {
         title: 'REMOVE',
         icon: <Delete size={16} filled />,
