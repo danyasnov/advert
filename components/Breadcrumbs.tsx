@@ -17,14 +17,15 @@ import {SerializedCookiesState} from '../types'
 const Breadcrumbs: FC<{brandLabel?: string; modelLabel?: string}> = observer(
   ({brandLabel, modelLabel}) => {
     const [location, setLocation] = useState('')
+    const cookies: SerializedCookiesState = parseCookies()
+
     useEffect(() => {
-      const cookies: SerializedCookiesState = parseCookies()
       if (cookies.cookieAccepted === 'true') {
         setLocation(`: ${cookies.address}`)
       } else {
         setLocation('')
       }
-    }, [])
+    }, [cookies.address])
     const {query} = useRouter()
     const {categories} = useCategoriesStore()
     const {setFilter, filter, aggregatedFields, fetchProducts, applyFilter} =
