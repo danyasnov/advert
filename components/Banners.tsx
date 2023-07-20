@@ -181,7 +181,6 @@ const Banners: FC = observer(() => {
     imgSize = `l`
     imgWidth = 440
   }
-  // const is4k = width >= 2560
   return (
     <div className='overflow-hidden mb-8' ref={viewportRef}>
       <div className='flex shrink-0'>
