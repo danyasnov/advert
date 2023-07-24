@@ -92,16 +92,19 @@ const DeactivateAdvModal: FC<Props> = ({
             <span className='text-body-16 text-greyscale-900 font-semibold'>
               {t('CHOOSE_REASON')}
             </span>
-            <RadioButtons
-              options={[
-                {title: t('SOLD_IN_VOOXEE'), value: 'soldAdverto'},
-                {title: t('SOLD_IN_ANOTHER_SERVICE'), value: 'soldOther'},
-                {title: t('CHANGE_MIND_TO_SELL'), value: 'changedMind'},
-              ]}
-              value={selectedValue}
-              name='soldOptions'
-              onChange={handleRadioChange}
-            />
+            <div className='font-medium'>
+              <RadioButtons
+                options={[
+                  {title: t('SOLD_IN_VOOXEE'), value: 'soldAdverto'},
+                  {title: t('SOLD_IN_ANOTHER_SERVICE'), value: 'soldOther'},
+                  {title: t('CHANGE_MIND_TO_SELL'), value: 'changedMind'},
+                ]}
+                value={selectedValue}
+                name='soldOptions'
+                onChange={handleRadioChange}
+              />
+            </div>
+
             <div className='flex justify-between space-x-2'>
               <SecondaryButton
                 className='w-full'
