@@ -1752,6 +1752,7 @@
   "SELECT_MESSAGES": "Обрати повідомлення",
   "SHOW_ALL_FILTERS": "Показати усі фільтри",
   "SHOW_CARS": "Показати машини",
+  "SHOW_CARS_COUNT": "Show {{count}} cars",
   "SHOW_NUMBER": "Показати номер телефону",
   "SHOW_REAL_ESTATE": "Показати нерухомість",
   "SIGN_UP": "Увійти",

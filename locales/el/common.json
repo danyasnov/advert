@@ -1752,6 +1752,7 @@
   "SELECT_MESSAGES": "Επιλέξτε μηνύματα",
   "SHOW_ALL_FILTERS": "Εμφάνιση όλων των φίλτρων",
   "SHOW_CARS": "Show cars",
+  "SHOW_CARS_COUNT": "Show {{count}} cars",
   "SHOW_NUMBER": "Εμφάνιση αριθμού τηλεφώνου",
   "SHOW_REAL_ESTATE": "Show real estate",
   "SIGN_UP": "Εγγραφή",

@@ -1752,6 +1752,7 @@
   "SELECT_MESSAGES": "Выбрать сообщения",
   "SHOW_ALL_FILTERS": "Показать все фильтры",
   "SHOW_CARS": "Показать машины",
+  "SHOW_CARS_COUNT": "Show {{count}} cars",
   "SHOW_NUMBER": "Показать номер телефона",
   "SHOW_REAL_ESTATE": "Показать недвижимость",
   "SIGN_UP": "Войти",
