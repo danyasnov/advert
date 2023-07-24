@@ -181,11 +181,10 @@ const Banners: FC = observer(() => {
     imgSize = `l`
     imgWidth = 440
   }
-  const is4k = width >= 2560
   return (
-    <div className='overflow-hidden mb-8' ref={is4k ? null : viewportRef}>
-      <div className={`flex shrink-0 ${is4k ? 'justify-center' : ''}`}>
-        {[...banners, ...(is4k ? [] : banners)].map((c, index) => (
+    <div className='overflow-hidden mb-8' ref={viewportRef}>
+      <div className='flex shrink-0'>
+        {[...banners].map((c, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div className='ml-4' key={`${c.id}-${imgSize}-${imgWidth}-${index}`}>
             <Button
