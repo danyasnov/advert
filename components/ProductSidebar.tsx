@@ -17,7 +17,7 @@ const ProductSidebar: FC = observer(() => {
   const {userHash} = useGeneralStore()
 
   return (
-    <div className='mt-11 flex flex-col sticky top-2'>
+    <div className='mt-11 flex flex-col sticky top-2 pb-25'>
       <ProductPrice />
       <div className='flex items-center space-x-2 text-greyscale-400 mt-4 mb-8'>
         <Location size={18} filled />
