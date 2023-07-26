@@ -27,6 +27,7 @@ import ProductMenu from '../ProductMenu'
 import Button from '../Buttons/Button'
 import EmptyProductImage from '../EmptyProductImage'
 import {getDigitsFromString} from '../../utils'
+import {useGeneralStore} from '../../providers/RootStoreProvider'
 
 interface Props {
   product: AdvertiseListItemModel
@@ -65,6 +66,7 @@ const Card: FC<Props> = ({
   const [images] = useState(
     imagesCount > 4 ? product.images.slice(0, 4) : product.images,
   )
+  const {userHash} = useGeneralStore()
 
   const [hideConnect, setHideConnect] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -122,6 +124,9 @@ const Card: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
   const isFree = price === '0'
+  const isSold = state === 'sold'
+  const isCurrentUser = userHash === owner?.hash
+
   let widthClassname = 'w-full min-w-40'
   if (isVip && !disableVipWidth) {
     widthClassname = 'w-full s:w-[464px] m:w-[404px] l:w-[440px]'
@@ -272,29 +277,35 @@ const Card: FC<Props> = ({
         <div className='px-4 py-3 flex flex-col bg-white rounded-b-xl flex-1 justify-between'>
           <div className='flex flex-col pb-3'>
             <div>
-              <span className='text-body-16 text-greyscale-900 font-semibold'>
-                {isFree ? t('FREE') : price}
-              </span>
-              {(showOldPrice || (isVip && discount)) && (
-                <>
-                  <span
-                    className={`text-body-14 text-greyscale-600 line-through ${
-                      isVip ? 'ml-3' : 'ml-1'
-                    }`}>
-                    {isVip ? oldPrice : oldPrice.slice(0, oldPrice.length - 2)}
-                  </span>
-                  <span
-                    className={`${
-                      discount?.isPriceDown ? 'text-green' : 'text-error'
-                    }`}>
-                    {discount?.isPriceDown ? (
-                      <ArrowDown size={16} style={{display: 'inline'}} />
-                    ) : (
-                      <ArrowUp size={16} style={{display: 'inline'}} />
-                    )}
-                  </span>
-                </>
+              {!(isSold && !isCurrentUser) && (
+                <span className='text-body-16 text-greyscale-900 font-semibold'>
+                  {isFree ? t('FREE') : price}
+                </span>
               )}
+
+              {(showOldPrice || (isVip && discount)) &&
+                !(isSold && !isCurrentUser) && (
+                  <>
+                    <span
+                      className={`text-body-14 text-greyscale-600 line-through ${
+                        isVip ? 'ml-3' : 'ml-1'
+                      }`}>
+                      {isVip
+                        ? oldPrice
+                        : oldPrice.slice(0, oldPrice.length - 2)}
+                    </span>
+                    <span
+                      className={`${
+                        discount?.isPriceDown ? 'text-green' : 'text-error'
+                      }`}>
+                      {discount?.isPriceDown ? (
+                        <ArrowDown size={16} style={{display: 'inline'}} />
+                      ) : (
+                        <ArrowUp size={16} style={{display: 'inline'}} />
+                      )}
+                    </span>
+                  </>
+                )}
             </div>
             <div className='flex items-start'>
               <span className='text-body-14 text-greyscale-600 line-clamp-2 flex-1 break-words'>
