@@ -11,7 +11,6 @@ const UserFavorites: FC = observer(() => {
       page={userFavorite.page}
       count={userFavorite.count}
       state={userFavorite.state}
-      enableThreeColumnsForS
       disableVipWidth
       limit={userFavorite.limit}
       fetchProducts={() => {
