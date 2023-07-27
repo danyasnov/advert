@@ -29,7 +29,7 @@ const TransportMain: FC<FilterProps> = observer(({conditionOptions}) => {
           <LinkWrapper
             title={i.name}
             href={`${clearUrlFromQuery(router.asPath)}/${i.slug}`}
-            className='px-4 py-2 font-medium text-body-16'>
+            className='px-4 py-2 font-medium text-body-16 hover:bg-primary-100 hover:text-primary-500 w-fit rounded-full'>
             {i.name}
           </LinkWrapper>
         ))}
