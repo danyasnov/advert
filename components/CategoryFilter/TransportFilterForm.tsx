@@ -52,7 +52,7 @@ const TransportFilterForm: FC<FilterProps> = (props) => {
       {width >= 768 ? (
         <DesktopForm {...props} key='desktop' />
       ) : (
-        <GeneralFilterForm {...props} />
+        <GeneralFilterForm {...props} key='mobile' />
       )}
     </div>
   )

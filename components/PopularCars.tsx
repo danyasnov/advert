@@ -37,6 +37,10 @@ const popular = [
   {img: 'suzuki', path: '/vehicles-cars?brands-of-cars=Suzuki'},
   {img: 'toyota', path: '/vehicles-cars?brands-of-cars=Toyota'},
   {img: 'porsche', path: '/vehicles-cars?brands-of-cars=Porsche'},
+  {img: 'maserati', path: '/vehicles-cars?brands-of-cars=Maserati'},
+  {img: 'land_rover', path: '/vehicles-cars?brands-of-cars=Land Rover'},
+  {img: 'renault', path: '/vehicles-cars?brands-of-cars=Renault'},
+  {img: 'mitsubishi', path: '/vehicles-cars?brands-of-cars=Mitsubishi'},
 ]
 const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
   ({conditionOptions}) => {
