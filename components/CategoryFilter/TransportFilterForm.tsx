@@ -41,6 +41,7 @@ import LinkButton from '../Buttons/LinkButton'
 import {FilterProps} from '../../types'
 import FormikFilterCheckboxes from '../FormikComponents/FormikFilterCheckboxes'
 import AutoSortSelect from '../Selects/AutoSortSelect'
+import GeneralFilterForm from './GeneralFilterForm'
 
 const TransportFilterForm: FC<FilterProps> = (props) => {
   const {currentCategory, categoriesOptions, onChangeCategory} = props
@@ -51,7 +52,7 @@ const TransportFilterForm: FC<FilterProps> = (props) => {
       {width >= 768 ? (
         <DesktopForm {...props} key='desktop' />
       ) : (
-        <MobileForm {...props} key='mobile' />
+        <GeneralFilterForm {...props} />
       )}
     </div>
   )
