@@ -306,7 +306,7 @@ const FilterForm: FC = observer(() => {
   }
   let body
 
-  if (width <= 768) {
+  if (width < 768) {
     body = <GeneralFilterForm {...filterProps} />
   } else if (isTransport) {
     body = <TransportMain {...filterProps} />
