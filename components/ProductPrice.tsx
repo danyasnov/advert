@@ -32,7 +32,7 @@ const ProductPrice: FC = observer(() => {
       <span className='text-body-18 font-bold text-greyscale-900 mb-2 break-words'>
         {advert.title}
       </span>
-      <div className='flex s:flex-col m:flex-row'>
+      <div className='flex s:flex-col m:flex-row flex-wrap gap-x-4 s:gap-x-0 m:gap-x-4'>
         {!(isSold && !isCurrentUser) && (
           <span
             className='text-primary-500 text-h-3 font-bold'
@@ -42,7 +42,7 @@ const ProductPrice: FC = observer(() => {
         )}
 
         {(showOldPrice || (isVip && discount)) && !(isSold && !isCurrentUser) && (
-          <div className='flex items-center ml-4 s:ml-0 m:ml-4'>
+          <div className='flex items-center'>
             <span className='text-h-4 text-greyscale-600 line-through '>
               {formattedOldPrice}
             </span>
