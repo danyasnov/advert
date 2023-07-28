@@ -5,6 +5,7 @@ import {useRouter} from 'next/router'
 import {isEmpty, isEqual, omit} from 'lodash'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
+import {useWindowSize} from 'react-use'
 import FormikAutoSave from '../FormikAutoSave'
 import {SelectItem} from '../Selects/Select'
 import {
@@ -77,6 +78,7 @@ const FilterForm: FC = observer(() => {
     router.query.categories,
     categories,
   )
+  const {width} = useWindowSize()
   const conditionOptions = useMemo(
     () => [
       {
@@ -303,12 +305,13 @@ const FilterForm: FC = observer(() => {
     onReset,
   }
   let body
-  if (isTransport) {
+
+  if (width <= 768) {
+    body = <GeneralFilterForm {...filterProps} />
+  } else if (isTransport) {
     body = <TransportMain {...filterProps} />
   } else if (isTransportChild) {
     body = <TransportFilterForm {...filterProps} />
-  } else {
-    body = <GeneralFilterForm {...filterProps} />
   }
   return (
     <FormikProvider value={formik}>
