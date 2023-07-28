@@ -131,16 +131,10 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
                 }
               }
 
-              router.push(
-                {
-                  pathname: `${clearUrlFromQuery(router.asPath)}/vehicles-cars`,
-                  query,
-                },
-                undefined,
-                {
-                  shallow: true,
-                },
-              )
+              router.push({
+                pathname: `${clearUrlFromQuery(router.asPath)}/vehicles-cars`,
+                query,
+              })
             }}>
             {t('SHOW_CARS_COUNT', {count: newCount})}
           </PrimaryButton>
