@@ -68,6 +68,9 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
             options={conditionOptions}
           />
         </div>
+        <span className='text-body-18 text-greyscale-900 font-medium'>
+          {t('POPULAR_BRANDS')}
+        </span>
         <div className='flex items-center mb-6'>
           <FullHeightSliderButton
             size={20}

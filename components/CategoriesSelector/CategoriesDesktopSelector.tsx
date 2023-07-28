@@ -77,7 +77,9 @@ const CategoriesDesktopSelector: FC = observer(() => {
           <FirstColItem
             category={c}
             key={c.id}
-            href={`/${getLocationCodes()}/${c.slug}`}
+            href={`/${getLocationCodes()}/${c.slug}${
+              c.slug === 'vehicles' ? '?priceMax=100000&priceMin=1000' : ''
+            }`}
             isActive={activeCategory?.id === c.id}
             onMouseEnter={handleHoverFirstCol}
           />

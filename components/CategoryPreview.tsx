@@ -28,18 +28,18 @@ const CategoryPreview: FC<Props> = ({category}) => {
 
   const imageClassname =
     images.length === 2
-      ? 'm:w-[220px] m:h-[180px] l:w-[280px] l:h-[232px] '
-      : 'm:w-[224px] m:h-[178px] l:w-[290px] l:h-[230px]'
+      ? 's:w-[164px] s:h-[134px] m:w-[220px] m:h-[180px] l:w-[280px] l:h-[232px] '
+      : 's:w-[164px] s:h-[130px] m:w-[224px] m:h-[178px] l:w-[290px] l:h-[230px]'
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex justify-between items-center mb-6'>
+      <div className='flex justify-between items-baseline mb-6'>
         <span className='text-h-4 font-bold text-greyscale-900'>
           {category.name}
         </span>
         <LinkWrapper
           href={mainHref}
           title={category.name}
-          className='text-primary-500 font-bold text-body-16'>
+          className='text-primary-500 font-bold text-body-16 whitespace-nowrap'>
           {t('SEE_ALL')}
         </LinkWrapper>
       </div>

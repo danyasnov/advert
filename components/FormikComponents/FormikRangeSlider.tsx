@@ -41,6 +41,7 @@ const FormikRangeSlider: FC<FieldProps & Partial<IFormikRange>> = ({
         opacity: 1,
       }}
       handleRender={(el, renderProps) => {
+        const {index} = renderProps
         return (
           <div className='relative'>
             {el}
@@ -49,7 +50,7 @@ const FormikRangeSlider: FC<FieldProps & Partial<IFormikRange>> = ({
               style={{
                 left: `${parseInt(el.props.style.left as string, 10) - 2}%`,
               }}>
-              {t('FROM')} {renderProps.value}
+              {t(index === 0 ? 'FROM' : 'UP_TO')} {renderProps.value}
             </div>
           </div>
         )

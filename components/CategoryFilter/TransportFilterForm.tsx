@@ -354,20 +354,19 @@ const DesktopForm: FC<FilterProps> = observer(
               <Button
                 onClick={onReset}
                 className='text-greyscale-500 space-x-2 flex items-center'>
-                <span className='text-body-16 font-medium'>{t('CLEAR')}</span>
+                <span className='text-body-16 font-medium'>{t('CLEAN')}</span>
                 <IcClose className='w-2.5 h-2.5 fill-current' />
               </Button>
             )}
           </div>
-          {!isFilterApplied && (
-            <PrimaryButton
-              className='s:w-[272px] m:w-[240px] h-10'
-              onClick={() => {
-                applyFilter()
-              }}>
-              {t('SHOW_CARS_COUNT', {count: newCount})}
-            </PrimaryButton>
-          )}
+          <PrimaryButton
+            className='s:w-[272px] m:w-[240px] h-10'
+            onClick={() => {
+              if (isFilterApplied) return
+              applyFilter()
+            }}>
+            {t('SHOW_CARS_COUNT', {count: newCount})}
+          </PrimaryButton>
         </div>
       </div>
     )

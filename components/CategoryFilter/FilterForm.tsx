@@ -102,18 +102,19 @@ const FilterForm: FC = observer(() => {
 
   const getInitialValues = ({
     reset,
-    isTransportChild,
-  }: Partial<{reset: boolean; isTransportChild: boolean}>): Values => {
+    forceQuery,
+  }: Partial<{
+    reset: boolean
+    forceQuery: boolean
+  }>): Values => {
     const onlyDiscounted = reset
       ? false
       : router.query.onlyDiscounted === 'true'
-    const priceRange = isTransportChild
-      ? ['1000', '100000']
-      : [
-          '',
-          // eslint-disable-next-line no-nested-ternary
-          reset ? '' : router.query.priceMax === '0' ? '0' : '',
-        ]
+    const priceRange = [
+      '',
+      // eslint-disable-next-line no-nested-ternary
+      reset ? '' : router.query.priceMax === '0' ? '0' : '',
+    ]
     const defaultValues = {
       condition: conditionOptions[0],
       priceRange,
@@ -122,7 +123,9 @@ const FilterForm: FC = observer(() => {
       fields: {},
     }
 
-    if (reset || isEmpty(aggregatedFields)) return defaultValues
+    if ((reset || isEmpty(aggregatedFields)) && !forceQuery) {
+      return defaultValues
+    }
     const queryFilter = getFormikInitialFromQuery(
       router.query,
       aggregatedFields.reduce((acc, val) => ({...acc, [val.slug]: val}), {}),
@@ -154,7 +157,9 @@ const FilterForm: FC = observer(() => {
   const isTransport = categoryData?.id === 1
   const isTransportChild = categoryData?.id === 23
   const [initialValues, setInitialValue] = useState<Values>(
-    getInitialValues({isTransportChild}),
+    getInitialValues({
+      forceQuery: isTransport,
+    }),
   )
 
   const currentCategoriesOptions =

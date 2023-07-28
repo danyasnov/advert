@@ -35,7 +35,7 @@ const TransportMain: FC<FilterProps> = observer(({conditionOptions}) => {
         ))}
       </div>
       <PopularCars conditionOptions={conditionOptions} />
-      <div className='flex-col hidden m:flex space-y-12 mt-12'>
+      <div className='flex-col hidden s:flex space-y-12 mt-12'>
         <div className={previewClassname}>
           <CategoryPreview category={transportCategoriesById[27]} />
           <CategoryPreview category={transportCategoriesById[10077]} />
@@ -48,11 +48,20 @@ const TransportMain: FC<FilterProps> = observer(({conditionOptions}) => {
           <CategoryPreview category={transportCategoriesById[25]} />
         </div>
       </div>
-      <div className='mt-12'>
-        <TitleWithSeparator title={t('RECOMMENDATIONS_FOR_YOU')} />
+      <div className='mt-12 mb-6'>
+        <div className='flex justify-between items-center'>
+          <span className='text-h-4 font-bold text-greyscale-900'>
+            {t('RECOMMENDED_FOR_YOU')}
+          </span>
+          <LinkWrapper
+            className='text-primary-500 font-bold text-body-16'
+            title={t('SEE_ALL')}
+            href={`${clearUrlFromQuery(router.asPath)}/vehicles-cars`}>
+            {t('SEE_ALL')}
+          </LinkWrapper>
+        </div>
       </div>
     </div>
   )
 })
-
 export default TransportMain
