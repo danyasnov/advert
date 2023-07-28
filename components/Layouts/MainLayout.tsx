@@ -173,7 +173,7 @@ const MainLayout: FC = observer(() => {
                   )}
                   <div className='mx-4 s:mx-8 m:mx-0 flex flex-col items-center'>
                     <ScrollableCardGroup
-                      className='s:grid-cols-2 m:grid-cols-3 l:grid-cols-4'
+                      className='s:grid-cols-3 m:grid-cols-3 l:grid-cols-4'
                       products={otherProducts.all}
                       state={isLoading ? 'pending' : 'done'}
                       disableScroll
