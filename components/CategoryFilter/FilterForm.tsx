@@ -306,13 +306,16 @@ const FilterForm: FC = observer(() => {
   }
   let body
 
-  if (width < 768 || !isTransport || !isTransportChild) {
+  if (width >= 768 && (isTransport || isTransportChild)) {
+    if (isTransport) {
+      body = <TransportMain {...filterProps} />
+    } else if (isTransportChild) {
+      body = <TransportFilterForm {...filterProps} />
+    }
+  } else {
     body = <GeneralFilterForm {...filterProps} />
-  } else if (isTransport) {
-    body = <TransportMain {...filterProps} />
-  } else if (isTransportChild) {
-    body = <TransportFilterForm {...filterProps} />
   }
+
   return (
     <FormikProvider value={formik}>
       <Form className='w-full'>
