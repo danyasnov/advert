@@ -78,7 +78,7 @@ const EnterCode: FC<PageProps> = observer(
       }
     }, [counter])
     useEffect(() => {
-      if (verifyMode === VerifyMode.SMS || verifyMode === VerifyMode.Call) {
+      if (verifyMode === VerifyMode.SMS) {
         sendCode()
       }
     }, [verifyMode])
