@@ -59,13 +59,14 @@ const PopularBrands: FC = () => {
           ? brandsWithAdsSorted
           : brandsWithAdsSorted.slice(0, visibleBrandsCount)
         ).map((b) => (
-          <LinkWrapper
-            href={`${baseUrl}${b.value}`}
-            title={b.value}
+          <Button
+            onClick={() => {
+              window.location.replace(`${baseUrl}${b.value}`)
+            }}
             className='space-x-2'>
             <span className='text-body-16 text-greyscale-900'>{b.value}</span>
             <span className='text-body-16 text-greyscale-500'>{b.count}</span>
-          </LinkWrapper>
+          </Button>
         ))}
         {!showAllPopular && showButton}
       </div>

@@ -272,7 +272,7 @@ const DesktopForm: FC<FilterProps> = observer(
     conditionOptions,
     currentCategory,
   }) => {
-    const {aggregatedFields, newCount, applyFilter, isFilterApplied} =
+    const {aggregatedFields, newCount, applyFilter, isFilterApplied, count} =
       useProductsStore()
     const {t} = useTranslation()
     const mainIds = [1991, 1992, 5, 6, 'price', 12, 17, 7, 2071, 10]
@@ -365,7 +365,7 @@ const DesktopForm: FC<FilterProps> = observer(
               if (isFilterApplied) return
               applyFilter()
             }}>
-            {t('SHOW_CARS_COUNT', {count: newCount})}
+            {t('SHOW_CARS_COUNT', {count: newCount || count})}
           </PrimaryButton>
         </div>
       </div>

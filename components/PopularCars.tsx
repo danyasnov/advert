@@ -83,9 +83,12 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
             <div className='flex mx-4 space-x-5 items-center'>
               {popular.map((p) => {
                 return (
-                  <LinkWrapper
-                    href={`${clearUrlFromQuery(router.asPath)}${p.path}`}
-                    title={p.img}
+                  <Button
+                    onClick={() => {
+                      window.location.replace(
+                        `${clearUrlFromQuery(router.asPath)}${p.path}`,
+                      )
+                    }}
                     className='w-20 h-20 shrink-0'>
                     <ImageWrapper
                       type={`/img/popular-cars/${p.img}.png`}
@@ -93,7 +96,7 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
                       width={80}
                       height={80}
                     />
-                  </LinkWrapper>
+                  </Button>
                 )
               })}
             </div>
@@ -120,24 +123,12 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
             className='s:w-[168px] m:w-[240px] h-10'
             onClick={() => {
               const params = new URLSearchParams(window.location.search)
-              const query = {}
 
-              for (const [key, value] of params) {
-                if (key === 'condition' && value) {
-                  query[key] = value
-                }
-                if (key === 'priceMin') {
-                  query[key] = value || 1000
-                }
-                if (key === 'priceMax') {
-                  query[key] = value || 100000
-                }
-              }
-
-              router.push({
-                pathname: `${clearUrlFromQuery(router.asPath)}/vehicles-cars`,
-                query,
-              })
+              window.location.replace(
+                `${clearUrlFromQuery(
+                  router.asPath,
+                )}/vehicles-cars?${params.toString()}`,
+              )
             }}>
             {t('SHOW_CARS_COUNT', {count: newCount})}
           </PrimaryButton>

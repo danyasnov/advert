@@ -1,26 +1,29 @@
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {toJS} from 'mobx'
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
+import {useFormikContext} from 'formik'
 import {FilterProps} from '../types'
 import PopularCars from './PopularCars'
 import CategoryPreview from './CategoryPreview'
-import {
-  useCategoriesStore,
-  useGeneralStore,
-} from '../providers/RootStoreProvider'
+import {useCategoriesStore} from '../providers/RootStoreProvider'
 import LinkWrapper from './Buttons/LinkWrapper'
-import TitleWithSeparator from './TitleWithSeparator'
 import {clearUrlFromQuery} from '../utils'
 
 const TransportMain: FC<FilterProps> = observer(({conditionOptions}) => {
   const {categoriesById} = useCategoriesStore()
   const {t} = useTranslation()
+  const {setFieldValue} = useFormikContext()
   const router = useRouter()
   const transportCategoriesById = categoriesById[1].items.reduce((acc, val) => {
     return {...acc, [val.id]: val}
   }, {})
+  useEffect(() => {
+    setTimeout(() => {
+      setFieldValue('priceRange', ['1000', '100000'])
+    })
+  }, [])
   const previewClassname = 'flex w-full space-x-8 l:space-x-12'
   return (
     <div className='flex flex-col'>
