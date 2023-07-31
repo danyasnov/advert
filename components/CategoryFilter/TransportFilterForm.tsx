@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction} from 'react'
+import React, {FC} from 'react'
 import {isEmpty} from 'lodash'
 import {ArrowLeft, Filter} from 'react-iconly'
 import IcCaretDown from 'icons/material/CarretDown.svg'
@@ -6,18 +6,12 @@ import {Field, useFormikContext} from 'formik'
 import {useTranslation} from 'next-i18next'
 import {observer} from 'mobx-react-lite'
 import ReactModal from 'react-modal'
-import {CACategoryDataFieldModel, CACategoryModel} from 'front-api'
+import {CACategoryDataFieldModel} from 'front-api'
 import {useWindowSize} from 'react-use'
 import IcClose from 'icons/material/Close.svg'
-import {toJS} from 'mobx'
-import {useRouter} from 'next/router'
-import {SelectItem} from '../Selects/Select'
-
 import {
   FormikCheckbox,
-  FormikFilterChips,
   FormikFilterFields,
-  FormikRange,
   FormikSegmented,
   FormikSelect,
   FormikSwitch,
@@ -41,10 +35,8 @@ import LinkButton from '../Buttons/LinkButton'
 import {FilterProps} from '../../types'
 import FormikFilterCheckboxes from '../FormikComponents/FormikFilterCheckboxes'
 import AutoSortSelect from '../Selects/AutoSortSelect'
-import GeneralFilterForm from './GeneralFilterForm'
 
 const TransportFilterForm: FC<FilterProps> = (props) => {
-  const {currentCategory, categoriesOptions, onChangeCategory} = props
   const {width} = useWindowSize()
   if (typeof window === 'undefined') return null
   return (
@@ -302,7 +294,7 @@ const DesktopForm: FC<FilterProps> = observer(
             options={conditionOptions}
           />
           <AutoSortSelect />
-          <div className='col-span-4 l:col-span-2 flex space-x-4 justify-end'>
+          <div className='col-span-4 l:col-span-2 flex space-x-4 l:justify-end'>
             <Field
               name='withoutRun'
               component={FormikCheckbox}

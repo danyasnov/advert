@@ -47,7 +47,8 @@ const PopularBrands: FC = () => {
   const brandsWithAdsSorted = [...brandsWithAds].sort(
     (a, b) => b.count - a.count,
   )
-  const gridClassname = 'grid grid-cols-4 l:grid-cols-6 gap-y-3'
+  const gridClassname =
+    'grid grid-cols-4 l:grid-cols-6 gap-y-3 justify-items-start'
   const baseUrl = `${clearUrlFromQuery(
     router.asPath,
   )}/vehicles-cars?brands-of-cars=`

@@ -1,27 +1,19 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC} from 'react'
 import {useTranslation} from 'next-i18next'
 import {Field} from 'formik'
 import useEmblaCarousel from 'embla-carousel-react'
 import {WheelGesturesPlugin} from 'embla-carousel-wheel-gestures'
 import {observer} from 'mobx-react-lite'
 import {useRouter} from 'next/router'
-import {toJS} from 'mobx'
-import {ArrowDown} from 'react-iconly'
 import {FormikSegmented} from './FormikComponents'
 import {FilterProps} from '../types'
 import ImageWrapper from './ImageWrapper'
 import FullHeightSliderButton from './Buttons/FullHeightSliderButton'
 import useSliderButtons from '../hooks/useSliderButtons'
 import PrimaryButton from './Buttons/PrimaryButton'
-import {
-  useCategoriesStore,
-  useGeneralStore,
-  useProductsStore,
-} from '../providers/RootStoreProvider'
+import {useProductsStore} from '../providers/RootStoreProvider'
 import FormikRangeSlider from './FormikComponents/FormikRangeSlider'
 import {clearUrlFromQuery} from '../utils'
-import LinkWrapper from './Buttons/LinkWrapper'
-import {makeRequest} from '../api'
 import Button from './Buttons/Button'
 import PopularBrands from './PopularBrands'
 
