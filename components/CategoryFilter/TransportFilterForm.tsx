@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {isEmpty} from 'lodash'
+import {get, isEmpty, size} from 'lodash'
 import {ArrowLeft, Filter} from 'react-iconly'
 import IcCaretDown from 'icons/material/CarretDown.svg'
 import {Field, useFormikContext} from 'formik'
@@ -268,7 +268,14 @@ const DesktopForm: FC<FilterProps> = observer(
       useProductsStore()
     const {t} = useTranslation()
     const mainIds = [1991, 1992, 5, 6, 'price', 12, 17, 7, 2071, 10]
-    const {setFieldValue} = useFormikContext()
+    const {setFieldValue, values} = useFormikContext()
+
+    let brand
+    // @ts-ignore
+    if (size(values.fields[1991]) === 1) {
+      brand = get(values, 'fields[1991][0].label')
+    }
+
     const mainFields = mainIds.map((id) => {
       if (id === 'price') {
         return {
@@ -286,7 +293,9 @@ const DesktopForm: FC<FilterProps> = observer(
 
     return (
       <div className='w-full rounded-3xl  flex flex-col py-8 px-6 bg-white mb-6 shadow-[0_45px_80px_rgba(4,6,15,0.08)]'>
-        <span className='text-h-4 font-bold mb-6'>{currentCategory.name}</span>
+        <span className='text-h-4 font-bold mb-6'>
+          {brand ? t('BUY_AUTO_BRAND', {brand}) : currentCategory.name}
+        </span>
         <div className='grid grid-cols-3 m:grid-cols-4 gap-4 mb-4 items-center'>
           <Field
             component={FormikSegmented}

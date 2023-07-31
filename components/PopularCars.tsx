@@ -64,7 +64,7 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
         <span className='text-body-18 text-greyscale-900 font-medium'>
           {t('POPULAR_BRANDS')}
         </span>
-        <div className='flex items-center mb-6'>
+        <div className='flex items-center mb-6 -ml-1'>
           <FullHeightSliderButton
             size={20}
             onClick={modelsSlider.scrollPrev}
@@ -104,7 +104,7 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
         </div>
         <PopularBrands />
         <div className='flex items-center justify-between'>
-          <div className='h-[54px] w-[417px] m:w-[558px] shrink-0 flex items-center self-start'>
+          <div className='h-[54px] w-[417px] m:w-[558px] shrink-0 flex items-center self-start pl-2.5'>
             <Field
               name='priceRange'
               minValue={0}
