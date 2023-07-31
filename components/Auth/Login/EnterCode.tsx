@@ -64,7 +64,9 @@ const EnterCode: FC<PageProps> = observer(
       })
     }
     useEffect(() => {
-      sendCode()
+      if (verifyMode !== VerifyMode.SMS) {
+        sendCode()
+      }
     }, [])
     useEffect(() => {
       if (verifyMode !== VerifyMode.Call) {
@@ -75,11 +77,11 @@ const EnterCode: FC<PageProps> = observer(
         }
       }
     }, [counter])
-    // useEffect(() => {
-    //   if (verifyMode === VerifyMode.SMS || verifyMode === VerifyMode.Call) {
-    //     sendCode()
-    //   }
-    // }, [verifyMode])
+    useEffect(() => {
+      if (verifyMode === VerifyMode.SMS || verifyMode === VerifyMode.Call) {
+        sendCode()
+      }
+    }, [verifyMode])
 
     const formik = useFormik({
       enableReinitialize: true,
