@@ -9,20 +9,22 @@ const MainBanner: FC = () => {
   const {t} = useTranslation()
 
   return (
-    <div className='flex flex-col space-y-4 sticky top-[32px]'>
-      <VipBanner
-        title={t('ROYAL_GARDENS_RESIDENCE')}
-        description={t('SPACIOUS_COMPLEX')}
-        link='/royal-gardens'
-      />
-      <Banner
-        id='main-banner-1'
-        title={t('PROMOTION_TITLE2')}
-        titleColor='text-primary-500'
-        description={t('PROMOTION_DESCRIPTION2')}
-        descriptionColor='text-primary-500'
-        link='/business'
-      />
+    <div className='flex flex-col'>
+      <div className='flex flex-col space-y-4 sticky top-[32px]'>
+        <VipBanner
+          title={t('ROYAL_GARDENS_RESIDENCE')}
+          description={t('SPACIOUS_COMPLEX')}
+          link='/royal-gardens'
+        />
+        <Banner
+          id='main-banner-1'
+          title={t('PROMOTION_TITLE2')}
+          titleColor='text-primary-500'
+          description={t('PROMOTION_DESCRIPTION2')}
+          descriptionColor='text-primary-500'
+          link='/business'
+        />
+      </div>
     </div>
   )
 }
