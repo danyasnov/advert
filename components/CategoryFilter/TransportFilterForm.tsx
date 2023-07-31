@@ -302,7 +302,7 @@ const DesktopForm: FC<FilterProps> = observer(
             options={conditionOptions}
           />
           <AutoSortSelect />
-          <div className='col-span-4 l:col-span-1 flex space-x-4'>
+          <div className='col-span-4 l:col-span-2 flex space-x-4 justify-end'>
             <Field
               name='withoutRun'
               component={FormikCheckbox}

@@ -50,6 +50,7 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
     const router = useRouter()
     const [viewportRef, embla] = useEmblaCarousel(
       {
+        loop: true,
         dragFree: true,
         align: 'start',
         containScroll: 'trimSnaps',
