@@ -78,9 +78,11 @@ const PopularCars: FC<Pick<FilterProps, 'conditionOptions'>> = observer(
                 return (
                   <Button
                     onClick={() => {
-                      window.location.replace(
-                        `${clearUrlFromQuery(router.asPath)}${p.path}`,
-                      )
+                      if (embla.clickAllowed()) {
+                        window.location.replace(
+                          `${clearUrlFromQuery(router.asPath)}${p.path}`,
+                        )
+                      }
                     }}
                     className='w-20 h-20 shrink-0'>
                     <ImageWrapper
