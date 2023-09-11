@@ -43,7 +43,7 @@ export default async (
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: 'a559cdf560e7936ffb90fb5765d95c3a110087ad',
+      Authorization: '',
     },
     data: {
       campaign_id: 'postman_inline_both_example',
